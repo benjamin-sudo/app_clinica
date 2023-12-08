@@ -1,0 +1,186 @@
+<?php
+
+namespace App\Controllers;
+use CodeIgniter\Controller;
+use App\Models\UserModel;
+
+class Home extends BaseController {
+
+    private $usersModel;
+
+    public function __construct() {
+        $this->usersModel = new UserModel();
+    }
+
+    public function index(): string {
+        return view('login');
+    }
+
+    public function administrador(): string {
+        if ($this->request->isAJAX()){  }
+        $arr            =   [];
+        $arr            =   $this->usersModel->ini_contendido();
+        $data           =   [
+                                'css'       => ['administrador/css/style.css'],
+                                'js'        => ['administrador/js/javascript.js'],
+                                'respuesta' => $arr 
+                            ];
+        return view('administrador',$data);
+    }
+
+    public function buscaExtArch(){
+        if ($this->request->isAJAX()){  }
+        $status         =  true;
+        $rutaactual     =  $this->request->getPost('rutaactual');
+        $aData          =  $this->usersModel->buscaExtArch(array('rutaactual'=>$rutaactual));
+        if (count($aData) >0 ){
+            $status     =  false;
+        }
+        echo json_encode(array(
+            'status' => $status,
+            'aData'  => $aData,
+        ));
+    }
+
+    public function grabraExt() {
+        if ($this->request->isAJAX()){  }
+        $status                 =   true;    
+        $tip                    =   $this->request->getPost("extension_principal");
+        $rutaactual             =   strtolower($this->request->getPost("nomArch"));    
+        $aData                  =   $this->usersModel->grabarExt($_POST);
+        //**********************************************************************
+        $fileControllCreado     =   'Controlador no Creado';
+        $fileView               =   'Vista no Creada';
+        $fileModel              =   'Modelo no Creado';
+        $fileCss                =   'CSS no Creado';
+        $fileJs                 =   'JavaScript no Creado';
+        $files                  =   '<br>';
+        $parentPath             =   '';
+        if ($tip == 2)  { //Solo Crea los Directorios Cuando el Padre es Sub-Menu
+            //Crea Archivo del Controller
+            $file1              =   APPPATH."Controllers/".ucwords($rutaactual).'.php';
+            $fileController     =   fopen($file1, "w+");
+            $contController     =  '<?php' . PHP_EOL .
+                                    'namespace App\Controllers;' . PHP_EOL . PHP_EOL .
+                                    'use CodeIgniter\Controller;' . PHP_EOL . PHP_EOL .
+                                    'use App\Models\UserModel; ' . PHP_EOL . PHP_EOL .
+                                    'class ' . $rutaactual . ' extends Controller {' . PHP_EOL . PHP_EOL .
+                                    '   var $empresa;' . PHP_EOL . PHP_EOL .
+                                    '   function __construct() {' . PHP_EOL .
+                                    '       parent::__construct();' . PHP_EOL .
+                                    '   }' . PHP_EOL . PHP_EOL .
+                                    '   public function index() {' . PHP_EOL .
+                                    '       echo view("' . $rutaactual . '/' . $rutaactual . '_view");' . PHP_EOL .
+                                    '   }' . PHP_EOL . PHP_EOL .
+                                    '}' . PHP_EOL;
+
+            fwrite($fileController, $contController);
+            fclose($fileController);
+            
+            if(file_exists($file1)){
+                $fileControllCreado     =   $file1;
+            }
+            //Crea Archivo del Modelo
+            $file2          =   APPPATH.'Models/' . ucwords($rutaactual) . '_model.php';
+            $fileModel      =   fopen($file2, "w+");
+            $contModel      = '<?php' . PHP_EOL .
+                                ' namespace App\Models;' . PHP_EOL . PHP_EOL .
+                                ' use CodeIgniter\Model;' . PHP_EOL . PHP_EOL .
+                                ' class ' . $rutaactual . '_model extends Model {' . PHP_EOL . PHP_EOL .
+                                '   var $own    = "ADMIN";' . PHP_EOL .
+                                '   var $ownGu  = "GUADMIN";' . PHP_EOL . PHP_EOL .
+                                '   public function __construct() {' . PHP_EOL . PHP_EOL .
+                                '       parent::__construct();' . PHP_EOL . PHP_EOL .
+                                '   }' . PHP_EOL . PHP_EOL .
+                                '}' . PHP_EOL;
+
+            fwrite($fileModel, $contModel);
+            fclose($fileModel);
+            if (file_exists($file2)){
+                $fileModel = $file2;
+            }
+
+
+            //Crea Archivo de la Vista
+            mkdir(APPPATH."Views/$rutaactual",0700);
+            $file3      =   APPPATH.'Views/' . $rutaactual . '/' . $rutaactual . '_view.php';
+            $fileView   =   fopen($file3, "w+");
+            $contView   =   ' Vista ' . $rutaactual . '.';
+            fwrite($fileView,$contView);
+            fclose($fileView);
+            if (file_exists($file3)) {
+                $fileView = $file3;
+            }
+
+            $parentPath     = dirname(APPPATH)."/public/";
+            
+            mkdir($parentPath."assets/$rutaactual", 0700);
+            mkdir($parentPath."assets/$rutaactual/css", 0700);
+            mkdir($parentPath."assets/$rutaactual/js", 0700);
+            mkdir($parentPath."assets/$rutaactual/img", 0700);
+
+            $file4      = $parentPath.'assets/' . $rutaactual . '/css/styles.css';
+            $fileCss    = fopen($file4, "w+");
+            $contCss    = ' /*Contenido CSS de la Extensión ' . $rutaactual . '.*/';
+            fwrite($fileCss,$contCss);
+            fclose($fileCss);
+            if(file_exists($file4)) {
+                $fileCss =  $file4;
+            }
+
+            $file5      =   $parentPath.'assets/' . $rutaactual . '/js/javascript.js';
+            $fileJs     =   fopen($file5, "w+");
+            $contJs     =   '//Contenido JS de la Extensión ' . $rutaactual . '.' . PHP_EOL . PHP_EOL .
+                            '$(function () {' . PHP_EOL . PHP_EOL .
+                            '   console.log("SYSDATE"); ' . PHP_EOL .
+                            '});' . PHP_EOL ;
+            fwrite($fileJs, $contJs);
+            fclose($fileJs);
+            if(file_exists($file5)){
+                $fileJs = $file5;
+            }
+
+            $files .= 'Archivos Creados:<br>';
+            $files .= $fileControllCreado . '<br>';
+            $files .= $fileView . '<br>';
+            $files .= $fileModel . '<br>';
+            $files .= $fileCss . '<br>';
+            $files .= $fileJs . '<br>';
+        }
+        echo json_encode(array(
+            'post'          =>  $_POST,
+            'return'        =>  $aData,
+            'status'        =>  $status,
+            'tip'           =>  $tip,
+            'files'         =>  $files,
+            'parentPath'    =>  $parentPath,
+        ));
+    }
+
+    public function creaPrivilegio() {
+        if ($this->request->isAJAX()){  }
+        $status     =   true;
+        $nombre     =   $this->request->getPost("nombre");
+        $return     =   $this->usersModel->creaPrivilegio($nombre);
+        echo json_encode(array(
+            'nombre'          =>  $nombre,
+            'status'          =>  $status,
+        ));
+    }
+
+    public function actualiza_privilegio() {
+        if ($this->request->isAJAX()){  }
+        $status     =   true;
+        $PER_ID     =   $this->request->getPost("PER_ID");
+        $v_bool     =   $this->request->getPost("v_bool");
+        $return     =   $this->usersModel->actualiza_Privilegio([
+            'PER_ID'    => $PER_ID,
+            'v_bool'    =>  $v_bool
+        ]);
+        echo json_encode(array(
+            'status'    =>  $status,
+            'return'    =>  $return
+        ));
+    }
+}
+

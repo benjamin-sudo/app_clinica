@@ -1,0 +1,146 @@
+ERROR - 2023-11-29 17:37:17 --> SELECT m.*, sm.*, ex.* 
+                FROM ADMIN.GU_TMENUPRINCIPAL m 
+                LEFT JOIN ADMIN.GU_TMENUPRINCIPAL sm ON sm.MENP_IDPADRE = m.MENP_ID AND sm.MENP_FRAME = 3
+                LEFT JOIN ADMIN.GU_TMENUPRINCIPAL ex ON ex.MENP_IDPADRE = sm.MENP_ID AND ex.MENP_FRAME = 3
+                WHERE m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 13 - GESTOR UNICO DE PACIENTES - 1 - CLINICA_BDU - 12 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 14 - GESTION DE FICHA CLINICA  - 1 - BDU_GESTIONDEFICHACLINICA - 12 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 15 - GESTION TEMPLATE  - 1 - BDU_GESTIONTEMPLATE - 12 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 16 - GESTION NUMERO  - 1 - BDU_GESTIONNUMERO - 12 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 17 - MENUS SUB - 1 - BDU_MENUSSUB - 12 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 19 - EXTENSIO PARA EL SUB MENU - 1 - SSAN_EXTENSIOPARAELSUBMENU - 18 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 20 - SUB MENU DE GESTION DE PACIENTES - 1 - CLIN_SUBMENUDEGESTIONDEPACIENTES - 12 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 --> 22 - EXTENSIO  SUB MENU - 1 - bdu_EXTENSIOSUBMENU - 12 - 2 -  - 3 -  -  -  - 
+ERROR - 2023-11-29 17:37:17 --> ****************************************************************************************
+ERROR - 2023-11-29 17:37:17 -->  -  -  -  -  -  -  -  -  -  -  - 
+CRITICAL - 2023-11-29 17:58:05 --> Undefined array key "SUBMENP_ID"
+in APPPATH/Models/UserModel.php on line 28.
+ 1 APPPATH/Models/UserModel.php(28): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(23): App\Models\UserModel->ini_contendido()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 17:59:47 --> Cannot access offset of type string on string
+in APPPATH/Views/administrador.php on line 88.
+ 1 SYSTEMPATH/View/View.php(226): include()
+ 2 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 4 APPPATH/Controllers/Home.php(29): view()
+ 5 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 6 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:01:15 --> Cannot access offset of type string on string
+in APPPATH/Views/administrador.php on line 88.
+ 1 SYSTEMPATH/View/View.php(226): include()
+ 2 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 4 APPPATH/Controllers/Home.php(29): view()
+ 5 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 6 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:01:17 --> Cannot access offset of type string on string
+in APPPATH/Views/administrador.php on line 88.
+ 1 SYSTEMPATH/View/View.php(226): include()
+ 2 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 4 APPPATH/Controllers/Home.php(29): view()
+ 5 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 6 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:01:53 --> Cannot access offset of type string on string
+in APPPATH/Views/administrador.php on line 98.
+ 1 SYSTEMPATH/View/View.php(226): include()
+ 2 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 4 APPPATH/Controllers/Home.php(29): view()
+ 5 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 6 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:03:21 --> Cannot access offset of type string on string
+in APPPATH/Views/administrador.php on line 127.
+ 1 SYSTEMPATH/View/View.php(226): include()
+ 2 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 4 APPPATH/Controllers/Home.php(29): view()
+ 5 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 6 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:05:48 --> Undefined array key "MENP_ID"
+in APPPATH/Models/UserModel.php on line 33.
+ 1 APPPATH/Models/UserModel.php(33): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(23): App\Models\UserModel->ini_contendido()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:26:35 --> Undefined variable $organizedMenu
+in APPPATH/Models/UserModel.php on line 63.
+ 1 APPPATH/Models/UserModel.php(63): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(22): App\Models\UserModel->ini_contendido()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:26:56 --> Undefined array key "nombre"
+in APPPATH/Models/UserModel.php on line 66.
+ 1 APPPATH/Models/UserModel.php(66): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(22): App\Models\UserModel->ini_contendido()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:54:16 --> Undefined array key "MENP_ID"
+in APPPATH/Views/administrador.php on line 87.
+ 1 APPPATH/Views/administrador.php(87): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(226): include('/app/myapp/app/Views/administrador.php')
+ 3 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/Home.php(28): view()
+ 6 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 7 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 18:56:22 --> Undefined array key "MENP_ID"
+in APPPATH/Models/UserModel.php on line 159.
+ 1 APPPATH/Models/UserModel.php(159): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(51): App\Models\UserModel->grabarExt()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->grabraExt()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 19:23:58 --> Undefined array key "select_menu"
+in APPPATH/Views/administrador.php on line 113.
+ 1 APPPATH/Views/administrador.php(113): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(226): include('/app/myapp/app/Views/administrador.php')
+ 3 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/Home.php(28): view()
+ 6 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 7 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 19:24:01 --> Undefined array key "select_menu"
+in APPPATH/Views/administrador.php on line 113.
+ 1 APPPATH/Views/administrador.php(113): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(226): include('/app/myapp/app/Views/administrador.php')
+ 3 SYSTEMPATH/View/View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1188): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/Home.php(28): view()
+ 6 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 7 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()

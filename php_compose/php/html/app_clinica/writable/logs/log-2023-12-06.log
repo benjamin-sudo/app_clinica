@@ -1,0 +1,260 @@
+ERROR - 2023-12-06 13:12:52 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//or...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(17): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:12:52 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(17): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:15:39 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//or...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:15:39 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:20:24 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//or...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:20:24 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:23:12 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//or...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:23:12 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(16): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:24:22 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//or...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:24:22 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:25:08 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//10...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:25:08 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:25:09 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//10...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:25:09 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:25:34 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//10...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:25:34 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(14): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:26:30 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', 'oci:dbname=//10...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(18): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:26:31 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12154: TNS:could not resolve the connect identifier specified
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(18): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-12-06 13:32:45 --> Error connecting to the database: ErrorException: oci_connect(): ORA-12514: TNS:listener does not currently know of service requested in connect descriptor in /var/www/html/app_clinica/system/Database/OCI8/Connection.php:129
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'oci_connect(): ...', '/var/www/html/a...', 129, Array)
+#1 /var/www/html/app_clinica/system/Database/OCI8/Connection.php(129): oci_connect('ADMIN', 'ssprueba.210', '10.68.159.13:60...', 'utf8')
+#2 /var/www/html/app_clinica/system/Database/BaseConnection.php(392): CodeIgniter\Database\OCI8\Connection->connect(false)
+#3 /var/www/html/app_clinica/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 /var/www/html/app_clinica/system/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /var/www/html/app_clinica/app/Models/ModelLogin.php(18): CodeIgniter\Database\BaseBuilder->get()
+#6 /var/www/html/app_clinica/app/Controllers/Home.php(15): App\Models\ModelLogin->test()
+#7 /var/www/html/app_clinica/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#8 /var/www/html/app_clinica/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#9 /var/www/html/app_clinica/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /var/www/html/app_clinica/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-12-06 13:32:45 --> Unable to connect to the database.
+Main connection [OCI8]: oci_connect(): ORA-12514: TNS:listener does not currently know of service requested in connect descriptor
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "ADMIN"."HO_LISTA_TOTEMANGOL"', [], false)
+ 3 APPPATH/Models/ModelLogin.php(18): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH/Controllers/Home.php(15): App\Models\ModelLogin->test()
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()

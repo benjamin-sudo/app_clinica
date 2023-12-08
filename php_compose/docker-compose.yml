@@ -1,0 +1,107 @@
+version: '3'
+services:
+
+  #app usuario
+  codeneiter_4:
+    build:
+      context: ./
+      dockerfile: ./php/Dockerfile
+    ports:
+      - "9005:80"
+      - "9004:443"
+    restart: always  
+    volumes:
+      - ./php/app_clinica:/var/www/app_clinica/
+      - ./php/html:/var/www/html/
+    networks:
+      - mynetwork 
+
+  #https://hub.docker.com/r/gvenzl/oracle-free
+  oracle_slim:
+    image: gvenzl/oracle-free:23-slim
+    container_name: oracle_slim
+    environment:
+      APP_USER: ADMIN
+      APP_USER_PASSWORD: ssprueba.210
+      ORACLE_DATABASE: ADMIN
+      ORACLE_PASSWORD: ssprueba.210
+      TARGET_PDB: FREEPDB1
+      TZ: America/Santiago
+    ports:
+      - 6000:1521
+    volumes:
+      - oracle-data:/path/to/oracle/data
+      - ./oracle/init_scripts:/container-entrypoint-initdb.d
+      - ./oracle/init_sql:/container-entrypoint-startdb.d
+    restart: always
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - mynetwork
+
+  #administrador
+  codeigniter:
+    container_name: user_administrador
+    image: bitnami/codeigniter:4.4.3-debian-11-r0
+    ports:
+      - "9000:8000"
+    volumes:
+      - ./codeigniter/app:/app  
+    environment:
+      - CODEIGNITER_PROJECT_NAME=myapp
+      - CODEIGNITER_DATABASE_HOST=mariadb
+      - CODEIGNITER_DATABASE_USER=myuser
+      - CODEIGNITER_DATABASE_PASSWORD=mypassword
+      - APP_ENV=development  # Modo de desarrollo
+      - ALLOW_EMPTY_PASSWORD=yes  # Permitir contraseñas vacías
+    depends_on:
+      - oracle_slim
+      - mysql_6
+    restart: always  # Reiniciar en caso de fallo
+    networks:
+      - mynetwork
+
+  mysql_6:
+    container_name: mysql_6
+    image: mysql:5.7
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_spanish_ci
+      - --init-connect=SET NAMES utf8mb4 COLLATE utf8mb4_spanish_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ssprueba.210
+      MYSQL_DATABASE: ADMIN
+      MYSQL_USER: ADMIN
+      MYSQL_PASSWORD: ssprueba.210
+      TZ: America/Santiago
+    expose:
+      - "9306"
+    ports:
+      - "9306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql 
+    networks:
+      - mynetwork          
+
+  monitoreo_mysql:
+    image: adminer
+    restart: always
+    ports:
+      - 9100:8080
+    networks:
+      - mynetwork          
+
+volumes:
+  oracle-data:
+  db_data:
+
+networks:
+  mynetwork:
+
+

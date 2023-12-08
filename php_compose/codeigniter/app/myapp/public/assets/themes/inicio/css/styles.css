@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18-ene-2016, 12:42:11
+    Author     : esteban.diaz
+*/
+a:link {
+  font-size: 12px;
+  font-family:arial;
+}
+a:visited {
+  font-size: 13px;font-family:arial;
+}
+
+#lgn_mosaic {
+	background-image:url('../img/portadaNew.png');
+	background-repeat:no-repeat;
+	border: 1px #DDD solid;
+	height:500px;
+	width:770px;
+        margin: 100px auto;
+        background-color: #fff;
+}
+
+#lgn_login   { 
+  padding-left:10px; 
+  margin-left:10px; 
+  width:210px; 
+  height:195px; 
+  position:relative; 
+  top:56%; 
+  left: 6%;
+}
+#lgn_login label {font-size: 12px;font-family:arial;}
+
