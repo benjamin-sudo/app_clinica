@@ -375,11 +375,17 @@ class UserModel extends Model {
     }
 
     public function editando_extension($aData){
+        $listarMenup        =   $aData['post']['listarMenup'];
+        $tip                =   $aData['post']['extension_principal'];    
+        $check              =   $aData['post']['check'];
+        $nombre             =   $aData['post']['nombre'];
+        $idMen              =   $aData['post']['idMen'];
+
+
+        //ma_ana
+
 
         
-
-
-
         
         return  [
                     "status"    =>  true

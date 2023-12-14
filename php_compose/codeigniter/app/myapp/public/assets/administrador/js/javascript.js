@@ -554,29 +554,29 @@ function grabarExt(opt){
         let bool_checked          = document.getElementById('habilitado').checked; // menu habilitado
         let listarMenup           = [];
         let extension_principal   = 1;
-    if($("#listarMenup").val() == "0"){
-        listarMenup            =  0;
-    } else {
-    let value              =  $("#listarMenup").val();
-        listarMenup            =  parseInt(value);
-        num_tipo               =  $('option[value="'+value+'"]').data('tipo');
-        extension_principal    =  parseInt(num_tipo) + 1;
-    }
-      //console.log("  ------------------------------------------------   ");
-      //console.log("  extension_principal  -> ",extension_principal);
-      //console.log("  listarMenup          -> ",listarMenup); 
-      //console.log("  arr_permisos         -> ",arr_permisos);
-      //return false;
 
-      //gestionextensionesmodel
+        if($("#listarMenup").val() == "0"){
+            listarMenup            =  0;
+        } else {
+            let value              =  $("#listarMenup").val();
+            listarMenup            =  parseInt(value);
+            num_tipo               =  $('option[value="'+value+'"]').data('tipo');
+            extension_principal    =  parseInt(num_tipo) + 1;
+        }
+        //console.log("  ------------------------------------------------   ");
+        //console.log("  extension_principal  -> ",extension_principal);
+        //console.log("  listarMenup          -> ",listarMenup); 
+        //console.log("  arr_permisos         -> ",arr_permisos);
+        //return false;
+        //gestionextensionesmodel
 
-      $("#loadFade").modal("show");
-      $.ajax({ 
-         type           : "POST",
-         url            : "Home/grabraExt",
-         dataType       : "json",
-         beforeSend     :  function(xhr){ },
-         data           :  { 
+      
+        $.ajax({ 
+            type           : "POST",
+            url            : "Home/grabraExt",
+            dataType       : "json",
+            beforeSend     :  function(xhr){  $("#loadFade").modal("show"); },
+            data           :  { 
                               opt                  : opt,
                               bool_checked         : bool_checked,
                               nomExt               : $("#nomExt").val(),
@@ -585,14 +585,14 @@ function grabarExt(opt){
                               extension_principal  : extension_principal,
                               arr_permisos         : arr_permisos,
                            },
-         error          :  function(errro)  {  
+            error          :  function(errro)  {  
                                                 console.log(errro);
                                                 //console.log(errro.responseText);  
                                                 jAlert("Error General, Consulte Al Administrador"); 
                                                 $('#loadFade').modal('hide');
                                                 js_limpia_panel();
                                             },
-         success        :   function(aData) {  
+            success        :   function(aData) {  
                                                 $('#loadFade').modal('hide');
                                                 //console.log("--------- Exito  ------------- ");
                                                 //console.log(aData);
@@ -606,6 +606,88 @@ function grabarExt(opt){
       });
    }
 }
+
+function js_editarextension(idMen){
+    let const_error     =   [];
+
+    let check           =   document.getElementById('habilitado').checked?1:0; // menu habilitado
+    let listarMenup     =   $("#listarMenup").val();
+
+    //console.log("bool_checked   ->  ",bool_checked);
+
+
+    if ($("#nomExt").val()   == ''){
+        const_error.push("Falta nombre del menu");
+    }
+    //console.log("   editando    ->  ",idMen);
+    let arr_permisos = [];
+    $(".checked_id").each(function(index){
+        let ck_permiso = document.getElementById(this.id).checked;
+        if (ck_permiso){
+            arr_permisos.push(this.id.split("_")[2]);
+        }
+    });
+    console.log("arr_permisos   ->",arr_permisos);
+    if (arr_permisos.length==0){ 
+        const_error.push("Falta previlegios"); 
+    }
+    if (const_error.length>0){
+        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
+        return false;
+    } else {
+
+
+        let bool_checked          = document.getElementById('habilitado').checked; // menu habilitado
+        let listarMenup           = [];
+        let extension_principal   = 1;
+
+        if($("#listarMenup").val() == "0"){
+            listarMenup            =  0;
+        } else {
+            let value              =  $("#listarMenup").val();
+            listarMenup            =  parseInt(value);
+            num_tipo               =  $('option[value="'+value+'"]').data('tipo');
+            extension_principal    =  parseInt(num_tipo) + 1;
+        }
+
+
+
+        $.ajax({ 
+            type           : "POST",
+            url            : "Home/editando_estensiones_privilegios",
+            dataType       : "json",
+            beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
+            data           :  {
+                                "idMen"                 :   idMen,
+                                "nombre"                :   $("#nomExt").val(),   
+                                "listarMenup"           :   listarMenup,
+                                "extension_principal"   :   extension_principal,
+                                "check"                 :   check,
+                                
+                                "arr_permisos"          :   arr_permisos,
+                                "bool_checked"          :   bool_checked,
+                              },
+            error          :  function(errro)   {  
+                                                   console.log(errro);
+                                                   jAlert("Error General, Consulte Al Administrador"); 
+                                                   $('#loadFade').modal('hide');
+                                                },
+            success        :   function(aData)  {  
+
+                                                    $('#loadFade').modal('hide');
+                                                    console.log("editando_estensiones_privilegios   -> ",aData);
+                                                    
+                                                    /*
+                                                    jAlert('Se modifico información', "Confirmac\u00f3on", function (r) {
+                                                      if (r) { location.reload(true);   }
+                                                    });
+                                                    */
+
+                                                }, 
+        });
+    }
+}
+
 
 function js_limpia_panel(){
     $("#listarMenup").val('0');
@@ -789,59 +871,4 @@ function cargaPrivOrigen() {
     AjaxExt(variables,id,funcion);
 }
 
-function js_editarextension(idMen){
-    let const_error     =  [];
-    let bool_checked    =  document.getElementById('habilitado').checked; // menu habilitado
-    console.log("bool_checked   ->  ",bool_checked);
-    if ($("#nomExt").val()   == ''){
-        const_error.push("Falta nombre del menu");
-    }
-    //console.log("   editando    ->  ",idMen);
-    let arr_permisos = [];
-    $(".checked_id").each(function(index){
-        let ck_permiso = document.getElementById(this.id).checked;
-        if (ck_permiso){
-            arr_permisos.push(this.id.split("_")[2]);
-        }
-    });
-    console.log("arr_permisos   ->",arr_permisos);
-    if (arr_permisos.length==0){ 
-        const_error.push("Falta previlegios"); 
-    }
-    if (const_error.length>0){
-        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
-        return false;
-    } else {
-
-        $.ajax({ 
-            type           : "POST",
-            url            : "Home/editando_estensiones_privilegios",
-            dataType       : "json",
-            beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
-            data           :  {
-                                "idMen"         :   idMen,
-                                "nombre_menu"   :   $("#nomExt").val(),   
-                                "arr_permisos"  :   arr_permisos,
-                                "bool_checked"  :   bool_checked,
-                              },
-            error          :  function(errro)   {  
-                                                   console.log(errro);
-                                                   jAlert("Error General, Consulte Al Administrador"); 
-                                                   $('#loadFade').modal('hide');
-                                                },
-            success        :   function(aData)  {  
-
-                                                    $('#loadFade').modal('hide');
-                                                    console.log("editando_estensiones_privilegios   -> ",aData);
-                                                    
-                                                    /*
-                                                    jAlert('Se modifico información', "Confirmac\u00f3on", function (r) {
-                                                      if (r) { location.reload(true);   }
-                                                    });
-                                                    */
-
-                                                }, 
-        });
-    }
-}
 

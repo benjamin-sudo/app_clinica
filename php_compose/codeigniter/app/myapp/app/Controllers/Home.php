@@ -170,10 +170,10 @@ class Home extends BaseController {
 
     public function actualiza_privilegio() {
         if ($this->request->isAJAX()){  }
-        $status     =   true;
-        $PER_ID     =   $this->request->getPost("PER_ID");
-        $v_bool     =   $this->request->getPost("v_bool");
-        $return     =   $this->usersModel->actualiza_Privilegio([
+        $status         =   true;
+        $PER_ID         =   $this->request->getPost("PER_ID");
+        $v_bool         =   $this->request->getPost("v_bool");
+        $return         =   $this->usersModel->actualiza_Privilegio([
             'PER_ID'    =>  $PER_ID,
             'v_bool'    =>  $v_bool
         ]);
@@ -199,9 +199,9 @@ class Home extends BaseController {
 
     public function fn_gestion_perfil(){
         if ($this->request->isAJAX()){  }
-        $data_return    =   [];    
-        $status         =   true;
-        $data_return    =   $this->usersModel->grabaUsu(['post'=>$this->request->getPost()]);
+        $data_return        =   [];    
+        $status             =   true;
+        $data_return        =   $this->usersModel->grabaUsu(['post'=>$this->request->getPost()]);
         echo json_encode([
             'data_return'   =>  $data_return,
             'status'        =>  $status,
@@ -224,7 +224,10 @@ class Home extends BaseController {
     public function editando_estensiones_privilegios(){
         if ($this->request->isAJAX()){  }
         $status         =   true;
-        $data_return    =   $this->usersModel->editando_extension(['post'=>$this->request->getPost()]);
+        $data_return    =   $this->usersModel->editando_extension([
+            'post'      =>  $this->request->getPost()
+        ]);
         return ['status'=>$status,'data_return'=>$data_return]
     }
+
 }
