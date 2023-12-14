@@ -4,21 +4,23 @@
 <div class="grid_cabecera">
     <div class="grid_cabecera1">
         <h4 class="title" style="color:#e34f49;">
-            <i class="fa fa-tag" aria-hidden="true"></i>&nbsp;&nbsp;<b>ADMINISTRADOR APP CLINICA </b>
+            <i class="fa fa-tag" aria-hidden="true"></i>&nbsp;
+            <b>ADMINISTRADOR&nbsp;APP&nbsp;CLINICA&nbsp;<?php echo date("d-m-Y");?></b>
         </h4>
     </div>
     <div class="grid_cabecera2">
+        <i class="bi bi-flower1"></i>
+        <i class="bi bi-h-square-fill"></i>
         <!--
-        <button type="button" class="btn btn-success" onclick="test(0)">
-            <i class="fa fa-database" aria-hidden="true"></i> TEST 1
-        </button>
-        <button type="button" class="btn btn-success" onclick="test(1)">
-            <i class="fa fa-database" aria-hidden="true"></i> VALIDACION DE PACIENTE
-        </button>
+            <button type="button" class="btn btn-success" onclick="test(0)">
+                <i class="fa fa-database" aria-hidden="true"></i> TEST 1
+            </button>
+            <button type="button" class="btn btn-success" onclick="test(1)">
+                <i class="fa fa-database" aria-hidden="true"></i> VALIDACION DE PACIENTE
+            </button>
         -->
     </div>
 </div>
-
 <div class="content">
     <ul class="nav nav-tabs menu_principal" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
@@ -86,13 +88,13 @@
                                                     <input 
                                                         type    = "checkbox" 
                                                         class   = "form-check-input checked_id"
-                                                        id      = "ck_permiso_<?php echo $row->PER_ID;?>" 
+                                                        id      = "ck_permiso_<?php echo $row['PER_ID'];?>" 
                                                         name    = "ck_permiso"
                                                         style   = "display: block;cursor: pointer;margin-top: 0px;margin-bottom: -1px;"
-                                                        value   = "<?php echo $row->PER_ID;?>">
+                                                        value   = "<?php echo $row['PER_ID'];?>">
                                                 </div>   
                                                 <div class="grid_li_permisos1">
-                                                    <?php echo $row->PER_NOMBRE;?>
+                                                    <?php echo $row['PER_NOMBRE'];?>
                                                 </div>   
                                             </div>   
                                         </li>
@@ -102,9 +104,18 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: center">
-                                <a class="btn btn-small btn-success btn-fill" href="#" id="grabarExt" onclick="grabarExt(0);" style="color:#fff;"><i class="fa fa-save fa-large" id="iconBtn"></i><span id="nomBTN">&nbsp;CREAR EXTENSI&Oacute;N</span></a>
-                                &nbsp;&nbsp;
-                                <a class="btn btn-small btn-danger btn-fill" href="javascript:js_limpia_panel()" style="color:#fff;"><i class="fa fa-times fa-large" id="iconBtn"></i> <span id="nomBTN">CANCELAR</span></a>
+                                
+                            <button class="btn btn-small btn-success btn-fill" id="grabarExt" style="color:#fff;" onclick="grabarExt(0);">
+                                <i class="fa fa-save fa-large" id="iconBtn"></i><span id="nomBTN">&nbsp;CREAR EXTENSIÓN</span>
+                            </button>
+
+                            &nbsp;
+                            &nbsp;
+
+                            <button class="btn btn-small btn-danger btn-fill" style="color:#fff;" onclick="js_limpia_panel();">
+                                <i class="fa fa-times fa-large" id="iconBtn"></i> <span id="nomBTN">CANCELAR</span>
+                            </button>
+
                             </td>
                         </tr>
                     </table>
@@ -140,7 +151,7 @@
                                         <p class="h6"><?php echo $i+1;?></p>
                                     </div>   
                                     <div class="grid_li_permisos_2">
-                                        <p class="lead"><?php echo $row->PER_NOMBRE;?></p>    
+                                        <p class="lead"><?php echo $row['PER_NOMBRE'];?></p>    
                                     </div>
                                     <div class="grid_li_permisos_3">
                                         <i class="bi bi-2-circle-fill"></i>
@@ -152,12 +163,12 @@
                                                 role    =   "switch" 
                                                 class   =   "form-check-input" 
                                                 style   =   "width: 4em;height: 2em;" 
-                                                id      =   "<?php echo $row->PER_ID;?>"
+                                                id      =   "<?php echo $row['PER_ID'];?>"
                                                 onclick =   "js_estado_r(this.id)"
-                                                <?php echo $row->PER_ESTADO==0?'':'checked';?>>
-                                            <label class="form-check-label" for="sw_<?php echo $row->PER_ID;?>">
-                                                <p style="margin-left: 10px;" class="h6">DESACTIVADO/ACTIVADO</p>
-                                            </label>
+                                                <?php echo $row['PER_ESTADO']==0?'':'checked';?>>
+                                                <label class="form-check-label" for="sw_<?php echo $row['PER_ID'];?>">
+                                                    <p style="margin-left: 10px;" class="h6">DESACTIVADO/ACTIVADO</p>
+                                                </label>
                                         </div>
                                     </div>
                                 </div>   
@@ -168,17 +179,18 @@
             </div>
         </div>
         <div class="tab-pane fade" id="gusuarios" role="tabpanel" aria-labelledby="contact-tab">
-
-            <h4 class="title" style="color:#e34f49;margin-top:10px;margin-bottom:12px;">
+            <h4 class="title" style="color:#e34f49;margin-top:10px;margin-bottom:12px;text-align:-webkit-center;">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                 <b>&nbsp;GESTI&Oacute;N DE USUARIOS</b>
             </h4>
-
             <div class="grid_body_gestionususarios">
-                <div class="grid_body_gestionususarios1"> 
+                <div class="grid_body_gestionususarios1">
                     <div class="card grid_clave_esissan" style="width:30em">
                         <div class="grid_clave_esissan3">
-                            <h5 class="card-title"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;<b>RUN USUARIO</b></h5>
+                            <h5 class="card-title">
+                                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<b>RUN USUARIO</b>
+                            </h5>
+                            <input type="hidden" id="ind_id_uid" name="ind_id_uid" value="">
                         </div>
                         <div class="grid_clave_esissan3">&nbsp;</div>
                         <div class="grid_clave_esissan3">&nbsp;</div>
@@ -190,7 +202,7 @@
                                 <button type="button" class="btn btn-success btn-sm" id="btn_valida_profesional" onclick="valida_run_esissan(0)">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-danger btn-smclass_input_cuenta" id="btn_volver_atras">
+                                <button type="button" class="btn btn-danger btn-smclass_input_cuenta" id="btn" onclick="btn_defaultuser()">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -200,20 +212,24 @@
 
                     <table class="card table table-striped" style="width:100%;">
                        <tbody>
-                            <tr style="height: 36px;">
+                            <tr style="height: 40px;">
                                 <th scope="col" colspan="2">
                                     <div class="grid_info_usuarios">
-                                        <div class="grid_info_usuarios1">Datos del Usuario</div>
-                                        <div class="grid_info_usuarios5 class_superusuario" style="display:none">&nbsp;Super Usuario&nbsp;</div>
-                                        <div class="grid_info_usuarios4 class_superusuario" style="display:none"><input type="checkbox" id="checkTipo" class="class_checkbox" style="display: block;margin-top: 0px;" disabled></div>
+                                        <div class="grid_info_usuarios1">Información del Usuario</div>
+                                        <div class="grid_info_usuarios5 class_superusuario">&nbsp;Super Usuario&nbsp;</div>
+                                        <div class="grid_info_usuarios4 class_superusuario">
+                                            <input type="checkbox" class="class_checkbox" id="checkTipo"    style="display: block;margin-top: 0px;" disabled>
+                                        </div>
                                         <div class="grid_info_usuarios3">&nbsp;Habilitado&nbsp;</div>
-                                        <div class="grid_info_usuarios2"><input type="checkbox" id="CheckboxUsu" class="class_checkbox" style="display: block;margin-top: 0px;" disabled> </div>
+                                        <div class="grid_info_usuarios2">
+                                            <input type="checkbox" class="class_checkbox" id="CheckboxUsu"  style="display: block;margin-top: 0px;" disabled>
+                                        </div>
                                     </div>
                                 </th>
                             </tr>
                             <tr>
-                                <th style="width: 54%;" scope="row" >Nombres</th>
-                                <td style="width: 50%;"><input type="text" id="txtNombres" onkeypress="return soloLetras(event);" class="form-control input-sm class_input_cuenta"></td>
+                                <th style="width:30%;" scope="row" >Nombres</th>
+                                <td style="width:70%;"><input type="text" id="txtNombres" onkeypress="return soloLetras(event);" class="form-control input-sm class_input_cuenta"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Apellido Paterno</th>
@@ -225,9 +241,11 @@
                             </tr>
                             <tr>
                                 <th scope="row">Correo Electr&oacute;nico</th>
-                                <td><input type="text" id="txtEmail" onkeypress="return soloEmail(event);"  class="form-control input-sm class_input_cuenta" style="text-transform: none;"></td>
+                                <td>
+                                <input type="text" id="txtEmail" onkeypress="return soloEmail(event);"  class="form-control input-sm class_input_cuenta" style="text-transform: none;">
+                                </td>
                             </tr>
-                            <tr style="height: 36px;">
+                            <tr style="height: 40px;">
                                 <th scope="col" colspan="2">
                                     <div class="grid_nueva_contraena">
                                         <div class="grid_nueva_contraena1">Contrase&ntilde;a de Acceso</div>
@@ -235,81 +253,85 @@
                                             <label style="margin-bottom: 0px;" for="ind_actualiza_pass" id="txt_acceso_contraena">Reiniciar contrase&ntilde;a</label>
                                         </div>
                                         <div class="grid_nueva_contraena3 check_contrasena">
-                                            <input type="checkbox" id="ind_actualiza_pass" name="ind_actualiza_pass" class="class_checkbox" style="display: block;margin-top: 0px;" disabled>
+                                            <input type="checkbox" class="class_checkbox" id="ind_actualiza_pass" name="ind_actualiza_pass" style="display: block;margin-top: 0px;" disabled>
                                         </div>
                                     </div>
                                 </th>
                             </tr>
                             <tr>
-                                <th scope="row">Nueva Contrase&ntilde;a:</th>
+                                <th scope="row">Nueva Contrase&ntilde;a</th>
                                 <td><input type="password" id="txtPass" onkeypress="return alfanumerico(event);" onblur="validaPass()" class="form-control input-sm class_input_pass"></td>
                             </tr>
                             <tr>
-                                <th scope="row">Repetir Contrase&ntilde;a:</th>
+                                <th scope="row">Repetir Contrase&ntilde;a</th>
                                 <td><input type="password" id="txtPassRep" onkeypress="return alfanumerico(event);" onblur="validaPass2()" class="form-control input-sm class_input_pass"></td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class="grid_btn_guarda" style="text-align:center;">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm" id="btn_creaedita_user" disabled>
+                                <i class="bi bi-floppy"></i>&nbsp;Crear/editar usuario
+                            </button>
+                            <button type="button" class="btn btn-danger btn-smclass_input_cuenta" id="btn_defaultuser()">
+                                <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancelar
+                            </button>
+                        </div>
+                    </div>
                 </div>  
                 <div class="grid_body_gestionususarios2">
                     <div class="card" style="margin-bottom: 10px;">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fa fa-hashtag" aria-hidden="true"></i>&nbsp;<b>B&Uacute;SQUEDA DE PRIVILEGIOS&nbsp;</b></h5>
-                            <select class="selectpicker" name="destinoPriv" id="destinoPriv" data-width="100%" data-container="body" data-selected-text-format="count" data-live-search="true" multiple  title="Seleccione privilegios..." onchange="js_reload_previlegios(this)">
+                            <select class="selectpicker" name="destinoPriv" id="destinoPriv" data-width="100%" data-container="body" data-selected-text-format="count" data-live-search="true" multiple title="Seleccione privilegios..." onchange="js_reload_previlegios(this)">
                                 <?php if (count($respuesta['roles_creados'])>0){ 
                                 foreach ($respuesta['roles_creados'] as $i => $row){ ?>
-                                    <option value="<?php echo $row->PER_ID;?>"><?php echo $row->PER_NOMBRE;?></option>
+                                    <option value="<?php echo $row['PER_ID'];?>" 
+                                        data-info="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>">
+                                        <?php echo $row['PER_NOMBRE'];?>
+                                    </option>
+                                <?php } } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-bottom: 10px;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fa fa-hashtag" aria-hidden="true"></i>&nbsp;<b>PRIVILEGIOS ASIGNADOS AL USUARIO&nbsp;</b>
+                            </h5>
+                            <ul class="list-group li_priveligos" style="margin-bottom:4px;" id="">
+                                <li class="list-group-item" style="cursor:pointer;text-align:center;">
+                                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;SIN PRIVILEGIOS
+                                </li>
+                            </ul>
+                        </div>
+                    </div>    
+                </div>  
+                <div class="grid_body_gestionususarios3">
+                    <div class="card" style="margin-bottom: 10px;">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;<b>ESTABLECIMIENOS ASIGNADOS&nbsp;</b></h5>
+                            <select class="selectpicker" name="establecimiento" id="establecimiento" data-width="100%" data-container="body" data-selected-text-format="count" data-live-search="true" multiple  title="Seleccione establecimientos..." onchange="js_reload_establecimientos(this)">
+                                <?php if (count($respuesta['arr_empresas'])>0){ 
+                                foreach ($respuesta['arr_empresas'] as $i => $row){ ?>
+                                    <option value="<?php echo $row['COD_EMPRESA'];?>"
+                                        data-info="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>">
+                                        <?php echo $row['NOM_RAZSOC'];?>
+                                    </option>
                                 <?php } }?>
                             </select>
                         </div>
                     </div>
                     <div class="card" style="margin-bottom: 10px;">
                         <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="fa fa-hashtag" aria-hidden="true"></i>&nbsp;<b>PRIVILEGIOS ASIGNADOS AL USUARIO&nbsp;</b>
-                            <br>
-                            <small class="text-muted">With faded secondary text</small>
-                        </h5>
-                        
-                                    
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                        Cras justo odio
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">3</span>
+                            <h5 class="card-title">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;<b>ESTABLECIMIENTOS ASIGNADOS&nbsp;</b>
+                            </h5>
+                            <ul class="list-group privilegios_empresa" style="margin-bottom:4px;" id="">
+                                <li class="list-group-item" style="cursor:pointer;text-align: center;">
+                                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;SIN ESTABLECIMIENTO
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                        Cras justo odio
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                        Cras justo odio
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">0</span>
-                                </li>
-                            </ol>
-
-
-                        </div>
-                    </div>    
-                </div>  
-                <div class="grid_body_gestionususarios3"> 
-                    <div class="card" style="margin-bottom: 10px;">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;<b>ESTABLECIMIENOS ASIGNADOS&nbsp;</b></h5>
-                            <select class="selectpicker" name="establecimiento" id="establecimiento" data-width="100%" data-container="body" data-selected-text-format="count" data-live-search="true" multiple  title="Seleccione establecimientos..." onchange="js_reload_previlegios(this)">
-                                <?php if (count($respuesta['arr_empresas'])>0){ 
-                                foreach ($respuesta['arr_empresas'] as $i => $row){ ?>
-                                    <option value="<?php echo $row['COD_EMPRESA'];?>"><?php echo $row['NOM_RAZSOC'];?></option>
-                                <?php } }?>
-                            </select>
+                            </ul>
                         </div>
                     </div>
                 </div>    
@@ -344,6 +366,7 @@
     //$parentPath = dirname(APPPATH);
     //echo $parentPath;
 ?>
+
 <?php
 /*
 if (file_exists(APPPATH."Controllers")) {
@@ -353,4 +376,5 @@ if (file_exists(APPPATH."Controllers")) {
 }
 */
 ?>
+
 <?= $this->endSection() ?>

@@ -14,8 +14,8 @@ services:
       - ./php/app_clinica:/var/www/app_clinica/
       - ./php/html:/var/www/html/
     networks:
-      - mynetwork 
-
+      - mynetwork
+      
   #https://hub.docker.com/r/gvenzl/oracle-free
   oracle_slim:
     image: gvenzl/oracle-free:23-slim
@@ -64,6 +64,7 @@ services:
     networks:
       - mynetwork
 
+  #bd session    
   mysql_6:
     container_name: mysql_6
     image: mysql:5.7
@@ -89,6 +90,7 @@ services:
     networks:
       - mynetwork          
 
+  #toad mysql
   monitoreo_mysql:
     image: adminer
     restart: always
@@ -103,5 +105,3 @@ volumes:
 
 networks:
   mynetwork:
-
-

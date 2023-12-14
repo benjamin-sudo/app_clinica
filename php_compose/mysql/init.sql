@@ -5,7 +5,6 @@ ALTER DATABASE ADMIN CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
 SET NAMES 'utf8mb4' COLLATE 'utf8mb4_spanish_ci';
 SET collation_connection  = 'utf8mb4_spanish_ci';
 
-
 CREATE TABLE ADMIN.SS_TEMPRESAS (
   ID_EMRESA               INT AUTO_INCREMENT PRIMARY KEY,  
   COD_EMPRESA             VARCHAR(5),
@@ -33,8 +32,6 @@ INSERT INTO ADMIN.SS_TEMPRESAS
 (1, '029',  NULL, NULL, 'HOME', NULL, NULL, NULL, NULL, '029',  NULL, NULL, NULL, NULL, 'V',  NULL, NULL, NULL),
 (2, '800',  NULL, NULL, 'DIALISIS BAYO DIAL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V',  NULL, NULL, NULL),
 (3, '801',  NULL, NULL, 'ANATOMIA PATOLOGIA', NULL, NULL, NULL, '', '029',  NULL, NULL, NULL, NULL, 'V',  NULL, NULL, NULL);
-
-
 
 CREATE TABLE ADMIN.GG_TGPACTE (
   ID_INGRESO              INT AUTO_INCREMENT PRIMARY KEY,  
@@ -126,8 +123,6 @@ CREATE TABLE ADMIN.GG_TGPACTE (
   EDADGESTACIONAL         INT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
 
-
-
 CREATE TABLE ADMIN.GU_TPERMISOS (
   PER_ID                INT NOT NULL AUTO_INCREMENT,
   PER_NOMBRE            VARCHAR(80),
@@ -167,6 +162,94 @@ CREATE TABLE ADMIN.GU_TMENPTIENEPER (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
 
 
+CREATE TABLE ADMIN.FE_USERS (
+  ID_UID                          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  PID                             INT(10) UNSIGNED DEFAULT '0',
+  TSTAMP                          INT(10) UNSIGNED DEFAULT '0',
+  USERNAME                        VARCHAR(50) NOT NULL,
+  PASSWORD                        VARCHAR(60) NOT NULL,
+  USERGROUP                       TEXT,
+  DISABLE                         TINYINT(3) UNSIGNED DEFAULT '0' NOT NULL,
+  STARTTIME                       INT(10) UNSIGNED DEFAULT '0',
+  ENDTIME                         INT(10) UNSIGNED DEFAULT '0',
+  NAME                            VARCHAR(80) NOT NULL,
+  FIRST_NAME                      VARCHAR(50) NOT NULL,
+  MIDDLE_NAME                     VARCHAR(50) NOT NULL,
+  LAST_NAME                       VARCHAR(50) NOT NULL,
+  ADDRESS                         VARCHAR(255),
+  TELEPHONE                       VARCHAR(20) NOT NULL,
+  FAX                             VARCHAR(20),
+  EMAIL                           VARCHAR(80),
+  CRDATE                          INT(10) UNSIGNED DEFAULT '0',
+  CRUSER_ID                       INT(10) UNSIGNED DEFAULT '0',
+  LOCKTODOMAIN                    VARCHAR(50),
+  DELETED                         TINYINT(3) UNSIGNED DEFAULT '0',
+  UC                              BLOB,
+  TITLE                           VARCHAR(40),
+  ZIP                             VARCHAR(10),
+  CITY                            VARCHAR(50),
+  COUNTRY                         VARCHAR(40),
+  WWW                             VARCHAR(80),
+  COMPANY                         VARCHAR(80),
+  IMAGE                           TEXT,
+  TSCONFIG                        TEXT,
+  FE_CRUSER_ID                    INT(10) UNSIGNED DEFAULT '0',
+  LASTLOGIN                       INT(10) UNSIGNED DEFAULT '0',
+  IS_ONLINE                       INT(10) UNSIGNED DEFAULT '0',
+  TX_EXTBASE_TYPE                 VARCHAR(255),
+  FELOGIN_REDIRECTPID             TEXT,
+  FELOGIN_FORGOTHASH              VARCHAR(80),
+  TX_CHCFORUM_AIM                 TEXT,
+  TX_CHCFORUM_YAHOO               TEXT,
+  TX_CHCFORUM_MSN                 TEXT,
+  TX_CHCFORUM_CUSTOMIM            TEXT,
+  MAILHASH                        VARCHAR(60),
+  ACTIVATED_ON                    INT(10) UNSIGNED DEFAULT '0',
+  PSEUDONYM                       VARCHAR(50),
+  GENDER                          INT(10) UNSIGNED DEFAULT '0',
+  DATE_OF_BIRTH                   INT(10) UNSIGNED DEFAULT '0',
+  LANGUAGE                        CHAR(2),
+  ZONE                            VARCHAR(45),
+  STATIC_INFO_COUNTRY             CHAR(3),
+  TIMEZONE                        FLOAT DEFAULT '0',
+  DAYLIGHT                        TINYINT(3) UNSIGNED DEFAULT '0',
+  MOBILEPHONE                     VARCHAR(20),
+  GTC                             TINYINT(3) UNSIGNED DEFAULT '0',
+  PRIVACY                         TINYINT(3) UNSIGNED DEFAULT '0',
+  STATUS                          INT(10) UNSIGNED DEFAULT '0',
+  BY_INVITATION                   TINYINT(3) UNSIGNED DEFAULT '0',
+  COMMENTS                        TEXT,
+  MODULE_SYS_DMAIL_HTML           TINYINT(3) UNSIGNED DEFAULT '0',
+  MODULE_SYS_DMAIL_CATEGORY       INT(10) UNSIGNED DEFAULT '0',
+  TX_EXTERNALIMPORTTUT_CODE       VARCHAR(10),
+  TX_EXTERNALIMPORTTUT_DEPARTMEN  TEXT,
+  TX_EXTERNALIMPORTTUT_HOLIDAYS   INT(10) UNSIGNED DEFAULT '0',
+  TX_INTRANETSSAN_APELLIDOPATERN  TEXT,
+  TX_INTRANETSSAN_APELLIDOMATERN  TEXT,
+  TX_INTRANETSSAN_CLAVEUNICA      TEXT,
+  TX_INTRANETSSAN_OBLIGACAMBIARC  INT(10) UNSIGNED DEFAULT '0',
+  TX_INTRANETSSAN_PREFERENCIA     VARCHAR(255),
+  TX_INTRANETSSAN_RUN             BIGINT(12),
+  TX_INTRANETSSAN_DV              CHAR(1),
+  PRIMARY KEY (ID_UID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
+
+
+CREATE TABLE ADMIN.GU_TUSUTIENEPER (
+  ID_UTP                        INT AUTO_INCREMENT PRIMARY KEY,  
+  PER_ID                        INT(5),
+  ID_UID                        INT(10),
+  IND_ESTADO                    INT(1)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
+
+
+
+CREATE TABLE ADMIN.GU_TUSUXEMPRESA (
+  ID_UXE                        INT AUTO_INCREMENT PRIMARY KEY,  
+  ID_UID                        INT(10),
+  COD_ESTABL                    INT(5),
+  IND_ESTADO                    INT(1)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
 
 
 

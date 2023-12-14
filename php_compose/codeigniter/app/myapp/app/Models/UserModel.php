@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 use CodeIgniter\Model;
 
@@ -22,7 +21,9 @@ class UserModel extends Model {
                     WHERE 
                         m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;
                     ";
+
         $menuData           =   $db->query($sql)->getResultArray();
+
         $menu               =   [];
         foreach($menuData as $row) {
             $menuId         =   $row['main_id'];
@@ -31,8 +32,8 @@ class UserModel extends Model {
             // Organizar en estructura jerárquica
             if (!isset($menu[$menuId])) {
                 $menu[$menuId] = [
-                    'data'          => $row, // Datos del menú principal
-                    'submenus'      => []
+                    'data'      => $row, // Datos del menú principal
+                    'submenus'  => []
                 ];
             }
             if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
@@ -46,44 +47,54 @@ class UserModel extends Model {
             }
         }
 
+
         // Variable para almacenar el HTML
         $html = "";
-        foreach ($menu as $mainId => $mainMenu) {
-            // Acceder a los datos del menú principal
+        foreach ($menu as $mainId => $mainMenu){
+
+            //Acceder a los datos del menú principal
             $mainData = $mainMenu['data'];
-            // Generar el HTML para el menú principal
-            $html .= "<div class='card'  style='margin-bottom: 8px;'>";
-            $html .= "<div class='card-body'>";
-            $html .= "<h5 class='card-title' style='color:#888888;'><i class='fa fa-list' aria-hidden='true'></i><b>&nbsp;" . htmlspecialchars($mainData['main_nombre']) . "</b></h5>";
+
+            //Generar el HTML para el menú principal
+            $html .=    "<div class='card' style='margin-bottom: 8px;'>";
+            $html .=    "<div class='card-body'>";
+            $html .=    "<h5 class='card-title' style='color:#888888;'><i class='fa fa-list' aria-hidden='true'></i><b>&nbsp;" ;
+                $html .=    htmlspecialchars($mainData['main_nombre']);
+                $html .=    "&nbsp;<a href='javascript:editarExt(".$mainData['main_id'].")'><i class='bi bi-gear-fill'></i></a>" ;
+            $html .=    "</b></h5>";
+
+
             // Generar la lista de submenús y sus extensiones
-            $html .= "<ul class='list-group'>";
+            $html   .= "<ul class='list-group'>";
             foreach ($mainMenu['submenus'] as $subMenuId => $subMenu) {
                 // Acceder a los datos del submenú
-                $subData = $subMenu['data'];
+                $subData    =   $subMenu['data'];
                 // Aquí agregas el nombre del submenú
-                $html .= "<b>" . htmlspecialchars($subData['sub_nombre']) . "</b><ul>";
+                $html       .=  "<h6 style='color:#888888;'><b><i class='bi bi-menu-up'></i>&nbsp;" . htmlspecialchars($subData['sub_nombre']) . "</b></h6>";
+                $html       .=  "<ul>";
                 // Acceder a los datos de las extensiones
                 foreach ($subMenu['extensions'] as $extensionId => $extension) {
-                    $html .= "<li><i class='bi bi-box-seam'></i>&nbsp;" . htmlspecialchars($extension['ext_nombre']) . "</li>";
+                    $html   .=  "<li>&nbsp;" . htmlspecialchars($extension['ext_nombre']) . "</li>";
                 }
-                $html .= "</ul></li>"; // Cerrar la lista del submenú
+
+                $html .= "</ul>"; // Cerrar la lista del submenú
             }
-            $html .= "</ul>";
-            $html .= "</div>";
-            $html .= "</div>";
+
+            $html   .=  "</ul>";
+            $html   .=  "</div>";
+            $html   .=  "</div>";
         }
-        #Consulta para roles creados
-        $query1 = $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3) ")->getResult();
-        #Consulta por establecimientos
-        $query2 = $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V' ")->getResultArray();
-        return $output = [
-            'menu_principal'    =>  array_values($menu), // Convertir a array para un mejor formato JSON
-            'menuData'          =>  $menuData,
-            'roles_creados'     =>  $query1,
-            'arr_empresas'      =>  $query2,
-            'html'              =>  $html,
-        ];
+
+
+        return $output  = [
+                            'menu_principal'    =>  array_values($menu), // Convertir a array para un mejor formato JSON
+                            'menuData'          =>  $menuData,
+                            'roles_creados'     =>  $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3) ")->getResultArray(),
+                            'arr_empresas'      =>  $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V' ")->getResultArray(),
+                            'html'              =>  $html,
+                        ];
     }
+
 
     public function buscaExtArch($aData){
         $db         = db_connect();
@@ -99,16 +110,16 @@ class UserModel extends Model {
         $arrPrivilegios         =   $v_post['arr_permisos']; 
         $tip                    =   $v_post['extension_principal'];  
         $listarMenup            =   $v_post['listarMenup'];
-        $db     =   \Config\Database::connect();
+        $db                     =   \Config\Database::connect();
         $db->transStart();
-        $data   =   [
-            'MENP_NOMBRE'   => $nombre,
-            'MENP_ESTADO'   => $check,
-            'MENP_TIPO'     => $tip,
-            'MENP_IDPADRE'  => $listarMenup,
-            'MENP_RUTA'     => $rutaactual,
-            'MENP_FRAME'    => 3
-        ];
+        $data                   =   [
+                                        'MENP_NOMBRE'   => $nombre,
+                                        'MENP_ESTADO'   => $check,
+                                        'MENP_TIPO'     => $tip,
+                                        'MENP_IDPADRE'  => $listarMenup,
+                                        'MENP_RUTA'     => $rutaactual,
+                                        'MENP_FRAME'    => 3
+                                    ];
         $constructora = $db->table('ADMIN.GU_TMENUPRINCIPAL');
         $constructora->insert($data);
 
@@ -215,10 +226,153 @@ class UserModel extends Model {
                                 V.NUM_HOSPITALIZADO = ? AND  V.ID_INGRESO = ?", 
                             [$num,$id]); 
         return array(
-            'ingreso_paciente' => $query->getResult(),
-            'hospitalizado' => $query1->getResult(),
-            'num' => $num
+            'ingreso_paciente'  =>  $query->getResult(),
+            'hospitalizado'     =>  $query1->getResult(),
+            'num'               =>  $num
         );
+    }
+
+    public function valida_cuenta_esissan_anatomia($aData){
+        $run_gestion            =   $aData['run']."-".$aData['dv'];
+        $status_existe          =   true;
+        $getResultArray         =   [];
+        $arr_privilegios        =   [];
+        $arr_empresa            =   [];
+        $db                     =   db_connect();
+        $get_fe_users           =   $db->query("SELECT * FROM ADMIN.FE_USERS WHERE TX_INTRANETSSAN_RUN = ".$aData['run'])->getResultArray();
+        if(count($get_fe_users)>0){
+            $arr_privilegios    =   $db->query("SELECT * FROM ADMIN.GU_TUSUTIENEPER WHERE IND_ESTADO = 1 AND ID_UID =".$get_fe_users[0]['ID_UID'])->getResultArray();
+            $arr_empresa        =   $db->query("SELECT * FROM ADMIN.GU_TUSUXEMPRESA WHERE IND_ESTADO = 1 AND ID_UID =".$get_fe_users[0]['ID_UID'])->getResultArray();
+        } else {
+            $status_existe      =   false;    
+        }
+        return [
+            'status'            =>  true,
+            'arr_privilegios'   =>  $arr_privilegios,
+            'arr_empresa'       =>  $arr_empresa,
+            'getResultArray'    =>  $get_fe_users,
+            'status_existe'     =>  $status_existe, 
+            'date'              =>  date("d-m-Y"),
+            'run_gestion'       =>  $run_gestion
+        ];
+    }
+
+    public function grabaUsu($aData){
+        $status                     =   true;
+        $name                       =   $aData['post']['nombres']." ".$aData['post']['apepate']." ".$aData['post']['apemate'];
+        $arr_run                    =   str_replace('.','',$aData['post']['user']);
+        $db = \Config\Database::connect();
+        $db->transStart();
+        $hash                       =   password_hash($aData['post']['pass'],PASSWORD_BCRYPT);
+        $dataUs                     =   array(
+            //'ID_UID'              =>  $uID,
+            'USERNAME'              =>  trim($arr_run),
+            'NAME'                  =>  $name, 
+            'FIRST_NAME'            =>  $aData['post']['nombres'],
+            'MIDDLE_NAME'           =>  $aData['post']['apepate'], 
+            'LAST_NAME'             =>  $aData['post']['apemate'],
+            'EMAIL'                 =>  $aData['post']['email'],
+            'TELEPHONE'             =>  0,
+            'PASSWORD'              =>  $hash,
+            'LOCKTODOMAIN'          =>  $hash,
+            'DISABLE'               =>  $aData['post']['activo'],       //activo
+            'STATUS'                =>  $aData['post']['superUser'],    //superUser 
+            'TX_INTRANETSSAN_RUN'   =>  trim(explode("-",$arr_run)[0]),
+            'TX_INTRANETSSAN_DV'    =>  trim(explode("-",$arr_run)[1]),
+            'DAYLIGHT'              =>  1
+        );
+        //**************************************************************
+        $last_id            =   0;
+        $arr_username       =   $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = ".$arr_run)->getResultArray();
+        if(count($arr_username)>0){
+            $last_id        =   $arr_username[0]['ID_UID'];
+            $constructora   =   $db->table('ADMIN.FE_USERS');
+            $constructora->set($dataUs);
+            $constructora->where('ID_UID',$last_id);
+            $updated        =   $constructora->update();
+        } else {
+            $constructora   =   $db->table('ADMIN.FE_USERS');
+            $constructora->insert($dataUs);
+            $last_id        =   $db->insertID();
+        }
+        //privilegios
+        $arrPrivilegios                 =   $aData['post']['arrPrivilegios'];
+        if(count($arrPrivilegios)>0){
+            $constructora0              =   $db->table('ADMIN.GU_TUSUTIENEPER');
+            $constructora0->set(['IND_ESTADO' => 0]);
+            $constructora0->where('ID_UID',$last_id);
+            $constructora0->update();
+            foreach($arrPrivilegios as $i => $row){
+                $get_tusutieneper       =   $db->query("SELECT ID_UTP FROM ADMIN.GU_TUSUTIENEPER WHERE PER_ID IN (".$row.") AND ID_UID  = ".$last_id)->getResultArray();
+                if (count($get_tusutieneper)>0){
+                    $constructora3      =   $db->table('ADMIN.GU_TUSUTIENEPER');
+                    $constructora3->set(['IND_ESTADO' => 1]);
+                    $constructora3->where('ID_UTP',$get_tusutieneper[0]['ID_UTP']);
+                    $constructora3->update();
+                } else {
+                    $constructora2      =   $db->table('ADMIN.GU_TUSUTIENEPER');
+                    $constructora2->insert(['ID_UID'=>$last_id,'PER_ID'=>$row,'IND_ESTADO'=>1]);
+                }
+            }
+        }
+        //establecimientos
+        $arrEmpresas                    =   $aData['post']['arrEmpresas'];
+        if(count($arrEmpresas)>0){
+            $constructora4              =   $db->table('ADMIN.GU_TUSUXEMPRESA');
+            $constructora4->set(['IND_ESTADO' => 0]);
+            $constructora4->where('ID_UID',$last_id);
+            foreach($arrEmpresas as $i => $row){
+                $get_arrEmpresas        =   $db->query("SELECT ID_UXE FROM ADMIN.GU_TUSUXEMPRESA WHERE COD_ESTABL IN (".$row.") AND ID_UID = ".$last_id)->getResultArray();
+                if (count($get_arrEmpresas)>0){
+                    $constructora5      =   $db->table('ADMIN.GU_TUSUXEMPRESA');
+                    $constructora5->set(['IND_ESTADO' => 1]);
+                    $constructora5->where('ID_UXE',$get_arrEmpresas[0]['ID_UXE']);
+                    $constructora5->update();
+                } else {
+                    $constructora6      =    $db->table('ADMIN.GU_TUSUXEMPRESA');
+                    $constructora6->insert(['ID_UID'=>$last_id,'COD_ESTABL'=>$row,'IND_ESTADO'=>1]);
+                }
+            }
+        }
+        $db->transComplete();
+        return  [
+                    'last_id'   =>  $last_id,
+                    'user'      =>  $arr_run,
+                    'status'    =>  $status,
+                ];
+    }
+
+    public function buscaExtEdit($aData){
+        $db         =   db_connect();
+        $id         =   $aData['idMen'];
+        $query      =   $db->query("SELECT 
+                            MENP_ID, 
+                            MENP_NOMBRE, 
+                            MENP_RUTA, 
+                            MENP_IDPADRE, 
+                            MENP_TIPO, 
+                            MENP_ESTADO 
+                        FROM 
+                            ADMIN.GU_TMENUPRINCIPAL 
+                        WHERE 
+                            MENP_ID =".$id)->getResultArray();
+        $query2     =   $db->query("SELECT 
+                            A.MENP_ID,
+                            A.PER_ID,
+                            B.PER_NOMBRE,
+                            B.PER_ESTADO 
+                        FROM 
+                            ADMIN.GU_TMENPTIENEPER A,
+                            ADMIN.GU_TPERMISOS B 
+                        WHERE 
+                            A.MENP_ID=" . $id . " AND 
+                            B.PER_ESTADO = 3 AND 
+                            A.PER_ID=B.PER_ID AND 
+                            A.IND_ESTADO=1")->getResultArray();
+        return [
+            'gu_tmenuprincipal' => $query,
+            'gu_tmenusecundario' => $query2,
+        ];                    
     }
 }
 ?>

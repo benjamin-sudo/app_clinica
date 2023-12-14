@@ -75,10 +75,9 @@
     width                               :   4em;
     height                              :   1.8em;
 }
-
-
 /*****************************************************/
 /******************** 01.12.2023 *********************/
+/*****************************************************/
 .grid_clave_esissan                     {
     display                             :   grid;
     grid-template-columns               :   auto auto 1fr;
@@ -147,4 +146,10 @@
     gap                                 :   5px;
 }
 
+.grid_privilegios_establecimiento       {
+    display                             :   grid;
+    grid-template-columns               :   auto 1fr auto;
+    gap                                 :   18px;
+    align-items                         :   center;
+}
 
