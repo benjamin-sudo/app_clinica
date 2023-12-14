@@ -279,6 +279,7 @@ class UserModel extends Model {
             'TX_INTRANETSSAN_DV'    =>  trim(explode("-",$arr_run)[1]),
             'DAYLIGHT'              =>  1
         );
+
         //**************************************************************
         $last_id            =   0;
         $arr_username       =   $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = ".$arr_run)->getResultArray();
@@ -363,22 +364,26 @@ class UserModel extends Model {
                             ADMIN.GU_TMENPTIENEPER A,
                             ADMIN.GU_TPERMISOS B 
                         WHERE 
-                            A.MENP_ID=" . $id . " AND 
-                            B.PER_ESTADO = 3 AND 
-                            A.PER_ID=B.PER_ID AND 
-                            A.IND_ESTADO=1")->getResultArray();
-        return [
-            'gu_tmenuprincipal' => $query,
-            'gu_tmenusecundario' => $query2,
-        ];                    
+                            A.MENP_ID       =   ".$id." AND 
+                            B.PER_ESTADO    =   3 AND
+                            A.PER_ID        =   B.PER_ID AND 
+                            A.IND_ESTADO    =   1")->getResultArray();
+        return  [
+                    'gu_tmenuprincipal'     => $query,
+                    'gu_tmenusecundario'    => $query2,
+                ];                    
     }
-
 
     public function editando_extension($aData){
 
+        
+
+
 
         
-        return ['status'=>true]
+        return  [
+                    "status"    =>  true
+                ]
     }
 }
 ?>

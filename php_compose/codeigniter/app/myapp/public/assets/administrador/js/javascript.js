@@ -567,6 +567,9 @@ function grabarExt(opt){
       //console.log("  listarMenup          -> ",listarMenup); 
       //console.log("  arr_permisos         -> ",arr_permisos);
       //return false;
+
+      //gestionextensionesmodel
+
       $("#loadFade").modal("show");
       $.ajax({ 
          type           : "POST",
