@@ -11,14 +11,6 @@
     <div class="grid_cabecera2">
         <i class="bi bi-flower1"></i>
         <i class="bi bi-h-square-fill"></i>
-        <!--
-            <button type="button" class="btn btn-success" onclick="test(0)">
-                <i class="fa fa-database" aria-hidden="true"></i> TEST 1
-            </button>
-            <button type="button" class="btn btn-success" onclick="test(1)">
-                <i class="fa fa-database" aria-hidden="true"></i> VALIDACION DE PACIENTE
-            </button>
-        -->
     </div>
 </div>
 <div class="content">
@@ -38,13 +30,19 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <h4 class="title" style="color:#e34f49;margin-top:10px;">  <i class="fa fa-cog" aria-hidden="true"></i><b>&nbsp;INICIO</b></h4>
+          
+            <div class="alert alert-success" role="alert" style="margin-top: 11px;">
+                <h4 class="alert-heading">inicio</h4>
+                <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                <hr>
+                <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+            </div>
+
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <h4 class="title" style="color:#e34f49;margin-top:10px;">
                 <i class="fa fa-cog" aria-hidden="true"></i><b>&nbsp;GESTI&Oacute;N DE EXTENSIONES</b>
             </h4>
-
             <div class="grid_body_extensiones">
                 <div class=" grid_body_extensiones1">
                     <?php echo $respuesta['html']; ?>
@@ -57,7 +55,7 @@
                                 <div class="div_2">
                                     <div class="div_21"><input type="text" id="nomExt" onkeypress="return soloLetras(event)" class="form-control form-control-sm;" style="text-transform: inherit;width: 220px;" onblur="validaExt()"> </div>
                                     <div class="div_21">
-                                    <input type="checkbox" id="habilitado" name="habilitado" value="1" checked style="display: inline;"> Menú Habilitado </div>
+                                    <input type="checkbox" class="form-check-input mt-1" id="habilitado" name="habilitado" value="1" checked>&nbsp;Men&uacute; Habilitado</div>
                                 </div>
                             </td>
                         </tr>
@@ -105,16 +103,16 @@
                         <tr>
                             <td colspan="2" style="text-align: center">
                                 
-                            <button class="btn btn-small btn-success btn-fill" id="grabarExt" style="color:#fff;" onclick="grabarExt(0);">
-                                <i class="fa fa-save fa-large" id="iconBtn"></i><span id="nomBTN">&nbsp;CREAR EXTENSIÓN</span>
-                            </button>
+                                <button class="btn btn-small btn-success btn-fill" id="grabarExt" style="color:#fff;" onclick="grabarExt(0);">
+                                    <i class="fa fa-save fa-large" id="iconBtn"></i><span id="nomBTN">&nbsp;CREAR EXTENSIÓN</span>
+                                </button>
 
-                            &nbsp;
-                            &nbsp;
+                                &nbsp;
+                                &nbsp;
 
-                            <button class="btn btn-small btn-danger btn-fill" style="color:#fff;" onclick="js_limpia_panel();">
-                                <i class="fa fa-times fa-large" id="iconBtn"></i> <span id="nomBTN">CANCELAR</span>
-                            </button>
+                                <button class="btn btn-small btn-danger btn-fill" style="color:#fff;" onclick="js_limpia_panel();">
+                                    <i class="fa fa-times fa-large" id="iconBtn"></i> <span id="nomBTN">CANCELAR</span>
+                                </button>
 
                             </td>
                         </tr>
@@ -339,6 +337,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 <?php
     #var_dump($respuesta['arr_empresas']);

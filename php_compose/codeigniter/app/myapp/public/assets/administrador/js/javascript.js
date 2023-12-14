@@ -33,7 +33,9 @@ $(document).ready(function(){
     $(".selectpicker").selectpicker();
 
     //*************************************************************************************************************************
+    
     //showNotification('top','right','<i class="bi bi-database-fill-slash"></i> Conexi&oacute;n con instancia no iniciada',2);
+    
     //$('.toast').toast('show');
     //var notify = $.notify('<strong>Saving</strong> Do not close this page...', { allow_dismiss: false });
     //notify.update({ type: 'success','<strong>Success</strong> Your page has been saved!' });
@@ -526,34 +528,6 @@ function muestraDirAr(){
    }
 }
 
-function js_editarextension(idMen){
-    let const_error          =   [];
-    if ($("#nomExt").val()   == ''){
-        const_error.push("Falta nombre del menu");
-    }
-
-    //console.log("   editando    ->  ",idMen);
-
-    let arr_permisos = [];
-    $(".checked_id").each(function(index){
-      let ck_permiso = document.getElementById(this.id).checked;
-      if (ck_permiso){
-         arr_permisos.push(this.id.split("_")[2]);
-      }
-    });
-    console.log("arr_permisos   ->",arr_permisos);
-
-    if (arr_permisos.length==0){ 
-        const_error.push("Falta previlegios"); 
-    }
-
-    if (const_error.length>0){
-        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
-        return false;
-    } else {
-
-    }
-}
 
 function grabarExt(opt){
     let const_error          =   [];
@@ -805,12 +779,71 @@ function editarExt(idMen){
     */
 }
 
-
-
 function cargaPrivOrigen() {
     var id          =   "origen";
     var funcion     =   'selectOrigen';
     var variables   =   {}
     AjaxExt(variables,id,funcion);
 }
+
+function js_editarextension(idMen){
+    let const_error     =  [];
+    let bool_checked    =  document.getElementById('habilitado').checked; // menu habilitado
+    console.log("bool_checked   ->  ",bool_checked);
+    if ($("#nomExt").val()   == ''){
+        const_error.push("Falta nombre del menu");
+    }
+    //console.log("   editando    ->  ",idMen);
+    let arr_permisos = [];
+    $(".checked_id").each(function(index){
+        let ck_permiso = document.getElementById(this.id).checked;
+        if (ck_permiso){
+            arr_permisos.push(this.id.split("_")[2]);
+        }
+    });
+    console.log("arr_permisos   ->",arr_permisos);
+    if (arr_permisos.length==0){ 
+        const_error.push("Falta previlegios"); 
+    }
+    if (const_error.length>0){
+        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
+        return false;
+    } else {
+        $.ajax({ 
+            type           : "POST",
+            url            : "Home/editando_estensiones_privilegios",
+            dataType       : "json",
+            beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
+            data           :  {
+                                 "idMen"        :   idMen,
+                                 "arr_permisos" :   arr_permisos,
+                              },
+                              
+            error          :  function(errro)   {  
+                                                   console.log(errro);
+                                                   jAlert("Error General, Consulte Al Administrador"); 
+                                                   $('#loadFade').modal('hide');
+                                                },
+            success        :   function(aData)  {  
+
+                                                    $('#loadFade').modal('hide');
+                                                    console.log("editando_estensiones_privilegios   -> ",aData);
+                                                    
+                                                    /*
+                                                    jAlert('Se modifico información', "Confirmac\u00f3on", function (r) {
+                                                      if (r) { location.reload(true);   }
+                                                    });
+                                                    */
+
+                                                }, 
+        });
+
+
+
+    }
+}
+
+
+
+
 
