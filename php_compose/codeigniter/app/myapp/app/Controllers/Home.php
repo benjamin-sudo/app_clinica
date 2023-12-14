@@ -220,4 +220,11 @@ class Home extends BaseController {
             'status'    =>  $status,
         ]);   
     }
+
+    public function editando_estensiones_privilegios(){
+        if ($this->request->isAJAX()){  }
+        $status         =   true;
+        $data_return    =   $this->usersModel->editando_extension(['post'=>$this->request->getPost()]);
+        return ['status'=>$status,'data_return'=>$data_return]
+    }
 }

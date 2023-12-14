@@ -122,11 +122,9 @@ class UserModel extends Model {
                                     ];
         $constructora = $db->table('ADMIN.GU_TMENUPRINCIPAL');
         $constructora->insert($data);
-
         $idSeq  = $db->insertID();
         $idExt  = $idSeq;
         $count  = count($arrPrivilegios);
-
         if ($count > 0) {
             $sigMen = 0;
             while ($sigMen <= 2) {
@@ -373,6 +371,14 @@ class UserModel extends Model {
             'gu_tmenuprincipal' => $query,
             'gu_tmenusecundario' => $query2,
         ];                    
+    }
+
+
+    public function editando_extension($aData){
+
+
+        
+        return ['status'=>true]
     }
 }
 ?>

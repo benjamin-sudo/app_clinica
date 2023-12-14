@@ -67,11 +67,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><b>EXTENSI&Oacute;N PRINCIPAL O PADRE</b> </td>
+                            <td><b>EXTENSI&Oacute;N PRINCIPAL O PADRE</b></td>
                             <td>
-                                <?php
-                                    echo view("html_administrador", ['menu_principal' => $respuesta['menu_principal']]);
-                                ?>
+                                <?php echo view("html_administrador",['menu_principal'=>$respuesta['menu_principal']]);  ?>
                             </td>
                         </tr>
                         <tr>
@@ -102,18 +100,13 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: center">
-                                
                                 <button class="btn btn-small btn-success btn-fill" id="grabarExt" style="color:#fff;" onclick="grabarExt(0);">
                                     <i class="fa fa-save fa-large" id="iconBtn"></i><span id="nomBTN">&nbsp;CREAR EXTENSIÓN</span>
                                 </button>
-
                                 &nbsp;
-                                &nbsp;
-
                                 <button class="btn btn-small btn-danger btn-fill" style="color:#fff;" onclick="js_limpia_panel();">
                                     <i class="fa fa-times fa-large" id="iconBtn"></i> <span id="nomBTN">CANCELAR</span>
                                 </button>
-
                             </td>
                         </tr>
                     </table>

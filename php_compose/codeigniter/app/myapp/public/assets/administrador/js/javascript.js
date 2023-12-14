@@ -809,16 +809,18 @@ function js_editarextension(idMen){
         jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
         return false;
     } else {
+
         $.ajax({ 
             type           : "POST",
             url            : "Home/editando_estensiones_privilegios",
             dataType       : "json",
             beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
             data           :  {
-                                 "idMen"        :   idMen,
-                                 "arr_permisos" :   arr_permisos,
+                                "idMen"         :   idMen,
+                                "nombre_menu"   :   $("#nomExt").val(),   
+                                "arr_permisos"  :   arr_permisos,
+                                "bool_checked"  :   bool_checked,
                               },
-                              
             error          :  function(errro)   {  
                                                    console.log(errro);
                                                    jAlert("Error General, Consulte Al Administrador"); 
@@ -837,13 +839,6 @@ function js_editarextension(idMen){
 
                                                 }, 
         });
-
-
-
     }
 }
-
-
-
-
 
