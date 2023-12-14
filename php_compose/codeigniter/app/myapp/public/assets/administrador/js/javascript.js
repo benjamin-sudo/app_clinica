@@ -32,13 +32,13 @@ $(document).ready(function(){
     }
     $(".selectpicker").selectpicker();
 
-    alert("HOLA");
     //*************************************************************************************************************************
     //showNotification('top','right','<i class="bi bi-database-fill-slash"></i> Conexi&oacute;n con instancia no iniciada',2);
     //$('.toast').toast('show');
     //var notify = $.notify('<strong>Saving</strong> Do not close this page...', { allow_dismiss: false });
     //notify.update({ type: 'success','<strong>Success</strong> Your page has been saved!' });
     //$.notify('actualizando',{ showProgressbar: true });
+
 });
 
 function valida_run_esissan(val)   {
@@ -527,10 +527,32 @@ function muestraDirAr(){
 }
 
 function js_editarextension(idMen){
+    let const_error          =   [];
+    if ($("#nomExt").val()   == ''){
+        const_error.push("Falta nombre del menu");
+    }
 
+    //console.log("   editando    ->  ",idMen);
 
+    let arr_permisos = [];
+    $(".checked_id").each(function(index){
+      let ck_permiso = document.getElementById(this.id).checked;
+      if (ck_permiso){
+         arr_permisos.push(this.id.split("_")[2]);
+      }
+    });
+    console.log("arr_permisos   ->",arr_permisos);
 
+    if (arr_permisos.length==0){ 
+        const_error.push("Falta previlegios"); 
+    }
 
+    if (const_error.length>0){
+        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
+        return false;
+    } else {
+
+    }
 }
 
 function grabarExt(opt){
@@ -762,7 +784,7 @@ function editarExt(idMen){
                                                 if (aData.arr_bd.gu_tmenuprincipal.length>0){
                                                     $("#nomExt").val(data_menu.MENP_NOMBRE);
                                                     $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled",true);
-                                                    $("#listarMenup").val(data_menu.MENP_ID)attr("disabled",true);;
+                                                    $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);;
                                                     $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+')');
                                                 }
                                                 //aData.arr_bd.gu_tmenusecundario

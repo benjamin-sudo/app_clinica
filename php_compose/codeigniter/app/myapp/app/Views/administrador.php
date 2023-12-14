@@ -77,7 +77,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><b>PERMISOS</b></td>
+                            <td><b>PRIVILEGIOS ASIGNADOS</b></td>
                             <td>
                                 <ul class="list-group">
                                     <?php if (count($respuesta['roles_creados'])>0){ 
