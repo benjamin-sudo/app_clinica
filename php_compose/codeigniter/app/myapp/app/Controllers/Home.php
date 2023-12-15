@@ -221,7 +221,6 @@ class Home extends BaseController {
         ]);   
     }
 
-
     public function editExtension(){
         $status             =   true;
         $data_return        =   [];

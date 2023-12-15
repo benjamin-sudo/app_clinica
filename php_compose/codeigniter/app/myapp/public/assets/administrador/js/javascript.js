@@ -526,7 +526,6 @@ function muestraDirAr(){
    }
 }
 
-
 function grabarExt(opt){
     let const_error          =   [];
     if ($("#nomExt").val()   == ''){
@@ -542,33 +541,34 @@ function grabarExt(opt){
          arr_permisos.push(this.id.split("_")[2]);
       }
     });
-    if (arr_permisos.length==0){ 
+    if(arr_permisos.length==0){ 
         const_error.push("Falta permisos"); 
     }
-    if (const_error.length>0){
-      jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
-      return false;
+    
+    if(const_error.length>0){
+        jError(const_error.join("<br>")," - ERROR - ");
+        return false;
     } else {
-        let bool_checked          = document.getElementById('habilitado').checked; // menu habilitado
-        let listarMenup           = [];
-        let extension_principal   = 1;
+
+        let bool_checked          =     document.getElementById('habilitado').checked; // menu habilitado
+        let listarMenup           =     [];
+        let extension_principal   =     1;
 
         if($("#listarMenup").val() == "0"){
-            listarMenup            =  0;
+            listarMenup            =    0;
         } else {
-            let value              =  $("#listarMenup").val();
-            listarMenup            =  parseInt(value);
-            num_tipo               =  $('option[value="'+value+'"]').data('tipo');
-            extension_principal    =  parseInt(num_tipo) + 1;
+            let value              =    $("#listarMenup").val();
+            listarMenup            =    parseInt(value);
+            num_tipo               =    $('option[value="'+value+'"]').data('tipo');
+            extension_principal    =    parseInt(num_tipo) + 1;
         }
+
         //console.log("  ------------------------------------------------   ");
         //console.log("  extension_principal  -> ",extension_principal);
         //console.log("  listarMenup          -> ",listarMenup); 
         //console.log("  arr_permisos         -> ",arr_permisos);
         //return false;
-        //gestionextensionesmodel
 
-      
         $.ajax({ 
             type           : "POST",
             url            : "Home/grabraExt",
@@ -724,6 +724,7 @@ function alfanumerico(e) {
             break;
         }
     }
+    
     if (letras.indexOf(tecla) == -1 && !tecla_especial) {
         return false;
     }
@@ -739,24 +740,23 @@ function editarExt(idMen){
     $('#iconBtn').attr('class', 'fa fa-pencil-square-o fa-large');
     $('#idExt').val(idMen);
     */
+
     $.ajax({ 
-        type           : "POST",
-        url            : "Home/buscaEditar",
-        dataType       : "json",
-        beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
-        data           :  {
-                            "idMen" : idMen,
-                          },
-        error          :  function(errro)   {  
+        type           :   "POST",
+        url            :   "Home/buscaEditar",
+        dataType       :   "json",
+        beforeSend     :   function(xhr){  $('#loadFade').modal('show'); },
+        data           :   { "idMen" : idMen },
+        error          :   function(errro)   {  
                                                console.log(errro);
                                                jAlert("Error General, Consulte Al Administrador"); 
                                                $('#loadFade').modal('hide');
                                             },
         success        :   function(aData)  {  
-
                                                 $('#loadFade').modal('hide');
-                                                console.log("buscaEditar -> ",aData);
-
+                                                //console.log("   ------------------------------------");
+                                                //console.log("   buscaEditar     ->  ",aData         );
+                                                //console.log("   ------------------------------------");
                                                 let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
                                                 if (aData.arr_bd.gu_tmenuprincipal.length>0){
                                                     $("#nomExt").val(data_menu.MENP_NOMBRE);
@@ -764,33 +764,25 @@ function editarExt(idMen){
                                                     $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);;
                                                     $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+')');
                                                 }
-
-                                                if (aData.arr_bd.gu_tmenusecundario>0){
-                                                    console.log(aData.arr_bd.gu_tmenusecundario);
+                                                if(aData.arr_bd.arr_permisos.length>0){
+                                                    aData.arr_bd.arr_permisos.forEach((row, index) => {
+                                                        document.getElementById('ck_permiso_'+row.PER_ID).checked = true;
+                                                    });   
                                                 }
-
-                                                /*
-                                                //console.log("actualiza_privilegio   -> ",aData);
-                                                jAlert('Se modifico información', "Confirmac\u00f3on", function (r) {
-                                                    if (r) { location.reload(true);   }
-                                                });
-                                                */
                                             }, 
     });
     /*
-        cargaPrivOrigen();
-        var id          =   "carga";
-        var funcion     =   'buscaEditar';
-        var variables   =   {"id":idMen}
-        AjaxExt(variables, id, funcion);
+    cargaPrivOrigen();
+    var id          =   "carga";
+    var funcion     =   'buscaEditar';
+    var variables   =   {"id":idMen}
+    AjaxExt(variables, id, funcion);
     */
 }
-
 
 function js_editarextension(idMen){
     let const_error     =   [];
     let check           =   document.getElementById('habilitado').checked?1:0; // menu habilitado
-    
     //console.log("bool_checked   ->  ",bool_checked);
     if ($("#nomExt").val()   == ''){
         const_error.push("Falta nombre del menu");
@@ -824,34 +816,29 @@ function js_editarextension(idMen){
         }
         //console.error("  editando_estensiones_privilegios        ");
         $.ajax({ 
-            type           : "POST",
-            url            : "Home/editExtension",
-            dataType       : "json",
-            beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
-            data           :  { 
-                                
-                                "idMen"                 :   idMen,
-                                "nombre"                :   $("#nomExt").val(),   
-                                "listarMenup"           :   listarMenup,
-                                "extension_principal"   :   extension_principal,
-                                "check"                 :   check,
-                                "arr_permisos"          :   arr_permisos,
-                                "bool_checked"          :   bool_checked,
-                              },
-            error          :  function(errro)   {  
+            type           :    "POST",
+            url            :    "Home/editExtension",
+            dataType       :    "json",
+            beforeSend     :    function(xhr){ $('#loadFade').modal('show'); },
+            data           :    { 
+                                    "idMen"                 :   idMen,
+                                    "nombre"                :   $("#nomExt").val(),   
+                                    "listarMenup"           :   listarMenup,
+                                    "extension_principal"   :   extension_principal,
+                                    "check"                 :   check,
+                                    "arrPrivilegios"        :   arr_permisos,
+                                    "bool_checked"          :   bool_checked,
+                                },
+            error          :    function(errro) {  
                                                    console.log(errro);
                                                    jAlert("Error General, Consulte Al Administrador"); 
                                                    $('#loadFade').modal('hide');
                                                 },
-            success        :   function(aData)  {  
+            success        :    function(aData) {  
                                                     $('#loadFade').modal('hide');
-                                                    
                                                     console.log("editando_estensiones_privilegios   -> ",aData);
-
                                                 }, 
         });
-        
-
     }
 }
 
