@@ -59,12 +59,12 @@
             </h4>
             <div class="grid_body_extensiones">
                 <div class=" grid_body_extensiones1">
-                    <?php echo $respuesta['html']; ?>
+                    <?php echo $respuesta['html'];?>
                 </div>
                 <div class="grid_body_extensiones1 card">
                     <table class="table table-striped" style="margin-bottom: 0px;">
                         <tr>
-                            <td width="250px"><b>NOMBRE DEL MEN&Uacute;</b></td>
+                            <td width="250px"><b>Nombre del men&uacute;</b></td>
                             <td>
                                 <div class="div_2">
                                     <div class="div_21"><input type="text" id="nomExt" onkeypress="return soloLetras(event)" class="form-control form-control-sm;" style="text-transform: inherit;width: 220px;" onblur="validaExt()"> </div>
@@ -74,20 +74,20 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="200px"><b>NOMBRE EXTENSI&Oacute;N</b> </td>
+                            <td width="200px"><b>Nombre extensi&oacute;n</b> </td>
                             <td>
                                 <input type="text" id="nomArch" class="form-control form-control-sm;" onkeypress="return alfanumericoRuta(event)" style="text-transform: lowercase;width: 220px;" onblur="buscaExtArch();">
                                 <input type="hidden" id="existeExt" value="0">
                             </td>
                         </tr>
                         <tr>
-                            <td><b>EXTENSI&Oacute;N PRINCIPAL O PADRE</b></td>
+                            <td><b>Extensi&oacute;n principal o padre</b></td>
                             <td>
                                 <?php echo view("html_administrador",['menu_principal'=>$respuesta['menu_principal']]);  ?>
                             </td>
                         </tr>
                         <tr>
-                            <td><b>PRIVILEGIOS ASIGNADOS</b></td>
+                            <td><b>Privilegios asignados</b></td>
                             <td>
                                 <ul class="list-group">
                                     <?php if (count($respuesta['roles_creados'])>0){ 

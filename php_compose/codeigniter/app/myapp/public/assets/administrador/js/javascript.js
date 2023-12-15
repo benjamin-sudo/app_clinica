@@ -823,6 +823,8 @@ function editarExt(idMen){
     $('#iconBtn').attr('class', 'fa fa-pencil-square-o fa-large');
     $('#idExt').val(idMen);
     */
+
+    
     $.ajax({ 
         type           : "POST",
         url            : "Home/buscaEditar",
@@ -838,14 +840,21 @@ function editarExt(idMen){
                                             },
         success        :   function(aData)  {  
                                                 $('#loadFade').modal('hide');
-                                                //console.log(aData);
+                                                
+
+                                                console.log("buscaEditar -> ",aData);
+
                                                 let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
+
                                                 if (aData.arr_bd.gu_tmenuprincipal.length>0){
+
                                                     $("#nomExt").val(data_menu.MENP_NOMBRE);
                                                     $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled",true);
                                                     $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);;
                                                     $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+')');
+      
                                                 }
+
                                                 //aData.arr_bd.gu_tmenusecundario
                                                 /*
                                                 //console.log("actualiza_privilegio   -> ",aData);
