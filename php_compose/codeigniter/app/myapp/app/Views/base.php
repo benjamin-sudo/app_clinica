@@ -9,33 +9,27 @@
     <meta name="robots" content="all, index, follow"/>
     <meta name="googlebot" content="all, index, follow" />
     <link type="image/x-icon" rel="shortcut icon" href="assets/themes/img/iconAdmin.png" />
-
     <!-- NUEVOS RECURSOS -->
     <!-- NUEVO OLD -->
     <link rel="stylesheet" type="text/css" href="recursos/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="recursos/fontawesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-  
     <!-- jAlert... -->
     <link rel="stylesheet" type="text/css" href="assets/themes/css/jquery.alerts.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
-
     <?php if (isset($css)): ?>
         <?php foreach ($css as $cssFile): ?>
             <link rel="stylesheet" href="<?= 'assets/' . $cssFile; ?>">
         <?php endforeach; ?>
     <?php endif; ?>
-
 </head>
 <body>
-
-<!--  bg-dark -->
-<div class="card " style="margin:15px;">
+<!-- bg-dark -->
+<div class="card" style="margin:15px;">
   <div class="card-body">
     <?php $this->renderSection('content');?>
   </div>
 </div>
-
 <section>
     <div class="modal bg-dark fade" id="loadFade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -66,18 +60,15 @@
                 <div class="spinner-grow text-dark" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
-
             </div>
         </div>
       </div>
     </div>
 </section>
-
 <script type="text/javascript" src="recursos/js/bootstrap/dist/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="recursos/js/socket/4_6_1/socket.io.js"></script>
 <script type="text/javascript" src="recursos/js/jquery/1_12_4/jquery.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/jquery-ui.js"></script>
-
 <!-- VALIDADOR RUT -->
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.js" ></script>
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.min.js"></script>
@@ -86,25 +77,28 @@
 <script type="text/javascript" src="assets/themes/js/funciones.js" ></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="assets/themes/lightboot/js/bootstrap-notify.js"></script>
-
 <script type="text/javascript" src="assets/themes/js/javaGlobal.js"></script>
-
 <!--
   <script src="https://https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
 -->
-
 <script type="text/javascript">
-  var type = ['', 'info', 'success', 'warning', 'danger'];
+   var type = ['',
+                'info', 
+                'success', 
+                'warning', 
+                'danger', 
+                'primary'
+              ];
   function showNotification(from, align, txt, color, icono, width) {
     $.notify({
-        icono       : icono,
-        message     : txt
+        icono       :   icono,
+        message     :   txt
     },{
-        type        : type[color],
-        timer       : 4000,
-        placement   : {
-            from    : from,
-            align   : align
+        type        :   type[color],
+        timer       :   4000,
+        placement   :   {
+            from    :   from,
+            align   :   align
         }
     });
     $('.alert').css('z-index', '9999');
@@ -114,13 +108,10 @@
     }
 }
 </script>
-
-<!-- JavaScript específico -->
 <?php if (isset($js)): ?>
     <?php foreach ($js as $jsFile): ?>
         <script src="<?= 'assets/'.$jsFile; ?>"></script>
     <?php endforeach; ?>
 <?php endif; ?>
-
 </body>
 </html>

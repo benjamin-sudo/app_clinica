@@ -52,11 +52,12 @@
                 </p>
             </div>
         </div>
-
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            
             <h4 class="title" style="color:#e34f49;margin-top:10px;">
                 <i class="fa fa-cog" aria-hidden="true"></i><b>&nbsp;GESTI&Oacute;N DE EXTENSIONES</b>
             </h4>
+
             <div class="grid_body_extensiones">
                 <div class=" grid_body_extensiones1">
                     <?php echo $respuesta['html'];?>
@@ -96,12 +97,12 @@
                                             <div class="grid_li_permisos">
                                                 <div class="grid_li_permisos2">
                                                     <input 
-                                                        type    = "checkbox" 
-                                                        class   = "form-check-input checked_id"
-                                                        id      = "ck_permiso_<?php echo $row['PER_ID'];?>" 
-                                                        name    = "ck_permiso"
-                                                        style   = "display: block;cursor: pointer;margin-top: 0px;margin-bottom: -1px;"
-                                                        value   = "<?php echo $row['PER_ID'];?>">
+                                                        type    =   "checkbox" 
+                                                        class   =   "form-check-input checked_id"
+                                                        id      =   "ck_permiso_<?php echo $row['PER_ID'];?>" 
+                                                        name    =   "ck_permiso"
+                                                        style   =   "display: block;cursor: pointer;margin-top: 0px;margin-bottom: -1px;"
+                                                        value   =   "<?php echo $row['PER_ID'];?>">
                                                 </div>   
                                                 <div class="grid_li_permisos1">
                                                     <?php echo $row['PER_NOMBRE'];?>
@@ -345,13 +346,9 @@
     </div>
 </div>
 
-
-
-
 <?php
     #var_dump($respuesta['arr_empresas']);
 ?>
-
 <?php
     /*
     echo current_url();
@@ -374,7 +371,6 @@
     //$parentPath = dirname(APPPATH);
     //echo $parentPath;
 ?>
-
 <?php
 /*
 if (file_exists(APPPATH."Controllers")) {
@@ -384,5 +380,4 @@ if (file_exists(APPPATH."Controllers")) {
 }
 */
 ?>
-
 <?= $this->endSection() ?>

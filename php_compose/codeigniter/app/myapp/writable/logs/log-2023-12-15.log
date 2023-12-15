@@ -1,27 +1,24 @@
-CRITICAL - 2023-12-15 11:38:47 --> syntax error, unexpected token "}", expecting ";"
-in APPPATH/Controllers/Home.php on line 231.
- 1 SYSTEMPATH/Autoloader/Autoloader.php(285): CodeIgniter\Autoloader\Autoloader->includeFile()
- 2 SYSTEMPATH/Autoloader/Autoloader.php(263): CodeIgniter\Autoloader\Autoloader->loadInNamespace()
- 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass()
- 4 SYSTEMPATH/CodeIgniter.php(877): class_exists()
- 5 SYSTEMPATH/CodeIgniter.php(481): CodeIgniter\CodeIgniter->startController()
- 6 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
- 7 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
-CRITICAL - 2023-12-15 11:38:48 --> syntax error, unexpected token "}", expecting ";"
-in APPPATH/Controllers/Home.php on line 231.
- 1 SYSTEMPATH/Autoloader/Autoloader.php(285): CodeIgniter\Autoloader\Autoloader->includeFile()
- 2 SYSTEMPATH/Autoloader/Autoloader.php(263): CodeIgniter\Autoloader\Autoloader->loadInNamespace()
- 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass()
- 4 SYSTEMPATH/CodeIgniter.php(877): class_exists()
- 5 SYSTEMPATH/CodeIgniter.php(481): CodeIgniter\CodeIgniter->startController()
- 6 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
- 7 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
-CRITICAL - 2023-12-15 11:39:13 --> syntax error, unexpected token "}", expecting ";"
-in APPPATH/Controllers/Home.php on line 231.
- 1 SYSTEMPATH/Autoloader/Autoloader.php(285): CodeIgniter\Autoloader\Autoloader->includeFile()
- 2 SYSTEMPATH/Autoloader/Autoloader.php(263): CodeIgniter\Autoloader\Autoloader->loadInNamespace()
- 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass()
- 4 SYSTEMPATH/CodeIgniter.php(877): class_exists()
- 5 SYSTEMPATH/CodeIgniter.php(481): CodeIgniter\CodeIgniter->startController()
- 6 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
- 7 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-15 13:31:29 --> Undefined array key "listarMenup"
+in APPPATH/Models/UserModel.php on line 379.
+ 1 APPPATH/Models/UserModel.php(379): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(228): App\Models\UserModel->editando_extension()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->editExtension()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-15 14:19:15 --> Undefined variable $arrPrivilegios
+in APPPATH/Models/UserModel.php on line 389.
+ 1 APPPATH/Models/UserModel.php(389): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(228): App\Models\UserModel->editando_extension()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->editExtension()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-15 14:28:56 --> Undefined variable $arrPrivilegios
+in APPPATH/Models/UserModel.php on line 389.
+ 1 APPPATH/Models/UserModel.php(389): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Home.php(228): App\Models\UserModel->editando_extension()
+ 3 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->editExtension()
+ 4 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()

@@ -33,9 +33,7 @@ $(document).ready(function(){
     $(".selectpicker").selectpicker();
 
     //*************************************************************************************************************************
-    
     //showNotification('top','right','<i class="bi bi-database-fill-slash"></i> Conexi&oacute;n con instancia no iniciada',2);
-    
     //$('.toast').toast('show');
     //var notify = $.notify('<strong>Saving</strong> Do not close this page...', { allow_dismiss: false });
     //notify.update({ type: 'success','<strong>Success</strong> Your page has been saved!' });
@@ -607,88 +605,6 @@ function grabarExt(opt){
    }
 }
 
-function js_editarextension(idMen){
-    let const_error     =   [];
-
-    let check           =   document.getElementById('habilitado').checked?1:0; // menu habilitado
-    let listarMenup     =   $("#listarMenup").val();
-
-    //console.log("bool_checked   ->  ",bool_checked);
-
-
-    if ($("#nomExt").val()   == ''){
-        const_error.push("Falta nombre del menu");
-    }
-    //console.log("   editando    ->  ",idMen);
-    let arr_permisos = [];
-    $(".checked_id").each(function(index){
-        let ck_permiso = document.getElementById(this.id).checked;
-        if (ck_permiso){
-            arr_permisos.push(this.id.split("_")[2]);
-        }
-    });
-    console.log("arr_permisos   ->",arr_permisos);
-    if (arr_permisos.length==0){ 
-        const_error.push("Falta previlegios"); 
-    }
-    if (const_error.length>0){
-        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
-        return false;
-    } else {
-
-
-        let bool_checked          = document.getElementById('habilitado').checked; // menu habilitado
-        let listarMenup           = [];
-        let extension_principal   = 1;
-
-        if($("#listarMenup").val() == "0"){
-            listarMenup            =  0;
-        } else {
-            let value              =  $("#listarMenup").val();
-            listarMenup            =  parseInt(value);
-            num_tipo               =  $('option[value="'+value+'"]').data('tipo');
-            extension_principal    =  parseInt(num_tipo) + 1;
-        }
-
-
-
-        $.ajax({ 
-            type           : "POST",
-            url            : "Home/editando_estensiones_privilegios",
-            dataType       : "json",
-            beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
-            data           :  {
-                                "idMen"                 :   idMen,
-                                "nombre"                :   $("#nomExt").val(),   
-                                "listarMenup"           :   listarMenup,
-                                "extension_principal"   :   extension_principal,
-                                "check"                 :   check,
-                                
-                                "arr_permisos"          :   arr_permisos,
-                                "bool_checked"          :   bool_checked,
-                              },
-            error          :  function(errro)   {  
-                                                   console.log(errro);
-                                                   jAlert("Error General, Consulte Al Administrador"); 
-                                                   $('#loadFade').modal('hide');
-                                                },
-            success        :   function(aData)  {  
-
-                                                    $('#loadFade').modal('hide');
-                                                    console.log("editando_estensiones_privilegios   -> ",aData);
-                                                    
-                                                    /*
-                                                    jAlert('Se modifico información', "Confirmac\u00f3on", function (r) {
-                                                      if (r) { location.reload(true);   }
-                                                    });
-                                                    */
-
-                                                }, 
-        });
-    }
-}
-
-
 function js_limpia_panel(){
     $("#listarMenup").val('0');
     $("#nomExt").val('');
@@ -823,8 +739,6 @@ function editarExt(idMen){
     $('#iconBtn').attr('class', 'fa fa-pencil-square-o fa-large');
     $('#idExt').val(idMen);
     */
-
-    
     $.ajax({ 
         type           : "POST",
         url            : "Home/buscaEditar",
@@ -839,23 +753,22 @@ function editarExt(idMen){
                                                $('#loadFade').modal('hide');
                                             },
         success        :   function(aData)  {  
-                                                $('#loadFade').modal('hide');
-                                                
 
+                                                $('#loadFade').modal('hide');
                                                 console.log("buscaEditar -> ",aData);
 
                                                 let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
-
                                                 if (aData.arr_bd.gu_tmenuprincipal.length>0){
-
                                                     $("#nomExt").val(data_menu.MENP_NOMBRE);
                                                     $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled",true);
                                                     $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);;
                                                     $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+')');
-      
                                                 }
 
-                                                //aData.arr_bd.gu_tmenusecundario
+                                                if (aData.arr_bd.gu_tmenusecundario>0){
+                                                    console.log(aData.arr_bd.gu_tmenusecundario);
+                                                }
+
                                                 /*
                                                 //console.log("actualiza_privilegio   -> ",aData);
                                                 jAlert('Se modifico información', "Confirmac\u00f3on", function (r) {
@@ -873,11 +786,81 @@ function editarExt(idMen){
     */
 }
 
+
+function js_editarextension(idMen){
+    let const_error     =   [];
+    let check           =   document.getElementById('habilitado').checked?1:0; // menu habilitado
+    
+    //console.log("bool_checked   ->  ",bool_checked);
+    if ($("#nomExt").val()   == ''){
+        const_error.push("Falta nombre del menu");
+    }
+    //console.log("   editando    ->  ",idMen);
+    let arr_permisos = [];
+    $(".checked_id").each(function(index){
+        let ck_permiso = document.getElementById(this.id).checked;
+        if (ck_permiso){
+            arr_permisos.push(this.id.split("_")[2]);
+        }
+    });
+    console.log("arr_permisos   ->",arr_permisos);
+    if (arr_permisos.length==0){ 
+        const_error.push("Falta previlegios"); 
+    }
+    if (const_error.length>0){
+        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
+        return false;
+    } else {
+        let bool_checked          = document.getElementById('habilitado').checked; // menu habilitado
+        let listarMenup           = [];
+        let extension_principal   = 1;
+        if($("#listarMenup").val() == "0"){
+            listarMenup            =  0;
+        } else {
+            let value              =  $("#listarMenup").val();
+            listarMenup            =  parseInt(value);
+            num_tipo               =  $('option[value="'+value+'"]').data('tipo');
+            extension_principal    =  parseInt(num_tipo) + 1;
+        }
+        //console.error("  editando_estensiones_privilegios        ");
+        $.ajax({ 
+            type           : "POST",
+            url            : "Home/editExtension",
+            dataType       : "json",
+            beforeSend     :  function(xhr){ $('#loadFade').modal('show'); },
+            data           :  { 
+                                
+                                "idMen"                 :   idMen,
+                                "nombre"                :   $("#nomExt").val(),   
+                                "listarMenup"           :   listarMenup,
+                                "extension_principal"   :   extension_principal,
+                                "check"                 :   check,
+                                "arr_permisos"          :   arr_permisos,
+                                "bool_checked"          :   bool_checked,
+                              },
+            error          :  function(errro)   {  
+                                                   console.log(errro);
+                                                   jAlert("Error General, Consulte Al Administrador"); 
+                                                   $('#loadFade').modal('hide');
+                                                },
+            success        :   function(aData)  {  
+                                                    $('#loadFade').modal('hide');
+                                                    
+                                                    console.log("editando_estensiones_privilegios   -> ",aData);
+
+                                                }, 
+        });
+        
+
+    }
+}
+
+/*
 function cargaPrivOrigen() {
     var id          =   "origen";
     var funcion     =   'selectOrigen';
     var variables   =   {}
     AjaxExt(variables,id,funcion);
 }
-
+*/
 
