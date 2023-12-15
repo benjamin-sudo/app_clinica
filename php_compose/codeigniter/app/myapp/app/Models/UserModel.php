@@ -373,7 +373,7 @@ class UserModel extends Model {
                     'gu_tmenusecundario'    => $query2,
                 ];                    
     }
-
+    /*
     public function editando_extension($aData){
         $listarMenup        =   $aData['post']['listarMenup'];
         $tip                =   $aData['post']['extension_principal'];    
@@ -391,5 +391,6 @@ class UserModel extends Model {
                     "status"    =>  true
                 ]
     }
+    */
 }
 ?>

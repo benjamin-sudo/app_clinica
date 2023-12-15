@@ -15,30 +15,44 @@
 </div>
 <div class="content">
     <ul class="nav nav-tabs menu_principal" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><i class="bi bi-1-circle-fill"></i>&nbsp;INICIO</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><i class="bi bi-2-circle-fill"></i>&nbsp;GESTI&Oacute;N DE EXTENSIONES</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false"><i class="bi bi-3-circle-fill"></i>&nbsp;GESTI&Oacute;N DE PRIVELIGIOS</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#gusuarios" type="button" role="tab" aria-controls="gusuarios" aria-selected="false"><i class="bi bi-4-circle-fill"></i>&nbsp;GESTI&Oacute;N DE USUARIOS</button>
-      </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><i class="bi bi-1-circle-fill"></i>&nbsp;INICIO</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><i class="bi bi-2-circle-fill"></i>&nbsp;GESTI&Oacute;N DE EXTENSIONES</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false"><i class="bi bi-3-circle-fill"></i>&nbsp;GESTI&Oacute;N DE PRIVELIGIOS</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#gusuarios" type="button" role="tab" aria-controls="gusuarios" aria-selected="false"><i class="bi bi-4-circle-fill"></i>&nbsp;GESTI&Oacute;N DE USUARIOS</button>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-          
-            <div class="alert alert-success" role="alert" style="margin-top: 11px;">
-                <h4 class="alert-heading">inicio</h4>
-                <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+            <div class="alert alert-success" role="alert" style="margin-top:11px;margin-bottom:0px;">
+                <h4 class="alert-heading">INICIO</h4>
                 <hr>
-                <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                <p><i class="bi bi-check-circle-fill mt-1"></i> 
+                    Plataforma de Gestión de Usuarios, Privilegios y Extensiones de la Plataforma e-SISSAN del Servicio de Salud Araucanía Norte.
+                </p>
+                <hr>
+                <p><i class="bi bi-check-circle mt-1"></i> 
+                    Gestión de Extensiones: En esta sección podrá crear nuevas extensiones y 
+                    modificar las ya existentes, además podrá asignar privilegios para cada menú o extensión para asi controlar el acceso a estos.
+                </p>
+                <hr>
+                <p><i class="bi bi-check-square-fill mt-1"></i> 
+                    Gestion de Privilegios: En esta sección podrá crear y gestionar los privilegios para asignarlos a usuarios o menus.
+                </p>
+                <hr>
+                <p style="margin-bottom: 0px;"><i class="bi bi-check2-circle mt-1"></i> 
+                    Gestion de Usuarios: En esta sección podrá crear y gestionar los usuarios que acceden a la plataforma, 
+                    en la cual se pueden asignar los privilegios y establecimientos a los cuales tendrá acceso.
+                </p>
             </div>
-
         </div>
+
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <h4 class="title" style="color:#e34f49;margin-top:10px;">
                 <i class="fa fa-cog" aria-hidden="true"></i><b>&nbsp;GESTI&Oacute;N DE EXTENSIONES</b>
