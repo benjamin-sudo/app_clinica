@@ -1,9 +1,20 @@
 version: '3'
 services:
+
   #codeneiter_3
-
-
-
+  php_codeneiter_3:
+    build:
+      context: ./
+      dockerfile: ./php_codeneiter/Dockerfile
+    ports:
+      - "9015:80"
+      - "9014:443"
+    restart: always  
+    volumes:
+      - ./php_codeneiter/app_clinica:/var/www/app_clinica/
+      - ./php_codeneiter/html:/var/www/html/
+    networks:
+      - mynetwork
 
   #app usuario
   codeneiter_4:
@@ -94,7 +105,7 @@ services:
     networks:
       - mynetwork          
 
-  #toad mysql
+  #toad en mysql
   monitoreo_mysql:
     image: adminer
     restart: always
