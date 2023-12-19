@@ -811,7 +811,9 @@ function js_editarextension(idMen){
             num_tipo               =  $('option[value="'+value+'"]').data('tipo');
             extension_principal    =  parseInt(num_tipo) + 1;
         }
-        //console.error("  editando_estensiones_privilegios        ");
+
+        //console.log("     ----------------------------------------    ");
+        //console.log("     editando_estensiones_privilegios            ");
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta e-SISSAN <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
                 $.ajax({ 

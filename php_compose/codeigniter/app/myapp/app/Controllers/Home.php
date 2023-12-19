@@ -100,7 +100,6 @@ class Home extends BaseController {
                 $fileModel = $file2;
             }
 
-
             //Crea Archivo de la Vista
             mkdir(APPPATH."Views/$rutaactual",0700);
             $file3      =   APPPATH.'Views/' . $rutaactual . '/' . $rutaactual . '_view.php';
@@ -113,7 +112,6 @@ class Home extends BaseController {
             }
 
             $parentPath     = dirname(APPPATH)."/public/";
-            
             mkdir($parentPath."assets/$rutaactual", 0700);
             mkdir($parentPath."assets/$rutaactual/css", 0700);
             mkdir($parentPath."assets/$rutaactual/js", 0700);
