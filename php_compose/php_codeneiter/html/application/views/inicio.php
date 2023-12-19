@@ -101,28 +101,22 @@
         if (error.length > 0){
             alert(error.join("\n"),"Clinica libre");
         } else {
-            //preguntar variables v_run y v_pass
-
-
+            //******    preguntar variables v_run y v_pass  *********
             $.ajax({ 
                 type           :   "POST",
                 url            :   "Welcome/login",
                 dataType       :   "json",
                 beforeSend     :   function(xhr)    {     },
-                data		   :   { },
-                error		      :   function(errro)  {  
+                data		   :   {  },
+                error		   :   function(errro)  {  
                                                         console.log(errro);
                                                         console.log(errro.responseText);  
                                                         alert("Error General, Consulte Al Administrador"); 
-                                                        return false;
                                                     },
                 success		   :   function(aData)  {  
                                                         console.log("aData   -> ",aData);
-                                                        return true;
                                                     }, 
             });
-
-
         }
     }
 </script>
