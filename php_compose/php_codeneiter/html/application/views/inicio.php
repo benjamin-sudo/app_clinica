@@ -58,6 +58,8 @@
 </div>
 <!-- /.login-box -->
 
+
+  
 <!-- jQuery -->
 <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -108,9 +110,10 @@
                 url            :   "Constructor/login",
                 dataType       :   "json",
                 beforeSend     :   function(xhr)    {     },
-                data		   :   {  run: v_run,
-    password: v_pass
- },
+                data		   :   {  
+                                  run: v_run,
+                                  password: v_pass
+                                },
                 error		   :   function(errro)  {  
                                                         console.log(errro);
                                                         console.log(errro.responseText);  
@@ -124,24 +127,7 @@
     }
 </script>
 
-<?php
 
-function url(){
-    return sprintf(
-      "%s://%s%s",
-      isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
-      $_SERVER['SERVER_NAME'],
-      $_SERVER['REQUEST_URI']
-    );
-  }
-  
-  echo url();
-echo "<br>";
-
-
-
-
-  ?>
 
 </body>
 </html>

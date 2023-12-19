@@ -5,12 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Constructor extends CI_Controller {
 
     public function index()  {
-        echo $_SERVER['SERVER_ADDR'];
         
-        echo "<br>";
-
-        //echo baseurl();
-
         //echo "<br>";
 
         //$host       =   $_SERVER['HTTP_HOST'];
