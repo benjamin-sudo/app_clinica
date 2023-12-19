@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
-
 	/**
 	 * Index Page for this controller.
 	 *
@@ -18,8 +17,17 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
-	public function index()
-	{
+
+	public function index(){
 		$this->load->view('inicio');
 	}
+	
+	public function login(){
+        if (!$this->input->is_ajax_request()) {  show_404(); }
+
+		
+		$this->output->set_output(json_encode([
+			'status' => true
+		]));
+    }
 }
