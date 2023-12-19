@@ -49,50 +49,50 @@ class UserModel extends Model {
 
 
         // Variable para almacenar el HTML
-        $html = "";
+        $html   =   "";
         foreach ($menu as $mainId => $mainMenu){
-
             //Acceder a los datos del menú principal
             $mainData = $mainMenu['data'];
-
             //Generar el HTML para el menú principal
             $html .=    "<div class='card' style='margin-bottom: 8px;'>";
             $html .=    "<div class='card-body'>";
-            $html .=    "<h5 class='card-title' style='color:#888888;'><i class='fa fa-list' aria-hidden='true'></i><b>&nbsp;" ;
+
+            $html .=    "<h3 class='card-title' style='color:#888888;'>";
+                $html .=    "<a href='javascript:editarExt(".$mainData['main_id'].")'><i class='bi bi-pencil'></i></a>" ;
                 $html .=    htmlspecialchars($mainData['main_nombre']);
-                $html .=    "&nbsp;<a href='javascript:editarExt(".$mainData['main_id'].")'><i class='bi bi-gear-fill'></i></a>" ;
-            $html .=    "</b></h5>";
-
-
+            $html .=    "</h3>";
             // Generar la lista de submenús y sus extensiones
             $html   .= "<ul class='list-group'>";
-            foreach ($mainMenu['submenus'] as $subMenuId => $subMenu) {
+            foreach ($mainMenu['submenus'] as $subMenuId => $subMenu){
                 // Acceder a los datos del submenú
                 $subData    =   $subMenu['data'];
                 // Aquí agregas el nombre del submenú
-                $html       .=  "<h6 style='color:#888888;'><b><i class='bi bi-menu-up'></i>&nbsp;" . htmlspecialchars($subData['sub_nombre']) . "</b></h6>";
-                $html       .=  "<ul>";
+                $html   .=  "<h5 style='color:#888888;margin-left: 10px;'>";
+                $html   .=  "<a href='javascript:editarExt(".$subData['sub_id'].")'><i class='bi bi-pencil'></i></a>".htmlspecialchars($subData['sub_nombre'])."";
+                $html   .=  "</h5>";
+                
+                $html   .=  "<ul class='no-bullet'>";
                 // Acceder a los datos de las extensiones
                 foreach ($subMenu['extensions'] as $extensionId => $extension) {
-                    $html   .=  "<li>&nbsp;" . htmlspecialchars($extension['ext_nombre']) . "</li>";
+                    $html   .=  "<li><h6 style='color:#888888;margin-left: 15px;'><a href='javascript:editarExt(".$subData['ext_id'].")'>";
+                    $html   .=  "<i class='bi bi-pencil'></i></a>&nbsp;" . htmlspecialchars($extension['ext_nombre'])."</h6>";
+                    $html   .=  "</li>";
                 }
-
-                $html .= "</ul>"; // Cerrar la lista del submenú
+                $html       .= "</ul>"; // Cerrar la lista del submenú
             }
-
+            
             $html   .=  "</ul>";
             $html   .=  "</div>";
             $html   .=  "</div>";
         }
 
-
         return $output  = [
-                            'menu_principal'    =>  array_values($menu), // Convertir a array para un mejor formato JSON
-                            'menuData'          =>  $menuData,
-                            'roles_creados'     =>  $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3) ")->getResultArray(),
-                            'arr_empresas'      =>  $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V' ")->getResultArray(),
-                            'html'              =>  $html,
-                        ];
+            'menu_principal'    =>  array_values($menu), // Convertir a array para un mejor formato JSON
+            'menuData'          =>  $menuData,
+            'roles_creados'     =>  $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3) ")->getResultArray(),
+            'arr_empresas'      =>  $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V' ")->getResultArray(),
+            'html'              =>  $html,
+        ];
     }
 
 
@@ -130,7 +130,6 @@ class UserModel extends Model {
             'adata' => $aData
         ];
     }
-
 
     public function findByTk($id,$num){
         $db = db_connect();
@@ -346,11 +345,9 @@ class UserModel extends Model {
                                     ];
         $constructora = $db->table('ADMIN.GU_TMENUPRINCIPAL');
         $constructora->insert($data);
-
         $idSeq  =   $db->insertID();
         $idExt  =   $idSeq;
         $count  =   count($arrPrivilegios);
-
         if ($count > 0) {
             $sigMen     =   0;
             while ($sigMen <= 2) {
@@ -441,7 +438,6 @@ class UserModel extends Model {
                         $builder2->insert($data);
                     }
                 }
-
                 if ($listarMenup != 0 && $sigMen == 0) {
                     $idExt      =   $listarMenup;
                 } else if ($sigMen == 1) {
@@ -462,7 +458,5 @@ class UserModel extends Model {
             "status"    =>  true
         ];
     }
-
-    
 }
 ?>

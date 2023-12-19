@@ -256,9 +256,9 @@ function grabarUsu() {
             "actualiza_pass"    :   document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
         }; //Variables pasadas por ajax a la funcion
         
-        console.log("       ------------------------    ");
-        console.log("       pasa                        ");
-        console.log("       enviando -> ",variables,"   ");
+        //console.log("       ------------------------    ");
+        //console.log("       pasa                        ");
+        //console.log("       enviando -> ",variables,"   ");
 
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta e-SISSAN <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
@@ -740,7 +740,6 @@ function editarExt(idMen){
     $('#iconBtn').attr('class', 'fa fa-pencil-square-o fa-large');
     $('#idExt').val(idMen);
     */
-
     $.ajax({ 
         type           :   "POST",
         url            :   "Home/buscaEditar",
@@ -754,9 +753,7 @@ function editarExt(idMen){
                                             },
         success        :   function(aData)  {  
                                                 $('#loadFade').modal('hide');
-                                                //console.log("   ------------------------------------");
-                                                //console.log("   buscaEditar     ->  ",aData         );
-                                                //console.log("   ------------------------------------");
+                                                console.log("   out -> ",aData);
                                                 let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
                                                 if (aData.arr_bd.gu_tmenuprincipal.length>0){
                                                     $("#nomExt").val(data_menu.MENP_NOMBRE);
@@ -795,7 +792,7 @@ function js_editarextension(idMen){
             arr_permisos.push(this.id.split("_")[2]);
         }
     });
-    console.log("arr_permisos   ->",arr_permisos);
+    //console.log("arr_permisos   ->",arr_permisos);
     if (arr_permisos.length==0){ 
         const_error.push("Falta previlegios"); 
     }
@@ -815,29 +812,36 @@ function js_editarextension(idMen){
             extension_principal    =  parseInt(num_tipo) + 1;
         }
         //console.error("  editando_estensiones_privilegios        ");
-        $.ajax({ 
-            type           :    "POST",
-            url            :    "Home/editExtension",
-            dataType       :    "json",
-            beforeSend     :    function(xhr){ $('#loadFade').modal('show'); },
-            data           :    { 
-                                    "idMen"                 :   idMen,
-                                    "nombre"                :   $("#nomExt").val(),   
-                                    "listarMenup"           :   listarMenup,
-                                    "extension_principal"   :   extension_principal,
-                                    "check"                 :   check,
-                                    "arrPrivilegios"        :   arr_permisos,
-                                    "bool_checked"          :   bool_checked,
-                                },
-            error          :    function(errro) {  
-                                                   console.log(errro);
-                                                   jAlert("Error General, Consulte Al Administrador"); 
-                                                   $('#loadFade').modal('hide');
-                                                },
-            success        :    function(aData) {  
-                                                    $('#loadFade').modal('hide');
-                                                    console.log("editando_estensiones_privilegios   -> ",aData);
-                                                }, 
+        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta e-SISSAN <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
+            if(r){
+                $.ajax({ 
+                    type           :    "POST",
+                    url            :    "Home/editExtension",
+                    dataType       :    "json",
+                    beforeSend     :    function(xhr){ $('#loadFade').modal('show'); },
+                    data           :    { 
+                                            "idMen"                 :   idMen,
+                                            "nombre"                :   $("#nomExt").val(),   
+                                            "listarMenup"           :   listarMenup,
+                                            "extension_principal"   :   extension_principal,
+                                            "check"                 :   check,
+                                            "arrPrivilegios"        :   arr_permisos,
+                                            "bool_checked"          :   bool_checked,
+                                        },
+                    error          :    function(errro) {  
+                                                           console.log(errro);
+                                                           jAlert("Error General, Consulte Al Administrador"); 
+                                                           $('#loadFade').modal('hide');
+                                                        },
+                    success        :    function(aData) {  
+                                                            $('#loadFade').modal('hide');
+                                                            console.log("editando_estensiones_privilegios   -> ",aData);
+                                                            showNotification('top','right','<i class="bi bi-database-fill-slash"></i> Se edito privilegios',2);
+                                                        }, 
+                });
+            } else {
+                //jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            }
         });
     }
 }
@@ -850,4 +854,3 @@ function cargaPrivOrigen() {
     AjaxExt(variables,id,funcion);
 }
 */
-
