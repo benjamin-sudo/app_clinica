@@ -61,19 +61,15 @@
 <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script type="text/javascript" src="assets/plugins/template/js/adminlte.min.js"></script>
-<!-- validacion run -->
-<script type="text/javascript" src="assets/plugins/template/js/adminlte.min.js"></script>
 <!-- RUN  -->
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js"></script>
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
+
 <script>
   $(document).ready(function(){
-    //##################################################### 
-    //jAlert('El Run ingresado es Incorrecto ...','test');
-    //#####################################################
     $("#rut_profesional").Rut({
       on_error    :   function() {   
-                                  jAlert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
+                                  alert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
                                   console.log($("#rut_profesional").val());  
                                   $("#rut_profesional").css('border-color','red'); 
                                   $("#rut_profesional").val('');
