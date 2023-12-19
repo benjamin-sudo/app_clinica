@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <title>CL&Iacute;NICA C&Oacute;DIGO LIBRE</title>
     <meta charset="UTF-8">
-    <title>CLINICA CODIGO LIBRE</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
     <meta name="viewport" content="width=device-width, initial-scale=3">
     <meta name="resource-type" content="document" />
@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- jAlert... -->
     <link rel="stylesheet" type="text/css" href="assets/themes/css/jquery.alerts.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
     <?php if (isset($css)): ?>
         <?php foreach ($css as $cssFile): ?>
             <link rel="stylesheet" href="<?= 'assets/' . $cssFile; ?>">
@@ -101,17 +101,18 @@
             align   :   align
         }
     });
-    $('.alert').css('z-index', '9999');
+    $('.alert').css('z-index','9999');
     if (width != '') {
-        $('.alert').css('width', width);
-        $('.message').css('width', width);
+      $('.alert').css('width', width);
+      $('.message').css('width', width);
     }
 }
 </script>
+
 <?php if (isset($js)): ?>
-    <?php foreach ($js as $jsFile): ?>
-        <script src="<?= 'assets/'.$jsFile; ?>"></script>
-    <?php endforeach; ?>
+  <?php foreach ($js as $jsFile): ?>
+    <script src="<?= 'assets/'.$jsFile; ?>"></script>
+  <?php endforeach; ?>
 <?php endif; ?>
 </body>
 </html>
