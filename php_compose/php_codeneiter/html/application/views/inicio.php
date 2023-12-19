@@ -15,6 +15,8 @@
 </head>
 
 <body class="hold-transition login-page">
+
+
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
@@ -62,7 +64,6 @@
 <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script type="text/javascript" src="assets/plugins/template/js/adminlte.min.js"></script>
-
 <!-- RUN  -->
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js"></script>
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
@@ -104,10 +105,12 @@
             //******    preguntar variables v_run y v_pass  *********
             $.ajax({ 
                 type           :   "POST",
-                url            :   "Welcome/login",
+                url            :   "Constructor/login",
                 dataType       :   "json",
                 beforeSend     :   function(xhr)    {     },
-                data		   :   {  },
+                data		   :   {  run: v_run,
+    password: v_pass
+ },
                 error		   :   function(errro)  {  
                                                         console.log(errro);
                                                         console.log(errro.responseText);  
@@ -120,5 +123,25 @@
         }
     }
 </script>
+
+<?php
+
+function url(){
+    return sprintf(
+      "%s://%s%s",
+      isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+      $_SERVER['SERVER_NAME'],
+      $_SERVER['REQUEST_URI']
+    );
+  }
+  
+  echo url();
+echo "<br>";
+
+
+
+
+  ?>
+
 </body>
 </html>

@@ -12,7 +12,6 @@ services:
       - "9014:443"
     restart: always  
     volumes:
-      - ./php_codeneiter/app_clinica:/var/www/app_clinica/
       - ./php_codeneiter/html:/var/www/html/
     networks:
       - mynetwork
