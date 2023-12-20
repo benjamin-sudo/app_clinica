@@ -19,10 +19,10 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>CL&Iacute;NICA</b>&nbsp;LIBRE</a>
+      <a href="#" class="h1"><b>CL&Iacute;NICA</b>&nbsp;LIBRE</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Ingrese <b>RUN</b> y contraseña para inicio de sesi&oacute;n</p>
+      <p class="login-box-msg">Ingrese <b>RUN</b> y contrase&ntilde;a para inicio de sesi&oacute;n</p>
       <form action="../../index3.html" method="post">
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="RUN" id="rut_profesional">
@@ -70,7 +70,7 @@
     $(document).ready(function(){
       $("#rut_profesional").Rut({
         on_error    :   function()  {   
-                                      alert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
+                                      alert('El RUN ingresado es incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
                                       console.log($("#rut_profesional").val());  
                                       $("#rut_profesional").css('border-color','red'); 
                                       $("#rut_profesional").val('');
@@ -81,7 +81,7 @@
         format_on   : 'keyup'
       });
     });
-
+    
     function js_inicio(){
         let error   =   [];
         let v_run   =   $("#rut_profesional").val();
@@ -101,8 +101,6 @@
         if (error.length > 0){
             alert(error.join("\n"),"Clinica libre");
         } else {
-
-          //******    preguntar variables v_run y v_pass  *********
           $.ajax({ 
             type        : "POST",
             url         : "Constructor/login",
