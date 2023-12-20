@@ -70,18 +70,18 @@
 
 <script>
     $(document).ready(function(){
-        $("#rut_profesional").Rut({
-            on_error    :   function()  {   
-                                            alert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
-                                            console.log($("#rut_profesional").val());  
-                                            $("#rut_profesional").css('border-color','red'); 
-                                            $("#rut_profesional").val('');
-                                        },
-            on_success  :   function()  {   
-                                            $("#rut_profesional").css('border-color','');   
-                                        },
-            format_on   : 'keyup'
-        });
+      $("#rut_profesional").Rut({
+        on_error    :   function()  {   
+                                      alert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
+                                      console.log($("#rut_profesional").val());  
+                                      $("#rut_profesional").css('border-color','red'); 
+                                      $("#rut_profesional").val('');
+                                    },
+        on_success  :   function()  {   
+                                      $("#rut_profesional").css('border-color','');   
+                                    },
+        format_on   : 'keyup'
+      });
     });
 
     function js_inicio(){
@@ -91,39 +91,38 @@
         let access  =   null;
         $("#rut_profesional").css('border-color','');   
         if (v_pass == ''){
-            error.push(" - RUN Vacio");
+            error.push("RUN Vacio");
             $("#rut_profesional").css('border-color','red');   
         }
         $("#password").css('border-color','');   
         if (v_pass == ''){
-            error.push(" - Contraseña vacia");
+            error.push("Contraseña vacia");
             $("#password").css('border-color','red');   
         }
         //console.log("   error   ->  ",error);
         if (error.length > 0){
             alert(error.join("\n"),"Clinica libre");
         } else {
-
+          
           //******    preguntar variables v_run y v_pass  *********
           $.ajax({ 
-          type          : "POST",
-          url           : "Constructor/login",
-          dataType      : "json",
-          beforeSend    : function(xhr)    {     },
-          data		      : {  
+            type        : "POST",
+            url         : "Constructor/login",
+            dataType    : "json",
+            beforeSend  : function(xhr)    {     },
+            data		    : {  
                             user      : v_run,
                             password  : v_pass,
                             access    : access,
-
                           },
-          error		      : function(errro) {  
-                                            console.log(errro);
-                                            console.log(errro.responseText);  
-                                            alert("Error General, Consulte Al Administrador"); 
-                                          },
-          success		   :  function(aData) {  
-                                            console.log("aData   -> ",aData);
-                                          }, 
+            error		      : function(errro) {  
+                                              console.log(errro);
+                                              console.log(errro.responseText);  
+                                              alert("Error General, Consulte Al Administrador"); 
+                                            },
+            success		   :  function(aData) {  
+                                              console.log("aData   -> ",aData);
+                                            }, 
           });
         }
     }

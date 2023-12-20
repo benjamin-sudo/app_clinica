@@ -6,10 +6,10 @@ class Constructor extends CI_Controller {
 
     public function index()  {
         //echo "<br>";
-        //$host       =   $_SERVER['HTTP_HOST'];
-        //$uri        =   rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-        //echo $base  =   "http://" . $host . $uri . "/";
-        log_message('error', 'USER_INFO ' . 'date');
+        //$host = $_SERVER['HTTP_HOST'];
+        //$uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        //echo $base = "http://" . $host . $uri . "/";
+        //log_message('info', 'USER_INFO ' . 'entrando al aplicativo --> '.date('d-m-Y'));
         $this->load->view('inicio');
     }
 
@@ -19,9 +19,6 @@ class Constructor extends CI_Controller {
         $user       =   strtoupper(str_replace(".","",$this->input->post('user')));
         $password   =   $this->input->post('password');
         $access     =   $this->input->post('access');
-
-
-        
 
 
         $this->output->set_output(json_encode([
