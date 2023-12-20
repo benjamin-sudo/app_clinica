@@ -21,21 +21,19 @@ class Constructor extends CI_Controller {
         $user           =   strtoupper(str_replace(".","",$this->input->post('user')));
         $password       =   $this->input->post('password');
         $access         =   $this->input->post('access');
-        
-        redirect('Dashboard');
-
-        /*
+        $redirect       =   '';
         $user           =   $this->modelinicio->login_modelo($user,$password);
         $status         =   $user['status'];
         if($user['status']) {   
             $unique                     =   str_replace('-','', $userL[0]["USERNAME"]).$this->getRandomCode();
             $_SESSION["IP"]             =   $this->input->ip_address();
-            $_SESSION["loginFr"]        =   'si';
             $_SESSION["USERNAME"]       =   $userL[0]["USERNAME"];
             $_SESSION["NAMESESSION"]    =   $userL[0]["NAME"];
             $_SESSION["FONOSESSION"]    =   $userL[0]["TELEPHONE"];
             $_SESSION["ID_UID"]         =   $iuid;
             $_SESSION["unique"]         =   $unique;
+            $_SESSION["loginFr"]        =   'si';
+            
             $newdata            =   array(
                 'ID_UID'        =>  $iuid,
                 'USERNAME'      =>  $userL[0]["USERNAME"],
@@ -46,12 +44,13 @@ class Constructor extends CI_Controller {
                 'loginFr'       =>  'si'
             );
             $this->session->set_userdata($newdata);
-            #como redireccionar a otro controlador 
-            redirect('Dashboard/index');
-        }
-        */
+            //redirect('Dashboard');
+            $redirect = 'Dashboard';
+        } 
+
         $this->output->set_output(json_encode([
-            'status'    =>  true,
+            'status'    =>  $status,
+            'redirect'  =>  $redirect,
             'userL'     =>  $user,
         ]));
     }
@@ -64,6 +63,11 @@ class Constructor extends CI_Controller {
         ]));
     }
 
+    public function logout() {
+        $this->session->sess_destroy();
+        redirect('Login'); // Redirige al controlador de inicio de sesión o a la página que desees
+    }
+    
     public function getRandomCode() {
         $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $su = strlen($an) - 1;

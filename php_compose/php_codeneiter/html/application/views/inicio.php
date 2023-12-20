@@ -92,12 +92,13 @@
             error.push("RUN Vacio");
             $("#rut_profesional").css('border-color','red');   
         }
+        //**************************************/
         $("#password").css('border-color','');   
         if (v_pass == ''){
             error.push("Contraseña vacia");
             $("#password").css('border-color','red');   
         }
-        //console.log("   error   ->  ",error);
+        //**************************************/
         if (error.length > 0){
             alert(error.join("\n"),"Clinica libre");
         } else {
@@ -105,7 +106,7 @@
             type        : "POST",
             url         : "Constructor/login",
             dataType    : "json",
-            beforeSend  : function(xhr)    {     },
+            beforeSend  : function(xhr){ console.log(xhr); },
             data		    : {  
                             user      : v_run,
                             password  : v_pass,
@@ -118,11 +119,15 @@
                                             },
             success		   :  function(aData) {  
                                               console.log("aData   -> ",aData);
+                                              if (aData.status){
+                                                window.location = aData.redirect;
+                                              } else {
+                                                //error
+                                              }
                                             }, 
           });
         }
     }
 </script>
-
 </body>
 </html>
