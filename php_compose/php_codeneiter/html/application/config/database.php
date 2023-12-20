@@ -73,7 +73,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	$active_group 		= 	'session';
 	$query_builder 		= 	TRUE;
-
 	$db['session'] 		= 	array(
 		'dsn'			=> 	'',
 		'hostname' 		=> 	'mysql_6',

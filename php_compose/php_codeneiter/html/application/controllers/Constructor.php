@@ -9,7 +9,9 @@ class Constructor extends CI_Controller {
     }
 
     public function index(){
-        $this->load->view('inicio');
+        $_valor         =   [];
+        #$_valor        =   $this->modelinicio->_index();
+        $this->load->view('inicio',$_valor);
     }
 
     public function login(){
@@ -19,19 +21,14 @@ class Constructor extends CI_Controller {
         $password       =   $this->input->post('password');
         $access         =   $this->input->post('access');
         $userL          =   $this->modelinicio->trae_login($user,$password,$access);
-
-
-
-
         $this->output->set_output(json_encode([
             'status'    => true,
-            'post'      => $user,
+            'userL'     => $user,
         ]));
     }
 
     public function login0(){
-       // if (!$this->input->is_ajax_request()) {  show_404(); }
-
+        #if (!$this->input->is_ajax_request()) {  show_404(); }
         $this->output->set_output(json_encode([
             'opcion'=> 'login 2',
             'status' => true
