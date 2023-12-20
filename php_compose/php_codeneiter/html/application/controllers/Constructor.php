@@ -17,13 +17,14 @@ class Constructor extends CI_Controller {
 
     public function login(){
         if(!$this->input->is_ajax_request()) {  show_404(); }
-        $status         =   true;
         $user           =   strtoupper(str_replace(".","",$this->input->post('user')));
         $password       =   $this->input->post('password');
         $access         =   $this->input->post('access');
         $user           =   $this->modelinicio->login_modelo($user,$password);
-
-        if ($user['status']){
+        $status         =   $user['status'];
+       
+        if($user['status']){
+     
             $unique                     =   str_replace('-', '', $userL[0]["USERNAME"]) . $this->getRandomCode();
             $_SESSION["IP"]             =   $this->input->ip_address();
             $_SESSION["loginFr"]        =   'si';
@@ -32,7 +33,8 @@ class Constructor extends CI_Controller {
             $_SESSION["FONOSESSION"]    =   $userL[0]["TELEPHONE"];
             $_SESSION["ID_UID"]         =   $iuid;
             $_SESSION["unique"]         =   $unique;
-            $newdata = array(
+
+            $newdata            =   array(
                 'ID_UID'        =>  $iuid,
                 'USERNAME'      =>  $userL[0]["USERNAME"],
                 'uniq ue'       =>  $unique,
@@ -42,11 +44,13 @@ class Constructor extends CI_Controller {
                 'loginFr'       =>  'si'
             );
             $this->session->set_userdata($newdata);
+
         }
 
-        #CPU Ryzen 7 7700X
-
-
+        #########################
+        #   CPU Ryzen 7 7700X   #
+        #########################
+        
         $this->output->set_output(json_encode([
             'status'    =>  true,
             'userL'     =>  $user,
