@@ -58,8 +58,6 @@
 </div>
 <!-- /.login-box -->
 
-
-  
 <!-- jQuery -->
 <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -90,6 +88,7 @@
         let error   =   [];
         let v_run   =   $("#rut_profesional").val();
         let v_pass  =   $("#password").val();
+        let access  =   null;
         $("#rut_profesional").css('border-color','');   
         if (v_pass == ''){
             error.push(" - RUN Vacio");
@@ -104,30 +103,31 @@
         if (error.length > 0){
             alert(error.join("\n"),"Clinica libre");
         } else {
-            //******    preguntar variables v_run y v_pass  *********
-            $.ajax({ 
-                type           :   "POST",
-                url            :   "Constructor/login",
-                dataType       :   "json",
-                beforeSend     :   function(xhr)    {     },
-                data		   :   {  
-                                  run: v_run,
-                                  password: v_pass
-                                },
-                error		   :   function(errro)  {  
-                                                        console.log(errro);
-                                                        console.log(errro.responseText);  
-                                                        alert("Error General, Consulte Al Administrador"); 
-                                                    },
-                success		   :   function(aData)  {  
-                                                        console.log("aData   -> ",aData);
-                                                    }, 
-            });
+
+          //******    preguntar variables v_run y v_pass  *********
+          $.ajax({ 
+          type          : "POST",
+          url           : "Constructor/login",
+          dataType      : "json",
+          beforeSend    : function(xhr)    {     },
+          data		      : {  
+                            user      : v_run,
+                            password  : v_pass,
+                            access    : access,
+
+                          },
+          error		      : function(errro) {  
+                                            console.log(errro);
+                                            console.log(errro.responseText);  
+                                            alert("Error General, Consulte Al Administrador"); 
+                                          },
+          success		   :  function(aData) {  
+                                            console.log("aData   -> ",aData);
+                                          }, 
+          });
         }
     }
 </script>
-
-
 
 </body>
 </html>

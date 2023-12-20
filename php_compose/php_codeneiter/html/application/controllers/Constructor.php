@@ -14,9 +14,27 @@ class Constructor extends CI_Controller {
     }
 
     public function login(){
-        //if (!$this->input->is_ajax_request()) {  show_404(); }
+        if(!$this->input->is_ajax_request()) {  show_404(); }
+        $status     =   true;
+        $user       =   strtoupper(str_replace(".","",$this->input->post('user')));
+        $password   =   $this->input->post('password');
+        $access     =   $this->input->post('access');
+
+
+        
+
 
         $this->output->set_output(json_encode([
+            'status'    =>  true,
+            'post'      =>  $user,
+        ]));
+    }
+
+    public function login0(){
+       // if (!$this->input->is_ajax_request()) {  show_404(); }
+
+        $this->output->set_output(json_encode([
+            'opcion'=> 'llogin 2',
             'status' => true
         ]));
     }
