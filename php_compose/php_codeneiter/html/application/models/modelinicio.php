@@ -21,13 +21,18 @@ class modelinicio extends CI_Model {
         }
     }
 
-
-    public function trae_login($user, $pass, $access = '') {
-        $sql = "SELECT ID_UID, NAME, USERNAME,FIRST_NAME,MIDDLE_NAME,LAST_NAME,EMAIL,TELEPHONE, LOCKTODOMAIN,LASTLOGIN,DAYLIGHT from 
-        $this->ownGu.FE_USERS WHERE DISABLE = 0 AND USERNAME='$user' 
-            AND (PASSWORD='" . md5($pass) . "' OR LOCKTODOMAIN='" . md5($pass) . "')";
-        $query  = $this->session->query($sql);
-        return $query->result_array();
+    public function login_modelo($user, $pass) {
+        $sql = "SELECT USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
+        $query = $this->db->query($sql, array($user));
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            if (password_verify($pass, $row->PASSWORD)){
+                return ['status' => true, 'row' => $row];
+            } else {
+                return ['status' => false, 'row' => []];
+            }
+        } else {
+            return ['status' => false, 'row' => []];
+        }
     }
-
 }

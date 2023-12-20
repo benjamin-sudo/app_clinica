@@ -13,9 +13,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="/assets/plugins/template/css/adminlte.min.css">
 </head>
-
 <body class="hold-transition login-page">
-
 
 <div class="login-box">
   <!-- /.login-logo -->
@@ -103,7 +101,7 @@
         if (error.length > 0){
             alert(error.join("\n"),"Clinica libre");
         } else {
-          
+
           //******    preguntar variables v_run y v_pass  *********
           $.ajax({ 
             type        : "POST",

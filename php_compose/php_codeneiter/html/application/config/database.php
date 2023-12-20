@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$query_builder 		= 	TRUE;
 	$db['session'] 		= 	array(
 		'dsn'			=> 	'',
-		'hostname' 		=> 	'mysql_6',
+		'hostname' 		=> 	'mysql_6:3306',
 		'username' 		=> 	'ADMIN',
 		'password' 		=> 	'ssprueba.210',
 		'database' 		=> 	'ADMIN',
@@ -93,7 +93,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'stricton'		=> 	FALSE,
 		'failover' 		=> 	array(),
 		'save_queries' 	=> 	TRUE,
-		'port'          =>  9306,
+		#'port'          =>  9306,
 	);
 
 	/*

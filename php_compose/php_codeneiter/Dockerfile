@@ -1,5 +1,7 @@
 FROM php:7.4-apache
 
+RUN docker-php-ext-install mysqli
+
 # Asegúrate de que los archivos de Oracle Instant Client estén en una subcarpeta llamada 'oracle-instantclient'
 COPY ./php/instantclient-basic-linux.x64-12.2.0.1.0.zip /tmp/
 COPY ./php/instantclient-sdk-linux.x64-12.2.0.1.0.zip /tmp/

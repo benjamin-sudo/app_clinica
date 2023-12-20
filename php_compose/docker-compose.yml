@@ -1,7 +1,7 @@
 version: '3'
 services:
 
-  #codeneiter_3
+  #codeneiter_3 - app ususario respal
   php_codeneiter_3:
     container_name: codeneite_3_app
     build:
@@ -16,7 +16,7 @@ services:
     networks:
       - mynetwork
 
-  #app usuario
+  #codeneiter_4 - app ususario
   codeneiter_4:
     container_name: codeneite_4_admin
     build:
@@ -27,7 +27,6 @@ services:
       - "9004:443"
     restart: always  
     volumes:
-      #- ./php/app_clinica:/var/www/app_clinica/
       - ./php/html:/var/www/html/
     networks:
       - mynetwork
