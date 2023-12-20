@@ -18,11 +18,9 @@ class Database extends Config {
      * use if no other is specified.
      */
     public string $defaultGroup = 'default';
-
     /**
      * The default database connection.
      */
-
     public array $default = [
         'DSN'           =>  '',
         'hostname'      =>  'mysql_6',

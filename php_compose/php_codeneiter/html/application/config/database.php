@@ -70,27 +70,100 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = 'default';
-$query_builder = TRUE;
 
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+	$active_group 		= 	'session';
+	$query_builder 		= 	TRUE;
+
+	$db['session'] 		= 	array(
+		'dsn'			=> 	'',
+		'hostname' 		=> 	'mysql_6',
+		'username' 		=> 	'ADMIN',
+		'password' 		=> 	'ssprueba.210',
+		'database' 		=> 	'ADMIN',
+		'dbdriver' 		=> 	'MySQLi',
+		'dbprefix' 		=> 	'',
+		'pconnect' 		=> 	FALSE,
+		'db_debug' 		=> 	(ENVIRONMENT !== 'production'),
+		'cache_on' 		=> 	FALSE,
+		'cachedir' 		=> 	'',
+		'char_set' 		=> 	'utf8',
+		'dbcollat' 		=> 	'utf8_general_ci',
+		'swap_pre' 		=> 	'',
+		'encrypt' 		=> 	FALSE,
+		'compress' 		=> 	FALSE,
+		'stricton'		=> 	FALSE,
+		'failover' 		=> 	array(),
+		'save_queries' 	=> 	TRUE,
+		'port'          =>  9306,
+	);
+
+	/*
+	public array $default = [
+        'DSN'           =>  '',
+        'hostname'      =>  'mysql_6',
+        'username'      =>  'ADMIN',
+        'password'      =>  'ssprueba.210',
+        'database'      =>  'ADMIN',
+        'DBDriver'      =>  'MySQLi',
+        'DBPrefix'      =>  '',
+        'pConnect'      =>  false,
+        'DBDebug'       =>  true,
+        'charset'       =>  'utf8',
+        'DBCollat'      =>  'utf8_general_ci',
+        'swapPre'       =>  '',
+        'encrypt'       =>  false,
+        'compress'      =>  false,
+        'strictOn'      =>  false,
+        'failover'      =>  [],
+        'port'          =>  3306,
+        'numberNative'  =>  false,
+    ];
+	*/
+
+
+	/*
+	$tsname = '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.5.183.212)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = DSSAN)))';
+	$db['oracle'] = array(
+		'dsn' 			=> '',
+		'hostname' 		=> $tsname,
+		'username' 		=> 'USUARIO_SISTEMAS',
+		'password' 		=> 'USU2014RIOSSAN',
+		'database' 		=> 'DSSAN',
+		'dbdriver' 		=> 'oci8',
+		'dbprefix' 		=> '',
+		'pconnect' 		=> FALSE,
+		'db_debug' 		=> (ENVIRONMENT !== 'production'),
+		'cache_on' 		=> FALSE,
+		'cachedir' 		=> '',
+		'char_set' 		=> 'utf8',
+		'dbcollat' 		=> 'utf8_general_ci',
+		'swap_pre' 		=> '',
+		'encrypt' 		=> FALSE,
+		'compress' 		=> FALSE,
+		'autoinit' 		=> FALSE,
+		'stricton' 		=> FALSE,
+		'failover' 		=> array(),
+		'save_queries' 	=> FALSE,
+		'dbc_timeout'	=> 30 
+	);
+	*/
+
+
+	/*
+	
+
+    public $oracle      =   [
+        'DSN'           =>  '',
+        'hostname'      =>  'oracle', // O 'oracle' si está en otro contenedor Docker
+        'username'      =>  'ADMIN',
+        'password'      =>  'ssprueba.210',
+        'database'      =>  'FREEPDB1',
+        'DBDriver'      =>  'OCI8',
+        'DBPrefix'      =>  '', // Ajusta según necesidad
+        'pConnect'      =>  false,
+        'DBDebug'       =>  (ENVIRONMENT !== 'production'),
+        'charset'       =>  'utf8',
+        'DBCollat'      =>  'utf8_general_ci',
+        'port'          =>  6000, // Puerto mapeado en Docker
+    ];
+	*/
