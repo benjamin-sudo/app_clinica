@@ -21,26 +21,25 @@ class modelinicio extends CI_Model {
         }
     }
 
-    public function login_modelo($user, $pass) {
+    public function login_modelo($user,$pass) {
         $status =   false;
         $row    =   [];
         $menu   =   [];
         $ID_UID =   '';
-
         $sql    =   "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
         $query  =   $this->db->query($sql,array($user));
         if ($query->num_rows()>0){
-            $row    =   $query->row();
+            $row = $query->row();
             if (password_verify($pass,$row->PASSWORD)){
-                $status     =   true;
-                $ID_UID     =   $row->ID_UID;
-                $row        =   $row;
-                $menu       =   $this->load_menuxuser($ID_UID);
+                $status = true;
+                $ID_UID = $row->ID_UID;
+                $row    = $row;
+                $menu   = $this->load_menuxuser($ID_UID);
             } 
         } 
         return [
             'status'    => $status, 
-            'row'       => $row , 
+            'row'       => $row, 
             'menu'      => $menu
         ];
     }
@@ -61,8 +60,7 @@ class modelinicio extends CI_Model {
                     ";
         $menuData           =   $this->db->query($sql)->result_array();
         $menu               =   [];
-        
-        if ( count($menuData)>0){
+        if(count($menuData)>0){
             foreach($menuData as $row) {
                 $menuId         =   $row['main_id'];
                 $subMenuId      =   $row['sub_id'];
@@ -86,6 +84,9 @@ class modelinicio extends CI_Model {
             }
         }
         return $menu;
+
+
+        
         /*
         $sql_permisos    = "
                             SELECT 

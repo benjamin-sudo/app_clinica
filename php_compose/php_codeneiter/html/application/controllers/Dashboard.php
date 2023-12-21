@@ -11,17 +11,16 @@ class Dashboard extends CI_Controller {
     }
 
     public function index(){
-        
-        $MENUARRFR = '';
+        $MENUARRFR = [];
+        if(!$this->session->userdata('ID_UID')) {
+            redirect('/'); // Asegúrate de reemplazar 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
+        }
         $MENUARRFR = $this->session->userdata('MENUARRFR');
-        $this->load->view('Dashboard/view_escritorio',['return'=>$MENUARRFR ]);
-
-
+        $this->load->view('Dashboard/view_escritorio',['menu'=>$MENUARRFR]);
     }
 
     public function logout(){
         $this->session->sess_destroy();
         redirect('/'); // Reemplaza 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
     }
-
 }

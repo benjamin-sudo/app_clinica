@@ -10,6 +10,15 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+
+  <!-- Cargar CSS -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/ssan_bdu_creareditarpaciente/css/styles.css'); ?>">
+
+  <!-- Cargar archivos CSS dinámicamente -->
+  <?php foreach($css_files as $file): ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url($file); ?>">
+  <?php endforeach; ?>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -17,11 +26,14 @@
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
+    </ul>
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
       <li class="nav-item d-none d-sm-inline-block">
         <a href="../../index.html" class="nav-link">Inicio</a>
       </li>
@@ -29,29 +41,7 @@
         <a href="#" class="nav-link">Configuraci&oacute;n</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<?php echo site_url('dashboard/logout');?>" class="nav-link" style="color:red;">Cerrar sesion</a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+        <a href="<?php echo site_url('dashboard/logout');?>" class="nav-link" style="color:red;">Cerrar Sesi&oacute;n</a>
       </li>
     </ul>
   </nav>
@@ -77,73 +67,67 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-header">Listado sistema</li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
-                  <p>BDU paciente<i class="fas fa-angle-left right"></i></p>
-              </a>
-              <ul class="nav nav-treeview">
-              <li class="nav-item">
-                  <a href="#" class="nav-link"><i class="far fa-circle nav-icon"></i>
-                      <p>Maestro de pacientes<i class="fas fa-angle-left right"></i></p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                      <a href="../examples/login-v2.html" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i><p>BDU</p>
-                      </a>
-                  </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p> Login & Register v2<i class="fas fa-angle-left right"></i> </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="../examples/login-v2.html" class="nav-link">
-                          <i class="far fa-circle nav-icon"></i><p>Login v2</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../examples/register-v2.html" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Register v2</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../examples/forgot-password-v2.html" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Forgot Password v2</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../examples/recover-password-v2.html" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Recover Password v2</p>
-                        </a>
-                    </li>
-                </ul>
-              </li>
-            </ul>
+        <li class="nav-header">Listado sistema</li>
+        <?php
+          if (count($menu)>0){
+            foreach ($menu as $mainId => $mainItem) {
+                // Menú principal
+                echo '<li class="nav-item">';
+                echo '<a href="#" class="nav-link">';
+                echo '<i class="nav-icon ' . $mainItem['data']['main_icon'] . '"></i>';
+                echo '<p>' . $mainItem['data']['main_nombre'];
+                if (!empty($mainItem['submenus'])) {
+                    echo '<i class="right fas fa-angle-left"></i>';
+                }
+                echo '</p>';
+                echo '</a>';
+                // Submenús
+                if (!empty($mainItem['submenus'])){
+                    echo '<ul class="nav nav-treeview">';
+                    foreach ($mainItem['submenus'] as $subId => $subItem) {
+                        echo '<li class="nav-item">';
+                        echo '<a href="' . $subItem['data']['sub_ruta'] . '" class="nav-link">';
+                        echo '<i class="far fa-circle nav-icon"></i>';
+                        echo '<p>' . $subItem['data']['sub_nombre'];
+                        if (!empty($subItem['extensions'])) {
+                            echo '<i class="right fas fa-angle-left"></i>';
+                        }
+                        echo '</p>';
+                        echo '</a>';
+                        // Extensiones
+                        if (!empty($subItem['extensions'])) {
+                            echo '<ul class="nav nav-treeview">';
+                            foreach ($subItem['extensions'] as $extId => $extItem) {
+                                echo '<li class="nav-item">';
+                                echo '<a href="' . $extItem['ext_ruta'] . '" class="nav-link load-in-frame">';
+                                echo '<i class="far fa-dot-circle nav-icon"></i>';
+                                echo '<p>' . $extItem['ext_nombre'] . '</p>';
+                                echo '</a>';
+                                echo '</li>';
+                            }
+                            echo '</ul>';  // Fin de las extensiones
+                        }
+                        echo '</li>';
+                    }
+                    echo '</ul>';  // Fin de los submenús
+                }
+              echo '</li>';
+            }
+          }
+        ?>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header page_frame">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Pagina Bienvenida</h1>
-            
-            <br>
-            <?php echo $return;?>
-
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -161,7 +145,7 @@
     <div class="float-right d-none d-sm-block">
       <b>Version CLinica libre</b> 1.0.0
     </div>
-    <strong>Clinica libre&copy;<?php echo date('d-m-Y'); ?> <a href="https://adminlte.io">#</a>.</strong> Todos los derechos reservados
+    <strong>Clinica libre&copy;<?php echo date('m-Y');?> <a href="#">#</a>.</strong> Todos los derechos reservados
   </footer>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -170,7 +154,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
   <!-- jQuery -->
   <script src="assets/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
@@ -178,7 +161,26 @@
   <!-- AdminLTE App -->
   <script src="assets/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
+  <!--
   <script src="assets/dist/js/demo.js"></script>
+  -->
 
+  <!-- Cargar archivos JavaScript dinámicamente -->
+  <?php foreach($js_files as $file): ?>
+    <script src="<?php echo base_url($file); ?>"></script>
+  <?php endforeach; ?>
+
+
+<script>
+$(document).ready(function(){
+  $('.load-in-frame').click(function(e) {
+      e.preventDefault(); // Evitar que el navegador siga el enlace
+      var url = $(this).attr('href'); // Obtener la URL del enlace
+      // Cargar la vista en el contenedor
+      console.log("url  ->  ",url);
+      $('.page_frame').load(url);
+  });
+});
+</script>
 </body>
 </html>

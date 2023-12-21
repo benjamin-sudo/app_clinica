@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CL&Iacute;NICA&nbsp;LIBRE</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="/assets/plugins/template/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
-
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
@@ -42,7 +41,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="button" class="btn btn-primary btn-block" onclick="js_inicio()">INGRESAR</button>   
+            <button type="button" id="btn_inicio" class="btn btn-primary btn-block" onclick="js_inicio()">INGRESAR</button>   
           </div>
         </div>
       </form>
@@ -106,8 +105,10 @@
             type        : "POST",
             url         : "Constructor/login",
             dataType    : "json",
-            beforeSend  : function(xhr){ console.log(xhr); },
-            data		    : {  
+            beforeSend  : function(xhr) {
+                                          $("#btn_inicio").prop("disabled",true);
+                                        },
+            data		    :  {  
                             user      : v_run,
                             password  : v_pass,
                             access    : access,
@@ -116,13 +117,14 @@
                                               console.log(errro);
                                               console.log(errro.responseText);  
                                               alert("Error General, Consulte Al Administrador"); 
+                                              $("#btn_inicio").prop("disabled",false);
                                             },
             success		   :  function(aData) {  
                                               console.log("aData   -> ",aData);
                                               if (aData.status){
                                                 window.location = aData.redirect;
                                               } else {
-                                                //error
+                                                $("#btn_inicio").prop("disabled",false);
                                               }
                                             }, 
           });

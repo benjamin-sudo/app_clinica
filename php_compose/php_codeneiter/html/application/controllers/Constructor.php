@@ -21,30 +21,31 @@ class Constructor extends CI_Controller {
         $user           =   strtoupper(str_replace(".","",$this->input->post('user')));
         $password       =   $this->input->post('password');
         $access         =   $this->input->post('access');
+        $userL          =   [];
         $redirect       =   '';
         $user           =   $this->modelinicio->login_modelo($user,$password);
         $status         =   $user['status'];
         if($user['status']){   
-            $unique                     =   str_replace('-','', $userL[0]["USERNAME"]).$this->getRandomCode();
+            $userL                      =   $user['row'];
+            $unique                     =   str_replace('-','', $userL->USERNAME).$this->getRandomCode();
             $_SESSION["IP"]             =   $this->input->ip_address();
-            $_SESSION["ID_UID"]         =   $iuid;
+            $_SESSION["ID_UID"]         =   $userL->ID_UID;
             $_SESSION["unique"]         =   $unique;
-            $_SESSION["USERNAME"]       =   $userL[0]["USERNAME"];
-            $_SESSION["NAMESESSION"]    =   $userL[0]["NAME"];
-            $_SESSION["FONOSESSION"]    =   $userL[0]["TELEPHONE"];
+            $_SESSION["USERNAME"]       =   $userL->USERNAME;
+            $_SESSION["NAMESESSION"]    =   $userL->NAME;
+            $_SESSION["FONOSESSION"]    =   $userL->TELEPHONE;
             $_SESSION["loginFr"]        =   'si';
             $newdata            =   array(
-                'ID_UID'        =>  $iuid,
-                'USERNAME'      =>  $userL[0]["USERNAME"],
                 'unique'        =>  $unique,
-                'NAMESESSION'   =>  $userL[0]["NAME"],
-                'FONOSESSION'   =>  $userL[0]["TELEPHONE"],
-                'LASTLOGIN'     =>  $userL[0]["LASTLOGIN"],
+                'ID_UID'        =>  $userL->ID_UID,
+                'USERNAME'      =>  $userL->USERNAME,
+                'NAMESESSION'   =>  $userL->NAME,
+                'FONOSESSION'   =>  $userL->TELEPHONE,
+                'LASTLOGIN'     =>  $userL->LASTLOGIN,
                 'loginFr'       =>  'si',
-                'MENUARRFR'     =>  implode(",",$user['menu']),
+                'MENUARRFR'     =>  $user['menu'],
             );
             $this->session->set_userdata($newdata);
-            //redirect('Dashboard');
             $redirect = 'Dashboard';
         } 
         $this->output->set_output(json_encode([

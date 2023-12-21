@@ -23,7 +23,6 @@ class UserModel extends Model {
                     ";
 
         $menuData           =   $db->query($sql)->getResultArray();
-
         $menu               =   [];
         foreach($menuData as $row) {
             $menuId         =   $row['main_id'];
@@ -46,6 +45,8 @@ class UserModel extends Model {
                 $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = $row; // Datos de la extensión
             }
         }
+
+        
 
         //*************************************** */
         // Variable para almacenar el HTML
