@@ -10,14 +10,14 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
-
   <!-- Cargar CSS -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/ssan_bdu_creareditarpaciente/css/styles.css'); ?>">
 
-  <!-- Cargar archivos CSS dinámicamente -->
+  <!-- inicio Cargar archivos CSS dinámicamente -->
   <?php foreach($css_files as $file): ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url($file); ?>">
   <?php endforeach; ?>
+  <!-- inicio final archivos CSS dinámicamente -->
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -164,23 +164,20 @@
   <!--
   <script src="assets/dist/js/demo.js"></script>
   -->
-
   <!-- Cargar archivos JavaScript dinámicamente -->
   <?php foreach($js_files as $file): ?>
     <script src="<?php echo base_url($file); ?>"></script>
   <?php endforeach; ?>
-
-
-<script>
-$(document).ready(function(){
-  $('.load-in-frame').click(function(e) {
-      e.preventDefault(); // Evitar que el navegador siga el enlace
-      var url = $(this).attr('href'); // Obtener la URL del enlace
-      // Cargar la vista en el contenedor
-      console.log("url  ->  ",url);
-      $('.page_frame').load(url);
-  });
-});
-</script>
+  <script>
+    $(document).ready(function(){
+      $('.load-in-frame').click(function(e) {
+          e.preventDefault();             // Evitar que el navegador siga el enlace
+          var url = $(this).attr('href'); // Obtener la URL del enlace
+          // Cargar la vista en el contenedor
+          console.log("url  ->  ",url);
+          $('.page_frame').load(url);
+      });
+    });
+  </script>
 </body>
 </html>

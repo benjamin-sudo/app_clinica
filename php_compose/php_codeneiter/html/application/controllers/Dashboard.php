@@ -23,4 +23,5 @@ class Dashboard extends CI_Controller {
         $this->session->sess_destroy();
         redirect('/'); // Reemplaza 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
     }
+    
 }

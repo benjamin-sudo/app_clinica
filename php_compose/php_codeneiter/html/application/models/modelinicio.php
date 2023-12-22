@@ -84,9 +84,6 @@ class modelinicio extends CI_Model {
             }
         }
         return $menu;
-
-
-        
         /*
         $sql_permisos    = "
                             SELECT 
