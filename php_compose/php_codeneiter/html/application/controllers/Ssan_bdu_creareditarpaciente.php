@@ -19,5 +19,5 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $this->load->css("assets/ssan_bdu_creareditarpaciente/css/styles.css");
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view', $data);
     }
-
+    
 }
