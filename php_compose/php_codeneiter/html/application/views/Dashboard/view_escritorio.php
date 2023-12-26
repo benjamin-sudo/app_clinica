@@ -115,8 +115,8 @@
   <div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
-    <section class="content-header page_frame">
-      <div class=" container-fluid">
+    <section class="content-header ">
+      <div class="page_frame container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Pagina Bienvenida</h1>
@@ -162,20 +162,19 @@
       $('.load-in-frame').click(function(e){
           e.preventDefault();                     // Evitar que el navegador siga el enlace
           let url     =     $(this).attr('href'); // Obtener la URL del enlace
-          console.log("   ********************************    ");
-          console.log("   Cargar la vista en el contenedor    ");
-          console.log("   url -> ",url);
+          //console.log("   ********************************    ");
+          //console.log("   Cargar la vista en el contenedor    ");
+          //console.log("   url -> ",url);
           //$('.page_frame').load(url);
+          //falta load
           $.ajax({
               url: url,  // Ruta al método del controlador
               type: 'POST',  // Método HTTP deseado, POST es común para envío de datos
-              data: {
-                  id: '123',  // Datos que deseas enviar al servidor, por ejemplo, un ID
-                  otroDato: 'información'  // Más datos según sea necesario
-              },
+              data: { },
               success: function(response) {
                   // Aquí manejas lo que sucede después de recibir la respuesta del servidor
                   console.log(response);
+                  $('.page_frame').html(response);
               },
               error: function(xhr, status, error) {
                   // Manejo de errores

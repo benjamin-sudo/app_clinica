@@ -1,4 +1,4 @@
 $(document).ready(function(){
-    console.log("   -   -   -   ");
-    alert("juidshu");
+    //console.log("   -   -   -   ");
+    //alert("juidshu");
 });
