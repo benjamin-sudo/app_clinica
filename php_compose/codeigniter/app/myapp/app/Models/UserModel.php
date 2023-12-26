@@ -21,7 +21,6 @@ class UserModel extends Model {
                     WHERE 
                         m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;
                     ";
-
         $menuData           =   $db->query($sql)->getResultArray();
         $menu               =   [];
         foreach($menuData as $row) {
@@ -46,7 +45,7 @@ class UserModel extends Model {
             }
         }
 
-        
+
 
         //*************************************** */
         // Variable para almacenar el HTML

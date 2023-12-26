@@ -10,17 +10,8 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
-  <!-- Cargar CSS -->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/ssan_bdu_creareditarpaciente/css/styles.css'); ?>">
-
-  <!-- inicio Cargar archivos CSS dinámicamente -->
-  <?php foreach($css_files as $file): ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url($file); ?>">
-  <?php endforeach; ?>
-  <!-- inicio final archivos CSS dinámicamente -->
-
 </head>
-<body class="hold-transition sidebar-mini">
+<body data-scrollbar-auto-hide="n">
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -98,12 +89,12 @@
                         if (!empty($subItem['extensions'])) {
                             echo '<ul class="nav nav-treeview">';
                             foreach ($subItem['extensions'] as $extId => $extItem) {
-                                echo '<li class="nav-item">';
-                                echo '<a href="' . $extItem['ext_ruta'] . '" class="nav-link load-in-frame">';
-                                echo '<i class="far fa-dot-circle nav-icon"></i>';
-                                echo '<p>' . $extItem['ext_nombre'] . '</p>';
-                                echo '</a>';
-                                echo '</li>';
+                              echo '<li class="nav-item">';
+                              echo '<a href="' . $extItem['ext_ruta'] . '" class="nav-link load-in-frame">';
+                              echo '<i class="far fa-dot-circle nav-icon"></i>';
+                              echo '<p>' . $extItem['ext_nombre'] . '</p>';
+                              echo '</a>';
+                              echo '</li>';
                             }
                             echo '</ul>';  // Fin de las extensiones
                         }
@@ -122,9 +113,10 @@
   </aside>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
     <!-- Content Header (Page header) -->
     <section class="content-header page_frame">
-      <div class="container-fluid">
+      <div class=" container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Pagina Bienvenida</h1>
@@ -139,13 +131,14 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
       <b>Version CLinica libre</b> 1.0.0
     </div>
-    <strong>Clinica libre&copy;<?php echo date('m-Y');?> <a href="#">#</a>.</strong> Todos los derechos reservados
+    <strong>Clinica libre&copy;<?php echo date('m-Y');?> <a href="#">#</a></strong> Todos los derechos reservados
   </footer>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -164,18 +157,31 @@
   <!--
   <script src="assets/dist/js/demo.js"></script>
   -->
-  <!-- Cargar archivos JavaScript dinámicamente -->
-  <?php foreach($js_files as $file): ?>
-    <script src="<?php echo base_url($file); ?>"></script>
-  <?php endforeach; ?>
   <script>
     $(document).ready(function(){
-      $('.load-in-frame').click(function(e) {
-          e.preventDefault();             // Evitar que el navegador siga el enlace
-          var url = $(this).attr('href'); // Obtener la URL del enlace
-          // Cargar la vista en el contenedor
-          console.log("url  ->  ",url);
-          $('.page_frame').load(url);
+      $('.load-in-frame').click(function(e){
+          e.preventDefault();                     // Evitar que el navegador siga el enlace
+          let url     =     $(this).attr('href'); // Obtener la URL del enlace
+          console.log("   ********************************    ");
+          console.log("   Cargar la vista en el contenedor    ");
+          console.log("   url -> ",url);
+          //$('.page_frame').load(url);
+          $.ajax({
+              url: url,  // Ruta al método del controlador
+              type: 'POST',  // Método HTTP deseado, POST es común para envío de datos
+              data: {
+                  id: '123',  // Datos que deseas enviar al servidor, por ejemplo, un ID
+                  otroDato: 'información'  // Más datos según sea necesario
+              },
+              success: function(response) {
+                  // Aquí manejas lo que sucede después de recibir la respuesta del servidor
+                  console.log(response);
+              },
+              error: function(xhr, status, error) {
+                  // Manejo de errores
+                  console.error(error);
+              }
+          });
       });
     });
   </script>

@@ -80,7 +80,7 @@
         format_on   : 'keyup'
       });
     });
-    
+
     function js_inicio(){
         let error   =   [];
         let v_run   =   $("#rut_profesional").val();
@@ -99,7 +99,17 @@
         }
         //**************************************/
         if (error.length > 0){
-            alert(error.join("\n"),"Clinica libre");
+            //https://adminlte.io/docs/3.2/javascript/iframe.html
+            $('body').Toasts('create', {
+                position    : 'bottomRight',
+                imageHeight : '130px',
+                title       : 'Clinica libre',
+                icon        : 'fas fa-exclamation-triangle',
+                autohide    : true,
+                delay       : 3000,
+                body        : error.join("<br>"),
+            });
+
         } else {
           $.ajax({ 
             type        : "POST",
@@ -108,14 +118,14 @@
             beforeSend  : function(xhr) {
                                           $("#btn_inicio").prop("disabled",true);
                                         },
-            data		    :  {  
+            data		    : {  
                             user      : v_run,
                             password  : v_pass,
                             access    : access,
                           },
             error		      : function(errro) {  
                                               console.log(errro);
-                                              console.log(errro.responseText);  
+                                              console.log(errro.responseText); 
                                               alert("Error General, Consulte Al Administrador"); 
                                               $("#btn_inicio").prop("disabled",false);
                                             },
@@ -125,6 +135,15 @@
                                                 window.location = aData.redirect;
                                               } else {
                                                 $("#btn_inicio").prop("disabled",false);
+                                                $('body').Toasts('create', {
+                                                  position    : 'bottomRight',
+                                                  imageHeight : '130px',
+                                                  title       : 'Clinica libre',
+                                                  icon        : 'fas fa-exclamation-triangle',
+                                                  autohide    : true,
+                                                  delay       : 3000,
+                                                  body        : 'Error en las credenciales',
+                                                });
                                               }
                                             }, 
           });

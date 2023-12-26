@@ -1,6 +1,3 @@
-
-
-
 <?php
 echo "<br>";
 if (extension_loaded('imagick')) {
@@ -21,6 +18,8 @@ if (extension_loaded('mbstring')) {
     echo "La extensión simplexml no está instalada.";
 }
 phpinfo();
-//echo "<br>";
-//phpinfo();
+#####################
+#echo "<br>";
+#phpinfo();
+###################
 ?>

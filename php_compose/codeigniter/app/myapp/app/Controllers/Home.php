@@ -125,7 +125,6 @@ class Home extends BaseController {
             if(file_exists($file4)) {
                 $fileCss =  $file4;
             }
-
             $file5      =   $parentPath.'assets/' . $rutaactual . '/js/javascript.js';
             $fileJs     =   fopen($file5, "w+");
             $contJs     =   '//Contenido JS de la Extensión ' . $rutaactual . '.' . PHP_EOL . PHP_EOL .
