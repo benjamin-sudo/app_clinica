@@ -10,6 +10,13 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+
+  <style>
+    .nav-link.activo {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+  </style>
 </head>
 <body data-scrollbar-auto-hide="n">
 <!-- Site wrapper -->
@@ -57,12 +64,14 @@
       </div>
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column menu_principal" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-header">Listado sistema</li>
         <?php
           if (count($menu)>0){
             foreach ($menu as $mainId => $mainItem) {
+                
                 // Menú principal
+
                 echo '<li class="nav-item">';
                 echo '<a href="#" class="nav-link">';
                 echo '<i class="nav-icon ' . $mainItem['data']['main_icon'] . '"></i>';
@@ -72,12 +81,13 @@
                 }
                 echo '</p>';
                 echo '</a>';
+
                 // Submenús
                 if (!empty($mainItem['submenus'])){
                     echo '<ul class="nav nav-treeview">';
                     foreach ($mainItem['submenus'] as $subId => $subItem) {
                         echo '<li class="nav-item">';
-                        echo '<a href="' . $subItem['data']['sub_ruta'] . '" class="nav-link">';
+                        echo '<a href="' . $subItem['data']['sub_ruta'] . '" class="nav-link" id="menu-' . $mainId . '-sub-' . $subId . '">';
                         echo '<i class="far fa-circle nav-icon"></i>';
                         echo '<p>' . $subItem['data']['sub_nombre'];
                         if (!empty($subItem['extensions'])) {
@@ -90,12 +100,12 @@
                             echo '<ul class="nav nav-treeview">';
                             foreach ($subItem['extensions'] as $extId => $extItem) {
                               echo '<li class="nav-item">';
-                              echo '<a href="' . $extItem['ext_ruta'] . '" class="nav-link load-in-frame">';
+                              echo '<a href="' . $extItem['ext_ruta'] . '" class="nav-link load-in-frame" id="menu-' . $mainId . '-sub-' . $subId . '-ext-' . $extId . '">';
                               echo '<i class="far fa-dot-circle nav-icon"></i>';
                               echo '<p>' . $extItem['ext_nombre'] . '</p>';
                               echo '</a>';
                               echo '</li>';
-                            }
+                          }
                             echo '</ul>';  // Fin de las extensiones
                         }
                         echo '</li>';
@@ -158,11 +168,6 @@
   <script src="assets/dist/js/demo.js"></script>
   -->
   <script>
-
-          //como configurar un 
-
-
-          
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){
           e.preventDefault();                   // Evitar que el navegador siga el enlace
@@ -176,15 +181,78 @@
                                                     console.error(error);
                                                   },
 
-            success : function(response)  {
-                                            // Aquí manejas lo que sucede después de recibir la respuesta del servidor
-                                            console.log(response);
-                                            $('.page_frame').html(response);
-                                          },
+            success : function(response) {
+                                          // Aquí manejas lo que sucede después de recibir la respuesta del servidor
+                                          console.log(response);
+                                          $('.page_frame').html(response);
+                                        },
            
           });
       });
+      
+      // Asignar evento de clic al menú principal
+      js_gestion_menu();
     });
+
+    function js_gestion_menu(){
+
+            console.log("js_gestion_menu ini() ");
+
+            document.addEventListener('DOMContentLoaded', function() {
+              // Define una función para actualizar el estado activo del menú
+              function actualizarEstadoActivo(id) {
+                  // Elimina la clase activo de todos los elementos
+                  document.querySelectorAll('.menu_principal div').forEach(function(el) {
+                      el.classList.remove('activo');
+                  });
+                  // Añade la clase activo al elemento correcto
+                  var elementoActivo = document.getElementById(id);
+                  if (elementoActivo) {
+                      elementoActivo.classList.add('activo');
+                  }
+              }
+
+              // Captura clics en los enlaces del menú y extensiones
+              document.querySelectorAll('.nav-link').forEach(function(link) {
+                  link.addEventListener('click', function() {
+                      localStorage.setItem('ultimaPosicionMenu', this.id);
+                  });
+              });
+
+              // Restaurar el estado activo del último enlace seleccionado
+              var ultimaPosicion = localStorage.getItem('ultimaPosicionMenu');
+              if (ultimaPosicion) {
+                  actualizarEstadoActivo(ultimaPosicion);
+              }
+
+              // Evento de clic para el menú principal
+              document.querySelector('.menu_principal').addEventListener('click', function(event) {
+
+                  console.log("click - menu_principal");
+
+                  // Asegúrate de que el clic fue en un elemento del menú
+                  if (event.target.id) {
+                      // Guardar la posición del menú en localStorage
+                      localStorage.setItem('ultimaPosicionMenu', event.target.id);
+                      // Actualizar visualmente el menú activo
+                      actualizarEstadoActivo(event.target.id);
+                  }
+              });
+
+              // Al cargar la página, verifica si hay una posición guardada y actúa en consecuencia
+              var ultimaPosicion            = localStorage.getItem('ultimaPosicionMenu');
+              console.log("ultimaPosicion   = ",ultimaPosicion);
+              if (ultimaPosicion) {
+                  var elementoActivo = document.getElementById(ultimaPosicion);
+                  if (elementoActivo) {
+                    if (elementoActivo) {
+                        elementoActivo.classList.add('activo');
+                    }
+                  }
+              }
+        });
+
+  }
   </script>
 </body>
 </html>
