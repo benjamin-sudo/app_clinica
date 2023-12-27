@@ -7,7 +7,51 @@
 
 .grid_body_bdu                          {
     display                             :   grid;
-    grid-template-columns               :   1fr 1fr;
+    grid-template-columns               :   1fr 2fr;
     gap                                 :   10px;
+}
+
+.grid_panel_buscando{
+    display                     :   grid;
+    grid-template-columns       :   1fr 2fr 1fr 1fr;
+    align-items                 :   center;
+}
+
+.modal-body{
+    max-height                  :   calc(100vh - 212px);
+    overflow-y                  :   auto;
+}
+
+@media(min-width:600px){
+    .modal-xl4{
+        width                   :   60%;
+        max-width               :   450px;
+    }
+}
+
+@media(min-width:600px){
+    .modal-xl3{
+        width                   :   100%;
+        max-width               :   900px;
+    }
+}
+
+#client-paginator{
+    position                    :   relative;
+    width                       :   100%;
+    overflow-y                  :   hidden;
+    overflow-x                  :   scroll;
+}
+
+.pagination{
+    display                     :   table !important;
+}
+
+.pagination>li{
+    display                     :   table-cell !important;
+}
+
+.disabledTab{
+    pointer-events              :   none;
 }
 
