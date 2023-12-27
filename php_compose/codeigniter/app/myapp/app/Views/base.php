@@ -73,6 +73,7 @@
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.js" ></script>
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/jquery.alerts.mod.js"></script>
+<!-- OTROS -->
 <script type="text/javascript" src="assets/themes/js/jquery.easy-autocomplete.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/funciones.js" ></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>

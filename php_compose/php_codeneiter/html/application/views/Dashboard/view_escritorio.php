@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+
+
   <style>
     .nav-link.activo {    }
   </style>
@@ -152,15 +154,18 @@
 </div>
 <!-- ./wrapper -->
   <!-- jQuery -->
-  <script src="assets/plugins/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
-  <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="assets/dist/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <!--
-  <script src="assets/dist/js/demo.js"></script>
-  -->
+  <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
+ 
+  <!-- Validador rut -->
+  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js" ></script>
+  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
+
+
   <script>
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){
