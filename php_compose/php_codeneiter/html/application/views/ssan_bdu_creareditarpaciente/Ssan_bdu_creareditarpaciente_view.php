@@ -8,8 +8,5 @@
         <?php echo date('d-m-Y');?>
     </div>
 </div>
-
 <hr>
-
-
 <br>
