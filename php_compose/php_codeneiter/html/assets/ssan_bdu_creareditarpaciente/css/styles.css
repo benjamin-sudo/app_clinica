@@ -1,8 +1,6 @@
 .grid_cabecera_bdu                      {
     display                             :   grid;
     grid-template-columns               :   1fr auto;
-    margin-top                          :   15px;
+    margin-top                          :   0px;
     gap                                 :   10px;
 }
-
-

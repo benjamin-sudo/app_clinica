@@ -158,28 +158,30 @@
   <script src="assets/dist/js/demo.js"></script>
   -->
   <script>
+
+          //como configurar un 
+
+
+          
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){
-          e.preventDefault();                     // Evitar que el navegador siga el enlace
-          let url     =     $(this).attr('href'); // Obtener la URL del enlace
-          //console.log("   ********************************    ");
-          //console.log("   Cargar la vista en el contenedor    ");
-          //console.log("   url -> ",url);
-          //$('.page_frame').load(url);
-          //falta load
+          e.preventDefault();                   // Evitar que el navegador siga el enlace
+          let url = $(this).attr('href');       // Obtener la URL del enlace
           $.ajax({
-              url: url,  // Ruta al método del controlador
-              type: 'POST',  // Método HTTP deseado, POST es común para envío de datos
-              data: { },
-              success: function(response) {
-                  // Aquí manejas lo que sucede después de recibir la respuesta del servidor
-                  console.log(response);
-                  $('.page_frame').html(response);
-              },
-              error: function(xhr, status, error) {
-                  // Manejo de errores
-                  console.error(error);
-              }
+            url     : url,                           // Ruta al método del controlador
+            type    : 'POST',                       // Método HTTP deseado, POST es común para envío de datos
+            data    : { },
+            error   : function(xhr,status,error) {
+                                                    //Manejo de errores
+                                                    console.error(error);
+                                                  },
+
+            success : function(response)  {
+                                            // Aquí manejas lo que sucede después de recibir la respuesta del servidor
+                                            console.log(response);
+                                            $('.page_frame').html(response);
+                                          },
+           
           });
       });
     });

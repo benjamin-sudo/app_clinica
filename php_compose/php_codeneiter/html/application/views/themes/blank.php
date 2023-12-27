@@ -16,7 +16,9 @@
 ?>
 </head>
 <body>
-<?php echo $output;?>
+	<div class="card" style="padding: 10px;">
+		<?php echo $output;?>
+	</div>
 <?php
 	foreach($js as $file){
 	echo "\n\t\t"; 
