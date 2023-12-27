@@ -44,50 +44,49 @@ $(document).ready(function(){
     
     console.log(" -------------- TEMPLETE -> "+$("#indTemplateNum").val() +" <--------------");
     //ocMen();
-
-    //********************************** 10.02.2020 ********************************
     $('#modal_percapita').on('show.bs.modal',function(e){
-	$("#HTML_PERCAPITA").html('');
-	$("#modalPaciente").css("z-index","1000"); 
-	$("#modal_percapita").css("z-index","11500");
+        $("#HTML_PERCAPITA").html('');
+        $("#modalPaciente").css("z-index","1000"); 
+        $("#modal_percapita").css("z-index","11500");
     });
+
     $('#modal_percapita').on('hidden.bs.modal',function(e){
-	$("#modal_percapita").css("z-index","100");
-	$("#modalPaciente").css("z-index","1500"); 
-	$("#HTML_PERCAPITA").html('');
+        $("#modal_percapita").css("z-index","100");
+        $("#modalPaciente").css("z-index","1500"); 
+        $("#HTML_PERCAPITA").html('');
     });
-    //********************************** 10.02.2020 ********************************
+    
+    console.log("   ---------------------------------------------------------------     ");
+    console.log("                       Codeigniter 3                                   ");
+    console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
+    console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
+    console.log("   ---------------------------------------------------------------     ");
 
-
+    
+    jError("Debe Ingresar a lo menos un parametro para la busqueda", "Restricci\u00f3n");
 
 });
 
-
-
 function nuevo_reciennacido(value){
-    
     $.ajax({ 
         type        :	"POST",
-	url         :	"ssan_bdu_creareditarpaciente/new_paciente_rn",
-	dataType    :	"json",
+        url         :	"ssan_bdu_creareditarpaciente/new_paciente_rn",
+        dataType    :	"json",
         data        :	{   },
         error       :	function(errro)	    { 
 						console.log(errro.responseText); 
 						jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
 					    },
         success     :	function(aData)	    {	
-            
-						console.log("-------------");
-						console.log(aData);
                                                 console.log("-------------");
-						if(AjaxExtJsonAll(aData)){
-						    $("#MODAL_RECIEN_NACIDO").modal("show");
+                                                console.log(aData);
+                                                console.log("-------------");
+                                                if(AjaxExtJsonAll(aData)){
+                                                    $("#MODAL_RECIEN_NACIDO").modal("show");
                                                 } 
                 			    }, 
     });
     
-   
-   
     /*
     $("#MODAL_RECIEN_NACIDO").modal({backdrop: 'static', keyboard: false}).modal("show"); 
     $.ajax({ 

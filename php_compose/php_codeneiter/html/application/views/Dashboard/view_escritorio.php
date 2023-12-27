@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <meta name="viewport" content="width=device-width, initial-scale=3">
+  <meta name="resource-type" content="document" />
+  <meta name="robots" content="all, index, follow"/>
+  <meta name="googlebot" content="all, index, follow">
   <title>Clinica Libre</title>
-    <!-- Google Font: Source Sans Pro -->
+
+
+
+
+  <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
-
+  <!-- Bootstrap Icons v1.11.2 -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <!-- select min  -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
 
   <style>
-    .nav-link.activo {    }
+    .nav-link.activo{ }
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
@@ -159,11 +170,15 @@
   <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
- 
   <!-- Validador rut -->
   <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js" ></script>
   <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
+
+
+  <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
 
 
   <script>
@@ -175,7 +190,6 @@
         star_ajax_extension(url);
       });
     });
-
     function star_ajax_extension(url){
       $.ajax({
         url   : url,                          // Ruta al metodo del controlador
@@ -238,11 +252,11 @@
             // Desplegar todos los menús padres
             let parent = elementoActivo.parentElement;
             while(parent) {
-                if (parent.matches('.nav')) { // Asegúrate de que esta condición coincida con tus elementos de menú
-                    parent.style.display = 'block'; // O agrega una clase que muestre el menú
-                    parent.classList.add('desplegado'); // Si tienes una clase específica para desplegar menús
-                }
-                parent = parent.parentElement; // Subir en el árbol del DOM
+              if (parent.matches('.nav')) { // Asegúrate de que esta condición coincida con tus elementos de menú
+                  parent.style.display = 'block'; // O agrega una clase que muestre el menú
+                  parent.classList.add('desplegado'); // Si tienes una clase específica para desplegar menús
+              }
+              parent = parent.parentElement; // Subir en el árbol del DOM
             }
         }
       }
