@@ -1,4 +1,3 @@
-
 <div class="grid_cabecera_bdu">
     <div class="grid_cabecera_bdu1">
         <h4 class="title" style="color:#e34f49;margin:0px;">
@@ -10,4 +9,11 @@
     </div>
 </div>
 
-
+<div class="grid_body_bdu">
+    <div class="grid_body_bdu1">
+        panel 
+    </div>
+    <div class="grid_body_bdu2">
+        resultado de busqueda
+    </div>
+</div>

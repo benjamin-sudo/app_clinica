@@ -10,12 +10,8 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
-
   <style>
-    .nav-link.activo {
-      background-color: #f0f0f0;
-      color: #333;
-    }
+    .nav-link.activo {    }
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
@@ -69,16 +65,14 @@
         <?php
           if (count($menu)>0){
             foreach ($menu as $mainId => $mainItem) {
-                
                 // Menú principal
-
                 echo '<li class="nav-item">';
                 echo '<a href="#" class="nav-link">';
                 echo '<i class="nav-icon ' . $mainItem['data']['main_icon'] . '"></i>';
                 echo '<p>' . $mainItem['data']['main_nombre'];
-                if (!empty($mainItem['submenus'])) {
+                  if (!empty($mainItem['submenus'])) {
                     echo '<i class="right fas fa-angle-left"></i>';
-                }
+                  }
                 echo '</p>';
                 echo '</a>';
 
@@ -170,89 +164,84 @@
   <script>
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){
-          e.preventDefault();                   // Evitar que el navegador siga el enlace
-          let url = $(this).attr('href');       // Obtener la URL del enlace
-          $.ajax({
-            url     : url,                           // Ruta al método del controlador
-            type    : 'POST',                       // Método HTTP deseado, POST es común para envío de datos
-            data    : { },
-            error   : function(xhr,status,error) {
-                                                    //Manejo de errores
-                                                    console.error(error);
-                                                  },
-
-            success : function(response) {
-                                          // Aquí manejas lo que sucede después de recibir la respuesta del servidor
-                                          console.log(response);
-                                          $('.page_frame').html(response);
-                                        },
-           
-          });
+        e.preventDefault();                       // Evitar que el navegador siga el enlace
+        let url = $(this).attr('href');           // Obtener la URL del enlace
+        localStorage.setItem('ind_llamada_extension',url);
+        star_ajax_extension(url);
       });
-      
-      // Asignar evento de clic al menú principal
-      js_gestion_menu();
     });
 
-  function js_gestion_menu(){
-    console.log("js_gestion_menu ini() ");
-  }
-
+    function star_ajax_extension(url){
+      $.ajax({
+        url   : url,                          // Ruta al metodo del controlador
+        type  : 'POST',                       // Método HTTP deseado, POST es común para envío de datos
+        data  : { },
+        error : function(xhr,status,error)  {
+                                              console.error(error); // Manejo de errores
+                                            },
+        success : function(response)  {
+                                        $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
+                                      },
+      });
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
       // Define una función para actualizar el estado activo del menú
-      function actualizarEstadoActivo(id) {
-          // Elimina la clase activo de todos los elementos
-          document.querySelectorAll('.menu_principal div').forEach(function(el) {
-              el.classList.remove('activo');
-          });
-          // Añade la clase activo al elemento correcto
-          var elementoActivo = document.getElementById(id);
-          if (elementoActivo) {
-              elementoActivo.classList.add('activo');
-          }
+      function actualizarEstadoActivo(id){
+        // Elimina la clase activo de todos los elementos
+        document.querySelectorAll('.menu_principal div').forEach(function(el) {
+            el.classList.remove('activo');
+        });
+        // Añade la clase activo al elemento correcto
+        var elementoActivo = document.getElementById(id);
+        if (elementoActivo) {
+            elementoActivo.classList.add('activo');
+        }
       }
-
-      // Captura clics en los enlaces del menú y extensiones
+      // Captura clics en los enlaces del menu y extensiones
       document.querySelectorAll('.nav-link').forEach(function(link) {
         link.addEventListener('click', function() {
-          localStorage.setItem('ultimaPosicionMenu', this.id);
+            console.log("Guardando ID : ", this.id);  // Verificar en la consola
+            localStorage.setItem('ultimaPosicionMenu', this.id);
         });
       });
-
-     
-      // Evento de clic para el menú principal
+      // Evento de clic para el menu principal
       document.querySelector('.menu_principal').addEventListener('click', function(event) {
-          console.log("click - menu_principal");
-           // Asegúrate de que el clic fue en un elemento del menú
+          console.log("click - menu_principal : ",event.target.id);
+          // Asegúrate de que el clic fue en un elemento del menu
           if (event.target.id) {
-              // Guardar la posición del menú en localStorage
+              // Guardar la posición del menu en localStorage
               localStorage.setItem('ultimaPosicionMenu', event.target.id);
-              // Actualizar visualmente el menú activo
+              // Actualizar visualmente el menu activo
               actualizarEstadoActivo(event.target.id);
           }
       });
-
       // Al cargar la página, verifica si hay una posición guardada y actúa en consecuencia
-      var ultimaPosicion            = localStorage.getItem('ultimaPosicionMenu');
-      
-      console.log("-----------------------------------------------");
-      console.log("ultimaPosicion   = ",ultimaPosicion);
-
+      var ultimaPosicion                  =   localStorage.getItem('ultimaPosicionMenu');
+      console.log("Recuperando posición   :   ",ultimaPosicion);  // Verificar en la consola
       if (ultimaPosicion) {
-          var elementoActivo = document.getElementById(ultimaPosicion);
-          if (elementoActivo) {
-            if (elementoActivo) {
-                elementoActivo.classList.add('activo');
+         // Verificar si la posición incluye 'ext-'
+        if (ultimaPosicion.includes('ext-')) {
+            // Código adicional para manejar cuando hay 'ext-'
+            let last_extension = localStorage.getItem('ind_llamada_extension');
+            console.log("La posición incluye ext- y fue : ",last_extension);
+            star_ajax_extension(last_extension);
+        }
+        var elementoActivo = document.getElementById(ultimaPosicion);
+        if (elementoActivo) {
+            elementoActivo.classList.add('activo');
+            // Desplegar todos los menús padres
+            let parent = elementoActivo.parentElement;
+            while(parent) {
+                if (parent.matches('.nav')) { // Asegúrate de que esta condición coincida con tus elementos de menú
+                    parent.style.display = 'block'; // O agrega una clase que muestre el menú
+                    parent.classList.add('desplegado'); // Si tienes una clase específica para desplegar menús
+                }
+                parent = parent.parentElement; // Subir en el árbol del DOM
             }
-          }
+        }
       }
-
-
     });
-
-
-
   </script>
 </body>
 </html>

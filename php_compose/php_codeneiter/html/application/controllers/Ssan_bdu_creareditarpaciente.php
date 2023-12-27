@@ -14,6 +14,5 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $this->load->js("assets/ssan_bdu_creareditarpaciente/js/javascript.js");
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view',$data);
     }
-    
-}
 
+}
