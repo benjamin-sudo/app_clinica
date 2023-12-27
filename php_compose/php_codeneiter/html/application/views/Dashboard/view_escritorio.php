@@ -194,65 +194,65 @@
       js_gestion_menu();
     });
 
-    function js_gestion_menu(){
-
-            console.log("js_gestion_menu ini() ");
-
-            document.addEventListener('DOMContentLoaded', function() {
-              // Define una función para actualizar el estado activo del menú
-              function actualizarEstadoActivo(id) {
-                  // Elimina la clase activo de todos los elementos
-                  document.querySelectorAll('.menu_principal div').forEach(function(el) {
-                      el.classList.remove('activo');
-                  });
-                  // Añade la clase activo al elemento correcto
-                  var elementoActivo = document.getElementById(id);
-                  if (elementoActivo) {
-                      elementoActivo.classList.add('activo');
-                  }
-              }
-
-              // Captura clics en los enlaces del menú y extensiones
-              document.querySelectorAll('.nav-link').forEach(function(link) {
-                  link.addEventListener('click', function() {
-                      localStorage.setItem('ultimaPosicionMenu', this.id);
-                  });
-              });
-
-              // Restaurar el estado activo del último enlace seleccionado
-              var ultimaPosicion = localStorage.getItem('ultimaPosicionMenu');
-              if (ultimaPosicion) {
-                  actualizarEstadoActivo(ultimaPosicion);
-              }
-
-              // Evento de clic para el menú principal
-              document.querySelector('.menu_principal').addEventListener('click', function(event) {
-
-                  console.log("click - menu_principal");
-
-                  // Asegúrate de que el clic fue en un elemento del menú
-                  if (event.target.id) {
-                      // Guardar la posición del menú en localStorage
-                      localStorage.setItem('ultimaPosicionMenu', event.target.id);
-                      // Actualizar visualmente el menú activo
-                      actualizarEstadoActivo(event.target.id);
-                  }
-              });
-
-              // Al cargar la página, verifica si hay una posición guardada y actúa en consecuencia
-              var ultimaPosicion            = localStorage.getItem('ultimaPosicionMenu');
-              console.log("ultimaPosicion   = ",ultimaPosicion);
-              if (ultimaPosicion) {
-                  var elementoActivo = document.getElementById(ultimaPosicion);
-                  if (elementoActivo) {
-                    if (elementoActivo) {
-                        elementoActivo.classList.add('activo');
-                    }
-                  }
-              }
-        });
-
+  function js_gestion_menu(){
+    console.log("js_gestion_menu ini() ");
   }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Define una función para actualizar el estado activo del menú
+      function actualizarEstadoActivo(id) {
+          // Elimina la clase activo de todos los elementos
+          document.querySelectorAll('.menu_principal div').forEach(function(el) {
+              el.classList.remove('activo');
+          });
+          // Añade la clase activo al elemento correcto
+          var elementoActivo = document.getElementById(id);
+          if (elementoActivo) {
+              elementoActivo.classList.add('activo');
+          }
+      }
+
+      // Captura clics en los enlaces del menú y extensiones
+      document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          localStorage.setItem('ultimaPosicionMenu', this.id);
+        });
+      });
+
+     
+      // Evento de clic para el menú principal
+      document.querySelector('.menu_principal').addEventListener('click', function(event) {
+          console.log("click - menu_principal");
+           // Asegúrate de que el clic fue en un elemento del menú
+          if (event.target.id) {
+              // Guardar la posición del menú en localStorage
+              localStorage.setItem('ultimaPosicionMenu', event.target.id);
+              // Actualizar visualmente el menú activo
+              actualizarEstadoActivo(event.target.id);
+          }
+      });
+
+      // Al cargar la página, verifica si hay una posición guardada y actúa en consecuencia
+      var ultimaPosicion            = localStorage.getItem('ultimaPosicionMenu');
+      
+      console.log("-----------------------------------------------");
+      console.log("ultimaPosicion   = ",ultimaPosicion);
+
+      if (ultimaPosicion) {
+          var elementoActivo = document.getElementById(ultimaPosicion);
+          if (elementoActivo) {
+            if (elementoActivo) {
+                elementoActivo.classList.add('activo');
+            }
+          }
+      }
+
+
+    });
+
+
+
   </script>
 </body>
 </html>
