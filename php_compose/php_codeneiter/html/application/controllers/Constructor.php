@@ -44,10 +44,13 @@ class Constructor extends CI_Controller {
                 'LASTLOGIN'     =>  $userL->LASTLOGIN,
                 'loginFr'       =>  'si',
                 'MENUARRFR'     =>  $user['menu'],
+                'COD_ESTAB'     =>  '',
             );
             $this->session->set_userdata($newdata);
             $redirect = 'Dashboard';
-        } 
+        }
+        
+        
         $this->output->set_output(json_encode([
             'status'    =>  $status,
             'redirect'  =>  $redirect,
