@@ -14,8 +14,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     public function index(){
         $this->output->set_template('blank');
         $data = [
-            'USERNAME'  =>  '2',
-            'COD_ESTAB' =>  '1'
+            'USERNAME'  =>  $this->session->userdata('USERNAME'),
+            'COD_ESTAB' =>  $this->session->userdata('COD_ESTAB');
         ];
         $this->load->css("assets/ssan_bdu_creareditarpaciente/css/styles.css");
         $this->load->js("assets/ssan_bdu_creareditarpaciente/js/javascript.js");

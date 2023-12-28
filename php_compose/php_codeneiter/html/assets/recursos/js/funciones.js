@@ -526,7 +526,6 @@ function resetearClaves() {
 }
 
 function logoutSes() {
-
     var id = "respuesta";
     var funcion = 'cierresesion';
     var variables = {}
@@ -534,15 +533,12 @@ function logoutSes() {
 }
 
 function guardacontra() {
-
     var txtPassNueva = $("#txtPassNueva").val();
     var txtRePassNueva = $("#txtRePassNueva").val();
     if ($('#txtPassNueva').val() != $('#txtRePassNueva').val()) {
         $("#mensaje2").html('ContraseÃ±as no coinciden.');
         $("#TDtxtRePassNueva").attr("style", "background-color:#FA5858;");
     } else {
-
-
         var variables = { "funcion": 6, "txtPassNueva": txtPassNueva, "txtRePassNueva": txtRePassNueva }
         var id = "guardaUsu";
         ajax(variables, id);
@@ -550,7 +546,6 @@ function guardacontra() {
 }
 
 function rellenadatos() {
-
     var funcion = "rellenadatos";
     var variables = {}
     var id = "datosusu";
@@ -580,12 +575,10 @@ function enter(valor) {
 }
 
 function CambioPass() {
-
     var txtPassOLD = $("#txtPassOLD").val();
     var txtPassNueva = $("#txtPassNueva1").val();
     var txtRePassNueva = $("#txtRePassNueva1").val();
     var nivelPass = $("#nivContr0").val();
-
     if (txtPassNueva == '' || txtRePassNueva == '') {
         jWarning("La ContraseÃ±a no puede estar vacia", "RestricciÃ³n");
     } else if (nivelPass == 'Pobre') {
@@ -618,8 +611,6 @@ function guardausu() {
     if ($('#txtRut').val() === '' || $('#txtRutDig').val() === '' || $('#txtNombresUsu').val() === '' || $('#txtApellidoP').val() === '' || $('#txtApellidoM').val() === '' || $('#txtCorreo').val() === '' || $('#txtFono').val() === '' || $('#txtPassNueva').val() === '' || $('#txtRePassNueva').val() === '') {
         alert('Rellene los campos vacios');
     } else {
-
-
         var rut = $("#txtRut").val();
         var txtRutDig = $("#txtRutDig").val();
         var Nombre = $("#txtNombresUsu").val();
@@ -802,8 +793,6 @@ function ValPassFirmaIgualesFs() {
     }
 }
 
-
-
 function salirpopupfirmasimple() {
     $('#firmsimple').dialog('close');
 }
@@ -842,9 +831,6 @@ function CambioFirma() {
 
 }
 
-
-
-
 function ValPassFirmaIguales() {
     if ($('#txtPassFirmaS1').val() != $('#txtPassFirmaS2').val()) {
         $("#mensaje2").html('ContraseÃ±as no coinciden.');
@@ -879,7 +865,6 @@ function firmasimplexemail2(idusu, token) {
 
 
 $(document).ready(function() {
-
     jQuery.browser = {};
     jQuery.browser.msie = false;
     jQuery.browser.version = 0;
@@ -887,10 +872,8 @@ $(document).ready(function() {
         jQuery.browser.msie = true;
         jQuery.browser.version = RegExp.$1;
     }
-
-
-
 });
+
 $.maxZIndex = $.fn.maxZIndex = function(opt) {
     /// <summary>
     /// Returns the max zOrder in the document (no parameter)
@@ -991,8 +974,6 @@ function botX() {
 }
 
 function desplegar(val) {
-
-
     if (val == 3) {
         $('#firmasimple').hide(500);
         $("#formContenido").show(500);
@@ -1167,7 +1148,6 @@ $().ready(function() {
 });
 
 function mensaje(num) {
-
     if (num == 1) {
         $('#oculto').val(1);
     } else if (num == 2) {
@@ -1177,60 +1157,45 @@ function mensaje(num) {
     }
 }
 
-
 function ValidaBloqueo(num) {
-
     if (num == 1) {
         $("#btnEditarMenu").attr("disabled", true);
     } else if (num == 0) {
         $("#btnEditarMenu").attr("disabled", false);
     }
-
-
 }
 
 ////Funcion Global para consultas Ajax
-
 function ajax(variables, id, funcion) {
-
     var imagens = '<img src="assets/themes/frontend/img/loadings.gif" style="width:100%; height:4px">';
     $.ajax({
-        type: "POST",
-        dataType: "text",
-        url: "frontend/" + funcion,
-        data: variables,
-        beforeSend: function() {
-            //$("#carga").html(imagens);
-            $("#" + id).html(imagens);
-        },
-        success: function(datos) {
-            $("#" + id).html(datos);
-        },
-        timeout: 4000,
-        cache: false,
-        error: $("#" + id).text('Problemas en el servidor.')
+        type        :   "POST",
+        dataType    :   "text",
+        url         :   "frontend/" + funcion,
+        data        :   variables,
+        beforeSend  :   function()  {
+                                        $("#" + id).html(imagens);
+                                    },
+        success     :   function(datos) {
+                                            $("#" + id).html(datos);
+                                        },
+        timeout     :   4000,
+        cache       :   false,
+        error       :   $("#" + id).text('Problemas en el servidor.')
     });
 }
 
-
-
-
 function ajaxLog(variables, id, funcion) {
-
     $.ajax({
-        type: "POST",
-        dataType: "text",
-        url: "inicio/" + funcion,
-        data: variables,
-        beforeSend: function() {
-            $("#" + id).html('<img src="assets/themes/esissan/img/cargando.gif">');
-        },
-        success: function(datos) {
-            $("#" + id).html(datos);
-        },
-        timeout: 4000,
-        cache: false,
-        error: $("#" + id).text('Problemas en el servidor.')
+        type        :   "POST",
+        dataType    :   "text",
+        url         :   "inicio/" + funcion,
+        data        :   variables,
+        beforeSend  :   function() {  $("#" + id).html('<img src="assets/themes/esissan/img/cargando.gif">');   },
+        success     :   function(datos) {   $("#" + id).html(datos);  },
+        timeout     :   4000,
+        cache       :   false,
+        error       :   $("#" + id).text('Problemas en el servidor.')
     });
 }
 
@@ -1239,9 +1204,9 @@ function expan() {
 }
 
 function verificaFinal_0(ius, tok) {
-    var funcion = "verificaFinal";
-    var id = "respuesta";
-    var variables = { "ius": ius, "tok": tok }
+    var funcion     =   "verificaFinal";
+    var id          =   "respuesta";
+    var variables   =   { "ius": ius, "tok": tok }
     AjaxExt(variables, id, funcion);
 }
 
@@ -1320,5 +1285,6 @@ function AjaxExtJsonAll(datos) {
         }
     });
     return true;
-
 }
+
+

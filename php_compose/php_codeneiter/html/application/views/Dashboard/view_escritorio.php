@@ -14,23 +14,13 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
-
- 
-
-  <!-- https://github.com/cyberzilla/jAlert -->
   <!-- jalert css -->
   <link href="assets/recursos/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-
-
   <!-- Bootstrap Icons v1.11.2 -->
-  <!--
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-  -->
   <!-- select min  -->
-  <!--
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
-  -->
- 
+  
  
   <style>
     .nav-link.activo{ }
@@ -173,31 +163,27 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
   <!-- jQuery -->
   <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
-  <!-- Bootstrap 4 -->
-  <!--
+  <!-- Bootstrap 4 
   <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   -->
   <!-- Bootstrap 5 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  
   <!-- AdminLTE App -->
   <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
   <!-- Validador rut -->
   <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js" ></script>
   <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
-  
+  <!-- jalert y otro -->
   <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
   <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
-  <!--
-  <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
-  -->
-  <!--
+  <!-- otros -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
-  -->
+
   <script>
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){

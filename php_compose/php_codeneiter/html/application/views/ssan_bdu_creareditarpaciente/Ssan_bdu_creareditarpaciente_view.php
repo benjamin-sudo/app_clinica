@@ -213,8 +213,8 @@
 <div id="dialogo_prestacion"></div>
 <div id="respuesta"></div>
 <input type="hidden" id="indTemplateNum" name="indTemplateNum" value="1"/>
-<input type="hidden" id="USERNAME" name="USERNAME" value="<?php echo $USERNAME; ?>"/>
-<input type="hidden" id="COD_ESTAB" name="COD_ESTAB" value="<?php echo $COD_ESTAB; ?>"/>
+<input type="text" id="USERNAME" name="USERNAME" value="<?php echo $USERNAME; ?>"/>
+<input type="text" id="COD_ESTAB" name="COD_ESTAB" value="<?php echo $COD_ESTAB; ?>"/>
 
 
 
