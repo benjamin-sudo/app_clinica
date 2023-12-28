@@ -65,15 +65,18 @@
       </div>
     </div>
 </section>
+
 <script type="text/javascript" src="recursos/js/bootstrap/dist/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="recursos/js/socket/4_6_1/socket.io.js"></script>
 <script type="text/javascript" src="recursos/js/jquery/1_12_4/jquery.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/jquery-ui.js"></script>
+
 <!-- VALIDADOR RUT -->
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.js" ></script>
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/jquery.alerts.mod.js"></script>
 <!-- OTROS -->
+
 <script type="text/javascript" src="assets/themes/js/jquery.easy-autocomplete.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/funciones.js" ></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>

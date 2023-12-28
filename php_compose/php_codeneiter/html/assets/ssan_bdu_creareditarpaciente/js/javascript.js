@@ -31,7 +31,7 @@ $(document).ready(function(){
         $('#Btn_bdu').attr('onClick','');
         $("#Btn_bdu").addClass("disabled");
         $('#btn_rut').attr('disabled',false);
-	$('#Btn_bdu').attr("disabled",false);
+	    $('#Btn_bdu').attr("disabled",false);
         $("#respuesta").html("");
         //$('#Btn_bdu').prop("disabled",true);
         //$('#Btn_bdu').hide();
@@ -61,10 +61,7 @@ $(document).ready(function(){
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
-
-    
-    jError("Debe Ingresar a lo menos un parametro para la busqueda", "Restricci\u00f3n");
-
+    jAlert("Debe Ingresar a lo menos un parametro para la busqueda", "Restricci\u00f3n");
 });
 
 function nuevo_reciennacido(value){
@@ -74,17 +71,16 @@ function nuevo_reciennacido(value){
         dataType    :	"json",
         data        :	{   },
         error       :	function(errro)	    { 
-						console.log(errro.responseText); 
-						jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                            console.log(errro.responseText); 
+                            jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
 					    },
         success     :	function(aData)	    {	
                                                 console.log("-------------");
                                                 console.log(aData);
-                                                console.log("-------------");
                                                 if(AjaxExtJsonAll(aData)){
                                                     $("#MODAL_RECIEN_NACIDO").modal("show");
                                                 } 
-                			    }, 
+                			                }, 
     });
     
     /*
