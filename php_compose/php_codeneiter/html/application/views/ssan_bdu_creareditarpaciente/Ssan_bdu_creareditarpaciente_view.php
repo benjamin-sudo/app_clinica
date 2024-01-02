@@ -8,9 +8,7 @@
         <?php echo date('d-m-Y');?>
     </div>
 </div>
-
 <hr>
-
 <div class="grid_body_bdu">
     <div class="card grid_body_bdu1">
 
@@ -113,15 +111,14 @@
             </table>
             <div class="row">
                 <div class="col-xs-1 center-block">
-                <div style="text-align:center;" align="center">  
-                            <div id="new_paginacion" style="display: none;"></div>
-                        </div>
+                    <div style="text-align:center;" align="center">  
+                        <div id="new_paginacion" style="display: none;"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <section>
     <div class="modal fade bs-example-modal-lg" id="modalPaciente">
@@ -172,8 +169,6 @@
         </div>
     </div>
 
-
-    <!--------------------  RECIEN NACIDO ---------------------->
     <div class="modal fade" id="MODAL_RECIEN_NACIDO">
         <div class="modal-dialog modal-xl3">
         <div class="modal-content">
@@ -188,8 +183,6 @@
         </div>
         </div>
     </div>
-    <!--------------------  RECIEN NACIDO ---------------------->
-
 
     <div class="modal fade" id="MODAL_RECIEN_NACIDO">
         <div class="modal-dialog modal-xl3">
@@ -206,10 +199,11 @@
         </div>
     </div>
 
-
-    <div id="dialogo_prestacion"></div>
     <div id="respuesta"></div>
-    <input type="hidden" id="indTemplateNum" name="indTemplateNum" value="1"/>
-    <input type="text" id="USERNAME" name="USERNAME" value="<?php echo $USERNAME; ?>"/>
-    <input type="text" id="COD_ESTAB" name="COD_ESTAB" value="<?php echo $COD_ESTAB; ?>"/>
+    <div id="dialogo_prestacion"></div>
+    
+    <input type="hidden" name="indTemplateNum"  id="indTemplateNum"     value="1"/>
+    <input type="hidden" name="USERNAME"        id="USERNAME"           value="<?php echo $USERNAME; ?>"/>
+    <input type="hidden" name="COD_ESTAB"       id="COD_ESTAB"          value="<?php echo $COD_ESTAB; ?>"/>
+
 </section>

@@ -28,9 +28,8 @@ class Constructor extends CI_Controller {
         if($user['status']){   
             $userL                      =   $user['row'];
             $unique                     =   str_replace('-','', $userL->USERNAME).$this->getRandomCode();
-            
+            ##################################
             #falta agregar empresa por default
-
             $empresas                   =   '100';
             $_SESSION["IP"]             =   $this->input->ip_address();
             $_SESSION["ID_UID"]         =   $userL->ID_UID;
@@ -40,7 +39,6 @@ class Constructor extends CI_Controller {
             $_SESSION["FONOSESSION"]    =   $userL->TELEPHONE;
             $_SESSION["loginFr"]        =   'si';
             $_SESSION["COD_ESTAB"]      =   $empresas;
-            
             $newdata            =   array(
                 'unique'        =>  $unique,
                 'ID_UID'        =>  $userL->ID_UID,
@@ -76,18 +74,18 @@ class Constructor extends CI_Controller {
     }
     
     public function getRandomCode() {
-        $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $su = strlen($an) - 1;
-        return substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1) .
-            substr($an, rand(0, $su), 1);
+        $an     =   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $su     =   strlen($an) - 1;
+        return  substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1) .
+                substr($an, rand(0, $su), 1);
     }
 }
 ?>

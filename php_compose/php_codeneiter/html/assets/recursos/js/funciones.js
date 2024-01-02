@@ -78,7 +78,7 @@ function validaPass(idPass, idError) {
 }
 
 function confirmDatPss() {
-
+    var err = '';
     var idUsrS = $('#idUsrS').val();
     var nombres = $('#nameUsr').val();
     var apePat = $('#apePatUsr').val();
@@ -89,7 +89,7 @@ function confirmDatPss() {
     var passNew = $('#password1').val();
     var passNew2 = $('#passNew2Usr').val();
     var nivPass = $('#nivContr').val();
-    var err = '';
+    
     if (nombres === '') {
         err += 'Nombres\n';
     } else if (apePat === '') {
@@ -124,7 +124,6 @@ function confirmDatPss() {
         var variables = { idUsrS: idUsrS, nombres: nombres, apePat: apePat, apeMat: apeMat, email: email, fono: fono, passActual: passActual, passNew: passNew };
         AjaxExt(variables, 'respuesta', 'confirNewDat', '', 'inicio');
     }
-
 }
 
 function $_GET(param) {
@@ -181,11 +180,8 @@ function removeMenu() {
 
 }
 
-
-
 //Funcion General de Ajax
 function AjaxExt(variables, id, funcion, tipDest, extension) {
-
     var imagens = '<img src="assets/themes/frontend/img/loadings.gif" style="width:100%; height:4px">';
     if (extension == undefined || extension == '') {
         var URLactual = jQuery(location).attr('href');
@@ -231,7 +227,6 @@ function AjaxExt(variables, id, funcion, tipDest, extension) {
                 $("#" + id).html(data);
                 break;
         }
-
 
         $("#carga").html("");
         $("#cargaSecundaria").html("");
@@ -285,7 +280,6 @@ function ocMen() {
         stateM = 0;
     }
 }
-
 
 // function selectM(ext, idPrin, idMen) {
 //     window.location = ext + '?id=' + idMen + '&m=' + idPrin;
@@ -398,7 +392,6 @@ function login() {
 }
 
 function sesiones() {
-
     $('#iconSes').attr('class', 'fa fa-spinner fa-spin');
     var funcion = 'arraymenu';
     var id = "ocultosesion";
@@ -423,9 +416,7 @@ function load() {
 function loadDash() {
     var idSel = $_GET('m');
     var idMen = $_GET('id');
-
     // var controller = traeController();
-
     //    var funcion = 'loadMenuDashBoard';
     var funcion = 'loadMenuMaterial';
     var variables = { idSel: idSel, idMen: idMen, controller: 'frontend' };
@@ -482,7 +473,6 @@ function obtGet() {
             i++;
         }
     }
-
     return id;
 }
 
