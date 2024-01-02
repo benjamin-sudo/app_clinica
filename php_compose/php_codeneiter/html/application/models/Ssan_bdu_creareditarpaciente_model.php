@@ -9,13 +9,15 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
+        $this->conex = $this->load->database('oracle_conteiner',true);
         #$this->load->model("sql_class/sql_class_ggpacientes");
         #$this->load->model("sql_class/sqlclass_archivo");
         #$this->load->model("sql_class/sql_class_pabellon");
     }
 
-    public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete){
 
+    
+    public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete){
         if ($identifier == '' and $pasaporte == ''){
             $query =  $this->db->select('   
                                             G.NUM_FICHAE            FALLECIDO,

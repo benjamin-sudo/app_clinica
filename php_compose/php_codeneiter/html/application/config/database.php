@@ -97,7 +97,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		#'port'          =>  9306,
 	);
 
-	$tsname_all 		= '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = oracle_slim )(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = FREEPDB1)))';
+	$tsname_all 		= '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = oracle_slim)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = FREEPDB1)))';
 	$db['oracle_conteiner']	= array(
 		'dsn' 			=> '',
 		'hostname' 		=> 	$tsname_all,

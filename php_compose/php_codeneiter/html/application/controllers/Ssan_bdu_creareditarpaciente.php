@@ -5,7 +5,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        #$this->load->model("ssan_bdu_creareditarpaciente_model");
+        $this->load->model("ssan_bdu_creareditarpaciente_model");
     }
 
     public function index(){
@@ -19,10 +19,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view',$data);
     }
 
-
-
-
-    
 
     public function buscarPac(){
         if (!$this->input->is_ajax_request()) {  show_404(); }

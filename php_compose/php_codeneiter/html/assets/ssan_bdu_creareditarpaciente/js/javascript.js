@@ -108,7 +108,7 @@ function buscar(OP,LIM_INI){
         $("#apellidoP").css("border-color","red");
         $("#apellidoM").css("border-color","red");
         $("#resultados").html('');
-        $("#result").hide();
+        //$("#result").hide();
         document.getElementById("btn_buscageneral").disabled = false;
     } else {
         $("#icoSe").hide();
