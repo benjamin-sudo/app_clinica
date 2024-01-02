@@ -36,7 +36,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $OP                 =    $this->input->post("OP");
         $templete           =    $this->input->post("templete");
 
-        if ($tipoPac        == 0) {
+        if ($tipoPac        ==  0) {
             $isnal          =    '1';
             $identifier     =    $rut;
             $pasaporte      =    '';
@@ -56,8 +56,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             if ($this->session->userdata("SISTYPO") != 1) {
                 //$script	    .=		'window.location = "../../inicio"';
             }
-            $script        .=    '});</script>';
-            $aDatos[]        =    array('id_html' => 'respuesta', 'opcion' => 'append', 'contenido' => $script);
+            $script        .=   '});</script>';
+            $aDatos[]       =   array('id_html' => 'respuesta', 'opcion' => 'append', 'contenido' => $script);
             $this->output->set_output(json_encode($aDatos));
             return false;
         }
@@ -87,7 +87,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 $row['FEC_VENCEPASPORT'];     
                 */
                 $IND_EXTRANJERO        =    $row['IND_EXTRANJERO'];
-
                 if (($row['COD_PAIS'] == 'CL') || ($row['IND_EXTRANJERO'] == '0')) {
                     $EXTRAN = '';
                 } else if ($row['IND_EXTRANJERO'] == '1') {
