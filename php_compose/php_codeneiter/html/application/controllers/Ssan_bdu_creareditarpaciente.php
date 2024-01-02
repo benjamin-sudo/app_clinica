@@ -19,6 +19,11 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view',$data);
     }
 
+
+
+
+    
+
     public function buscarPac(){
         if (!$this->input->is_ajax_request()) {  show_404(); }
 	    $codEmpresa         =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");

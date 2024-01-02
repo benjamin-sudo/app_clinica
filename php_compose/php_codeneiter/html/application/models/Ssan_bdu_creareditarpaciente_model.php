@@ -1,7 +1,5 @@
 <?php
-
 defined("BASEPATH") OR exit("No direct script access allowed");
-
 //require_once(APPPATH . '/models/ClassFonasa/libsp/nusoapwsf.php');
 
 class ssan_bdu_creareditarpaciente_model extends CI_Model {
@@ -16,24 +14,26 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         #$this->load->model("sql_class/sql_class_pabellon");
     }
 
-    public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete) {
+    public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete){
+
         if ($identifier == '' and $pasaporte == ''){
-          $query =  $this->db->select('G.NUM_FICHAE            FALLECIDO,
-                                A.COD_PAIS,
-                                A.NUM_IDENTIFICACION,
-                                A.FEC_VENCEPASPORT,
-                                A.COD_RUTPAC,
-                                A.COD_DIGVER,
-                                A.NOM_NOMBRE,
-                                A.NOM_APEPAT,
-                                A.NOM_APEMAT,
-                                A.FEC_NACIMI,
-                                A.IND_TISEXO,
-                                A.NUM_FICHAE,
-				                A.IND_EXTRANJERO,
-                                F.NUM_NFICHA,
-                                COUNT(*) OVER () RESULT_COUNT
-                            ');
+            $query =  $this->db->select('   
+                                            G.NUM_FICHAE            FALLECIDO,
+                                            A.COD_PAIS,
+                                            A.NUM_IDENTIFICACION,
+                                            A.FEC_VENCEPASPORT,
+                                            A.COD_RUTPAC,
+                                            A.COD_DIGVER,
+                                            A.NOM_NOMBRE,
+                                            A.NOM_APEPAT,
+                                            A.NOM_APEMAT,
+                                            A.FEC_NACIMI,
+                                            A.IND_TISEXO,
+                                            A.NUM_FICHAE,
+                                            A.IND_EXTRANJERO,
+                                            F.NUM_NFICHA,
+                                            COUNT(*) OVER () RESULT_COUNT
+                                        ');
             $this->db->from($this->tableSpace . '.GG_TGPACTE A');
 	
             if ($templete == 1 || $templete == 4 || $templete == 5) {

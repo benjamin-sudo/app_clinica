@@ -73,6 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	$active_group 		= 	'session';
 	$query_builder 		= 	TRUE;
+
 	$db['session'] 		= 	array(
 		'dsn'			=> 	'',
 		'hostname' 		=> 	'mysql_6:3306',
@@ -95,6 +96,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'save_queries' 	=> 	TRUE,
 		#'port'          =>  9306,
 	);
+
+	$tsname_all 		= '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = oracle_slim )(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = FREEPDB1)))';
+	$db['oracle_conteiner']	= array(
+		'dsn' 			=> '',
+		'hostname' 		=> 	$tsname_all,
+		'username' 		=> 	'admin',
+		'password' 		=> 	'ssprueba.210',
+		'database' 		=> 	'XEPDB1',
+		'dbdriver' 		=> 	'oci8',
+		'dbprefix' 		=> 	'',
+		'pconnect' 		=> 	FALSE,
+		'db_debug' 		=> 	TRUE,
+		'cache_on' 		=> 	FALSE,
+		'cachedir' 		=> 	'',
+		'char_set' 		=> 	'utf8',
+		'dbcollat' 		=> 	'utf8_general_ci',
+		'swap_pre' 		=> 	'',
+		'encrypt' 		=> 	FALSE,
+		'compress' 		=> 	FALSE,
+		'autoinit' 		=> 	FALSE,
+		'stricton' 		=> 	FALSE,
+		'failover' 		=> 	array(),
+		'save_queries' 	=> 	FALSE
+	);
+
+
 
 	/*
 	public array $default = [

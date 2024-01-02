@@ -8,7 +8,9 @@
         <?php echo date('d-m-Y');?>
     </div>
 </div>
+
 <hr>
+
 <div class="grid_body_bdu">
     <div class="card grid_body_bdu1">
 
@@ -158,14 +160,14 @@
         <div class="modal-dialog modal-xl3">
         <div class="modal-content">
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3 class="modal-title" id="tituloModal"><B>API PERCAPITA</B></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="tituloModal"><B>API PERCAPITA</B></h3>
             </div>
             <div class="modal-body" id="HTML_PERCAPITA"></div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 
