@@ -113,11 +113,9 @@
             </table>
             <div class="row">
                 <div class="col-xs-1 center-block">
-                    <center>
-                        <div style="text-align:center;" align="center">  
+                <div style="text-align:center;" align="center">  
                             <div id="new_paginacion" style="display: none;"></div>
                         </div>
-                    </center>
                 </div>
             </div>
         </div>
@@ -175,54 +173,43 @@
     </div>
 
 
-<!--------------------  RECIEN NACIDO ---------------------->
-<div class="modal fade" id="MODAL_RECIEN_NACIDO">
-    <div class="modal-dialog modal-xl3">
-	<div class="modal-content">
-	    <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 class="modal-title" id="tituloModal"><b>FORMULARIO RECIEN NACIDO</b></h3>
-	    </div>
-	    <div class="modal-body" id="HTML_FORM_RN"></div>
-	    <div class="modal-footer">
-		<button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
-	    </div>
-	</div>
-    </div>
-</div>
-<!--------------------  RECIEN NACIDO ---------------------->
-
-
-<div class="modal fade" id="MODAL_RECIEN_NACIDO">
-    <div class="modal-dialog modal-xl3">
-	    <div class="modal-content">
-	        <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    <h3 class="modal-title" id="tituloModal"><b>FORMULARIO RECIEN NACIDO</b></h3>
-	    </div>
-	    <div class="modal-body" id="HTML_FORM_RN"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
+    <!--------------------  RECIEN NACIDO ---------------------->
+    <div class="modal fade" id="MODAL_RECIEN_NACIDO">
+        <div class="modal-dialog modal-xl3">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="modal-title" id="tituloModal"><b>FORMULARIO RECIEN NACIDO</b></h3>
             </div>
-	    </div>
+            <div class="modal-body" id="HTML_FORM_RN"></div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
+            </div>
+        </div>
+        </div>
     </div>
-</div>
+    <!--------------------  RECIEN NACIDO ---------------------->
 
 
+    <div class="modal fade" id="MODAL_RECIEN_NACIDO">
+        <div class="modal-dialog modal-xl3">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="tituloModal"><b>FORMULARIO RECIEN NACIDO</b></h3>
+            </div>
+            <div class="modal-body" id="HTML_FORM_RN"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div id="dialogo_prestacion"></div>
-<div id="respuesta"></div>
-<input type="hidden" id="indTemplateNum" name="indTemplateNum" value="1"/>
-<input type="text" id="USERNAME" name="USERNAME" value="<?php echo $USERNAME; ?>"/>
-<input type="text" id="COD_ESTAB" name="COD_ESTAB" value="<?php echo $COD_ESTAB; ?>"/>
 
-
-
-
-
+    <div id="dialogo_prestacion"></div>
+    <div id="respuesta"></div>
+    <input type="hidden" id="indTemplateNum" name="indTemplateNum" value="1"/>
+    <input type="text" id="USERNAME" name="USERNAME" value="<?php echo $USERNAME; ?>"/>
+    <input type="text" id="COD_ESTAB" name="COD_ESTAB" value="<?php echo $COD_ESTAB; ?>"/>
 </section>
-
-
-
-
-
