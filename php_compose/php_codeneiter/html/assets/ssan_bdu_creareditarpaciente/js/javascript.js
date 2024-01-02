@@ -55,18 +55,21 @@ $(document).ready(function(){
         $("#modalPaciente").css("z-index","1500"); 
         $("#HTML_PERCAPITA").html('');
     });
+
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 3                                   ");
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
+
+    $('.dropdown-toggle').dropdown();
+
     //jAlert("Debe Ingresar a lo menos un parametro para la busqueda", "Restricci\u00f3n");
 });
 
 
 
 function buscar(OP,LIM_INI){
-    
     $("#rut").css("border-color","");
     $("#dni").css("border-color","");
     $("#name").css("border-color","");
@@ -75,9 +78,7 @@ function buscar(OP,LIM_INI){
     $("#apellidoM").css("border-color","");
     $("#resultados").append('<tr id="msj_load"><td style="text-align:center" colspan="11"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i> <span class="sr-only"></span><b>BUSCANDO...</b></td></tr>');
     if(OP==0){ $("#paginacion_bdu").html(''); }else {  }
-    
     document.getElementById("btn_buscageneral").disabled = true;
-     
     var rut         =	$("#rut").val();
     var pasaporte   =	$("#dni").val();
     var nombre      =	$("#name").val();
@@ -111,10 +112,12 @@ function buscar(OP,LIM_INI){
         //$("#result").hide();
         document.getElementById("btn_buscageneral").disabled = false;
     } else {
+
         $("#icoSe").hide();
         $("#respuesta").hide();
         $("#icoLoa").css('display','inline-block');
         $("#txBusc").html('Buscando');
+
         $.ajax({ 
             type            :	"POST",
             url             :	"ssan_bdu_creareditarpaciente/buscarPac",
@@ -133,11 +136,15 @@ function buscar(OP,LIM_INI){
                                     numxpag     :   numxpag,
                                     OP          :   OP,
                                     templete    :   $("#indTemplateNum").val(),
-				    
-				    USERNAME    :   $("#USERNAME").val(),
+				                    USERNAME    :   $("#USERNAME").val(),
                                     COD_ESTAB   :   $("#COD_ESTAB").val(),
                                 },
-            error           :	function(errro){  console.log(errro.responseText); console.log(errro); $("#resultados").html(''); document.getElementById("btn_buscageneral").disabled = false; jAlert("Error General, Consulte Al Administrador"); },
+            error           :	function(errro) {  
+                                                    console.log(errro); 
+                                                    $("#resultados").html(''); 
+                                                    document.getElementById("btn_buscageneral").disabled = false; 
+                                                    jAlert("Error General, Consulte Al Administrador"); 
+                                                },
             success         :	function(aData){ 
                                                     $("#resultados").html(''); 
                                                     document.getElementById("btn_buscageneral").disabled = false; 
@@ -561,23 +568,26 @@ function FormModal(isNal,numFichae){
         type        :	"POST",
         url         :	"ssan_bdu_creareditarpaciente/CreaEditaPaciente",
         dataType    :	"json",
-        data        :	
-			{ 
-			    numFichae   :   numFichae,
-			    isNal       :   isNal,
-			    template    :   $("#indTemplateNum").val(),
-			    Numedad	:   '0',
-			},
+        data        :	{ 
+                            numFichae   :   numFichae,
+                            isNal       :   isNal,
+                            template    :   $("#indTemplateNum").val(),
+                            Numedad	    :   '0',
+                        },
         error      :	function(errro)	    {  
-						console.log(errro);
-						$("#HTML_DIALOGO").html('');	 
-						jError("Error General, Consulte Al Administrador"); 
+                            console.log(errro);
+                            $("#HTML_DIALOGO").html('');	 
+                            jError("Error General, Consulte Al Administrador"); 
 					    },
         success    :	function(aData)	    {    
-						$("#HTML_DIALOGO").html('');	
-						AjaxExtJsonAll(aData); 
+						    
+                            console.log("aData  ->  ",aData);
+                            //$("#HTML_DIALOGO").html('');	
+						    //AjaxExtJsonAll(aData); 
+
 					    }, 
     });
+    
     $("#modalPaciente").modal("show");
 }
 

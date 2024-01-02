@@ -8,19 +8,25 @@
   <meta name="robots" content="all, index, follow"/>
   <meta name="googlebot" content="all, index, follow">
   <title>Clinica Libre</title>
+
+  <!-- Bootstrap 5.2 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- Bootstrap Icons v1.11.2 -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <!-- Font Awesome -->
+  <!--
+  <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
+  -->
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
   <!-- jalert css -->
   <link href="assets/recursos/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-  <!-- Bootstrap Icons v1.11.2 -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
   <!-- select min  -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
- 
   <style>
     .nav-link.activo{ }
   </style>
@@ -163,14 +169,18 @@
 </div>
 <!-- ./wrapper -->
 
-  <!-- jQuery -->
+  <!-- jQuery v3.6.0 -->
   <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI - v1.12.0-rc.2  -->
   <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
-  <!-- Bootstrap 4 
-  <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  -->
   <!-- Bootstrap 5 -->
+  <!--
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
   <!-- AdminLTE App -->
   <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
   <!-- Validador rut -->
@@ -183,6 +193,8 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
 
+
+  
   <script>
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){
@@ -194,15 +206,15 @@
     });
     function star_ajax_extension(url){
       $.ajax({
-        url   : url,                          // Ruta al metodo del controlador
-        type  : 'POST',                       // Método HTTP deseado, POST es común para envío de datos
-        data  : { },
-        error : function(xhr,status,error)  {
-                                              console.error(error); // Manejo de errores
-                                            },
-        success : function(response)  {
-                                        $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
-                                      },
+        url     :   url,                          // Ruta al metodo del controlador
+        type    :   'POST',                       // Método HTTP deseado, POST es común para envío de datos
+        data    :   {},
+        error   :   function(xhr,status,error)  {
+                                                  console.error(error); // Manejo de errores
+                                                },
+        success :   function(response)  {
+                                          $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
+                                        },
       });
     }
     document.addEventListener('DOMContentLoaded', function() {

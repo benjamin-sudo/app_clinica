@@ -1,37 +1,29 @@
 <div class="grid_cabecera_bdu">
     <div class="grid_cabecera_bdu1">
-        <h4 class="title" style="color:#e34f49;margin:0px;">
-            <b>GESTOR &Uacute;NICO DE PACIENTES</b>
-        </h4>
+        <h4 class="title" style="color:#e34f49;margin:0px;"><b>GESTOR &Uacute;NICO DE PACIENTES</b></h4>
     </div>
     <div class="grid_cabecera_bdu1">
-        <?php echo date('d-m-Y');?>
+        <div class="dropdown"  id="btn_crear">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Nuevo Paciente
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a href="javascript:FormModal(1,'')" class="dropdown-item"><i class="fa fa-user-circle"       aria-hidden="true"></i>&nbsp;PACIENTE NACIONAL</a></li>
+                <li><a href="javascript:FormModal(0,'')" class="dropdown-item"><i class="fa fa-universal-access"  aria-hidden="true"></i>&nbsp;PACIENTE EXTRANJERO</a></li>
+            </div>
+        </div>
     </div>
 </div>
 
-<hr>
-
 <div class="grid_body_bdu">
     <div class="card grid_body_bdu1">
-
-        <table class="table table-striped" width="100%">
+        <table class="table table-striped" width="100%" style="margin-bottom:0px;">
             <tr class="success">
                 <td style="width:40%;text-align: right;">
                     <div id="titulo_nombre"><b>PACIENTE/EDITAR</b></div>
                 </td>
                 <td style="width:60%">
-                    <div class="dropdown" id="btn_crear">
-                        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-                            <i class="fa fa-address-card-o" aria-hidden="true"></i>  <b>AGREGAR/EDITAR PACIENTE</b>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:FormModal(1,'')"><i class="fa fa-user-circle"       aria-hidden="true"></i>&nbsp;PACIENTE NACIONAL</a></li>
-                            <li><a href="javascript:FormModal(0,'')"><i class="fa fa-universal-access"  aria-hidden="true"></i>&nbsp;PACIENTE EXTRANJERO</a></li>
-                            <li><a href="javascript:FormModal(3,'')"><i class="fa fa-child"             aria-hidden="true"></i>&nbsp;PACIENTE R.N</a></li>
-                            <li><a href="javascript:nuevo_reciennacido()"><i class="fa fa-child"        aria-hidden="true"></i>&nbsp;PACIENTE R.N 2</a></li>
-                        </ul>
-                    </div>
+                    --
                 </td>
             </tr>
             <tr id="trTipo">
