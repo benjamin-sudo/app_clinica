@@ -10,13 +10,6 @@ $(document).ready(function(){
         on_success  :	function(){ console.log($("#txRutTit").val()); $("#txRutTit").css('border-color',''); },
         format_on   :	'keyup'
     });
-    /*
-    $('#txtBuscarFonasa').Rut({
-        on_error    :	function(){ jAlert('El Rut ingresado es Incorrecto. '+$("#txtBuscarFonasa").val(),'Rut Incorrecto'); console.log($("#txtBuscarFonasa").val()); $("#txtBuscarFonasa").css('border-color','red');  $("#txtBuscarFonasa").val('')},
-        on_success  :	function(){ console.log($("#txtBuscarFonasa").val());  $("#txtBuscarFonasa").css('border-color',''); },
-        format_on   :	'keyup'
-    });
-    */
     $("input[name=tipPac]:radio").change(function () { 
         $("#result").hide(); 
         $("#formUser").hide();   
@@ -37,11 +30,9 @@ $(document).ready(function(){
         //$('#Btn_bdu').hide();
         //$("#Btn_bdu").removeClass("btn btn-primary btn-sm");
     });
-    
     $("#new_paginacion").on('click','li',function (){
         if(!isNaN($(this).text())){ buscar(1,$(this).text()); }
     });
-    
     console.log(" -------------- TEMPLETE -> "+$("#indTemplateNum").val() +" <--------------");
     //ocMen();
     $('#modal_percapita').on('show.bs.modal',function(e){
@@ -49,21 +40,17 @@ $(document).ready(function(){
         $("#modalPaciente").css("z-index","1000"); 
         $("#modal_percapita").css("z-index","11500");
     });
-
     $('#modal_percapita').on('hidden.bs.modal',function(e){
         $("#modal_percapita").css("z-index","100");
         $("#modalPaciente").css("z-index","1500"); 
         $("#HTML_PERCAPITA").html('');
     });
-
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 3                                   ");
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
-
     $('.dropdown-toggle').dropdown();
-
     //jAlert("Debe Ingresar a lo menos un parametro para la busqueda", "Restricci\u00f3n");
 });
 
@@ -101,7 +88,7 @@ function buscar(OP,LIM_INI){
         valida      =	1;
     }
     
-    if (valida      == 0){
+    if (valida == 0){
         jError("Debe ingresar a lo menos un par&aacute;metro para la b&uacute;squeda ", "Restricci\u00f3n");
         $("#rut").css("border-color","red");
         $("#dni").css("border-color","red");
@@ -310,17 +297,11 @@ function cargaInfoFonasa(rut,dv){
 
 //********************************** 20.01.2020 ********************************
 function cargaInfoApi(rut,dv){
-    
-    console.log("----------------");
-    
-    console.log(parseInt(rut));
-    
-    console.log(parseInt(rut,64));
-    
-    console.log(dv);
-    
-    console.log("----------------");
-   
+    //console.log("----------------");
+    //console.log(parseInt(rut));
+    //console.log(parseInt(rut,64));
+    //console.log(dv);
+    //console.log("----------------");
     jConfirm("Estimado Usuario:<br>El paciente seleccionado no est&aacute; incluido en la base de SSAN &iquestDesea buscarlo los datos generales? ", 'ESISSAN', function (r) {   
         if (r){
             $.ajax({ 
@@ -345,11 +326,8 @@ function cargaInfoApi(rut,dv){
 }
 //********************************** 20.01.2020 ********************************
 
-
-
 function buscaTitular(val){
     var RUTMALO = '';
-    
     if(($("#txtRuttit").val()!=''&&$("#txtDvtit").val()!='')){
         RUTMALO = valida_rut($("#txtRuttit").val(),$("#txtDvtit").val());
         if (RUTMALO == 0){ jError("RUN Titular No valido","e-SISSAN");  return false;  }
@@ -580,15 +558,15 @@ function FormModal(isNal,numFichae){
                             jError("Error General, Consulte Al Administrador"); 
 					    },
         success    :	function(aData)	    {    
-						    
                             console.log("aData  ->  ",aData);
-                            //$("#HTML_DIALOGO").html('');	
-						    //AjaxExtJsonAll(aData); 
-
-					    }, 
+                            $("#HTML_DIALOGO").html('');
+                            if(AjaxExtJsonAll(aData)){
+                                $("#modalPaciente").modal({backdrop:'static',keyboard:false}).modal('show');
+                            } 
+                        }, 
     });
     
-    $("#modalPaciente").modal("show");
+   
 }
 
 //RUT FONASA

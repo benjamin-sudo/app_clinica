@@ -19,6 +19,1020 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view',$data);
     }
     
+    public function CreaEditaPaciente(){
+        if (!$this->input->is_ajax_request()) {  show_404();  }
+        $codEmpresa     =   $this->session->userdata("COD_ESTAB");
+        $numFichae      =   $this->input->post("numFichae");
+        $isNal          =   $this->input->post("isNal");
+        $templete       =   $this->input->post("template");
+        $edad           =   $this->input->post("Numedad");
+
+        $value_sex      =   '';
+        $dateGenero     =   $this->ssan_bdu_creareditarpaciente_model->getTraeGenero();
+        if (count($dateGenero) > 0) {
+            foreach ($dateGenero as $sex) {
+                $value_sex  .= "<option value='" . $sex['IND_SEXO'] . "'>" . $sex['NOM_SEXO'] . "</option>";
+            }
+        }
+ 
+        $value_etn     =    '';
+        $dateEtnia     =    $this->ssan_bdu_creareditarpaciente_model->getTraeEtnia();
+        if (count($dateEtnia) > 0) {
+            $value_etn .= "<option value=''>SELECCIONE...</option>";
+            foreach ($dateEtnia as $etn) {
+                $value_etn .= "<option value='" . $etn['IND_ETN'] . "'>" . $etn['NOM_ETN'] . "</option>";
+            }
+        }
+
+        $value_civ     =    '';
+        $dateCivil     =    $this->ssan_bdu_creareditarpaciente_model->getTraeEstadoCivil();
+        if (count($dateCivil) > 0) {
+            $value_civ .= "<option value=''>SELECCIONE...</option>";
+            foreach ($dateCivil as $civ) {
+                $value_civ .= "<option value='" . $civ['COD_ESTCIV'] . "'>" . $civ['NOM_ESTCIV'] . "</option>";
+            }
+        }
+
+        $value_pais    =    '';
+        $datePais      =    $this->ssan_bdu_creareditarpaciente_model->getTraePais();
+        if (count($datePais) > 0) {
+            $value_pais .= "<option value=''>SELECCIONE...</option>";
+            foreach ($datePais as $civ) {
+                $value_pais .= "<option value='" . $civ['COD_PAIS'] . "'>" . $civ['NOM_PAIS'] . "</option>";
+            }
+        }
+
+        $value_region    =  '';
+        $dateregion      =  $this->ssan_bdu_creareditarpaciente_model->getTraeRegionXCodigo();
+        if (count($dateregion) > 0) {
+            $value_region .= "<option value=''>SELECCIONE...</option>";
+            foreach ($dateregion as $civ) {
+                $value_region .= "<option value='" . $civ['COD_REGION'] . "'>" . $civ['NOM_REGION'] . "</option>";
+            }
+        }
+
+        $value_Gsangre  =   '';
+        $Gsangre        =   $this->ssan_bdu_creareditarpaciente_model->getTraeGrupoSangre();
+        if (count($Gsangre) > 0) {
+            $value_Gsangre .= "<option value=''>SELECCIONE...</option>";
+            foreach ($Gsangre as $civ) {
+                $value_Gsangre .= "<option value='" . $civ['IND_GRUSAN'] . "'>" . $civ['NOM_GRUSAN'] . "</option>";
+            }
+        }
+
+        $value_fsangre      = '';
+        $Fsangre        = $this->ssan_bdu_creareditarpaciente_model->getTraeFactorSangre();
+        if (count($Fsangre) > 0) {
+            $value_fsangre .= "<option value=''>SELECCIONE...</option>";
+            foreach ($Fsangre as $civ) {
+                $value_fsangre .= "<option value='" . $civ['IND_FACSAN'] . "'>" . $civ['NOM_FACSAN'] . "</option>";
+            }
+        }
+
+        $value_fprevi       = '';
+        $Fprevision         = $this->ssan_bdu_creareditarpaciente_model->getTraePrevision('');
+        if (count($Fprevision) > 0) {
+            $value_fprevi .= "<option value=''>SELECCIONE...</option>";
+            foreach ($Fprevision as $civ) {
+                $value_fprevi .= "<option value='" . $civ['IND_PREVIS'] . "'>" . $civ['NOM_PREVIS'] . "</option>";
+            }
+        }
+
+        $value_previEmp     = '';
+        $FsangreEmp         = $this->ssan_bdu_creareditarpaciente_model->getTraeEmpresa();
+        if (count($FsangreEmp) > 0) {
+            $value_previEmp .= "<option value=''>SELECCIONE...</option>";
+            if ($isNal == 0) {
+                $value_previEmp .= "<option value='61603000'>E.EXTRANJERO</option>";
+            } else {
+                foreach ($FsangreEmp as $civ) {
+                    $value_previEmp .= "<option value='" . $civ['COD_RUTINS'] . "'>" . $civ['NOM_INSEMP'] . "</option>";
+                }
+            }
+        }
+
+
+        $html = '
+            <table width="100%" border="0" cellspacing="0"  class="table-sm">
+                <theard>
+            ';
+        if ($isNal == 0) {
+            $html .= '<tr>
+                    <td width="35%" style="text-align:center"> 
+                        <select name="cboNumIdentifica" id="cboNumIdentifica" class="spetit" onchange="js_cambiaNID(this.id,this.value)" style="width: 100%;">
+                            <option value="1" >N&deg; PASAPORTE VIGENTE/(DNI)</option>
+                            <option value="2" >N&deg; PROVISORIO FONASA</option>
+                            <option value="4" >N&deg; EXTRANJERO SSAN(SOLO BUSQUEDA)</option>
+                        </select>
+                    </td> 
+                    <td width="5%" style="text-align:center">
+                        <div id="txtMenjajefonasa" style="display:none">
+                            <button class="btn btn-default hint hint--left" type="button" style="height:auto;width:40px" data-hint="N&Uacute;MERO ATENCION PROVISORIO">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td width="30%" style="text-align:center">
+                        <div id="numExtranjero" style="text-align:left">
+                            <input name="txtNumIdentiExtra" type="text" id="txtNumIdentiExtra" style="TEXT-TRANSFORM: uppercase;" value="" size="30">
+                        </div>
+                        <div id="numFonasa" style="display:none" style="text-align:center">
+                            <input type="text" class="form-control" name="txtBuscarFonasa" id="txtBuscarFonasa" size="8" maxlength="8" style="width:70px" onkeypress="return soloNumeros(event)"> 
+                            - 
+                            <input type="text" class="form-control" name="txtDvFoonasa"    id="txtDvFoonasa"    size="1" maxlength="1" style="width:15px">
+                        </div>
+                    </td> 
+                    <td width="30%" style="text-align:left">
+                        <button type="button" class="btn btn-success" onclick="validaNumeroExtranjero(0,null);" id="btnNumExtranjero"> 
+                        <i class="fa fa-check-circle" aria-hidden="true"></i> VALIDAR N&deg; DE IDENTIFICACI&Oacute;N </button>
+                    </td>
+                </tr> 
+                ';
+        } else if ($isNal == 1) {
+            $html .= '
+                <tr class="info">
+                    <td class="info" width="40%" style="text-align:right"><b>RUN CHILENO</b>:</td> 
+                    <td class="info" width="20%" style="text-align:center">
+                        <div class="grid_div_run">
+                            <div class="grid_div_run1">
+                                <input type="text" class="form-control" name="txtBuscar" id="txtBuscar" size="8" maxlength="8" onkeypress="return soloNumeros(event)"> 
+                            </div>
+                            <div class="grid_div_run2">-</div>
+                            <div class="grid_div_run3">
+                                <input type="text" class="form-control" name="txtDv" id="txtDv" size="1" maxlength="1">
+                            </div>
+                        </div>
+                    </td> 
+                    <td class="info" width="40%" style="text-align:left">
+                        <a class="btn btn-small btn-success" onclick="validaRutChileno(1,null);" id="btn_rut">
+                        <i class="fa fa-search" aria-hidden="true"></i> VALIDAR RUT</a>
+                    </td> 
+                </tr>
+                ';
+        } else if ($isNal == 3) {
+            $html .= '
+                <tr class="info">
+                    <td class="info" width="33%" style="text-align:right"><b>RUT MADRE</b>:</td> 
+                    <td class="info" width="33%" style="text-align:center">
+                        
+                        <input type="text" class="form-control" name="txtBuscar" id="txtBuscar" size="8" maxlength="8" style="width:70px" onkeypress="return soloNumeros(event)"> 
+                        - 
+                        <input type="text" class="form-control" name="txtDv" id="txtDv" size="1" maxlength="1" style="width:15px">
+
+                    </td> 
+                    <td class="info" width="33%" style="text-align:left">
+                        <a class="btn btn-small btn-info" onclick="validaRutmadre(1,null);" id="btn_rut">
+                        <i class="fa fa-search" aria-hidden="true"></i> VALIDAR RUT RN</a>
+                    </td> 
+                </tr>
+                ';
+        }
+        $html .= '</theard></table>';
+
+        
+        $html .= '
+        <div id="formularioUsuario">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="nav-item active" id="tabs_datosgenerales">
+                    <a class="nav-link active" data-toggle="tab" href="#datos_generales" role="tab"><b>DATOS GENERALES</b> <span class="badge" id="num_ic_5"></a>
+                </li>
+                <li class="nav-item" id="tabs_datoslocales">
+                    <a class="nav-link" data-toggle="tab" href="#datos_locales" role="tab"><b>DATOS LOCALES</b> <span class="badge" id="num_ic_4"></a>
+                </li>';
+        if ($isNal != 3) {
+            $html .= '<li class="nav-item" id="tabs_datosprevisionales" >
+                    <a class="nav-link" data-toggle="tab" href="#datos_previ" role="tab"><b>DATOS PREVISIONALES</b> <span class="badge" id="num_ic_3"></a>
+                </li>';
+        }
+        if ($isNal == 0) { /* Solo Extranjeros */
+            $html .= '<li class="nav-item" id="tabs_datosextranjero" >
+                  <a class="nav-link" data-toggle="tab" href="#datos_extranjero" role="tab"><b>DATOS EXTRANJERO</b> <span class="badge" id="num_ic_2"></a>
+                </li>';
+        }
+
+        //*************** NUEVO 18.12.2019 ***************
+        $html .= '<li class="nav-item" id="tabs_datosinscrito" style="display:none">
+		    <a class="nav-link" data-toggle="tab" href="#datos_inscrito" role="tab" ><b>INSCRITO</b></a>
+                </li>';
+        //*************** NUEVO 18.12.2019 ***************
+
+
+        //*************** NUEVO 07.02.2020 ***************
+        $html .= '
+		<li class="dropdown" id="dropdown_opciones" style="display:none">
+		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+			<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
+			<span class="caret"></span>
+		    </a>
+		    <ul class="dropdown-menu" id="btn_percapita" >
+			<li>
+			    <a href="javascript:ver_infopercapita()" id="a_ver_percapita" style="white-space: normal;">
+				<i class="fa fa fa-info-circle" aria-hidden="true"></i>&nbsp;INFO PERCAPITA
+			    </a>
+			</li>
+		    </ul>
+		</li>
+		';
+        //*************** NUEVO 07.02.2020 ***************
+
+
+
+        $html .= '</ul>
+            
+        <div class="tab-content">
+	        <!-- ************** NUEVO 18-12-2019 *************** -->
+            <div class="tab-pane" id="datos_inscrito" role="tabpanel"> 
+                ...
+            </div>
+	        <div class="tab-pane active" id="datos_generales" role="tabpanel">
+                <form action="#" method="post" id="fromDatosGenerales" name="fromDatosGenerales">
+                    <table width="100%" border="0" cellspacing="0"  class="table-sm table-striped">
+
+                    <tr class="formulario" id="recienNacido"> 
+                        <td width="30%" height="28px">&#191;Recien nacido&#63;</td>
+                        <td width="70%" style="display:flex;">
+                            S&iacute; <input type="radio" name="rdoRecNacido" class="input" value="1">
+                            No 	  <input type="radio"  name="rdoRecNacido" class="input" value="0" checked="checked"> 
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Nombres
+                            <input type="hidden" id="numFichae" name="numFichae" value="">
+                            <input type="hidden" id="isNewPac"  name="isNewPac"  value="">
+                        </td>
+                        <td style="display:flex;"><input type="text"  class="form-control" id="txtNombre" name="txtNombre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
+                        <font color="#339999" class="Estilo2">*</font></td>
+                    </tr>
+
+                    <tr class="formulario">
+                        <td>  Nombre Social</td>
+                        <td style="display:flex;">
+                            <input type="text" class="form-control" d="txtNombreSocial" name="txtNombreSocial" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Apellido Paterno</td>
+                        <td style="display:flex;">
+                            <input type="text" class="form-control" id="txtApellidoPaterno" name="txtApellidoPaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Apellido Materno</td>
+                        <td style="display:flex;">
+                            <input type="text" class="form-control" id="txtApellidoMaterno" name="txtApellidoMaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Fecha de nacimiento</td>
+                        <td style="display:flex;">
+                            <input type="text" class="form-control" style="width:80px" id="txtFechaNacimineto" name="txtFechaNacimineto" maxlength="10" disabled/><font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Sexo</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboGenero" id="cboGenero" onchange="" class="" style="width: 64%;">
+                                '.$value_sex.'
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Etnia</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboEtnia1" id="cboEtnia1" onchange="" class="" style="width: 64%;">
+                            ' . $value_etn . '
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Percepci&oacute;n Etnia</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboEtnia2" id="cboEtnia2" onchange="" class="" style="width: 64%;">
+                            ' . $value_etn . '
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Estado Civil</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboEstadoCivil" id="cboEstadoCivil" onchange="" class="" style="width: 64%;">
+                            ' . $value_civ . '
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Nombre Pareja</td>
+                        <td style="display:flex;">
+                            <input class="form-control" name="txtPareja" type="text" id="txtPareja" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Nombre Padre</td>
+                        <td><input class="form-control" name="txtPadre" type="text" id="txtPadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"> </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Nombre Madre</td>
+                        <td><input class="form-control" name="txtMadre" type="text" id="txtMadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"></td>
+                    </tr>
+                    <tr class="formulario" >
+                        <td height="28px">Pais</td>
+                        <td>
+                            <select class="form-select" name="cboPais" id="cboPais" onchange="" class="" style="width: 64%;">' . $value_pais . '<select>
+                        </td>    
+                ';
+                /*
+                if ($isNal == 0){
+                    $html.='';
+                } else {
+                    $html.='<input  name="cboPais" id="cboPais" type="hidden" value="CL"> <b>CHILENO/A</b>';
+                    $html.='<font color="#339999" class="Estilo2">*</font></td>
+                    ';
+                }
+                */
+        $html .= '</tr>';
+
+        //Nacionalidad solo extranjeros
+        $html   .= ' 
+                    <tr class="formulario" >
+                        <td height="28px">Nacionalidad</td>
+                        <td>
+                            <select class="form-select" name="cboNacionalidad" id="cboNacionalidad" onchange="" style="width: 64%;">
+                                '.$value_pais.'
+                            <select>
+                        </td>   
+                    </tr>
+                ';
+
+        $html .=    '<tr class="formulario">
+                        <td> Regi&oacute;n </td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboRegion" id="cboRegion" onchange="buscaCiudades(this.value,\'cboCiudad\',\'\');buscaComunas(this.value,\'cboComuna\',\'\')" class="" style="width: 64%;">
+                                '.$value_region.'
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+
+                    <tr class="formulario">
+                        <td>Ciudad</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboCiudad" id="cboCiudad" onchange="" class="" style="width: 64%;">
+                                <option value="">SELECCIONE...</option>
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Comuna:</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboComuna" id="cboComuna" onchange="" class="" style="width: 64%;">
+                                <option value="">SELECCIONE...</option>
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> V&iacute;a Direcci&oacute;n</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboviadire" id="cboviadire" class="spetit" style="width: 64%;">
+                                <option value="C">CALLE</option>
+                                <option value="P">PASAJE</option>
+                                <option value="A">AVENIDA</option>
+                                <option value="O">OTRO</option>
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Direcci&oacute;n</td>
+                        <td style="display:flex;">
+                            <input type="text" class="form-control" name="txtDireccion"  id="txtDireccion" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="100">
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>N&deg;</td>
+                        <td style="display:flex;">
+                            <input name="txtNum_dire" type="text" class="form-control" id="txtNum_dire" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6" onblur="pastePacNo(1)">
+                            <font color="#339999" class="Estilo2">*</font>0 para "s/n". 
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Resto Direcci&oacute;n </td>
+                        <td>
+                            <input name="txtdire_resto" type="text" class="form-control" id="txtdire_resto" style="TEXT-TRANSFORM: uppercase;width: 64%;"maxlength="300">
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Procedencia</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboProcedencia" id="cboProcedencia" class="spetit" style="width: 64%;">
+                                <option value="U">URBANA</option>
+                                <option value="R">RURAL</option>
+                            </select> 
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Tel&eacute;fono</td>
+                        <td style="display:flex;">
+                            <input name="txtTelefono" type="text"  class="form-control" id="txtTelefono" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6">
+                             NO ingresar c&oacute;digo de &aacute;rea 
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Celular </td>
+                        <td style="display:flex;">
+                            <input name="txtCelular" type="text"  class="form-control" id="txtCelular" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
+                            <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Correo Electr&oacute;nico</td>
+                        <td>
+                            <input name="txtEmail" type="text" class="form-control" id="txtEmail" style="width: 64%;" maxlength="40">
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Grupo Sangre</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboGrupoSangre" id="cboGrupoSangre" onchange="" class="" style="width: 64%;">' . $value_Gsangre . '</select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td> Factor Sangre</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="cboFactorSangre" id="cboFactorSangre" onchange="" class="" style="width: 64%;">' . $value_fsangre . '</select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario">
+                        <td>Calidad Previsional</td>
+                        <td style="display:flex;">
+                            <select name="cboTippac" id="cboTippac" class="form-select" onchange="revisaTitular()" style="width: 64%;">
+                                <option value="" selected="selected">SELECCIONE...</option>
+                            ';
+        if ($isNal == 0) {
+            $html .= '<option value="E">EXTRANJERO</option>';
+        } else {
+            $html .= '<option value="T">TITULAR</option>'
+                . '<option value="D">DEPENDIENTE O CARGA</option>';
+        }
+        $html .= '</select> 
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    
+                    <tr class="formulario" style="height: 31px;">
+                        <td>Condici&oacute;n PRAIS</td>
+                        <td style="display:flex;" style="height: 45px;">
+                            S&iacute;   <input type="radio" name="rdoprais" id="rdoprais_1" class="input" value="1"> 
+                            No          <input type="radio" name="rdoprais" id="rdoprais_0" class="input" value="0" checked="checked">
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                    <tr class="formulario" style="height: 31px;">
+                        <td>Trans</td>
+                        <td style="display:flex;" style="height: 45px;">
+                            S&iacute;   <input type="radio" name="rdotrans" id="rdotrans_1" class="input" value="1" > 
+                            No          <input type="radio" name="rdotrans" id="rdotrans_0" class="input" value="0" checked="checked">
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                </tbody>
+                ';
+
+        $html .= '<tbody id="id_editarFicha">
+                    <tr class="formulario" id="tr_ocupacion">
+                        <td height="28px">Ocupaci&oacute;n</td>
+                        <td><input type="text"  name="txtOcupacion" id="txtOcupacion" class="form-control" style="width: 64%;" maxlength="100"></td>
+                    </tr>
+                    <tr class="formulario" id="representateLegal">
+                        <td height="28px">Representante Legal</td>
+                        <td style="display:flex;">
+                            <input type="text"  name="txtRepLegal"id="txtRepLegal" class="form-control" style="width: 64%;" maxlength="100"> * Menores de 18 a&ntilde;os
+                        </td>
+                    </tr>
+                </tbody>';
+
+        
+        $html .= '<tbody id="id_nuevo_20092021">
+                    <tr class="formulario" id="tr_ocupacion">
+                        <td height="28px">Nivel educacioanal</td>
+                        <td style="display:flex;">
+                            <select class="form-select"  name="ind_nivel_educacional" id="ind_nivel_educacional" class="spetit" style="width: 64%;">
+                                <option value="">SELECCIONE ...</option>
+                                <option value="0">SIN EDUCACI&Oacute;N</option>
+                                <option value="1">EDUCACI&Oacute;N PRE-ESCOLAR</option>
+                                <option value="2">EDUCACI&Oacute;N BASICA</option>
+                                <option value="3">EDUCACI&Oacute;N MEDIA</option>
+                                <option value="4">NIVEL SUPERIOR</option>
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+
+                    <tr class="formulario" id="representateLegal">
+                        <td height="28px">Poblaci&oacute;n Migrante</td>
+                        <td style="display:flex;">
+                            <select class="form-select" name="ind_poblacion_migrante" id="ind_poblacion_migrante" class="spetit" style="width: 64%;">
+                                <option value="">SELECCIONE ...</option>
+                                <option value="1">SI</option>
+                                <option value="0">NO</option>
+                            </select>
+                            <font color="#339999" class="Estilo2">*</font>
+                        </td>
+                    </tr>
+                </tbody>';
+        
+        
+        $html .= '</table>
+        </form>
+    </div>';
+
+
+
+        if ($isNal != 3) { //Omite Cuando Es Recien Nacinado //Hasta nuevo aviso
+            $html .= '
+    <div class="tab-pane" id="datos_locales" role="tabpanel"> 
+        <form action="#" method="post" id="from_datos_locales" name="from_datos_locales">
+        <table width="100%" border="0" cellspacing="0" class="table-sm table-striped">
+            <tbody id="id_formLocal">
+                <tr class="formulario">
+                    <td>Ficha F&iacute;sica Local</td>
+                    <td>
+                        <div id="txt_nficha"></div>
+                        <div class="form-group form-inline"  style="padding-top:15px;" id="group_nueva_fichalocal">
+                            <label class="sr-only" for="exampleInputAmount">Ficha Local</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
+                                <input type="text" id="txtFichaFisicaLocal" name="txtFichaFisicaLocal" style="width:60px;height:auto" size="10" class="form-control" onkeypress="return IsNumber(event);" onblur="validarFL();" value="">
+                                <div class="input-group-addon"><input type="checkbox" name="newFichaL" id="newFichaL" onclick="nuevafichalocal()"> <b>GENERAR NUEVA FICHA LOCAL</b></div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="tieneDatosLocales" name="tieneDatosLocales" value="0"/>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td width="30%" height="28px">R.U.T</td>
+                    <td width="70%">
+                        <label id="RutLabel"></label></b> 
+                        <div id="cargaPaciente" style="display: initial"></div>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td height="28px"> Nombre Completo </td>
+                    <td><label id="nombreLabel"></label> </td>
+                </tr>
+                <tr class="formulario" style="">
+                    <td height="28px">C&oacute;digo Familia  </td>
+                    <td><span id="txtCodFamilia"></span>  </td>
+                </tr>
+                <tr class="formulario" style="">
+                    <td height="28px">  Sector  </td>
+                    <td><span id="txtSector"></span></td>
+                </tr>
+                <tr class="formulario">
+                    <td> Regi&oacute;n</td>
+                    <td>
+                        <select name="cboRegionLocal" id="cboRegionLocal" onchange="buscaCiudades(this.value,\'cboCiudadLocal\',\'\');buscaComunas(this.value,\'cboComunaLocal\',\'\')" style="width: 64%;">
+                            ' . $value_region . '
+                        </select>
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Ciudad</td>
+                    <td>
+                        <select name="cboCiudadLocal" id="cboCiudadLocal" style="width: 64%;">
+                            <option value="">SELECCIONE...</option>
+                        </select>
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Comuna:</td>
+                    <td>
+                        <select name="cboComunaLocal" id="cboComunaLocal" style="width: 64%;">
+                            <option value="">SELECCIONE...</option>
+                        </select>
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>  V&iacute;a Direcci&oacute;n Local </td>
+                    <td>
+                        <select name="cboviadireLocal" id="cboviadireLocal" class="spetit" style="width: 64%;">
+                            <option value="C">CALLE</option>
+                            <option value="P">PASAJE</option>
+                            <option value="A">AVENIDA</option>
+                            <option value="O">OTRO</option>
+                        </select>
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Direcci&oacute;n Local</td>
+                    <td>
+                        <input name="txtDireccionLocal" type="text" id="txtDireccionLocal" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="100">
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td> Tel&eacute;fono Local</td>
+                    <td>
+                        <input name="txtTelefonoLocal" type="text" id="txtTelefonoLocal" onkeypress="return IsNumber(event);"  style="width: 64%;" maxlength="7">
+                        NO ingresar c&oacute;digo de &aacute;rea 
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Celular Local </td>
+                    <td>
+                        <input name="txtCelularLocal" type="text" id="txtCelularLocal" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
+                        <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Nombre Contacto  </td>
+                    <td>
+                        <input type="text" id="txtNombreContacto" name="txtNombreContacto" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Direcci&oacute;n Contacto</td>
+                    <td>
+                        <input name="txtDireccionContacto" type="text" id="txtDireccionContacto"  style="width: 64%;" maxlength="100">
+                        <font color="#339999" class="Estilo2">*</font> 
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>  N&deg; Direcci&oacute;n Contacto </td>
+                    <td>
+                        <input name="txtNum_direContacto" type="text" id="txtNum_direContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6">
+                        <font color="#339999" class="Estilo2">*</font> digite un 0 para "s/n".
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td> Tel&eacute;fono Contacto</td>
+                    <td>
+                        <input name="txtTelefonoContacto" type="text" id="txtTelefonoContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="7">
+                        NO ingresar c&oacute;digo de &aacute;rea 
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td> Celular Contacto </td>
+                    <td>
+                        <input name="txtCelularContacto" type="text" id="txtCelularContacto"  onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
+                        <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
+                    </td>
+                </tr>
+            </tbody>
+         ';
+
+            //Solo para ficha local- Para editar Datos Locales
+            if ($templete == '2') {
+                $html .= '
+                <tbody id="id_editarFichaL">
+                    <tr class="formulario" id="tr_ocupacionL">
+                        <td height="28px">Ocupaci&oacute;n</td>
+                        <td><input name="txtOcupacionL" type="text" id="txtOcupacionL" style="width: 64%;" maxlength="100"></td>
+                    </tr>
+                    <tr class="formulario" id="representateLegalL">
+                        <td height="28px">Representante Legal</td>
+                        <td><input name="txtRepLegalL" type="text" id="txtRepLegalL" style="width: 64%;" maxlength="100"> * Menores de 18 a&ntilde;os</td>
+                    </tr>
+                </tbody>
+                ';
+            }
+            $html .= '</table>
+            
+       </form>
+    </div> 
+    ';
+        }
+
+        $html .= '<div class="tab-pane" id="datos_previ" role="tabpanel">
+        
+
+        
+
+        <form action="#" method="post" id="From_datos_previsiones" name="From_datos_previsiones">
+            <table width="100%" border="0" cellspacing="0" class="table-sm table-striped">';
+        if ($isNal == 0) {
+            $html .= '
+            <tbody id="soloExnjerosFonasa">      
+                 <tr class="formulario">
+                     <td width="30%">SOLO EXTRANJEROS </td>
+                     <td width="70%">
+                         <div class="has-error">
+                             <div class="radio">
+                                 <label>
+                                     <input type="radio" name="tienePreviExtra" id="PreviExtr_0" value="0" onchange="js_cambia(this.id,this.value)" checked>
+                                     <b>PACIENTE EXTRANJERO NO CUENTA CON RUT PROVISORIO DE FONASA (EN TRAMITE)</b>
+                                 </label>
+                             </div>
+                         </div>
+                         <div class="has-success">
+                             <div class="radio">
+                                 <label>
+                                     <input type="radio" name="tienePreviExtra" id="PreviExtr_1" value="1" onchange="js_cambia(this.id,this.value)">
+                                     <b>PACIENTE EXTRANJERO CUENTA CON RUT PROVISORIO DE FONASA </b>
+                                 </label>
+                             </div>
+                         </div>
+                     </td>
+                 </tr>
+             </tbody>
+            ';
+        } else {
+            $html .= '<input type="hidden" name="tienePreviExtra" id="tienePreviExtra" value="1">';
+        }
+
+        if ($isNal == 0) {
+            $style = ' style="display:none"';
+        } else {
+            $style = ' ';
+        }
+        $html .= '
+            <tbody id="formulario_provisionales" ' . $style . '>      
+                <tr class="formulario">
+                    <td width="30%">  R.U.T:</td>
+                    <td width="70%" class="formulario">
+                        <input type="text" name="txtRuttit" id="txtRuttit" onkeypress="return IsNumber(event);"            size="8" maxlength="8" value=""> - 
+                        <input type="text" name="txtDvtit"  id="txtDvtit"  onkeypress="return IsDigitoVerificador(event);" size="1" maxlength="1" value=""> 
+                        <font color="#339999" class="Estilo2">*</font>';
+        $html .= '<button type="button" name="btnConsultarPacientePrevisionales" id="btnConsultarPacientePrevisionales" class="btn btn-small btn-info" onclick="buscaTitular(1);">  
+                        <i class="fa fa-database" aria-hidden="true"></i>&nbsp; INFORMACI&Oacute;N FONASA 
+                    </button>
+                    ';
+        $html .= '</td>
+                </tr>
+                <tr class="formulario">
+                    <td>  Nombres </td>
+                    <td class="formulario">
+                        <input type="text" id="txtNombretit" name="txtNombretit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Apellido paterno</td>
+                    <td class="formulario">
+                        <input type="text" id="txtApellidoPaternotit" name="txtApellidoPaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Apellido Materno</td>
+                    <td class="formulario">
+                        <input type="text" id="txtApellidoMaternotit" name="txtApellidoMaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Previsi&oacute;n</td>
+                    <td class="formulario">
+                        <select name="cboPrevision" id="cboPrevision" onchange="" class="" style="width: 64%;">' . $value_fprevi . '</select>
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+                <tr class="formulario">
+                    <td>Empresa</td>
+                    <td class="formulario">
+                        <select name="cboEmpresaPrevision" id="cboEmpresaPrevision" onchange="" class="" style="width: 64%;">' . $value_previEmp . '</select>
+                        <font color="#339999" class="Estilo2">*</font>
+                    </td>
+                </tr>
+            </table>
+        </tbody> 
+    </form>  
+   
+    <div class="grid_panel_buscando" id="buscando_fonasa"  style="display:none">
+        <div class="grid_panel_buscando1"></div>
+        <div class="grid_panel_buscando2">
+            <b>BUSCANDO INFORMACI&Oacute;N</b>
+        </div>
+        <div class="grid_panel_buscando3">
+            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="color: #28a745"></i>
+            <span class="sr-only"> CARGANDO ... </span>
+        </div>
+        <div class="grid_panel_buscando4"></div>
+    </div>
+  
+    <div class="alert alert-info alert-dismissible fade in" role="alert" id="msjFonasa" style="display:none" > 
+        <h4 style="text-align: center;"> RESULTADO:</h4> 
+        <p id="txtFonasa" style="text-align: center;"> </p> 
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">VER INFORMACION <i class="fa fa-eye" aria-hidden="true"></i></a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body" id="tableFonasa"></div>
+                </div>
+              </div>
+        </div>
+        </div>
+    </div>
+    
+    ';
+
+        if ($isNal == 0) {
+            $html .=   '
+            <div class="tab-pane" id="datos_extranjero" role="tabpanel">
+                <form action="#" method="post" id="Form_datos_extranjero" name="Form_datos_extranjero">
+                    <table width="100%" border="0" cellspacing="0">
+                       <tbody>
+                        <tr class="formulario" id="extranjero3">
+                            <td width="30%"> Fecha Vencimiento Documento:(Pasaporte)</td>
+                            <td width="70%" class="formulario">
+                                <input type="text" name="txtFecvencePasport" id="txtFecvencePasport" size="10" value=""/> <b><font size="-2">(dd/mm/aaaa)</font></b> 
+                            </td>
+                        </tr>
+                        
+                        <tr class="formulario" id="extranjero3">
+                            <td width="30%"> Fecha Vencimiento Identificador Provisorio</td>
+                            <td width="70%" class="formulario">
+                                <input type="text" name="txtFecvence_fonasa" id="txtFecvence_fonasa" size="10" value=""/> <b><font size="-2">(dd/mm/aaaa)</font></b> 
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </form>  
+            </div> 
+            
+            <script>
+                $("#txtFecvencePasport").datepicker($.extend({
+                    //defaultDate       : fecha,
+                    showOn              : "button",
+                    buttonImage         : "assets/themes/frontend/img/calendar.png",
+                    buttonImageOnly     : true,
+                    dateFormat          : "dd-mm-yy",
+                    changeMonth         : true,
+                    changeYear          : true,
+                    showButtonPanel     : true,
+                    buttonText          : "Calendario", 
+                    //minDate           : "0",
+                    //maxDate           : "0",
+                    pick12HourFormat    : true,
+                    selectOtherMonths   : true,
+                    onSelect            : function(textoFecha, objDatepicker){    }
+                },$.datepicker.regional["es"]));
+                
+                $("#txtFecvence_fonasa").datepicker($.extend({
+                    //defaultDate       : fecha,
+                    showOn              : "button",
+                    buttonImage         : "assets/themes/frontend/img/calendar.png",
+                    buttonImageOnly     : true,
+                    dateFormat          : "dd-mm-yy",
+                    changeMonth         : true,
+                    changeYear          : true,
+                    showButtonPanel     : true,
+                    buttonText          : "Calendario", 
+                    //minDate           : "0",
+                    //maxDate           : "0",
+                    pick12HourFormat    : true,
+                    selectOtherMonths   : true,
+                    onSelect            : function(textoFecha, objDatepicker){    }
+                },$.datepicker.regional["es"]));
+                
+                
+            </script>
+        </div>  
+        ';
+        }
+
+        $html .= '
+            <script>
+                $("#txtFechaNacimineto").datepicker($.extend({
+                    //defaultDate       : fecha,
+                    showOn              : "button",
+                    buttonImage         : "assets/themes/frontend/img/calendar.png",
+                    buttonImageOnly     : true,
+                    yearRange           : "-120:+0",
+                    dateFormat          : "dd-mm-yy",
+                    changeMonth         : true,
+                    changeYear          : true,
+                    showButtonPanel     : true,
+                    buttonText          : "Calendario", 
+                    //minDate           : "0",
+                    maxDate             : "0",
+                    pick12HourFormat    : true,
+                    selectOtherMonths   : true,
+                    onSelect            : function(textoFecha, objDatepicker){    }
+                },$.datepicker.regional["es"]));
+            </script>';
+        $html .= '</div>
+        </div> 
+        ';
+
+
+        $aDatos[] = array('id_html' => 'HTML_DIALOGO', 'opcion' => 'html', 'contenido' => $html);
+
+
+        if ($isNal == 1) {
+            $aDatos[] = array(
+                "id_html"   => "titulo_bdu",
+                "opcion"    => "html",
+                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE </b>"
+            );
+            /*
+            $aDatos[] = array(
+                               "id_html"   => "",    
+                               "opcion"    => "console",    
+                               "contenido" => "----------->".$templete
+                           ); 
+            */
+
+            if ($templete == 1) {
+                $aDatos[] = array(
+                    "id_html"   => "txt_bdu",
+                    "opcion"    => "html",
+                    "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N PACIENTE</b>"
+                );
+            } else if ($templete == 2) {
+                $aDatos[] = array(
+                    "id_html"   => "txt_bdu",
+                    "opcion"    => "html",
+                    "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>EDICI&Oacute;N FICHA LOCAL</b>"
+                );
+            }
+
+            $aDatos[] = array(
+                "id_html"   => "txt_bdu",
+                "opcion"    => "html",
+                "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N PACIENTE</b>"
+            );
+
+            if ($numFichae != '') {
+                $aDatos[] = array(
+                    "id_html"   => "respuesta",
+                    "opcion"    => "html",
+                    "contenido" => "<script>validaRutChileno(1,$numFichae)</script>"
+                );
+            }
+        } else if ($isNal == 0) { //EXTRANJERO
+            $aDatos[]       = array(
+                'id_html'   => 'cboPais',
+                'opcion'    => 'find_rm',
+                'contenido' => 'CL'
+            );
+            $aDatos[]       = array(
+                "id_html"   => "titulo_bdu",
+                "opcion"    => "html",
+                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE EXTRANJERO</b>"
+            );
+            $aDatos[]       = array(
+                "id_html"   => "txt_bdu",
+                "opcion"    => "html",
+                "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N PACIENTE EXTRANJERO</b>"
+            );
+            if ($numFichae != '') {
+                $aDatos[]   = array(
+                    "id_html"   => "respuesta",
+                    "opcion"    => "html",
+                    "contenido" => "<script>validaNumeroExtranjero(0,$numFichae)</script>"
+                );
+            }
+        } else if ($isNal == 3) { //Datos del recien nacido
+            //RN
+            //$aDatos[]     = array('id_html'=>'cboPais' ,'opcion'=>'find_rm','contenido'=>'CL');
+            $aDatos[]       = array(
+                "id_html"   => "titulo_bdu",
+                "opcion"    => "html",
+                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE RECIEN NACIDO</b>"
+            );
+            $aDatos[]       = array(
+                "id_html"   => "txt_bdu",
+                "opcion"    => "html",
+                "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N RECIEN NACIDO</b>"
+            );
+            if ($numFichae != '') {
+                $aDatos[]   = array(
+                    "id_html"   => "respuesta",
+                    "opcion"    => "html",
+                    "contenido" => "<script>validaNumeroRN(0,$numFichae)</script>"
+                );
+            }
+        }
+
+        $this->output->set_output(json_encode($aDatos));
+    }
+
+
+    
+
+
     public function buscarPac(){
         if (!$this->input->is_ajax_request()) {  show_404();  }
         //  $codEmpresa         =    $this->session->userdata("COD_ESTAB");
@@ -1114,994 +2128,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         )));
     }
 
-
-
-
-    public function CreaEditaPaciente(){
-        if (!$this->input->is_ajax_request()) {  show_404();  }
-
-        $codEmpresa     =   $this->session->userdata("COD_ESTAB");
-        $numFichae      =   $this->input->post("numFichae");
-        $isNal          =   $this->input->post("isNal");
-        $templete       =   $this->input->post("template");
-        $edad           =   $this->input->post("Numedad");
-
-        $value_sex      =   '';
-        $dateGenero     =   $this->ssan_bdu_creareditarpaciente_model->getTraeGenero();
-        foreach ($dateGenero as $sex) {
-            $value_sex .= "<option value='" . $sex['IND_SEXO'] . "'>" . $sex['NOM_SEXO'] . "</option>";
-        }
-
-        $value_etn     =    '';
-        $dateEtnia     =    $this->ssan_bdu_creareditarpaciente_model->getTraeEtnia();
-        if (count($dateEtnia) > 0) {
-            $value_etn .= "<option value=''>SELECCIONE...</option>";
-            foreach ($dateEtnia as $etn) {
-                $value_etn .= "<option value='" . $etn['IND_ETN'] . "'>" . $etn['NOM_ETN'] . "</option>";
-            }
-        }
-
-        $value_civ     =    '';
-        $dateCivil     =    $this->ssan_bdu_creareditarpaciente_model->getTraeEstadoCivil();
-        if (count($dateCivil) > 0) {
-            $value_civ .= "<option value=''>SELECCIONE...</option>";
-            foreach ($dateCivil as $civ) {
-                $value_civ .= "<option value='" . $civ['COD_ESTCIV'] . "'>" . $civ['NOM_ESTCIV'] . "</option>";
-            }
-        }
-
-        $value_pais    =    '';
-        $datePais      =    $this->ssan_bdu_creareditarpaciente_model->getTraePais();
-        if (count($datePais) > 0) {
-            $value_pais .= "<option value=''>SELECCIONE...</option>";
-            foreach ($datePais as $civ) {
-                $value_pais .= "<option value='" . $civ['COD_PAIS'] . "'>" . $civ['NOM_PAIS'] . "</option>";
-            }
-        }
-
-        $value_region    =  '';
-        $dateregion      =  $this->ssan_bdu_creareditarpaciente_model->getTraeRegionXCodigo();
-        if (count($dateregion) > 0) {
-            $value_region .= "<option value=''>SELECCIONE...</option>";
-            foreach ($dateregion as $civ) {
-                $value_region .= "<option value='" . $civ['COD_REGION'] . "'>" . $civ['NOM_REGION'] . "</option>";
-            }
-        }
-
-        $value_Gsangre  =   '';
-        $Gsangre        =   $this->ssan_bdu_creareditarpaciente_model->getTraeGrupoSangre();
-        if (count($Gsangre) > 0) {
-            $value_Gsangre .= "<option value=''>SELECCIONE...</option>";
-            foreach ($Gsangre as $civ) {
-                $value_Gsangre .= "<option value='" . $civ['IND_GRUSAN'] . "'>" . $civ['NOM_GRUSAN'] . "</option>";
-            }
-        }
-
-        $value_fsangre      = '';
-        $Fsangre        = $this->ssan_bdu_creareditarpaciente_model->getTraeFactorSangre();
-        if (count($Fsangre) > 0) {
-            $value_fsangre .= "<option value=''>SELECCIONE...</option>";
-            foreach ($Fsangre as $civ) {
-                $value_fsangre .= "<option value='" . $civ['IND_FACSAN'] . "'>" . $civ['NOM_FACSAN'] . "</option>";
-            }
-        }
-
-        $value_fprevi       = '';
-        $Fprevision         = $this->ssan_bdu_creareditarpaciente_model->getTraePrevision('');
-        if (count($Fprevision) > 0) {
-            $value_fprevi .= "<option value=''>SELECCIONE...</option>";
-            foreach ($Fprevision as $civ) {
-                $value_fprevi .= "<option value='" . $civ['IND_PREVIS'] . "'>" . $civ['NOM_PREVIS'] . "</option>";
-            }
-        }
-
-        $value_previEmp     = '';
-        $FsangreEmp         = $this->ssan_bdu_creareditarpaciente_model->getTraeEmpresa();
-        if (count($FsangreEmp) > 0) {
-            $value_previEmp .= "<option value=''>SELECCIONE...</option>";
-            if ($isNal == 0) {
-                $value_previEmp .= "<option value='61603000'>E.EXTRANJERO</option>";
-            } else {
-                foreach ($FsangreEmp as $civ) {
-                    $value_previEmp .= "<option value='" . $civ['COD_RUTINS'] . "'>" . $civ['NOM_INSEMP'] . "</option>";
-                }
-            }
-        }
-
-
-        $html = '
-            <table width="100%" border="0" cellspacing="0"  class="table-sm">
-                <theard>
-            ';
-        if ($isNal == 0) {
-            $html .= '<tr>
-                    <td width="35%" style="text-align:center"> 
-                        <select name="cboNumIdentifica" id="cboNumIdentifica" class="spetit" onchange="js_cambiaNID(this.id,this.value)" style="width: 100%;">
-                            <option value="1" >N&deg; PASAPORTE VIGENTE/(DNI)</option>
-                            <option value="2" >N&deg; PROVISORIO FONASA</option>
-                            <option value="4" >N&deg; EXTRANJERO SSAN(SOLO BUSQUEDA)</option>
-                        </select>
-                    </td> 
-                    <td width="5%" style="text-align:center">
-                        <div id="txtMenjajefonasa" style="display:none">
-                            <button class="btn btn-default hint hint--left" type="button" style="height:auto;width:40px" data-hint="N&Uacute;MERO ATENCION PROVISORIO">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </td>
-                    <td width="30%" style="text-align:center">
-                        <div id="numExtranjero" style="text-align:left">
-                            <input name="txtNumIdentiExtra" type="text" id="txtNumIdentiExtra" style="TEXT-TRANSFORM: uppercase;" value="" size="30">
-                        </div>
-                        <div id="numFonasa" style="display:none" style="text-align:center">
-                            <input type="text" name="txtBuscarFonasa" id="txtBuscarFonasa" size="8" maxlength="8" style="width:70px" onkeypress="return soloNumeros(event)"> 
-                            - 
-                            <input type="text" name="txtDvFoonasa"    id="txtDvFoonasa"    size="1" maxlength="1" style="width:15px">
-                        </div>
-                    </td> 
-                    <td width="30%" style="text-align:left">
-                        <button type="button" class="btn btn-success" onclick="validaNumeroExtranjero(0,null);" id="btnNumExtranjero"> 
-                        <i class="fa fa-check-circle" aria-hidden="true"></i> VALIDAR N&deg; DE IDENTIFICACI&Oacute;N </button>
-                    </td>
-                </tr> 
-                ';
-        } else if ($isNal == 1) {
-            $html .= '
-                <tr class="info">
-                    <td class="info" width="33%" style="text-align:right"><b>RUT CHILENO</b>:</td> 
-                    <td class="info" width="33%" style="text-align:center">
-                        <input type="text" name="txtBuscar" id="txtBuscar" size="8" maxlength="8" style="width:70px" onkeypress="return soloNumeros(event)"> 
-                        - 
-                        <input type="text" name="txtDv" id="txtDv" size="1" maxlength="1" style="width:15px">
-                    </td> 
-                    <td class="info" width="33%" style="text-align:left">
-                        <a class="btn btn-small btn-success" onclick="validaRutChileno(1,null);" id="btn_rut">
-                        <i class="fa fa-search" aria-hidden="true"></i> VALIDAR RUT</a>
-                    </td> 
-                </tr>
-                ';
-        } else if ($isNal == 3) {
-            $html .= '
-                <tr class="info">
-                    <td class="info" width="33%" style="text-align:right"><b>RUT MADRE</b>:</td> 
-                    <td class="info" width="33%" style="text-align:center">
-                        <input type="text" name="txtBuscar" id="txtBuscar" size="8" maxlength="8" style="width:70px" onkeypress="return soloNumeros(event)"> 
-                        - 
-                        <input type="text" name="txtDv" id="txtDv" size="1" maxlength="1" style="width:15px">
-                    </td> 
-                    <td class="info" width="33%" style="text-align:left">
-                        <a class="btn btn-small btn-info" onclick="validaRutmadre(1,null);" id="btn_rut">
-                        <i class="fa fa-search" aria-hidden="true"></i> VALIDAR RUT RN</a>
-                    </td> 
-                </tr>
-                ';
-        }
-        $html .= '</theard></table>        
-        <div id="formularioUsuario" >
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li class="nav-item active" id="tabs_datosgenerales">
-                    <a class="nav-link active" data-toggle="tab" href="#datos_generales" role="tab"><b>DATOS GENERALES</b> <span class="badge" id="num_ic_5"></a>
-                </li>
-                <li class="nav-item" id="tabs_datoslocales">
-                    <a class="nav-link" data-toggle="tab" href="#datos_locales" role="tab"><b>DATOS LOCALES</b> <span class="badge" id="num_ic_4"></a>
-                </li>';
-        if ($isNal != 3) {
-            $html .= '<li class="nav-item" id="tabs_datosprevisionales" >
-                    <a class="nav-link" data-toggle="tab" href="#datos_previ" role="tab"><b>DATOS PREVISIONALES</b> <span class="badge" id="num_ic_3"></a>
-                </li>';
-        }
-        if ($isNal == 0) { /* Solo Extranjeros */
-            $html .= '<li class="nav-item" id="tabs_datosextranjero" >
-                  <a class="nav-link" data-toggle="tab" href="#datos_extranjero" role="tab"><b>DATOS EXTRANJERO</b> <span class="badge" id="num_ic_2"></a>
-                </li>';
-        }
-
-        //*************** NUEVO 18.12.2019 ***************
-        $html .= '<li class="nav-item" id="tabs_datosinscrito" style="display:none">
-		    <a class="nav-link" data-toggle="tab" href="#datos_inscrito" role="tab" ><b>INSCRITO</b></a>
-                </li>';
-        //*************** NUEVO 18.12.2019 ***************
-
-
-        //*************** NUEVO 07.02.2020 ***************
-        $html .= '
-		<li class="dropdown" id="dropdown_opciones" style="display:none">
-		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-			<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
-			<span class="caret"></span>
-		    </a>
-		    <ul class="dropdown-menu" id="btn_percapita" >
-			<li>
-			    <a href="javascript:ver_infopercapita()" id="a_ver_percapita" style="white-space: normal;">
-				<i class="fa fa fa-info-circle" aria-hidden="true"></i>&nbsp;INFO PERCAPITA
-			    </a>
-			</li>
-		    </ul>
-		</li>
-		';
-        //*************** NUEVO 07.02.2020 ***************
-
-
-
-        $html .= '</ul>
-            
-        <div class="tab-content">
-	
-	    <!-- ************** NUEVO 18-12-2019 *************** -->
-	    <div class="tab-pane" id="datos_inscrito" role="tabpanel"> 
-		...
-	    </div>
-	    
-            <div class="tab-pane active" id="datos_generales" role="tabpanel">
-            <form action="#" method="post" id="fromDatosGenerales" name="fromDatosGenerales">
-                <table width="100%" border="0" cellspacing="0"  class="table-sm table-striped">
-                <tr class="formulario" id="recienNacido"> 
-                    <td width="30%" height="28px">&#191;Recien nacido&#63;</td>
-                    <td width="70%">
-                        S&iacute; <input type="radio"  name="rdoRecNacido" class="input" value="1">
-                        No 	  <input type="radio"  name="rdoRecNacido" class="input" value="0" checked="checked"> 
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Nombres
-                        <input type="hidden" id="numFichae" name="numFichae" value="">
-                        <input type="hidden" id="isNewPac"  name="isNewPac"  value="">
-                    </td>
-                    <td><input type="text" id="txtNombre" name="txtNombre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
-                    <font color="#339999" class="Estilo2">*</font></td>
-                </tr>
-                <tr class="formulario">
-                    <td>  Nombre Social</td>
-                    <td>
-                        <input type="text" id="txtNombreSocial" name="txtNombreSocial" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Apellido Paterno</td>
-                    <td>
-                        <input type="text" id="txtApellidoPaterno" name="txtApellidoPaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Apellido Materno</td>
-                    <td>
-                        <input type="text" id="txtApellidoMaterno" name="txtApellidoMaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Fecha de nacimiento</td>
-                    <td><input type="text" style="width:80px" id="txtFechaNacimineto" name="txtFechaNacimineto" maxlength="10" disabled/><font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)</td>
-                </tr>
-                <tr class="formulario">
-                    <td> Sexo</td>
-                    <td>
-                        <select name="cboGenero" id="cboGenero" onchange="" class="" style="width: 64%;">' . $value_sex . '</select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td> Etnia</td>
-                    <td>
-                        <select name="cboEtnia1" id="cboEtnia1" onchange="" class="" style="width: 64%;">
-                        ' . $value_etn . '
-                        </select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td> Percepci&oacute;n Etnia</td>
-                    <td>
-                        <select name="cboEtnia2" id="cboEtnia2" onchange="" class="" style="width: 64%;">
-                        ' . $value_etn . '
-                        </select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Estado Civil</td>
-                    <td>
-                        <select name="cboEstadoCivil" id="cboEstadoCivil" onchange="" class="" style="width: 64%;">
-                        ' . $value_civ . '
-                        </select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td> Nombre Pareja</td>
-                    <td>
-                        <input name="txtPareja" type="text" id="txtPareja" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Nombre Padre</td>
-                    <td><input name="txtPadre" type="text" id="txtPadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"> </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Nombre Madre</td>
-                    <td><input name="txtMadre" type="text" id="txtMadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"></td>
-                </tr>
-                <tr class="formulario" >
-                    <td height="28px">Pais</td>
-                    <td>
-                    <select name="cboPais" id="cboPais" onchange="" class="" style="width: 64%;">' . $value_pais . '<select>
-                    </td>    
-                        
-                ';
-        /*
-                if ($isNal == 0){
-                    $html.='';
-                } else {
-                    $html.='<input  name="cboPais" id="cboPais" type="hidden" value="CL"> <b>CHILENO/A</b>';
-                    $html.='<font color="#339999" class="Estilo2">*</font></td>
-                    ';
-                }
-                */
-
-        $html .= '</tr>';
-
-
-
-        //Nacionalidad solo extranjeros
-        $html .= ' 
-            <tr class="formulario" >
-                <td height="28px"><b>Nacionalidad</b></td>
-                <td>
-                    <select name="cboNacionalidad" id="cboNacionalidad" onchange="" class="" style="width: 64%;">' . $value_pais . '<select>
-                </td>   
-            </tr>
-            ';
-
-        $html .= '<tr class="formulario">
-                        <td> Regi&oacute;n </td>
-                        <td>
-                            <select name="cboRegion" id="cboRegion" onchange="buscaCiudades(this.value,\'cboCiudad\',\'\');buscaComunas(this.value,\'cboComuna\',\'\')" class="" style="width: 64%;">
-                                ' . $value_region . '
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Ciudad</td>
-                        <td>
-                            <select name="cboCiudad" id="cboCiudad" onchange="" class="" style="width: 64%;">
-                                <option value="">SELECCIONE...</option>
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Comuna:</td>
-                        <td>
-                            <select name="cboComuna" id="cboComuna" onchange="" class="" style="width: 64%;">
-                                <option value="">SELECCIONE...</option>
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> V&iacute;a Direcci&oacute;n</td>
-                        <td><select name="cboviadire" id="cboviadire" class="spetit" style="width: 64%;">
-                                <option value="C">CALLE</option>
-                                <option value="P">PASAJE</option>
-                                <option value="A">AVENIDA</option>
-                                <option value="O">OTRO</option>
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Direcci&oacute;n</td>
-                        <td>
-                            <input name="txtDireccion" type="text" id="txtDireccion" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="100">
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>N&deg;</td>
-                        <td>
-                            <input name="txtNum_dire" type="text" id="txtNum_dire" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6" onblur="pastePacNo(1)">
-                            <font color="#339999" class="Estilo2">*</font>0 para "s/n". 
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Resto Direcci&oacute;n </td>
-                        <td>
-                            <input name="txtdire_resto" type="text" id="txtdire_resto" style="TEXT-TRANSFORM: uppercase;width: 64%;"maxlength="300">
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Procedencia</td>
-                        <td>
-                            <select name="cboProcedencia" id="cboProcedencia" class="spetit" style="width: 64%;">
-                                <option value="U">URBANA</option>
-                                <option value="R">RURAL</option>
-                            </select> 
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Tel&eacute;fono</td>
-                        <td>
-                            <input name="txtTelefono" type="text" id="txtTelefono" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6">
-                             NO ingresar c&oacute;digo de &aacute;rea 
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Celular </td>
-                        <td>
-                            <input name="txtCelular" type="text" id="txtCelular" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
-                            <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Correo Electr&oacute;nico</td>
-                        <td>
-                            <input name="txtEmail" type="text" id="txtEmail" style="width: 64%;" maxlength="40">
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Grupo Sangre</td>
-                        <td>
-                            <select name="cboGrupoSangre" id="cboGrupoSangre" onchange="" class="" style="width: 64%;">' . $value_Gsangre . '</select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Factor Sangre</td>
-                        <td>
-                            <select name="cboFactorSangre" id="cboFactorSangre" onchange="" class="" style="width: 64%;">' . $value_fsangre . '</select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Calidad Previsional</td>
-                        <td>
-                            <select name="cboTippac" id="cboTippac" class="spetit" onchange="revisaTitular()" style="width: 64%;">
-                                <option value="" selected="selected">SELECCIONE...</option>
-                            ';
-        if ($isNal == 0) {
-            $html .= '<option value="E">EXTRANJERO</option>';
-        } else {
-            $html .= '<option value="T">TITULAR</option>'
-                . '<option value="D">DEPENDIENTE O CARGA</option>';
-        }
-        $html .= '</select> 
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    
-                    <tr class="formulario" style="height: 31px;">
-                        <td>Condici&oacute;n PRAIS</td>
-                        <td>
-                            S&iacute;   <input type="radio" name="rdoprais" id="rdoprais_1" class="input" value="1"> 
-                            No          <input type="radio" name="rdoprais" id="rdoprais_0" class="input" value="0" checked="checked">
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario" style="height: 31px;">
-                        <td>Trans</td>
-                        <td>
-                            S&iacute;   <input type="radio" name="rdotrans" id="rdotrans_1" class="input" value="1" > 
-                            No          <input type="radio" name="rdotrans" id="rdotrans_0" class="input" value="0" checked="checked">
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                </tbody>
-                ';
-
-        $html .= '<tbody id="id_editarFicha">
-                    <tr class="formulario" id="tr_ocupacion">
-                        <td height="28px">Ocupaci&oacute;n</td>
-                        <td><input type="text"  name="txtOcupacion" id="txtOcupacion" style="width: 64%;" maxlength="100"></td>
-                    </tr>
-                    <tr class="formulario" id="representateLegal">
-                        <td height="28px">Representante Legal</td>
-                        <td><input type="text"  name="txtRepLegal"id="txtRepLegal" style="width: 64%;" maxlength="100"> * Menores de 18 a&ntilde;os</td>
-                    </tr>
-                </tbody>';
-
-        
-        $html .= '<tbody id="id_nuevo_20092021">
-                    <tr class="formulario" id="tr_ocupacion">
-                        <td height="28px">Nivel educacioanal</td>
-                        <td>
-                            <select name="ind_nivel_educacional" id="ind_nivel_educacional" class="spetit" style="width: 64%;">
-                                <option value="">SELECCIONE ...</option>
-                                <option value="0">SIN EDUCACI&Oacute;N</option>
-                                <option value="1">EDUCACI&Oacute;N PRE-ESCOLAR</option>
-                                <option value="2">EDUCACI&Oacute;N BASICA</option>
-                                <option value="3">EDUCACI&Oacute;N MEDIA</option>
-                                <option value="4">NIVEL SUPERIOR</option>
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario" id="representateLegal">
-                        <td height="28px">Poblaci&oacute;n Migrante</td>
-                        <td>
-                            <select name="ind_poblacion_migrante" id="ind_poblacion_migrante" class="spetit" style="width: 64%;">
-                                <option value="">SELECCIONE ...</option>
-                                <option value="1">SI</option>
-                                <option value="0">NO</option>
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                </tbody>';
-        
-        
-        $html .= '</table>
-        </form>
-    </div>';
-
-        if ($isNal != 3) { //Omite Cuando Es Recien Nacinado //Hasta nuevo aviso
-            $html .= '
-    <div class="tab-pane" id="datos_locales" role="tabpanel"> 
-        <form action="#" method="post" id="from_datos_locales" name="from_datos_locales">
-        <table width="100%" border="0" cellspacing="0" class="table-sm table-striped">
-            <tbody id="id_formLocal">
-                <tr class="formulario">
-                    <td>Ficha F&iacute;sica Local</td>
-                    <td>
-                        <div id="txt_nficha"></div>
-                        <div class="form-group form-inline"  style="padding-top:15px;" id="group_nueva_fichalocal">
-                            <label class="sr-only" for="exampleInputAmount">Ficha Local</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
-                                <input type="text" id="txtFichaFisicaLocal" name="txtFichaFisicaLocal" style="width:60px;height:auto" size="10" class="form-control" onkeypress="return IsNumber(event);" onblur="validarFL();" value="">
-                                <div class="input-group-addon"><input type="checkbox" name="newFichaL" id="newFichaL" onclick="nuevafichalocal()"> <b>GENERAR NUEVA FICHA LOCAL</b></div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="tieneDatosLocales" name="tieneDatosLocales" value="0"/>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td width="30%" height="28px">R.U.T</td>
-                    <td width="70%">
-                        <label id="RutLabel"></label></b> 
-                        <div id="cargaPaciente" style="display: initial"></div>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td height="28px"> Nombre Completo </td>
-                    <td><label id="nombreLabel"></label> </td>
-                </tr>
-                <tr class="formulario" style="">
-                    <td height="28px">C&oacute;digo Familia  </td>
-                    <td><span id="txtCodFamilia"></span>  </td>
-                </tr>
-                <tr class="formulario" style="">
-                    <td height="28px">  Sector  </td>
-                    <td><span id="txtSector"></span></td>
-                </tr>
-                <tr class="formulario">
-                    <td> Regi&oacute;n</td>
-                    <td>
-                        <select name="cboRegionLocal" id="cboRegionLocal" onchange="buscaCiudades(this.value,\'cboCiudadLocal\',\'\');buscaComunas(this.value,\'cboComunaLocal\',\'\')" style="width: 64%;">
-                            ' . $value_region . '
-                        </select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Ciudad</td>
-                    <td>
-                        <select name="cboCiudadLocal" id="cboCiudadLocal" style="width: 64%;">
-                            <option value="">SELECCIONE...</option>
-                        </select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Comuna:</td>
-                    <td>
-                        <select name="cboComunaLocal" id="cboComunaLocal" style="width: 64%;">
-                            <option value="">SELECCIONE...</option>
-                        </select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>  V&iacute;a Direcci&oacute;n Local </td>
-                    <td>
-                        <select name="cboviadireLocal" id="cboviadireLocal" class="spetit" style="width: 64%;">
-                            <option value="C">CALLE</option>
-                            <option value="P">PASAJE</option>
-                            <option value="A">AVENIDA</option>
-                            <option value="O">OTRO</option>
-                        </select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Direcci&oacute;n Local</td>
-                    <td>
-                        <input name="txtDireccionLocal" type="text" id="txtDireccionLocal" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="100">
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td> Tel&eacute;fono Local</td>
-                    <td>
-                        <input name="txtTelefonoLocal" type="text" id="txtTelefonoLocal" onkeypress="return IsNumber(event);"  style="width: 64%;" maxlength="7">
-                        NO ingresar c&oacute;digo de &aacute;rea 
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Celular Local </td>
-                    <td>
-                        <input name="txtCelularLocal" type="text" id="txtCelularLocal" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
-                        <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Nombre Contacto  </td>
-                    <td>
-                        <input type="text" id="txtNombreContacto" name="txtNombreContacto" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Direcci&oacute;n Contacto</td>
-                    <td>
-                        <input name="txtDireccionContacto" type="text" id="txtDireccionContacto"  style="width: 64%;" maxlength="100">
-                        <font color="#339999" class="Estilo2">*</font> 
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>  N&deg; Direcci&oacute;n Contacto </td>
-                    <td>
-                        <input name="txtNum_direContacto" type="text" id="txtNum_direContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6">
-                        <font color="#339999" class="Estilo2">*</font> digite un 0 para "s/n".
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td> Tel&eacute;fono Contacto</td>
-                    <td>
-                        <input name="txtTelefonoContacto" type="text" id="txtTelefonoContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="7">
-                        NO ingresar c&oacute;digo de &aacute;rea 
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td> Celular Contacto </td>
-                    <td>
-                        <input name="txtCelularContacto" type="text" id="txtCelularContacto"  onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
-                        <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
-                    </td>
-                </tr>
-            </tbody>
-         ';
-
-            //Solo para ficha local- Para editar Datos Locales
-            if ($templete == '2') {
-                $html .= '
-                <tbody id="id_editarFichaL">
-                    <tr class="formulario" id="tr_ocupacionL">
-                        <td height="28px">Ocupaci&oacute;n</td>
-                        <td><input name="txtOcupacionL" type="text" id="txtOcupacionL" style="width: 64%;" maxlength="100"></td>
-                    </tr>
-                    <tr class="formulario" id="representateLegalL">
-                        <td height="28px">Representante Legal</td>
-                        <td><input name="txtRepLegalL" type="text" id="txtRepLegalL" style="width: 64%;" maxlength="100"> * Menores de 18 a&ntilde;os</td>
-                    </tr>
-                </tbody>
-                ';
-            }
-            $html .= '</table>
-            
-       </form>
-    </div> 
-    ';
-        }
-
-        $html .= '<div class="tab-pane" id="datos_previ" role="tabpanel">
-        
-
-        
-
-        <form action="#" method="post" id="From_datos_previsiones" name="From_datos_previsiones">
-            <table width="100%" border="0" cellspacing="0" class="table-sm table-striped">';
-        if ($isNal == 0) {
-            $html .= '
-            <tbody id="soloExnjerosFonasa">      
-                 <tr class="formulario">
-                     <td width="30%">SOLO EXTRANJEROS </td>
-                     <td width="70%">
-                         <div class="has-error">
-                             <div class="radio">
-                                 <label>
-                                     <input type="radio" name="tienePreviExtra" id="PreviExtr_0" value="0" onchange="js_cambia(this.id,this.value)" checked>
-                                     <b>PACIENTE EXTRANJERO NO CUENTA CON RUT PROVISORIO DE FONASA (EN TRAMITE)</b>
-                                 </label>
-                             </div>
-                         </div>
-                         <div class="has-success">
-                             <div class="radio">
-                                 <label>
-                                     <input type="radio" name="tienePreviExtra" id="PreviExtr_1" value="1" onchange="js_cambia(this.id,this.value)">
-                                     <b>PACIENTE EXTRANJERO CUENTA CON RUT PROVISORIO DE FONASA </b>
-                                 </label>
-                             </div>
-                         </div>
-                     </td>
-                 </tr>
-             </tbody>
-            ';
-        } else {
-            $html .= '<input type="hidden" name="tienePreviExtra" id="tienePreviExtra" value="1">';
-        }
-
-        if ($isNal == 0) {
-            $style = ' style="display:none"';
-        } else {
-            $style = ' ';
-        }
-        $html .= '
-            <tbody id="formulario_provisionales" ' . $style . '>      
-                <tr class="formulario">
-                    <td width="30%">  R.U.T:</td>
-                    <td width="70%" class="formulario">
-                        <input type="text" name="txtRuttit" id="txtRuttit" onkeypress="return IsNumber(event);"            size="8" maxlength="8" value=""> - 
-                        <input type="text" name="txtDvtit"  id="txtDvtit"  onkeypress="return IsDigitoVerificador(event);" size="1" maxlength="1" value=""> 
-                        <font color="#339999" class="Estilo2">*</font>';
-        $html .= '<button type="button" name="btnConsultarPacientePrevisionales" id="btnConsultarPacientePrevisionales" class="btn btn-small btn-info" onclick="buscaTitular(1);">  
-                        <i class="fa fa-database" aria-hidden="true"></i>&nbsp; INFORMACI&Oacute;N FONASA 
-                    </button>
-                    ';
-        $html .= '</td>
-                </tr>
-                <tr class="formulario">
-                    <td>  Nombres </td>
-                    <td class="formulario">
-                        <input type="text" id="txtNombretit" name="txtNombretit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Apellido paterno</td>
-                    <td class="formulario">
-                        <input type="text" id="txtApellidoPaternotit" name="txtApellidoPaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Apellido Materno</td>
-                    <td class="formulario">
-                        <input type="text" id="txtApellidoMaternotit" name="txtApellidoMaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Previsi&oacute;n</td>
-                    <td class="formulario">
-                        <select name="cboPrevision" id="cboPrevision" onchange="" class="" style="width: 64%;">' . $value_fprevi . '</select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-                <tr class="formulario">
-                    <td>Empresa</td>
-                    <td class="formulario">
-                        <select name="cboEmpresaPrevision" id="cboEmpresaPrevision" onchange="" class="" style="width: 64%;">' . $value_previEmp . '</select>
-                        <font color="#339999" class="Estilo2">*</font>
-                    </td>
-                </tr>
-            </table>
-        </tbody> 
-    </form>  
-   
-    <div class="grid_panel_buscando" id="buscando_fonasa"  style="display:none">
-        <div class="grid_panel_buscando1"></div>
-        <div class="grid_panel_buscando2">
-            <b>BUSCANDO INFORMACI&Oacute;N</b>
-        </div>
-        <div class="grid_panel_buscando3">
-            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="color: #28a745"></i>
-            <span class="sr-only"> CARGANDO ... </span>
-        </div>
-        <div class="grid_panel_buscando4"></div>
-    </div>
-  
-    <div class="alert alert-info alert-dismissible fade in" role="alert" id="msjFonasa" style="display:none" > 
-        <h4 style="text-align: center;"> RESULTADO:</h4> 
-        <p id="txtFonasa" style="text-align: center;"> </p> 
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">VER INFORMACION <i class="fa fa-eye" aria-hidden="true"></i></a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body" id="tableFonasa"></div>
-                </div>
-              </div>
-        </div>
-        </div>
-    </div>
     
-    ';
-
-        if ($isNal == 0) {
-            $html .=   '
-            <div class="tab-pane" id="datos_extranjero" role="tabpanel">
-                <form action="#" method="post" id="Form_datos_extranjero" name="Form_datos_extranjero">
-                    <table width="100%" border="0" cellspacing="0">
-                       <tbody>
-                        <tr class="formulario" id="extranjero3">
-                            <td width="30%"> Fecha Vencimiento Documento:(Pasaporte)</td>
-                            <td width="70%" class="formulario">
-                                <input type="text" name="txtFecvencePasport" id="txtFecvencePasport" size="10" value=""/> <b><font size="-2">(dd/mm/aaaa)</font></b> 
-                            </td>
-                        </tr>
-                        
-                        <tr class="formulario" id="extranjero3">
-                            <td width="30%"> Fecha Vencimiento Identificador Provisorio</td>
-                            <td width="70%" class="formulario">
-                                <input type="text" name="txtFecvence_fonasa" id="txtFecvence_fonasa" size="10" value=""/> <b><font size="-2">(dd/mm/aaaa)</font></b> 
-                            </td>
-                        </tr>
-                        
-                    </table>
-                </form>  
-            </div> 
-            
-            <script>
-                $("#txtFecvencePasport").datepicker($.extend({
-                    //defaultDate       : fecha,
-                    showOn              : "button",
-                    buttonImage         : "assets/themes/frontend/img/calendar.png",
-                    buttonImageOnly     : true,
-                    dateFormat          : "dd-mm-yy",
-                    changeMonth         : true,
-                    changeYear          : true,
-                    showButtonPanel     : true,
-                    buttonText          : "Calendario", 
-                    //minDate           : "0",
-                    //maxDate           : "0",
-                    pick12HourFormat    : true,
-                    selectOtherMonths   : true,
-                    onSelect            : function(textoFecha, objDatepicker){    }
-                },$.datepicker.regional["es"]));
-                
-                $("#txtFecvence_fonasa").datepicker($.extend({
-                    //defaultDate       : fecha,
-                    showOn              : "button",
-                    buttonImage         : "assets/themes/frontend/img/calendar.png",
-                    buttonImageOnly     : true,
-                    dateFormat          : "dd-mm-yy",
-                    changeMonth         : true,
-                    changeYear          : true,
-                    showButtonPanel     : true,
-                    buttonText          : "Calendario", 
-                    //minDate           : "0",
-                    //maxDate           : "0",
-                    pick12HourFormat    : true,
-                    selectOtherMonths   : true,
-                    onSelect            : function(textoFecha, objDatepicker){    }
-                },$.datepicker.regional["es"]));
-                
-                
-            </script>
-        </div>  
-        ';
-        }
-
-        $html .= '
-            <script>
-                $("#txtFechaNacimineto").datepicker($.extend({
-                    //defaultDate       : fecha,
-                    showOn              : "button",
-                    buttonImage         : "assets/themes/frontend/img/calendar.png",
-                    buttonImageOnly     : true,
-                    yearRange           : "-120:+0",
-                    dateFormat          : "dd-mm-yy",
-                    changeMonth         : true,
-                    changeYear          : true,
-                    showButtonPanel     : true,
-                    buttonText          : "Calendario", 
-                    //minDate           : "0",
-                    maxDate             : "0",
-                    pick12HourFormat    : true,
-                    selectOtherMonths   : true,
-                    onSelect            : function(textoFecha, objDatepicker){    }
-                },$.datepicker.regional["es"]));
-            </script>';
-        $html .= '</div>
-        </div> 
-        ';
-        $aDatos[] = array('id_html' => 'HTML_DIALOGO', 'opcion' => 'html', 'contenido' => $html);
-
-
-        if ($isNal == 1) {
-            $aDatos[] = array(
-                "id_html"   => "titulo_bdu",
-                "opcion"    => "html",
-                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE </b>"
-            );
-            /*
-            $aDatos[] = array(
-                               "id_html"   => "",    
-                               "opcion"    => "console",    
-                               "contenido" => "----------->".$templete
-                           ); 
-            */
-
-            if ($templete == 1) {
-                $aDatos[] = array(
-                    "id_html"   => "txt_bdu",
-                    "opcion"    => "html",
-                    "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N PACIENTE</b>"
-                );
-            } else if ($templete == 2) {
-                $aDatos[] = array(
-                    "id_html"   => "txt_bdu",
-                    "opcion"    => "html",
-                    "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>EDICI&Oacute;N FICHA LOCAL</b>"
-                );
-            }
-
-            $aDatos[] = array(
-                "id_html"   => "txt_bdu",
-                "opcion"    => "html",
-                "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N PACIENTE</b>"
-            );
-
-            if ($numFichae != '') {
-                $aDatos[] = array(
-                    "id_html"   => "respuesta",
-                    "opcion"    => "html",
-                    "contenido" => "<script>validaRutChileno(1,$numFichae)</script>"
-                );
-            }
-        } else if ($isNal == 0) { //EXTRANJERO
-            $aDatos[]       = array(
-                'id_html'   => 'cboPais',
-                'opcion'    => 'find_rm',
-                'contenido' => 'CL'
-            );
-            $aDatos[]       = array(
-                "id_html"   => "titulo_bdu",
-                "opcion"    => "html",
-                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE EXTRANJERO</b>"
-            );
-            $aDatos[]       = array(
-                "id_html"   => "txt_bdu",
-                "opcion"    => "html",
-                "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N PACIENTE EXTRANJERO</b>"
-            );
-            if ($numFichae != '') {
-                $aDatos[]   = array(
-                    "id_html"   => "respuesta",
-                    "opcion"    => "html",
-                    "contenido" => "<script>validaNumeroExtranjero(0,$numFichae)</script>"
-                );
-            }
-        } else if ($isNal == 3) { //Datos del recien nacido
-            //RN
-            //$aDatos[]     = array('id_html'=>'cboPais' ,'opcion'=>'find_rm','contenido'=>'CL');
-            $aDatos[]       = array(
-                "id_html"   => "titulo_bdu",
-                "opcion"    => "html",
-                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE RECIEN NACIDO</b>"
-            );
-            $aDatos[]       = array(
-                "id_html"   => "txt_bdu",
-                "opcion"    => "html",
-                "contenido" => "<i class='fa fa-id-card-o'     aria-hidden='true'></i>&nbsp;<b>CREACI&Oacute;N/EDICI&Oacute;N RECIEN NACIDO</b>"
-            );
-            if ($numFichae != '') {
-                $aDatos[]   = array(
-                    "id_html"   => "respuesta",
-                    "opcion"    => "html",
-                    "contenido" => "<script>validaNumeroRN(0,$numFichae)</script>"
-                );
-            }
-        }
-        $this->output->set_output(json_encode($aDatos));
-    }
 
     public function CreaCOOKEE()
     {

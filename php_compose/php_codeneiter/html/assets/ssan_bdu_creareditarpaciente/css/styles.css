@@ -55,3 +55,12 @@
 .disabledTab                            {
     pointer-events                      :   none;
 }
+
+.grid_div_run                           {
+    display                             :   grid;
+    grid-template-columns               :   100px 15px 45px;
+    gap                                 :   5px;
+    align-items                         :   center;
+    justify-items                       :   legacy;   
+}
+

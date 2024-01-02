@@ -105,7 +105,7 @@
             </table>
             <div class="row">
                 <div class="col-xs-1 center-block">
-                    <div style="text-align:center;" align="center">  
+                    <div style="text-align:center;">  
                         <div id="new_paginacion" style="display: none;"></div>
                     </div>
                 </div>
@@ -114,17 +114,18 @@
     </div>
 </div>
 
+
 <section>
-    <div class="modal fade bs-example-modal-lg" id="modalPaciente">
-        <div class="modal-dialog modal-xl3">
-            <div class="modal-content modal-lg">
+    <div class="modal fade" id="modalPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3 class="modal-title" id="tituloModal"><div id="titulo_bdu"></div> </h3>
+                    <h3 class="modal-title" id="tituloModal"><div id="titulo_bdu"></div></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="HTML_DIALOGO"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CIERRA VENTANA</button>
                     <button type="button" class="btn btn-primary btn-sm disabled" id="Btn_bdu">
                         <div id="txt_bdu"></div>
                     </button>
@@ -200,4 +201,26 @@
     <input type="hidden" name="USERNAME"        id="USERNAME"           value="<?php echo $USERNAME; ?>"/>
     <input type="hidden" name="COD_ESTAB"       id="COD_ESTAB"          value="<?php echo $COD_ESTAB; ?>"/>
 
+</section>
+
+
+<section>
+    <!--
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> ... 1 ...</div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"> ... 2 ...</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"> ... 3 ...</div>
+        </div>
+    -->
 </section>
