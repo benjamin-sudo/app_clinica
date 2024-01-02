@@ -28,6 +28,7 @@ class Constructor extends CI_Controller {
         if($user['status']){   
             $userL                      =   $user['row'];
             $unique                     =   str_replace('-','', $userL->USERNAME).$this->getRandomCode();
+            
             $_SESSION["IP"]             =   $this->input->ip_address();
             $_SESSION["ID_UID"]         =   $userL->ID_UID;
             $_SESSION["unique"]         =   $unique;
@@ -35,6 +36,7 @@ class Constructor extends CI_Controller {
             $_SESSION["NAMESESSION"]    =   $userL->NAME;
             $_SESSION["FONOSESSION"]    =   $userL->TELEPHONE;
             $_SESSION["loginFr"]        =   'si';
+            $_SESSION["COD_ESTAB"]      =   '100';
             $newdata            =   array(
                 'unique'        =>  $unique,
                 'ID_UID'        =>  $userL->ID_UID,
@@ -49,8 +51,6 @@ class Constructor extends CI_Controller {
             $this->session->set_userdata($newdata);
             $redirect = 'Dashboard';
         }
-        
-        
         $this->output->set_output(json_encode([
             'status'    =>  $status,
             'redirect'  =>  $redirect,
