@@ -113,7 +113,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
 
         $html = '
-            <table width="100%" border="0" cellspacing="0"  class="table-sm">
+            <table border="0" cellspacing="0"  class="table-sm">
                 <theard>
             ';
         if ($isNal == 0) {
@@ -189,30 +189,51 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         }
         $html .= '</theard></table>';
 
-        
+/*
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> ... 1 ...</div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"> ... 2 ...</div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"> ... 3 ...</div>
+    </div>
+*/
+
         $html .= '
         <div id="formularioUsuario">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li class="nav-item active" id="tabs_datosgenerales">
-                    <a class="nav-link active" data-toggle="tab" href="#datos_generales" role="tab"><b>DATOS GENERALES</b> <span class="badge" id="num_ic_5"></a>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+               <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#datos_generales" type="button" role="tab" aria-controls="home" aria-selected="true">DATOS GENERALES</button>
                 </li>
                 <li class="nav-item" id="tabs_datoslocales">
-                    <a class="nav-link" data-toggle="tab" href="#datos_locales" role="tab"><b>DATOS LOCALES</b> <span class="badge" id="num_ic_4"></a>
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">DATOS LOCALES</button>
                 </li>';
         if ($isNal != 3) {
-            $html .= '<li class="nav-item" id="tabs_datosprevisionales" >
-                    <a class="nav-link" data-toggle="tab" href="#datos_previ" role="tab"><b>DATOS PREVISIONALES</b> <span class="badge" id="num_ic_3"></a>
-                </li>';
+            $html .=    '<li class="nav-item" id="tabs_datosprevisionales">
+                           <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">DATOS PREVISIONALES</button>
+                        </li>';
         }
+        
         if ($isNal == 0) { /* Solo Extranjeros */
-            $html .= '<li class="nav-item" id="tabs_datosextranjero" >
-                  <a class="nav-link" data-toggle="tab" href="#datos_extranjero" role="tab"><b>DATOS EXTRANJERO</b> <span class="badge" id="num_ic_2"></a>
-                </li>';
+            $html .=    '<li class="nav-item" id="tabs_datosextranjero">
+   
+                            <button class="nav-link" id="datos_extranjero-tab" data-bs-toggle="tab" data-bs-target="#datos_extranjero" type="button" role="tab" aria-controls="datos_extranjero" aria-selected="false">DATOS PREVISIONALES</button>
+
+                        </li>';
         }
 
         //*************** NUEVO 18.12.2019 ***************
         $html .= '<li class="nav-item" id="tabs_datosinscrito" style="display:none">
-		    <a class="nav-link" data-toggle="tab" href="#datos_inscrito" role="tab" ><b>INSCRITO</b></a>
+	                <button class="nav-link" id="datos_inscrito-tab" data-bs-toggle="tab" data-bs-target="#datos_inscrito" type="button" role="tab" aria-controls="datos_inscrito" aria-selected="false">DATOS PREVISIONALES</button>
                 </li>';
         //*************** NUEVO 18.12.2019 ***************
 
@@ -221,8 +242,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $html .= '
 		<li class="dropdown" id="dropdown_opciones" style="display:none">
 		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-			<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
-			<span class="caret"></span>
+			    <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
+			    <span class="caret"></span>
 		    </a>
 		    <ul class="dropdown-menu" id="btn_percapita" >
 			<li>
@@ -235,8 +256,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 		';
         //*************** NUEVO 07.02.2020 ***************
 
-
-
         $html .= '</ul>
             
         <div class="tab-content">
@@ -244,108 +263,108 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             <div class="tab-pane" id="datos_inscrito" role="tabpanel"> 
                 ...
             </div>
-	        <div class="tab-pane active" id="datos_generales" role="tabpanel">
+
+            <div class="tab-pane fade show active" id="datos_generales" role="tabpanel" aria-labelledby="home-tab">
+
                 <form action="#" method="post" id="fromDatosGenerales" name="fromDatosGenerales">
                     <table width="100%" border="0" cellspacing="0"  class="table-sm table-striped">
-
-                    <tr class="formulario" id="recienNacido"> 
-                        <td width="30%" height="28px">&#191;Recien nacido&#63;</td>
-                        <td width="70%" style="display:flex;">
-                            S&iacute; <input type="radio" name="rdoRecNacido" class="input" value="1">
-                            No 	  <input type="radio"  name="rdoRecNacido" class="input" value="0" checked="checked"> 
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Nombres
-                            <input type="hidden" id="numFichae" name="numFichae" value="">
-                            <input type="hidden" id="isNewPac"  name="isNewPac"  value="">
-                        </td>
-                        <td style="display:flex;"><input type="text"  class="form-control" id="txtNombre" name="txtNombre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
-                        <font color="#339999" class="Estilo2">*</font></td>
-                    </tr>
-
-                    <tr class="formulario">
-                        <td>  Nombre Social</td>
-                        <td style="display:flex;">
-                            <input type="text" class="form-control" d="txtNombreSocial" name="txtNombreSocial" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Apellido Paterno</td>
-                        <td style="display:flex;">
-                            <input type="text" class="form-control" id="txtApellidoPaterno" name="txtApellidoPaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Apellido Materno</td>
-                        <td style="display:flex;">
-                            <input type="text" class="form-control" id="txtApellidoMaterno" name="txtApellidoMaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Fecha de nacimiento</td>
-                        <td style="display:flex;">
-                            <input type="text" class="form-control" style="width:80px" id="txtFechaNacimineto" name="txtFechaNacimineto" maxlength="10" disabled/><font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Sexo</td>
-                        <td style="display:flex;">
-                            <select class="form-select" name="cboGenero" id="cboGenero" onchange="" class="" style="width: 64%;">
-                                '.$value_sex.'
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Etnia</td>
-                        <td style="display:flex;">
-                            <select class="form-select" name="cboEtnia1" id="cboEtnia1" onchange="" class="" style="width: 64%;">
-                            ' . $value_etn . '
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Percepci&oacute;n Etnia</td>
-                        <td style="display:flex;">
-                            <select class="form-select" name="cboEtnia2" id="cboEtnia2" onchange="" class="" style="width: 64%;">
-                            ' . $value_etn . '
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Estado Civil</td>
-                        <td style="display:flex;">
-                            <select class="form-select" name="cboEstadoCivil" id="cboEstadoCivil" onchange="" class="" style="width: 64%;">
-                            ' . $value_civ . '
-                            </select>
-                            <font color="#339999" class="Estilo2">*</font>
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td> Nombre Pareja</td>
-                        <td style="display:flex;">
-                            <input class="form-control" name="txtPareja" type="text" id="txtPareja" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
-                        </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Nombre Padre</td>
-                        <td><input class="form-control" name="txtPadre" type="text" id="txtPadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"> </td>
-                    </tr>
-                    <tr class="formulario">
-                        <td>Nombre Madre</td>
-                        <td><input class="form-control" name="txtMadre" type="text" id="txtMadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"></td>
-                    </tr>
-                    <tr class="formulario" >
-                        <td height="28px">Pais</td>
-                        <td>
-                            <select class="form-select" name="cboPais" id="cboPais" onchange="" class="" style="width: 64%;">' . $value_pais . '<select>
-                        </td>    
+                        <tr class="formulario" id="recienNacido"> 
+                            <td width="30%" height="45pxpx">&#191;Recien nacido&#63;</td>
+                            <td width="70%" style="display:flex;">
+                                S&iacute; <input type="radio" name="rdoRecNacido" class="input" value="1">
+                                No 	  <input type="radio"  name="rdoRecNacido" class="input" value="0" checked="checked"> 
+                                <font color="#339999" class="Estilo2">*</font>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>Nombres
+                                <input type="hidden" id="numFichae" name="numFichae" value="">
+                                <input type="hidden" id="isNewPac"  name="isNewPac"  value="">
+                            </td>
+                            <td style="display:flex;"><input type="text"  class="form-control" id="txtNombre" name="txtNombre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
+                            <font color="#339999" class="Estilo2">*</font></td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>  Nombre Social</td>
+                            <td style="display:flex;">
+                                <input type="text" class="form-control" d="txtNombreSocial" name="txtNombreSocial" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>Apellido Paterno</td>
+                            <td style="display:flex;">
+                                <input type="text" class="form-control" id="txtApellidoPaterno" name="txtApellidoPaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                                <font color="#339999" class="Estilo2">*</font>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>Apellido Materno</td>
+                            <td style="display:flex;">
+                                <input type="text" class="form-control" id="txtApellidoMaterno" name="txtApellidoMaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                                <font color="#339999" class="Estilo2">*</font>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>Fecha de nacimiento</td>
+                            <td style="display:flex;">
+                                <input type="text" class="form-control" style="width:80px" id="txtFechaNacimineto" name="txtFechaNacimineto" maxlength="10" disabled/><font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td> Sexo</td>
+                            <td style="display:flex;">
+                                <select class="form-select" name="cboGenero" id="cboGenero" onchange="" class="" style="width: 64%;">
+                                    '.$value_sex.'
+                                </select>
+                                <font color="#339999" class="Estilo2">*</font>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td> Etnia</td>
+                            <td style="display:flex;">
+                                <select class="form-select" name="cboEtnia1" id="cboEtnia1" onchange="" class="" style="width: 64%;">
+                                ' . $value_etn . '
+                                </select>
+                                <font color="#339999" class="Estilo2">*</font>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td> Percepci&oacute;n Etnia</td>
+                            <td style="display:flex;">
+                                <select class="form-select" name="cboEtnia2" id="cboEtnia2" onchange="" class="" style="width: 64%;">
+                                ' . $value_etn . '
+                                </select>
+                                <font color="#339999" class="Estilo2">*</font>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>Estado Civil</td>
+                            <td style="display:flex;">
+                                <select class="form-select" name="cboEstadoCivil" id="cboEstadoCivil" onchange="" class="" style="width: 64%;">
+                                ' . $value_civ . '
+                                </select>
+                                <font color="#339999" class="Estilo2">*</font>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td> Nombre Pareja</td>
+                            <td style="display:flex;">
+                                <input class="form-control" name="txtPareja" type="text" id="txtPareja" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>Nombre Padre</td>
+                            <td><input class="form-control" name="txtPadre" type="text" id="txtPadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"> </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>Nombre Madre</td>
+                            <td><input class="form-control" name="txtMadre" type="text" id="txtMadre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10"></td>
+                        </tr>
+                        <tr class="formulario" >
+                            <td height="28px">Pais</td>
+                            <td>
+                                <select class="form-select" name="cboPais" id="cboPais" onchange="" class="" style="width: 64%;">' . $value_pais . '<select>
+                            </td>    
                 ';
                 /*
                 if ($isNal == 0){
@@ -559,10 +578,10 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     </div>';
 
 
+    if ($isNal != 3) { //Omite Cuando Es Recien Nacinado //Hasta nuevo aviso
 
-        if ($isNal != 3) { //Omite Cuando Es Recien Nacinado //Hasta nuevo aviso
-            $html .= '
-    <div class="tab-pane" id="datos_locales" role="tabpanel"> 
+        $html .= '
+    <div class="tab-pane" id="profile" role="tabpanel"> 
         <form action="#" method="post" id="from_datos_locales" name="from_datos_locales">
         <table width="100%" border="0" cellspacing="0" class="table-sm table-striped">
             <tbody id="id_formLocal">
@@ -720,7 +739,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     ';
         }
 
-        $html .= '<div class="tab-pane" id="datos_previ" role="tabpanel">
+        $html .= '<div class="tab-pane" id="contact" role="tabpanel">
         
 
         
