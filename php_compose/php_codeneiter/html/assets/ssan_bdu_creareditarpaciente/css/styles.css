@@ -64,3 +64,11 @@
     justify-items                       :   legacy;   
 }
 
+.grid_div_run_previ                     {
+    display                             :   grid;
+    grid-template-columns               :   100px 15px 45px 30px 1fr;
+    gap                                 :   5px;
+    align-items                         :   center;
+    justify-items                       :   legacy;   
+}
+

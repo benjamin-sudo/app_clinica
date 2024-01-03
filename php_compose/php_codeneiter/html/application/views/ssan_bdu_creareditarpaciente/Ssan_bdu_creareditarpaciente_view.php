@@ -79,23 +79,23 @@
         <div id="result" style="">
             <table class="table table-striped" width="100%">
                 <thead>
-                    <tr class="info">
+                    <tr>
                         <td colspan="6" > Informaci&oacute;n de Pacientes</td>
                         <td colspan="4"> Total Resultados <span class="badge" id="nresultados"></span></td>
                     </tr>
                 </thead>
                 <thead>
-                    <tr class="info">
-                        <td width="1%"   >N&deg;</td>
-                        <td width="15%"  >Run/ID Fonasa</td>
-                        <td width="10%"  >DNI/Pasaporte</td>
-                        <td width="8%"   >F.Local</td>
-                        <td width="15%"  >Nombres</td>
-                        <td width="15%"  >Apellido Paterno</td>
-                        <td width="15%"  >Apellido Materno</td>
-                        <td width="9%"   >Nacimiento</td>
-                        <td width="5%"   >PAIS</td>
-                        <td width="7%"   style="width:10%;text-align:center">Opci&oacute;n</td>
+                    <tr>
+                        <td width="1%"      >N&deg;</td>
+                        <td width="15%"     >Run/ID Fonasa</td>
+                        <td width="10%"     >DNI/Pasaporte</td>
+                        <td width="8%"      >F.Local</td>
+                        <td width="15%"     >Nombres</td>
+                        <td width="15%"     >Apellido Paterno</td>
+                        <td width="15%"     >Apellido Materno</td>
+                        <td width="9%"      >Nacimiento</td>
+                        <td width="5%"      >PAIS</td>
+                        <td width="7%"      style="width:10%;text-align:center">Opci&oacute;n</td>
                     </tr>
                 </thead>    
                 <tbody id="resultados"></tbody>
@@ -158,21 +158,6 @@
                     <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="MODAL_RECIEN_NACIDO">
-        <div class="modal-dialog modal-xl3">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3 class="modal-title" id="tituloModal"><b>FORMULARIO RECIEN NACIDO</b></h3>
-            </div>
-            <div class="modal-body" id="HTML_FORM_RN"></div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">&nbsp;<i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA</button>
-            </div>
-        </div>
         </div>
     </div>
 

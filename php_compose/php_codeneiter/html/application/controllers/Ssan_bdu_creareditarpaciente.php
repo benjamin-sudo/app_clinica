@@ -505,7 +505,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         </td>
                     </tr>
                     
-                    <tr class="formulario" style="height: 31px;">
+                    <tr class="formulario" style="height: 45px;">
                         <td>Condici&oacute;n PRAIS</td>
                         <td style="display:flex;" style="height: 45px;">
                             S&iacute;   <input type="radio" name="rdoprais" id="rdoprais_1" class="input" value="1"> 
@@ -513,7 +513,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                             <font color="#339999" class="Estilo2">*</font>
                         </td>
                     </tr>
-                    <tr class="formulario" style="height: 31px;">
+                    <tr class="formulario" style="height: 45px;">
                         <td>Trans</td>
                         <td style="display:flex;" style="height: 45px;">
                             S&iacute;   <input type="radio" name="rdotrans" id="rdotrans_1" class="input" value="1" > 
@@ -542,7 +542,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     <tr class="formulario" id="tr_ocupacion">
                         <td height="28px">Nivel educacioanal</td>
                         <td style="display:flex;">
-                            <select class="form-select"  name="ind_nivel_educacional" id="ind_nivel_educacional" class="spetit" style="width: 64%;">
+                            <select class="form-select" name="ind_nivel_educacional" id="ind_nivel_educacional" class="spetit" style="width: 64%;">
                                 <option value="">SELECCIONE ...</option>
                                 <option value="0">SIN EDUCACI&Oacute;N</option>
                                 <option value="1">EDUCACI&Oacute;N PRE-ESCOLAR</option>
@@ -584,13 +584,12 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     <td>Ficha F&iacute;sica Local</td>
                     <td>
                         <div id="txt_nficha"></div>
-                        <div class="form-group form-inline"  style="padding-top:15px;" id="group_nueva_fichalocal">
-                            <label class="sr-only" for="exampleInputAmount">Ficha Local</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
-                                <input type="text" id="txtFichaFisicaLocal" name="txtFichaFisicaLocal" style="width:60px;height:auto" size="10" class="form-control" onkeypress="return IsNumber(event);" onblur="validarFL();" value="">
-                                <div class="input-group-addon"><input type="checkbox" name="newFichaL" id="newFichaL" onclick="nuevafichalocal()"> <b>GENERAR NUEVA FICHA LOCAL</b></div>
+                        <div class="input-group" id="group_nueva_fichalocal">
+                            <div class="input-group-text" style="width: 45px;">
+                                <input type="checkbox" class="form-check-input mt-0" name="newFichaL" id="newFichaL" onclick="nuevafichalocal()" style="margin-left:2px;" value="" aria-label="Nueva ficha local">
                             </div>
+                            <label class="input-group-text" for="inputGroupFile01">GENERAR NUEVA FICHA LOCAL</label>
+                            <input type="text" id="txtFichaFisicaLocal" name="txtFichaFisicaLocal" size="10" class="form-control" onkeypress="return IsNumber(event);" onblur="validarFL();" value="">
                         </div>
                         <input type="hidden" id="tieneDatosLocales" name="tieneDatosLocales" value="0"/>
                     </td>
@@ -616,8 +615,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 </tr>
                 <tr class="formulario">
                     <td> Regi&oacute;n</td>
-                    <td>
-                        <select name="cboRegionLocal" id="cboRegionLocal" onchange="buscaCiudades(this.value,\'cboCiudadLocal\',\'\');buscaComunas(this.value,\'cboComunaLocal\',\'\')" style="width: 64%;">
+                    <td style="display:flex;">
+                        <select class="form-select" name="cboRegionLocal" id="cboRegionLocal" onchange="buscaCiudades(this.value,\'cboCiudadLocal\',\'\');buscaComunas(this.value,\'cboComunaLocal\',\'\')" style="width: 64%;">
                             ' . $value_region . '
                         </select>
                         <font color="#339999" class="Estilo2">*</font>
@@ -625,8 +624,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 </tr>
                 <tr class="formulario">
                     <td>Ciudad</td>
-                    <td>
-                        <select name="cboCiudadLocal" id="cboCiudadLocal" style="width: 64%;">
+                    <td style="display:flex;">
+                        <select class="form-select" name="cboCiudadLocal" id="cboCiudadLocal" style="width: 64%;">
                             <option value="">SELECCIONE...</option>
                         </select>
                         <font color="#339999" class="Estilo2">*</font>
@@ -634,8 +633,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 </tr>
                 <tr class="formulario">
                     <td>Comuna:</td>
-                    <td>
-                        <select name="cboComunaLocal" id="cboComunaLocal" style="width: 64%;">
+                    <td style="display:flex;">
+                        <select class="form-select" name="cboComunaLocal" id="cboComunaLocal" style="width: 64%;">
                             <option value="">SELECCIONE...</option>
                         </select>
                         <font color="#339999" class="Estilo2">*</font>
@@ -643,8 +642,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 </tr>
                 <tr class="formulario">
                     <td>  V&iacute;a Direcci&oacute;n Local </td>
-                    <td>
-                        <select name="cboviadireLocal" id="cboviadireLocal" class="spetit" style="width: 64%;">
+                    <td style="display:flex;">
+                        <select class="form-select" name="cboviadireLocal" id="cboviadireLocal" class="spetit" style="width: 64%;">
                             <option value="C">CALLE</option>
                             <option value="P">PASAJE</option>
                             <option value="A">AVENIDA</option>
@@ -655,57 +654,57 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 </tr>
                 <tr class="formulario">
                     <td>Direcci&oacute;n Local</td>
-                    <td>
-                        <input name="txtDireccionLocal" type="text" id="txtDireccionLocal" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="100">
+                    <td style="display:flex;">
+                        <input class="form-control" name="txtDireccionLocal" type="text" id="txtDireccionLocal" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="100">
                         <font color="#339999" class="Estilo2">*</font>
                     </td>
                 </tr>
                 <tr class="formulario">
                     <td> Tel&eacute;fono Local</td>
-                    <td>
-                        <input name="txtTelefonoLocal" type="text" id="txtTelefonoLocal" onkeypress="return IsNumber(event);"  style="width: 64%;" maxlength="7">
+                    <td style="display:flex;">
+                        <input class="form-control" name="txtTelefonoLocal" type="text" id="txtTelefonoLocal" onkeypress="return IsNumber(event);"  style="width: 64%;" maxlength="7">
                         NO ingresar c&oacute;digo de &aacute;rea 
                     </td>
                 </tr>
                 <tr class="formulario">
                     <td>Celular Local </td>
-                    <td>
-                        <input name="txtCelularLocal" type="text" id="txtCelularLocal" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
+                    <td style="display:flex;">
+                        <input class="form-control" name="txtCelularLocal" type="text" id="txtCelularLocal" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
                         <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
                     </td>
                 </tr>
                 <tr class="formulario">
                     <td>Nombre Contacto  </td>
-                    <td>
-                        <input type="text" id="txtNombreContacto" name="txtNombreContacto" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
+                    <td style="display:flex;">
+                        <input class="form-control" type="text" id="txtNombreContacto" name="txtNombreContacto" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="10">
                         <font color="#339999" class="Estilo2">*</font>
                     </td>
                 </tr>
                 <tr class="formulario">
                     <td>Direcci&oacute;n Contacto</td>
-                    <td>
-                        <input name="txtDireccionContacto" type="text" id="txtDireccionContacto"  style="width: 64%;" maxlength="100">
+                    <td style="display:flex;">
+                        <input class="form-control" name="txtDireccionContacto" type="text" id="txtDireccionContacto"  style="width: 64%;" maxlength="100">
                         <font color="#339999" class="Estilo2">*</font> 
                     </td>
                 </tr>
                 <tr class="formulario">
-                    <td>  N&deg; Direcci&oacute;n Contacto </td>
-                    <td>
-                        <input name="txtNum_direContacto" type="text" id="txtNum_direContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6">
+                    <td> N&deg; Direcci&oacute;n Contacto </td>
+                    <td style="display:flex;">
+                        <input class="form-control" name="txtNum_direContacto" type="text" id="txtNum_direContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="6">
                         <font color="#339999" class="Estilo2">*</font> digite un 0 para "s/n".
                     </td>
                 </tr>
                 <tr class="formulario">
                     <td> Tel&eacute;fono Contacto</td>
-                    <td>
-                        <input name="txtTelefonoContacto" type="text" id="txtTelefonoContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="7">
+                    <td style="display:flex;">
+                        <input class="form-control" name="txtTelefonoContacto" type="text" id="txtTelefonoContacto" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="7">
                         NO ingresar c&oacute;digo de &aacute;rea 
                     </td>
                 </tr>
                 <tr class="formulario">
-                    <td> Celular Contacto </td>
-                    <td>
-                        <input name="txtCelularContacto" type="text" id="txtCelularContacto"  onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
+                    <td> Celular Contacto</td>
+                    <td style="display:flex;">
+                        <input  class="form-control" name="txtCelularContacto" type="text" id="txtCelularContacto"  onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
                         <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
                     </td>
                 </tr>
@@ -718,11 +717,15 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 <tbody id="id_editarFichaL">
                     <tr class="formulario" id="tr_ocupacionL">
                         <td height="28px">Ocupaci&oacute;n</td>
-                        <td><input name="txtOcupacionL" type="text" id="txtOcupacionL" style="width: 64%;" maxlength="100"></td>
+                        <td>
+                            <input  class="form-control" name="txtOcupacionL" type="text" id="txtOcupacionL" style="width: 64%;" maxlength="100">
+                        </td>
                     </tr>
                     <tr class="formulario" id="representateLegalL">
                         <td height="28px">Representante Legal</td>
-                        <td><input name="txtRepLegalL" type="text" id="txtRepLegalL" style="width: 64%;" maxlength="100"> * Menores de 18 a&ntilde;os</td>
+                        <td>
+                            <input class="form-control" name="txtRepLegalL" type="text" id="txtRepLegalL" style="width: 64%;" maxlength="100"> * Menores de 18 a&ntilde;os
+                        </td>
                     </tr>
                 </tbody>
                 ';
@@ -735,9 +738,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         }
 
         $html .= '<div class="tab-pane" id="contact" role="tabpanel">
-        
-
-        
 
         <form action="#" method="post" id="From_datos_previsiones" name="From_datos_previsiones">
             <table width="100%" border="0" cellspacing="0" class="table-sm table-striped">';
@@ -779,49 +779,60 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $html .= '
             <tbody id="formulario_provisionales" ' . $style . '>      
                 <tr class="formulario">
-                    <td width="30%">  R.U.T:</td>
-                    <td width="70%" class="formulario">
-                        <input type="text" name="txtRuttit" id="txtRuttit" onkeypress="return IsNumber(event);"            size="8" maxlength="8" value=""> - 
-                        <input type="text" name="txtDvtit"  id="txtDvtit"  onkeypress="return IsDigitoVerificador(event);" size="1" maxlength="1" value=""> 
-                        <font color="#339999" class="Estilo2">*</font>';
-        $html .= '<button type="button" name="btnConsultarPacientePrevisionales" id="btnConsultarPacientePrevisionales" class="btn btn-small btn-info" onclick="buscaTitular(1);">  
-                        <i class="fa fa-database" aria-hidden="true"></i>&nbsp; INFORMACI&Oacute;N FONASA 
-                    </button>
-                    ';
+                    <td width="30%"> RUN</td>
+                    <td width="70%">
+                        <div class="grid_div_run_previ">
+                            <div class="grid_div_run1">
+                                <input type="text" class="form-control" name="txtRuttit" id="txtRuttit" onkeypress="return IsNumber(event);" size="8" maxlength="8" value=""> 
+                            </div>
+                            <div class="grid_div_run2" style="text-align: center;">-</div>
+                            <div class="grid_div_run3">
+                                <input type="text" class="form-control" name="txtDvtit"  id="txtDvtit"  onkeypress="return IsDigitoVerificador(event);" size="1" maxlength="1" value=""> 
+                            </div>
+                            <div class="grid_div_run4" style="text-align: center;">
+                                <font color="#339999" class="Estilo2">*</font>
+                            </div>
+                            <div class="grid_div_run5">
+                                <button type="button" name="btnConsultarPacientePrevisionales" id="btnConsultarPacientePrevisionales" class="btn btn-small btn-info" onclick="buscaTitular(1);"  style="display:none;">  
+                                    <i class="fa fa-database" aria-hidden="true"></i>&nbsp; INFORMACI&Oacute;N FONASA 
+                                </button>
+                            </div>
+                        </div>
+                        ';
         $html .= '</td>
                 </tr>
-                <tr class="formulario">
-                    <td>  Nombres </td>
-                    <td class="formulario">
-                        <input type="text" id="txtNombretit" name="txtNombretit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
+                <tr>
+                    <td>Nombres</td>
+                    <td style="display:flex;">
+                        <input type="text" class="form-control" id="txtNombretit" name="txtNombretit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
                         <font color="#339999" class="Estilo2">*</font>
                     </td>
                 </tr>
-                <tr class="formulario">
+                <tr>
                     <td>Apellido paterno</td>
-                    <td class="formulario">
-                        <input type="text" id="txtApellidoPaternotit" name="txtApellidoPaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
+                    <td style="display:flex;">
+                        <input type="text" class="form-control" id="txtApellidoPaternotit" name="txtApellidoPaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
                         <font color="#339999" class="Estilo2">*</font>
                     </td>
                 </tr>
-                <tr class="formulario">
+                <tr>
                     <td>Apellido Materno</td>
-                    <td class="formulario">
-                        <input type="text" id="txtApellidoMaternotit" name="txtApellidoMaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
+                    <td  style="display:flex;">
+                        <input type="text" class="form-control" id="txtApellidoMaternotit" name="txtApellidoMaternotit" style="TEXT-TRANSFORM: uppercase;width: 64%;">
                         <font color="#339999" class="Estilo2">*</font>
                     </td>
                 </tr>
-                <tr class="formulario">
+                <tr>
                     <td>Previsi&oacute;n</td>
-                    <td class="formulario">
-                        <select name="cboPrevision" id="cboPrevision" onchange="" class="" style="width: 64%;">' . $value_fprevi . '</select>
+                    <td  style="display:flex;">
+                        <select class="form-select" name="cboPrevision" id="cboPrevision" onchange="" class="" style="width: 64%;">' . $value_fprevi . '</select>
                         <font color="#339999" class="Estilo2">*</font>
                     </td>
                 </tr>
-                <tr class="formulario">
+                <tr>
                     <td>Empresa</td>
-                    <td class="formulario">
-                        <select name="cboEmpresaPrevision" id="cboEmpresaPrevision" onchange="" class="" style="width: 64%;">' . $value_previEmp . '</select>
+                    <td style="display:flex;">
+                        <select class="form-select" name="cboEmpresaPrevision" id="cboEmpresaPrevision" onchange="" class="" style="width: 64%;">' . $value_previEmp . '</select>
                         <font color="#339999" class="Estilo2">*</font>
                     </td>
                 </tr>
@@ -1447,23 +1458,21 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     }
 
     public function validaPacienteBDU(){
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+        if (!$this->input->is_ajax_request()) {   show_404();  }
         $codEmpresa                 =    $this->session->userdata("COD_ESTAB");
-        //$aDatos[]                    =	array(""=>"", "opcion"=>"console", "contenido"=>$codEmpresa);
+        //$aDatos[]                 =	array(""=>"", "opcion"=>"console", "contenido"=>$codEmpresa);
         $isNal                      =    $this->input->post("isNal");
         $numFichae                  =    $this->input->post("numFichae");
         $rut                        =    $this->input->post("rut");
         $dv                         =    $this->input->post("dv");
         $templete                   =    $this->input->post("templete");
-        //$desdeEXT                   =	$this->input->post("desdeEXT");
+        //$desdeEXT                 =	$this->input->post("desdeEXT");
         $pasaporte                  =    '';
         $tipoEx                     =    '';
         $isRN                       =    0;
         $adataPersonas              =    $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $rut, $codEmpresa, $isNal, $pasaporte, $tipoEx);
         /*
-	$aDatos[]                   =	array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
+	    $aDatos[]                   =	array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
         $aDatos[]                   =	array(""=>"", "opcion"=>"console", "contenido"=>$adataPersonas);
         $aDatos[]                   =	array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
         */

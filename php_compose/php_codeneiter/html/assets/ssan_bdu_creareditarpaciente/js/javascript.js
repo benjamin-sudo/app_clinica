@@ -644,7 +644,10 @@ function validExtrangero(desde,numFichae){
 }
 
 function validaRutChileno(val,numfichae){
-    //console.log("----------->"+numfichae);
+    
+    console.log("----------->"+numfichae);
+
+    
     $('#txtBuscar').css("border-color","");
     $('#txtDv').css("border-color","");
     var valida      =	'';
@@ -654,7 +657,6 @@ function validaRutChileno(val,numfichae){
     } else {
         valida      =	1;
     }
-    
     if(valida == 1 || RUTMALO == 1){
         $.ajax({ 
             type        : "POST",
@@ -669,16 +671,24 @@ function validaRutChileno(val,numfichae){
                             dv          : $("#txtDv").val(),
                             templete    : $("#indTemplateNum").val(),
                         },
-            error       : function(errro){ console.log(errro.responseText); jError("Error General, Consulte Al Administrador"); },
+            error       : function(errro){ 
+                                            console.log(errro.responseText); 
+                                            jError("Error General, Consulte Al Administrador"); 
+                                        },
             success     : function(aData){ 
-                            /*console.log(aData);*/
-                            $('#txtBuscar').prop("disabled",true);
-                            $('#txtDv').prop("disabled",true);
-                            $('#txtBuscar').addClass("disabled");
-                            $('#btn_rut').attr('disabled',true);
-                            $("#Btn_bdu").removeClass("disabled");
-                            if(AjaxExtJsonAll(aData)){ $('.nav-tabs a:first').tab('show'); }; 
-                        }, 
+                                            /*console.log(aData);*/
+                                            
+                                            $('#txtBuscar').prop("disabled",true);
+                                            $('#txtDv').prop("disabled",true);
+                                            $('#txtBuscar').addClass("disabled");
+                                            $('#btn_rut').attr('disabled',true);
+                                            $("#Btn_bdu").removeClass("disabled");
+                                            
+                                            if(AjaxExtJsonAll(aData)){ 
+                                                $('.nav-tabs a:first').tab('show'); 
+                                        
+                                            }; 
+                                        }, 
         });
     } else {
         jError("R.U.N CON CAMPOS VAC&Iacute;OS O ERR&Oacute;NEOS","e-SISSAN");  

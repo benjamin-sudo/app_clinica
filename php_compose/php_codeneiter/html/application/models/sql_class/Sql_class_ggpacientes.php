@@ -133,8 +133,8 @@ class sql_class_ggpacientes extends CI_Model {
                     A.IND_CONDPRAIS,
                     A.IND_TRANS,
 
-		    A.COD_NACIONALIDAD,
-		    TO_CHAR(A.FEC_IDFONASA,'DD/MM/YYYY')                                        FEC_IDFONASA,
+                    A.COD_NACIONALIDAD,
+                    TO_CHAR(A.FEC_IDFONASA,'DD/MM/YYYY')                                        FEC_IDFONASA,
 
 
                     A.IND_RUT,
@@ -177,10 +177,10 @@ class sql_class_ggpacientes extends CI_Model {
                     A.REP_LEGAL,
 		    
                     A.IND_PREMATURO,
-		    A.EDAD_GESTA_SEMANA, 
-		    A.EDAD_GESTA_DIAS, 
-		    A.EDAD_CORREGIDA_SEMANA, 
-		    A.EDAD_CORREGIDA_DIAS,
+                    A.EDAD_GESTA_SEMANA, 
+                    A.EDAD_GESTA_DIAS, 
+                    A.EDAD_CORREGIDA_SEMANA, 
+                    A.EDAD_CORREGIDA_DIAS,
                     
                     A.IND_NIVEL_EDUCACIONAL,
                     A.IND_POBLACION_MIGRANTE,
@@ -210,7 +210,7 @@ class sql_class_ggpacientes extends CI_Model {
                     A.NUM_FICHAE        = F.NUM_FICHAE(+)   AND
                     F.COD_EMPRESA(+)    = '$codEmpresa'     AND
                     F.IND_ESTADO(+)     = 'V'               AND
-		    A.IND_ESTADO	= 'V'               AND
+		            A.IND_ESTADO	    = 'V'               AND
                     F.COD_RUTPAC        = G.COD_RUTPAC(+)   AND
                     F.COD_EMPRESA       = G.COD_EMPRESA(+)  AND 
                     G.IND_ESTADO(+)     = 'V'               AND
