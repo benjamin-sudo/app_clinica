@@ -54,7 +54,6 @@
   <!-- /.card -->
 </div>
 <!-- /.login-box -->
-
 <!-- jQuery -->
 <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -64,7 +63,6 @@
 <!-- RUN  -->
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js"></script>
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
-
 <script>
     $(document).ready(function(){
       $("#rut_profesional").Rut({
@@ -79,76 +77,87 @@
                                     },
         format_on   : 'keyup'
       });
-    });
+  });
 
-    function js_inicio(){
-        let error   =   [];
+  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("keypress", function(event) {
+      if (event.keyCode === 13 || event.which === 13) {
         let v_run   =   $("#rut_profesional").val();
         let v_pass  =   $("#password").val();
-        let access  =   null;
-        $("#rut_profesional").css('border-color','');   
-        if (v_pass == ''){
-            error.push("RUN Vacio");
-            $("#rut_profesional").css('border-color','red');   
+        if (v_run != '' &&  v_pass != '' ){
+          js_inicio();
         }
-        //**************************************/
-        $("#password").css('border-color','');   
-        if (v_pass == ''){
-            error.push("Contraseña vacia");
-            $("#password").css('border-color','red');   
-        }
-        //**************************************/
-        if (error.length > 0){
-            //https://adminlte.io/docs/3.2/javascript/iframe.html
-            $('body').Toasts('create', {
-                position    : 'bottomRight',
-                imageHeight : '130px',
-                title       : 'Clinica libre',
-                icon        : 'fas fa-exclamation-triangle',
-                autohide    : true,
-                delay       : 3000,
-                body        : error.join("<br>"),
-            });
+      }
+    });
+  });
 
-        } else {
-          $.ajax({ 
-            type        : "POST",
-            url         : "Constructor/login",
-            dataType    : "json",
-            beforeSend  : function(xhr) {
-                                          $("#btn_inicio").prop("disabled",true);
-                                        },
-            data		    : {  
-                            user      : v_run,
-                            password  : v_pass,
-                            access    : access,
-                          },
-            error		      : function(errro) {  
-                                              console.log(errro);
-                                              console.log(errro.responseText); 
-                                              alert("Error General, Consulte Al Administrador"); 
-                                              $("#btn_inicio").prop("disabled",false);
-                                            },
-            success		   :  function(aData) {  
-                                              console.log("aData   -> ",aData);
-                                              if (aData.status){
-                                                window.location = aData.redirect;
-                                              } else {
-                                                $("#btn_inicio").prop("disabled",false);
-                                                $('body').Toasts('create', {
-                                                  position    : 'bottomRight',
-                                                  imageHeight : '130px',
-                                                  title       : 'Clinica libre',
-                                                  icon        : 'fas fa-exclamation-triangle',
-                                                  autohide    : true,
-                                                  delay       : 3000,
-                                                  body        : 'Error en las credenciales',
-                                                });
-                                              }
-                                            }, 
-          });
-        }
+function js_inicio(){
+    let error   =   [];
+    let v_run   =   $("#rut_profesional").val();
+    let v_pass  =   $("#password").val();
+    let access  =   null;
+    $("#rut_profesional").css('border-color','');   
+    if (v_pass == ''){
+        error.push("RUN Vacio");
+        $("#rut_profesional").css('border-color','red');   
     }
+    //**************************************/
+    $("#password").css('border-color','');   
+    if (v_pass == ''){
+        error.push("Contraseña vacia");
+        $("#password").css('border-color','red');   
+    }
+    //**************************************/
+    if (error.length > 0){
+        //https://adminlte.io/docs/3.2/javascript/iframe.html
+        $('body').Toasts('create', {
+            position    : 'bottomRight',
+            imageHeight : '130px',
+            title       : 'Clinica libre',
+            icon        : 'fas fa-exclamation-triangle',
+            autohide    : true,
+            delay       : 3000,
+            body        : error.join("<br>"),
+        });
+    } else {
+      $.ajax({ 
+        type        : "POST",
+        url         : "Constructor/login",
+        dataType    : "json",
+        beforeSend  : function(xhr) {
+                                      $("#btn_inicio").prop("disabled",true);
+                                    },
+        data		    : {  
+                        user      : v_run,
+                        password  : v_pass,
+                        access    : access,
+                      },
+        error		      : function(errro) {  
+                                          console.log(errro);
+                                          console.log(errro.responseText); 
+                                          alert("Error General, Consulte Al Administrador"); 
+                                          $("#btn_inicio").prop("disabled",false);
+                                        },
+        success		   :  function(aData) {  
+                                          console.log("aData   -> ",aData);
+                                          if (aData.status){
+                                            window.location = aData.redirect;
+                                          } else {
+                                            $("#btn_inicio").prop("disabled",false);
+                                            $('body').Toasts('create', {
+                                              position    : 'bottomRight',
+                                              imageHeight : '130px',
+                                              title       : 'Clinica libre',
+                                              icon        : 'fas fa-exclamation-triangle',
+                                              autohide    : true,
+                                              delay       : 3000,
+                                              body        : 'Error en las credenciales',
+                                            });
+                                          }
+                                        }, 
+      });
+    }
+  }
 </script>
 </body>
 </html>

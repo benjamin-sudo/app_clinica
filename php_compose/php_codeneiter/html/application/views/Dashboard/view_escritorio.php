@@ -189,7 +189,6 @@
   <!-- otros -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
-  
   <script>
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){
