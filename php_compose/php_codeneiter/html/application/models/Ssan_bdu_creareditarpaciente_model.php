@@ -557,9 +557,10 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $this->db->update($this->tableSpace.'.GG_TCORREL', $UpdateNfichaLocal);
                     } else {
                         $NUM_CORREL	        =   '1';
-                        $UpdateNfichaLocal  =   array('COD_EMPRESA' => $codEmpresa, 'NUM_CORPAC' => $NUM_CORREL, 'ID_CORREL' => 'CORPAC', 'COD_SISTEMA' => '58');
+                        $UpdateNfichaLocal  =   array('COD_EMPRESA' => $codEmpresa, 'NUM_CORREL' => $NUM_CORREL, 'ID_CORREL' => 'CORPAC', 'COD_SISTEMA' => '58');
                         $this->db->insert($this->tableSpace.'.GG_TCORREL', $UpdateNfichaLocal);
                     }
+                    
                     $creaDatosLocales = array_merge($creaDatosLocales, array('NUM_CORPAC' => $NUM_CORREL));
                     $this->db->insert($this->tableSpace.'.SO_TCPACTE', $creaDatosLocales);
 		        }

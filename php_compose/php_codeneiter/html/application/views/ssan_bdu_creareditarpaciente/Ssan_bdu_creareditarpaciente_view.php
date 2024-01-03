@@ -5,7 +5,7 @@
     <div class="grid_cabecera_bdu1">
         <div class="dropdown"  id="btn_crear">
             <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Nuevo Paciente
+                Agregar Nuevo Paciente
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a href="javascript:FormModal(1,'')" class="dropdown-item"><i class="fa fa-user-circle"       aria-hidden="true"></i>&nbsp;PACIENTE NACIONAL</a></li>

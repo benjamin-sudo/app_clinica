@@ -78,7 +78,6 @@
         format_on   : 'keyup'
       });
   });
-
   document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("keypress", function(event) {
       if (event.keyCode === 13 || event.which === 13) {
