@@ -70,14 +70,17 @@ function FormModal(isNal,numFichae){
                             $("#HTML_DIALOGO").html('');	 
                             jError("Error General, Consulte Al Administrador"); 
 					    },
-        success    :	function(aData)	    {    
-                            console.log("aData  ->  ",aData);
+        success    :	function(aData) {    
+                            
+                            //*****************************************/
+                            //console.log("aData->",aData);
+                            
                             $("#HTML_DIALOGO").html('');
                             if(AjaxExtJsonAll(aData)){
+                                
+                                console.log("   star calendarios    ");
 
-
-                                console.log("   star calendarios ");
-
+                                /*
                                 $("#txtFechaNacimineto").datepicker($.extend({
                                     //defaultDate       : fecha,
                                     showOn              : "button",
@@ -95,6 +98,30 @@ function FormModal(isNal,numFichae){
                                     selectOtherMonths   : true,
                                     onSelect            : function(textoFecha, objDatepicker){    }
                                 },$.datepicker.regional["es"]));
+                                */
+
+
+                                /*
+                                $("#txtFechaNacimineto").datetimepicker({
+                                    format              :  'DD-MM-YYYY',
+                                    //minDate           :  new Date(new Date().setDate((todayDate)-(0))),
+                                    maxDate             :  new Date(),
+                                    locale              :  'es-us',
+                                    icons               :   {
+                                                               time        :   "fa fa-clock-o"         ,
+                                                               date        :   "fa fa-calendar"        ,
+                                                               up          :   "fa fa-chevron-up"      ,
+                                                               down        :   "fa fa-chevron-down"    ,
+                                                               previous    :   "fa fa-chevron-left"    ,
+                                                               next        :   "fa fa-chevron-right"   ,
+                                                               today       :   "fa fa-screenshot"      ,
+                                                               clear       :   "fa fa-trash"           ,
+                                                               close       :   "fa fa-remove"          ,
+                                                            }
+                                 }).on('dp.change',function(e){ 
+                                    //js_actualiza_fila_farmacia_central();  
+                                 });
+                                 */
 
 
 

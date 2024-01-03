@@ -254,10 +254,10 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     <table width="100%" border="0" cellspacing="0"  class="table-sm table-striped">
                         <tr class="formulario" id="recienNacido"> 
                             <td width="30%" height="45pxpx">&#191;Recien nacido&#63;</td>
-                            <td width="70%" style="display:flex;">
-                                S&iacute; <input type="radio" name="rdoRecNacido" class="input" value="1">
-                                No 	  <input type="radio"  name="rdoRecNacido" class="input" value="0" checked="checked"> 
-                                <font color="#339999" class="Estilo2">*</font>
+                            <td width="70%" style="display:flex;margin-top:6px;">
+                                S&iacute;&nbsp;<input type="radio" name="rdoRecNacido" class="input" value="1">
+                                No&nbsp;<input type="radio"  name="rdoRecNacido" class="input" value="0" checked="checked">
+                                &nbsp;<font color="#339999" class="Estilo2">*</font>
                             </td>
                         </tr>
                         <tr class="formulario">
@@ -292,12 +292,17 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                             <td>Fecha de nacimiento</td>
                             <td style="display:flex;">
                                 <input 
-                                    type        =   "text" 
+                                    type        =   "date" 
                                     class       =   "form-control" 
-                                    style       =   "width:120px" 
+                                    style       =   "width:140px" 
                                     id          =   "txtFechaNacimineto" 
                                     name        =   "txtFechaNacimineto" 
-                                    maxlength   =   "10" disabled/><font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
+                                    maxlength   =   "10" 
+                                    max         =   "'. date('Y-m-d').'"  
+                                    min         =   "'. date('Y-m-d',strtotime('-120 years')).'"
+                                    />
+                                    <font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
+                                    <!-- disabled -->
                             </td>
                         </tr>
                         <tr class="formulario">
