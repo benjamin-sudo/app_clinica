@@ -186,10 +186,10 @@ class sql_class_ggpacientes extends CI_Model {
                     A.IND_POBLACION_MIGRANTE,
 		    
                     (SELECT 
-                            IND_PREVIS 
-                        FROM 
-                            $oracle_own.SO_TTITUL C 
-                        WHERE A.COD_RUTTIT = C.COD_RUTTIT )                                     IND_PREVIS,
+                        IND_PREVIS 
+                    FROM 
+                        $oracle_own.SO_TTITUL C 
+                    WHERE A.COD_RUTTIT = C.COD_RUTTIT )                                         IND_PREVIS,
                         
                     DECODE(A.TIP_IDENTIFICACION,
                                             '1','PASAPORTE',
