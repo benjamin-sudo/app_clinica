@@ -1729,14 +1729,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $this->output->set_output(json_encode($aDatos));
     }
 
-
-
-
-    public function cont_buscaCiudades()
-    {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+    public function cont_buscaCiudades() {
+        if (!$this->input->is_ajax_request()) { show_404();  }
         $codEmpresa         = $this->session->userdata("COD_ESTAB");
         $Region             = $this->input->post("Region");
         $select             = $this->input->post("select");
@@ -1757,6 +1751,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         }
         $this->output->set_output(json_encode($aDatos));
     }
+    
 
     public function Cont_buscaComunas()
     {

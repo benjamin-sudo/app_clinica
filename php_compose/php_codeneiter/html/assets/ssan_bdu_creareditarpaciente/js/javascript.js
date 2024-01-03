@@ -702,7 +702,11 @@ function buscaCiudades(Region,select,idSelect){
                                 idSelect    : idSelect, 
                             },
             error       : function(errro){ console.log(errro); jError("Error General, Consulte Al Administrador"); },
-            success     : function(aData){ /*console.log(aData);*/ AjaxExtJsonAll(aData); } 
+            success     : function(aData){ 
+                
+                /*console.log(aData);*/ 
+                AjaxExtJsonAll(aData); 
+            } 
         });  
     }
 }
