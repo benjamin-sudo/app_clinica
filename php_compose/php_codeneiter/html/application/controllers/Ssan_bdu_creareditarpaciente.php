@@ -1460,25 +1460,23 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     public function validaPacienteBDU(){
         if (!$this->input->is_ajax_request()) {   show_404();  }
         $codEmpresa                 =    $this->session->userdata("COD_ESTAB");
-        //$aDatos[]                 =	array(""=>"", "opcion"=>"console", "contenido"=>$codEmpresa);
         $isNal                      =    $this->input->post("isNal");
         $numFichae                  =    $this->input->post("numFichae");
         $rut                        =    $this->input->post("rut");
         $dv                         =    $this->input->post("dv");
         $templete                   =    $this->input->post("templete");
-        //$desdeEXT                 =	$this->input->post("desdeEXT");
         $pasaporte                  =    '';
         $tipoEx                     =    '';
         $isRN                       =    0;
         $adataPersonas              =    $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $rut, $codEmpresa, $isNal, $pasaporte, $tipoEx);
         /*
-	    $aDatos[]                   =	array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
-        $aDatos[]                   =	array(""=>"", "opcion"=>"console", "contenido"=>$adataPersonas);
-        $aDatos[]                   =	array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
+            $aDatos[]   =	array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
+            $aDatos[]   =	array(""=>"", "opcion"=>"console", "contenido"=>$adataPersonas);
+            $aDatos[]   =   array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
         */
-        //**************** agregado 18.12.2019 *************************
+        #**************** agregado 18.12.2019 *************************
         if (count($adataPersonas) > 0) {
-            //INICIO DATOS GENERALES
+            #INICIO DATOS GENERALES
             if ($isNal == 0) {
                 $aDatos[]    =   array("id_html" => "cboNumIdentifica",  "opcion" => "val",    "contenido"  => $adataPersonas[0]["TIP_IDENTIFICACION"]); //cboviadireLocal  
                 if ($adataPersonas[0]["TIP_IDENTIFICACION"] == '2') {

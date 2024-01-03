@@ -659,10 +659,10 @@ function validaRutChileno(val,numfichae){
     }
     if(valida == 1 || RUTMALO == 1){
         $.ajax({ 
-            type        : "POST",
-            url         : "ssan_bdu_creareditarpaciente/validaPacienteBDU",
-            dataType    : "json",
-            cache       : false,
+            type        :   "POST",
+            url         :   "ssan_bdu_creareditarpaciente/validaPacienteBDU",
+            dataType    :   "json",
+            cache       :   false,
             data        : 
                         { 
                             numFichae   : numfichae,
@@ -676,14 +676,12 @@ function validaRutChileno(val,numfichae){
                                             jError("Error General, Consulte Al Administrador"); 
                                         },
             success     : function(aData){ 
-                                            /*console.log(aData);*/
-                                            
+                                            console.log(aData);
                                             $('#txtBuscar').prop("disabled",true);
                                             $('#txtDv').prop("disabled",true);
                                             $('#txtBuscar').addClass("disabled");
                                             $('#btn_rut').attr('disabled',true);
                                             $("#Btn_bdu").removeClass("disabled");
-                                            
                                             if(AjaxExtJsonAll(aData)){ 
                                                 $('.nav-tabs a:first').tab('show'); 
                                         
