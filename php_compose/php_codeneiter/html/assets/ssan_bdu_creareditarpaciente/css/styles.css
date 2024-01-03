@@ -72,3 +72,6 @@
     justify-items                       :   legacy;   
 }
 
+.toast {
+    z-index: 9999; /* Asegúrate de que este valor sea más alto que otros elementos en tu página */
+}

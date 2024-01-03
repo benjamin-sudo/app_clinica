@@ -111,7 +111,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
         }
 
-
         $html = '
             <table border="0" cellspacing="0"  class="table-sm">
                 <theard>
@@ -122,7 +121,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         <select name="cboNumIdentifica" id="cboNumIdentifica" class="spetit" onchange="js_cambiaNID(this.id,this.value)" style="width: 100%;">
                             <option value="1" >N&deg; PASAPORTE VIGENTE/(DNI)</option>
                             <option value="2" >N&deg; PROVISORIO FONASA</option>
-                            <option value="4" >N&deg; EXTRANJERO SSAN(SOLO BUSQUEDA)</option>
+                            <option value="4" >N&deg; EXTRANJERO SSAN (SOLO BUSQUEDA) </option>
                         </select>
                     </td> 
                     <td width="5%" style="text-align:center">
@@ -1577,10 +1576,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             if (count($adataDLocales) > 0) {
                 //$aDatos[] = array("id_html" => "txtNum_direLocal",              "opcion" => "val",  "contenido"  => $adataDLocales[0]["LNCASA"]);
                 
-                
-                
-                
-                //***************************************** 06-07-2020 ******************************
                 $aDatos[] = array("id_html" => "",              "opcion" => "console",  "contenido"  => "templete       ->".$templete);       
                 $aDatos[] = array("id_html" => "",              "opcion" => "console",  "contenido"  => "codEmpresa     ->".$codEmpresa);       
                 $boorean_tieneficha = $adataDLocales[0]["NUM_NFICHA"]==''?false:true;
@@ -1595,11 +1590,9 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         $aDatos[] = array("id_html" => "txt_nficha",                            "opcion" => "html",  "contenido"  =>  "<h5><b>".$adataDLocales[0]["NUM_NFICHA"]."</b></h5>");
                     }
                 } else {
-                    //**********************************************************
-                    //************************ ELSE ****************************
                     
                 }
-                //***************************************** 06-07-2020 ******************************
+
                 
                 $aDatos[]       = array("id_html" => "txtFichaFisicaLocal",     "opcion" => "val",      "contenido"  => $adataDLocales[0]["NUM_NFICHA"]);
                 $aDatos[]       = array("id_html" => "hdnNLocal",               "opcion" => "val",      "contenido"  => $adataDLocales[0]["NUM_NFICHA"]);
@@ -1719,19 +1712,16 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 //*************** 10.02.2020 INFORMACION PERCAPITA  ****************
             }
         } else {
+            #*************** 10.02.2020 INFORMACION PERCAPITA  ****************
+            #$aDatos[]   =   array("id_html"    =>  "dropdown_opciones",        "opcion" => "show",         "contenido"  => "");
+            #$SCRIPT     =   'a = document.getElementById("a_ver_percapita");  a.setAttribute("href",       "javascript:ver_infopercapita(\'' . $rut . "-" . $dv . '\')");';
+            #$aDatos[]   =   array("id_html"    =>  "respuesta",                "opcion" => "append",       "contenido"  => "<script>$SCRIPT</script>");
+            #$aDatos[]  =   array("id_html"	    =>  "respuesta",                "opcion" => "append",	    "contenido"  => "<script>cargaInfoFonasa('$rut','$dv')</script>");
+            $aDatos[]   =   array("id_html"    =>  "respuesta",                "opcion" => "append",        "contenido"  => "<script>cargaInfoApi('$rut','$dv')</script>");
+            $aDatos[]   =   array("id_html"    =>  "Btn_bdu",                  "opcion" => "onclick",       "contenido"  => "NuevoPacienteChileno(1,$isRN)");
+            $aDatos[]   =   array("id_html"    =>  "isNewPac",                 "opcion" => "val",           "contenido"  => "1");
+            $aDatos[]   =   array("id_html"    =>  "numFichae",                "opcion" => "val",           "contenido"  => "0");
 
-            //*************** 10.02.2020 INFORMACION PERCAPITA  ****************
-            $aDatos[]        =   array("id_html"    =>  "dropdown_opciones",        "opcion" => "show",        "contenido"  => "");
-            $SCRIPT            =   'a = document.getElementById("a_ver_percapita");  a.setAttribute("href", "javascript:ver_infopercapita(\'' . $rut . "-" . $dv . '\')");';
-            $aDatos[]        =   array("id_html"    =>  "respuesta",                "opcion" => "append",        "contenido"  => "<script>$SCRIPT</script>");
-            //*************** 10.02.2020 INFORMACION PERCAPITA  ****************
-
-            //***************** SI NO ENCUENTRA DATOS **************************
-            //$aDatos[] =   array("id_html"	=>  "respuesta",                "opcion" => "append",	    "contenido"  => "<script>cargaInfoFonasa('$rut','$dv')</script>");
-            $aDatos[]    =   array("id_html"    =>  "respuesta",                "opcion" => "append",        "contenido"  => "<script>cargaInfoApi('$rut','$dv')</script>");
-            $aDatos[]    =   array("id_html"    =>  "Btn_bdu",                  "opcion" => "onclick",        "contenido"  => "NuevoPacienteChileno(1,$isRN)");
-            $aDatos[]    =   array("id_html"    =>  "isNewPac",                 "opcion" => "val",        "contenido"  => "1");
-            $aDatos[]    =   array("id_html"    =>  "numFichae",                "opcion" => "val",        "contenido"  => "0");
         }
         $this->output->set_output(json_encode($aDatos));
     }
@@ -1865,17 +1855,14 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     }
 
     public function validaFichaLocal(){
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-        $codEmpresa         =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
-        //$codEmpresa = $this->session->userdata("COD_ESTAB");
-        $val            =   $this->input->post("val");
-        $fLPaciente     =   $this->input->post("fLPaciente");
-        $nfichaE        =   $this->input->post("nfichaE");
-        $aDatos         =   '';
-
-        $DatosPaciente  = $this->ssan_bdu_creareditarpaciente_model->ConsultaFicLoal($fLPaciente, $codEmpresa);
+        if (!$this->input->is_ajax_request()){  show_404();   }
+        $codEmpresa         =   $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
+        #$codEmpresa        =   $this->session->userdata("COD_ESTAB");
+        $val                =   $this->input->post("val");
+        $fLPaciente         =   $this->input->post("fLPaciente");
+        $nfichaE            =   $this->input->post("nfichaE");
+        $aDatos             =   [];
+        $DatosPaciente      =   $this->ssan_bdu_creareditarpaciente_model->ConsultaFicLoal($fLPaciente,$codEmpresa);
         if (count($DatosPaciente) > 0) {
             if ($DatosPaciente[0]['NUM_FICHAE']  == $nfichaE) {
                 $aDatos[]               =   array("id_html" => 'respuesta',           "opcion" => "console",  "contenido"  => 'LA MISMA FICHA');
@@ -1887,7 +1874,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 $aDatos[]               =   array("id_html" => 'txtFichaFisicaLocal', "opcion" => "val",      "contenido"  => '');
             }
         } else {
-            $aDatos[]               =   array("id_html" => 'respuesta', "opcion" => "console",  "contenido"  => 'SIN FICHA');
+            //$aDatos[]               =   array("id_html" => 'respuesta', "opcion" => "console",  "contenido"  => 'SIN FICHA');
         }
         //$aDatos[]       = array("id_html" => 'respuesta', "opcion" => "console",  "contenido"  => $DatosPaciente);
         $this->output->set_output(json_encode($aDatos));
@@ -1908,21 +1895,21 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
 
     //***************************** nuevo 20.01.2020 ***************************
-    public function api_personas()
-    {
+    public function api_personas(){
         $this->load->library('api_minsal');
         $codEmpresa             =   $this->session->userdata("COD_ESTAB");
         $txtRuttit              =   $this->input->post("txtRuttit");
         $txtDvtit               =   $this->input->post("txtDvtit");
-        $aDatos[]        =   array("id_html" => "", "opcion" => "console", "contenido"  => $txtRuttit);
-        $aDatos[]        =   array("id_html" => "", "opcion" => "console", "contenido"  => $txtDvtit);
-        //$txtRuttit		=   '17745477';
-        //$txtDvtit		=   'K';
-        $urlApi            =   'https://apiqa.minsal.cl/v2/personas/datos/basicos/run?';
-        $data            =   array(
+        $aDatos[]               =   array("id_html" => "", "opcion" => "console", "contenido"  => $txtRuttit);
+        $aDatos[]               =   array("id_html" => "", "opcion" => "console", "contenido"  => $txtDvtit);
+        //$txtRuttit		    =   '17745477';
+        //$txtDvtit		        =   'K';
+        $urlApi                 =   'https://apiqa.minsal.cl/v2/personas/datos/basicos/run?';
+        $data                   =   array(
             'runPersona'    =>  $txtRuttit,
-            'dvPersona'    =>  $txtDvtit
+            'dvPersona'     =>  $txtDvtit
         );
+
         $return            =   $this->api_minsal->getRecurso($data, $urlApi);
         $aData            =   $return['data'];
         if ($aData->estado->codigo == 'NOK') { // Descripcion del error
@@ -2210,7 +2197,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             $valida     =   $this->ssan_his_historialclinico_model->validaClave($password, '61');
         } else {
             //*********************************codineiter*******************************
-            $valida     =   $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+            #$valida     =   $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+            $valida     =   true;
         }
 
         if ($valida) {
@@ -2228,6 +2216,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         } else {
             $return     =   false;
         }
+
         $TABLA[0]       =   array("validez"     => $return);
         $TABLA[1]       =   array("transaccion" => $transaccion);
         $TABLA[3]       =   array("sql"         => $accesdata);

@@ -344,12 +344,24 @@ function validarFL(val){
 }
 
 function cargaInfoFonasa(rut,dv){
-    
     console.log("----------------");
     console.log(rut);
     console.log(dv);
     console.log("----------------");
-    
+
+
+    $('body').Toasts('create', {
+        position    : 'bottomRight',
+        imageHeight : '130px',
+        title       : 'Clinica libre',
+        icon        : 'fas fa-exclamation-triangle',
+        autohide    : true,
+        delay       : 3000,
+        body        : 'NUEVO PACIENTE- INGRESAR INFORMACI&Oacute;N',
+    });
+
+
+    /*
     jConfirm("Estimado Usuario:<br>El paciente seleccionado no est&aacute; incluido en la base de SSAN &iquestDesea buscarlo los datos generales en registros de Fonasa? ", 'ESISSAN', function (r) {   
         if (r){
 	    $.ajax({ 
@@ -370,6 +382,7 @@ function cargaInfoFonasa(rut,dv){
 	    });
         } 
     });
+    */
 }
 
 //********************************** 20.01.2020 ********************************
@@ -379,6 +392,10 @@ function cargaInfoApi(rut,dv){
     //console.log(parseInt(rut,64));
     //console.log(dv);
     //console.log("----------------");
+    
+    jAlert("NUEVO PACIENTE- INGRESAR INFORMACI&Oacute;N","CLINICA LIBRE");
+
+    /*
     jConfirm("Estimado Usuario:<br>El paciente seleccionado no est&aacute; incluido en la base de SSAN &iquestDesea buscarlo los datos generales? ", 'ESISSAN', function (r) {   
         if (r){
             $.ajax({ 
@@ -400,6 +417,7 @@ function cargaInfoApi(rut,dv){
                 });
         }
     });
+    */
 }
 //********************************** 20.01.2020 ********************************
 
@@ -644,10 +662,7 @@ function validExtrangero(desde,numFichae){
 }
 
 function validaRutChileno(val,numfichae){
-    
-    console.log("----------->"+numfichae);
-
-    
+    //console.log("----------->"+numfichae);
     $('#txtBuscar').css("border-color","");
     $('#txtDv').css("border-color","");
     var valida      =	'';
@@ -677,15 +692,19 @@ function validaRutChileno(val,numfichae){
                                         },
             success     : function(aData){ 
                                             console.log(aData);
+                                            
                                             $('#txtBuscar').prop("disabled",true);
                                             $('#txtDv').prop("disabled",true);
                                             $('#txtBuscar').addClass("disabled");
                                             $('#btn_rut').attr('disabled',true);
                                             $("#Btn_bdu").removeClass("disabled");
+                                            
                                             if(AjaxExtJsonAll(aData)){ 
                                                 $('.nav-tabs a:first').tab('show'); 
-                                        
-                                            }; 
+
+                                                
+                                            };
+
                                         }, 
         });
     } else {
@@ -900,8 +919,11 @@ function enviaDatosBDU(isNew,isNal,RN,numFichae,IDselect,txtNumero,RutMon){
     console.log(actualizacionDatos); 
     //return false;
     $('#Btn_bdu').attr("disabled",true);
-    jPrompt('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir o actualizar informaci&oacute;n paciente en BDU SSAN. <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
+
+    //jPrompt
+    jConfirm('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir o actualizar informaci&oacute;n paciente en BDU - Clinica libre. <br/>&iquest;Est&aacute; seguro de continuar?<br />','Confirmaci\u00F3n',function(r){
         if(r){
+
             $.ajax({ 
                 type        :	"POST",
                 url         :	"ssan_bdu_creareditarpaciente/guardaInformacionBDU",
@@ -909,37 +931,42 @@ function enviaDatosBDU(isNew,isNal,RN,numFichae,IDselect,txtNumero,RutMon){
                 cache       :	false,
                 data        :                   
 						    { 
-							isNew       : isNew,
-							isNal       : isNal,
-							RN          : RN,
-							numFichae   : numFichae,
-							IDselect    : IDselect,
-							txtNumero   : txtNumero,
-							RutMon      : RutMon,
-							FORM        : actualizacionDatos,
-							rutTitul    : rutTitul,
-							contrasena  : r,
-							Previ       : tienePreviExtra,
-							nuevaNFicha : nuevaNFicha,
+                                isNew       : isNew,
+                                isNal       : isNal,
+                                RN          : RN,
+                                numFichae   : numFichae,
+                                IDselect    : IDselect,
+                                txtNumero   : txtNumero,
+                                RutMon      : RutMon,
+                                FORM        : actualizacionDatos,
+                                rutTitul    : rutTitul,
+                                contrasena  : r,
+                                Previ       : tienePreviExtra,
+                                nuevaNFicha : nuevaNFicha,
 						    },
-                error       :	function(errro)	    {	$('#Btn_bdu').attr("disabled",false); console.log(errro); console.log(errro.responseText); jError("Error General, Consulte Al Administrador"); },
+                error       :	function(errro)	    {	
+                                                        $('#Btn_bdu').attr("disabled",false); 
+                                                        console.log(errro); 
+                                                        console.log(errro.responseText); 
+                                                        jError("Error General, Consulte Al Administrador"); 
+                                                    },
                 success     :	function(aData)	    {   
 							/*
 							console.log(aData);
 							console.log(num_fichae);
 							*/
-							$("#Btn_bdu").attr("disabled",false);
-							if(aData[0]['validez']){
-							    var num_fichae = aData[4]['id'];
-							    $("#modalPaciente").modal('hide');
-							    if(isNal == 1){
-								jAlert("Se ha creado/Editado el usuario","e-SISSAN");
-							    } else {
-								jConfirm('Se ha creado con exito, Desea Imprimir Credencial Extranjero.','e-SISSAN',function(r){  if (r){ CertificadoExtranjero(num_fichae); } else { }});
-							    }
-							} else {
-							    jError("Error Contrase&ntilde;a","eSISSAN");
-							}
+                                $("#Btn_bdu").attr("disabled",false);
+                                if(aData[0]['validez']){
+                                    var num_fichae = aData[4]['id'];
+                                    $("#modalPaciente").modal('hide');
+                                    if(isNal == 1){
+                                    jAlert("Se ha creado/Editado el usuario","e-SISSAN");
+                                    } else {
+                                    jConfirm('Se ha creado con exito, Desea Imprimir Credencial Extranjero.','e-SISSAN',function(r){  if (r){ CertificadoExtranjero(num_fichae); } else { }});
+                                    }
+                                } else {
+                                    jError("Error Contrase&ntilde;a","eSISSAN");
+                                }
 						    }, 
                 });
         } else {
@@ -963,10 +990,8 @@ function validacionDatos(isNal){
     for (var i = 0; i < aData.length; i++){
             $("#"+aData[i].name).css("border-color","");
             if (
-                    
                     aData[i].name=='ind_nivel_educacional'      || 
                     aData[i].name=='ind_poblacion_migrante'     || 
-                    
                     aData[i].name=='txtNombreSocial'            || 
                     aData[i].name=='txtPareja'                  || 
                     aData[i].name=='txtPadre'                   || 
@@ -1000,26 +1025,30 @@ function validacionDatos(isNal){
         $("#num_ic_5").append(contador_errores);
         strMsg+='<li> Datos que Completar datos de  pesta&ntilde;a <b>DATOS GENERALES</b> </li>';
     }
-    
+
     var contador_errores2   = 0;
     var aData               = $("#from_datos_locales").serializeArray();
+    
+    console.log("   *********************************************   ");
+    console.log("   from_datos_locales -> aData  ->  ",aData);
+    
     for (var i = 0; i < aData.length; i++){
-            $("#"+aData[i].name).css("border-color","");
-            if  (
-                    aData[i].name=='txtTelefonoContacto'    || 
-                    aData[i].name=='txtTelefonoLocal'       ||
-                    aData[i].name=='txtRepLegalL'           ||
-                    aData[i].name=='txtOcupacionL'
-                ){
-                //console.log(aData[i].name);
-            } else {
-                if(aData[i].value == ""){  
-                $("#"+aData[i].name).css("border-color","RED");
-                contador_errores2++;
-                }  else {
-                    $("#"+aData[i].name).css("border-color","");
-                } 
-            }
+        $("#"+aData[i].name).css("border-color","");
+        if  (
+                aData[i].name=='txtTelefonoContacto'    || 
+                aData[i].name=='txtTelefonoLocal'       ||
+                aData[i].name=='txtRepLegalL'           ||
+                aData[i].name=='txtOcupacionL'
+            ){
+            //console.log(aData[i].name);
+        } else {
+            if(aData[i].value == ""){  
+            $("#"+aData[i].name).css("border-color","RED");
+            contador_errores2++;
+            }  else {
+                $("#"+aData[i].name).css("border-color","");
+            } 
+        }
     }
     if (contador_errores2!=0){ 
         $("#num_ic_4").append(contador_errores2);

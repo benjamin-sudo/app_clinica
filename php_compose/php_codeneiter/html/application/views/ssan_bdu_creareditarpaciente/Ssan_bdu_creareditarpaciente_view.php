@@ -4,7 +4,7 @@
     </div>
     <div class="grid_cabecera_bdu1">
         <div class="dropdown"  id="btn_crear">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Nuevo Paciente
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

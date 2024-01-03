@@ -9,6 +9,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->db = $this->load->database('oracle_conteiner',true);
+        $this->load->helper('text');
         $this->load->model("sql_class/sql_class_ggpacientes");
         $this->load->model("sql_class/sqlclass_archivo");
         $this->load->model("sql_class/sql_class_pabellon");
@@ -211,12 +212,15 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         //SO_TTITUL     //DATOS PREVISIONALES
         //PERCAPITA
         if ($isNew == 0) {
-            $creaProtocolo = array('COD_USUARI' => $session, 'FEC_AUDITA' => 'SYSDATE');
+            $creaProtocolo      =   array(
+                'COD_USUARI'    =>  $session, 
+                'FEC_AUDITA'    => 'SYSDATE'
+            );
         } else {
             
-            $query		=   $this->db->query($this->sql_class_pabellon->busquedaLastNumfichae());
+            $query		        =   $this->db->query($this->sql_class_pabellon->busquedaLastNumfichae());
             $LastNumfichae      =   $query->result_array();
-	    $RnumFichae         =   $LastNumfichae[0]['NUM_CORREL'];
+	        $RnumFichae         =   $LastNumfichae[0]['NUM_CORREL'];
             $numFichae          =   ($RnumFichae + 1);
             $TransResulta       =   $this->db->query($this->sql_class_pabellon->UpdateLastNumfichae($numFichae));
 
@@ -240,9 +244,9 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                 $datosGenerales = $Object[0]['Form_Datosgenerales'];
                 foreach ($datosGenerales as $i => $From){
                     /*
-			error_log("-----------------------------------------------------------------------------------------");
-			error_log("---------------- (NAME:".$From['name'].")  --- VALUE (".$From['value'].") ---------------");
-			error_log("-----------------------------------------------------------------------------------------");
+                error_log("-----------------------------------------------------------------------------------------");
+                error_log("---------------- (NAME:".$From['name'].")  --- VALUE (".$From['value'].") ---------------");
+                error_log("-----------------------------------------------------------------------------------------");
                     */
                     if ($From['name'] == 'txtrutpac') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
@@ -552,14 +556,14 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $this->db->where('COD_EMPRESA',$codEmpresa);
                         $this->db->update($this->tableSpace.'.GG_TCORREL', $UpdateNfichaLocal);
                     } else {
-                        $NUM_CORREL	    = '1';
-                        $UpdateNfichaLocal  = array('COD_EMPRESA' => $codEmpresa, 'NUM_CORPAC' => $NUM_CORREL, 'ID_CORREL' => 'CORPAC', 'COD_SISTEMA' => '58');
+                        $NUM_CORREL	        =   '1';
+                        $UpdateNfichaLocal  =   array('COD_EMPRESA' => $codEmpresa, 'NUM_CORPAC' => $NUM_CORREL, 'ID_CORREL' => 'CORPAC', 'COD_SISTEMA' => '58');
                         $this->db->insert($this->tableSpace.'.GG_TCORREL', $UpdateNfichaLocal);
                     }
                     $creaDatosLocales = array_merge($creaDatosLocales, array('NUM_CORPAC' => $NUM_CORREL));
                     $this->db->insert($this->tableSpace.'.SO_TCPACTE', $creaDatosLocales);
-		    
-                }
+		        }
+
 		
             } else if ($infObject == 'DatosPrevisionales') {
                 if ($Previ == 1) {
