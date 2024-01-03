@@ -233,7 +233,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
             $creaProtocolo = array(
                 'COD_USRCREA'   =>      $session,
-                'FEC_USRCREA'   =>      'SYSDATE',
+                //'FEC_USRCREA'   =>      'SYSDATE',
                 'NUM_FICHAE'    =>      $numFichae,
                 'IND_ESTADO'    =>      'V'
             );
@@ -244,26 +244,26 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                 $datosGenerales = $Object[0]['Form_Datosgenerales'];
                 foreach ($datosGenerales as $i => $From){
                     /*
-                error_log("-----------------------------------------------------------------------------------------");
-                error_log("---------------- (NAME:".$From['name'].")  --- VALUE (".$From['value'].") ---------------");
-                error_log("-----------------------------------------------------------------------------------------");
+                    error_log("-----------------------------------------------------------------------------------------");
+                    error_log("---------------- (NAME:".$From['name'].")  --- VALUE (".$From['value'].") ---------------");
+                    error_log("-----------------------------------------------------------------------------------------");
                     */
                     if ($From['name'] == 'txtrutpac') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
+                       // $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
                         $rut = $From['value'];
                     }
                     if ($From['name'] == 'txtdvpac') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_DIGVER' => $From['value']));
                     }
                     if ($From['name'] == 'txtruttitular') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTTIT' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_RUTTIT' => $From['value']));
                     }
                     //INI SOLO EXTRANJEROS
                     if ($From['name'] == 'txt_extranjero') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_EXTRANJERO' => strtoupper(trim($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_EXTRANJERO' => strtoupper(trim($From['value']))));
                     }
                     if ($From['name'] == 'ind_extranjero') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('TIP_IDENTIFICACION' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('TIP_IDENTIFICACION' => $From['value']));
                     }
                     if ($From['name'] == 'txtNumIdentiExtra') {
                         $creaProtocolo = array_merge($creaProtocolo, array('NUM_IDENTIFICACION' => strtoupper(trim($From['value']))));
@@ -276,105 +276,105 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $creaProtocolo = array_merge($creaProtocolo, array('NOM_NOMBRE' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtNombreSocial') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_SOCIAL' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NOM_SOCIAL' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtApellidoPaterno') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_APEPAT' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NOM_APEPAT' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtApellidoMaterno') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_APEMAT' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NOM_APEMAT' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtFechaNacimineto') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_NACIMI' => "TO_DATE('" . $From['value'] . "','DD/MM/YYYY')"));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('FEC_NACIMI' => "TO_DATE('" . $From['value'] . "','DD/MM/YYYY')"));
                     }
                     if ($From['name'] == 'cboGenero') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_TISEXO' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_TISEXO' => $From['value']));
                     }
                     if ($From['name'] == 'cboEtnia1') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_ETN' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_ETN' => $From['value']));
                     }
                     if ($From['name'] == 'cboEtnia2') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_PERCETN' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_PERCETN' => $From['value']));
                     }
                     if ($From['name'] == 'cboEstadoCivil') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_ESTCIV' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_ESTCIV' => $From['value']));
                     }
                     if ($From['name'] == 'txtPareja') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_PAREJA' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NOM_PAREJA' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtPadre') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_NPADRE' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NOM_NPADRE' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtMadre') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_NMADRE' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NOM_NMADRE' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'cboPais') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_PAIS' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_PAIS' => $From['value']));
                     }
 
 		    /*agregado 25.06.2018*/
                     if ($From['name'] == 'cboNacionalidad') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_NACIONALIDAD' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_NACIONALIDAD' => $From['value']));
                     }
                     if ($From['name'] == 'txtFecvence_fonasa') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_IDFONASA' => "TO_DATE('".$From['value']."','DD/MM/YYYY')"));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('FEC_IDFONASA' => "TO_DATE('".$From['value']."','DD/MM/YYYY')"));
                     }
                     /*agregado 25.06.2018*/
 
                     if ($From['name'] == 'cboRegion') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_REGION' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_REGION' => $From['value']));
                     }
                     if ($From['name'] == 'cboComuna') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_COMUNA' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_COMUNA' => $From['value']));
                     }
                     if ($From['name'] == 'cboCiudad') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_CIUDAD' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_CIUDAD' => $From['value']));
                     }
                     if ($From['name'] == 'cboviadire') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_VIADIRECCION' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_VIADIRECCION' => $From['value']));
                     }
                     if ($From['name'] == 'txtDireccion') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_DIRECC' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NOM_DIRECC' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtNum_dire') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NUM_CASA' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NUM_CASA' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'txtdire_resto') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NOM_RESTODIRECC' => $From['value']));
+                       // $creaProtocolo = array_merge($creaProtocolo, array('NOM_RESTODIRECC' => $From['value']));
                     }
                     if ($From['name'] == 'cboProcedencia') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_URBRUR' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_URBRUR' => $From['value']));
                     }
                     if ($From['name'] == 'txtTelefono') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NUM_TELEFO1' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NUM_TELEFO1' => $From['value']));
                     }
                     if ($From['name'] == 'txtCelular') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('NUM_CELULAR' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('NUM_CELULAR' => $From['value']));
                     }
                     if ($From['name'] == 'txtEmail') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('EMAIL' => quotes_to_entities(strtoupper($From['value']))));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('EMAIL' => quotes_to_entities(strtoupper($From['value']))));
                     }
                     if ($From['name'] == 'cboGrupoSangre') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_GRUSAN' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_GRUSAN' => $From['value']));
                     }
                     if ($From['name'] == 'cboFactorSangre') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_FACSAN' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('COD_FACSAN' => $From['value']));
                     }
                     if ($From['name'] == 'cboTippac') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_TIPPAC' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_TIPPAC' => $From['value']));
                     }
                     if ($From['name'] == 'rdoprais') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_CONDPRAIS' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_CONDPRAIS' => $From['value']));
                     }
                     if ($From['name'] == 'rdotrans') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('IND_TRANS' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('IND_TRANS' => $From['value']));
                     }
                     //Last Agregado 
                     if ($From['name'] == 'txtRepLegal') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('REP_LEGAL' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('REP_LEGAL' => $From['value']));
                     }
                     if ($From['name'] == 'txtOcupacion') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('OCUPACION' => $From['value']));
+                        //$creaProtocolo = array_merge($creaProtocolo, array('OCUPACION' => $From['value']));
                     }
                     
                     //agregado 20-09-2021
@@ -406,8 +406,8 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     error_log("DATOS LOCALES ES NUEVO");
                 } else {
                     error_log("----------------------------------------");
-                    $query	= $this->db->query($this->sql_class_ggpacientes->sqlExisteDatosLocales($this->tableSpace, $numFichae, $codEmpresa));
-		    $query2     = $query->result_array();
+                    $query	    =   $this->db->query($this->sql_class_ggpacientes->sqlExisteDatosLocales($this->tableSpace, $numFichae, $codEmpresa));
+		            $query2     =   $query->result_array();
                     if ($query2[0]['NUM'] == '0') {
                         $actualiza_local = '0';
                         $creaDatosLocales = array('IND_ESTADO' => 'V', 'COD_USRCREA' => $session, 'FEC_USRCREA' => 'SYSDATE', 'NUM_FICHAE' => $numFichae, 'COD_EMPRESA' => $codEmpresa, 'COD_SISTEMA' => '58');
@@ -547,11 +547,11 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 		    
                 } else {
 		    
-                    $query		    = $this->db->query($this->sql_class_ggpacientes->sqlObtieneNCORPAC($this->tableSpace, $codEmpresa));
-                    $LastNCORPAC	    = $query->result_array();
+                    $query		            =   $this->db->query($this->sql_class_ggpacientes->sqlObtieneNCORPAC($this->tableSpace, $codEmpresa));
+                    $LastNCORPAC	        =   $query->result_array();
                     if(isset($LastNCORPAC[0]['NUM_CORREL'])) {
-                        $NUM_CORREL	    = $LastNCORPAC[0]['NUM_CORREL'] + 1;
-                        $UpdateNfichaLocal  = array('NUM_CORREL' => $NUM_CORREL, 'COD_SISTEMA' => '58');
+                        $NUM_CORREL	        =   $LastNCORPAC[0]['NUM_CORREL'] + 1;
+                        $UpdateNfichaLocal  =   array('NUM_CORREL' => $NUM_CORREL, 'COD_SISTEMA' => '58');
                         $this->db->where('ID_CORREL','CORPAC');
                         $this->db->where('COD_EMPRESA',$codEmpresa);
                         $this->db->update($this->tableSpace.'.GG_TCORREL', $UpdateNfichaLocal);
