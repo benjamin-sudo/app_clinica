@@ -494,48 +494,48 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     //$fecFEC_AUDITA	    =   $infoRecetaxHist[0]['FEC_AUDITA'];
                     
 			$SO_THISTCPACTE		=   array(
-			    'COD_RUTPAC'	=>  $infoDatoLocalxHist[0]['COD_RUTPAC'], 
-			    'NUM_CORPAC'	=>  $infoDatoLocalxHist[0]['NUM_CORPAC'],
-			    'NUM_NFICHA'	=>  $infoDatoLocalxHist[0]['NUM_NFICHA'],
-			    'NUM_AFICHA'	=>  $infoDatoLocalxHist[0]['NUM_AFICHA'],
-			    'IND_ESTPAC'	=>  $infoDatoLocalxHist[0]['IND_ESTPAC'],
-			    'COD_SERULA'	=>  $infoDatoLocalxHist[0]['COD_SERULA'],
-			    'NUM_CORHOS'	=>  $infoDatoLocalxHist[0]['NUM_CORHOS'],
-			    'COD_ULTSER'	=>  $infoDatoLocalxHist[0]['COD_ULTSER'],
-			    'IND_ARCHIVO'	=>  $infoDatoLocalxHist[0]['IND_ARCHIVO'],
-			    'COD_USRCREA'	=>  $infoDatoLocalxHist[0]['COD_USRCREA'],
-			    'FEC_USRCREA'	=>  "TO_DATE('".$infoDatoLocalxHist[0]['FEC_USRCREA']."','DD-MM-YYYY HH24:MI:SS')",
-			    'COD_USUARI'	=>  $rut,
-			    'FEC_AUDITA'	=>  'SYSDATE',
-			    'IND_ESTADO'	=>  $infoDatoLocalxHist[0]['IND_ESTADO'],
-			    'COD_EMPRESA'	=>  $infoDatoLocalxHist[0]['COD_EMPRESA'],
-			    'NOM_DIRECC'	=>  $infoDatoLocalxHist[0]['NOM_DIRECC'],
-			    'NOM_CONTACTO'	=>  $infoDatoLocalxHist[0]['NOM_CONTACTO'],
+			    'COD_RUTPAC'	    =>  $infoDatoLocalxHist[0]['COD_RUTPAC'], 
+			    'NUM_CORPAC'	    =>  $infoDatoLocalxHist[0]['NUM_CORPAC'],
+			    'NUM_NFICHA'	    =>  $infoDatoLocalxHist[0]['NUM_NFICHA'],
+			    'NUM_AFICHA'	    =>  $infoDatoLocalxHist[0]['NUM_AFICHA'],
+			    'IND_ESTPAC'	    =>  $infoDatoLocalxHist[0]['IND_ESTPAC'],
+			    'COD_SERULA'	    =>  $infoDatoLocalxHist[0]['COD_SERULA'],
+			    'NUM_CORHOS'	    =>  $infoDatoLocalxHist[0]['NUM_CORHOS'],
+			    'COD_ULTSER'	    =>  $infoDatoLocalxHist[0]['COD_ULTSER'],
+			    'IND_ARCHIVO'	    =>  $infoDatoLocalxHist[0]['IND_ARCHIVO'],
+			    'COD_USRCREA'	    =>  $infoDatoLocalxHist[0]['COD_USRCREA'],
+			    //'FEC_USRCREA'	    =>  "TO_DATE('".$infoDatoLocalxHist[0]['FEC_USRCREA']."','DD-MM-YYYY HH24:MI:SS')",
+			    'COD_USUARI'	    =>  $rut,
+			    //'FEC_AUDITA'	    =>  'SYSDATE',
+			    'IND_ESTADO'	    =>  $infoDatoLocalxHist[0]['IND_ESTADO'],
+			    'COD_EMPRESA'	    =>  $infoDatoLocalxHist[0]['COD_EMPRESA'],
+			    'NOM_DIRECC'	    =>  $infoDatoLocalxHist[0]['NOM_DIRECC'],
+			    'NOM_CONTACTO'	    =>  $infoDatoLocalxHist[0]['NOM_CONTACTO'],
 			    'DIRECC_CONTACTO'   =>  $dirCC,
-			    'NUM_FICHAE'	=>  $infoDatoLocalxHist[0]['NUM_FICHAE'],
-			    'IND_IMPRES'	=>  $infoDatoLocalxHist[0]['IND_IMPRES'],
-			    'NUM_TELEFO1_2'	=>  $infoDatoLocalxHist[0]['NUM_TELEFO1_2'],
+			    'NUM_FICHAE'	    =>  $infoDatoLocalxHist[0]['NUM_FICHAE'],
+			    'IND_IMPRES'	    =>  $infoDatoLocalxHist[0]['IND_IMPRES'],
+			    'NUM_TELEFO1_2'	    =>  $infoDatoLocalxHist[0]['NUM_TELEFO1_2'],
 			    'TELEFO_CONTACTO_2'	=>  $infoDatoLocalxHist[0]['TELEFO_CONTACTO_2'],
-			    'NUM_TELEFO1'	=>  $infoDatoLocalxHist[0]['NUM_TELEFO1'],
+			    'NUM_TELEFO1'	    =>  $infoDatoLocalxHist[0]['NUM_TELEFO1'],
 			    'TELEFO_CONTACTO'	=>  $infoDatoLocalxHist[0]['TELEFO_CONTACTO'],
-			    'COD_SISTEMA'	=>  $infoDatoLocalxHist[0]['COD_SISTEMA'],
+			    'COD_SISTEMA'	    =>  $infoDatoLocalxHist[0]['COD_SISTEMA'],
 			    'COD_SISTEMAUDITA'	=>  $infoDatoLocalxHist[0]['COD_SISTEMAUDITA'],
-			    'COD_SECTOR'	=>  $infoDatoLocalxHist[0]['COD_SECTOR'],
-			    'COD_FAMILIA'	=>  $infoDatoLocalxHist[0]['COD_FAMILIA'],
-			    'NUM_CASA'		=>  $infoDatoLocalxHist[0]['NUM_CASA'],
+			    'COD_SECTOR'	    =>  $infoDatoLocalxHist[0]['COD_SECTOR'],
+			    'COD_FAMILIA'	    =>  $infoDatoLocalxHist[0]['COD_FAMILIA'],
+			    'NUM_CASA'		    =>  $infoDatoLocalxHist[0]['NUM_CASA'],
 			    'COD_VIADIRECCION'	=>  $infoDatoLocalxHist[0]['COD_VIADIRECCION'],
-			    'COD_COMUNAL'	=>  $infoDatoLocalxHist[0]['COD_COMUNAL'],
-			    'COD_CIUDADL'	=>  $infoDatoLocalxHist[0]['COD_CIUDADL'],
+			    'COD_COMUNAL'	    =>  $infoDatoLocalxHist[0]['COD_COMUNAL'],
+			    'COD_CIUDADL'	    =>  $infoDatoLocalxHist[0]['COD_CIUDADL'],
 			);
 			
 			if ($infoDatoLocalxHist[0]['FEC_ULTASI'] != '')    {
-			    $SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_ULTASI' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_ULTASI']."','DD-MM-YYYY HH24:MI:SS')"));
+			    //$SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_ULTASI' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_ULTASI']."','DD-MM-YYYY HH24:MI:SS')"));
 			}
 			if ($infoDatoLocalxHist[0]['FEC_ULTSER'] != '')   {
-			    $SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_IMPRES' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_ULTSER']."','DD-MM-YYYY HH24:MI:SS')"));
+			    //$SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_IMPRES' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_ULTSER']."','DD-MM-YYYY HH24:MI:SS')"));
 			}
 			if ($infoDatoLocalxHist[0]['FEC_IMPRES'] != '')   {
-			    $SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_ULTSER' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_IMPRES']."','DD-MM-YYYY HH24:MI:SS')"));
+			    //$SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_ULTSER' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_IMPRES']."','DD-MM-YYYY HH24:MI:SS')"));
 			}
 			
 			$this->db->insert($this->tableSpace . '.SO_THISTCPACTE', $SO_THISTCPACTE);
