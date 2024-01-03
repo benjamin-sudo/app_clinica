@@ -51,10 +51,60 @@ $(document).ready(function(){
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
     $('.dropdown-toggle').dropdown();
-    //jAlert("Debe Ingresar a lo menos un parametro para la busqueda", "Restricci\u00f3n");
 });
 
+function FormModal(isNal,numFichae){
+    $('.dropdown-toggle').dropdown('hide');
+    $.ajax({ 
+        type        :	"POST",
+        url         :	"ssan_bdu_creareditarpaciente/CreaEditaPaciente",
+        dataType    :	"json",
+        data        :	{ 
+                            numFichae   :   numFichae,
+                            isNal       :   isNal,
+                            template    :   $("#indTemplateNum").val(),
+                            Numedad	    :   '0',
+                        },
+        error      :	function(errro)	    {  
+                            console.log(errro);
+                            $("#HTML_DIALOGO").html('');	 
+                            jError("Error General, Consulte Al Administrador"); 
+					    },
+        success    :	function(aData)	    {    
+                            console.log("aData  ->  ",aData);
+                            $("#HTML_DIALOGO").html('');
+                            if(AjaxExtJsonAll(aData)){
 
+
+                                console.log("   star calendarios ");
+
+                                $("#txtFechaNacimineto").datepicker($.extend({
+                                    //defaultDate       : fecha,
+                                    showOn              : "button",
+                                    buttonImage         : "assets/themes/frontend/img/calendar.png",
+                                    buttonImageOnly     : true,
+                                    yearRange           : "-120:+0",
+                                    dateFormat          : "dd-mm-yy",
+                                    changeMonth         : true,
+                                    changeYear          : true,
+                                    showButtonPanel     : true,
+                                    buttonText          : "Calendario", 
+                                    //minDate           : "0",
+                                    maxDate             : "0",
+                                    pick12HourFormat    : true,
+                                    selectOtherMonths   : true,
+                                    onSelect            : function(textoFecha, objDatepicker){    }
+                                },$.datepicker.regional["es"]));
+
+
+
+                                $("#modalPaciente").modal({backdrop:'static',keyboard:false}).modal('show');
+
+
+                            } 
+                        }, 
+    });
+}
 
 function buscar(OP,LIM_INI){
     $("#rut").css("border-color","");
@@ -541,33 +591,6 @@ function cambiaDoc(){
     }
 }
 
-function FormModal(isNal,numFichae){
-    $.ajax({ 
-        type        :	"POST",
-        url         :	"ssan_bdu_creareditarpaciente/CreaEditaPaciente",
-        dataType    :	"json",
-        data        :	{ 
-                            numFichae   :   numFichae,
-                            isNal       :   isNal,
-                            template    :   $("#indTemplateNum").val(),
-                            Numedad	    :   '0',
-                        },
-        error      :	function(errro)	    {  
-                            console.log(errro);
-                            $("#HTML_DIALOGO").html('');	 
-                            jError("Error General, Consulte Al Administrador"); 
-					    },
-        success    :	function(aData)	    {    
-                            console.log("aData  ->  ",aData);
-                            $("#HTML_DIALOGO").html('');
-                            if(AjaxExtJsonAll(aData)){
-                                $("#modalPaciente").modal({backdrop:'static',keyboard:false}).modal('show');
-                            } 
-                        }, 
-    });
-    
-   
-}
 
 //RUT FONASA
 function validExtrangero(desde,numFichae){

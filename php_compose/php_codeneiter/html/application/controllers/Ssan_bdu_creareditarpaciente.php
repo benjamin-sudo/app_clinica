@@ -151,9 +151,10 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         } else if ($isNal == 1) {
             $html .= '
                 <tr class="info">
-                    <td class="info" width="40%" style="text-align:right"><b>RUN CHILENO</b>:</td> 
+                    <td class="info" width="40%" style="text-align:right"><b>RUN</b>:</td> 
                     <td class="info" width="20%" style="text-align:center">
                         <div class="grid_div_run">
+                            
                             <div class="grid_div_run1">
                                 <input type="text" class="form-control" name="txtBuscar" id="txtBuscar" size="8" maxlength="8" onkeypress="return soloNumeros(event)"> 
                             </div>
@@ -161,6 +162,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                             <div class="grid_div_run3">
                                 <input type="text" class="form-control" name="txtDv" id="txtDv" size="1" maxlength="1">
                             </div>
+
                         </div>
                     </td> 
                     <td class="info" width="40%" style="text-align:left">
@@ -189,24 +191,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         }
         $html .= '</theard></table>';
 
-/*
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> ... 1 ...</div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"> ... 2 ...</div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"> ... 3 ...</div>
-    </div>
-*/
 
         $html .= '
         <div id="formularioUsuario">
@@ -307,7 +291,13 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         <tr class="formulario">
                             <td>Fecha de nacimiento</td>
                             <td style="display:flex;">
-                                <input type="text" class="form-control" style="width:80px" id="txtFechaNacimineto" name="txtFechaNacimineto" maxlength="10" disabled/><font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
+                                <input 
+                                    type        =   "text" 
+                                    class       =   "form-control" 
+                                    style       =   "width:120px" 
+                                    id          =   "txtFechaNacimineto" 
+                                    name        =   "txtFechaNacimineto" 
+                                    maxlength   =   "10" disabled/><font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
                             </td>
                         </tr>
                         <tr class="formulario">
@@ -891,6 +881,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             </div> 
             
             <script>
+
                 $("#txtFecvencePasport").datepicker($.extend({
                     //defaultDate       : fecha,
                     showOn              : "button",
@@ -933,23 +924,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
         $html .= '
             <script>
-                $("#txtFechaNacimineto").datepicker($.extend({
-                    //defaultDate       : fecha,
-                    showOn              : "button",
-                    buttonImage         : "assets/themes/frontend/img/calendar.png",
-                    buttonImageOnly     : true,
-                    yearRange           : "-120:+0",
-                    dateFormat          : "dd-mm-yy",
-                    changeMonth         : true,
-                    changeYear          : true,
-                    showButtonPanel     : true,
-                    buttonText          : "Calendario", 
-                    //minDate           : "0",
-                    maxDate             : "0",
-                    pick12HourFormat    : true,
-                    selectOtherMonths   : true,
-                    onSelect            : function(textoFecha, objDatepicker){    }
-                },$.datepicker.regional["es"]));
+                console.log("La vida sigue igual");
             </script>';
         $html .= '</div>
         </div> 
@@ -963,7 +938,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             $aDatos[] = array(
                 "id_html"   => "titulo_bdu",
                 "opcion"    => "html",
-                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE </b>"
+                "contenido" => "<i class='fa fa-user-circle'   aria-hidden='true'></i>&nbsp;<b>GRABA/EDITA PACIENTE</b>"
             );
             /*
             $aDatos[] = array(
@@ -972,7 +947,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                                "contenido" => "----------->".$templete
                            ); 
             */
-
             if ($templete == 1) {
                 $aDatos[] = array(
                     "id_html"   => "txt_bdu",
@@ -1024,6 +998,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 );
             }
         } else if ($isNal == 3) { //Datos del recien nacido
+            
             //RN
             //$aDatos[]     = array('id_html'=>'cboPais' ,'opcion'=>'find_rm','contenido'=>'CL');
             $aDatos[]       = array(
@@ -1043,9 +1018,12 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     "contenido" => "<script>validaNumeroRN(0,$numFichae)</script>"
                 );
             }
+
         }
 
         $this->output->set_output(json_encode($aDatos));
+
+
     }
 
 

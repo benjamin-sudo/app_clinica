@@ -19,15 +19,12 @@
     <div class="card grid_body_bdu1">
         <table class="table table-striped" width="100%" style="margin-bottom:0px;">
             <tr class="success">
-                <td style="width:40%;text-align: right;">
-                    <div id="titulo_nombre"><b>PACIENTE/EDITAR</b></div>
-                </td>
-                <td style="width:60%">
-                    --
+                <td colspan="2" style="text-align: center;">
+                    <div id="titulo_nombre"><b>B&Uacute;SQUEDA DE PACIENTE</b></div>
                 </td>
             </tr>
             <tr id="trTipo">
-                <td style="width:186px;text-align: right;">Tipo de Paciente:</td>
+                <td id="nameType2" style="text-align: right;">Tipo de Paciente</td>
                 <td>
                     <input type="radio" name="tipPac" value="0" id="checkReNacido"  onclick="cambiaTip(0)" checked/>
                     <label style="cursor:pointer" for="checkReNacido"><img class="shadow"> Con RUN Nacional</label> 
@@ -37,9 +34,9 @@
                 </td>
             </tr>
             <tr id="trEx" style="display: none;" >
-                <td style="text-align: right;">Tipo Documento :</td>
-                <td>
-                    <select id="tipoEx" onchange="cambiaDoc(this.value);" style="width:210px">
+                <td style="width:30%;text-align: right;">Tipo Documento:</td>
+                <td style="width:70%">
+                    <select id="tipoEx" onchange="cambiaDoc(this.value);" style="" class="form-select">
                         <option value="1">Pasaporte/DNI Pa&iacute;s Origen</option>
                         <option value="2">ID Provisorio Fonasa</option>
                     </select>
@@ -115,27 +112,7 @@
 </div>
 
 <section>
-    <!--
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> ... 1 ...</div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"> ... 2 ...</div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"> ... 3 ...</div>
-        </div>
-    -->
-</section>
 
-<section>
     <div class="modal fade" id="modalPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -146,7 +123,7 @@
                 <div class="modal-body" id="HTML_DIALOGO"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CIERRA VENTANA</button>
-                    <button type="button" class="btn btn-primary btn-sm disabled" id="Btn_bdu">
+                    <button type="button" class="btn btn-primary disabled" id="Btn_bdu">
                         <div id="txt_bdu"></div>
                     </button>
                 </div>
