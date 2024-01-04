@@ -1033,21 +1033,13 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         }
 
         $this->output->set_output(json_encode($aDatos));
-
-
     }
-
-
-    
-
 
     public function buscarPac(){
         if (!$this->input->is_ajax_request()) {  show_404();  }
         //  $codEmpresa         =    $this->session->userdata("COD_ESTAB");
-	
 	    $codEmpresa         =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
-	
-        $html               =    '';
+	    $html               =    '';
         $NUM_COUNT          =    '';
         $isNal              =    '';
         $data               =    '';
@@ -1152,21 +1144,23 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 if ($row['FALLECIDO'] == '') {
                     if ($templete == '1') { //todo el power
                         $html .= '
-                            <div class="dropdown">
-                                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-                                <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                <span class="caret"></span></button>
-                                <ul class="dropdown-menu pull-right">
+                            <div class="dropdown"  id="btn_gestion">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="bi bi-forward-fill"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a href="javascript:FormModal(' . $isNal . ',' . $row['NUM_FICHAE'] . ')"> <i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp;EDITAR</a></li>';
                         if ($IND_EXTRANJERO == '1') {
-                            $html .= '<li><a href="javascript:CertificadoExtranjero(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp;C.EXTRANJERO</a></li>';
+                                $html .= '<li><a href="javascript:CertificadoExtranjero(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp;C.EXTRANJERO</a></li>';
                             if($row['COD_RUTPAC'] == ''){
                                 $html .= '<li><a href="javascript:editor_extranjero(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-exchange" aria-hidden="true"></i>&nbsp;RUN DEFINITIVO</a></li>';
                             }
-                           
-                            
                         }
-                        $html .= '</ul></div>';
+                        
+                        $html .= '</div>';
+
+
+
                     } else if ($templete == '2') { //Edita ficha local
                         $html .= '<a class="btn btn-info" href="javascript:FormModal(' . $isNal . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-cog" aria-hidden="true"></i></a>';
                     }
@@ -1174,40 +1168,37 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     //Nuevo 13.11.2018
                     else if ($templete == '3') {
                         $html .= '<a 
-                                            class="btn btn-info" 
-                                            href="javascript:FormModal2(' . $isNal . ',' . $row['NUM_FICHAE'] . ',\'' . $row['COD_RUTPAC'] . '\',\'' . $row['NUM_IDENTIFICACION'] . '\')"
-                                            >
-                                            <i class="fa fa-cog" aria-hidden="true"></i>
-                                        </a>';
+                                    class="btn btn-info" 
+                                    href="javascript:FormModal2(' . $isNal . ',' . $row['NUM_FICHAE'] . ',\'' . $row['COD_RUTPAC'] . '\',\'' . $row['NUM_IDENTIFICACION'] . '\')"
+                                    >
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                </a>';
                     }
 
-
                     //NUEVO PARA EL GESTION DE CITACION 06-08-2019 // NO SUBIDO
-
                     else if ($templete == '5') {
                         $JSON2                    =   htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
                         if (is_numeric($numFichaL)) {
-                            $html .= '
-					    <button 
-						class				=   "btn btn-success btn-xs btn-fill" 
-						type				=   "button"
-						id				=   "DATA_' . $row['NUM_FICHAE'] . '"
-						data-ROW			=   "' . $JSON2 . '"
-						onclick				=   "busqueda_comp(' . $row['NUM_FICHAE'] . ')"
-						>
-						<i class="fa fa-plus-square-o" aria-hidden="true"></i>
-					    </button>
+                            $html .=    '<button 
+                                            class				=   "btn btn-success btn-xs btn-fill" 
+                                            type				=   "button"
+                                            id				    =   "DATA_' . $row['NUM_FICHAE'] . '"
+                                            data-ROW			=   "' . $JSON2 . '"
+                                            onclick				=   "busqueda_comp(' . $row['NUM_FICHAE'] . ')"
+                                            >
+                                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                                        </button>
 					    ';
                         } else {
                             $html  .= ' <button 
-						class				=   "btn btn-DEFAULT btn-xs btn-fill" 
-						type				=   "button"
-						id				=   "DATA_' . $row['NUM_FICHAE'] . '"
-						data-ROW			=   "' . $JSON2 . '"
-						onclick				=   "SINFICHALOCAL(' . $row['NUM_FICHAE'] . ');"
-						>
-						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
-					    </button>';
+                                            class				=   "btn btn-DEFAULT btn-xs btn-fill" 
+                                            type				=   "button"
+                                            id				    =   "DATA_' . $row['NUM_FICHAE'] . '"
+                                            data-ROW			=   "' . $JSON2 . '"
+                                            onclick				=   "SINFICHALOCAL(' . $row['NUM_FICHAE'] . ');"
+                                            >
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+					                    </button>';
                         }
                     }
                 } else {
@@ -1226,6 +1217,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     
                     
                     $aDatos[]       = array('id_html' => 'nresultados', 'opcion' => 'html', 'contenido' => $NUM_COUNT);
+
                     $data           .= '<script>$("#new_paginacion").bootpag({total:' . round($PageN) . ',page:1,maxVisible: 10});</script>';
                     $data           .= '<script>$("#new_paginacion").show("fast");</script>';
                     $aDatos[]       = array("id_html" => "respuesta", "opcion" => "append", "contenido"  => $data);

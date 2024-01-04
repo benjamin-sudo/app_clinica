@@ -188,8 +188,7 @@ function buscar(OP,LIM_INI){
             type            :	"POST",
             url             :	"ssan_bdu_creareditarpaciente/buscarPac",
             dataType        :	"json",
-            data            : 
-                                { 
+            data            :   { 
                                     numFichae   :   '',
                                     rut         :   rut,
                                     tipoEx      :   tipoEx,
@@ -214,9 +213,15 @@ function buscar(OP,LIM_INI){
             success         :	function(aData){ 
                                                     $("#resultados").html(''); 
                                                     document.getElementById("btn_buscageneral").disabled = false; 
-                                                    AjaxExtJsonAll(aData); 
+                                                    if(AjaxExtJsonAll(aData)){
+                                                        
+                                                        console.log("dropdown-toggle   ->  ");
+                                                        $('.dropdown-toggle').dropdown();
+
+                                                    }
                                                 }, 
         });
+
         $("#resultados").html('');
     }
 }
