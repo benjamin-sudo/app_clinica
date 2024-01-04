@@ -34,6 +34,7 @@ services:
   #https://hub.docker.com/r/gvenzl/oracle-free
   oracle_slim:
     image: gvenzl/oracle-free:23.3-full
+    #image: gvenzl/oracle-free:23-slim
     container_name: oracle_slim
     environment:
       APP_USER: ADMIN
