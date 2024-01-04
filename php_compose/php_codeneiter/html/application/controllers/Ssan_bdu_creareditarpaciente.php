@@ -214,33 +214,29 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         </li>';
         }
 
-        //*************** NUEVO 18.12.2019 ***************
+       
         $html .= '<li class="nav-item" id="tabs_datosinscrito" style="display:none">
 	                <button class="nav-link" id="datos_inscrito-tab" data-bs-toggle="tab" data-bs-target="#datos_inscrito" type="button" role="tab" aria-controls="datos_inscrito" aria-selected="false">DATOS PREVISIONALES</button>
                 </li>';
-        //*************** NUEVO 18.12.2019 ***************
+       
 
-
-        //*************** NUEVO 07.02.2020 ***************
         $html .= '
-		<li class="dropdown" id="dropdown_opciones" style="display:none">
-		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-			    <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
-			    <span class="caret"></span>
-		    </a>
-		    <ul class="dropdown-menu" id="btn_percapita" >
-			<li>
-			    <a href="javascript:ver_infopercapita()" id="a_ver_percapita" style="white-space: normal;">
-				<i class="fa fa fa-info-circle" aria-hidden="true"></i>&nbsp;INFO PERCAPITA
-			    </a>
-			</li>
-		    </ul>
-		</li>
+            <li class="dropdown" id="dropdown_opciones" style="display:none">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" id="btn_percapita" >
+                <li>
+                    <a href="javascript:ver_infopercapita()" id="a_ver_percapita" style="white-space: normal;">
+                    <i class="fa fa fa-info-circle" aria-hidden="true"></i>&nbsp;INFO PERCAPITA
+                    </a>
+                </li>
+                </ul>
+            </li>
 		';
-        //*************** NUEVO 07.02.2020 ***************
-
+      
         $html .= '</ul>
-            
         <div class="tab-content">
 	        <!-- ************** NUEVO 18-12-2019 *************** -->
             <div class="tab-pane" id="datos_inscrito" role="tabpanel"> 

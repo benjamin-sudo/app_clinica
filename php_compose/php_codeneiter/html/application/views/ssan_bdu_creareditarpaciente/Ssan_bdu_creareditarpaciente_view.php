@@ -1,6 +1,6 @@
 <div class="grid_cabecera_bdu">
     <div class="grid_cabecera_bdu1">
-        <h4 class="title" style="color:#e34f49;margin:0px;"><b>GESTOR &Uacute;NICO DE PACIENTES</b></h4>
+        <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;"><b>GESTOR &Uacute;NICO DE PACIENTES</b></h4>
     </div>
     <div class="grid_cabecera_bdu1">
         <div class="dropdown"  id="btn_crear">

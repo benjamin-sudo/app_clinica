@@ -141,7 +141,9 @@ function buscar(OP,LIM_INI){
     $("#apellidoP").css("border-color","");
     $("#apellidoM").css("border-color","");
     $("#resultados").append('<tr id="msj_load"><td style="text-align:center" colspan="11"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i> <span class="sr-only"></span><b>BUSCANDO...</b></td></tr>');
-    if(OP==0){ $("#paginacion_bdu").html(''); }else {  }
+    
+    if(OP==0){ $("#paginacion_bdu").html(''); }
+    
     document.getElementById("btn_buscageneral").disabled = true;
     var rut         =	$("#rut").val();
     var pasaporte   =	$("#dni").val();
@@ -915,11 +917,12 @@ function enviaDatosBDU(isNew,isNal,RN,numFichae,IDselect,txtNumero,RutMon){
         nuevaNFicha         = $("#txtFichaFisicaLocal").val();
     }
   
+
     console.log(rutTitul);
-    console.log(actualizacionDatos); 
+    console.log(actualizacionDatos);
+    
     //return false;
     $('#Btn_bdu').attr("disabled",true);
-
     //jPrompt
     jConfirm('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir o actualizar informaci&oacute;n paciente en BDU - Clinica libre. <br/>&iquest;Est&aacute; seguro de continuar?<br />','Confirmaci\u00F3n',function(r){
         if(r){
