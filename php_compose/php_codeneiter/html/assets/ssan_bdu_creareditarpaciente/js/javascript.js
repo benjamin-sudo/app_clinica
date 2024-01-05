@@ -56,6 +56,7 @@ $(document).ready(function(){
     $('.dropdown-toggle').dropdown();
 });
 
+/*
 function js_test(){
     $.ajax({ 
         type        :	"POST",
@@ -80,6 +81,7 @@ function js_test(){
 					                        }, 
     });
 }
+*/
 
 function FormModal(isNal,numFichae){
     $('.dropdown-toggle').dropdown('hide');
@@ -690,6 +692,11 @@ function validExtrangero(desde,numFichae){
     });
 }
 
+
+
+
+
+
 function validaRutChileno(val,numfichae){
     //console.log("----------->"+numfichae);
     $('#txtBuscar').css("border-color","");
@@ -724,16 +731,18 @@ function validaRutChileno(val,numfichae){
                                             
                                             $('#txtBuscar').prop("disabled",true);
                                             $('#txtDv').prop("disabled",true);
+
+                                            
                                             $('#txtBuscar').addClass("disabled");
                                             $('#btn_rut').attr('disabled',true);
                                             $("#Btn_bdu").removeClass("disabled");
                                             
                                             if(AjaxExtJsonAll(aData)){ 
-                                                $('.nav-tabs a:first').tab('show'); 
 
-                                                
+                                                $('#myTab .nav-link:first').tab('show');
+
+
                                             };
-
                                         }, 
         });
     } else {
@@ -742,6 +751,7 @@ function validaRutChileno(val,numfichae){
         $('#txtDv').css("border-color","red"); 
     }
 }
+
 
 function buscaCiudades(Region,select,idSelect){
     //console.log(Region);console.log(select);console.log(idSelect);

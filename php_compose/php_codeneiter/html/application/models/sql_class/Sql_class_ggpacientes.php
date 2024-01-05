@@ -26,12 +26,9 @@ class sql_class_ggpacientes extends CI_Model {
 
     public static function sqlConsultaPacienteNEW($oracle_own, $numFichaE, $identifier = '', $codEmpresa, $isnal, $pasaporte  = '', $tipoEx  = ''){
         $wheBusca           = '';
-        if ($codEmpresa     == '29') {
-            $codEmpresa     = '029';
-        }
-        if ($isnal          == '') {
-            $isnal          = 0;
-        }
+        if ($codEmpresa     == '29') { $codEmpresa = '029';  }
+        if ($isnal          == '') { $isnal = 0;  }
+
         #SI VIENE NUM_FICHA_E MANDA
         if (!empty($numFichaE)) {
             $wheBusca = " A.NUM_FICHAE = '$numFichaE' AND ";

@@ -120,6 +120,10 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
         }
 
+
+
+
+
         $html = '
             <table border="0" cellspacing="0"  class="table-sm">
                 <theard>
@@ -162,7 +166,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     <td class="info" width="40%" style="text-align:right"><b>RUN</b>:</td> 
                     <td class="info" width="20%" style="text-align:center">
                         <div class="grid_div_run">
-                            
                             <div class="grid_div_run1">
                                 <input type="text" class="form-control" name="txtBuscar" id="txtBuscar" size="8" maxlength="8" onkeypress="return soloNumeros(event)"> 
                             </div>
@@ -170,12 +173,11 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                             <div class="grid_div_run3">
                                 <input type="text" class="form-control" name="txtDv" id="txtDv" size="1" maxlength="1">
                             </div>
-
                         </div>
                     </td> 
                     <td class="info" width="40%" style="text-align:left">
                         <a class="btn btn-small btn-success" onclick="validaRutChileno(1,null);" id="btn_rut">
-                        <i class="fa fa-search" aria-hidden="true"></i> VALIDAR RUT</a>
+                        <i class="fa fa-search" aria-hidden="true"></i> VALIDAR RUN</a>
                     </td> 
                 </tr>
                 ';
@@ -184,11 +186,9 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 <tr class="info">
                     <td class="info" width="33%" style="text-align:right"><b>RUT MADRE</b>:</td> 
                     <td class="info" width="33%" style="text-align:center">
-                        
                         <input type="text" class="form-control" name="txtBuscar" id="txtBuscar" size="8" maxlength="8" style="width:70px" onkeypress="return soloNumeros(event)"> 
                         - 
                         <input type="text" class="form-control" name="txtDv" id="txtDv" size="1" maxlength="1" style="width:15px">
-
                     </td> 
                     <td class="info" width="33%" style="text-align:left">
                         <a class="btn btn-small btn-info" onclick="validaRutmadre(1,null);" id="btn_rut">
@@ -1061,7 +1061,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $LIM_INI            =    $this->input->post("LIM_INI");
         $OP                 =    $this->input->post("OP");
         $templete           =    $this->input->post("templete");
-
         if ($tipoPac        == 0) {
             $isnal          =    '1';
             $identifier     =    $rut;
@@ -1080,10 +1079,10 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>"-------------------------------------");
             $script        =    '<script type="text/javascript">jAlert(" - SU SESI&Oacute;N A EXPIRADO", "Listado de Errores - e-EISSAN", function(){';
             if ($this->session->userdata("SISTYPO") != 1) {
-                //$script	    .=		'window.location = "../../inicio"';
+                //$script   .=  'window.location = "../../inicio"';
             }
             $script        .=    '});</script>';
-            $aDatos[]        =    array('id_html' => 'respuesta', 'opcion' => 'append', 'contenido' => $script);
+            $aDatos[]       =    array('id_html' => 'respuesta', 'opcion' => 'append', 'contenido' => $script);
             $this->output->set_output(json_encode($aDatos));
             return false;
         }
@@ -1175,8 +1174,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     //Nuevo 13.11.2018
                     else if ($templete == '3') {
                         $html .= '<a 
-                                        class   =   "btn btn-info" 
-                                        href    =   "javascript:FormModal2('.$isNal.','.$row['NUM_FICHAE'].',\''.$row['COD_RUTPAC'].'\',\''.$row['NUM_IDENTIFICACION'].'\')"
+                                    class   =   "btn btn-info" 
+                                    href    =   "javascript:FormModal2('.$isNal.','.$row['NUM_FICHAE'].',\''.$row['COD_RUTPAC'].'\',\''.$row['NUM_IDENTIFICACION'].'\')"
                                     >
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </a>';
@@ -1187,22 +1186,22 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         $JSON2                    =   htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
                         if (is_numeric($numFichaL)) {
                             $html .=    '<button 
-                                            class				=   "btn btn-success btn-xs btn-fill" 
-                                            type				=   "button"
-                                            id				    =   "DATA_' . $row['NUM_FICHAE'] . '"
-                                            data-ROW			=   "' . $JSON2 . '"
-                                            onclick				=   "busqueda_comp(' . $row['NUM_FICHAE'] . ')"
+                                            class       =   "btn btn-success btn-xs btn-fill" 
+                                            type		=   "button"
+                                            id			=   "DATA_'.$row['NUM_FICHAE'] . '"
+                                            data-ROW	=   "'.$JSON2.'"
+                                            onclick		=   "busqueda_comp('.$row['NUM_FICHAE'].')"
                                             >
                                             <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                                         </button>
 					    ';
                         } else {
                             $html  .= ' <button 
-                                            class				=   "btn btn-DEFAULT btn-xs btn-fill" 
-                                            type				=   "button"
-                                            id				    =   "DATA_' . $row['NUM_FICHAE'] . '"
-                                            data-ROW			=   "' . $JSON2 . '"
-                                            onclick				=   "SINFICHALOCAL(' . $row['NUM_FICHAE'] . ');"
+                                            class		=   "btn btn-DEFAULT btn-xs btn-fill" 
+                                            type		=   "button"
+                                            id			=   "DATA_'.$row['NUM_FICHAE'] . '"
+                                            data-ROW	=   "'.$JSON2.'"
+                                            onclick		=   "SINFICHALOCAL('.$row['NUM_FICHAE'].');"
                                             >
                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
 					                    </button>';
@@ -1211,7 +1210,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 } else {
                     $html .= '<span class="fa-stack fa-lg hint hint--left" data-hint="PACIENTE FALLECIDO"><i class="fa fa-user-o fa-stack-1x"></i><i class="fa fa-ban fa-stack-2x text-danger"></i></span>';
                 }
-
                 $html .= '</td>
                     </tr>
                     ';
@@ -1221,32 +1219,22 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 if ($OP == 0 and $LIM_INI == '1') {
                     $NUM_COUNT      =   (int)$row['RESULT_COUNT'];
                     $PageN          =   ceil($NUM_COUNT / 10);
-                    
-                    
-                    $aDatos[]       = array('id_html' => 'nresultados', 'opcion' => 'html', 'contenido' => $NUM_COUNT);
-
-                    $data           .= '<script>$("#new_paginacion").bootpag({total:' . round($PageN) . ',page:1,maxVisible: 10});</script>';
-                    $data           .= '<script>$("#new_paginacion").show("fast");</script>';
-                    $aDatos[]       = array("id_html" => "respuesta", "opcion" => "append", "contenido"  => $data);
+                    $aDatos[]       =   array('id_html' => 'nresultados', 'opcion' => 'html', 'contenido' => $NUM_COUNT);
+                    $data           .=  '<script>$("#new_paginacion").bootpag({total:' . round($PageN) . ',page:1,maxVisible: 10});</script>';
+                    $data           .=  '<script>$("#new_paginacion").show("fast");</script>';
+                    $aDatos[]       =   array("id_html" => "respuesta", "opcion" => "append", "contenido"  => $data);
                 }
             }
         } else {
 
-            $aDatos[]   = array('id_html' => 'nresultados', 'opcion' => 'html', 'contenido' => '');
-            $aDatos[]   = array('id_html' => 'nresultados', 'opcion' => 'html', 'contenido' => '0');
-            $aDatos[]   = array('id_html' => 'new_paginacion', 'opcion' => 'hide', 'contenido' => '');
+            $aDatos[]   = array('id_html' => 'nresultados',     'opcion' => 'html', 'contenido' => '');
+            $aDatos[]   = array('id_html' => 'nresultados',     'opcion' => 'html', 'contenido' => '0');
+            $aDatos[]   = array('id_html' => 'new_paginacion',  'opcion' => 'hide', 'contenido' => '');
+
             if ($templete == '1') {
-                $html .=    '<tr id="mensajeSinresultados_1">
-                                <td colspan="12" style="text-align:center">   <b><i> NO SE HAN ENCONTRADO RESULTADOS </i></b>
-                                    <br>
-                                    <div class="dropdown">
-                                        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <b>AGREGAR/EDITAR PACIENTE</b>
-                                        <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                          <li><a href="javascript:FormModal(1,null)"> <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;PACIENTE NACIONAL</a></li>
-                                          <li><a href="javascript:FormModal(0,null)"> <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;PACIENTE EXTRANJERO</a></li>
-                                        </ul>
-                                    </div>
+                $html   .=  '<tr id="mensajeSinresultados_1">
+                                <td colspan="12" style="text-align:center">
+                                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;<b><i>NO SE HAN ENCONTRADO RESULTADOS</i></b>
                                 </td>
                             </tr>';
             } else if ($templete == '2') {
