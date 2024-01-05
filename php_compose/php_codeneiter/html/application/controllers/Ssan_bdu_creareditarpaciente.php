@@ -269,15 +269,18 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                                 <input type="hidden" id="numFichae" name="numFichae" value="">
                                 <input type="hidden" id="isNewPac"  name="isNewPac"  value="">
                             </td>
-                            <td style="display:flex;"><input type="text"  class="form-control" id="txtNombre" name="txtNombre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
+                            <td style="display:flex;">
+                            <input type="text"  class="form-control" id="txtNombre" name="txtNombre" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25"  oninput="copiarnombre()">
                             <font color="#339999" class="Estilo2">*</font></td>
                         </tr>
+                        
                         <tr class="formulario">
                             <td>  Nombre Social</td>
                             <td style="display:flex;">
                                 <input type="text" class="form-control" d="txtNombreSocial" name="txtNombreSocial" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
                             </td>
                         </tr>
+
                         <tr class="formulario">
                             <td>Apellido Paterno</td>
                             <td style="display:flex;">
@@ -599,22 +602,22 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     </td>
                 </tr>
                 <tr class="formulario">
-                    <td width="30%" height="28px">R.U.T</td>
+                    <td width="30%" height="35px">RUN</td>
                     <td width="70%">
                         <label id="RutLabel"></label></b> 
                         <div id="cargaPaciente" style="display: initial"></div>
                     </td>
                 </tr>
                 <tr class="formulario">
-                    <td height="28px"> Nombre Completo </td>
+                    <td height="35px"> Nombre Completo </td>
                     <td><label id="nombreLabel"></label> </td>
                 </tr>
                 <tr class="formulario" style="">
-                    <td height="28px">C&oacute;digo Familia  </td>
+                    <td height="35px">C&oacute;digo Familia  </td>
                     <td><span id="txtCodFamilia"></span>  </td>
                 </tr>
                 <tr class="formulario" style="">
-                    <td height="28px">  Sector  </td>
+                    <td height="35px">  Sector  </td>
                     <td><span id="txtSector"></span></td>
                 </tr>
                 <tr class="formulario">

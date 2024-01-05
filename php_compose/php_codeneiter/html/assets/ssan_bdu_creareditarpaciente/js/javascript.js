@@ -416,41 +416,25 @@ function cargaInfoFonasa(rut,dv){
     */
 }
 
-//********************************** 20.01.2020 ********************************
 function cargaInfoApi(rut,dv){
-    //console.log("----------------");
-    //console.log(parseInt(rut));
-    //console.log(parseInt(rut,64));
-    //console.log(dv);
-    //console.log("----------------");
-    
-    jAlert("NUEVO PACIENTE- INGRESAR INFORMACI&Oacute;N","CLINICA LIBRE");
-
-    /*
-    jConfirm("Estimado Usuario:<br>El paciente seleccionado no est&aacute; incluido en la base de SSAN &iquestDesea buscarlo los datos generales? ", 'ESISSAN', function (r) {   
-        if (r){
-            $.ajax({ 
-                    type        : "POST",
-                    //url       : "ssan_bdu_creareditarpaciente/buscaInfoApi",
-		    url         : "ssan_bdu_creareditarpaciente/api_personas",
-		    dataType    : "json",
-                    data        : 
-                                { 
-				    txtRuttit  : parseInt(rut),
-                                    txtDvtit   : dv,
-				},
-                    error       : function(errro){ 
-						    console.log(errro);
-						    console.log(errro.responseText); 
-						    jAlert("Error General, Consulte Al Administrador"); 
-						},
-                    success     : function(aData){ AjaxExtJsonAll(aData); }, 
-                });
-        }
-    });
-    */
+    jAlert("ingreso de nuevo paciente- ingresar informaci&oacute;n minima","Clinica Libre");
+    $("#txtRuttit").val(rut).prop("disabled",true);
+    $("#txtRuttit").val(dv).prop("disabled",true);
+    $("#txtNombretit").prop("disabled",true);
+    $("#txtDvtit").prop("disabled",true);
 }
-//********************************** 20.01.2020 ********************************
+
+
+function copiarnombre(){
+    let textoOriginal = document.getElementById('txtNombre').value;
+
+    console.log("textoOriginal  ->  ",textoOriginal);
+
+    $("#nombreLabel").html(textoOriginal);
+}
+
+
+
 
 function buscaTitular(val){
     var RUTMALO = '';
@@ -460,7 +444,6 @@ function buscaTitular(val){
     } else {
         jError("RUN Titular ","e-SISSAN"); return false;
     }
-    
     $.ajax({ 
         type        :   "POST",
         url         :   "ssan_bdu_creareditarpaciente/buscarPrevision",
@@ -736,12 +719,9 @@ function validaRutChileno(val,numfichae){
                                             $('#txtBuscar').addClass("disabled");
                                             $('#btn_rut').attr('disabled',true);
                                             $("#Btn_bdu").removeClass("disabled");
-                                            
+
                                             if(AjaxExtJsonAll(aData)){ 
-
                                                 $('#myTab .nav-link:first').tab('show');
-
-
                                             };
                                         }, 
         });
