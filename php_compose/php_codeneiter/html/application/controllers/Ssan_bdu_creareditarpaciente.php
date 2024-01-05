@@ -284,14 +284,14 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         <tr class="formulario">
                             <td>Apellido Paterno</td>
                             <td style="display:flex;">
-                                <input type="text" class="form-control" id="txtApellidoPaterno" name="txtApellidoPaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                                <input type="text" class="form-control" id="txtApellidoPaterno" name="txtApellidoPaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20" oninput="copiaapellidopaterno()">
                                 <font color="#339999" class="Estilo2">*</font>
                             </td>
                         </tr>
                         <tr class="formulario">
                             <td>Apellido Materno</td>
                             <td style="display:flex;">
-                                <input type="text" class="form-control" id="txtApellidoMaterno" name="txtApellidoMaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                                <input type="text" class="form-control" id="txtApellidoMaterno" name="txtApellidoMaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20" oninput="copiaapellidomaterno()">
                                 <font color="#339999" class="Estilo2">*</font>
                             </td>
                         </tr>

@@ -419,20 +419,25 @@ function cargaInfoFonasa(rut,dv){
 function cargaInfoApi(rut,dv){
     jAlert("ingreso de nuevo paciente- ingresar informaci&oacute;n minima","Clinica Libre");
     $("#txtRuttit").val(rut).prop("disabled",true);
-    $("#txtRuttit").val(dv).prop("disabled",true);
-    $("#txtNombretit").prop("disabled",true);
+    $("#txtDvtit").val(dv).prop("disabled",true);
+    $("#txtNombretit,#txtApellidoPaternotit,#txtApellidoMaternotit").prop("disabled",true);
     $("#txtDvtit").prop("disabled",true);
 }
 
-
 function copiarnombre(){
     let textoOriginal = document.getElementById('txtNombre').value;
-
-    console.log("textoOriginal  ->  ",textoOriginal);
-
-    $("#nombreLabel").html(textoOriginal);
+    $("#txtNombretit").html(textoOriginal);
 }
 
+function copiaapellidopaterno(){
+    let textoOriginal = document.getElementById('txtApellidoPaterno').value;
+    $("#txtApellidoPaternotit").html(textoOriginal);
+}
+
+function copiaapellidomaterno(){
+    let textoOriginal = document.getElementById('txtApellidoMaterno').value;
+    $("#txtApellidoMaternotit").html(textoOriginal);
+}
 
 
 
