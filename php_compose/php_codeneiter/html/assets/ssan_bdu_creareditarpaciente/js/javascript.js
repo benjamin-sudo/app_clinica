@@ -10,7 +10,8 @@ $(document).ready(function(){
         on_success  :	function(){ console.log($("#txRutTit").val()); $("#txRutTit").css('border-color',''); },
         format_on   :	'keyup'
     });
-    $("input[name=tipPac]:radio").change(function () { 
+    
+    $("input[name=tipPac]:radio").change(function(){ 
         $("#result").hide(); 
         $("#formUser").hide();   
     });
@@ -18,7 +19,7 @@ $(document).ready(function(){
     $("#modalExtranjero").on('hidden.bs.modal',function(e){ 
         $("#HTML_PDF").html(""); 
     });
-    
+
     $("#modalPaciente").on('hidden.bs.modal',function(e){ 
         $("#HTML_DIALOGO").html(""); 
         $('#Btn_bdu').attr('onClick','');
@@ -30,9 +31,11 @@ $(document).ready(function(){
         //$('#Btn_bdu').hide();
         //$("#Btn_bdu").removeClass("btn btn-primary btn-sm");
     });
+    
     $("#new_paginacion").on('click','li',function (){
         if(!isNaN($(this).text())){ buscar(1,$(this).text()); }
     });
+    
     console.log(" -------------- TEMPLETE -> "+$("#indTemplateNum").val() +" <--------------");
     //ocMen();
     $('#modal_percapita').on('show.bs.modal',function(e){
@@ -53,6 +56,31 @@ $(document).ready(function(){
     $('.dropdown-toggle').dropdown();
 });
 
+function js_test(){
+    $.ajax({ 
+        type        :	"POST",
+        url         :	"ssan_bdu_creareditarpaciente/function_test",
+        beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
+        dataType    :	"json",
+        data        :	{ },
+        error       :	function(errro,error2,error3)	{ 
+
+                                                            console.log("--------------------------------"); 
+                                                            console.log(errro.responseText); 
+                                                            console.log(errro); 
+                                                            console.log(error2);
+                                                            console.log(error3);
+
+                                                            jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                                                            $('#loadFade').modal('hide');
+                                                        },
+        success     :	function(aData)	    {	
+                                                console.log(aData);
+                                                $('#loadFade').modal('hide');
+					                        }, 
+    });
+}
+
 function FormModal(isNal,numFichae){
     $('.dropdown-toggle').dropdown('hide');
     $.ajax({ 
@@ -71,15 +99,11 @@ function FormModal(isNal,numFichae){
                             jError("Error General, Consulte Al Administrador"); 
 					    },
         success    :	function(aData) {    
-                            
                             //*****************************************/
                             //console.log("aData->",aData);
-                            
                             $("#HTML_DIALOGO").html('');
                             if(AjaxExtJsonAll(aData)){
-                                
                                 console.log("   star calendarios    ");
-
                                 /*
                                 $("#txtFechaNacimineto").datepicker($.extend({
                                     //defaultDate       : fecha,
@@ -214,10 +238,8 @@ function buscar(OP,LIM_INI){
                                                     $("#resultados").html(''); 
                                                     document.getElementById("btn_buscageneral").disabled = false; 
                                                     if(AjaxExtJsonAll(aData)){
-                                                        
-                                                        console.log("dropdown-toggle   ->  ");
+                                                        console.log("dropdown-toggle");
                                                         $('.dropdown-toggle').dropdown();
-
                                                     }
                                                 }, 
         });
@@ -252,21 +274,21 @@ function ver_infopercapita(RUN){
     console.log(RUN);
     $.ajax({ 
         type        :	"POST",
-	url         :	"ssan_bdu_creareditarpaciente/apipercapita",
-	dataType    :	"json",
+        url         :	"ssan_bdu_creareditarpaciente/apipercapita",
+        dataType    :	"json",
         data        :	{ 
-			    rutPac	:   RUN,
-			},
+                            rutPac	:   RUN,
+                        },
         error       :	function(errro)	    { 
 						console.log(errro.responseText); 
 						jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
 					    },
         success     :	function(aData)	    {	
-						console.log("-------------");
-						console.log(aData);
-						if(AjaxExtJsonAll(aData)){
-						    
-						} 
+                            console.log("-------------");
+                            console.log(aData);
+                            if(AjaxExtJsonAll(aData)){
+                                
+                            } 
 					    }, 
     });
 }

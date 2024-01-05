@@ -1,35 +1,22 @@
 <div class="grid_cabecera_bdu">
     <div class="grid_cabecera_bdu1">
-        <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;"><b>GESTOR &Uacute;NICO DE PACIENTES</b></h4>
+        <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
+            <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>GESTOR &Uacute;NICO DE PACIENTES</b>
+        </h4>
+    </div>
+    <div class="grid_cabecera_bdu1">
+        <button type="button" class="btn btn-primary" onclick="js_test();"><i class="bi bi-prescription"></i>&nbsp;TEST</button>
     </div>
     <div class="grid_cabecera_bdu1">
         <div class="dropdown"  id="btn_crear">
             <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Agregar Nuevo Paciente
+                <i class="bi bi-person-add"></i>&nbsp;Agregar Nuevo Paciente
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a href="javascript:FormModal(1,'')" class="dropdown-item"><i class="fa fa-user-circle"       aria-hidden="true"></i>&nbsp;PACIENTE NACIONAL</a></li>
                 <li><a href="javascript:FormModal(0,'')" class="dropdown-item"><i class="fa fa-universal-access"  aria-hidden="true"></i>&nbsp;PACIENTE EXTRANJERO</a></li>
             </div>
         </div>
-
-
-        <!-- Example split danger button -->
-<div class="btn-group">
-  <button type="button" class="btn btn-danger">Action</button>
-  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Separated link</a>
-  </div>
-</div>
-
-
     </div>
 </div>
 

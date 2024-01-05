@@ -10,13 +10,22 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
     public function index(){
         $this->output->set_template('blank');
-        $data = [
-            'USERNAME'  =>  $this->session->userdata('USERNAME'),
-            'COD_ESTAB' =>  $this->session->userdata('COD_ESTAB'),
-        ];
+        $data       =   [
+                            'USERNAME'  =>  $this->session->userdata('USERNAME'),
+                            'COD_ESTAB' =>  $this->session->userdata('COD_ESTAB')
+                        ];
         $this->load->css("assets/ssan_bdu_creareditarpaciente/css/styles.css");
         $this->load->js("assets/ssan_bdu_creareditarpaciente/js/javascript.js");
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view',$data);
+    }
+
+    public function function_test(){
+        if (!$this->input->is_ajax_request()) {  show_404();  }
+        $return_data        =   $this->ssan_bdu_creareditarpaciente_model->test();
+        $this->output->set_output(json_encode([
+            'return_data'   =>  $return_data,
+            'status'        =>  true,
+        ]));
     }
     
     public function CreaEditaPaciente(){
@@ -1159,8 +1168,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                         
                         $html .= '</div>';
 
-
-
                     } else if ($templete == '2') { //Edita ficha local
                         $html .= '<a class="btn btn-info" href="javascript:FormModal(' . $isNal . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-cog" aria-hidden="true"></i></a>';
                     }
@@ -1168,8 +1175,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     //Nuevo 13.11.2018
                     else if ($templete == '3') {
                         $html .= '<a 
-                                    class="btn btn-info" 
-                                    href="javascript:FormModal2(' . $isNal . ',' . $row['NUM_FICHAE'] . ',\'' . $row['COD_RUTPAC'] . '\',\'' . $row['NUM_IDENTIFICACION'] . '\')"
+                                        class   =   "btn btn-info" 
+                                        href    =   "javascript:FormModal2('.$isNal.','.$row['NUM_FICHAE'].',\''.$row['COD_RUTPAC'].'\',\''.$row['NUM_IDENTIFICACION'].'\')"
                                     >
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </a>';

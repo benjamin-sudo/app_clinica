@@ -1,6 +1,6 @@
 .grid_cabecera_bdu                      {
     display                             :   grid;
-    grid-template-columns               :   1fr auto;
+    grid-template-columns               :   1fr auto auto;
     margin-top                          :   0px;
     gap                                 :   10px;
 }
@@ -12,7 +12,7 @@
     padding                             :   10px;
 }
 
-.grid_panel_buscando{
+.grid_panel_buscando                    {
     display                             :   grid;
     grid-template-columns               :   1fr 2fr 1fr 1fr;
     align-items                         :   center;
@@ -72,6 +72,7 @@
     justify-items                       :   legacy;   
 }
 
-.toast {
-    z-index: 9999; /* Asegúrate de que este valor sea más alto que otros elementos en tu página */
+.toast                                  {
+    z-index                             :   9999;
 }
+

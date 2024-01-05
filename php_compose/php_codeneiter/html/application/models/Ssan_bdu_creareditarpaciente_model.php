@@ -15,6 +15,30 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         $this->load->model("sql_class/sql_class_pabellon");
     }
 
+    public function test() {
+        $this->db->trans_start();
+        $this->db->set('FECHA_CREACION', 'SYSDATE', FALSE);
+        $this->db->insert($this->tableSpace.'.TABLA_PRUEBAS');
+        $this->db->trans_complete();
+
+        /*
+        $this->db->trans_start();
+        $this->db->insert($this->tableSpace.'.TABLA_PRUEBAS', [ 'FECHA_CREACION' =>'SYSDATE']);
+        $this->db->trans_complete();
+        */
+
+        /*
+        $this->db->trans_start();
+        $this->db->query("INSERT INTO ".$this->tableSpace.".TABLA_PRUEBAS (FECHA_CREACION) VALUES (SYSDATE)");
+        $this->db->trans_complete();
+        */
+        return $array;
+    }   
+
+
+    //$array = $this->db->query("SELECT SYSDATE FROM SYS.DUAL")->result_array();
+
+
     public function graba_rut_extranjero($numfichae,$rut,$dv) {
         $this->db->trans_start();
         $UpdateNfichaLocal	= array('COD_RUTPAC' => $rut, "COD_DIGVER" => $dv);
@@ -236,10 +260,10 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             }
 
             $creaProtocolo = array(
-                'COD_USRCREA'   =>      $session,
-                //'FEC_USRCREA'   =>      'SYSDATE',
-                'NUM_FICHAE'    =>      $numFichae,
-                'IND_ESTADO'    =>      'V'
+                'COD_USRCREA'   =>  $session,
+                #'FEC_USRCREA' =>  'SYSDATE',
+                'NUM_FICHAE'    =>  $numFichae,
+                'IND_ESTADO'    =>  'V',
             );
         }
 
@@ -390,17 +414,18 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($From['name'] == 'ind_poblacion_migrante') {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_POBLACION_MIGRANTE' => $From['value']));
                     }
-                    
-                    
                 }
 
-                if ($isNew == 0) {
+
+                if($isNew == 0) {
                     //FALTA GUARDA EN EL HISTORIAL
                     $this->db->where('NUM_FICHAE = ' . $numFichae);
                     $this->db->update($this->tableSpace . '.GG_TGPACTE', $creaProtocolo);
                 } else {
                     $this->db->insert($this->tableSpace . '.GG_TGPACTE', $creaProtocolo);
                 }
+
+                
             } else if ($infObject == 'DatosLocales') {
 
                 $datosLocales   =   $Object[0]['FormDatoslocales'];
