@@ -240,8 +240,10 @@ function buscar(OP,LIM_INI){
                                                     $("#resultados").html(''); 
                                                     document.getElementById("btn_buscageneral").disabled = false; 
                                                     if(AjaxExtJsonAll(aData)){
+
                                                         console.log("dropdown-toggle");
                                                         $('.dropdown-toggle').dropdown();
+
                                                     }
                                                 }, 
         });

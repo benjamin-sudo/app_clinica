@@ -1100,38 +1100,37 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                             <td>' . strtoupper($row['NOM_APEMAT']) . '</td>
                             <td>' . $row['FEC_NACIMI'] . '</td>
                             <td>';
+
                 if (($row['COD_PAIS'] == 'CL') || ($row['IND_EXTRANJERO'] == '0')) {
-                    $html .= '<img class="shadow" src="assets/ssan_bdu_creareditarpaciente/img/bchile.jpg">';
-                    $isNal  = 1;
+                    $html       .= 'Chile';
+                    $isNal      = 1;
                 } else if ($row['IND_EXTRANJERO'] == '1') {
-                    $html .= '<img class="shadow" src="assets/ssan_bdu_creareditarpaciente/img/bInter.jpg">';
-                    $isNal  = 0;
+                    $html       .=  'Extranjero';
+                    $isNal      =   0;
                 } else {
-                    $html .= '';
+                    $html       .=  '';
                 }
-                $html .= '</td>';
+                $html           .=  '</td>';
 
                 $html .= '<td align="center">';
                 if ($row['FALLECIDO'] == '') {
                     if ($templete == '1') { //todo el power
                         $html .= '
-                            <div class="dropdown"  id="btn_gestion">
-                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="bi bi-forward-fill"></i>
+                            <div class="dropdown" id="btn_gestion">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a href="javascript:FormModal(' . $isNal . ',' . $row['NUM_FICHAE'] . ')"> <i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp;EDITAR</a></li>';
+                                <li class="dropdown-item"><a href="javascript:FormModal('.$isNal.','.$row['NUM_FICHAE'].')">&nbsp;EDITAR</a></li>';
                         if ($IND_EXTRANJERO == '1') {
-                                $html .= '<li><a href="javascript:CertificadoExtranjero(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp;C.EXTRANJERO</a></li>';
+                                $html .= '<li><a href="javascript:CertificadoExtranjero('.$row['NUM_FICHAE'].')"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp;C.EXTRANJERO</a></li>';
                             if($row['COD_RUTPAC'] == ''){
-                                $html .= '<li><a href="javascript:editor_extranjero(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-exchange" aria-hidden="true"></i>&nbsp;RUN DEFINITIVO</a></li>';
+                                $html .= '<li><a href="javascript:editor_extranjero('.$row['NUM_FICHAE'].')"><i class="fa fa-exchange" aria-hidden="true"></i>&nbsp;RUN DEFINITIVO</a></li>';
                             }
                         }
-                        
                         $html .= '</div>';
-
                     } else if ($templete == '2') { //Edita ficha local
-                        $html .= '<a class="btn btn-info" href="javascript:FormModal(' . $isNal . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-cog" aria-hidden="true"></i></a>';
+                        $html   .=  '<a class="btn btn-info" href="javascript:FormModal(' . $isNal . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-cog" aria-hidden="true"></i></a>';
                     }
 
                     //Nuevo 13.11.2018
