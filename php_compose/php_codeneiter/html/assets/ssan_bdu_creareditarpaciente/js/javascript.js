@@ -306,12 +306,14 @@ function js_cambia(id,value){
 function Add_Agenda(numFichae){
     
     $.ajax({ 
-        type        : "POST",
-        url         : "ssan_bdu_creareditarpaciente/CreaCOOKEE",
-        dataType    : "json",
-        data        : { numFichae : numFichae,  },
-        error       : function(errro){ console.log(errro.responseText); jAlert("Error General, Consulte Al Administrador"); },
-        success     : function(aData){ AjaxExtJsonAll(aData); }, 
+        type        :   "POST",
+        url         :   "ssan_bdu_creareditarpaciente/CreaCOOKEE",
+        dataType    :   "json",
+        data        :   { numFichae : numFichae,  },
+        error       :   function(errro){ console.log(errro.responseText); jAlert("Error General, Consulte Al Administrador"); },
+        success     :   function(aData) { 
+                                            AjaxExtJsonAll(aData); 
+                                        }, 
     });
     
         //window.addEventListener('message', function(evt) { 
@@ -347,12 +349,10 @@ function validarFL(val){
     var error       = '';
     var fLPaciente  = $('#txtFichaFisicaLocal').val();
     var nfichaE     = $('#numFichae').val();
-    
     if(fLPaciente   == ''){
         error += "- Sr. Usuario, favor no dejar en blanco el N&#176; de Ficha\n";
         $('#txtFichaFisicaLocal').css('border-color','red');
     }
-    
     if(error        != ''){
        jAlert('Listado de Campos Obligatorios <br>'+error,'Informacion');
     } else {
@@ -369,29 +369,23 @@ function validarFL(val){
                                 COD_ESTAB   :   $("#COD_ESTAB").val(),
                             },
             error       : function(errro){ console.log(errro.responseText); jAlert("Error General, Consulte Al Administrador"); },
-            success     : function(aData){ AjaxExtJsonAll(aData); }, 
+            success     : function(aData)   { 
+                                                AjaxExtJsonAll(aData); 
+                                            }, 
         });
     }
 }
 
 function cargaInfoFonasa(rut,dv){
-    console.log("----------------");
-    console.log(rut);
-    console.log(dv);
-    console.log("----------------");
-
-
-    $('body').Toasts('create', {
-        position    : 'bottomRight',
-        imageHeight : '130px',
-        title       : 'Clinica libre',
-        icon        : 'fas fa-exclamation-triangle',
-        autohide    : true,
-        delay       : 3000,
-        body        : 'NUEVO PACIENTE- INGRESAR INFORMACI&Oacute;N',
+    $('body').Toasts('create',{
+        position    :   'bottomRight',
+        imageHeight :   '130px',
+        title       :   'Clinica libre',
+        icon        :   'fas fa-exclamation-triangle',
+        autohide    :   true,
+        delay       :   3000,
+        body        :   'NUEVO PACIENTE- INGRESAR INFORMACI&Oacute;N',
     });
-
-
     /*
     jConfirm("Estimado Usuario:<br>El paciente seleccionado no est&aacute; incluido en la base de SSAN &iquestDesea buscarlo los datos generales en registros de Fonasa? ", 'ESISSAN', function (r) {   
         if (r){
@@ -417,29 +411,31 @@ function cargaInfoFonasa(rut,dv){
 }
 
 function cargaInfoApi(rut,dv){
-    jAlert("ingreso de nuevo paciente- ingresar informaci&oacute;n minima","Clinica Libre");
+    jAlert("Ingreso de nuevo paciente- ingresar informaci&oacute;n minima","Clinica Libre");
     $("#txtRuttit").val(rut).prop("disabled",true);
     $("#txtDvtit").val(dv).prop("disabled",true);
     $("#txtNombretit,#txtApellidoPaternotit,#txtApellidoMaternotit").prop("disabled",true);
-    $("#txtDvtit").prop("disabled",true);
+    $("#cboEtnia1").val('0');
+    $("#cboEtnia2").val('0');
+    $("#cboPais").val('CL');
+    $("#cboNacionalidad").val('CL');
 }
 
 function copiarnombre(){
     let textoOriginal = document.getElementById('txtNombre').value;
-    $("#txtNombretit").html(textoOriginal);
+    console.log("textoOriginal  ->  ",textoOriginal);
+    $("#txtNombretit").val(textoOriginal);
 }
 
 function copiaapellidopaterno(){
     let textoOriginal = document.getElementById('txtApellidoPaterno').value;
-    $("#txtApellidoPaternotit").html(textoOriginal);
+    $("#txtApellidoPaternotit").val(textoOriginal);
 }
 
 function copiaapellidomaterno(){
     let textoOriginal = document.getElementById('txtApellidoMaterno').value;
-    $("#txtApellidoMaternotit").html(textoOriginal);
+    $("#txtApellidoMaternotit").val(textoOriginal);
 }
-
-
 
 function buscaTitular(val){
     var RUTMALO = '';

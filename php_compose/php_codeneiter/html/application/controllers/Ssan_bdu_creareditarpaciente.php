@@ -902,53 +902,13 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     </table>
                 </form>  
             </div> 
-            
             <script>
 
-                $("#txtFecvencePasport").datepicker($.extend({
-                    //defaultDate       : fecha,
-                    showOn              : "button",
-                    buttonImage         : "assets/themes/frontend/img/calendar.png",
-                    buttonImageOnly     : true,
-                    dateFormat          : "dd-mm-yy",
-                    changeMonth         : true,
-                    changeYear          : true,
-                    showButtonPanel     : true,
-                    buttonText          : "Calendario", 
-                    //minDate           : "0",
-                    //maxDate           : "0",
-                    pick12HourFormat    : true,
-                    selectOtherMonths   : true,
-                    onSelect            : function(textoFecha, objDatepicker){    }
-                },$.datepicker.regional["es"]));
-                
-                $("#txtFecvence_fonasa").datepicker($.extend({
-                    //defaultDate       : fecha,
-                    showOn              : "button",
-                    buttonImage         : "assets/themes/frontend/img/calendar.png",
-                    buttonImageOnly     : true,
-                    dateFormat          : "dd-mm-yy",
-                    changeMonth         : true,
-                    changeYear          : true,
-                    showButtonPanel     : true,
-                    buttonText          : "Calendario", 
-                    //minDate           : "0",
-                    //maxDate           : "0",
-                    pick12HourFormat    : true,
-                    selectOtherMonths   : true,
-                    onSelect            : function(textoFecha, objDatepicker){    }
-                },$.datepicker.regional["es"]));
-                
-                
             </script>
         </div>  
         ';
         }
 
-        $html .= '
-            <script>
-                console.log("La vida sigue igual");
-            </script>';
         $html .= '</div>
         </div> 
         ';

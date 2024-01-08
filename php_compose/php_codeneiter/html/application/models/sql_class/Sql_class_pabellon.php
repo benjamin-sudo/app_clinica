@@ -3735,8 +3735,6 @@ OBS_RECHAZO,
             return $sql; 
         }
         
-        
-        
         public function getBusquedaListaxRut($rutPac , $empresa, $rutPro , $estados){
             
             $where          = '';
