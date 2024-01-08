@@ -274,6 +274,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         foreach ($FORM as $infObject => $Object) {
             if ($infObject == 'DatosGenerales') {
                 $datosGenerales = $Object[0]['Form_Datosgenerales'];
+
                 foreach ($datosGenerales as $i => $From){
                     if ($From['name'] == 'txtrutpac') {
                         $creaProtocolo  =   array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
@@ -312,9 +313,13 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($From['name'] == 'txtApellidoMaterno') {
                         $creaProtocolo = array_merge($creaProtocolo, array('NOM_APEMAT' => quotes_to_entities(strtoupper($From['value']))));
                     }
+                    
                     if ($From['name'] == 'txtFechaNacimineto') {
-                        //$creaProtocolo = array_merge($creaProtocolo, array('FEC_NACIMI' => "TO_DATE('" . $From['value'] . "','DD/MM/YYYY')"));
+                        $array          = explode("-", $From['value']);
+                        $formattedDate  = sprintf("%02d/%02d/%04d", $array[2], $array[1], $array[0]); // DD/MM/YYYY
+                        //$creaProtocolo  = array_merge($creaProtocolo, array('FEC_NACIMI' => 'TO_DATE("1988-04-18","YYYY-MM-DD")'));
                     }
+
                     if ($From['name'] == 'cboGenero') {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_TISEXO' => $From['value']));
                     }
@@ -426,8 +431,8 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             } else if ($infObject == 'DatosLocales') {
                 $datosLocales   =   $Object[0]['FormDatoslocales'];
                 if ($isNew == 1) {
-                    $actualiza_local    =   '0';
-                    $creaDatosLocales   =   array(
+                    $actualiza_local            =   '0';
+                    $creaDatosLocales           =   array(
                                                     'IND_ESTADO'    =>  'V', 
                                                     'COD_USRCREA'   =>  $session, 
                                                     //'FEC_USRCREA'   =>  'SYSDATE', 
@@ -436,9 +441,8 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                                                 );
                     error_log("DATOS LOCALES ES NUEVO");
                 } else {
-                    error_log("----------------------------------------");
-                    $query	    =   $this->db->query($this->sql_class_ggpacientes->sqlExisteDatosLocales($this->tableSpace, $numFichae, $codEmpresa));
-		            $query2     =   $query->result_array();
+                    $query	                    =   $this->db->query($this->sql_class_ggpacientes->sqlExisteDatosLocales($this->tableSpace, $numFichae, $codEmpresa));
+		            $query2                     =   $query->result_array();
                     if ($query2[0]['NUM'] == '0') {
                         $actualiza_local        = '0';
                         $creaDatosLocales       = array(
@@ -513,18 +517,18 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                 //Actualizar el numero de ficha
                 if ($nuevaNFicha == 'NUEVA') {
                     $nficha_local           =   $this->db->query($this->sql_class_ggpacientes->sqlObtieneNfichaLocal($this->tableSpace, $codEmpresa))->result_array();
-                    if (count($nficha_local)>0){
+                    if ($nficha_local[0]['NUMFICHALOCALMAX'] == NULL){
+                        $fhl                    =   1;
+                        $this->db->insert($this->tableSpace.'.GG_TFICHA',['NUM_NFICHA'=>$fhl,'COD_EMPRESA'=>$codEmpresa,'IND_ESTADO'=>'V']);
+                    } else {
                         $fhl                    =   $nficha_local[0]['NUMFICHALOCALMAX'] + 1;
                         $UpdateNfichaLocal      =   array('NUM_NFICHA' => $fhl);
                         $this->db->where('COD_EMPRESA', $codEmpresa);
                         $this->db->update($this->tableSpace . '.GG_TFICHA', $UpdateNfichaLocal);
-                    } else {
-                        $fhl                    =   1;
-                        $this->db->insert($this->tableSpace.'.GG_TFICHA',['NUM_NFICHA'=>$fhl,'COD_EMPRESA'=>$codEmpresa,'IND_ESTADO'=>'V']);
                     }
-                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA_1' => $fhl));
+                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA' => $fhl));
                 } else {
-                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA_2' => $nuevaNFicha));
+                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA' => $nuevaNFicha));
                 }
                 //actualizar el numero de ficha
 

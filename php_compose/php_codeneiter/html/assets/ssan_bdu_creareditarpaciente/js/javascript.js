@@ -48,6 +48,9 @@ $(document).ready(function(){
         $("#modalPaciente").css("z-index","1500"); 
         $("#HTML_PERCAPITA").html('');
     });
+
+
+
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 3                                   ");
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
@@ -213,7 +216,7 @@ function nuevo_reciennacido(value){
         data        :	{   },
         error       :	function(errro)	    { 
                             console.log(errro.responseText); 
-                            jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
 					    },
         success     :	function(aData)	    {	
                                                 console.log("-------------");
@@ -440,9 +443,9 @@ function buscaTitular(val){
                                                         if (aData.update_prevision){
                                                             if (aData.ind_actualizo_fonasa == 1){
                                                                 if (aData.pac_fallecido == 1){
-                                                                    jError("Seg&uacute;n la informaci&oacute;n proporcionada por Fonasa. el paciente se encuentra fallecido ","e-SISSAN");
+                                                                    jError("Seg&uacute;n la informaci&oacute;n proporcionada por Fonasa. el paciente se encuentra fallecido ","Clinica Libre");
                                                                 } else {
-                                                                    jAlert("Se actualizo previsi&oacute;n del paciente","e-SISSAN");
+                                                                    jAlert("Se actualizo previsi&oacute;n del paciente","Clinica Libre");
                                                                 }
                                                             }
                                                         }
@@ -626,19 +629,18 @@ function validExtrangero(desde,numFichae){
                                             $('#txtNumIdentiExtra').prop("disabled",true).addClass("disabled");
                                             $('#btnNumExtranjero').attr('disabled', true);
                                             $("#Btn_bdu").removeClass("disabled");
-                                            if (AjaxExtJsonAll(aData)){  }; 
+                                            if (AjaxExtJsonAll(aData)){  
+                                                $("#txtNombretit,#txtApellidoPaternotit,#txtApellidoMaternotit").prop("disabled",true);
+                                                copiarnombre();
+                                                copiaapellidopaterno();
+                                                copiaapellidomaterno();
+                                            }; 
                                         }, 
     });
 }
 
-
-
-
-
-
 function validaRutChileno(val,numfichae){
     //console.log("----------->"+numfichae);
-
     $('#txtBuscar').css("border-color","");
     $('#txtDv').css("border-color","");
     var valida      =	'';
@@ -678,6 +680,10 @@ function validaRutChileno(val,numfichae){
 
                                             if(AjaxExtJsonAll(aData)){ 
                                                 $('#myTab .nav-link:first').tab('show');
+                                                $("#txtNombretit,#txtApellidoPaternotit,#txtApellidoMaternotit").prop("disabled",true);
+                                                copiarnombre();
+                                                copiaapellidopaterno();
+                                                copiaapellidomaterno();
                                             };
                                         }, 
         });

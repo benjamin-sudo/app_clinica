@@ -5,7 +5,9 @@
         </h4>
     </div>
     <div class="grid_cabecera_bdu1">
-        <button type="button" class="btn btn-primary" onclick="js_test();"><i class="bi bi-prescription"></i>&nbsp;TEST</button>
+        <button type="button" class="btn btn-primary" onclick="js_test();" style="display:none">
+            <i class="bi bi-prescription"></i>&nbsp;TEST
+        </button>
     </div>
     <div class="grid_cabecera_bdu1">
         <div class="dropdown"  id="btn_crear">

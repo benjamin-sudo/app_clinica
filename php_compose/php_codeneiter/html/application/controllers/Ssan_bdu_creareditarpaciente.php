@@ -1458,11 +1458,12 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
 
             $aDatos[] = array("id_html" => "txtNombre",             "opcion" => "val",      "contenido"  => $adataPersonas[0]["NOMBREPAC"]);
-
-
+            $aDatos[] = array("id_html" => "txtNombretit",          "opcion" => "val",      "contenido"  => $adataPersonas[0]["NOMBREPAC"]);
             $aDatos[] = array("id_html" => "txtNombreSocial",       "opcion" => "val",      "contenido"  => $adataPersonas[0]["NOM_SOCIAL"]);
             $aDatos[] = array("id_html" => "txtApellidoPaterno",    "opcion" => "val",      "contenido"  => $adataPersonas[0]["APEPATPAC"]);
+            $aDatos[] = array("id_html" => "txtApellidoPaternotit", "opcion" => "val",      "contenido"  => $adataPersonas[0]["APEPATPAC"]);
             $aDatos[] = array("id_html" => "txtApellidoMaterno",    "opcion" => "val",      "contenido"  => $adataPersonas[0]["APEMATPAC"]);
+            $aDatos[] = array("id_html" => "txtApellidoMaternotit", "opcion" => "val",      "contenido"  => $adataPersonas[0]["APEPATPAC"]);
             $aDatos[] = array("id_html" => "txtFechaNacimineto",    "opcion" => "val",      "contenido"  => $adataPersonas[0]["FECHANACTO"]);
             $aDatos[] = array("id_html" => "cboGenero",             "opcion" => "val",      "contenido"  => $adataPersonas[0]["IND_TISEXO"]);
             $aDatos[] = array("id_html" => "cboEtnia1",             "opcion" => "val",      "contenido"  => $adataPersonas[0]["IND_ETN"]);
