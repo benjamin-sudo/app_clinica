@@ -241,7 +241,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         #SO_TTITUL     #DATOS PREVISIONALES
         #PERCAPITA
         ####################################################
-        
+
         if ($isNew == 0) {
             $creaProtocolo      =   array(
                 'COD_USUARI'    =>  $session, 
@@ -274,19 +274,17 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             if ($infObject == 'DatosGenerales') {
                 $datosGenerales = $Object[0]['Form_Datosgenerales'];
                 foreach ($datosGenerales as $i => $From){
-                    
                     /*
                     error_log("-----------------------------------------------------------------------------------------");
                     error_log("---------------- (NAME:".$From['name'].")  --- VALUE (".$From['value'].") ---------------");
                     error_log("-----------------------------------------------------------------------------------------");
                     */
-
                     if ($From['name'] == 'txtrutpac') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
-                        $rut = $From['value'];
+                        $creaProtocolo  =   array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
+                        $rut            =   $From['value'];
                     }
                     if ($From['name'] == 'txtdvpac') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('COD_DIGVER' => $From['value']));
+                        $creaProtocolo  =   array_merge($creaProtocolo, array('COD_DIGVER' => $From['value']));
                     }
                     if ($From['name'] == 'txtruttitular') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTTIT' => $From['value']));
@@ -617,14 +615,14 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 		
             } else if ($infObject == 'DatosPrevisionales') {
                 if ($Previ == 1) {
-                    $creaDatosPrevi             = array();
-                    $rutTitular                 = '';
-                    $datosProfesionales         = $Object[0]['From_Previsiones'];
+                    $creaDatosPrevi             =   [];
+                    $rutTitular                 =   $rut;
+                    $datosProfesionales         =   $Object[0]['From_Previsiones'];
                     foreach ($datosProfesionales as $i => $From) {
                         if ($From['name'] == 'txtRuttit') {
                             $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_RUTTIT' => quotes_to_entities(strtoupper($From['value']))));
-                            $rutTitular = $From['value'];
                         }
+
                         if ($From['name'] == 'txtDvtit') {
                             $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_DIGVER' => quotes_to_entities(strtoupper($From['value']))));
                         }
@@ -645,20 +643,17 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         }
                     }
 		    
-                    $query = $this->db->query($this->sql_class_ggpacientes->sqlTraeDatosTitularxRut($this->tableSpace, $rutTitular));
-                    $LastNCORPAC= $query->result_array();
+                    $query                  =   $this->db->query($this->sql_class_ggpacientes->sqlTraeDatosTitularxRut($this->tableSpace, $rutTitular));
+                    $LastNCORPAC            =   $query->result_array();
                     if (count($LastNCORPAC)>0) {
-                        $cod_titulocompara = $LastNCORPAC[0]['COD_RUTTIT'];
+                        $cod_titulocompara  =   $LastNCORPAC[0]['COD_RUTTIT'];
                     } else {
-                        $cod_titulocompara = '';
+                        $cod_titulocompara  =   '';
                     }
-
-		    
                     if ($cod_titulocompara == '') {
+                        $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_RUTTIT'   =>  $rutTitul));
                         $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USRCREA'  =>  $session));
-                        #$creaDatosPrevi    =   array_merge($creaDatosPrevi, array('FEC_USRCREA'  =>  'SYSDATE'));
                         $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USUARI'   =>  $session));
-                        #$creaDatosPrevi    =   array_merge($creaDatosPrevi, array('FEC_AUDITA'   =>  'SYSDATE'));
                         $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('IND_ESTADO'   =>  'V'));
                         $this->db->insert($this->tableSpace . '.SO_TTITUL', $creaDatosPrevi);
                     } else {
@@ -668,8 +663,6 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $this->db->where('COD_RUTTIT', $rutTitul);
                         $this->db->update($this->tableSpace . '.SO_TTITUL', $creaDatosPrevi);
                     }
-                    
-                    
                 }
             }
         }
