@@ -240,6 +240,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         #SO_TCPACTE    #DATOS LOCALES 
         #SO_TTITUL     #DATOS PREVISIONALES
         #PERCAPITA
+        ####################################################
         
         if ($isNew == 0) {
             $creaProtocolo      =   array(

@@ -410,6 +410,7 @@ function cargaInfoFonasa(rut,dv){
     */
 }
 
+//inicio
 function cargaInfoApi(rut,dv){
     jAlert("Ingreso de nuevo paciente- ingresar informaci&oacute;n minima","Clinica Libre");
     $("#txtRuttit").val(rut).prop("disabled",true);
@@ -422,18 +423,17 @@ function cargaInfoApi(rut,dv){
 }
 
 function copiarnombre(){
-    let textoOriginal = document.getElementById('txtNombre').value;
-    console.log("textoOriginal  ->  ",textoOriginal);
+    let textoOriginal   =   document.getElementById('txtNombre').value;
     $("#txtNombretit").val(textoOriginal);
 }
 
 function copiaapellidopaterno(){
-    let textoOriginal = document.getElementById('txtApellidoPaterno').value;
+    let textoOriginal   =   document.getElementById('txtApellidoPaterno').value;
     $("#txtApellidoPaternotit").val(textoOriginal);
 }
 
 function copiaapellidomaterno(){
-    let textoOriginal = document.getElementById('txtApellidoMaterno').value;
+    let textoOriginal   =   document.getElementById('txtApellidoMaterno').value;
     $("#txtApellidoMaternotit").val(textoOriginal);
 }
 

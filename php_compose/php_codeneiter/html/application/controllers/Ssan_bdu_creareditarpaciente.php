@@ -471,7 +471,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     <tr class="formulario">
                         <td> Celular </td>
                         <td style="display:flex;">
-                            <input name="txtCelular" type="text"  class="form-control" id="txtCelular" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="8">
+                            <input name="txtCelular" type="text"  class="form-control" id="txtCelular" onkeypress="return IsNumber(event);" style="width: 64%;" maxlength="12">
                             <font color="#339999" class="Estilo2">*</font> NO anteponer 09  
                         </td>
                     </tr>
