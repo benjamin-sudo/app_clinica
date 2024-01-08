@@ -84,7 +84,9 @@ function js_test(){
 */
 
 function FormModal(isNal,numFichae){
+    
     $('.dropdown-toggle').dropdown('hide');
+
     $.ajax({ 
         type        :	"POST",
         url         :	"ssan_bdu_creareditarpaciente/CreaEditaPaciente",
@@ -96,66 +98,17 @@ function FormModal(isNal,numFichae){
                             Numedad	    :   '0',
                         },
         error      :	function(errro)	    {  
-                            console.log(errro);
-                            $("#HTML_DIALOGO").html('');	 
-                            jError("Error General, Consulte Al Administrador"); 
-					    },
+                                                console.log(errro);
+                                                $("#HTML_DIALOGO").html('');	 
+                                                jError("Error General, Consulte Al Administrador"); 
+                                            },
         success    :	function(aData) {    
-                            //*****************************************/
-                            //console.log("aData->",aData);
-                            $("#HTML_DIALOGO").html('');
-                            if(AjaxExtJsonAll(aData)){
-                                console.log("   star calendarios    ");
-                                /*
-                                $("#txtFechaNacimineto").datepicker($.extend({
-                                    //defaultDate       : fecha,
-                                    showOn              : "button",
-                                    buttonImage         : "assets/themes/frontend/img/calendar.png",
-                                    buttonImageOnly     : true,
-                                    yearRange           : "-120:+0",
-                                    dateFormat          : "dd-mm-yy",
-                                    changeMonth         : true,
-                                    changeYear          : true,
-                                    showButtonPanel     : true,
-                                    buttonText          : "Calendario", 
-                                    //minDate           : "0",
-                                    maxDate             : "0",
-                                    pick12HourFormat    : true,
-                                    selectOtherMonths   : true,
-                                    onSelect            : function(textoFecha, objDatepicker){    }
-                                },$.datepicker.regional["es"]));
-                                */
-
-
-                                /*
-                                $("#txtFechaNacimineto").datetimepicker({
-                                    format              :  'DD-MM-YYYY',
-                                    //minDate           :  new Date(new Date().setDate((todayDate)-(0))),
-                                    maxDate             :  new Date(),
-                                    locale              :  'es-us',
-                                    icons               :   {
-                                                               time        :   "fa fa-clock-o"         ,
-                                                               date        :   "fa fa-calendar"        ,
-                                                               up          :   "fa fa-chevron-up"      ,
-                                                               down        :   "fa fa-chevron-down"    ,
-                                                               previous    :   "fa fa-chevron-left"    ,
-                                                               next        :   "fa fa-chevron-right"   ,
-                                                               today       :   "fa fa-screenshot"      ,
-                                                               clear       :   "fa fa-trash"           ,
-                                                               close       :   "fa fa-remove"          ,
-                                                            }
-                                 }).on('dp.change',function(e){ 
-                                    //js_actualiza_fila_farmacia_central();  
-                                 });
-                                 */
-
-
-
-                                $("#modalPaciente").modal({backdrop:'static',keyboard:false}).modal('show');
-
-
-                            } 
-                        }, 
+                                            console.log("aData  ->  ",aData);
+                                            $("#HTML_DIALOGO").html('');
+                                            if(AjaxExtJsonAll(aData)){
+                                                $("#modalPaciente").modal({backdrop:'static',keyboard:false}).modal('show');
+                                            } 
+                                        }, 
     });
 }
 
@@ -685,6 +638,7 @@ function validExtrangero(desde,numFichae){
 
 function validaRutChileno(val,numfichae){
     //console.log("----------->"+numfichae);
+
     $('#txtBuscar').css("border-color","");
     $('#txtDv').css("border-color","");
     var valida      =	'';
@@ -702,11 +656,11 @@ function validaRutChileno(val,numfichae){
             cache       :   false,
             data        : 
                         { 
-                            numFichae   : numfichae,
-                            isNal       : val,
-                            rut         : $("#txtBuscar").val(),
-                            dv          : $("#txtDv").val(),
-                            templete    : $("#indTemplateNum").val(),
+                            numFichae   :   numfichae,
+                            isNal       :   val,
+                            rut         :   $("#txtBuscar").val(),
+                            dv          :   $("#txtDv").val(),
+                            templete    :   $("#indTemplateNum").val(),
                         },
             error       : function(errro){ 
                                             console.log(errro.responseText); 
@@ -717,7 +671,6 @@ function validaRutChileno(val,numfichae){
                                             
                                             $('#txtBuscar').prop("disabled",true);
                                             $('#txtDv').prop("disabled",true);
-
                                             
                                             $('#txtBuscar').addClass("disabled");
                                             $('#btn_rut').attr('disabled',true);
@@ -820,8 +773,8 @@ function editapaciente(isNal,RN,numFichae){
 }
 
 function NuevoPacienteChileno(isNal,RN){
-    var valor =  validacionDatos(isNal);
-    if(valor== true){
+    var valor   =   validacionDatos(isNal);
+    if(valor    ==  true){
         enviaDatosBDU(1,isNal,RN,'','','','','');
     } else {
         jError(valor,"e-SISSAN");
@@ -1051,13 +1004,12 @@ function validacionDatos(isNal){
 
     var contador_errores2   = 0;
     var aData               = $("#from_datos_locales").serializeArray();
-    
     console.log("   *********************************************   ");
     console.log("   from_datos_locales -> aData  ->  ",aData);
-    
     for (var i = 0; i < aData.length; i++){
         $("#"+aData[i].name).css("border-color","");
         if  (
+                aData[i].name=='newFichaL'    || 
                 aData[i].name=='txtTelefonoContacto'    || 
                 aData[i].name=='txtTelefonoLocal'       ||
                 aData[i].name=='txtRepLegalL'           ||
@@ -1120,7 +1072,7 @@ function validacionDatos(isNal){
                 //console.log(aData[i].name);
             } else {
                 if(aData[i].value == ""){  
-                    $("#"+aData[i].name).css("border-color","RED");
+                    $("#"+aData[i].name).css("border-color","red");
                 contador_errores4++;
                 }  else {
                     $("#"+aData[i].name).css("border-color","");

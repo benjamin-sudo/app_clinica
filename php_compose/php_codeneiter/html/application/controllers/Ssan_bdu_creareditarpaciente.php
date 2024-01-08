@@ -30,58 +30,53 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     
     public function CreaEditaPaciente(){
         if (!$this->input->is_ajax_request()) {  show_404();  }
-        $codEmpresa     =   $this->session->userdata("COD_ESTAB");
-        $numFichae      =   $this->input->post("numFichae");
-        $isNal          =   $this->input->post("isNal");
-        $templete       =   $this->input->post("template");
-        $edad           =   $this->input->post("Numedad");
+        $codEmpresa         =   $this->session->userdata("COD_ESTAB");
+        $numFichae          =   $this->input->post("numFichae");
+        $isNal              =   $this->input->post("isNal");
+        $templete           =   $this->input->post("template");
+        $edad               =   $this->input->post("Numedad");
 
-        $value_sex      =   '';
-        $dateGenero     =   $this->ssan_bdu_creareditarpaciente_model->getTraeGenero();
+        $value_sex          =   '';
+        $dateGenero         =   $this->ssan_bdu_creareditarpaciente_model->getTraeGenero();
         if (count($dateGenero) > 0) {
             foreach ($dateGenero as $sex) {
                 $value_sex  .= "<option value='" . $sex['IND_SEXO'] . "'>" . $sex['NOM_SEXO'] . "</option>";
             }
         }
- 
-        $value_etn     =    '';
-        $dateEtnia     =    $this->ssan_bdu_creareditarpaciente_model->getTraeEtnia();
+        $value_etn          =    '';
+        $dateEtnia          =    $this->ssan_bdu_creareditarpaciente_model->getTraeEtnia();
         if (count($dateEtnia) > 0) {
             $value_etn .= "<option value=''>SELECCIONE...</option>";
             foreach ($dateEtnia as $etn) {
                 $value_etn .= "<option value='" . $etn['IND_ETN'] . "'>" . $etn['NOM_ETN'] . "</option>";
             }
         }
-
-        $value_civ     =    '';
-        $dateCivil     =    $this->ssan_bdu_creareditarpaciente_model->getTraeEstadoCivil();
+        $value_civ          =    '';
+        $dateCivil          =    $this->ssan_bdu_creareditarpaciente_model->getTraeEstadoCivil();
         if (count($dateCivil) > 0) {
             $value_civ .= "<option value=''>SELECCIONE...</option>";
             foreach ($dateCivil as $civ) {
                 $value_civ .= "<option value='" . $civ['COD_ESTCIV'] . "'>" . $civ['NOM_ESTCIV'] . "</option>";
             }
         }
-
-        $value_pais    =    '';
-        $datePais      =    $this->ssan_bdu_creareditarpaciente_model->getTraePais();
+        $value_pais         =    '';
+        $datePais           =    $this->ssan_bdu_creareditarpaciente_model->getTraePais();
         if (count($datePais) > 0) {
             $value_pais .= "<option value=''>SELECCIONE...</option>";
             foreach ($datePais as $civ) {
                 $value_pais .= "<option value='" . $civ['COD_PAIS'] . "'>" . $civ['NOM_PAIS'] . "</option>";
             }
         }
-
-        $value_region    =  '';
-        $dateregion      =  $this->ssan_bdu_creareditarpaciente_model->getTraeRegionXCodigo();
+        $value_region       =  '';
+        $dateregion         =  $this->ssan_bdu_creareditarpaciente_model->getTraeRegionXCodigo();
         if (count($dateregion) > 0) {
             $value_region .= "<option value=''>SELECCIONE...</option>";
             foreach ($dateregion as $civ) {
                 $value_region .= "<option value='" . $civ['COD_REGION'] . "'>" . $civ['NOM_REGION'] . "</option>";
             }
         }
-
-        $value_Gsangre  =   '';
-        $Gsangre        =   $this->ssan_bdu_creareditarpaciente_model->getTraeGrupoSangre();
+        $value_Gsangre      =   '';
+        $Gsangre            =   $this->ssan_bdu_creareditarpaciente_model->getTraeGrupoSangre();
         if (count($Gsangre) > 0) {
             $value_Gsangre .= "<option value=''>SELECCIONE...</option>";
             foreach ($Gsangre as $civ) {
@@ -89,8 +84,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
         }
 
-        $value_fsangre      = '';
-        $Fsangre        = $this->ssan_bdu_creareditarpaciente_model->getTraeFactorSangre();
+        $value_fsangre      =   '';
+        $Fsangre            =   $this->ssan_bdu_creareditarpaciente_model->getTraeFactorSangre();
         if (count($Fsangre) > 0) {
             $value_fsangre .= "<option value=''>SELECCIONE...</option>";
             foreach ($Fsangre as $civ) {
@@ -98,8 +93,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
         }
 
-        $value_fprevi       = '';
-        $Fprevision         = $this->ssan_bdu_creareditarpaciente_model->getTraePrevision('');
+        $value_fprevi       =   '';
+        $Fprevision         =   $this->ssan_bdu_creareditarpaciente_model->getTraePrevision('');
         if (count($Fprevision) > 0) {
             $value_fprevi .= "<option value=''>SELECCIONE...</option>";
             foreach ($Fprevision as $civ) {
@@ -107,8 +102,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
         }
 
-        $value_previEmp     = '';
-        $FsangreEmp         = $this->ssan_bdu_creareditarpaciente_model->getTraeEmpresa();
+        $value_previEmp     =   '';
+        $FsangreEmp         =   $this->ssan_bdu_creareditarpaciente_model->getTraeEmpresa();
         if (count($FsangreEmp) > 0) {
             $value_previEmp .= "<option value=''>SELECCIONE...</option>";
             if ($isNal == 0) {
@@ -120,14 +115,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
         }
 
-
-
-
-
-        $html = '
-            <table border="0" cellspacing="0"  class="table-sm">
-                <theard>
-            ';
+        $html = '<table border="0" cellspacing="0"  class="table-sm"><theard>';
         if ($isNal == 0) {
             $html .= '<tr>
                     <td width="35%" style="text-align:center"> 
@@ -230,19 +218,19 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
        
 
         $html .= '
-            <li class="dropdown" id="dropdown_opciones" style="display:none">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                    <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" id="btn_percapita" >
-                <li>
-                    <a href="javascript:ver_infopercapita()" id="a_ver_percapita" style="white-space: normal;">
-                    <i class="fa fa fa-info-circle" aria-hidden="true"></i>&nbsp;INFO PERCAPITA
+                <li class="dropdown" id="dropdown_opciones2" style="display:none">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;INFORMACI&Oacute;N 
+                        <span class="caret"></span>
                     </a>
+                    <ul class="dropdown-menu" id="btn_percapita" >
+                    <li>
+                        <a href="javascript:ver_infopercapita()" id="a_ver_percapita" style="white-space: normal;">
+                        <i class="fa fa fa-info-circle" aria-hidden="true"></i>&nbsp;INFO PERCAPITA
+                        </a>
+                    </li>
+                    </ul>
                 </li>
-                </ul>
-            </li>
 		';
       
         $html .= '</ul>
@@ -1121,7 +1109,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li class="dropdown-item"><a href="javascript:FormModal('.$isNal.','.$row['NUM_FICHAE'].')">&nbsp;EDITAR</a></li>';
+                                <li class="dropdown-item"><a href="javascript:FormModal('.$isNal.','.$row['NUM_FICHAE'].')"><i class="bi bi-person-add"></i>&nbsp;EDITAR</a></li>';
                         if ($IND_EXTRANJERO == '1') {
                                 $html .= '<li><a href="javascript:CertificadoExtranjero('.$row['NUM_FICHAE'].')"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp;C.EXTRANJERO</a></li>';
                             if($row['COD_RUTPAC'] == ''){
@@ -1424,8 +1412,15 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             if ($isNal == 0) {
                 $aDatos[]    =   array("id_html" => "cboNumIdentifica",  "opcion" => "val",    "contenido"  => $adataPersonas[0]["TIP_IDENTIFICACION"]); //cboviadireLocal  
                 if ($adataPersonas[0]["TIP_IDENTIFICACION"] == '2') {
+
                     $aDatos[]    =   array("id_html" => "txtBuscarFonasa",   "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_RUTPAC"]);
                     $aDatos[]    =   array("id_html" => "txtDvFoonasa",      "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_DIGVER"]);
+
+
+                    
+                    //$aDatos[]    =   array("id_html" => "txtBuscarFonasa",   "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_RUTPAC"]);
+                    //$aDatos[]    =   array("id_html" => "txtDvFoonasa",      "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_DIGVER"]);
+
                     $aDatos[]    =   array("id_html" => "numFonasa",         "opcion" => "show",   "contenido"  => "");
                     $aDatos[]    =   array("id_html" => "numExtranjero",     "opcion" => "hide",   "contenido"  => "");
                     $aDatos[]    =   array("id_html" => "txtMenjajefonasa",  "opcion" => "show",   "contenido"  => "");
@@ -1463,6 +1458,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             }
 
             $aDatos[] = array("id_html" => "txtNombre",             "opcion" => "val",      "contenido"  => $adataPersonas[0]["NOMBREPAC"]);
+
+
             $aDatos[] = array("id_html" => "txtNombreSocial",       "opcion" => "val",      "contenido"  => $adataPersonas[0]["NOM_SOCIAL"]);
             $aDatos[] = array("id_html" => "txtApellidoPaterno",    "opcion" => "val",      "contenido"  => $adataPersonas[0]["APEPATPAC"]);
             $aDatos[] = array("id_html" => "txtApellidoMaterno",    "opcion" => "val",      "contenido"  => $adataPersonas[0]["APEMATPAC"]);
@@ -1589,13 +1586,14 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
             //BuscaInformacionTitular
             if (isset($adataPersonas[0]["COD_RUTPAC"])) {
-                $titular = $this->ssan_bdu_creareditarpaciente_model->traeDatosTitularxRut($adataPersonas[0]["COD_RUTPAC"]);
+                $titular = $this->ssan_bdu_creareditarpaciente_model->traeDatosTitularxRut($adataPersonas[0]["NUM_FICHAE"]);
                 //$titular = $this->ssan_bdu_creareditarpaciente_model->getTraePrevisionPacienteNfichaE($adataPersonas[0]["NUM_FICHAEPACTE"]);
                 //$aDatos[] = array("id_html" => "txtRuttit",                     "opcion" => "console",  "contenido"  => $titular);
                 //INICIO DATOS PREVISIONALES 
                 if (count($titular) > 0) {
                     $aDatos[] = array("id_html" => "txtRuttit",                 "opcion" => "val",  "contenido"  => $titular[0]["COD_RUTTIT"]);
                     $aDatos[] = array("id_html" => "txtDvtit",                  "opcion" => "val",  "contenido"  => $titular[0]["COD_DIGVER"]);
+                    
                     $aDatos[] = array("id_html" => "txtNombretit",              "opcion" => "val",  "contenido"  => $titular[0]["NOM_NOMBRE"]);
                     $aDatos[] = array("id_html" => "txtApellidoPaternotit",     "opcion" => "val",  "contenido"  => $titular[0]["NOM_APEPAT"]);
                     $aDatos[] = array("id_html" => "txtApellidoMaternotit",     "opcion" => "val",  "contenido"  => $titular[0]["NOM_APEMAT"]);

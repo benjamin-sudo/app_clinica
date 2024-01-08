@@ -244,29 +244,35 @@ class sql_class_ggpacientes extends CI_Model {
         return $sql;
     }
 
-    public static function sqlTraeDatosTitularxRut($oracle_own, $rut)
-    {
-        $sQuery = "
-                SELECT 
-                    DISTINCT
-                    A.COD_RUTTIT, 
-                    A.COD_DIGVER, 
-                    A.NOM_NOMBRE,
-                    A.NOM_APEPAT,
-                    A.NOM_APEMAT,
-                    A.IND_PREVIS,
-                    A.NUM_RUTINS,
-                    A.IND_ESTADO,
-                    B.NOM_INSEMP,
-                    C.NOM_PREVIS
-                FROM 
-                    $oracle_own.SO_TTITUL       A,
-                    $oracle_own.GG_TINSEMP      B,
-                    $oracle_own.GG_TDATPREV     C
-                WHERE
-                    A.COD_RUTTIT = '$rut'           AND
-                    A.NUM_RUTINS = B.COD_RUTINS(+)  AND
-                    A.IND_PREVIS = C.IND_PREVIS(+)  
+    public static function sqlTraeDatosTitularxRut($oracle_own, $rut){
+        $sQuery = "SELECT
+                        C.COD_RUTPAC,
+                        C.COD_DIGVER,
+                        B.COD_RUTTIT, 
+                        B.COD_DIGVER, 
+                        B.NOM_NOMBRE,
+                        B.NOM_APEPAT,
+                        B.NOM_APEMAT,
+                        B.IND_PREVIS,
+                        B.NUM_RUTINS,
+                        B.IND_ESTADO,
+                        D.NOM_INSEMP,
+                        A.NOM_PREVIS
+                    FROM
+                        ADMIN.GG_TDATPREV     A,
+                        ADMIN.SO_TTITUL       B,
+                        ADMIN.GG_TGPACTE      C,
+                        ADMIN.GG_TINSEMP      D
+                    WHERE
+                        A.IND_PREVIS    = B.IND_PREVIS
+                    AND
+                        B.COD_RUTTIT    = C.COD_RUTTIT
+                    AND  
+                        B.NUM_RUTINS    = D.COD_RUTINS
+                    AND
+                        C.NUM_FICHAE    = '$rut'
+                    AND
+                        A.IND_ESTADO    = 'V' 
                 ";
         return $sQuery;
     }

@@ -231,15 +231,16 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         $actualiza_local        =   '';
         $cod_titulocompara      =   '';
         $rut                    =   '';
+        $div                    =   '';
         $creaDatosLocales       =   [];
 
         ####################################################
+        #PERCAPITA
         #$isNal 1      #NACIONAL, 0 EXTRANJERO 
         #$isNew 1      #NUEVO, 0 PASADO (DEBE VENIR CON NUM_FICHAE)        
         #GG_TGPACTE    #DATOS GENERALES 
         #SO_TCPACTE    #DATOS LOCALES 
         #SO_TTITUL     #DATOS PREVISIONALES
-        #PERCAPITA
         ####################################################
 
         if ($isNew == 0) {
@@ -274,17 +275,13 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             if ($infObject == 'DatosGenerales') {
                 $datosGenerales = $Object[0]['Form_Datosgenerales'];
                 foreach ($datosGenerales as $i => $From){
-                    /*
-                    error_log("-----------------------------------------------------------------------------------------");
-                    error_log("---------------- (NAME:".$From['name'].")  --- VALUE (".$From['value'].") ---------------");
-                    error_log("-----------------------------------------------------------------------------------------");
-                    */
                     if ($From['name'] == 'txtrutpac') {
                         $creaProtocolo  =   array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
                         $rut            =   $From['value'];
                     }
                     if ($From['name'] == 'txtdvpac') {
                         $creaProtocolo  =   array_merge($creaProtocolo, array('COD_DIGVER' => $From['value']));
+                        $div            =   $From['value'];
                     }
                     if ($From['name'] == 'txtruttitular') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTTIT' => $From['value']));
@@ -417,7 +414,6 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     }
                 }
 
-
                 if($isNew == 0) {
                     //FALTA GUARDA EN EL HISTORIAL
                     $this->db->where('NUM_FICHAE = ' . $numFichae);
@@ -428,9 +424,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
 
             } else if ($infObject == 'DatosLocales') {
-
                 $datosLocales   =   $Object[0]['FormDatoslocales'];
-                
                 if ($isNew == 1) {
                     $actualiza_local    =   '0';
                     $creaDatosLocales   =   array(
@@ -446,24 +440,24 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     $query	    =   $this->db->query($this->sql_class_ggpacientes->sqlExisteDatosLocales($this->tableSpace, $numFichae, $codEmpresa));
 		            $query2     =   $query->result_array();
                     if ($query2[0]['NUM'] == '0') {
-                        $actualiza_local = '0';
-                        $creaDatosLocales = array(
-                            'IND_ESTADO' => 'V', 
-                            'COD_USRCREA' => $session, 
-                            //'FEC_USRCREA' => 'SYSDATE', 
-                            'NUM_FICHAE' => $numFichae, 
-                            'COD_EMPRESA' => $codEmpresa, 
-                            'COD_SISTEMA' => '58');
-                        error_log("DATOS LOCALES NO TIENE DATOS LOCALES");
+                        $actualiza_local        = '0';
+                        $creaDatosLocales       = array(
+                            'IND_ESTADO'        => 'V', 
+                            'COD_USRCREA'       => $session, 
+                            //'FEC_USRCREA'     => 'SYSDATE', 
+                            'NUM_FICHAE'        => $numFichae, 
+                            'COD_EMPRESA'       => $codEmpresa, 
+                            'COD_SISTEMA'       => '58');
+                        //error_log("DATOS LOCALES NO TIENE DATOS LOCALES");
                     } else {
                         $actualiza_local = '1';
-                        $creaDatosLocales = array(
-                            'IND_ESTADO' => 'V', 
-                            'COD_USUARI' => $session, 
-                            //'FEC_AUDITA' => 'SYSDATE', 
-                            'NUM_FICHAE' => $numFichae, 
-                            'COD_EMPRESA' => $codEmpresa, 
-                            'COD_SISTEMAUDITA' => '58'
+                        $creaDatosLocales       = array(
+                            'IND_ESTADO'        => 'V', 
+                            'COD_USUARI'        => $session, 
+                            //'FEC_AUDITA'      => 'SYSDATE', 
+                            'NUM_FICHAE'        => $numFichae, 
+                            'COD_EMPRESA'       => $codEmpresa, 
+                            'COD_SISTEMAUDITA'  => '58'
                         );
                         error_log("DATOS LOCALES TIENE");
                     }
@@ -518,15 +512,19 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
                 //Actualizar el numero de ficha
                 if ($nuevaNFicha == 'NUEVA') {
-                    $query                  =   $this->db->query($this->sql_class_ggpacientes->sqlObtieneNfichaLocal($this->tableSpace, $codEmpresa));
-                    $nficha_local           =   $query->result_array();
-                    $fhl                    =   $nficha_local[0]['NUMFICHALOCALMAX'] + 1;
-                    $UpdateNfichaLocal      =   array('NUM_NFICHA' => $fhl);
-                    $this->db->where('COD_EMPRESA', $codEmpresa);
-                    $this->db->update($this->tableSpace . '.GG_TFICHA', $UpdateNfichaLocal);
-                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA' => $fhl));
+                    $nficha_local           =   $this->db->query($this->sql_class_ggpacientes->sqlObtieneNfichaLocal($this->tableSpace, $codEmpresa))->result_array();
+                    if (count($nficha_local)>0){
+                        $fhl                    =   $nficha_local[0]['NUMFICHALOCALMAX'] + 1;
+                        $UpdateNfichaLocal      =   array('NUM_NFICHA' => $fhl);
+                        $this->db->where('COD_EMPRESA', $codEmpresa);
+                        $this->db->update($this->tableSpace . '.GG_TFICHA', $UpdateNfichaLocal);
+                    } else {
+                        $fhl                    =   1;
+                        $this->db->insert($this->tableSpace.'.GG_TFICHA',['NUM_NFICHA'=>$fhl,'COD_EMPRESA'=>$codEmpresa,'IND_ESTADO'=>'V']);
+                    }
+                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA_1' => $fhl));
                 } else {
-                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA' => $nuevaNFicha));
+                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA_2' => $nuevaNFicha));
                 }
                 //actualizar el numero de ficha
 
@@ -617,12 +615,12 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                 if ($Previ == 1) {
                     $creaDatosPrevi             =   [];
                     $rutTitular                 =   $rut;
+                    $divTirulae                 =   $div;
                     $datosProfesionales         =   $Object[0]['From_Previsiones'];
                     foreach ($datosProfesionales as $i => $From) {
                         if ($From['name'] == 'txtRuttit') {
                             $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_RUTTIT' => quotes_to_entities(strtoupper($From['value']))));
                         }
-
                         if ($From['name'] == 'txtDvtit') {
                             $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_DIGVER' => quotes_to_entities(strtoupper($From['value']))));
                         }
@@ -643,15 +641,19 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         }
                     }
 		    
-                    $query                  =   $this->db->query($this->sql_class_ggpacientes->sqlTraeDatosTitularxRut($this->tableSpace, $rutTitular));
+                    $query                  =   $this->db->query($this->sql_class_ggpacientes->sqlTraeDatosTitularxRut($this->tableSpace,$numFichae));
                     $LastNCORPAC            =   $query->result_array();
                     if (count($LastNCORPAC)>0) {
-                        $cod_titulocompara  =   $LastNCORPAC[0]['COD_RUTTIT'];
+                        $cod_titulocompara      =   $LastNCORPAC[0]['COD_RUTTIT'];
+                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_RUTTIT'   =>  $LastNCORPAC[0]['COD_RUTPAC']));
+                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_DIGVER'   =>  $LastNCORPAC[0]['COD_DIGVER']));
                     } else {
-                        $cod_titulocompara  =   '';
+                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_RUTTIT'   =>  $rut));
+                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_DIGVER'   =>  $div));
+                        $cod_titulocompara      =   '';
                     }
-                    if ($cod_titulocompara == '') {
-                        $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_RUTTIT'   =>  $rutTitul));
+
+                    if ($cod_titulocompara  == '') {
                         $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USRCREA'  =>  $session));
                         $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USUARI'   =>  $session));
                         $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('IND_ESTADO'   =>  'V'));
