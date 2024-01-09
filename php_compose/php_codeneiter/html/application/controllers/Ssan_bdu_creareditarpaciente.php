@@ -21,7 +21,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
     public function function_test(){
         if (!$this->input->is_ajax_request()) {  show_404();  }
-        $return_data        =   $this->ssan_bdu_creareditarpaciente_model->test();
+        $return_data        =   $this->ssan_bdu_creareditarpaciente_model->function_test();
         $this->output->set_output(json_encode([
             'return_data'   =>  $return_data,
             'status'        =>  true,

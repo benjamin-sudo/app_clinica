@@ -59,7 +59,7 @@ $(document).ready(function(){
     $('.dropdown-toggle').dropdown();
 });
 
-/*
+
 function js_test(){
     $.ajax({ 
         type        :	"POST",
@@ -84,12 +84,9 @@ function js_test(){
 					                        }, 
     });
 }
-*/
 
 function FormModal(isNal,numFichae){
-    
     $('.dropdown-toggle').dropdown('hide');
-
     $.ajax({ 
         type        :	"POST",
         url         :	"ssan_bdu_creareditarpaciente/CreaEditaPaciente",
@@ -906,6 +903,8 @@ function enviaDatosBDU(isNew,isNal,RN,numFichae,IDselect,txtNumero,RutMon){
     jConfirm('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir o actualizar informaci&oacute;n paciente en BDU - Clinica libre. <br/>&iquest;Est&aacute; seguro de continuar?<br />','Confirmaci\u00F3n',function(r){
         if(r){
 
+
+            
             $.ajax({ 
                 type        :	"POST",
                 url         :	"ssan_bdu_creareditarpaciente/guardaInformacionBDU",

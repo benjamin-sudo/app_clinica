@@ -100,7 +100,9 @@ class sql_class_ggpacientes extends CI_Model {
                     A.NOM_NOMBRE                                                                AS NOMBREPAC,
                     A.NOM_APEPAT                                                                AS APEPATPAC,
                     A.NOM_APEMAT                                                                AS APEMATPAC,
-                    TO_CHAR(A.FEC_NACIMI, 'DD/MM/YYYY')                                         AS FECHANACTO,
+                    
+                    TO_CHAR(A.FEC_NACIMI, 'YYYY-MM-DD')                                         AS FECHANACTO,
+
                     A.IND_TISEXO                                                                AS IND_TISEXO,
                     DECODE(A.IND_TISEXO,'M','MASCULINO','F','FEMENINO','NO ESPECIFICADO')       AS TIPO_SEXO,
                     A.IND_ETN,

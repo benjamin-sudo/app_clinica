@@ -15,31 +15,33 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         $this->load->model("sql_class/sql_class_pabellon");
     }
 
-    public function test(){
+    public function function_test(){
+        $fecha = "18-APR-1988";
+        $fecha_formateada = date('d-M-Y', strtotime($fecha));
+        // $fecha_formateada = str_replace("'", "''", $fecha_formateada); // Elimina o comenta esta línea
+        $arr = array('FECHA_CREACION' => "TO_DATE('" . $fecha_formateada . "','DD-MON-YYYY')");
         $this->db->trans_start();
-        $this->db->set('FECHA_CREACION','SYSDATE', FALSE);
-        $this->db->insert($this->tableSpace.'.TABLA_PRUEBAS');
+        $this->db->insert($this->tableSpace.'.TABLA_PRUEBAS', $arr);
         $this->db->trans_complete();
-
-        /*
-        $this->db->trans_start();
-        $this->db->insert($this->tableSpace.'.TABLA_PRUEBAS', ['FECHA_CREACION' =>'SYSDATE']);
-        $this->db->trans_complete();
-        */
-        
-        /*
-        $this->db->trans_start();
-        $this->db->query("INSERT INTO ".$this->tableSpace.".TABLA_PRUEBAS (FECHA_CREACION) VALUES (SYSDATE)");
-        $this->db->trans_complete();
-        */
         return [
             'status' => $this->db->trans_status(),
         ];
-    }   
+    }
 
-
-    //$array = $this->db->query("SELECT SYSDATE FROM SYS.DUAL")->result_array();
-
+    public function function_test2(){
+        // Definir la fecha
+        $fecha = "18-APR-1988";
+        $tabla = $this->tableSpace . '.TABLA_PRUEBAS';
+        // Construir la consulta SQL manualmente
+        $sql = "INSERT INTO $tabla (FECHA_CREACION) VALUES (TO_DATE('$fecha','DD-MON-YYYY'))";
+        $this->db->trans_start();
+        // Ejecutar la consulta manualmente
+        $this->db->query($sql);
+        $this->db->trans_complete();
+        return [
+            'status' => $this->db->trans_status(),
+        ];
+    }
 
     public function graba_rut_extranjero($numfichae,$rut,$dv) {
         $this->db->trans_start();
@@ -265,7 +267,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
             $creaProtocolo = array(
                 'COD_USRCREA'   =>  $session,
-                #'FEC_USRCREA' =>  'SYSDATE',
+                'FEC_USRCREA'   =>  'SYSDATE',
                 'NUM_FICHAE'    =>  $numFichae,
                 'IND_ESTADO'    =>  'V',
             );
@@ -313,13 +315,10 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($From['name'] == 'txtApellidoMaterno') {
                         $creaProtocolo = array_merge($creaProtocolo, array('NOM_APEMAT' => quotes_to_entities(strtoupper($From['value']))));
                     }
-                    
-                    if ($From['name'] == 'txtFechaNacimineto') {
-                        $array          = explode("-", $From['value']);
-                        $formattedDate  = sprintf("%02d/%02d/%04d", $array[2], $array[1], $array[0]); // DD/MM/YYYY
-                        //$creaProtocolo  = array_merge($creaProtocolo, array('FEC_NACIMI' => 'TO_DATE("1988-04-18","YYYY-MM-DD")'));
+                    if ($From['name']       ==  'txtFechaNacimineto') {
+                        #Esto sería '1988-04-18'
+                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_NACIMI' => "TO_DATE('" . $From['value'] . "','YYYY-MM-DD')"));
                     }
-
                     if ($From['name'] == 'cboGenero') {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_TISEXO' => $From['value']));
                     }
@@ -435,7 +434,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     $creaDatosLocales           =   array(
                                                     'IND_ESTADO'    =>  'V', 
                                                     'COD_USRCREA'   =>  $session, 
-                                                    //'FEC_USRCREA'   =>  'SYSDATE', 
+                                                    'FEC_USRCREA'   =>  'SYSDATE', 
                                                     'NUM_FICHAE'    =>  $numFichae, 
                                                     'COD_EMPRESA'   =>  $codEmpresa
                                                 );
@@ -448,7 +447,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $creaDatosLocales       = array(
                             'IND_ESTADO'        => 'V', 
                             'COD_USRCREA'       => $session, 
-                            //'FEC_USRCREA'     => 'SYSDATE', 
+                            'FEC_USRCREA'     => 'SYSDATE', 
                             'NUM_FICHAE'        => $numFichae, 
                             'COD_EMPRESA'       => $codEmpresa, 
                             'COD_SISTEMA'       => '58');
@@ -458,7 +457,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $creaDatosLocales       = array(
                             'IND_ESTADO'        => 'V', 
                             'COD_USUARI'        => $session, 
-                            //'FEC_AUDITA'      => 'SYSDATE', 
+                            'FEC_AUDITA'      => 'SYSDATE', 
                             'NUM_FICHAE'        => $numFichae, 
                             'COD_EMPRESA'       => $codEmpresa, 
                             'COD_SISTEMAUDITA'  => '58'
@@ -665,7 +664,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     } else {
                         #$creaDatosPrevi    =   array_merge($creaDatosPrevi, array('FEC_USRCREA'  =>  'SYSDATE'));
                         $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USUARI'   =>  $session));
-                        #$creaDatosPrevi    =   array_merge($creaDatosPrevi, array('FEC_AUDITA'   =>  'SYSDATE'));
+                        $creaDatosPrevi    =   array_merge($creaDatosPrevi, array('FEC_AUDITA'   =>  'SYSDATE'));
                         $this->db->where('COD_RUTTIT', $rutTitul);
                         $this->db->update($this->tableSpace . '.SO_TTITUL', $creaDatosPrevi);
                     }

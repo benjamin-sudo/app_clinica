@@ -11,3 +11,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	https://codeigniter.com/userguide3/general/hooks.html
 |
 */
+
+/*
+$hook['post_controller_constructor'][] = array(
+    'function' => 'redirect_ssl',
+    'filename' => 'ssl.php',
+    'filepath' => 'hooks'
+);
+
+$hook['post_system'] = array(
+    'class'    => 'Oracle_timeout_handler',
+    'function' => 'handle_timeout',
+    'filename' => 'oracle_timeout_handler.php',
+    'filepath' => 'hooks'
+);
+*/
