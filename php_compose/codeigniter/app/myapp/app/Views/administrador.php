@@ -6,6 +6,7 @@
         <h4 class="title" style="color:#e34f49;">
             <i class="fa fa-tag" aria-hidden="true"></i>&nbsp;
             <b>ADMINISTRADOR&nbsp;APP&nbsp;CLINICA&nbsp;<?php echo date("d-m-Y");?></b> 
+            <br>
         </h4>
     </div>
     <div class="grid_cabecera2">
