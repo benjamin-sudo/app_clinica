@@ -80,7 +80,7 @@ services:
     networks:
       - mynetwork
 
-  #bd_session    
+  #bd_session_mysql    
   mysql_6:
     container_name: mysql_6
     image: mysql:5.7

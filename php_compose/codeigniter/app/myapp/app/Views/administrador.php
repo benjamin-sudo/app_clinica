@@ -67,7 +67,7 @@
                             <td width="250px"><b>Nombre del men&uacute;</b></td>
                             <td>
                                 <div class="div_2">
-                                    <div class="div_21"><input type="text" id="nomExt" onkeypress="return soloLetras(event)" class="form-control form-control-sm;" style="text-transform: inherit;width: 220px;" onblur="validaExt()"> </div>
+                                    <div class="div_21"><input type="text" id="nomExt" onkeypress="return soloLetras(event)" class="form-control form-control-sm;" style="text-transform: inherit;" onblur="validaExt()"> </div>
                                     <div class="div_21">
                                     <input type="checkbox" class="form-check-input mt-1" id="habilitado" name="habilitado" value="1" checked>&nbsp;Men&uacute; Habilitado</div>
                                 </div>
@@ -76,7 +76,7 @@
                         <tr>
                             <td width="200px"><b>Nombre extensi&oacute;n</b> </td>
                             <td>
-                                <input type="text" id="nomArch" class="form-control form-control-sm;" onkeypress="return alfanumericoRuta(event)" style="text-transform: lowercase;width: 220px;" onblur="buscaExtArch();">
+                                <input type="text" id="nomArch" class="form-control form-control-sm;" onkeypress="return alfanumericoRuta(event)" style="text-transform: lowercase;" onblur="buscaExtArch();">
                                 <input type="hidden" id="existeExt" value="0">
                             </td>
                         </tr>
