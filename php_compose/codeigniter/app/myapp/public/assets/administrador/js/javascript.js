@@ -5,6 +5,7 @@ $(document).ready(function(){
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
+
     $('#run_esissan').Rut({
         on_error    :   function()  { 
                                         console.log($("#run_esissan").val());  
@@ -31,14 +32,12 @@ $(document).ready(function(){
         console.error("No se encontró el primer tab.");
     }
     $(".selectpicker").selectpicker();
-
     //*************************************************************************************************************************
     //showNotification('top','right','<i class="bi bi-database-fill-slash"></i> Conexi&oacute;n con instancia no iniciada',2);
     //$('.toast').toast('show');
     //var notify = $.notify('<strong>Saving</strong> Do not close this page...', { allow_dismiss: false });
     //notify.update({ type: 'success','<strong>Success</strong> Your page has been saved!' });
     //$.notify('actualizando',{ showProgressbar: true });
-
 });
 
 function valida_run_esissan(val)   {
@@ -48,14 +47,12 @@ function valida_run_esissan(val)   {
     var rut             =   "";
     var dv              =   "";
     _rut                =   $("#run_esissan").val();
-    
     $("#run_esissan").css('border-color','');
     if(_rut == ''){
         jError("RUN vac&iacute;o","Clinica Libre");
         $("#run_esissan").css('border-color','red');
         return false;
     }
-
     rut_array           =   _rut.split("-");
     rut2                =   rut_array[0].replace(".","");
     rut                 =   rut2.replace(".","");
@@ -78,10 +75,8 @@ function valida_run_esissan(val)   {
                                                     $('#loadFade').modal('hide');
                                                 },
         success          :   function(aData)    {   
-                                                    
                                                     console.log("   ----------------------------    ");
                                                     console.log("   aData   :   ",aData);
-
                                                     $("#loadFade").modal("hide");
                                                     if(aData.return_bd.status_existe){
                                                         showNotification('top','right','<i class="fa fa-television" aria-hidden="true"></i>&nbsp;Editando usuario',2);
@@ -255,11 +250,9 @@ function grabarUsu() {
             "superUser"         :   superUser,
             "actualiza_pass"    :   document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
         }; //Variables pasadas por ajax a la funcion
-        
         //console.log("       ------------------------    ");
         //console.log("       pasa                        ");
         //console.log("       enviando -> ",variables,"   ");
-
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta e-SISSAN <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
                 console.log(" r -> ",r);
@@ -617,11 +610,11 @@ function js_limpia_panel(){
 }
 
 function crearPriv() {
-   let nombre = $('#nomProv').val();
-   if (nombre == ""){
-      jError("Nombre del privilegio vac&iacute;o","Clinica online Maria Zabala");
-      return false;
-   }
+    let nombre = $('#nomProv').val();
+    if (nombre == ""){
+        jError("Nombre del privilegio vac&iacute;o","Clinica online Maria Zabala");
+        return false;
+    }
    $.ajax({ 
       type          :   "POST",
       url           :   "Home/creaPrivilegio",

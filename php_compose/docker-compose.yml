@@ -1,5 +1,27 @@
 version: '3'
 services:
+  
+  #administrador
+  codeigniter:
+    container_name: user_administrador
+    image: bitnami/codeigniter:4.4.3-debian-11-r0
+    ports:
+      - "9000:8000"
+    volumes:
+      - ./codeigniter/app:/app  
+    environment:
+      - CODEIGNITER_PROJECT_NAME=myapp
+      - CODEIGNITER_DATABASE_HOST=mariadb
+      - CODEIGNITER_DATABASE_USER=myuser
+      - CODEIGNITER_DATABASE_PASSWORD=mypassword
+      - APP_ENV=development  # Modo de desarrollo
+      - ALLOW_EMPTY_PASSWORD=yes  # Permitir contraseñas vacías
+    depends_on:
+      - oracle_slim
+      - mysql_6
+    restart: always  # Reiniciar_en_caso_de_fallo
+    networks:
+      - mynetwork
 
   #codeneiter_3 - app ususario respal
   php_codeneiter_3:
@@ -58,29 +80,7 @@ services:
     networks:
       - mynetwork
 
-  #administrador
-  codeigniter:
-    container_name: user_administrador
-    image: bitnami/codeigniter:4.4.3-debian-11-r0
-    ports:
-      - "9000:8000"
-    volumes:
-      - ./codeigniter/app:/app  
-    environment:
-      - CODEIGNITER_PROJECT_NAME=myapp
-      - CODEIGNITER_DATABASE_HOST=mariadb
-      - CODEIGNITER_DATABASE_USER=myuser
-      - CODEIGNITER_DATABASE_PASSWORD=mypassword
-      - APP_ENV=development  # Modo de desarrollo
-      - ALLOW_EMPTY_PASSWORD=yes  # Permitir contraseñas vacías
-    depends_on:
-      - oracle_slim
-      - mysql_6
-    restart: always  # Reiniciar en caso de fallo
-    networks:
-      - mynetwork
-
-  #bd session    
+  #bd_session    
   mysql_6:
     container_name: mysql_6
     image: mysql:5.7
@@ -106,7 +106,7 @@ services:
     networks:
       - mynetwork          
 
-  #toad en mysql
+  #toad_de_mysql
   monitoreo_mysql:
     image: adminer
     restart: always
