@@ -16,10 +16,10 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
     }
 
     public function function_test(){
-        $fecha = "18-APR-1988";
-        $fecha_formateada = date('d-M-Y', strtotime($fecha));
-        // $fecha_formateada = str_replace("'", "''", $fecha_formateada); // Elimina o comenta esta línea
-        $arr = array('FECHA_CREACION' => "TO_DATE('" . $fecha_formateada . "','DD-MON-YYYY')");
+        $fecha              =   "18-APR-1988";
+        $fecha_formateada   =   date('d-M-Y', strtotime($fecha));
+        #$fecha_formateada  =   str_replace("'", "''", $fecha_formateada); // Elimina o comenta esta línea
+        $arr                =   array('FECHA_CREACION' => "TO_DATE('" . $fecha_formateada . "','DD-MON-YYYY')");
         $this->db->trans_start();
         $this->db->insert($this->tableSpace.'.TABLA_PRUEBAS', $arr);
         $this->db->trans_complete();

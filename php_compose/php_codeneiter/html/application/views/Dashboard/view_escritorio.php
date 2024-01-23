@@ -203,6 +203,7 @@
         star_ajax_extension(url);
       });
     });
+    
     function star_ajax_extension(url){
       $.ajax({
         url     :   url,  // Ruta al metodo del controlador
@@ -212,10 +213,12 @@
                                                   console.error(error); // Manejo de errores
                                                 },
         success :   function(response)          {
+                                                  console.log("response  ->",response);
                                                   $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
                                                 },
       });
     }
+
     document.addEventListener('DOMContentLoaded', function() {
       // Define una función para actualizar el estado activo del menú
       function actualizarEstadoActivo(id){
@@ -232,13 +235,13 @@
       // Captura clics en los enlaces del menu y extensiones
       document.querySelectorAll('.nav-link').forEach(function(link) {
         link.addEventListener('click', function() {
-            console.log("Guardando ID : ", this.id);  // Verificar en la consola
+            //console.log("Guardando ID : ", this.id);  // Verificar en la consola
             localStorage.setItem('ultimaPosicionMenu', this.id);
         });
       });
       // Evento de clic para el menu principal
       document.querySelector('.menu_principal').addEventListener('click', function(event) {
-          console.log("click - menu_principal : ",event.target.id);
+          //console.log("click - menu_principal : ",event.target.id);
           // Asegúrate de que el clic fue en un elemento del menu
           if (event.target.id) {
               // Guardar la posición del menu en localStorage
@@ -249,13 +252,13 @@
       });
       // Al cargar la página, verifica si hay una posición guardada y actúa en consecuencia
       var ultimaPosicion                  =   localStorage.getItem('ultimaPosicionMenu');
-      console.log("Recuperando posición   :   ",ultimaPosicion);  // Verificar en la consola
+      //console.log("Recuperando posición   :   ",ultimaPosicion);  // Verificar en la consola
       if (ultimaPosicion) {
          // Verificar si la posición incluye 'ext-'
         if (ultimaPosicion.includes('ext-')) {
             // Código adicional para manejar cuando hay 'ext-'
             let last_extension = localStorage.getItem('ind_llamada_extension');
-            console.log("La posición incluye ext- y fue : ",last_extension);
+            //console.log("La posición incluye ext- y fue : ",last_extension);
             star_ajax_extension(last_extension);
         }
         var elementoActivo = document.getElementById(ultimaPosicion);
