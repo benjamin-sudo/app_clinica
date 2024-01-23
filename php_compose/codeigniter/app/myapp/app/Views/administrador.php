@@ -1,6 +1,5 @@
 <?= $this->extend('base');?>
 <?= $this->section('content');?>
-
 <div class="grid_cabecera">
     <div class="grid_cabecera1">
         <h4 class="title" style="color:#e34f49;">
@@ -83,7 +82,7 @@
                         <tr>
                             <td><b>Extensi&oacute;n principal o padre</b></td>
                             <td>
-                                <?php echo view("html_administrador",['menu_principal'=>$respuesta['menu_principal']]);  ?>
+                                <?php echo view("html_administrador",['menu_principal'=>$respuesta['menu_principal']]); ?>
                             </td>
                         </tr>
                         <tr>
