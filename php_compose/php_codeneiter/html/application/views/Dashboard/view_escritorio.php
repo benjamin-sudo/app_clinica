@@ -213,7 +213,7 @@
                                                   console.error(error); // Manejo de errores
                                                 },
         success :   function(response)          {
-                                                  console.log("response  ->",response);
+                                                  //console.log("response  ->",response);
                                                   $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
                                                 },
       });
