@@ -48,6 +48,9 @@ function buscar() {
             success     :	function(aData)	                {	
                                                                 $('#loadFade').modal('hide');
                                                                 console.log("function ->",aData);
+
+
+                                                                console.log("html -> ",aData.html);
                                                                
                                                             }, 
         });
@@ -94,7 +97,9 @@ function consultaprofxestab() {
     let rut     =   $('#rutPac').val();
     let codemp  =   $('#codemp').val();
     if (rut === '') {
-        swal("Aviso", "El campo RUN se encuentra vacio", "info");
+       
+
+        jError("El campo RUN se encuentra vacio","Clinica Libre");
     } else {
         /*
             $('#loadFade').modal('show');
@@ -117,30 +122,30 @@ function prestador() {
     var email = $('#email').val();
     var codemp = $('#codemp').val();
     var telefono = $('#telefono').val();
-
+    
     if (rut === '') {
-        swal("Aviso", "EL CAMPO RUN SE ENCUENTRA VACIO", "info");
+        jError("EL CAMPO RUN SE ENCUENTRA VACIO","Clinica Libre");
     } else
     if (nombres === '') {
-        swal("Aviso", "EL CAMPO NOMBRE SE ENCUENTRA VACIO", "info");
+        jError("EL CAMPO NOMBRE SE ENCUENTRA VACIO","Clinica Libre");
     } else
     if (appat === '') {
-        swal("Aviso", "EL CAMPO APELLIDO PATERNO SE ENCUENTRA VACIO", "info");
+        jError("EL CAMPO APELLIDO PATERNO SE ENCUENTRA VACIO","Clinica Libre");
     } else
     if (apmat === '') {
-        swal("Aviso", "EL CAMPO APELLIDO MATERNO SE ENCUENTRA VACIO", "info");
+        jError("EL CAMPO APELLIDO MATERNO SE ENCUENTRA VACIO","Clinica Libre");
     } else
     if (tprof === 'SELECCIONE EL TIPO DE PROFESIONAL') {
-        swal("Aviso", "POR FAVOR SELECCIONE EL TIPO DE PROFESIONAL", "info");
+        jError("POR FAVOR SELECCIONE EL TIPO DE PROFESIONAL","Clinica Libre");
     } else
     if (prof === 'SELECCIONE UNA PROFESIÓN') {
-        swal("Aviso", "POR FAVOR SELECCIONE EL PROFESIONAL", "info");
+        jError("POR FAVOR SELECCIONE EL PROFESIONAL","Clinica Libre");
     } else
     if (email === '') {
-        swal("Aviso", "EL CAMPO CORREO SE ENCUENTRA VACIO", "info");
+        jError("EL CAMPO CORREO SE ENCUENTRA VACIO","Clinica Libre");
     } else
     if (telefono === '') {
-        swal("Aviso", "EL CAMPO TELEFONO SE ENCUENTRA VACIO", "info");
+        jError("EL CAMPO TELEFONO SE ENCUENTRA VACIO","Clinica Libre");
     } else {
         jPrompt('<B>SE GUARDARÁ LA INFORMACIÓN.</B><br /><br />&iquest;Est&aacute; SEGURO DESEA CONTINUAR?', '', 'CONFIRMACIÓN', function(r) {
             if (r) {

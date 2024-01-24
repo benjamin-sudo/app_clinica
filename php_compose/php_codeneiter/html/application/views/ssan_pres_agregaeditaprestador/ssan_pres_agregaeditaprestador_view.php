@@ -26,7 +26,11 @@
                         </a>
                     </td>
                     <td>
-                        <a id="btnSuper" href="javascript:getSuper()" class="btn btn-default" style="padding: 0 10px;display:none"><img src="assets/ssan_pre_gestionarprestador/img/logoSuper.png"></a>
+                        <!--
+                        <a id="btnSuper" href="javascript:getSuper()" class="btn btn-default" style="padding: 0 10px;display:none">
+                            <img src="assets/ssan_pre_gestionarprestador/img/logoSuper.png">
+                        </a>
+                        -->
                     </td>
                 </tr>
                 <tr>
