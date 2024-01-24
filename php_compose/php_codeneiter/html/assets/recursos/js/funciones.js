@@ -1617,8 +1617,7 @@ function isValidDate(day, month, year) {
     return ((day == dteDate.getDate()) && (month == dteDate.getMonth()) && (year == dteDate.getFullYear()));
 }
 
-
-var type = ['',
+var type =  ['',
     'info', 
     'success', 
     'warning', 
@@ -1628,8 +1627,8 @@ var type = ['',
 
 function showNotification(from, align, txt, color, icono, width){
     $.notify({
-        icono           :   icono,
-        message         :   txt
+            icono       :   icono,
+            message     :   txt
         },{
             type        :   type[color],
             timer       :   4000,

@@ -5,13 +5,12 @@
 <div class="content">
     <form id="" action="" method="">
         
-    <input type="hidden" id="username" name="username" value="<?php echo $usu_ario; ?>">
-        <input type="hidden" id="token" name="token" value="<?php echo $tok_G; ?>">
-        <input type="hidden" id="codemp" name="codemp" value="<?php echo $em_presa; ?>">
+        <input type="hidden" id="username"  name="username" value="<?php echo $usu_ario;?>">
+        <input type="hidden" id="token"     name="token"    value="<?php echo $tok_G;?>">
+        <input type="hidden" id="codemp"    name="codemp"   value="<?php echo $em_presa;?>">
 
         <div>
             <div id="respuesta1" class="form-group"></div>
-
             <table class="table table-responsive">
                 <tr>
                     <td>
@@ -91,29 +90,28 @@
                     </td>
                 </tr>
                 <tr>
-                    <td aling="center" colspan="2">
+                    <td colspan="3" style="text-align:center;">
                         <a href="javascript:limpiar()" class="btn btn-danger btn-fill"><i class="fa fa-eraser"></i> Limpiar</a>
                         <a href="javascript:prestador()" class="btn btn-success btn-fill"><i class="fa fa-user-plus"></i> Grabar Prestador</a>
                     </td>
                 </tr>
             </table>
-
         </div>
     </form>
 </div>
 
-
-<div class="modal fade" id="modalSuper" tabindex="-1">
-    <div class="modal-dialog modal-lg " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: #e34f49;">Superintendencia de Salud</h5>
-            </div>
-            <div class="modal-body" id="respSuper"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Cerrar</button>
+<section>
+    <div class="modal fade" id="modalSuper" tabindex="-1" style="text-align: center;">
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #e34f49;">Superintendencia de Salud</h5>
+                </div>
+                <div class="modal-body" id="respSuper"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</section>

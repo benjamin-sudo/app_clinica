@@ -65,7 +65,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
-      <span class="brand-text font-weight-light">Mi Clinica Libre</span>
+      <span class="brand-text font-weight-light">CLINICA LIBRE</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -188,11 +188,13 @@
   <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js" ></script>
   <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
   <!-- jalert y otro -->
-  <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
   <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
   <!-- Otros -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
+
+  <!-- personalizable --> 
+  <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
 
   <script>
     $(document).ready(function(){
@@ -203,7 +205,6 @@
         star_ajax_extension(url);
       });
     });
-    
     function star_ajax_extension(url){
       $.ajax({
         url     :   url,  // Ruta al metodo del controlador

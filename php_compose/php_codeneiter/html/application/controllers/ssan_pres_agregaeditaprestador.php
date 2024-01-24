@@ -54,7 +54,6 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         $var = "";   
         $retor = $this->Ssan_pres_agregaeditaprestador_model->cargatipo();
         if ($retor) {
-
             $var .= '<span style="color: #FF9800;">* </span><label class="control-label">TIPO PROFESIONAL</label>';
             $var .= '<select class="form-control" name="tprof" id="tprof" onchange="CARGAPROF();" required>';
             $var .= '<option>SELECCIONE EL TIPO DE PROFESIONAL</option>';
@@ -67,11 +66,13 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
     }
 
     //CARGA LA PROFESION DEPENDIENDO DEL TIPO DE PROFESIONAL
-    public function cargaprof()
-    {
-        $id = $this->input->post('tprof');
-        $retor = $this->Ssan_pres_agregaeditaprestador_model->cargaprof($id);
-        $var = '<option>SELECCIONE UNA PROFESIÓN</option>';
+    public function cargaprof(){
+        if (!$this->input->is_ajax_request()) {  show_404();  }
+        $id             =   $this->input->post('tprof');
+        $arr_return     =   $this->Ssan_pres_agregaeditaprestador_model->cargaprof($id);
+
+        /*
+        $var            =   '<option>SELECCIONE UNA PROFESIÓN</option>';
         if ($retor) {
             foreach ($retor as $row) {
                 $var .= '<option value="' . $row['COD_TPROFE'] . '"> ' . $row['NOM_TPROFE'] . '</option>';
@@ -81,59 +82,18 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
                 $var .= '<script>$("select#prof").prop("selectedIndex", 1);</script>';
             }
         }
-        $this->output->set_output($var);
+        */
+        
+        $this->output->set_output(json_encode([
+            'status'    =>  $arr_return
+        ]));
     }
 
-    public function buscaFuncSuper() {
 
-        $this->load->library('api_minsal');
-        $rut = $this->input->post('rutProf');
-        $rutm = explode(".", $rut);
-        $rutUs = $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
-        $rutsin = explode("-", $rutUs);
 
-        $return = $this->api_minsal->getPrestSuper($rutsin[0]);
 
-        $html = '';
-        if ($return['status']) {
-            $data = $return['data'];
 
-            $html .= '<table class="table table-striped">';
-            $html .= '<tr>';
-            $html .= '<td>Nº Registro<td><td>' . $data->nro_registro . '<td>';
-            $html .= '</tr>';
-            $html .= '<tr>';
-            $html .= '<td>Nombre<td><td>' . $data->nombres . ' ' . $data->apellido_paterno . ' ' . $data->apellido_materno . '<td>';
-            $html .= '</tr>';
-            $html .= '<tr>';
-            $html .= '<td>Fecha Nacimiento<td><td>' . $data->fecha_nacimiento . '<td>';
-            $html .= '</tr>';
-            $html .= '<tr>';
-            $html .= '<td>Fecha Registro<td><td>' . $data->fecha_registro . '<td>';
-            $html .= '</tr>';
-            $html .= '<tr>';
-            $html .= '<td>Nacionalidad<td><td>' . $data->nacionalidad . '<td>';
-            $html .= '</tr>';
-            $html .= '<tr>';
-            $html .= '<td>Profesión<td><td>' . $data->codigo_busqueda . '<td>';
-            $html .= '</tr>';
-            $html .= '<tr>';
-            $html .= '<td>Universidad<td><td>' . $data->universidad . '<td>';
-            $html .= '</tr>';
-            $html .= '<tr>';
-            $html .= '<td>Fecha Carga<td><td>' . $data->fecha_carga . '<td>';
-            $html .= '</tr>';
-            $html .= '</table>';
-
-            $html .= "<script>$('#modalSuper').modal('show');</script>";
-        } else {
-            $msj = $return['data'];
-            $html .= '<script>swal("Aviso", "' . $msj . '", "info");</script>';
-        }
-        $html .= "<script>$('#loadFade').modal('hide');</script>";
-        $this->output->set_output($html);
-    }
-
+    
     
 
     //consulta si el profesional esta registrado en la tabla profxestab
@@ -159,9 +119,7 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
     }
 
     public function PrestadorController(){
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+        if (!$this->input->is_ajax_request()) {  show_404();  }
 
         $rut = $this->input->post('rut');
         $rutm = explode(".", $rut);
@@ -181,6 +139,7 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         $iniciales .= substr($appat, 0, 1);
         $iniciales .= substr($apmat, 0, 1);
         $codemp = $this->input->post('codemp');
+
         if (empty($token)) {
 
             $valida = $this->Ssan_pres_agregaeditaprestador_model->validaClave($clave);
@@ -226,6 +185,51 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
     }
 
 
+    public function buscaFuncSuper() {
+        $this->load->library('api_minsal');
+        $rut        =   $this->input->post('rutProf');
+        $rutm       =   explode(".", $rut);
+        $rutUs      =   $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
+        $rutsin     =   explode("-", $rutUs);
+        $return     =   $this->api_minsal->getPrestSuper($rutsin[0]);
+        $html       =   '';
+        if ($return['status']) {
+            $data = $return['data'];
+            $html .= '<table class="table table-striped">';
+            $html .= '<tr>';
+            $html .= '<td>Nº Registro<td><td>' . $data->nro_registro . '<td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>Nombre<td><td>' . $data->nombres . ' ' . $data->apellido_paterno . ' ' . $data->apellido_materno . '<td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>Fecha Nacimiento<td><td>' . $data->fecha_nacimiento . '<td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>Fecha Registro<td><td>' . $data->fecha_registro . '<td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>Nacionalidad<td><td>' . $data->nacionalidad . '<td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>Profesión<td><td>' . $data->codigo_busqueda . '<td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>Universidad<td><td>' . $data->universidad . '<td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>Fecha Carga<td><td>' . $data->fecha_carga . '<td>';
+            $html .= '</tr>';
+            $html .= '</table>';
+
+            $html .= "<script>$('#modalSuper').modal('show');</script>";
+        } else {
+            $msj = $return['data'];
+            $html .= '<script>swal("Aviso", "' . $msj . '", "info");</script>';
+        }
+        $html .= "<script>$('#loadFade').modal('hide');</script>";
+        $this->output->set_output($html);
+    }
 
 
 }

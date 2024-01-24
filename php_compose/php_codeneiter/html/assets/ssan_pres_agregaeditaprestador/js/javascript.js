@@ -11,6 +11,9 @@ $(function(){
         format_on: 'keyup'
     });
     $("[data-toggle='tooltip']").tooltip();
+
+    //test
+    showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Conexi&oacute;n con instancia no iniciada ',2,'');
 });
 
 
@@ -19,14 +22,14 @@ function buscar() {
     if (rut === '') {
         jError("RUN ingresado incorrecto","Clinica Libre");
     } else {
-
         /*
             $('#loadFade').modal('show');
-            var id          = "respuesta"; //Div o ID de los resultados
-            var funcion     = "buscar"; //Funcion del Controlador a Ejecutar
-            var variables   = { 'rutPac': rut }; //Variables pasadas por ajax a la funcion
+            var id          =   "respuesta"; //Div o ID de los resultados
+            var funcion     =   "buscar"; //Funcion del Controlador a Ejecutar
+            var variables   =   { 'rutPac': rut }; //Variables pasadas por ajax a la funcion
             AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
         */
+
 
         $.ajax({ 
             type        :	"POST",
@@ -51,7 +54,7 @@ function buscar() {
                                                                 if (aData.status){
 
                                                                 } else {
-                                                                    jAlert("Resgistro nuevo profesional","Clinica Libre");
+                                                                    showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
                                                                 }
                                                             }, 
         });
@@ -59,16 +62,56 @@ function buscar() {
 }
 
 function CARGAPROF() {
-    var rut = $('#rutPac').val();
+    var rut     =   $('#rutPac').val();
     if (rut === '') {
-        $('#prof').val('SELECCIONE UNA PROFESIÓN');
+        $('#prof').val('SELECCIONE UNA PROFESI&Oacute;N');
     } else {
-        // var rut = $('#rutPac').val();//envio el 
-        var tprof = $('#tprof').val();
-        var id = "prof"; //Div o ID de los resultados
-        var funcion = "cargaprof"; //Funcion del Controlador a Ejecutar
-        var variables = { tprof: tprof }; //Variables pasadas por ajax a la funcion
-        AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
+
+
+        var tprof       =   $('#tprof').val();
+
+
+        //envio el 
+        //var rut       =   $('#rutPac').val();
+
+        /*
+       
+        var id          =   "prof"; //Div o ID de los resultados
+        var funcion     =   "cargaprof"; //Funcion del Controlador a Ejecutar
+        var variables   =   { tprof: tprof }; //Variables pasadas por ajax a la funcion
+        AjaxExt(variables, id ,funcion); //Funcion que Ejecuta la llamada del ajax
+        */
+
+
+        $.ajax({ 
+            type        :	"POST",
+            url         :	"Ssan_pres_agregaeditaprestador/carggaprof",
+            beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
+            dataType    :	"json",
+            data        :	{ tprof : tprof },
+            error       :	function(errro,error2,error3)	{ 
+
+                                                                console.log("--------------------------------"); 
+                                                                console.log(errro); 
+                                                                console.log(error2);
+                                                                console.log(error3);
+                                                                console.log(errro.responseText); 
+                                                                $('#loadFade').modal('hide');
+                                                                jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                                                                
+                                                            },
+            success     :	function(aData)	                {	
+                                                                console.log("out -> carggaprof ->",aData);
+                                                                /*
+                                                                $('#loadFade').modal('hide');
+                                                                if (aData.status){
+
+                                                                } else {
+                                                                    showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
+                                                                }
+                                                                */
+                                                            }, 
+        });
     }
 }
 
