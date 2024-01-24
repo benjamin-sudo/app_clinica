@@ -4,11 +4,9 @@
 
 <div class="content">
     <form id="" action="" method="">
-        
         <input type="hidden" id="username"  name="username" value="<?php echo $usu_ario;?>">
         <input type="hidden" id="token"     name="token"    value="<?php echo $tok_G;?>">
         <input type="hidden" id="codemp"    name="codemp"   value="<?php echo $em_presa;?>">
-
         <div>
             <div id="respuesta1" class="form-group"></div>
             <table class="table table-responsive">
@@ -20,7 +18,7 @@
                         </div>
                     </td>
                     <td valign="bottom">
-                        <a href="javascript:buscar(); consultaprofxestab(); " class="btn btn-primary btn-fill" style="margin-top: 32px;">
+                        <a href="javascript:buscar(); consultaprofxestab(); " class="btn btn-primary btn-fill" style="margin-top:30px;">
                             <i class="fa fa-search"></i>&nbsp;BUSCAR&nbsp;PRESTADOR
                         </a>
                     </td>

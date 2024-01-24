@@ -17,11 +17,12 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
     }
 
     public function cargatipo(){
+        $empresa            =   $this->session->userdata('COD_ESTAB');
         return [
-            'arr_tipos' => $this->db->query($this->sql_class_prestadores->cargartipo())->result_array(),
-            'usu_ario'  => '',
-            'tok_G'     => '',
-            'em_presa'  => '',
+            'arr_tipos'     =>  $this->db->query($this->sql_class_prestadores->cargartipo())->result_array(),
+            'usu_ario'      =>  '',
+            'tok_G'         =>  $this->session->userdata('USERNAME'),
+            'em_presa'      =>  $this->session->userdata('COD_ESTAB'),
         ];
     }
     
@@ -39,8 +40,11 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
     }
 
     public function buscar($rutfin){
-        $query = $this->db->query($this->sql_class_prestadores->buscar($rutfin));
-        return $query->result_array();
+        $codemp                 =   $this->session->userdata('COD_ESTAB');
+        return [
+            'prestador'         =   $this->db->query($this->sql_class_prestadores->buscar($rutfin))->result_array(),
+            'existe_empresa'    =   $this->db->query($this->sql_class_prestadores->consultaprofxestab($rutfin,$codemp)),
+        ];
     }
 
     public function cargaprof($id)

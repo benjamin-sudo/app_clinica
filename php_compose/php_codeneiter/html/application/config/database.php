@@ -73,7 +73,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	$active_group 		= 	'session';
 	$query_builder 		= 	TRUE;
-
 	$db['session'] 		= 	array(
 		'dsn'			=> 	'',
 		'hostname' 		=> 	'mysql_6:3306',
@@ -143,6 +142,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         'numberNative'  =>  false,
     ];
 	*/
+
 	/*
 	$tsname = '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.5.183.212)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = DSSAN)))';
 	$db['oracle'] = array(
@@ -169,6 +169,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'dbc_timeout'	=> 30 
 	);
 	*/
+
 	/*
     public $oracle      =   [
         'DSN'           =>  '',

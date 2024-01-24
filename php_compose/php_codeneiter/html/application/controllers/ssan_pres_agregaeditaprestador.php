@@ -25,26 +25,32 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         $rutUs              =   $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
         $rutsin             =   explode("-", $rutUs);
         $rutfin             =   $rutsin[0];
-        $retor              =   $this->Ssan_pres_agregaeditaprestador_model->buscar($rutfin);
-        if(count($retor)>0)    {
+        $arr                =   $this->Ssan_pres_agregaeditaprestador_model->buscar($rutfin);
+        if(count($arr['prestador'])>0)    {
+
+            $retor          =   $arr['prestador'];
+            /*
             $html           =   '<script>setTimeout(function(){ CARGAPROF("' . $retor[0]['COD_TPROFE'] . '");},200)</script>';
-            $html           .= '<script>
+            $html          .=   '<script>
                                     $("#nombres").val("' . $retor[0]['NOM_NOMBRE'] . '");
                                     $("#appat").val("' . $retor[0]['NOM_APEPAT'] . '");
                                     $("#apmat").val("' . $retor[0]['NOM_APEMAT'] . '");
                                     $("#email").val("' . $retor[0]['EMAILMED'] . '");
                                     $("#telefono").val("' . $retor[0]['NUM_TELEFOMED'] . '");
                                     $("#tprof").val("' . $retor[0]['IND_TIPOATENCION'] . '");' . 'setTimeout(function(){
-                                    $("#prof").val("' . $retor[0]['COD_TPROFE'] . '");},500)</script>';
-        } else {
-            $status_busqueda    = false;
-            $html = "<script></script>";
-        }
-        $html .= '<script> $("#loadFade").modal("hide"); </script>';
+                                    $("#prof").val("' . $retor[0]['COD_TPROFE'] . '");},500);
+                                </script>';
+            */
 
+        } else {
+            $status_busqueda    =   false;
+            $html               =   "<script></script>";
+        }
+       
         $this->output->set_output(json_encode([
             'html'      =>  $html,
-            'status'    =>  $status_busqueda
+            'status'    =>  $status_busqueda,
+            'arr'       =>  $arr
         ]));
     }
 
@@ -70,45 +76,21 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         if (!$this->input->is_ajax_request()) {  show_404();  }
         $id             =   $this->input->post('tprof');
         $arr_return     =   $this->Ssan_pres_agregaeditaprestador_model->cargaprof($id);
-
-        /*
-        $var            =   '<option>SELECCIONE UNA PROFESIÓN</option>';
-        if ($retor) {
-            foreach ($retor as $row) {
-                $var .= '<option value="' . $row['COD_TPROFE'] . '"> ' . $row['NOM_TPROFE'] . '</option>';
-            }
-
-            if (count($retor) == 1) {
-                $var .= '<script>$("select#prof").prop("selectedIndex", 1);</script>';
-            }
-        }
-        */
-        
-        $this->output->set_output(json_encode([
-            'status'    =>  $arr_return
-        ]));
+        $this->output->set_output(json_encode(['arr_return'=>$arr_return]));
     }
-
-
-
-
-
     
-    
-
     //consulta si el profesional esta registrado en la tabla profxestab
-    public function consultaprofxestab()
-    {
-        $var = "";
-        $rut = $this->input->post('rutPac');
-        $codemp = $this->input->post('codemp');
+    public function consultaprofxestab(){
+        if (!$this->input->is_ajax_request()) {  show_404();  }
+        $var        =   "";
+        $rut        =   $this->input->post('rutPac');
+        $codemp     =   $this->input->post('codemp');
+        $rutm       =   explode(".", $rut);
+        $rutUs      =   $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
+        $rutsin     =   explode("-", $rutUs);
+        $rutfin     =   $rutsin[0];
 
-        $rutm = explode(".", $rut);
-        $rutUs = $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
-        $rutsin = explode("-", $rutUs);
-        $rutfin = $rutsin[0];
-
-        $retor = $this->Ssan_pres_agregaeditaprestador_model->consultaprofxestab($rutfin, $codemp);
+        $retor      =   $this->Ssan_pres_agregaeditaprestador_model->consultaprofxestab($rutfin, $codemp);
         if ($retor) {
         } else {
             $var = '<div class="alert alert-warning">';

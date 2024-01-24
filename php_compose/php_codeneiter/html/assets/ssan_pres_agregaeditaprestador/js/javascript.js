@@ -8,29 +8,19 @@ $(function(){
         on_success  :   function()  {
                                         $('#btnSuper').show();
                                     },
-        format_on: 'keyup'
+        format_on   :   'keyup'
     });
     $("[data-toggle='tooltip']").tooltip();
-
     //test
-    showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Conexi&oacute;n con instancia no iniciada ',2,'');
+    //showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Conexi&oacute;n con instancia no iniciada ',2,'');
 });
-
 
 function buscar() {
     let rut = $('#rutPac').val();
+    limpiar();
     if (rut === '') {
         jError("RUN ingresado incorrecto","Clinica Libre");
     } else {
-        /*
-            $('#loadFade').modal('show');
-            var id          =   "respuesta"; //Div o ID de los resultados
-            var funcion     =   "buscar"; //Funcion del Controlador a Ejecutar
-            var variables   =   { 'rutPac': rut }; //Variables pasadas por ajax a la funcion
-            AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
-        */
-
-
         $.ajax({ 
             type        :	"POST",
             url         :	"Ssan_pres_agregaeditaprestador/buscar",
@@ -62,55 +52,42 @@ function buscar() {
 }
 
 function CARGAPROF() {
-    var rut     =   $('#rutPac').val();
+    let rut     =   $('#rutPac').val();
     if (rut === '') {
         $('#prof').val('SELECCIONE UNA PROFESI&Oacute;N');
     } else {
-
-
-        var tprof       =   $('#tprof').val();
-
-
-        //envio el 
-        //var rut       =   $('#rutPac').val();
-
-        /*
-       
-        var id          =   "prof"; //Div o ID de los resultados
-        var funcion     =   "cargaprof"; //Funcion del Controlador a Ejecutar
-        var variables   =   { tprof: tprof }; //Variables pasadas por ajax a la funcion
-        AjaxExt(variables, id ,funcion); //Funcion que Ejecuta la llamada del ajax
-        */
-
-
+        let tprof       =   $('#tprof').val();
+        document.getElementById('prof').innerHTML = '';
         $.ajax({ 
             type        :	"POST",
-            url         :	"Ssan_pres_agregaeditaprestador/carggaprof",
+            url         :	"Ssan_pres_agregaeditaprestador/cargaprof",
             beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
             dataType    :	"json",
             data        :	{ tprof : tprof },
             error       :	function(errro,error2,error3)	{ 
-
                                                                 console.log("--------------------------------"); 
                                                                 console.log(errro); 
                                                                 console.log(error2);
                                                                 console.log(error3);
-                                                                console.log(errro.responseText); 
-                                                                $('#loadFade').modal('hide');
                                                                 jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
-                                                                
                                                             },
             success     :	function(aData)	                {	
-                                                                console.log("out -> carggaprof ->",aData);
-                                                                /*
-                                                                $('#loadFade').modal('hide');
-                                                                if (aData.status){
-
-                                                                } else {
-                                                                    showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
-                                                                }
-                                                                */
+                                                                //console.log("out -> carggaprof ->",aData);
+                                                                let arr_return = aData.arr_return;
+                                                                if (arr_return.length>0){
+                                                                    var select = document.getElementById('prof');
+                                                                    arr_return.forEach(function(item){
+                                                                        var option          =   document.createElement('option');
+                                                                        option.value        =   item.COD_TPROFE; // Establecer el valor del option
+                                                                        option.textContent  =   item.NOM_TPROFE; // Establecer el texto del option
+                                                                        select.appendChild(option);
+                                                                    });
+                                                                } 
                                                             }, 
+            complete    :   function()                      {
+                                                                // Código que se ejecuta después de success/error
+                                                                $('#loadFade').modal('hide');
+                                                            }                                                
         });
     }
 }
@@ -123,10 +100,10 @@ function limpiar() {
     $('#appat').val('');
     $('#apmat').val('');
     $('#tprof').val('SELECCIONE EL TIPO DE PROFESIONAL');
-    $('#prof').val('SELECCIONE UNA PROFESIÓN');
     $('#email').val('');
     $('#telefono').val('');
     $("#respuesta1").hide();
+    document.getElementById('prof').innerHTML = '';
 }
 
 function getSuper() {
