@@ -2,22 +2,16 @@
     <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>AGREGA EDITA PRESTADOR</b>
 </h4>
 
-<?php
-
-echo $sql;
-
-?>
-
-
 <div class="content">
     <form id="" action="" method="">
-        <input type="hidden" id="username" name="username" value="<?php echo $usu_ario; ?>">
+        
+    <input type="hidden" id="username" name="username" value="<?php echo $usu_ario; ?>">
         <input type="hidden" id="token" name="token" value="<?php echo $tok_G; ?>">
         <input type="hidden" id="codemp" name="codemp" value="<?php echo $em_presa; ?>">
-        <div>
-            <div id="respuesta1" class="form-group">
 
-            </div>
+        <div>
+            <div id="respuesta1" class="form-group"></div>
+
             <table class="table table-responsive">
                 <tr>
                     <td>
@@ -26,8 +20,10 @@ echo $sql;
                             <input type="text" name="rutPac" id="rutPac" class="form-control" onkeyup="return NumGuion();" maxlength="12" required>
                         </div>
                     </td>
-                    <td>
-                        <a href="javascript:buscar(); consultaprofxestab(); " class="btn btn-primary btn-fill"><i class="fa fa-search"></i> Buscar Prestador</a>
+                    <td valign="bottom">
+                        <a href="javascript:buscar(); consultaprofxestab(); " class="btn btn-primary btn-fill" style="margin-top: 32px;">
+                            <i class="fa fa-search"></i>&nbsp;BUSCAR&nbsp;PRESTADOR
+                        </a>
                     </td>
                     <td>
                         <a id="btnSuper" href="javascript:getSuper()" class="btn btn-default" style="padding: 0 10px;display:none"><img src="assets/ssan_pre_gestionarprestador/img/logoSuper.png"></a>
@@ -59,7 +55,13 @@ echo $sql;
                             <span style="color: #FF9800;">* </span><label class="control-label">TIPO PROFESIONAL</label>
                             <select class="form-control" name="tprof" id="tprof" onchange="CARGAPROF();" required>
                             <option>SELECCIONE EL TIPO DE PROFESIONAL</option>
-                            <?php echo $cargatipo;?>
+                            <?php
+                                if (count($arr_tipos)>0){
+                                    foreach ($arr_tipos as $i => $val) {
+                                        echo '<option value="' . $val['IND_TIPOATENCION'] . '"> ' . $val['DES_TIPOATENCION'] . '</option>';
+                                    }
+                                }
+                            ?>
                             </select>
                         </div>
                     </td>

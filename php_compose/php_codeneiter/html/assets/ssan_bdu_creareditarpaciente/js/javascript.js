@@ -36,20 +36,19 @@ $(document).ready(function(){
         if(!isNaN($(this).text())){ buscar(1,$(this).text()); }
     });
     
-    console.log(" -------------- TEMPLETE -> "+$("#indTemplateNum").val() +" <--------------");
+    //console.log(" -------------- TEMPLETE -> "+$("#indTemplateNum").val() +" <--------------");
     //ocMen();
     $('#modal_percapita').on('show.bs.modal',function(e){
         $("#HTML_PERCAPITA").html('');
         $("#modalPaciente").css("z-index","1000"); 
         $("#modal_percapita").css("z-index","11500");
     });
+
     $('#modal_percapita').on('hidden.bs.modal',function(e){
         $("#modal_percapita").css("z-index","100");
         $("#modalPaciente").css("z-index","1500"); 
         $("#HTML_PERCAPITA").html('');
     });
-
-
 
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 3                                   ");

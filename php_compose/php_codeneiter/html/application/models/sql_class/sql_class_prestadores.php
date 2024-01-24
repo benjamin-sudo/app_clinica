@@ -22,26 +22,23 @@ class sql_class_prestadores extends CI_Model {
         return $sQuery;
     }
 
-
     //Hace una consulta que permite traer el prestador desde bd
-
     public function buscar($rutfin){
-
         $sQuery = "
           SELECT
-          A.NOM_NOMBRE,
-          A.NOM_APEPAT,
-          A.NOM_APEMAT,
-          A.EMAILMED,
-          A.NUM_TELEFOMED,
-          A.COD_TPROFE,
-          B.IND_TIPOATENCION
-          FROM
-          ADMIN.GG_TPROFESIONAL a,
-          ADMIN.GG_TPROFESION b
-          WHERE
-          A.COD_RUTPRO= $rutfin and
-          A.COD_TPROFE = B.COD_TPROFE";
+            A.NOM_NOMBRE,
+            A.NOM_APEPAT,
+            A.NOM_APEMAT,
+            A.EMAILMED,
+            A.NUM_TELEFOMED,
+            A.COD_TPROFE,
+            B.IND_TIPOATENCION
+            FROM
+            ADMIN.GG_TPROFESIONAL   A,
+            ADMIN.GG_TPROFESION     B
+            WHERE
+            A.COD_RUTPRO = $rutfin AND
+            A.COD_TPROFE = B.COD_TPROFE";
 
         return $sQuery;
     }
@@ -192,12 +189,12 @@ class sql_class_prestadores extends CI_Model {
     {
 
         $sQuery = "SELECT 
-        C.IND_TIPOATENCION AS PROF
+            C.IND_TIPOATENCION AS PROF
         FROM  
-        ADMIN.GG_TPROFESIONAL A,
-        ADMIN.GG_TPROFESION B,
-        ADMIN.AP_TTIPOATENCION C,
-        ADMIN.AP_TPROFXESTABL D
+            ADMIN.GG_TPROFESIONAL A,
+            ADMIN.GG_TPROFESION B,
+            ADMIN.AP_TTIPOATENCION C,
+            ADMIN.AP_TPROFXESTABL D
         WHERE A.IND_ESTADO = 'V'
                 AND A.COD_TPROFE = B.COD_TPROFE
                 AND B.IND_TIPOATENCION = C.IND_TIPOATENCION

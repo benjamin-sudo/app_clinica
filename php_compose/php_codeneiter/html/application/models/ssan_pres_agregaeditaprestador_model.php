@@ -1,7 +1,8 @@
 <?php
 
 defined("BASEPATH") OR exit("No direct script access allowed");
-//require_once(APPPATH . '/models/ClassFonasa/libsp/nusoapwsf.php');
+#require_once(APPPATH . '/models/ClassFonasa/libsp/nusoapwsf.php');
+
 class Ssan_pres_agregaeditaprestador_model extends CI_Model {
 
     var $tableSpace     =   "ADMIN";
@@ -9,16 +10,18 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
+        $this->db = $this->load->database('oracle_conteiner',true);
         $this->load->model("sql_class/sqlclass_archivo");
         $this->load->model("sql_class/sql_class_prestadores");
-        $this->load->helper('text');
-        $this->db = $this->load->database('oracle_conteiner',true);
+        #$this->load->helper('text');
     }
 
     public function cargatipo(){
         return [
-            //'sql' => $this->db->query($this->sql_class_prestadores->cargartipo()),
-            'sql' => 'nada'
+            'arr_tipos' => $this->db->query($this->sql_class_prestadores->cargartipo())->result_array(),
+            'usu_ario'  => '',
+            'tok_G'     => '',
+            'em_presa'  => '',
         ];
     }
     

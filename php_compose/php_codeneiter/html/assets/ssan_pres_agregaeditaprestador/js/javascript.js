@@ -1,45 +1,58 @@
-$(function() {
-    CARGATIPO();
+$(function(){
     $('#rutPac').Rut({
-        on_error: function() {
-            swal("Aviso", "RUN ingresado incorrecto", "info");
-            limpiar();
-            $('#btnSuper').hide();
-        },
-        on_success: function() {
-            $('#btnSuper').show();
-        },
+        on_error    :   function() {
+                                        jError("RUN ingresado incorrecto","Clinica Libre");
+                                        limpiar();
+                                        $('#btnSuper').hide();
+                                    },
+        on_success  :   function()  {
+                                        $('#btnSuper').show();
+                                    },
         format_on: 'keyup'
     });
-});
-
-$(function() {
     $("[data-toggle='tooltip']").tooltip();
 });
 
 
-//BOTON ELIMINAR
-function limpiar() {
-    $('#rutPac').val('');
-    $('#nombres').val('');
-    $('#appat').val('');
-    $('#apmat').val('');
-    $('#tprof').val('SELECCIONE EL TIPO DE PROFESIONAL');
-    $('#prof').val('SELECCIONE UNA PROFESIÓN');
-    $('#email').val('');
-    $('#telefono').val('');
-    $("#respuesta1").hide();
-}
+function buscar() {
+    let rut = $('#rutPac').val();
+    if (rut === '') {
+        jError("RUN ingresado incorrecto","Clinica Libre");
+    } else {
 
-function CARGATIPO() {
-    /*
-    var id = "respuesta"; //Div o ID de los resultados
-    var funcion = "cargatipo"; //Funcion del Controlador a Ejecutar
-    var variables = {}; //Variables pasadas por ajax a la funcion
-    AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
-    */
-}
+        /*
+            $('#loadFade').modal('show');
+            var id          = "respuesta"; //Div o ID de los resultados
+            var funcion     = "buscar"; //Funcion del Controlador a Ejecutar
+            var variables   = { 'rutPac': rut }; //Variables pasadas por ajax a la funcion
+            AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
+        */
 
+        $.ajax({ 
+            type        :	"POST",
+            url         :	"Ssan_pres_agregaeditaprestador/buscar",
+            beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
+            dataType    :	"json",
+            data        :	{ rutPac : rut },
+            error       :	function(errro,error2,error3)	{ 
+
+                                                                console.log("--------------------------------"); 
+                                                                console.log(errro); 
+                                                                console.log(error2);
+                                                                console.log(error3);
+                                                                console.log(errro.responseText); 
+                                                                $('#loadFade').modal('hide');
+                                                                jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                                                                
+                                                            },
+            success     :	function(aData)	                {	
+                                                                $('#loadFade').modal('hide');
+                                                                console.log("function ->",aData);
+                                                               
+                                                            }, 
+        });
+    }
+}
 
 function CARGAPROF() {
     var rut = $('#rutPac').val();
@@ -55,18 +68,18 @@ function CARGAPROF() {
     }
 }
 
-function buscar() {
-    var rut = $('#rutPac').val();
-    if (rut === '') {
-        swal("Aviso", "El campo RUN se encuentra vacio", "info");
-    } else {
-        $('#loadFade').modal('show');
-        var id = "respuesta"; //Div o ID de los resultados
-        var funcion = "buscar"; //Funcion del Controlador a Ejecutar
-        var variables = { 'rutPac': rut }; //Variables pasadas por ajax a la funcion
-        AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
-    }
 
+//BOTON ELIMINAR
+function limpiar() {
+    $('#rutPac').val('');
+    $('#nombres').val('');
+    $('#appat').val('');
+    $('#apmat').val('');
+    $('#tprof').val('SELECCIONE EL TIPO DE PROFESIONAL');
+    $('#prof').val('SELECCIONE UNA PROFESIÓN');
+    $('#email').val('');
+    $('#telefono').val('');
+    $("#respuesta1").hide();
 }
 
 function getSuper() {
@@ -78,19 +91,20 @@ function getSuper() {
 }
 
 function consultaprofxestab() {
-    var rut = $('#rutPac').val();
-    var codemp = $('#codemp').val();
+    let rut     =   $('#rutPac').val();
+    let codemp  =   $('#codemp').val();
     if (rut === '') {
         swal("Aviso", "El campo RUN se encuentra vacio", "info");
     } else {
-        //$('#loadFade').modal('show');
-        var id = "respuesta1"; //Div o ID de los resultados
-        var funcion = "consultaprofxestab"; //Funcion del Controlador a Ejecutar
-        var variables = { 'rutPac': rut, 'codemp': codemp }; //Variables pasadas por ajax a la funcion
-        AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
-
+        /*
+            $('#loadFade').modal('show');
+            var id = "respuesta1"; //Div o ID de los resultados
+            var funcion = "consultaprofxestab"; //Funcion del Controlador a Ejecutar
+            var variables = { 'rutPac': rut, 'codemp': codemp }; //Variables pasadas por ajax a la funcion
+            AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
+        */
+        console.log("consultaprofxestab -> ");
     }
-
 }
 
 function prestador() {
@@ -103,6 +117,7 @@ function prestador() {
     var email = $('#email').val();
     var codemp = $('#codemp').val();
     var telefono = $('#telefono').val();
+
     if (rut === '') {
         swal("Aviso", "EL CAMPO RUN SE ENCUENTRA VACIO", "info");
     } else

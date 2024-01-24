@@ -1,0 +1,11 @@
+.cell-with-button   {
+    display         :   flex;
+    flex-direction  :   column;
+    justify-content :   space-between;
+    height          :   100px; 
+}
+
+
+.cell-with-button   {
+    align-items     :   flex-end;
+}
