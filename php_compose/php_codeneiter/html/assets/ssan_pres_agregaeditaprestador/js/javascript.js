@@ -198,15 +198,17 @@ function prestador() {
                                                                     },
                     success     :	function(aData)	                {	
                                                                         console.log("success aData ->",aData);
+
+                                                                        if (aData.status){
+                                                                            showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Profesional granado exitosamente. ',2,'');
+                                                                            limpiar();
+                                                                        }
+
                                                                     }, 
                     complete    :   function()                      {
                                                                         $('#loadFade').modal('hide');
                                                                     }                                                
                 });
-
-
-                
-
                 //AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
             }
         });

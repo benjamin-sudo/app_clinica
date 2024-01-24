@@ -6,6 +6,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 class Ssan_pres_agregaeditaprestador_model extends CI_Model {
 
     var $tableSpace     =   "ADMIN";
+    var $own            =   "ADMIN";
     var $ownGu          =   "GUADMIN";
 
     public function __construct() {
@@ -88,15 +89,10 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             'COD_EMPRESA'   =>  $codemp,
             'COD_TPROFENEW' =>  $tprof
         );
-
+        
         //var_dump($rutfin);
 
-
-
-        $mprestador     =   $this->consultaPrestador($rutfin);
-
-
-
+        $mprestador         =   $this->consultaPrestador($rutfin);
         if ($mprestador) {
             #MODIFICO EL PRESTADOR
             $this->db->set('COD_USUARI', $rutUsClave);
@@ -110,8 +106,6 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             $this->db->set('FEC_USRCREA', 'SYSDATE');
             $this->db->insert($this->own . '.GG_TPROFESIONAL', $dataUs);
         }
-
-
 
         $profxemp = $this->consultaPrestadorxEmp($rutfin, $codemp);
         if ($profxemp) {
@@ -130,7 +124,6 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             $this->db->where('COD_RUTPRO', $rutfin);
             $this->db->insert($this->own . '.AP_TPROFXESTABL', $dataUp);
         }
-
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
