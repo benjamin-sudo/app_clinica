@@ -89,7 +89,6 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         $rutUs      =   $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
         $rutsin     =   explode("-", $rutUs);
         $rutfin     =   $rutsin[0];
-
         $retor      =   $this->Ssan_pres_agregaeditaprestador_model->consultaprofxestab($rutfin, $codemp);
         if ($retor) {
         } else {
@@ -102,68 +101,74 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
 
     public function PrestadorController(){
         if (!$this->input->is_ajax_request()) {  show_404();  }
-
-        $rut = $this->input->post('rut');
-        $rutm = explode(".", $rut);
-        $rutUs = $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
-        $rutsin = explode("-", $rutUs);
-        $rutfin = $rutsin[0];
-        $digrut = $rutsin[1];
-        $nombres = $this->input->post('nombres');
-        $appat = $this->input->post('appat');
-        $apmat = $this->input->post('apmat');
-        $tprof = $this->input->post('tprof');
-        $prof = $this->input->post('prof');
-        $email = $this->input->post('email');
-        $telefono = $this->input->post('telefono');
-        $clave = $this->input->post("clave");
-        $iniciales = substr($nombres, 0, 1);
-        $iniciales .= substr($appat, 0, 1);
-        $iniciales .= substr($apmat, 0, 1);
-        $codemp = $this->input->post('codemp');
-
+        $rut         =   $this->input->post('rut');
+        //$rutm      =   explode(".", $rut);
+        //$rutUs     =   $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
+        //$rutsin    =   explode("-", $rutUs);
+        $rutfin      =   $this->input->post('v_run');
+        $digrut      =   $this->input->post('v_dv');
+        
+        $nombres     =   $this->input->post('nombres');
+        $appat       =   $this->input->post('appat');
+        $apmat       =   $this->input->post('apmat');
+        $tprof       =   $this->input->post('tprof');
+        $prof        =   $this->input->post('prof');
+        $email       =   $this->input->post('email');
+        $telefono    =   $this->input->post('telefono');
+        $clave       =   $this->input->post("clave");
+        $iniciales   =   substr($nombres, 0, 1);
+        $iniciales  .=   substr($appat, 0, 1);
+        $iniciales  .=   substr($apmat, 0, 1);
+        $codemp      =   $this->input->post('codemp');
+        $valida      =   true;
+        /*
         if (empty($token)) {
-
             $valida = $this->Ssan_pres_agregaeditaprestador_model->validaClave($clave);
         } else {
-
-            $valida = $this->Ssan_pres_agregaeditaprestador_model->validaClaveTypo($clave);
+            $valida             = $this->Ssan_pres_agregaeditaprestador_model->validaClaveTypo($clave);
         }
-
+        */
         if ($valida) {
-            $rutClave = $valida[0]['USERNAME'];
-            $rutmClave = explode("-", $rutClave);
-            $rutUsClave = $rutmClave[0];
+            $rutClave           =   $valida[0]['USERNAME'];
+            $rutmClave          =   explode("-", $rutClave);
+            $rutUsClave         =   $rutmClave[0];
             //INSERTO
-            $inicial = $iniciales;
-            $consultainicial = $this->Ssan_pres_agregaeditaprestador_model->consultaIniciales(strtoupper($iniciales));
-            if ($consultainicial) {
-                $numero = $consultainicial[0]['NUMERO'];
+            $inicial            =   $iniciales;
+            $consultainicial    =   $this->Ssan_pres_agregaeditaprestador_model->consultaIniciales(strtoupper($iniciales));
+            if ($consultainicial){
+                $numero         =   $consultainicial[0]['NUMERO'];
                 if ($numero == 0) {
-                    $inicial = $iniciales;
+                    $inicial    =   $iniciales;
                 } elseif ($numero > 9) {
-                    $inicial  = substr($iniciales, 0, -1);
-                    $inicial .= $numero + 1;
+                    $inicial    =   substr($iniciales, 0, -1);
+                    $inicial    .=  $numero + 1;
                 } else {
-                    $inicial = $iniciales;
-                    $inicial .= $numero + 1;
+                    $inicial    =   $iniciales;
+                    $inicial    .=  $numero + 1;
                 }
             }
 
-            $ingresoPrestador = $this->Ssan_pres_agregaeditaprestador_model->guardarPrestador($rutfin, $digrut, $nombres, $appat, $apmat, $tprof, $prof, $email, $telefono, $inicial, $rutUsClave, $codemp);
-            if ($ingresoPrestador) {
+            $ingresoPrestador   =   $this->Ssan_pres_agregaeditaprestador_model->guardarPrestador($rutfin, $digrut, $nombres, $appat, $apmat, $tprof, $prof, $email, $telefono, $inicial, $rutUsClave, $codemp);
+            if ($ingresoPrestador){
                 //$html = '<script>showNotification("bottom", "right", "Prestador ingresado con exito.", 2, "fa fa-check");</script>';
-                $html = '<script>swal("CONFIRMACIÓN","PROCESO REALIZADO CON EXITO", "success");</script>';
-                $html .= '<script>limpiar();</script>';
-                $html .= '<script>$("#respuesta1").hide();</script>';
+                $html   =   '<script>swal("CONFIRMACIÓN","PROCESO REALIZADO CON EXITO", "success");</script>';
+                $html   .=  '<script>limpiar();</script>';
+                $html   .=  '<script>$("#respuesta1").hide();</script>';
             } else {
-                $html = '<script>swal("Error","Error al Grabar", "error");</script>';
+                $html   =   '<script>swal("Error","Error al Grabar", "error");</script>';
             }
-            $this->output->set_output($html);
+
+            #$this->output->set_output($html);
+            #$this->output->set_output(json_encode(['html'=>$html]));
         } else {
             $html = '<script>showNotification("top", "right", "Error - Firma simple incorrecta.", 4, "fa fa-times");</script>';
-            $this->output->set_output($html);
+            #$this->output->set_output($html);
+            #$this->output->set_output(json_encode(['html'=>$html]));
         }
+        
+        $this->output->set_output(json_encode([
+            'status' => true
+        ]));
     }
 
 

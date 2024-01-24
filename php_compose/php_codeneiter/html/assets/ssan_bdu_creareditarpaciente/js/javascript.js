@@ -862,9 +862,7 @@ function enviaDatosBDU(isNew,isNal,RN,numFichae,IDselect,txtNumero,RutMon){
                 //FormGenerales.push({name : 'IND_TIPOIDENTIFICA', value        : txtNumero });
                 //FormGenerales.push({name : 'TIP_IDENTIFICACION', value        : IDselect });
                 FormGenerales.push({name : 'txtFecvencePasport',   value        : $("#txtFecvencePasport").val() });
-                
                 FormGenerales.push({name : 'txtFecvence_fonasa',   value        : $("#txtFecvence_fonasa").val() });
-                
             }      
         } 
     }
@@ -891,18 +889,13 @@ function enviaDatosBDU(isNew,isNal,RN,numFichae,IDselect,txtNumero,RutMon){
     } else {
         nuevaNFicha         = $("#txtFichaFisicaLocal").val();
     }
-  
-
     console.log(rutTitul);
     console.log(actualizacionDatos);
-    
     //return false;
     $('#Btn_bdu').attr("disabled",true);
     //jPrompt
     jConfirm('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir o actualizar informaci&oacute;n paciente en BDU - Clinica libre. <br/>&iquest;Est&aacute; seguro de continuar?<br />','Confirmaci\u00F3n',function(r){
         if(r){
-
-
             
             $.ajax({ 
                 type        :	"POST",
@@ -911,18 +904,18 @@ function enviaDatosBDU(isNew,isNal,RN,numFichae,IDselect,txtNumero,RutMon){
                 cache       :	false,
                 data        :                   
 						    { 
-                                isNew       : isNew,
-                                isNal       : isNal,
-                                RN          : RN,
-                                numFichae   : numFichae,
-                                IDselect    : IDselect,
-                                txtNumero   : txtNumero,
-                                RutMon      : RutMon,
-                                FORM        : actualizacionDatos,
-                                rutTitul    : rutTitul,
-                                contrasena  : r,
-                                Previ       : tienePreviExtra,
-                                nuevaNFicha : nuevaNFicha,
+                                isNew       :   isNew,
+                                isNal       :   isNal,
+                                RN          :   RN,
+                                numFichae   :   numFichae,
+                                IDselect    :   IDselect,
+                                txtNumero   :   txtNumero,
+                                RutMon      :   RutMon,
+                                FORM        :   actualizacionDatos,
+                                rutTitul    :   rutTitul,
+                                contrasena  :   r,
+                                Previ       :   tienePreviExtra,
+                                nuevaNFicha :   nuevaNFicha,
 						    },
                 error       :	function(errro)	    {	
                                                         $('#Btn_bdu').attr("disabled",false); 

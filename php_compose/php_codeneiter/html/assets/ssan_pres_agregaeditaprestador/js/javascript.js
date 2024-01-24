@@ -15,9 +15,9 @@ $(function(){
     //showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Conexi&oacute;n con instancia no iniciada ',2,'');
 });
 
-function buscar() {
+function buscar_prestador(){
+    //limpiar();
     let rut = $('#rutPac').val();
-    limpiar();
     if (rut === '') {
         jError("RUN ingresado incorrecto","Clinica Libre");
     } else {
@@ -85,7 +85,6 @@ function CARGAPROF() {
                                                                 } 
                                                             }, 
             complete    :   function()                      {
-                                                                // Código que se ejecuta después de success/error
                                                                 $('#loadFade').modal('hide');
                                                             }                                                
         });
@@ -111,23 +110,6 @@ function getSuper() {
     if (rut != '') {
         //$('#loadFade').modal('show');
         //AjaxExt({ 'rutProf': rut }, 'respSuper', 'buscaFuncSuper');
-    }
-}
-
-function consultaprofxestab() {
-    let rut     =   $('#rutPac').val();
-    let codemp  =   $('#codemp').val();
-    if (rut === '') {
-        jError("El campo RUN se encuentra vac&iacute;o","Clinica Libre");
-    } else {
-        /*
-            $('#loadFade').modal('show');
-            var id          =   "respuesta1"; //Div o ID de los resultados
-            var funcion     =   "consultaprofxestab"; //Funcion del Controlador a Ejecutar
-            var variables   =   { 'rutPac': rut, 'codemp': codemp }; //Variables pasadas por ajax a la funcion
-            AjaxExt(variables,id,funcion); //Funcion que Ejecuta la llamada del ajax
-        */
-        console.log("consultaprofxestab -> ");
     }
 }
 
@@ -165,13 +147,15 @@ function prestador() {
     if (telefono === '') {
         jError("EL CAMPO TELEFONO SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else {
-        jPrompt('<b>SE GUARDAR&Aacute; LA INFORMACI&Oacute;N.</b> <br /><br />&iquest;Est&aacute; SEGURO DESEA CONTINUAR?', '', 'CONFIRMACIÓN', function(r) {
+        jConfirm('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir profesional a su establecimiento - Clinica libre. <br/>&iquest;Est&aacute; seguro de continuar?<br />','Confirmaci\u00F3n',function(r){
             if (r) {
-                var id              =   "respuesta"; //Div o ID de los resultados
-                var funcion         =   "PrestadorController"; //Funcion del Controlador a Ejecutar
-                const variables     =   {
+                let textoSinPuntos   =  rut.replace(/\./g, '');
+                let arrayDividido    =  textoSinPuntos.split('-');
+                const variables      =   {
                                             clave       :   r,
                                             rut         :   rut,
+                                            v_run       :  arrayDividido[0],
+                                            v_dv        :  arrayDividido[1],
                                             nombres     :   nombres,
                                             appat       :   appat,
                                             apmat       :   apmat,
@@ -182,13 +166,48 @@ function prestador() {
                                             telefono    :   telefono
                                         }; 
 
+                console.log("---------------------------");                        
                 console.log("variables  ->  ",variables);
+                console.log("---------------------------");                        
+                
+                $.ajax({ 
+                    type        :	"POST",
+                    url         :	"Ssan_pres_agregaeditaprestador/PrestadorController",
+                    beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
+                    dataType    :	"json",
+                    data        :	{ 
+                                        clave       :   r,
+                                        rut         :   rut,
+                                        v_run       :   arrayDividido[0],
+                                        v_dv        :   arrayDividido[1],
+                                        nombres     :   nombres,
+                                        appat       :   appat,
+                                        apmat       :   apmat,
+                                        codemp      :   codemp,
+                                        tprof       :   tprof,
+                                        prof        :   prof,
+                                        email       :   email,
+                                        telefono    :   telefono
+                                    },
+                    error       :	function(errro,error2,error3)	{ 
+                                                                        console.log("--------------------------------"); 
+                                                                        console.log(errro); 
+                                                                        console.log(error2);
+                                                                        console.log(error3);
+                                                                        jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                                                                    },
+                    success     :	function(aData)	                {	
+                                                                        console.log("success aData ->",aData);
+                                                                    }, 
+                    complete    :   function()                      {
+                                                                        $('#loadFade').modal('hide');
+                                                                    }                                                
+                });
+
+
                 
 
                 //AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
-
-
-
             }
         });
     }

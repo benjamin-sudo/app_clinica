@@ -39,22 +39,20 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
         return $query->result_array();
     }
 
-    public function buscar($rutfin){
-        $codemp                 =   $this->session->userdata('COD_ESTAB');
+    public function buscar($rutfin) {
+        $codemp = $this->session->userdata('COD_ESTAB');
         return [
-            'prestador'         =   $this->db->query($this->sql_class_prestadores->buscar($rutfin))->result_array(),
-            'existe_empresa'    =   $this->db->query($this->sql_class_prestadores->consultaprofxestab($rutfin,$codemp)),
+            'prestador'         =>  $this->db->query($this->sql_class_prestadores->buscar($rutfin))->result_array(),
+            'existe_empresa'    =>  $this->db->query($this->sql_class_prestadores->consultaprofxestab($rutfin, $codemp))->result_array(),
         ];
     }
-
-    public function cargaprof($id)
-    {
+    
+    public function cargaprof($id) {
         $query = $this->db->query($this->sql_class_prestadores->cargaprof($id));
         return $query->result_array();
     }
 
-    public function consultaPrestador($rutfin)
-    {
+    public function consultaPrestador($rutfin){
         $query = $this->db->query($this->sql_class_prestadores->consultaPrestador($rutfin));
         return $query->result_array();
     }
@@ -64,49 +62,56 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
         $query = $this->db->query($this->sql_class_prestadores->consultaPrestadorxEmp($rutfin, $codemp));
         return $query->result_array();
     }
-    public function consultaIniciales($iniciales)
-    {
+
+    public function consultaIniciales($iniciales){
         $query = $this->db->query($this->sql_class_prestadores->consultaIniciales($iniciales));
         return $query->result_array();
     }
-    public function consultaprofxestab($rutfin, $codemp)
-    {
+
+    public function consultaprofxestab($rutfin, $codemp){
         $query = $this->db->query($this->sql_class_prestadores->consultaprofxestab($rutfin, $codemp));
         return $query->result_array();
     }
-    public function guardarPrestador($rutfin, $digrut, $nombres, $appat, $apmat, $tprof, $prof, $email, $telefono, $iniciales, $rutUsClave, $codemp)
-    {
 
+    public function guardarPrestador($rutfin, $digrut, $nombres, $appat, $apmat, $tprof, $prof, $email, $telefono, $iniciales, $rutUsClave, $codemp){
         $this->db->trans_start();
-
         $dataUs = array(
-            'COD_RUTPRO' => $rutfin,
-            'COD_DIGVER' => $digrut,
-            'NOM_NOMBRE' => strtoupper($nombres),
-            'NOM_APEPAT' => strtoupper($appat),
-            'NOM_APEMAT' => strtoupper($apmat),
-            'EMAILMED' => $email,
-            'NUM_TELEFOMED' => $telefono,
-            'COD_TPROFE' => $prof,
-            'IND_ESTADO' => 'V',
-            'COD_EMPRESA' => $codemp,
-            'COD_TPROFENEW' => $tprof
+            'COD_RUTPRO'    =>  $rutfin,
+            'COD_DIGVER'    =>  $digrut,
+            'NOM_NOMBRE'    =>  strtoupper($nombres),
+            'NOM_APEPAT'    =>  strtoupper($appat),
+            'NOM_APEMAT'    =>  strtoupper($apmat),
+            'EMAILMED'      =>  $email,
+            'NUM_TELEFOMED' =>  $telefono,
+            'COD_TPROFE'    =>  $prof,
+            'IND_ESTADO'    =>  'V',
+            'COD_EMPRESA'   =>  $codemp,
+            'COD_TPROFENEW' =>  $tprof
         );
 
-        $mprestador = $this->consultaPrestador($rutfin);
+        //var_dump($rutfin);
+
+
+
+        $mprestador     =   $this->consultaPrestador($rutfin);
+
+
+
         if ($mprestador) {
-            //MODIFICO EL PRESTADOR
+            #MODIFICO EL PRESTADOR
             $this->db->set('COD_USUARI', $rutUsClave);
             $this->db->set('FEC_AUDITA', 'SYSDATE');
             $this->db->where('COD_RUTPRO', $rutfin);
             $this->db->update($this->own . '.GG_TPROFESIONAL', $dataUs);
         } else {
-            //CREA EL PRESTADOR
+            #CREA EL PRESTADOR
             $this->db->set('COD_PROMED', strtoupper($iniciales));
             $this->db->set('COD_USRCREA', $rutUsClave);
             $this->db->set('FEC_USRCREA', 'SYSDATE');
             $this->db->insert($this->own . '.GG_TPROFESIONAL', $dataUs);
         }
+
+
 
         $profxemp = $this->consultaPrestadorxEmp($rutfin, $codemp);
         if ($profxemp) {

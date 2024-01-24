@@ -1,5 +1,5 @@
 <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
-    <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>AGREGA EDITA PRESTADOR</b>
+    <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>AGREGA EDITA PRESTADOR | VERIFICAR EN PAGINA DE PRESTADORES</b>
 </h4>
 
 <div class="content">
@@ -18,7 +18,7 @@
                         </div>
                     </td>
                     <td valign="bottom">
-                        <a href="javascript:buscar(); consultaprofxestab(); " class="btn btn-primary btn-fill" style="margin-top:30px;">
+                        <a href="javascript:buscar_prestador(); " class="btn btn-primary btn-fill" style="margin-top:30px;">
                             <i class="fa fa-search"></i>&nbsp;BUSCAR&nbsp;PRESTADOR
                         </a>
                     </td>
@@ -34,19 +34,19 @@
                     <td>
                         <div class="form-group">
                             <span style="color: #FF9800;">* </span><label class="control-label">NOMBRES</label>
-                            <input type="text" class="form-control" id="nombres" onkeypress="return soloLetras(event);" name="nombres" type="text" required>
+                            <input type="text" class="form-control" style="text-transform: uppercase;" id="nombres" onkeypress="return soloLetras(event);" name="nombres" type="text" required>
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
                             <span style="color: #FF9800;">* </span> <label class="control-label">APELLIDO PATERNO</label>
-                            <input class="form-control" name="appat" onkeypress="return soloLetras(event);" id="appat" maxlength="12" type="text" required>
+                            <input class="form-control" style="text-transform: uppercase;" name="appat" onkeypress="return soloLetras(event);" id="appat" maxlength="12" type="text" required>
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
                             <span style="color: #FF9800;">* </span> <label class="control-label">APELLIDO MATERNO</label>
-                            <input class="form-control" name="apmat" onkeypress="return soloLetras(event);" id="apmat" type="text" required>
+                            <input class="form-control" style="text-transform: uppercase;" name="apmat" onkeypress="return soloLetras(event);" id="apmat" type="text" required>
                         </div>
                     </td>
                 </tr>
@@ -76,14 +76,14 @@
                 <tr>
                     <td>
                         <div class="form-group">
-                            <span style="color: #FF9800;">* </span> <label class="control-label">CORREO ELECTRÓNICO</label>
-                            <input class="form-control minusc" name="email" onkeypress="return soloEmail(event);" id="email" type="email" required>
+                            <span style="color: #FF9800;">* </span> <label class="control-label">CORREO ELECTR&Oacute;NICO</label>
+                            <input class="form-control minusc" style="text-transform: uppercase;" name="email" onkeypress="return soloEmail(event);" id="email" type="email" required>
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
                             <span style="color: #FF9800;">* </span> <label class="control-label">TELEFONO</label>
-                            <input class="form-control" name="telefono" onkeypress="return soloNumeros(event);" id="telefono" type="text" maxlength="12" required>
+                            <input class="form-control" style="text-transform: uppercase;" name="telefono" onkeypress="return soloNumeros(event);" id="telefono" type="text" maxlength="12" required>
                         </div>
                     </td>
                 </tr>
