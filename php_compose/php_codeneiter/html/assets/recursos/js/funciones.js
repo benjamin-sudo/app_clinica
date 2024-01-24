@@ -1,58 +1,62 @@
  $(function() {
+
     $("#firmsimple").dialog({
-        autoOpen: false,
-        modal: true,
-        height: 550,
-        width: 700,
-        hide: "scale",
-        show: "fold",
-        resizable: false,
-        draggable: false
+        autoOpen        :   false,
+        modal           :   true,
+        height          :   550,
+        width           :   700,
+        hide            :   "scale",
+        show            :   "fold",
+        resizable       :   false,
+        draggable       :   false
     });
+
     $("#idResetearClave").dialog({
-        autoOpen: false,
-        modal: true,
-        height: 450,
-        width: 650,
-        hide: "scale",
-        show: "fold",
-        resizable: false,
-        draggable: false,
-        dialogClass: 'no-close'
+        autoOpen        :   false,
+        modal           :   true,
+        height          :   450,
+        width           :   650,
+        hide            :   "scale",
+        show            :   "fold",
+        resizable       :   false,
+        draggable       :   false,
+        dialogClass     :   'no-close'
     });
+
     $("#popRestabPass").dialog({
-        autoOpen: false,
-        modal: true,
-        height: 310,
-        width: 556,
-        hide: "scale",
-        show: "fold",
-        resizable: false,
-        draggable: false,
-        closeOnEscape: false,
-        dialogClass: 'no-close'
+        autoOpen        :   false,
+        modal           :   true,
+        height          :   310,
+        width           :   556,
+        hide            :   "scale",
+        show            :   "fold",
+        resizable       :   false,
+        draggable       :   false,
+        closeOnEscape   :   false,
+        dialogClass     :   'no-close'
     });
+
     $("#validaDatos").dialog({
-        autoOpen: false,
-        modal: true,
-        height: 690,
-        width: 700,
-        hide: "scale",
-        show: "fold",
-        resizable: false,
-        draggable: false,
-        closeOnEscape: false,
-        dialogClass: 'no-close'
+        autoOpen        :   false,
+        modal           :   true,
+        height          :   690,
+        width           :   700,
+        hide            :   "scale",
+        show            :   "fold",
+        resizable       :   false,
+        draggable       :   false,
+        closeOnEscape   :   false,
+        dialogClass     :   'no-close'
     });
     $("#imgPass").dialog({
-        autoOpen: false,
-        modal: true,
-        height: 690,
-        width: 1082,
-        hide: "scale",
-        show: "fold",
-        resizable: false,
-        draggable: false
+        autoOpen        :   false,
+        modal           :   true,
+        height          :   690,
+        width           :   1082,
+        hide            :   "scale",
+        show            :   "fold",
+        resizable       :   false,
+        draggable       :   false
     });
     setTimeout(function() {
         moverE();
@@ -78,17 +82,17 @@ function validaPass(idPass, idError) {
 }
 
 function confirmDatPss() {
-    var err = '';
-    var idUsrS = $('#idUsrS').val();
-    var nombres = $('#nameUsr').val();
-    var apePat = $('#apePatUsr').val();
-    var apeMat = $('#apeMatUsr').val();
-    var email = $('#emailUsr').val();
-    var fono = $('#fonoUsr').val();
-    var passActual = $('#passAcUsr').val();
-    var passNew = $('#password1').val();
-    var passNew2 = $('#passNew2Usr').val();
-    var nivPass = $('#nivContr').val();
+    var err         =   '';
+    var idUsrS      =   $('#idUsrS').val();
+    var nombres     =   $('#nameUsr').val();
+    var apePat      =   $('#apePatUsr').val();
+    var apeMat      =   $('#apeMatUsr').val();
+    var email       =   $('#emailUsr').val();
+    var fono        =   $('#fonoUsr').val();
+    var passActual  =   $('#passAcUsr').val();
+    var passNew     =   $('#password1').val();
+    var passNew2    =   $('#passNew2Usr').val();
+    var nivPass     =   $('#nivContr').val();
     
     if (nombres === '') {
         err += 'Nombres\n';
@@ -99,13 +103,13 @@ function confirmDatPss() {
     } else if (email === '') {
         err += 'Correo ElectrÃ³nico de Contacto\n';
     } else if (fono === '') {
-        err += 'NÃºmero Celular de Contacto\n';
+        err += 'Numero Celular de Contacto\n';
     } else if (passActual === '') {
-        err += 'ContraseÃ±a Actual\n';
+        err += 'Pass Actual\n';
     } else if (passNew === '') {
-        err += 'Nueva ContraseÃ±a\n';
+        err += 'Nueva Pass\n';
     } else if (passNew2 === '') {
-        err += 'Repetir ContraseÃ±a\n';
+        err += 'Repetir Pass\n';
     }
 
     if (err !== '') {
@@ -1612,3 +1616,32 @@ function isValidDate(day, month, year) {
     //Devuelva true o false...
     return ((day == dteDate.getDate()) && (month == dteDate.getMonth()) && (year == dteDate.getFullYear()));
 }
+
+
+var type = ['',
+    'info', 
+    'success', 
+    'warning', 
+    'danger', 
+    'primary'
+];
+
+function showNotification(from, align, txt, color, icono, width){
+    $.notify({
+        icono           :   icono,
+        message         :   txt
+        },{
+            type        :   type[color],
+            timer       :   4000,
+            placement   :   {
+            from        :   from,
+            align       :   align
+        }
+    });
+    $('.alert').css('z-index','9999');
+    if (width != '') {
+        $('.alert').css('width', width);
+        $('.message').css('width', width);
+    }
+}
+

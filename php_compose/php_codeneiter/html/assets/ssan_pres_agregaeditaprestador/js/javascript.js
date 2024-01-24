@@ -46,12 +46,13 @@ function buscar() {
                                                                 
                                                             },
             success     :	function(aData)	                {	
-                                                                $('#loadFade').modal('hide');
                                                                 console.log("function ->",aData);
+                                                                $('#loadFade').modal('hide');
+                                                                if (aData.status){
 
-
-                                                                console.log("html -> ",aData.html);
-                                                               
+                                                                } else {
+                                                                    jAlert("Resgistro nuevo profesional","Clinica Libre");
+                                                                }
                                                             }, 
         });
     }
@@ -88,8 +89,8 @@ function limpiar() {
 function getSuper() {
     var rut = $('#rutPac').val();
     if (rut != '') {
-        $('#loadFade').modal('show');
-        AjaxExt({ 'rutProf': rut }, 'respSuper', 'buscaFuncSuper');
+        //$('#loadFade').modal('show');
+        //AjaxExt({ 'rutProf': rut }, 'respSuper', 'buscaFuncSuper');
     }
 }
 
@@ -97,43 +98,40 @@ function consultaprofxestab() {
     let rut     =   $('#rutPac').val();
     let codemp  =   $('#codemp').val();
     if (rut === '') {
-       
-
-        jError("El campo RUN se encuentra vacio","Clinica Libre");
+        jError("El campo RUN se encuentra vac&iacute;o","Clinica Libre");
     } else {
         /*
             $('#loadFade').modal('show');
-            var id = "respuesta1"; //Div o ID de los resultados
-            var funcion = "consultaprofxestab"; //Funcion del Controlador a Ejecutar
-            var variables = { 'rutPac': rut, 'codemp': codemp }; //Variables pasadas por ajax a la funcion
-            AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
+            var id          =   "respuesta1"; //Div o ID de los resultados
+            var funcion     =   "consultaprofxestab"; //Funcion del Controlador a Ejecutar
+            var variables   =   { 'rutPac': rut, 'codemp': codemp }; //Variables pasadas por ajax a la funcion
+            AjaxExt(variables,id,funcion); //Funcion que Ejecuta la llamada del ajax
         */
         console.log("consultaprofxestab -> ");
     }
 }
 
 function prestador() {
-    var rut = $('#rutPac').val();
-    var nombres = $('#nombres').val();
-    var appat = $('#appat').val();
-    var apmat = $('#apmat').val();
-    var tprof = $('#tprof').val();
-    var prof = $('#prof').val();
-    var email = $('#email').val();
-    var codemp = $('#codemp').val();
-    var telefono = $('#telefono').val();
-    
+    var rut         =   $('#rutPac').val();
+    var nombres     =   $('#nombres').val();
+    var appat       =   $('#appat').val();
+    var apmat       =   $('#apmat').val();
+    var tprof       =   $('#tprof').val();
+    var prof        =   $('#prof').val();
+    var email       =   $('#email').val();
+    var codemp      =   $('#codemp').val();
+    var telefono    =   $('#telefono').val();
     if (rut === '') {
-        jError("EL CAMPO RUN SE ENCUENTRA VACIO","Clinica Libre");
+        jError("EL CAMPO RUN SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else
     if (nombres === '') {
-        jError("EL CAMPO NOMBRE SE ENCUENTRA VACIO","Clinica Libre");
+        jError("EL CAMPO NOMBRE SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else
     if (appat === '') {
-        jError("EL CAMPO APELLIDO PATERNO SE ENCUENTRA VACIO","Clinica Libre");
+        jError("EL CAMPO APELLIDO PATERNO SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else
     if (apmat === '') {
-        jError("EL CAMPO APELLIDO MATERNO SE ENCUENTRA VACIO","Clinica Libre");
+        jError("EL CAMPO APELLIDO MATERNO SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else
     if (tprof === 'SELECCIONE EL TIPO DE PROFESIONAL') {
         jError("POR FAVOR SELECCIONE EL TIPO DE PROFESIONAL","Clinica Libre");
@@ -142,29 +140,34 @@ function prestador() {
         jError("POR FAVOR SELECCIONE EL PROFESIONAL","Clinica Libre");
     } else
     if (email === '') {
-        jError("EL CAMPO CORREO SE ENCUENTRA VACIO","Clinica Libre");
+        jError("EL CAMPO CORREO SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else
     if (telefono === '') {
-        jError("EL CAMPO TELEFONO SE ENCUENTRA VACIO","Clinica Libre");
+        jError("EL CAMPO TELEFONO SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else {
-        jPrompt('<B>SE GUARDARÁ LA INFORMACIÓN.</B><br /><br />&iquest;Est&aacute; SEGURO DESEA CONTINUAR?', '', 'CONFIRMACIÓN', function(r) {
+        jPrompt('<b>SE GUARDAR&Aacute; LA INFORMACI&Oacute;N.</b> <br /><br />&iquest;Est&aacute; SEGURO DESEA CONTINUAR?', '', 'CONFIRMACIÓN', function(r) {
             if (r) {
-                var id = "respuesta"; //Div o ID de los resultados
-                var funcion = "PrestadorController"; //Funcion del Controlador a Ejecutar
-                var variables = {
-                    clave: r,
-                    rut: rut,
-                    nombres: nombres,
-                    appat: appat,
-                    apmat: apmat,
-                    codemp: codemp,
-                    tprof: tprof,
-                    prof: prof,
-                    email: email,
-                    telefono: telefono
-                }; //Variables pasadas por ajax a la funcion
+                var id              =   "respuesta"; //Div o ID de los resultados
+                var funcion         =   "PrestadorController"; //Funcion del Controlador a Ejecutar
+                const variables     =   {
+                                            clave       :   r,
+                                            rut         :   rut,
+                                            nombres     :   nombres,
+                                            appat       :   appat,
+                                            apmat       :   apmat,
+                                            codemp      :   codemp,
+                                            tprof       :   tprof,
+                                            prof        :   prof,
+                                            email       :   email,
+                                            telefono    :   telefono
+                                        }; 
 
-                AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
+                console.log("variables  ->  ",variables);
+                
+
+                //AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
+
+
 
             }
         });

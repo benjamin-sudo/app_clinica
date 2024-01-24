@@ -26,28 +26,26 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         $rutsin             =   explode("-", $rutUs);
         $rutfin             =   $rutsin[0];
         $retor              =   $this->Ssan_pres_agregaeditaprestador_model->buscar($rutfin);
-
-        if (count($retor)>0)    {
-
-            $html   =   '<script>setTimeout(function(){ CARGAPROF("' . $retor[0]['COD_TPROFE'] . '");},200)</script>';
-            $html   .= '<script>
-                        $("#nombres").val("' . $retor[0]['NOM_NOMBRE'] . '");
-                        $("#appat").val("' . $retor[0]['NOM_APEPAT'] . '");
-                        $("#apmat").val("' . $retor[0]['NOM_APEMAT'] . '");
-                        $("#email").val("' . $retor[0]['EMAILMED'] . '");
-                        $("#telefono").val("' . $retor[0]['NUM_TELEFOMED'] . '");
-                        $("#tprof").val("' . $retor[0]['IND_TIPOATENCION'] . '");' . 'setTimeout(function(){
-                        $("#prof").val("' . $retor[0]['COD_TPROFE'] . '");},500)</script>';
+        if(count($retor)>0)    {
+            $html           =   '<script>setTimeout(function(){ CARGAPROF("' . $retor[0]['COD_TPROFE'] . '");},200)</script>';
+            $html           .= '<script>
+                                    $("#nombres").val("' . $retor[0]['NOM_NOMBRE'] . '");
+                                    $("#appat").val("' . $retor[0]['NOM_APEPAT'] . '");
+                                    $("#apmat").val("' . $retor[0]['NOM_APEMAT'] . '");
+                                    $("#email").val("' . $retor[0]['EMAILMED'] . '");
+                                    $("#telefono").val("' . $retor[0]['NUM_TELEFOMED'] . '");
+                                    $("#tprof").val("' . $retor[0]['IND_TIPOATENCION'] . '");' . 'setTimeout(function(){
+                                    $("#prof").val("' . $retor[0]['COD_TPROFE'] . '");},500)</script>';
         } else {
-            $status_busqueda = false;
+            $status_busqueda    = false;
             $html = "<script></script>";
         }
         $html .= '<script> $("#loadFade").modal("hide"); </script>';
 
         $this->output->set_output(json_encode([
-                                                'html'      =>  $html,
-                                                'status'    =>  $status_busqueda
-                                            ]));
+            'html'      =>  $html,
+            'status'    =>  $status_busqueda
+        ]));
     }
 
 
