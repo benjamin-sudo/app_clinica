@@ -1,10 +1,19 @@
-.cell-with-button   {
-    display         :   flex;
-    flex-direction  :   column;
-    justify-content :   space-between;
-    height          :   100px; 
+
+.grid_titulo_presta                     {
+    display                              :   grid;
+     grid-template-columns               :   1fr 4fr;
+     align-items                         :   flex-start;
+     padding                             :   15px;
+     gap                                 :   8px;
+ }
+
+.cell-with-button                       {
+    display                             :   flex;
+    flex-direction                      :   column;
+    justify-content                     :   space-between;
+    height                              :   100px; 
 }
 
-.cell-with-button   {
-    align-items     :   flex-end;
+.cell-with-button                       {
+    align-items                         :   flex-end;
 }
