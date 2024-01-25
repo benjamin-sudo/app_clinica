@@ -40,25 +40,19 @@ function buscar_prestador(){
                                                                 
                                                                 console.log("--------------------------------");
                                                                 console.log("function -> ",aData);
-
                                                                 if (aData.status){
-                                                                   
                                                                     let data_prestador = aData.arr.prestador[0];
-                                                                    
                                                                     $("#nombres").val(data_prestador.NOM_NOMBRE);
                                                                     $("#appat").val(data_prestador.NOM_APEPAT);
                                                                     $("#apmat").val(data_prestador.NOM_APEMAT);
                                                                     $("#email").val(data_prestador.EMAILMED);
                                                                     $("#telefono").val(data_prestador.NUM_TELEFOMED);
                                                                     $("#tprof").val(data_prestador.IND_TIPOATENCION);
-
                                                                     CARGAPROF(data_prestador.COD_TPROFE);
-                                                                    
                                                                     setTimeout(() => {
                                                                         console.log("Retrasado por 1 segundo ->",data_prestador.COD_TPROFE);
                                                                         $("#prof").val(data_prestador.COD_TPROFE);
                                                                     },"1000");
-
                                                                 } else {
                                                                     showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
                                                                 }
