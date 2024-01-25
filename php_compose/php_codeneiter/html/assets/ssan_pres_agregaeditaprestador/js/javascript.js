@@ -38,20 +38,28 @@ function buscar_prestador(){
                                                                 
                                                             },
             success     :	function(aData)	                {	
-                                                                console.log("function ->",aData);
+                                                                
+                                                                console.log("--------------------------------");
+                                                                console.log("function -> ",aData);
+
                                                                 if (aData.status){
-                                                                    CARGAPROF();
+                                                                   
                                                                     let data_prestador = aData.arr.prestador[0];
+                                                                    
                                                                     $("#nombres").val(data_prestador.NOM_NOMBRE);
                                                                     $("#appat").val(data_prestador.NOM_APEPAT);
                                                                     $("#apmat").val(data_prestador.NOM_APEMAT);
                                                                     $("#email").val(data_prestador.EMAILMED);
                                                                     $("#telefono").val(data_prestador.NUM_TELEFOMED);
                                                                     $("#tprof").val(data_prestador.IND_TIPOATENCION);
+
+                                                                    CARGAPROF(data_prestador.COD_TPROFE);
+                                                                    
                                                                     setTimeout(() => {
-                                                                        console.log("Retrasado por 1 segundo.");
+                                                                        console.log("Retrasado por 1 segundo ->",data_prestador.COD_TPROFE);
                                                                         $("#prof").val(data_prestador.COD_TPROFE);
                                                                     },"1000");
+
                                                                 } else {
                                                                     showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
                                                                 }
@@ -61,8 +69,12 @@ function buscar_prestador(){
     }
 }
 
-function CARGAPROF(){
+function CARGAPROF(_value){
     let rut             =   $('#rutPac').val();
+
+    console.log("_value ->",_value);
+
+
     if (rut === '') {
         $('#prof').val('SELECCIONE UNA PROFESI&Oacute;N');
     } else {
@@ -93,6 +105,7 @@ function CARGAPROF(){
                                                                         select.appendChild(option);
                                                                     });
                                                                 } 
+                                                                
                                                             }, 
             complete    :   function()                      {
                                                                 $('#loadFade').modal('hide');
