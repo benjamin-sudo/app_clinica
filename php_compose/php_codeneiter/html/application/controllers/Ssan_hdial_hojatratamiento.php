@@ -14,5 +14,13 @@ class Ssan_hdial_hojatratamiento extends CI_Controller {
         $this->load->css("assets/Ssan_hdial_hojatratamiento/css/styles.css");
         $this->load->js("assets/Ssan_hdial_hojatratamiento/js/javascript.js");
         $this->load->view('Ssan_hdial_hojatratamiento/Ssan_hdial_hojatratamiento_view',$data);
+
+        /*
+        $data       =   [];
+        $this->load->css("assets/Ssan_hdial_agendadialisis/css/styles.css");
+        $this->load->js("assets/Ssan_hdial_agendadialisis/js/javascript.js");
+        $this->load->view('Ssan_hdial_agendadialisis/Ssan_hdial_agendadialisis_view',$data);
+        */
+
     }
 }
