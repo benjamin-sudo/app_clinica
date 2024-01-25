@@ -11,8 +11,7 @@ $(function(){
         format_on   :   'keyup'
     });
     $("[data-toggle='tooltip']").tooltip();
-    //test
-    //showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Conexi&oacute;n con instancia no iniciada ',2,'');
+    $("#rutPac").focus();
 });
 
 function buscar_prestador(){
@@ -40,36 +39,30 @@ function buscar_prestador(){
                                                             },
             success     :	function(aData)	                {	
                                                                 console.log("function ->",aData);
-                                                                $('#loadFade').modal('hide');
                                                                 if (aData.status){
-
-                                                                    console.log("aData  : ",aData.arr.prestador[0]);
-
+                                                                    CARGAPROF();
                                                                     let data_prestador = aData.arr.prestador[0];
-
-                                                                    console.log("data_prestador ->  ",data_prestador);
-
                                                                     $("#nombres").val(data_prestador.NOM_NOMBRE);
-
-                                                                    /*
-                                                                    $("#appat").val("' . $retor[0]['NOM_APEPAT'] . '");
-                                                                    $("#apmat").val("' . $retor[0]['NOM_APEMAT'] . '");
-                                                                    $("#email").val("' . $retor[0]['EMAILMED'] . '");
-                                                                    $("#telefono").val("' . $retor[0]['NUM_TELEFOMED'] . '");
-                                                                    $("#tprof").val("' . $retor[0]['IND_TIPOATENCION'] . '");' . 'setTimeout(function(){
-                                                                    $("#prof").val("' . $retor[0]['COD_TPROFE'] . '");},500);
-                                                                    */    
-
+                                                                    $("#appat").val(data_prestador.NOM_APEPAT);
+                                                                    $("#apmat").val(data_prestador.NOM_APEMAT);
+                                                                    $("#email").val(data_prestador.EMAILMED);
+                                                                    $("#telefono").val(data_prestador.NUM_TELEFOMED);
+                                                                    $("#tprof").val(data_prestador.IND_TIPOATENCION);
+                                                                    setTimeout(() => {
+                                                                        console.log("Retrasado por 1 segundo.");
+                                                                        $("#prof").val(data_prestador.COD_TPROFE);
+                                                                    },"1000");
                                                                 } else {
                                                                     showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
                                                                 }
+                                                                $('#loadFade').modal('hide');
                                                             }, 
         });
     }
 }
 
-function CARGAPROF() {
-    let rut     =   $('#rutPac').val();
+function CARGAPROF(){
+    let rut             =   $('#rutPac').val();
     if (rut === '') {
         $('#prof').val('SELECCIONE UNA PROFESI&Oacute;N');
     } else {
