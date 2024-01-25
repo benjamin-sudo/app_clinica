@@ -57,7 +57,7 @@
                     <td>
                         <div id="respuesta" class="form-group">
                             <span style="color: #FF9800;">* </span><label class="control-label">TIPO PROFESIONAL</label>
-                            <select class="form-control" name="tprof" id="tprof" onchange="CARGAPROF();" required>
+                            <select class="form-control" name="tprof" id="tprof" onchange="CARGAPROF(null);" required>
                             <option>SELECCIONE EL TIPO DE PROFESIONAL</option>
                             <?php
                                 if (count($arr_tipos)>0){
