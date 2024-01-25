@@ -37,9 +37,9 @@ function buscar_prestador(){
                                                                 
                                                             },
             success     :	function(aData)	                {	
-                                                                
                                                                 console.log("--------------------------------");
                                                                 console.log("function -> ",aData);
+
                                                                 if (aData.status){
                                                                     let data_prestador = aData.arr.prestador[0];
                                                                     $("#nombres").val(data_prestador.NOM_NOMBRE);
@@ -50,7 +50,6 @@ function buscar_prestador(){
                                                                     $("#tprof").val(data_prestador.IND_TIPOATENCION);
                                                                     CARGAPROF(data_prestador.COD_TPROFE);
                                                                     setTimeout(() => {
-                                                                        console.log("Retrasado por 1 segundo ->",data_prestador.COD_TPROFE);
                                                                         $("#prof").val(data_prestador.COD_TPROFE);
                                                                     },"1000");
                                                                 } else {

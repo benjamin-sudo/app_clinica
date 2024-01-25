@@ -54,7 +54,6 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         ]));
     }
 
-
     //CARGA LA EL TIPO DE PROFESION
     public function cargatipo() {
         $var = "";   

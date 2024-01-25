@@ -89,9 +89,7 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             'COD_EMPRESA'   =>  $codemp,
             'COD_TPROFENEW' =>  $tprof
         );
-        
         //var_dump($rutfin);
-
         $mprestador         =   $this->consultaPrestador($rutfin);
         if ($mprestador) {
             #MODIFICO EL PRESTADOR
