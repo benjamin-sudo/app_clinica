@@ -105,7 +105,7 @@ function CARGAPROF(_value){
                                                                         select.appendChild(option);
                                                                     });
                                                                 } 
-                                                                
+                                                                $('#loadFade').modal('hide');
                                                             }, 
             complete    :   function()                      {
                                                                 $('#loadFade').modal('hide');
