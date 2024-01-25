@@ -1,10 +1,9 @@
 
 .grid_titulo_presta                     {
-    display                              :   grid;
-     grid-template-columns               :   1fr 4fr;
-     align-items                         :   flex-start;
-     padding                             :   15px;
-     gap                                 :   8px;
+    display                             :   grid;
+    grid-template-columns               :   1fr auto;
+    align-items                         :   flex-start;
+    gap                                 :   8px;
  }
 
 .cell-with-button                       {

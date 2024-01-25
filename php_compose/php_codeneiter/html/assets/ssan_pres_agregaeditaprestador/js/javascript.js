@@ -43,6 +43,23 @@ function buscar_prestador(){
                                                                 $('#loadFade').modal('hide');
                                                                 if (aData.status){
 
+                                                                    console.log("aData  : ",aData.arr.prestador[0]);
+
+                                                                    let data_prestador = aData.arr.prestador[0];
+
+                                                                    console.log("data_prestador ->  ",data_prestador);
+
+                                                                    $("#nombres").val(data_prestador.NOM_NOMBRE);
+
+                                                                    /*
+                                                                    $("#appat").val("' . $retor[0]['NOM_APEPAT'] . '");
+                                                                    $("#apmat").val("' . $retor[0]['NOM_APEMAT'] . '");
+                                                                    $("#email").val("' . $retor[0]['EMAILMED'] . '");
+                                                                    $("#telefono").val("' . $retor[0]['NUM_TELEFOMED'] . '");
+                                                                    $("#tprof").val("' . $retor[0]['IND_TIPOATENCION'] . '");' . 'setTimeout(function(){
+                                                                    $("#prof").val("' . $retor[0]['COD_TPROFE'] . '");},500);
+                                                                    */    
+
                                                                 } else {
                                                                     showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
                                                                 }
@@ -167,9 +184,9 @@ function prestador() {
                                             telefono    :   telefono
                                         }; 
 
-                console.log("---------------------------");                        
+                console.log("----------------------------------------------");                        
                 console.log("variables  ->  ",variables);
-                console.log("---------------------------");                        
+                console.log("----------------------------------------------");                        
                 
                 $.ajax({ 
                     type        :	"POST",
@@ -195,7 +212,7 @@ function prestador() {
                                                                         console.log(errro); 
                                                                         console.log(error2);
                                                                         console.log(error3);
-                                                                        console.log("--------------------------------"); 
+                                                                        console.log("--------------------------------");
                                                                         jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
                                                                     },
                     success     :	function(aData)	    {	

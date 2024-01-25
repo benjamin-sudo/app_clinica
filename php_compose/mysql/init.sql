@@ -154,7 +154,7 @@ INSERT INTO `GU_TMENUPRINCIPAL` (`MENP_ID`, `MENP_NOMBRE`, `MENP_ESTADO`, `MENP_
 (1,	'BDU PACIENTES',	1,	'app_defaul_bdu',	0,	1,	NULL,	3,	'fa fa-id-card',	1,	NULL,	NULL),
 (2,	'MAESTRO DE PACIENTES ',	1,	'MAESTRODEPACIENTES',	1,	1,	NULL,	3,	NULL,	NULL,	NULL,	NULL),
 (3,	'GESTOR UNICO PACIENTES',	1,	'Ssan_bdu_creareditarpaciente',	2,	2,	NULL,	3,	NULL,	NULL,	NULL,	NULL),
-(4,	'PRESTADORES',	1,	'PRESTADORES',	0,	1,	NULL,	3,	'fa fa-address-card',	NULL,	NULL,	NULL),
+(4,	'PRESTADORES',	1,	'PRESTADORES',	0,	1,	NULL,	3,	'fa fa-user-md',	NULL,	NULL,	NULL),
 (5,	'GESTIÓN DE PRESTADORES ',	1,	'GESTIONDEPRESTADORES',	4,	1,	NULL,	3,	NULL,	NULL,	NULL,	NULL),
 (6,	'AGREGA EDITA PRESTADOR ',	1,	'ssan_pres_agregaeditaprestador',	5,	2,	NULL,	3,	NULL,	NULL,	NULL,	NULL),
 (7,	'DIALISIS ',	1,	'DIALISIS',	0,	1,	NULL,	3,	'fa fa-tint',	NULL,	NULL,	NULL),

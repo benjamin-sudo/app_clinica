@@ -1,6 +1,11 @@
-<h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
-    <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>AGREGA EDITA PRESTADOR | VERIFICAR EN P&Aacute;GINA DE PRESTADORES</b>
-</h4>
+<div class="grid_titulo_presta">
+    <div class="grid_titulo_presta1"> 
+        <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
+            <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>AGREGA EDITA PRESTADOR | VERIFICAR EN P&Aacute;GINA RNPI SUPER DE SALUD</b>
+        </h4>
+    </div>
+    <div class="grid_titulo_presta2">&nbsp;</div>
+</div>
 
 <div class="content">
     <form id="" action="" method="">
@@ -23,11 +28,9 @@
                         </a>
                     </td>
                     <td>
-                        <!--
-                        <a id="btnSuper" href="javascript:getSuper()" class="btn btn-default" style="padding: 0 10px;display:none">
-                            <img src="assets/ssan_pre_gestionarprestador/img/logoSuper.png">
+                        <a href="https://rnpi.superdesalud.gob.cl/#" target="_blank" class="btn btn-info btn-fill" style="margin-top:30px;">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;VISITAR RNPI SUPER DE SALUD
                         </a>
-                        -->
                     </td>
                 </tr>
                 <tr>
