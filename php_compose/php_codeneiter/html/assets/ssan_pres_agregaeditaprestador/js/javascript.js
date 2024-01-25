@@ -3,10 +3,9 @@ $(function(){
         on_error    :   function() {
                                         jError("RUN ingresado incorrecto","Clinica Libre");
                                         limpiar();
-                                        $('#btnSuper').hide();
                                     },
         on_success  :   function()  {
-                                        $('#btnSuper').show();
+                                        buscar_prestador();
                                     },
         format_on   :   'keyup'
     });
