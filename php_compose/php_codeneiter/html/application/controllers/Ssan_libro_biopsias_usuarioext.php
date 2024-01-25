@@ -14,6 +14,16 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_usuarioext/js/javascript.js");
         $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);
+        
+
+        /*
+        $data       =   [];
+        $this->load->css("assets/Ssan_hdial_agendadialisis/css/styles.css");
+        $this->load->js("assets/Ssan_hdial_agendadialisis/js/javascript.js");
+        $this->load->view('Ssan_hdial_agendadialisis/Ssan_hdial_agendadialisis_view',$data);
+        */
     }
+
+
 
 }
