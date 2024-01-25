@@ -71,10 +71,10 @@ function buscar_prestador(){
 
 function CARGAPROF(_value){
     let rut             =   $('#rutPac').val();
-
-    console.log("_value ->",_value);
-
-
+    
+    console.log("   ***************************");
+    console.log("   _value     :   ",_value);
+    
     if (rut === '') {
         $('#prof').val('SELECCIONE UNA PROFESI&Oacute;N');
     } else {
@@ -104,6 +104,9 @@ function CARGAPROF(_value){
                                                                         option.textContent  =   item.NOM_TPROFE; // Establecer el texto del option
                                                                         select.appendChild(option);
                                                                     });
+                                                                    if (_value != null){
+                                                                        $("#prof").val(_value);
+                                                                    }
                                                                 } 
                                                                 $('#loadFade').modal('hide');
                                                             }, 

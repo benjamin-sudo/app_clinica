@@ -100,7 +100,6 @@
         </div>
     </form>
 </div>
-
 <section>
     <div class="modal fade" id="modalSuper" tabindex="-1" style="text-align: center;">
         <div class="modal-dialog modal-lg " role="document">

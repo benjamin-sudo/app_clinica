@@ -1643,4 +1643,3 @@ function showNotification(from, align, txt, color, icono, width){
         $('.message').css('width', width);
     }
 }
-
