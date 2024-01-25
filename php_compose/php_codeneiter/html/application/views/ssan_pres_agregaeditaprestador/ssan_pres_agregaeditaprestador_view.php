@@ -1,5 +1,5 @@
 <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
-    <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>AGREGA EDITA PRESTADOR | VERIFICAR EN PAGINA DE PRESTADORES</b>
+    <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;<b>AGREGA EDITA PRESTADOR | VERIFICAR EN P&Aacute;GINA DE PRESTADORES</b>
 </h4>
 
 <div class="content">

@@ -147,15 +147,16 @@ function prestador() {
     if (telefono === '') {
         jError("EL CAMPO TELEFONO SE ENCUENTRA VAC&Iacute;O","Clinica Libre");
     } else {
+
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir profesional a su establecimiento - Clinica libre. <br/>&iquest;Est&aacute; seguro de continuar?<br />','Confirmaci\u00F3n',function(r){
             if (r) {
-                let textoSinPuntos   =  rut.replace(/\./g, '');
-                let arrayDividido    =  textoSinPuntos.split('-');
-                const variables      =   {
+                let textoSinPuntos  =   rut.replace(/\./g, '');
+                let arrayDividido   =   textoSinPuntos.split('-');
+                const variables     =   {
                                             clave       :   r,
                                             rut         :   rut,
-                                            v_run       :  arrayDividido[0],
-                                            v_dv        :  arrayDividido[1],
+                                            v_run       :   arrayDividido[0],
+                                            v_dv        :   arrayDividido[1],
                                             nombres     :   nombres,
                                             appat       :   appat,
                                             apmat       :   apmat,
@@ -194,22 +195,20 @@ function prestador() {
                                                                         console.log(errro); 
                                                                         console.log(error2);
                                                                         console.log(error3);
+                                                                        console.log("--------------------------------"); 
                                                                         jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
                                                                     },
-                    success     :	function(aData)	                {	
-                                                                        console.log("success aData ->",aData);
-
-                                                                        if (aData.status){
-                                                                            showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Profesional granado exitosamente. ',2,'');
-                                                                            limpiar();
-                                                                        }
-
-                                                                    }, 
-                    complete    :   function()                      {
-                                                                        $('#loadFade').modal('hide');
-                                                                    }                                                
+                    success     :	function(aData)	    {	
+                                                            console.log("success aData ->",aData);
+                                                            if (aData.status){
+                                                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Profesional granado exitosamente. ',2,'');
+                                                                limpiar();
+                                                            }
+                                                        }, 
+                    complete    :   function()          {
+                                                            $('#loadFade').modal('hide');
+                                                        }                                                
                 });
-                //AjaxExt(variables, id, funcion); //Funcion que Ejecuta la llamada del ajax
             }
         });
     }
