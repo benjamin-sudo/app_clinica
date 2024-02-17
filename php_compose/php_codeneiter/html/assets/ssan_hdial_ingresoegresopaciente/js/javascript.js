@@ -32,7 +32,7 @@ function star_ws_general(option){
    console.log("  -----------------------------------------------   ");
    */
 
-
+    console.log("holaaa");
     console.log("conn_ws ->",conn_ws);
 
 
@@ -111,7 +111,9 @@ function js_mandaraimprimir(VISITA_ID,NUM_HOSPITALIZA,ID_PERSONA){
 function ws_manda_imprimir(obj_socket){
    $(document).on('submit','#get_mandar_a_imprimir',function(e){
       e.preventDefault();
-      const _room                         =  $("#ind_disponitivos_llamada").val();
+      let _room                         =  [];
+      _room.push($("#ind_disponitivos_llamada").val());
+      
       if (_room === null) {
          showNotification('top','center','Debe seleccionar t&oacute;tem con impresora',4,'fa fa-thumbs-down');
          return false;
