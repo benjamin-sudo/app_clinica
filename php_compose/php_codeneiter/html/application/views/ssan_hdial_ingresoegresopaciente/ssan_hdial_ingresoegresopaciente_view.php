@@ -57,9 +57,13 @@
                             BENJAMIN CASTILLO SEPULVEDA CASTILLO                            <hr style="margin: 2px;">
                             16869726-0                        </td>
                         <td>
-                                                            <button type="button" class="btn btn-info btn-xs btn-fill" onclick="js_mandaraimprimir(68,87652,126)">
+
+
+                                <button type="button" class="btn btn-info btn-xs btn-fill txt_manda_imprimir" onclick="js_mandaraimprimir(68,87652,126)">
                                     <i class="fa fa-print" aria-hidden="true"></i>
                                 </button>
+
+
                                 <button type="button" class="btn btn-warning btn-xs btn-fill" onclick="js_genera_pdf(68,87652,126)">
                                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF 
                                 </button>

@@ -73,7 +73,7 @@ function star_ws_general(option){
    });
    obj_socket.on('error',(error)=>{
       console.log("  error -> ",error);
-      showNotification('top','center',' Error en la conexi&oacute;n al nodo - error',4,'fa fa-server');
+      showNotification('top','center',conn_ws+' <br> Error en la conexi&oacute;n al nodo - error',4,'fa fa-server');
    });
    obj_socket.on('connect_error',(error)=>{
       console.log("  error -> ",error);
@@ -121,11 +121,9 @@ function ws_manda_imprimir(obj_socket){
       let NUM_HOSPITALIZA                 =  localStorage.getItem("arr_hospitalizado");
       let VISITA_ID                       =  localStorage.getItem("arr_visita");
       let arr_id_persona                  =  localStorage.getItem("arr_id_persona");
-      
       console.log("NUM_HOSPITALIZA        -> ",NUM_HOSPITALIZA);
       console.log("VISITA_ID              -> ",VISITA_ID);
       console.log("arr_id_persona         -> ",arr_id_persona);
-      
       let arr_hospitalizado               =  $("#en_curso_"+NUM_HOSPITALIZA).data('vista');
       let arr_visita                      =  $("#data_visita_"+arr_id_persona).data('info');
       let num_tarjeta                     =  $("#num_tarjeta_"+arr_id_persona).val()==""?"0":$("#num_tarjeta_"+arr_id_persona).val();
@@ -143,5 +141,30 @@ function ws_manda_imprimir(obj_socket){
       console.log("v_call_llamada -> ",v_call_llamada);
       showNotification('top','center','Se envi&oacute; impresi&oacute;n',1,'fa fa-print');   
       obj_socket.emit('ws_hall_central:print_hospitalizado',v_call_llamada);
+
+      deshabilitarYCambiarIconos();
+
    });
+}
+
+function deshabilitarYCambiarIconos() {
+    // Selecciona todos los botones por clase
+    var botones = document.querySelectorAll('.txt_manda_imprimir');
+
+    // Itera sobre cada botón
+    botones.forEach(function(boton) {
+        // Deshabilita el botón
+        boton.disabled = true;
+
+        // Cambia el ícono a un spinner
+        boton.innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>';
+    });
+
+    // Espera 5 segundos antes de volver a habilitar los botones y cambiar el ícono de vuelta
+    setTimeout(function() {
+        botones.forEach(function(boton) {
+            boton.disabled = false;
+            boton.innerHTML = '<i class="fa fa-print" aria-hidden="true"></i>';
+        });
+    }, 5000);
 }
