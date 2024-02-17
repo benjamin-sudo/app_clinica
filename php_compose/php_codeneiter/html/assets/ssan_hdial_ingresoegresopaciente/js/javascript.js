@@ -148,13 +148,25 @@ function ws_manda_imprimir(obj_socket){
         */
         showNotification('top','center','Se envi&oacute; impresi&oacute;n',1,'fa fa-print');   
         const v_call_llamada    =  {
-                                        txt_room    :  _room,
-                                       
+                                        txt_room : _room,
+                                        nombre_paciente : "benjamin castillo",
+                                        run_paciente : '16869726-0',
+                                        v_piso : 'ZOCALO',
+                                        v_cama : 'CAMA 1',
+                                        v_servicio : 'UTI PEDIATRICA',
+                                        v_id_ticke : '123',
+                                        v_date_llegada : '12-12-1212 12:11:34',
+                                        v_inicio_visita : '12-12-1212 12:11:35',
+                                        v_final_visita : '12-12-1212 12:11:35',
+                                        v_hospitalizado : '123',
+                                        v_tiempo_aprox : '00:12:00',
+                                        NUM_TARJETA :'4',
+                                        name_sesion : 'TETE CASTILLO BARRIA',
+
                                     };
         obj_socket.emit('ws_hall_central:print_hospitalizado',v_call_llamada);
         deshabilitarYCambiarIconos();
-
-   });
+    });
 }
 
 function deshabilitarYCambiarIconos() {
