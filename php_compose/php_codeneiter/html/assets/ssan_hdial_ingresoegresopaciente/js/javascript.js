@@ -128,6 +128,8 @@ function ws_manda_imprimir(obj_socket){
       let arr_visita                      =  $("#data_visita_"+arr_id_persona).data('info');
       let num_tarjeta                     =  $("#num_tarjeta_"+arr_id_persona).val()==""?"0":$("#num_tarjeta_"+arr_id_persona).val();
       arr_visita.NUM_TARJETA              =  num_tarjeta;
+
+      /*
       const v_call_llamada                =  {
                                                 txt_room    :  _room,
                                                 v_id_uid    :  '342',
@@ -138,29 +140,29 @@ function ws_manda_imprimir(obj_socket){
                                                 info_hosp   :  arr_hospitalizado,
                                                 info_visi   :  arr_visita
                                              };
-      console.log("v_call_llamada -> ",v_call_llamada);
-      showNotification('top','center','Se envi&oacute; impresi&oacute;n',1,'fa fa-print');   
-      obj_socket.emit('ws_hall_central:print_hospitalizado',v_call_llamada);
 
-      deshabilitarYCambiarIconos();
+
+        console.log("--------------------------------------------------");                                     
+        console.log("v_call_llamada -> ",v_call_llamada);
+        
+        */
+        showNotification('top','center','Se envi&oacute; impresi&oacute;n',1,'fa fa-print');   
+        const v_call_llamada    =  {
+                                        txt_room    :  _room,
+                                       
+                                    };
+        obj_socket.emit('ws_hall_central:print_hospitalizado',v_call_llamada);
+        deshabilitarYCambiarIconos();
 
    });
 }
 
 function deshabilitarYCambiarIconos() {
-    // Selecciona todos los botones por clase
     var botones = document.querySelectorAll('.txt_manda_imprimir');
-
-    // Itera sobre cada botón
     botones.forEach(function(boton) {
-        // Deshabilita el botón
         boton.disabled = true;
-
-        // Cambia el ícono a un spinner
         boton.innerHTML = '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>';
     });
-
-    // Espera 5 segundos antes de volver a habilitar los botones y cambiar el ícono de vuelta
     setTimeout(function() {
         botones.forEach(function(boton) {
             boton.disabled = false;
