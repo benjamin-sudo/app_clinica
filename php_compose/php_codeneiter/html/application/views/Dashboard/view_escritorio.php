@@ -196,6 +196,13 @@
   <!-- personalizable --> 
   <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
 
+  <!-- web socket -->
+  <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
+
+  
+
+
+
   <script>
     $(document).ready(function(){
       $('.load-in-frame').click(function(e){
