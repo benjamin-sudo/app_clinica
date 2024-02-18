@@ -77,7 +77,7 @@ function star_ws_general(option){
    });
    obj_socket.on('connect_error',(error)=>{
       console.log("  error -> ",error);
-      showNotification('top','center',' Error en la conexi&oacute;n al nodo - connect_error ',4,'fa fa-server');
+      showNotification('top','center',' Error en la conexi&oacute;n al nodo - connect_error <br>'+conn_ws,4,'fa fa-server');
    });
    obj_socket.io.on("reconnect", (error) => {
       console.log("  error -> ",error);

@@ -5,7 +5,8 @@
 <br>
 
 <select class="form-select" id="ind_disponitivos_llamada" aria-label="Default select example">
-  <option value="192.168.1.21">192.168.1.21</option>
+    <option value="192.168.1.21">192.168.1.21</option>
+    <option value="192.168.1.14">192.168.1.14</option>
 </select>
 
 <br>
