@@ -1,9 +1,6 @@
 $(document).ready(function() {
-    
-   
-    console.log( "ready!" );
-
-star_ws_general(1);
+   console.log( "ready!" );
+   star_ws_general(1);
 });
 
 
@@ -97,9 +94,6 @@ function js_mandaraimprimir(VISITA_ID,NUM_HOSPITALIZA,ID_PERSONA){
       showNotification('top','center','Debe seleccionar tÃ³tem con impresora',4,'fa fa-thumbs-down');
       return false;
    }
-   //localStorage.removeItem("arr_hospitalizado");
-   //localStorage.removeItem("arr_visita");
-   //localStorage.removeItem("arr_id_persona");
    localStorage.setItem("arr_hospitalizado",NUM_HOSPITALIZA);
    localStorage.setItem("arr_visita",VISITA_ID);
    localStorage.setItem("arr_id_persona",ID_PERSONA);
@@ -128,47 +122,28 @@ function ws_manda_imprimir(obj_socket){
       let arr_visita                      =  $("#data_visita_"+arr_id_persona).data('info');
       let num_tarjeta                     =  $("#num_tarjeta_"+arr_id_persona).val()==""?"0":$("#num_tarjeta_"+arr_id_persona).val();
       arr_visita.NUM_TARJETA              =  num_tarjeta;
-
-      /*
       const v_call_llamada                =  {
-                                                txt_room    :  _room,
-                                                v_id_uid    :  '342',
-                                                v_name_s    :  'NAMESESSION', 
-                                                arr_hosp    :  NUM_HOSPITALIZA,
-                                                arr_visita  :  VISITA_ID,
-                                                ind_print   :  localStorage.getItem("ind_opcion_print"),
-                                                info_hosp   :  arr_hospitalizado,
-                                                info_visi   :  arr_visita
-                                             };
-
-
-        console.log("--------------------------------------------------");                                     
-        console.log("v_call_llamada -> ",v_call_llamada);
-        
-        */
-        showNotification('top','center','Se envi&oacute; impresi&oacute;n',1,'fa fa-print');   
-        const v_call_llamada    =  {
-                                        txt_room : _room,
-                                        nombre_paciente : "BENJAMIN NELSON CASTILLO SEPULVEDA",
-                                        run_paciente : '16869726-0',
-                                        v_piso : 'ZOCALO',
-                                        v_cama : 'CAMA 1',
-                                        v_servicio : 'UTI PEDIATRICA',
-                                        v_id_ticke : '123',
-                                        v_nombre_visitante : 'DANIELA BARRIA JARA',
-                                        v_run_visita : '12312312-3',
-                                        v_date_llegada : '12-12-1212 12:11:34',
-                                        v_inicio_visita : '12-12-1212 12:11:35',
-                                        v_final_visita : '12-12-1212 12:11:35',
-                                        v_hospitalizado : '123',
-                                        v_tiempo_aprox : '00:12:00',
-                                        NUM_TARJETA :'4',
-                                        name_sesion : 'TETE CASTILLO BARRIA',
-                                    };
-                                    console.error(v_call_llamada);
-
-        obj_socket.emit('ws_hall_central:print_hospitalizado',v_call_llamada);
-        deshabilitarYCambiarIconos();
+                                              txt_room : _room,
+                                              nombre_paciente : "BENJAMIN NELSON CASTILLO SEPULVEDA",
+                                              run_paciente : '16869726-0',
+                                              v_piso : 'ZOCALO',
+                                              v_cama : 'CAMA 1',
+                                              v_servicio : 'UTI PEDIATRICA',
+                                              v_id_ticke : '123',
+                                              v_nombre_visitante : 'DANIELA BARRIA JARA',
+                                              v_run_visita : '12312312-3',
+                                              v_date_llegada : '12-12-1212 12:11:34',
+                                              v_inicio_visita : '12-12-1212 12:11:35',
+                                              v_final_visita : '12-12-1212 12:11:35',
+                                              v_hospitalizado : '123',
+                                              v_tiempo_aprox : '00:12:00',
+                                              NUM_TARJETA :'4',
+                                              name_sesion : 'TETE CASTILLO BARRIA',
+                                          };
+      console.error("v_call_llamada = ",v_call_llamada);
+      showNotification('top','center','Se envi&oacute; impresi&oacute;n',1,'fa fa-print');   
+      obj_socket.emit('ws_hall_central:print_hospitalizado',v_call_llamada);
+      deshabilitarYCambiarIconos();
     });
 }
 
