@@ -15,4 +15,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data);
     }
+
+
+    
 }
