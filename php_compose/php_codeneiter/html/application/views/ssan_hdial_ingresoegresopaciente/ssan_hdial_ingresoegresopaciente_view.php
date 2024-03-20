@@ -2,31 +2,30 @@
     <i class="nav-icon fa fa-tint" aria-hidden="true"></i>&nbsp;<b>INGRESO DE PACIENTES TURNOS EN DIALISIS Y RRHH</b>
 </h4>
 
-<hr>
+<br>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">LISTADO PACIENTES</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">LISTADO DE MAQUINAS</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">MI RRHH</button>
-  </li>
-  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">NUEVO INGREGO A PACIENTE</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">NUEVO PROFESIONAL</a></li>
-    </ul>
-  </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">LISTADO PACIENTES</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">LISTADO DE MAQUINAS</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" onclick="js_busqueda_rrhh(1)"> RRHH</button>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">NUEVO INGREGO A PACIENTE</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">NUEVO PROFESIONAL</a></li>
+        </ul>
+    </li>
 </ul>
 
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-
     <div class="grid_panel_paciente">
         <div class="grid_panel_paciente1">
             <h2 style="margin-top: 0px;margin-bottom: 0px;"><b>PACIENTE EN DIALISIS</b></h2>
@@ -37,45 +36,54 @@
             <input type="text" id="searchTermIng2" class="form-control"  style="width: auto;" onkeyup="doSearch(2)"></b>
         </div>
     </div>
-
     <table class="table table-striped" width="100%">
         <thead>
             <tr>
                 <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
                 <th class="subtitulo_formulario2" width="10%">RUN</th>
-                <th class="subtitulo_formulario2" width="29%">Apellido Nombre</th>
-                <th class="subtitulo_formulario2" width="6%" >Edad</th>
-                <th class="subtitulo_formulario2" width="14%">Ingreso</th>
-                <th class="subtitulo_formulario2" width="10%">Ingreso Historico</th>
-                <th class="subtitulo_formulario2" width="14%">Estado</th>
+                <th class="subtitulo_formulario2" width="29%">APELLIDO NOMBRE</th>
+                <th class="subtitulo_formulario2" width="6%" >EDAD</th>
+                <th class="subtitulo_formulario2" width="14%">INGRESO</th>
+                <th class="subtitulo_formulario2" width="10%">INGRESO HISTORICO</th>
+                <th class="subtitulo_formulario2" width="14%">ESTADO</th>
                 <th class="subtitulo_formulario2" width="15%">OPCI&Oacute;N</th>
             </tr>
         </thead>
         <tbody id="LISTA_PACIENTES"></tbody>
     </table>
+    </div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <table width="100%" style="margin-top: 14px;">
+            <tr>
+                <td width="80%">
+                    <h2 style="margin-bottom: 0px;margin-top: 0px;margin-left: 10px;"><b>M&Aacute;QUINAS DE DI&Aacute;LISIS</b></h2>
+                    <p style="margin-left: 10px;">LISTA MAQUINAS DI&Aacute;LISIS POR ESTABLECIMIENTO</p> 
+                </td>
+                <td width="20%" style="text-align:right"></td>
+            </tr>
+        </table>
+        <table class="table table-striped" width="100%" >
+            <thead>
+                <tr>
+                    <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
+                    <th class="subtitulo_formulario2" width="40%">MAQUINA (CODIGO)</th>
+                    <th class="subtitulo_formulario2" width="20%">FOLIO MAQUINA</th>
+                    <th class="subtitulo_formulario2" width="10%">ESTADO</th>
+                    <th class="subtitulo_formulario2" width="15%">N&deg; PACIENTE</th>
+                    <th class="subtitulo_formulario2" width="13%">OPCI&Oacute;N</th>
+                </tr>
+            </thead>
+            <tbody id="LISTA_MAQUINA"> </tbody>
+        </table>
 
-
-
-  </div>
-  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-
-    --.-- 2
-    
-  </div>
-  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-
-    --.-- 3
-
-  </div>
+    </div>
+    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+        <div id="IND_RRHH"></div>
+    </div>
 </div>
 
 
-
-
-
-
-
-
+<section>
     <div class="modal fade" id="TURNOXMAQUINA">
         <div class="modal-dialog modal-xl3">
             <div class="modal-content">
@@ -172,7 +180,7 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div id="busquedaMes2"/></div>
+                            <div id="busquedaMes2"></div>
                         </div>
                         <div class="col-lg-6">
                             <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA VENTANA</button>
