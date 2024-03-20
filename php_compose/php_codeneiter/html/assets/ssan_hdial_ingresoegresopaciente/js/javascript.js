@@ -1,6 +1,8 @@
 $(document).ready(function() {
+   
    console.log( "ready!" );
    star_ws_general(1);
+
 });
 
 
