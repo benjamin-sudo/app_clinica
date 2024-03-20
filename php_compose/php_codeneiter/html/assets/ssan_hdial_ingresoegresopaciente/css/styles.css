@@ -1,0 +1,87 @@
+.grid_panel_paciente                    {
+    display                             :   grid;
+    grid-template-columns               :   2fr 1fr;
+    gap                                 :   8px;
+}
+
+.grid_busqueda_rrhh                     {
+    display                             :   grid;
+    grid-template-columns               :   1fr 40px 3fr;
+    gap                                 :   8px;
+}
+
+.grid_busqueda_rrhh3                    {
+    text-align                          :   -webkit-center;
+}
+
+.table_parapdf tr td b                  {
+        font-size                       :   x-small;
+}
+
+.table_parapdf tr td input              {
+    font-size                           :   x-small;
+    width                               :   90%;
+}
+
+.table_parapdf tr td textarea           {
+    font-size                           :   x-small;
+    width                               :   90%;
+}
+.table_parapdf tr td p                  {
+    font-size                           :   x-small;
+}
+
+.table_parapdf                          {
+/*border:solid 1px;*/
+}
+
+.table_parapdf tr td label              {
+    font-size                           :   x-small;
+}
+
+.Titt                                   {
+  font-size                             :   x-large !important;  
+}
+
+.Titt2                                  {
+  font-size                             :   large;
+}
+
+@media(min-width                        :   900px){
+    .class_modal_pdf                    {
+        width                           :   85%;
+        max-width                       :   90%;
+    }
+}
+
+@media(min-width                        :   900px){
+    .modal_ANTERIORES                   {
+        width                           :   85%;
+        max-width                       :   90%;
+    }
+}
+
+@media(min-width                        :   900px){
+    .modal_imedico{
+        width                           :   80%;
+        max-width                       :   60%;
+    }
+}
+
+.contenedor {
+   display                              :   flex;
+   flex-direction                       :   row;
+   flex-wrap                            :   wrap; 
+   /* respeta ancho */  
+   /* justify-content                   :   space-around; */
+   align-content                        :   flex-start;
+}
+
+.form-group                             {
+   margin                               :   10px;
+}
+
+.input-flex                             {
+    width                               :   auto;
+    display                             :   flex;
+}

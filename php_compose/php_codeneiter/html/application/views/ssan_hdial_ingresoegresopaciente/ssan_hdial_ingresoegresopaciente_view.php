@@ -14,11 +14,47 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">MI RRHH</button>
   </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">NUEVO INGREGO A PACIENTE</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="#">NUEVO PROFESIONAL</a></li>
+    </ul>
+  </li>
 </ul>
+
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
-    --.-- 1
+    <div class="grid_panel_paciente">
+        <div class="grid_panel_paciente1">
+            <h2 style="margin-top: 0px;margin-bottom: 0px;"><b>PACIENTE EN DIALISIS</b></h2>
+            <p>LISTA PACIENTES INGRESADOS</p> 
+        </div>
+        <div class="grid_panel_paciente2">
+            <p style="margin-bottom: 0px;"><b>BUSCAR</b>&nbsp;<i class='fa fa-search icon-4x'></i></p> 
+            <input type="text" id="searchTermIng2" class="form-control"  style="width: auto;" onkeyup="doSearch(2)"></b>
+        </div>
+    </div>
+    
+    <table class="table table-striped" width="100%">
+        <thead>
+            <tr>
+                <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
+                <th class="subtitulo_formulario2" width="10%">RUN</th>
+                <th class="subtitulo_formulario2" width="29%">Apellido Nombre</th>
+                <th class="subtitulo_formulario2" width="6%" >Edad</th>
+                <th class="subtitulo_formulario2" width="14%">Ingreso</th>
+                <th class="subtitulo_formulario2" width="10%">Ingreso Historico</th>
+                <th class="subtitulo_formulario2" width="14%">Estado</th>
+                <th class="subtitulo_formulario2" width="15%">OPCI&Oacute;N</th>
+            </tr>
+        </thead>
+        <tbody id="LISTA_PACIENTES"></tbody>
+    </table>
+
+
 
   </div>
   <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
@@ -32,6 +68,13 @@
 
   </div>
 </div>
+
+
+
+
+
+
+
 
 <br>
 
@@ -52,6 +95,7 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane" id="IND_RRHH"></div>
             <div role="tabpanel" class="tab-pane active" id="PACIENTES">
+
                 <div id="imp__imprimePdfIng" style="display:none">
                 <form id="imp_formulario_ing_enf">
                     <table id="" class="table_parapdf" width="100%" >
@@ -250,31 +294,7 @@
                 </form>
             </div> 
                 <div class="container">
-                    <div class="grid_panel_paciente">
-                        <div class="grid_panel_paciente1">
-                            <h2 style="margin-top: 0px;margin-bottom: 0px;"><b>PACIENTE EN DIALISIS</b></h2>
-                            <p>LISTA PACIENTES INGRESADOS</p> 
-                        </div>
-                        <div class="grid_panel_paciente2">
-                            <p style="margin-bottom: 0px;"><b>BUSCAR</b>&nbsp;<i class='fa fa-search icon-4x'></i></p> 
-                            <input type="text" id="searchTermIng2" class="form-control"  style="width: auto;" onkeyup="doSearch(2)"></b>
-                        </div>
-                    </div>
-                    <table class="table table-striped" width="100%">
-                        <thead>
-                            <tr>
-                                <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
-                                <th class="subtitulo_formulario2" width="10%">RUN</th>
-                                <th class="subtitulo_formulario2" width="29%">Apellido Nombre</th>
-                                <th class="subtitulo_formulario2" width="6%" >Edad</th>
-                                <th class="subtitulo_formulario2" width="14%">Ingreso</th>
-                                <th class="subtitulo_formulario2" width="10%">Ingreso Historico</th>
-                                <th class="subtitulo_formulario2" width="14%">Estado</th>
-                                <th class="subtitulo_formulario2" width="15%">OPCI&Oacute;N</th>
-                            </tr>
-                        </thead>
-                        <tbody id="LISTA_PACIENTES"></tbody>
-                    </table>
+
                 </div>
             </div>
 
@@ -317,380 +337,383 @@
 
 
 
-
-
-<div class="modal fade" id="nuevoProfesional">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title"><b>NUEVO INGRESO PACIENTE</b></h3>
-            </div>
-            <div class="modal-body">
-                <table id="bootstrap-table2" class="table" width="100%">
-                    <tbody id="resultadoBusqueda">
-                        <tr>
-                            <td width="30%"><b>RUN Paciente</b></td>
-                            <td width="40%">
-                                <!--class="form-control input-sm"-->
-                                <!--onblur="js_grabadatosPaciente-->
-                                <input type="text" name="Rut_form" id="Rut_form" value="" maxlength="12" onkeypress="" onblur="" placeholder="11.111.111-1" required=""  class="form-control valid" >  <span class="alert_err" id="ErrorRutVF" style="display: none;color: #ea4848;font-weight: bold;"></span><input type="hidden" value="0" id="Hdd_RtInc"/>
-                                <input type="hidden" value="" id="fic_e"/>
-                            </td>
-                            <td width="20%">
-                                <a class="btn btn-info" href="javascript:js_grabadatosPaciente()" aria-label="Delete">
-                                    <i class="fa fa-search" aria-hidden="true"></i> BUSQUEDA
-                                </a>
-                                <span id="Btn_imp_imng"></span>
-                                <!--                                
-                                    <a class="btn btn-info" href="javascript:$('#dv_notif_reac_adv').toggle();" aria-label="Delete">
-                                        <i class="fa fa-search" aria-hidden="true"></i> VER FORM NOTIF. DE REACIONES ADVERSAS
+<section>
+    <div class="modal fade" id="nuevoProfesional">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title"><b>NUEVO INGRESO PACIENTE</b></h3>
+                </div>
+                <div class="modal-body">
+                    <table id="bootstrap-table2" class="table" width="100%">
+                        <tbody id="resultadoBusqueda">
+                            <tr>
+                                <td width="30%"><b>RUN Paciente</b></td>
+                                <td width="40%">
+                                    <!--class="form-control input-sm"-->
+                                    <!--onblur="js_grabadatosPaciente-->
+                                    <input type="text" name="Rut_form" id="Rut_form" value="" maxlength="12" onkeypress="" onblur="" placeholder="11.111.111-1" required=""  class="form-control valid" >  <span class="alert_err" id="ErrorRutVF" style="display: none;color: #ea4848;font-weight: bold;"></span><input type="hidden" value="0" id="Hdd_RtInc"/>
+                                    <input type="hidden" value="" id="fic_e"/>
+                                </td>
+                                <td width="20%">
+                                    <a class="btn btn-info" href="javascript:js_grabadatosPaciente()" aria-label="Delete">
+                                        <i class="fa fa-search" aria-hidden="true"></i> BUSQUEDA
                                     </a>
-                                -->
-                            </td>                            
-                        </tr>                          
-                    </tbody>
-                </table>
-                <div id="resultadoBusqueda_post"></div>
-            </div>
-            <div id="dv_mnj_frm" style="display:none"> </div>
-            <div class="modal-body">
-            <div id="Dv_form_IngEnf" class="card" style="display:none; ">
-                
-                <form id="formulario_ing_enf" onsubmit="return grab();" >
-                <table id="" class="table" width="100%">
-                    <tr>
-                        <td style="text-align: center;"  colspan="4"> <h4 class="title"><b>INGRESO DE ENFERMERIA</b></h4> <p class="category">Unidad de Hemodiálisis</p></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <p><b>1. ANTECEDENTES PERSONALES</b></p>
-                        </td>
-                    </tr>
-                    <tr> 
-                        <td><b>Antecedentes Quirúrgicos:</b></td><td colspan="3"><input id="Resp_IngEnf_Dial_541" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td><b>Antecedentes Alérgicos:</b><input type="hidden" id="Resp_IngEnf_Dial_542" class="limp"></td><td  colspan="3"> 
-                            <div class="col-xs-9">         
-                                <input type="radio"  onclick="selec_(542,1);" name="Rdo_infenf_Ant_Alerg" id="Rdo_infenf_Ant_Alerg_1" value="1" required aria-required="true">
-                                <label for="Rdo_infenf_Ant_Alerg_1"><span></span> Si</label>         
-                            </div> 
-                            <div class="col-xs-9" >                
-                                <input type="radio" onclick="selec_(542,2);" name="Rdo_infenf_Ant_Alerg" id="Rdo_infenf_Ant_Alerg_2" value="2">
-                                <label for="Rdo_infenf_Ant_Alerg_2"><span></span> No</label>
-                                &nbsp;&nbsp;&nbsp;
-                            </div>
-                            <div class="col-xs-9">                
-                                <input type="radio" onclick="selec_(542,3);" name="Rdo_infenf_Ant_Alerg" id="Rdo_infenf_Ant_Alerg_3" value="3">
-                                <label for="Rdo_infenf_Ant_Alerg_3"><span></span> No Sabe</label>
-                                &nbsp;&nbsp;&nbsp;
-                            </div>
-                        </td>
-                    </tr>
+                                    <span id="Btn_imp_imng"></span>
+                                    <!--                                
+                                        <a class="btn btn-info" href="javascript:$('#dv_notif_reac_adv').toggle();" aria-label="Delete">
+                                            <i class="fa fa-search" aria-hidden="true"></i> VER FORM NOTIF. DE REACIONES ADVERSAS
+                                        </a>
+                                    -->
+                                </td>                            
+                            </tr>                          
+                        </tbody>
+                    </table>
+                    <div id="resultadoBusqueda_post"></div>
+                </div>
+                <div id="dv_mnj_frm" style="display:none"> </div>
+                <div class="modal-body">
+                <div id="Dv_form_IngEnf" class="card" style="display:none; ">
                     
-                    <tr   id="TR_Aliments" >
-                        <td style="text-align: right;"><b>Alimentos:</b><input type="hidden" id="r_espuesta_543_old" value=""></td><td  colspan="3"><input id="Resp_IngEnf_Dial_543" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr  id="TR_Medicamnts">
-                        <td style="text-align: right;"><b>Medicamentos:</b><input type="hidden" id="r_espuesta_544_old" value=""></td><td colspan="3"><input id="Resp_IngEnf_Dial_544" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr   id="Tr_Otrss">
-                        <td style="text-align: right;"><b>Otros:</b><input type="hidden" id="r_espuesta_545_old" value=""></td><td colspan="3"><input id="Resp_IngEnf_Dial_545" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td><b>Diagn&oacute;stico de ingreso:</b> <input type="hidden" id="Resp_IngEnf_Dial_546" value="0" class=""></td><td colspan="3">
-                            <div class="content2">
-                                <input type="hidden" id="codDiagnostico" value="">
-                                <input type="text" name="autocompletar" id="nomcie10" onkeypress="return alfanumericoSpace(event);" data-source="ssan_hdial_ingresoegresopaciente/autocompletar2" onpaste="return false" class="autocompletar" style="width:50%;margin-bottom: 0;" placeholder="DIAGNOSTICO CIE10">
-                                <div class="autocomplete-jquery-results" id="muestralista" style="display:none;background: #e0f0ff;">
+                    <form id="formulario_ing_enf" onsubmit="return grab();" >
+                    <table id="" class="table" width="100%">
+                        <tr>
+                            <td style="text-align: center;"  colspan="4"> <h4 class="title"><b>INGRESO DE ENFERMERIA</b></h4> <p class="category">Unidad de Hemodiálisis</p></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p><b>1. ANTECEDENTES PERSONALES</b></p>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <td><b>Antecedentes Quirúrgicos:</b></td><td colspan="3"><input id="Resp_IngEnf_Dial_541" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td><b>Antecedentes Alérgicos:</b><input type="hidden" id="Resp_IngEnf_Dial_542" class="limp"></td><td  colspan="3"> 
+                                <div class="col-xs-9">         
+                                    <input type="radio"  onclick="selec_(542,1);" name="Rdo_infenf_Ant_Alerg" id="Rdo_infenf_Ant_Alerg_1" value="1" required aria-required="true">
+                                    <label for="Rdo_infenf_Ant_Alerg_1"><span></span> Si</label>         
+                                </div> 
+                                <div class="col-xs-9" >                
+                                    <input type="radio" onclick="selec_(542,2);" name="Rdo_infenf_Ant_Alerg" id="Rdo_infenf_Ant_Alerg_2" value="2">
+                                    <label for="Rdo_infenf_Ant_Alerg_2"><span></span> No</label>
+                                    &nbsp;&nbsp;&nbsp;
                                 </div>
-                            </div><!-- content --> 
-                            <div id="">
-                                <table id="Cod_cie10_1">
-                                    
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Establecimiento al que se deriva en caso de urgencia:</b></td><td colspan="3"><input id="Resp_IngEnf_Dial_547" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td><b>Grupo sanguíneo:</b></td><td><input id="Resp_IngEnf_Dial_548" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>RH:</b></td><td><input id="Resp_IngEnf_Dial_549" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                </table> 
-
-                <table id="" class="table" width="100%">
-
-                    <tr>
-                        <td colspan="8">
-                            <p><b>2. EXAMEN FISICO GENERAL</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Peso:</b></td><td><input id="Resp_IngEnf_Dial_550" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>FC:</b></td><td><input id="Resp_IngEnf_Dial_551" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>P/A:</b></td><td><div class="col-md-4"><input id="Resp_IngEnf_Dial_552" type="text" value="" placeholder="Sis" class="form-control valid limp" required /></div><div class="col-md-4"><input id="Resp_IngEnf_Dial_553" type="text" value="" placeholder="Dis" class="form-control valid limp" required /></div></td>
-                        <td><b>Talla:</b></td><td><input id="Resp_IngEnf_Dial_554" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Movilidad:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_555" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Nutrición:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_556" type="text" value="" class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Grado de conciencia:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_557" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Estado de la piel:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_558" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Conjuntivas:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_559" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Yugulares:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_560" type="text" value=""  class="form-control valid limp" required /></td>
-                    </tr> 
-                    
-                    <tr>
-                        <td  colspan="2"><b>Extremidades:</b></td><td colspan="6"><textarea id="Resp_IngEnf_Dial_561" class="form-control valid limp" required  rows="3"></textarea></td>
-                    </tr>
-                </table>
-
-                <table id="" class="table" width="100%">
-                    <tr>
-                        <td><b>Acceso Vascular</b></td><td><b>FAV:</b></td><td><input id="Resp_IngEnf_Dial_562" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_563" type="text" value=""  class="form-control valid limp" required /></td>                          
-                    </tr>
-                    <tr>
-                        <td>    </td><td><b>Gorotex:</b></td><td><input id="Resp_IngEnf_Dial_564" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_565" type="text" value=""  class="form-control valid limp" required /></td>                          
-                    </tr>
-                    <tr>
-                        <td>    </td><td><b>Catéter:</b></td><td><input id="Resp_IngEnf_Dial_566" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_567" type="text" value=""  class="form-control valid limp" required /></td>                          
-                    </tr>
-                    <tr>
-                        <td><b>Diuresis</b><input type="hidden" id="Resp_IngEnf_Dial_568" class=" limp"></td><td>                        
-                            <div class="col-xs-9">         
-                                <input type="radio" onclick="selec_(568,1);" name="Rdo_Diuesis" id="Rdo_Diuesis_1" value="1">
-                                <label for="Rdo_Diuesis_1"><span></span> Si</label>         
-                            </div> 
-                        </td><td>
-
-                            <div class="col-xs-9">                
-                                <input type="radio" onclick="selec_(568,2);"  name="Rdo_Diuesis" id="Rdo_Diuesis_2" value="2">
-                                <label for="Rdo_Diuesis_2"><span></span> No</label>
-                                &nbsp;&nbsp;&nbsp;
-                            </div>
-                        </td>
-                        <td><b>Volumen:</b></td><td><input id="Resp_IngEnf_Dial_569" type="text" value=""  class="form-control valid limp" required /></td>                          
-                    </tr>
-
-                    <tr>
-                        <td><b>Antígenos</b></td><td><b>HVC:</b></td><td><input id="Resp_IngEnf_Dial_570" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_571" type="text" value=""  class="form-control valid limp" required /></td>                          
-                    </tr>
-                    <tr>
-                        <td>  </td><td><b>HIV:</b></td><td><input id="Resp_IngEnf_Dial_572" type="text" value="" class="form-control valid limp" required /></td>
-                        <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_573" type="text" value=""  class="form-control valid limp" required /></td>                          
-                    </tr>
-                    <tr>
-                        <td>  </td><td><b>HBSAG:</b></td><td><input id="Resp_IngEnf_Dial_574" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_575" type="text" value=""  class="form-control valid limp" required /></td>                          
-                    </tr>
-                </table>
-
-                <table id="" class="table" width="100%">
-
-                    <tr>
-                        <td colspan="8">
-                            <p><b>3. ANTECEDENTES HEMODIALISIS</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>QB:</b></td><td><input id="Resp_IngEnf_Dial_576" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Heparina:</b></td><td>
-                            <label><span></span> I</label> <input id="Resp_IngEnf_Dial_577" type="text" value=""  class="form-control valid limp" required /> 
-                             <label><span></span> M</label> <input id="Resp_IngEnf_Dial_590" type="text" value=""  class="form-control valid limp" required /> 
-                        </td>
-                        <td><b>1° Dosis HVB:</b></td><td><input id="Resp_IngEnf_Dial_578" type="text" value=""  class="form-control valid limp" required /></td>                            
-                    </tr>
-
-                    <tr>
-                        <td><b>QD:</b></td><td><input id="Resp_IngEnf_Dial_579" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Baño K+/Na:</b></td><td>
-                            <input id="Resp_IngEnf_Dial_580" type="text" value=""  class="form-control valid limp" required /> 
-                        </td>
-                        <td><b>2° Dosis HVB:</b></td><td><input id="Resp_IngEnf_Dial_581" type="text" value=""  class="form-control valid limp" required /></td>                            
-                    </tr>
-                    <tr>
-                        <td><b>Peso seco:</b></td><td><input id="Resp_IngEnf_Dial_582" type="text" value=""  class="form-control valid limp" required /></td>
-                        <td><b>Concentrado:</b></td><td>
-                            <input id="Resp_IngEnf_Dial_583" type="text" value="" class="form-control valid limp" required /> 
-                        </td>
-                        <td><b>3° Dosis HVB:</b></td><td><input id="Resp_IngEnf_Dial_584" type="text" value="" class="form-control valid limp" required /></td>                            
-                    </tr>
-                    <tr>
-                        <td colspan="4"></td>
-                        <td><b>1° refuerzo HVB:</b></td><td><input id="Resp_IngEnf_Dial_585" type="text" value=""  class="form-control valid limp" required /></td>                            
-                    </tr>
-                </table>
-
-                <table id="" class="table" width="100%">
-
-                    <tr>
-                        <td colspan="8">
-                            <p><b>4. OBSERVACIONES</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td  colspan="4"><textarea id="Resp_IngEnf_Dial_586" class="form-control valid limp" required  rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><b>Enfermera:</b></td><td><input id="Resp_IngEnf_Dial_587" required  type="text" value=""  class="form-control valid limp"  /></td>
+                                <div class="col-xs-9">                
+                                    <input type="radio" onclick="selec_(542,3);" name="Rdo_infenf_Ant_Alerg" id="Rdo_infenf_Ant_Alerg_3" value="3">
+                                    <label for="Rdo_infenf_Ant_Alerg_3"><span></span> No Sabe</label>
+                                    &nbsp;&nbsp;&nbsp;
+                                </div>
+                            </td>
+                        </tr>
                         
-                        <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_588" required type="text" value="" class="form-control valid limp" /></td>                          
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                    <dt class="col-sm-12" style="text-align:center">
+                        <tr   id="TR_Aliments" >
+                            <td style="text-align: right;"><b>Alimentos:</b><input type="hidden" id="r_espuesta_543_old" value=""></td><td  colspan="3"><input id="Resp_IngEnf_Dial_543" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr  id="TR_Medicamnts">
+                            <td style="text-align: right;"><b>Medicamentos:</b><input type="hidden" id="r_espuesta_544_old" value=""></td><td colspan="3"><input id="Resp_IngEnf_Dial_544" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr   id="Tr_Otrss">
+                            <td style="text-align: right;"><b>Otros:</b><input type="hidden" id="r_espuesta_545_old" value=""></td><td colspan="3"><input id="Resp_IngEnf_Dial_545" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td><b>Diagn&oacute;stico de ingreso:</b> <input type="hidden" id="Resp_IngEnf_Dial_546" value="0" class=""></td><td colspan="3">
+                                <div class="content2">
+                                    <input type="hidden" id="codDiagnostico" value="">
+                                    <input type="text" name="autocompletar" id="nomcie10" onkeypress="return alfanumericoSpace(event);" data-source="ssan_hdial_ingresoegresopaciente/autocompletar2" onpaste="return false" class="autocompletar" style="width:50%;margin-bottom: 0;" placeholder="DIAGNOSTICO CIE10">
+                                    <div class="autocomplete-jquery-results" id="muestralista" style="display:none;background: #e0f0ff;">
+                                    </div>
+                                </div><!-- content --> 
+                                <div id="">
+                                    <table id="Cod_cie10_1">
+                                        
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Establecimiento al que se deriva en caso de urgencia:</b></td><td colspan="3"><input id="Resp_IngEnf_Dial_547" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td><b>Grupo sanguíneo:</b></td><td><input id="Resp_IngEnf_Dial_548" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>RH:</b></td><td><input id="Resp_IngEnf_Dial_549" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                    </table> 
+
+                    <table id="" class="table" width="100%">
+
+                        <tr>
+                            <td colspan="8">
+                                <p><b>2. EXAMEN FISICO GENERAL</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Peso:</b></td><td><input id="Resp_IngEnf_Dial_550" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>FC:</b></td><td><input id="Resp_IngEnf_Dial_551" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>P/A:</b></td><td><div class="col-md-4"><input id="Resp_IngEnf_Dial_552" type="text" value="" placeholder="Sis" class="form-control valid limp" required /></div><div class="col-md-4"><input id="Resp_IngEnf_Dial_553" type="text" value="" placeholder="Dis" class="form-control valid limp" required /></div></td>
+                            <td><b>Talla:</b></td><td><input id="Resp_IngEnf_Dial_554" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Movilidad:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_555" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Nutrición:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_556" type="text" value="" class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Grado de conciencia:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_557" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Estado de la piel:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_558" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Conjuntivas:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_559" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Yugulares:</b></td><td  colspan="6"><input id="Resp_IngEnf_Dial_560" type="text" value=""  class="form-control valid limp" required /></td>
+                        </tr> 
+                        
+                        <tr>
+                            <td  colspan="2"><b>Extremidades:</b></td><td colspan="6"><textarea id="Resp_IngEnf_Dial_561" class="form-control valid limp" required  rows="3"></textarea></td>
+                        </tr>
+                    </table>
+
+                    <table id="" class="table" width="100%">
+                        <tr>
+                            <td><b>Acceso Vascular</b></td><td><b>FAV:</b></td><td><input id="Resp_IngEnf_Dial_562" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_563" type="text" value=""  class="form-control valid limp" required /></td>                          
+                        </tr>
+                        <tr>
+                            <td>    </td><td><b>Gorotex:</b></td><td><input id="Resp_IngEnf_Dial_564" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_565" type="text" value=""  class="form-control valid limp" required /></td>                          
+                        </tr>
+                        <tr>
+                            <td>    </td><td><b>Catéter:</b></td><td><input id="Resp_IngEnf_Dial_566" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_567" type="text" value=""  class="form-control valid limp" required /></td>                          
+                        </tr>
+                        <tr>
+                            <td><b>Diuresis</b><input type="hidden" id="Resp_IngEnf_Dial_568" class=" limp"></td><td>                        
+                                <div class="col-xs-9">         
+                                    <input type="radio" onclick="selec_(568,1);" name="Rdo_Diuesis" id="Rdo_Diuesis_1" value="1">
+                                    <label for="Rdo_Diuesis_1"><span></span> Si</label>         
+                                </div> 
+                            </td><td>
+
+                                <div class="col-xs-9">                
+                                    <input type="radio" onclick="selec_(568,2);"  name="Rdo_Diuesis" id="Rdo_Diuesis_2" value="2">
+                                    <label for="Rdo_Diuesis_2"><span></span> No</label>
+                                    &nbsp;&nbsp;&nbsp;
+                                </div>
+                            </td>
+                            <td><b>Volumen:</b></td><td><input id="Resp_IngEnf_Dial_569" type="text" value=""  class="form-control valid limp" required /></td>                          
+                        </tr>
+
+                        <tr>
+                            <td><b>Antígenos</b></td><td><b>HVC:</b></td><td><input id="Resp_IngEnf_Dial_570" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_571" type="text" value=""  class="form-control valid limp" required /></td>                          
+                        </tr>
+                        <tr>
+                            <td>  </td><td><b>HIV:</b></td><td><input id="Resp_IngEnf_Dial_572" type="text" value="" class="form-control valid limp" required /></td>
+                            <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_573" type="text" value=""  class="form-control valid limp" required /></td>                          
+                        </tr>
+                        <tr>
+                            <td>  </td><td><b>HBSAG:</b></td><td><input id="Resp_IngEnf_Dial_574" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_575" type="text" value=""  class="form-control valid limp" required /></td>                          
+                        </tr>
+                    </table>
+
+                    <table id="" class="table" width="100%">
+
+                        <tr>
+                            <td colspan="8">
+                                <p><b>3. ANTECEDENTES HEMODIALISIS</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>QB:</b></td><td><input id="Resp_IngEnf_Dial_576" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Heparina:</b></td><td>
+                                <label><span></span> I</label> <input id="Resp_IngEnf_Dial_577" type="text" value=""  class="form-control valid limp" required /> 
+                                <label><span></span> M</label> <input id="Resp_IngEnf_Dial_590" type="text" value=""  class="form-control valid limp" required /> 
+                            </td>
+                            <td><b>1° Dosis HVB:</b></td><td><input id="Resp_IngEnf_Dial_578" type="text" value=""  class="form-control valid limp" required /></td>                            
+                        </tr>
+
+                        <tr>
+                            <td><b>QD:</b></td><td><input id="Resp_IngEnf_Dial_579" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Baño K+/Na:</b></td><td>
+                                <input id="Resp_IngEnf_Dial_580" type="text" value=""  class="form-control valid limp" required /> 
+                            </td>
+                            <td><b>2° Dosis HVB:</b></td><td><input id="Resp_IngEnf_Dial_581" type="text" value=""  class="form-control valid limp" required /></td>                            
+                        </tr>
+                        <tr>
+                            <td><b>Peso seco:</b></td><td><input id="Resp_IngEnf_Dial_582" type="text" value=""  class="form-control valid limp" required /></td>
+                            <td><b>Concentrado:</b></td><td>
+                                <input id="Resp_IngEnf_Dial_583" type="text" value="" class="form-control valid limp" required /> 
+                            </td>
+                            <td><b>3° Dosis HVB:</b></td><td><input id="Resp_IngEnf_Dial_584" type="text" value="" class="form-control valid limp" required /></td>                            
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td><b>1° refuerzo HVB:</b></td><td><input id="Resp_IngEnf_Dial_585" type="text" value=""  class="form-control valid limp" required /></td>                            
+                        </tr>
+                    </table>
+
+                    <table id="" class="table" width="100%">
+
+                        <tr>
+                            <td colspan="8">
+                                <p><b>4. OBSERVACIONES</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="4"><textarea id="Resp_IngEnf_Dial_586" class="form-control valid limp" required  rows="3"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><b>Enfermera:</b></td><td><input id="Resp_IngEnf_Dial_587" required  type="text" value=""  class="form-control valid limp"  /></td>
+                            
+                            <td><b>Fecha:</b></td><td><input id="Resp_IngEnf_Dial_588" required type="text" value="" class="form-control valid limp" /></td>                          
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                        <dt class="col-sm-12" style="text-align:center">
+                        
+                        <span id="spn_BtnGrab"></span>
                     
-                     <span id="spn_BtnGrab"></span>
-                  
-                   <span id="spn_BtnEdi"></span>  
+                    <span id="spn_BtnEdi"></span>  
+                        
+                        </dt>
+                        </td>
+                        </tr>
+                    </table>
+                        </form>
+                    <button type="" class="btn btn-danger" onclick="Limpiar1();"><i class="pe-7s-trash"></i> LIMPIAR </button>
+
+                </div>
+                </div>
                     
-                    </dt>
-                    </td>
-                    </tr>
-                </table>
-                    </form>
-                <button type="" class="btn btn-danger" onclick="Limpiar1();"><i class="pe-7s-trash"></i> LIMPIAR </button>
-
-            </div>
-            </div>
-                  
-    
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
+        
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="modal fade" id="TURNOXMAQUINA">
-    <div class="modal-dialog modal-xl3">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><b><div id="NOM_MAQUINA"></div> </b></h4>
-            </div>
-            <div class="modal-body" id="BODYXMAQUINA"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
+    <div class="modal fade" id="TURNOXMAQUINA">
+        <div class="modal-dialog modal-xl3">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><b><div id="NOM_MAQUINA"></div> </b></h4>
+                </div>
+                <div class="modal-body" id="BODYXMAQUINA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="TURNOXMAQUINA">
-    <div class="modal-dialog modal-xl3">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><b><div id="NOM_MAQUINA"></div> </b></h4>
-            </div>
-            <div class="modal-body" id="BODYXMAQUINA"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
+    <div class="modal fade" id="TURNOXMAQUINA">
+        <div class="modal-dialog modal-xl3">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><b><div id="NOM_MAQUINA"></div> </b></h4>
+                </div>
+                <div class="modal-body" id="BODYXMAQUINA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="PACIENTEXCUPO">
-    <div class="modal-dialog modal-xl3">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><b>AGREGAR PACIENTE POR CUPO</b></h4>
-            </div>
-            <div class="modal-body" id="HTML_PACIENE"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
-                <button type="button" class="btn btn-primary btn-sm" id="NUEVOPACIENTEXCUPO">GRABA PACIENTE</button>
+    <div class="modal fade" id="PACIENTEXCUPO">
+        <div class="modal-dialog modal-xl3">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><b>AGREGAR PACIENTE POR CUPO</b></h4>
+                </div>
+                <div class="modal-body" id="HTML_PACIENE"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="NUEVOPACIENTEXCUPO">GRABA PACIENTE</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="MODAL_HD_ANTERIORES">
-    <div class="modal-dialog modal_ANTERIORES">
-        <div class="modal-content">
-            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3 class="modal-title"><b>- HIST&Oacute;RICO DE HOJA DIARIA </b></h3></div>
-            <div class="modal-body" id="BODY_HD_ANTERIORES"></div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div id="busquedaMes"/></div>
-                    </div>
-                    <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"> <i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
+    <div class="modal fade" id="MODAL_HD_ANTERIORES">
+        <div class="modal-dialog modal_ANTERIORES">
+            <div class="modal-content">
+                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3 class="modal-title"><b>- HIST&Oacute;RICO DE HOJA DIARIA </b></h3></div>
+                <div class="modal-body" id="BODY_HD_ANTERIORES"></div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="busquedaMes"/></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"> <i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
+                        </div>
                     </div>
                 </div>
             </div>
-	</div>
+        </div>
     </div>
-</div>
 
-<div class="modal fade" id="MODAL_INFOHOJADIARIA">
-    <div class="modal-dialog modal_imedico">
-        <div class="modal-content">
-            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3 class="modal-title"><b>- INFORMACI&Oacute;N DE HOJA DIARIA </b></h3></div>
-            <div class="modal-body" id="BODY_INFOHOJADIARIA"></div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div id="busquedaMes2"/></div>
-                    </div>
-                    <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
-                        <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guardar"><i class="fa fa-check-square" aria-hidden="true"></i> GUARDAR INFORMACI&Oacute;N </button>
+    <div class="modal fade" id="MODAL_INFOHOJADIARIA">
+        <div class="modal-dialog modal_imedico">
+            <div class="modal-content">
+                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3 class="modal-title"><b>- INFORMACI&Oacute;N DE HOJA DIARIA </b></h3></div>
+                <div class="modal-body" id="BODY_INFOHOJADIARIA"></div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="busquedaMes2"/></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
+                            <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guardar"><i class="fa fa-check-square" aria-hidden="true"></i> GUARDAR INFORMACI&Oacute;N </button>
+                        </div>
                     </div>
                 </div>
             </div>
-	</div>
+        </div>
     </div>
-</div>
 
-<div class="modal fade" id="modal_nuevo_prestador_rrhh">
-    <div class="modal-dialog modal_imedico">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><b>NUEVO RRHH</b></h3>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body" id="html_nuevo_prestador_rrhh"></div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div id="busquedaMes2"/></div>
-                    </div>
-                    <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA VENTANA</button>
-                        <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guarda_infoxususario" disabled="">
-                            <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;GUARDAR RRHH
-                        </button>
+    <div class="modal fade" id="modal_nuevo_prestador_rrhh">
+        <div class="modal-dialog modal_imedico">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>NUEVO RRHH</b></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_nuevo_prestador_rrhh"></div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="busquedaMes2"/></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA VENTANA</button>
+                            <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guarda_infoxususario" disabled="">
+                                <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;GUARDAR RRHH
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-	</div>
+        </div>
     </div>
-</div>
+
+</section>
+
+
 
 <!--  ZONA INPUT INGRESO DE PACIENTE -->
 <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
