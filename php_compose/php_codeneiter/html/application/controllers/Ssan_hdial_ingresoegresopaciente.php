@@ -7,7 +7,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->library('session');
         $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
     }
-    
+
     public function index(){
         $this->output->set_template('blank');
         $data = [];
@@ -15,6 +15,4 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data);
     }
-
-    
 }

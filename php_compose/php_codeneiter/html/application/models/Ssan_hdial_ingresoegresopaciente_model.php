@@ -12,6 +12,8 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         parent::__construct();
         $this->db = $this->load->database('oracle_conteiner',true);
     }
+
+
     
-   
 }
+
