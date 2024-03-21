@@ -44,8 +44,8 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                                         'type'      =>  OCI_B_CURSOR
                                     ),
                                 );
-        $result                                     =   [];
-        #$result                                    =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','LOAD_DATA_LISTA_RRHH',$param);
+        #$result                                     =   [];
+        $result                                    =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','LOAD_DATA_LISTA_RRHH',$param);
         $this->db->trans_complete();
         return array(
             'return_bd'                             =>  $result,
@@ -82,8 +82,8 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                                     ),
                                     
                                 );
-        #$result            =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','DATA_VALIDA_PROFESIONAL',$param);
-        $result             =   [];
+        #$result             =   [];
+        $result            =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','DATA_VALIDA_PROFESIONAL',$param);
         $this->db->trans_complete();
         return array(
             'STATUS'	    =>	$this->db->trans_status(),

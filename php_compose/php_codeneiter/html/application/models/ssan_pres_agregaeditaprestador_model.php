@@ -89,7 +89,7 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             'COD_EMPRESA'   =>  $codemp,
             'COD_TPROFENEW' =>  $tprof
         );
-        //var_dump($rutfin);
+        #var_dump($rutfin);
         $mprestador         =   $this->consultaPrestador($rutfin);
         if ($mprestador) {
             #MODIFICO EL PRESTADOR
@@ -99,13 +99,15 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             $this->db->update($this->own . '.GG_TPROFESIONAL', $dataUs);
         } else {
             #CREA EL PRESTADOR
+            $id_profesional = $this->db->sequence($this->own,'SEQ_UNICOPROFESIONAL');
+            $this->db->set('ID_PROFESIONAL', $id_profesional);
             $this->db->set('COD_PROMED', strtoupper($iniciales));
             $this->db->set('COD_USRCREA', $rutUsClave);
             $this->db->set('FEC_USRCREA', 'SYSDATE');
             $this->db->insert($this->own . '.GG_TPROFESIONAL', $dataUs);
         }
 
-        $profxemp = $this->consultaPrestadorxEmp($rutfin, $codemp);
+            $profxemp   =   $this->consultaPrestadorxEmp($rutfin, $codemp);
         if ($profxemp) {
             $this->db->set('IND_ESTADO', 'V');
             $this->db->where('COD_RUTPRO', $rutfin);
@@ -113,11 +115,11 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             $this->db->update($this->own . '.AP_TPROFXESTABL');
         } else {
             $dataUp = array(
-                'COD_RUTPRO' => $rutfin,
-                'COD_USRCREA' => $rutUsClave,
-                'COD_EMPRESA' => $codemp,
-                'FEC_USRCREA' => 'SYSDATE', //solo cuando se edita
-                'IND_ESTADO' => 'V'
+                'COD_RUTPRO'    =>  $rutfin,
+                'COD_USRCREA'   =>  $rutUsClave,
+                'COD_EMPRESA'   =>  $codemp,
+                'FEC_USRCREA'   =>  'SYSDATE', //solo cuando se edita
+                'IND_ESTADO'    =>  'V'
             );
             $this->db->where('COD_RUTPRO', $rutfin);
             $this->db->insert($this->own . '.AP_TPROFXESTABL', $dataUp);

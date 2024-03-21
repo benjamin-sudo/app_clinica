@@ -53,5 +53,5 @@
                                             $("#rut_profesional").css('border-color','');   
                                         },
         format_on   : 'keyup'
-        });
+    });
 </script>

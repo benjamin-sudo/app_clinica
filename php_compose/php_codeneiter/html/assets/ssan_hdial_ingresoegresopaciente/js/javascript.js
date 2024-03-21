@@ -194,7 +194,6 @@ function valida_profesional(){
                                                         $("#rut_profesional").val('');
                                                         return false;
                                                     }
-                                                    
                                                     if(aData.info_prof.length  == 0){
                                                         showNotification('top','center','RUN ingresado no existe como prestador en su establecimiento',4,'fa fa-times')
                                                         js_limpia_panel();
@@ -207,9 +206,18 @@ function valida_profesional(){
                                                         $("#btn_guarda_infoxususario").prop('disabled',false);
                                                         $("#rut_profesional").prop('disabled',true);
                                                     }
-
                                                 }, 
    });
+}
+
+function js_limpia_panel(){
+    $("#numidentificador").html('');
+    $("#nombreLabel").html('');
+    $("#profesionLabel").html('');
+    $(".grid_busqueda_rrhh").data().data = [];
+    $("#btn_guarda_infoxususario").attr('onclick','');
+    $("#btn_guarda_infoxususario").prop('disabled',true);
+    $("#rut_profesional").prop('disabled',false);
 }
 
 function js_guarda_dialisis(){

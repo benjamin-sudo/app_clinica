@@ -32,9 +32,7 @@
 
 <div class="tab-content">
     <div class="tab-pane active" id="ind_medicos" role="tabpanel" aria-labelledby="ind_medicos-tab" tabindex="0">
-        
         <h3 style="margin-top: 8px;">LISTADO MEDICOS DE DIALISIS</h3>
-
         <table class="table table-striped" width="100%">
             <thead>
                 <tr>

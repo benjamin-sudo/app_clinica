@@ -178,10 +178,10 @@
                 <div class="modal-footer">
                     <div class="btn-group">
                         <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
-                            <i class="bi bi-x-square-fill"></i>&nbsp;CERRAR VENTANA
+                            <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR VENTANA
                         </button>
                         <button type="button" class="btn btn-success" id="btn_guarda_infoxususario" disabled="">
-                            <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;GUARDAR RRHH
+                            <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;&nbsp;GUARDAR RRHH
                         </button>
                     </div>
                 </div>
