@@ -1,6 +1,6 @@
 <div class="grid_busqueda_rrhh">
     <div class="grid_busqueda_rrhh1">
-        <span class="input-group-addon" id="basic-addon1" style=""><i class="fa fa-user"></i><b>RUN</b></span>
+        <span class="input-group-addon" id="basic-addon1" style=""><i class="fa fa-user-md"></i> <b>RUN</b></span>
         <input type="text" id="rut_profesional" name="rut_profesional" class="form-control input-sm" style="width:115px;"/>
     </div>
     <div class="grid_busqueda_rrhh3">

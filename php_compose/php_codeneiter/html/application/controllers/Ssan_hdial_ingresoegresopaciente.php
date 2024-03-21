@@ -71,10 +71,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $status                         =   true;
         $run                            =   $this->input->post('run');
         $empresa                        =   $this->session->userdata("COD_ESTAB");
+        
         $data_number                    =   $this->ssan_hdial_ingresoegresopaciente_model->model_asignacion_muestra_x_user(array(
             "val_empresa"               =>  $empresa,
             "rut_profesional"           =>  $run,
         ));
+
         $this->output->set_output(json_encode(array(
             'data_number'               =>  $data_number,
             'status'                    =>  $status,

@@ -433,6 +433,128 @@ CREATE TABLE ADMIN.HD_TURNOSXDIAS(
     IND_ESTADO      NUMBER,
     PRIMARY KEY (HD_TURNOSXDIAS)
 );
+COMMIT;
+/
+
+CREATE OR REPLACE PACKAGE ADMIN.PROCE_GESTION_DIALISIS AS
+    PROCEDURE LOAD_DATA_LISTA_RRHH(
+        V_COD_EMPRESA               IN VARCHAR2, 
+        V_FIRST                     IN VARCHAR2,
+        C_RESULT_RRHH               OUT SYS_REFCURSOR,
+        C_LOGS                      OUT SYS_REFCURSOR
+    );
+    PROCEDURE  DATA_VALIDA_PROFESIONAL (
+        V_COD_EMPRESA               IN VARCHAR,
+        V_RUT_PROFESIONAL           IN VARCHAR,
+        P_INFO_PROFESIONAL          OUT SYS_REFCURSOR,
+        P_RETURN_LOGS               OUT SYS_REFCURSOR
+    );
+END PROCE_GESTION_DIALISIS;
+/
+CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_GESTION_DIALISIS AS
+    PROCEDURE LOAD_DATA_LISTA_RRHH(
+        V_COD_EMPRESA               IN VARCHAR2, 
+        V_FIRST                     IN VARCHAR2,
+        C_RESULT_RRHH               OUT SYS_REFCURSOR,
+        C_LOGS                      OUT SYS_REFCURSOR
+    ) IS
+
+    BEGIN
+        OPEN C_RESULT_RRHH FOR
+        SELECT
+            A.ID_PROFESIONAL                                                                                                        AS ID_PRO, 
+            A.COD_RUTPRO,  
+            A.COD_DIGVER                                                                                                            AS COD_DIGVER,
+            DECODE (C.IND_TIPOATENCION,
+            '01','slc_medico',
+            '15','slc_medico',
+            '02','slc_enfermeria',
+            '12','slc_tecpara','no_info')                                                                                           AS HTML_OUT,
+            UPPER(A.NOM_APEPAT)||' ' ||UPPER(A.NOM_APEMAT)||' ' ||UPPER(A.NOM_NOMBRE)                                               AS NOM_PROFE,
+            C.DES_TIPOATENCION                                                                                                      AS DES_TIPOATENCION,
+            B.COD_TPROFE                                                                                                            AS COD_TPROFE,
+            B.NOM_TPROFE                                                                                                            AS NOM_TPROFE,
+            C.IND_TIPOATENCION                                                                                                      AS IND_TIPOATENCION
+        FROM 
+            ADMIN.GG_TPROFESIONAL       A,
+            ADMIN.GG_TPROFESION         B,
+            ADMIN.AP_TTIPOATENCION      C,
+            ADMIN.AP_TPROFXESTABL       D,
+            ADMIN.HD_RRHHDIALISIS       H
+        WHERE 
+                A.IND_ESTADO                                 =  'V'
+            AND D.IND_ESTADO                                 =  'V'
+            AND A.COD_TPROFE                                 =  B.COD_TPROFE
+            AND B.IND_TIPOATENCION                           =  C.IND_TIPOATENCION
+            AND A.COD_RUTPRO                                 =  D.COD_RUTPRO
+            AND D.COD_EMPRESA                                IN (V_COD_EMPRESA)
+            AND H.COD_RUTPRO                                 =  A.COD_RUTPRO
+            AND H.IND_ESTADO                                 IN (1)
+        ORDER BY C.IND_TIPOATENCION, A.NOM_APEPAT;
+        
+    END;
+
+
+PROCEDURE  DATA_VALIDA_PROFESIONAL (
+    V_COD_EMPRESA               IN VARCHAR,
+    V_RUT_PROFESIONAL           IN VARCHAR,
+    P_INFO_PROFESIONAL          OUT SYS_REFCURSOR,
+    P_RETURN_LOGS               OUT SYS_REFCURSOR
+) IS
+
+BEGIN
+    OPEN P_RETURN_LOGS FOR 
+    SELECT 
+        H.ID_RRHH, 
+        H.COD_RUTPRO, 
+        H.ID_PROFESIONAL, 
+        H.IND_ESTADO, 
+        H.COD_USERCREA, 
+        H.DATE_CREA, 
+        H.COD_EMPRESA, 
+        H.COD_AUDITA, 
+        H.FEC_AUDITA
+    FROM 
+        ADMIN.HD_RRHHDIALISIS H
+    WHERE
+        H.COD_EMPRESA IN (V_COD_EMPRESA)
+        AND
+        H.IND_ESTADO IN (1)
+        AND
+        H.COD_RUTPRO IN  (V_RUT_PROFESIONAL);
+        
+        
+    OPEN P_INFO_PROFESIONAL FOR 
+    SELECT 
+        A.COD_RUTPRO,  
+        A.ID_PROFESIONAL                                                                   AS ID_PRO,
+        A.COD_DIGVER                                                                       AS COD_DIGVER,
+        UPPER(A.NOM_APEPAT)||' ' ||UPPER(A.NOM_APEMAT)||' ' ||UPPER(A.NOM_NOMBRE)          AS NOM_PROFE,
+        C.DES_TIPOATENCION                                                                 AS DES_TIPOATENCION,
+        B.COD_TPROFE                                                                       AS COD_TPROFE,
+        B.NOM_TPROFE                                                                       AS NOM_TPROFE,
+        C.IND_TIPOATENCION                                                                 AS IND_TIPOATENCION
+    FROM 
+        ADMIN.GG_TPROFESIONAL       A,
+        ADMIN.GG_TPROFESION         B,
+        ADMIN.AP_TTIPOATENCION      C,
+        ADMIN.AP_TPROFXESTABL       D
+    WHERE 
+        A.IND_ESTADO                    IN  ('V')
+        AND D.IND_ESTADO                IN  ('V')
+        AND A.COD_TPROFE                =   B.COD_TPROFE
+        AND B.IND_TIPOATENCION          =   C.IND_TIPOATENCION
+        AND A.COD_RUTPRO                =   D.COD_RUTPRO
+        AND D.COD_EMPRESA               IN  (V_COD_EMPRESA)
+        AND A.COD_RUTPRO                IN  (V_RUT_PROFESIONAL) 
+    ORDER BY 
+        C.IND_TIPOATENCION, A.NOM_APEPAT;
+            
+END;
+
+END PROCE_GESTION_DIALISIS;
+/
+
 
 COMMIT;
 /

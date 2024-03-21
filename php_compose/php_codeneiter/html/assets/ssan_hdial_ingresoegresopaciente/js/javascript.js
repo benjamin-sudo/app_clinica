@@ -159,7 +159,7 @@ function valida_profesional(){
     _rut                    =   $("#rut_profesional").val();
 
     if(_rut == ''){
-       jError("RUN Vacio","e-SISSAN");
+       jError("RUN Vac&iacute;o","Clinica Libre");
        return false;
     }
 
