@@ -14,6 +14,11 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         $this->load->model("sql_class/sqlclass_archivo");
     }
 
+    public function load_inicio_dialisis(){
+
+
+
+    }
 
     public function load_busqueda_rrhhdialisis($data_controller) {
         $this->db->trans_start();
@@ -45,7 +50,6 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                                         'type'      =>  OCI_B_CURSOR
                                     ),
                                 );
-
         $result                                     =   [];
         #$result                                    =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','LOAD_DATA_LISTA_RRHH',$param);
         $this->db->trans_complete();

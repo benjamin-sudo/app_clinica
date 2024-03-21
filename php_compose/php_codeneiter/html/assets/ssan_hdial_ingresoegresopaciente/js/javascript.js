@@ -1,56 +1,47 @@
-$(function(){
-   $("#modal_historialclinico").on('show.bs.modal', function (e){ 
-       $("#txtBuscar").focus();
-   });
-   
-   $('#modal_historialclinico').on('hidden.bs.modal', function(e){ 
-       $("#txtBuscar").val(); 
-       $("#txtDv").val(); 
-       $("#resultadoBusqueda_post").val(); 
-   });
-   
-   $('#TURNOXMAQUINA').on('show.bs.modal', function (e){ 
-       //$("#txtBuscar").focus();
-   });
-   
-   $('#TURNOXMAQUINA').on('hidden.bs.modal', function(e){ 
-       $("#BODYXMAQUINA").html(''); 
-       $("#NOM_MAQUINA").html(''); 
-   });
-   
-   $('#PACIENTEXCUPO').on('show.bs.modal', function (e){ 
-   
-   });
-   
-   $('#PACIENTEXCUPO').on('hidden.bs.modal', function(e){ 
-       $("#NUEVOPACIENTEXCUPO").attr('onclick',''); 
-       $("#HTML_PACIENE").html('');
-   });
-   
-   $('#nuevoProfesional').on('hidden.bs.modal', function(e){ 
-       $("#txtBuscar").val(''); 
-       $("#txtDv").val(''); 
-       $("#resultadoBusqueda_post").html('');
-   });
-            
-   $('#MODAL_HD_ANTERIORES').on('show.bs.modal',     function(e){ });
-   $('#MODAL_HD_ANTERIORES').on('hidden.bs.modal',   function(e){ 
-       $("#BODY_HD_ANTERIORES").html(" "); 
-       $("#busquedaMes").html("");
-   });
-   $('#MODAL_INFOHOJADIARIA').on('show.bs.modal',     function(e){ });
-   $('#MODAL_INFOHOJADIARIA').on('hidden.bs.modal',   function(e){ 
-       $("#BODY_INFOHOJADIARIA").html(""); 
-       $("#busquedaMes").html("");
-   });
-  
-   $('#modal_nuevo_prestador_rrhh').on('hidden.bs.modal',   function(e){ 
-       $("#html_nuevo_prestador_rrhh").html('');
-       $("#btn_guarda_infoxususario").attr('onclick','');
-       $("#btn_guarda_infoxususario").prop('disabled',true);
-   });
-
-   $('#Rut_form').Rut({
+$(document).ready(function() {
+    $("#modal_historialclinico").on('show.bs.modal', function (e){ 
+        $("#txtBuscar").focus();
+    });
+    $('#modal_historialclinico').on('hidden.bs.modal', function(e){ 
+        $("#txtBuscar").val(); 
+        $("#txtDv").val(); 
+        $("#resultadoBusqueda_post").val(); 
+    });
+    $('#TURNOXMAQUINA').on('show.bs.modal', function (e){ 
+        //$("#txtBuscar").focus();
+    });
+    $('#TURNOXMAQUINA').on('hidden.bs.modal', function(e){ 
+        $("#BODYXMAQUINA").html(''); 
+        $("#NOM_MAQUINA").html(''); 
+    });
+    $('#PACIENTEXCUPO').on('show.bs.modal', function (e){ 
+    
+    });
+    $('#PACIENTEXCUPO').on('hidden.bs.modal', function(e){ 
+        $("#NUEVOPACIENTEXCUPO").attr('onclick',''); 
+        $("#HTML_PACIENE").html('');
+    });
+    $('#nuevoProfesional').on('hidden.bs.modal', function(e){ 
+        $("#txtBuscar").val(''); 
+        $("#txtDv").val(''); 
+        $("#resultadoBusqueda_post").html('');
+    });
+    $('#MODAL_HD_ANTERIORES').on('show.bs.modal',     function(e){ });
+    $('#MODAL_HD_ANTERIORES').on('hidden.bs.modal',   function(e){ 
+        $("#BODY_HD_ANTERIORES").html(" "); 
+        $("#busquedaMes").html("");
+    });
+    $('#MODAL_INFOHOJADIARIA').on('show.bs.modal',     function(e){ });
+    $('#MODAL_INFOHOJADIARIA').on('hidden.bs.modal',   function(e){ 
+        $("#BODY_INFOHOJADIARIA").html(""); 
+        $("#busquedaMes").html("");
+    });
+    $('#modal_nuevo_prestador_rrhh').on('hidden.bs.modal',   function(e){ 
+        $("#html_nuevo_prestador_rrhh").html('');
+        $("#btn_guarda_infoxususario").attr('onclick','');
+        $("#btn_guarda_infoxususario").prop('disabled',true);
+    });
+    $('#Rut_form').Rut({
        on_error            :   function(){
            $('#ErrorRutVF').html("Rut Incorrecto");
            $("#ErrorRutVF").show('slow').fadeOut('slow').fadeIn('slow');            
@@ -64,14 +55,14 @@ $(function(){
            $("#ErrorRutVF").hide('slow');
            js_grabadatosPaciente();
        },
-       
        format_on           :   'keyup'
    });
-   
    //$(".content2").autocomplete_nn();
    //busquedaPacientes();
    //busquedaPacientesxMaquina();
 });
+
+
 
 function js_busqueda_rrhh(){
    $.ajax({ 
@@ -550,7 +541,6 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
    });
  
    //**************************************************************************
-   
    jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
            'Confirmaci\u00F3n',function(r){
            if((r=='')||(r==null)){
@@ -724,30 +714,30 @@ function EliminaFilaCie10(idcod){
 function grabaform(){//segundo formularpo
     $("#Frm_notif_reac_adv").validate();
                    
-   var Sl_Hipo_sion1= $("#Sl_Hipo_sion1").val();     console.log("-"+Sl_Hipo_sion1); 
-   var Sl_Hipo_sion2= $("#Sl_Hipo_sion2").val();     console.log("-"+Sl_Hipo_sion2);     
-    var Sl_Hipo_sion3= $("#Sl_Hipo_sion3").val();     console.log("-"+Sl_Hipo_sion3);
-    var Sl_Ca_frio1= $("#Sl_Ca_frio1").val();     console.log("-"+Sl_Ca_frio1);
-    var Sl_Ca_frio2= $("#Sl_Ca_frio2").val();     console.log("-"+Sl_Ca_frio2);
-    var Sl_Ca_frio3= $("#Sl_Ca_frio3").val();     console.log("-"+Sl_Ca_frio3);
-    var Sl_F_bre1= $("#Sl_F_bre1").val();     console.log("-"+Sl_F_bre1);
-    var Sl_F_bre2= $("#Sl_F_bre2").val();     console.log("-"+Sl_F_bre2);
-    var Sl_F_bre3= $("#Sl_F_bre3").val();     console.log("-"+Sl_F_bre3);
-    var Sl_Inf_catt1= $("#Sl_Inf_catt1").val();     console.log("-"+Sl_Inf_catt1);
-    var Sl_Inf_catt2= $("#Sl_Inf_catt2").val();     console.log("-"+Sl_Inf_catt2);
-    var Sl_Inf_catt3= $("#Sl_Inf_catt3").val();     console.log("-"+Sl_Inf_catt3);
-    var Sl_Bact_meia1= $("#Sl_Bact_meia1").val();     console.log("-"+Sl_Bact_meia1);
-    var Sl_Bact_meia2= $("#Sl_Bact_meia2").val();     console.log("-"+Sl_Bact_meia2);
-    var Sl_Bact_meia3= $("#Sl_Bact_meia3").val();     console.log("-"+Sl_Bact_meia3);
-    var Sl_Hep_b1= $("#Sl_Hep_b1").val();     console.log("-"+Sl_Hep_b1);
-    var Sl_Hep_b2= $("#Sl_Hep_b2").val();     console.log("-"+Sl_Hep_b2);
-    var Sl_Hep_b3= $("#Sl_Hep_b3").val();     console.log("-"+Sl_Hep_b3);
-    var Sl_Hep_c1= $("#Sl_Hep_c1").val();     console.log("-"+Sl_Hep_c1);
-    var Sl_Hep_c2= $("#Sl_Hep_c2").val();     console.log("-"+Sl_Hep_c2);
-    var Sl_Hep_c3= $("#Sl_Hep_c3").val();     console.log("-"+Sl_Hep_c3);
-    var Sl_mrtes_pro1= $("#Sl_mrtes_pro1").val();     console.log("-"+Sl_mrtes_pro1);
-    var Sl_mrtes_pro2= $("#Sl_mrtes_pro2").val();     console.log("-"+Sl_mrtes_pro2);
-    var Sl_mrtes_pro3= $("#Sl_mrtes_pro3").val();     console.log("-"+Sl_mrtes_pro3);
+    var Sl_Hipo_sion1= $("#Sl_Hipo_sion1").val();       console.log("-"+Sl_Hipo_sion1); 
+    var Sl_Hipo_sion2= $("#Sl_Hipo_sion2").val();       console.log("-"+Sl_Hipo_sion2);     
+    var Sl_Hipo_sion3= $("#Sl_Hipo_sion3").val();       console.log("-"+Sl_Hipo_sion3);
+    var Sl_Ca_frio1= $("#Sl_Ca_frio1").val();           console.log("-"+Sl_Ca_frio1);
+    var Sl_Ca_frio2= $("#Sl_Ca_frio2").val();           console.log("-"+Sl_Ca_frio2);
+    var Sl_Ca_frio3= $("#Sl_Ca_frio3").val();           console.log("-"+Sl_Ca_frio3);
+    var Sl_F_bre1= $("#Sl_F_bre1").val();               console.log("-"+Sl_F_bre1);
+    var Sl_F_bre2= $("#Sl_F_bre2").val();               console.log("-"+Sl_F_bre2);
+    var Sl_F_bre3= $("#Sl_F_bre3").val();               console.log("-"+Sl_F_bre3);
+    var Sl_Inf_catt1= $("#Sl_Inf_catt1").val();         console.log("-"+Sl_Inf_catt1);
+    var Sl_Inf_catt2= $("#Sl_Inf_catt2").val();         console.log("-"+Sl_Inf_catt2);
+    var Sl_Inf_catt3= $("#Sl_Inf_catt3").val();         console.log("-"+Sl_Inf_catt3);
+    var Sl_Bact_meia1= $("#Sl_Bact_meia1").val();       console.log("-"+Sl_Bact_meia1);
+    var Sl_Bact_meia2= $("#Sl_Bact_meia2").val();       console.log("-"+Sl_Bact_meia2);
+    var Sl_Bact_meia3= $("#Sl_Bact_meia3").val();       console.log("-"+Sl_Bact_meia3);
+    var Sl_Hep_b1= $("#Sl_Hep_b1").val();               console.log("-"+Sl_Hep_b1);
+    var Sl_Hep_b2= $("#Sl_Hep_b2").val();               console.log("-"+Sl_Hep_b2);
+    var Sl_Hep_b3= $("#Sl_Hep_b3").val();               console.log("-"+Sl_Hep_b3);
+    var Sl_Hep_c1= $("#Sl_Hep_c1").val();               console.log("-"+Sl_Hep_c1);
+    var Sl_Hep_c2= $("#Sl_Hep_c2").val();               console.log("-"+Sl_Hep_c2);
+    var Sl_Hep_c3= $("#Sl_Hep_c3").val();               console.log("-"+Sl_Hep_c3);
+    var Sl_mrtes_pro1= $("#Sl_mrtes_pro1").val();       console.log("-"+Sl_mrtes_pro1);
+    var Sl_mrtes_pro2= $("#Sl_mrtes_pro2").val();       console.log("-"+Sl_mrtes_pro2);
+    var Sl_mrtes_pro3= $("#Sl_mrtes_pro3").val();       console.log("-"+Sl_mrtes_pro3);
     
     jPrompt('Con esta acci&oacute;n se proceder&aacute; a realizar el registro de datos.<br /><br />&iquest;Est&aacute; seguro de continuar?', '', 'Confirmaci\u00f3n', function (r) {
        if (r) {  
@@ -777,152 +767,129 @@ function grabaform(){//segundo formularpo
                "Sl_mrtes_pro2":Sl_mrtes_pro2,
                "Sl_mrtes_pro3":Sl_mrtes_pro3
            }
-
-           var id = "respuesta";
-           var funcion = "Graba_Respuesta_2"; //Funcion del Controlador a Ejecutar
-           AjaxExt(variables, id, funcion);
-               $('#confirmar').prop('disabled', true);
+            var id          =   "respuesta";
+            var funcion     =   "Graba_Respuesta_2"; //Funcion del Controlador a Ejecutar
+            AjaxExt(variables, id, funcion);
+            $('#confirmar').prop('disabled', true);
        }});
-    
-     return false;
+    return false;
 }
 
 function selec_(rdo,num){
-  $("#Resp_IngEnf_Dial_"+rdo).val(num);
-  
-  if(rdo==542 && num==1){//si
-      //$("#TR_Aliments").show();
-      // $("#TR_Medicamnts").show();
-       // $("#Tr_Otrss").show();
-//         
-//         $("#Resp_IngEnf_Dial_543").show();
-//        $("#Resp_IngEnf_Dial_544").show();
-//         $("#Resp_IngEnf_Dial_545").show();
-        
+    $("#Resp_IngEnf_Dial_"+rdo).val(num);
+    
+    if(rdo==542 && num==1){//si
+        //$("#TR_Aliments").show();
+        //$("#TR_Medicamnts").show();
+        //$("#Tr_Otrss").show();
+        //         
+        //$("#Resp_IngEnf_Dial_543").show();
+        //$("#Resp_IngEnf_Dial_544").show();
+        //$("#Resp_IngEnf_Dial_545").show();
         var res543=$("#r_espuesta_543_old").val();
         var res544=$("#r_espuesta_544_old").val();
         var res545=$("#r_espuesta_545_old").val();
-       
-        
-       $("#Resp_IngEnf_Dial_543").removeAttr('disabled');    $("#Resp_IngEnf_Dial_543").val(res543);   
-          $("#Resp_IngEnf_Dial_544").removeAttr('disabled');     $("#Resp_IngEnf_Dial_544").val(res544);
-          $("#Resp_IngEnf_Dial_545").removeAttr('disabled');      $("#Resp_IngEnf_Dial_545").val(res545);
-              
-              
-       
-  }
-   if(  (rdo==542 && (num==2 || num==3)) ){//no  - no sabe
-     //    $("#Resp_IngEnf_Dial_543").hide();
-     //  $("#Resp_IngEnf_Dial_544").hide();
-     //   $("#Resp_IngEnf_Dial_545").hide();
-       
-//       $("#TR_Aliments").hide();
-//        $("#TR_Medicamnts").hide();
-//         $("#Tr_Otrss").hide();
-           
-           
-            $("#Resp_IngEnf_Dial_543").val("");   $("#Resp_IngEnf_Dial_543").attr('disabled', 'disabled');
-             $("#Resp_IngEnf_Dial_544").val("");       $("#Resp_IngEnf_Dial_544").attr('disabled', 'disabled');
-              $("#Resp_IngEnf_Dial_545").val("");      $("#Resp_IngEnf_Dial_545").attr('disabled', 'disabled');
-  }
+        $("#Resp_IngEnf_Dial_543").removeAttr('disabled');    $("#Resp_IngEnf_Dial_543").val(res543);   
+        $("#Resp_IngEnf_Dial_544").removeAttr('disabled');     $("#Resp_IngEnf_Dial_544").val(res544);
+        $("#Resp_IngEnf_Dial_545").removeAttr('disabled');      $("#Resp_IngEnf_Dial_545").val(res545);
+    }
    
+    if(  (rdo==542 && (num==2 || num==3)) ){//no  - no sabe
+        //$("#Resp_IngEnf_Dial_543").hide();
+        //$("#Resp_IngEnf_Dial_544").hide();
+        //$("#Resp_IngEnf_Dial_545").hide();
+        //$("#TR_Aliments").hide();
+        //$("#TR_Medicamnts").hide();
+        //$("#Tr_Otrss").hide();
+        $("#Resp_IngEnf_Dial_543").val("");   $("#Resp_IngEnf_Dial_543").attr('disabled', 'disabled');
+        $("#Resp_IngEnf_Dial_544").val("");       $("#Resp_IngEnf_Dial_544").attr('disabled', 'disabled');
+        $("#Resp_IngEnf_Dial_545").val("");      $("#Resp_IngEnf_Dial_545").attr('disabled', 'disabled');
+    }
 }
 
 function select_2(){
-    var  Tiene='';
-     $('[id^=TR_Cie10_]').each(function () {  //Obtener valores de Diagnostico   
-       var objProducto = new Object();
-       objProducto.h = $(this).attr('id');
-       objProducto.h = objProducto.h.replace('TR_Cie10_', '');
-       objProducto.Resp_IngEnf_Dial_ = $("#TR_Cie10_" + objProducto.h).val();//lo que contesto       
-       Tiene=1;
-   });  
-   
-   if(Tiene==1){
+    var Tiene='';
+    $('[id^=TR_Cie10_]').each(function () {  //Obtener valores de Diagnostico   
+        var objProducto = new Object();
+        objProducto.h = $(this).attr('id');
+        objProducto.h = objProducto.h.replace('TR_Cie10_', '');
+        objProducto.Resp_IngEnf_Dial_ = $("#TR_Cie10_" + objProducto.h).val();//lo que contesto       
+        Tiene=1;
+    });  
+    if(Tiene==1){
         $("#Resp_IngEnf_Dial_546").val(1);
-       
-   }else{
-        
-           $("#Resp_IngEnf_Dial_546").val(0);
-   }
+    } else {
+        $("#Resp_IngEnf_Dial_546").val(0);
+    }
 }
 
 function grab(ed){
     $("#formulario_ing_enf").validate();
-    
-     var fic_e= $("#fic_e").val();     console.log("-"+fic_e);
-   
-   var mensaje='';
-   
-
-     var Resp_IngEnf_Dial = new Array();
-   $('[id^=Resp_IngEnf_Dial_]').each(function () {  //Obtener valores de Diagnostico   
-       var objProducto = new Object();
-       objProducto.h = $(this).attr('id');
-       objProducto.h = objProducto.h.replace('Resp_IngEnf_Dial_', '');
-       objProducto.Resp_IngEnf_Dial_ = $("#Resp_IngEnf_Dial_" + objProducto.h).val();//lo que contesto     
-       mensaje+="<br>N: "+objProducto.h+" ---> RESPUESTA: "+$("#Resp_IngEnf_Dial_" + objProducto.h).val();
+    var fic_e= $("#fic_e").val();     
+    console.log("-"+fic_e);
+    var mensaje='';
+    var Resp_IngEnf_Dial = new Array();
+    $('[id^=Resp_IngEnf_Dial_]').each(function(){  //Obtener valores de Diagnostico   
+    var objProducto = new Object();
+        objProducto.h = $(this).attr('id');
+        objProducto.h = objProducto.h.replace('Resp_IngEnf_Dial_', '');
+        objProducto.Resp_IngEnf_Dial_ = $("#Resp_IngEnf_Dial_" + objProducto.h).val();//lo que contesto     
+        mensaje+="<br>N: "+objProducto.h+" ---> RESPUESTA: "+$("#Resp_IngEnf_Dial_" + objProducto.h).val();
         Resp_IngEnf_Dial.push(objProducto);
-   });  
-//    jAlert(mensaje);
-//    
-//    return false;
+    });  
+
+    //jAlert(mensaje);
+    //return false;
  
-  
-   
-   //var agrupadascie10="";
-     var Cie10Agrupados = new Array();
-   $('[id^=Hd_Cie10_]').each(function () {  //Obtener valores de Diagnostico
-       // arrpreg
-       var objProducto = new Object();
-       objProducto.h = $(this).attr('id');
-       objProducto.h = objProducto.h.replace('Hd_Cie10_', '');
-       objProducto.RespCie = $("#Hd_Cie10_" + objProducto.h).val();//lo que contesto
-       //agrupadascie10+=$("#Hd_Cie10_" + objProducto.h).val()+',';//lo que contesto
+    //var agrupadascie10="";
+    var Cie10Agrupados = new Array();
+    $('[id^=Hd_Cie10_]').each(function () {  //Obtener valores de Diagnostico
+        // arrpreg
+        var objProducto = new Object();
+        objProducto.h = $(this).attr('id');
+        objProducto.h = objProducto.h.replace('Hd_Cie10_', '');
+        objProducto.RespCie = $("#Hd_Cie10_" + objProducto.h).val();//lo que contesto
+        //agrupadascie10+=$("#Hd_Cie10_" + objProducto.h).val()+',';//lo que contesto
         Cie10Agrupados.push(objProducto);
-   });     
-  //console.log("-"+agrupadascie10);
+    });     
+    //console.log("-"+agrupadascie10);
 
 
     jPrompt('Con esta acci&oacute;n se proceder&aacute; a realizar el registro de datos.<br /><br />&iquest;Est&aacute; seguro de continuar?', '', 'Confirmaci\u00f3n', function (r) {
-       if (r){
-           var variables = {
-               "ed":ed,
-               "Clave"             :   r,
-               "fic_e"             :   fic_e,
-               "Resp_IngEnf_Dial"  :   Resp_IngEnf_Dial,
-               "Cie10Agrupados"    :   Cie10Agrupados,     
-               "fec_histo"         :   $("#numFecha").val(),
-           }
-           var id                  = "respuesta";
-           var funcion             = "Graba_Respuesta"; //Funcion del Controlador a Ejecutar
-           
-           AjaxExt(variables, id, funcion);
-           $('#confirmar').prop('disabled', true);
-       }});
+        if (r){
+            var variables = {
+                "ed":ed,
+                "Clave"             :   r,
+                "fic_e"             :   fic_e,
+                "Resp_IngEnf_Dial"  :   Resp_IngEnf_Dial,
+                "Cie10Agrupados"    :   Cie10Agrupados,     
+                "fec_histo"         :   $("#numFecha").val(),
+            }
+        var id          =   "respuesta";
+        var funcion     =   "Graba_Respuesta"; //Funcion del Controlador a Ejecutar
+        AjaxExt(variables, id, funcion);
+        $('#confirmar').prop('disabled', true);
+    }});
    return false;
 }
 
 function Limpiar1(){  
-   // $("#Rut_form").val("");
-   $("#fic_e").val("");
-   //$("#resultadoBusqueda_post").html('');
-   $("#nomcie10").val('');
-   $("#Cod_cie10_1").html('');
-   $("#Resp_IngEnf_Dial_546").val(0);
+    // $("#Rut_form").val("");
+    $("#fic_e").val("");
+    //$("#resultadoBusqueda_post").html('');
+    $("#nomcie10").val('');
+    $("#Cod_cie10_1").html('');
+    $("#Resp_IngEnf_Dial_546").val(0);
 
-   //1. ANTECEDENTES PERSONALES_______________________________________
-     $(".limp").val("");//todos los cuadros de texto          
-   $("#Rdo_infenf_Ant_Alerg_1").prop('checked', false);
-   $("#Rdo_infenf_Ant_Alerg_2").prop('checked', false);
-   $("#Rdo_infenf_Ant_Alerg_3").prop('checked', false);
-
-
-   $("#Rdo_Diuesis_1").prop('checked', false);
-   $("#Rdo_Diuesis_2").prop('checked', false);
-
-   $("#Rdo_QQB_1").prop('checked', false);
-   $("#Rdo_QQB_2").prop('checked', false);
+    //1. ANTECEDENTES PERSONALES_______________________________________
+    $(".limp").val("");//todos los cuadros de texto          
+    $("#Rdo_infenf_Ant_Alerg_1").prop('checked', false);
+    $("#Rdo_infenf_Ant_Alerg_2").prop('checked', false);
+    $("#Rdo_infenf_Ant_Alerg_3").prop('checked', false);
+    $("#Rdo_Diuesis_1").prop('checked', false);
+    $("#Rdo_Diuesis_2").prop('checked', false);
+    $("#Rdo_QQB_1").prop('checked', false);
+    $("#Rdo_QQB_2").prop('checked', false);
 }
 
 function imprimePdrf() {   
