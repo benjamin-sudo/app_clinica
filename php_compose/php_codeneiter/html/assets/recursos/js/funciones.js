@@ -60,7 +60,7 @@ $(document).ready(function(){
 });
 
 function js_confimicuenta(){
-    console.log("   ->  js_confimicuenta    <-");
+    console.log("   ->  js_confimicuenta    <-  ");
     $.ajax({ 
         type        :   "POST",
         url         :   "Dashboard/configuracion_micuenta",
@@ -80,7 +80,6 @@ function js_confimicuenta(){
                                         }, 
     });
 }
-
 
 function change_captcha() {
     AjaxExt({}, 'imgCaptcha', 'traeCod', '', 'inicio');
