@@ -57,6 +57,9 @@ $(document).ready(function(){
     });
     */
     //setTimeout(function() {  moverE(); },10000);
+    $('#modal_perfil_usuario').on('hidden.bs.modal',   function(e){ 
+        $("#html_perfil_usuario").html('');
+    });
 });
 
 function js_confimicuenta(){
@@ -66,7 +69,7 @@ function js_confimicuenta(){
         url         :   "Dashboard/configuracion_micuenta",
         dataType    :   "json",
         beforeSend  :   function(xhr)   {  $('#loadFade').modal('show');    },
-        complete    :   function(xhr)   {  $('#loadFade').modal('hide');    },
+        finally     :   function(xhr)   {  $('#loadFade').modal('hide');    },
         data        :                   { },
         error		:   function(err)   { 
                                             console.log(err);  
@@ -76,7 +79,7 @@ function js_confimicuenta(){
         success     :   function(aData) { 
                                             console.log("   ##################################  ");
                                             console.log("   aData   ->  ",aData);
-                                            
+                                            $("#html_perfil_usuario").html(aData.html);
                                         }, 
     });
 }

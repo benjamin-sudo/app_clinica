@@ -26,9 +26,11 @@ class Dashboard extends CI_Controller {
 
     public function configuracion_micuenta(){
         $status = true;
-        
-        return [
-            'status' => $status
-        ];
+        if(!$this->input->is_ajax_request()){   show_404(); }
+        $html =  $this->load->view('Dashboard/html_perfil_usuario',[],true);
+        $this->output->set_output(json_encode([
+            'status' => $status,
+            'html' => $html
+        ]));
     }
 }

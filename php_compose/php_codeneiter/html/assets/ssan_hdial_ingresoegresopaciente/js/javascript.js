@@ -52,7 +52,6 @@ $(document).ready(function() {
             $("#resultadoBusqueda_post").html(""); 
             $("#dv_mnj_frm").html("");  
        },
-
        on_success : function(){
            $('#Hdd_RtInc').val(0);
            $('#ErrorRutVF').html('');

@@ -316,6 +316,29 @@
         </div>
       </div>
     </div>
+
+
+    <div class="modal fade" id="modal_perfil_usuario">
+        <div class="modal-dialog modal_imedico">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>PERFIL DE USUARIO</b></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_perfil_usuario"></div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR VENTANA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </section>
 </body>
 </html>
