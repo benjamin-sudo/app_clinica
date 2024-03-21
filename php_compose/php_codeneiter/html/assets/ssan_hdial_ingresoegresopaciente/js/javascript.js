@@ -57,12 +57,11 @@ $(document).ready(function() {
        },
        format_on           :   'keyup'
    });
+
    //$(".content2").autocomplete_nn();
    //busquedaPacientes();
    //busquedaPacientesxMaquina();
 });
-
-
 
 function js_busqueda_rrhh(){
    $.ajax({ 

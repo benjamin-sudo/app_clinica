@@ -1,7 +1,6 @@
 <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
     <i class="nav-icon fa fa-tint" aria-hidden="true"></i>&nbsp;<b>INGRESO DE PACIENTES TURNOS EN DIALISIS Y RRHH</b>
 </h4>
-
 <br>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -12,7 +11,7 @@
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">LISTADO DE MAQUINAS</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" onclick="js_busqueda_rrhh(1)"> RRHH</button>
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">RRHH</button>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
@@ -78,7 +77,7 @@
 
     </div>
     <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-        <div id="IND_RRHH"></div>
+        <div id="IND_RRHH"><?php echo $html_out;?></div>
     </div>
 </div>
 
@@ -138,7 +137,7 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div id="busquedaMes"/></div>
+                            <div id="busquedaMes"></div>
                         </div>
                         <div class="col-lg-6">
                             <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"> <i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
@@ -157,7 +156,7 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div id="busquedaMes2"/></div>
+                            <div id="busquedaMes2"></div>
                         </div>
                         <div class="col-lg-6">
                             <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>

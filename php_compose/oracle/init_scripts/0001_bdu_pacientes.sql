@@ -93,67 +93,66 @@ CREATE TABLE ADMIN.GG_TGPACTE(
 );
 COMMIT;
 /
-
 CREATE TABLE ADMIN.SO_TCPACTE (
-   COD_RUTPAC              NUMBER,
-   NUM_CORPAC              NUMBER,
-   NUM_NFICHA              NUMBER,
-   NUM_AFICHA              NUMBER,
-   IND_ESTPAC              CHAR,
-   COD_SERULA              VARCHAR2(7 BYTE),
-   FEC_ULTASI              DATE,
-   NUM_CORHOS              NUMBER,
-   FEC_ULTSER              DATE,
-   COD_ULTSER              VARCHAR2(3 BYTE),
-   IND_ARCHIVO             VARCHAR2(1 BYTE),
-   FEC_IMPRES              DATE,
-   COD_USRCREA             VARCHAR2(60 BYTE),
-   FEC_USRCREA             DATE,
-   COD_USUARI              VARCHAR2(60 BYTE),
-   FEC_AUDITA              DATE,
-   IND_ESTADO              CHAR,
-   COD_EMPRESA             VARCHAR2(5 BYTE),
-   NOM_DIRECC              VARCHAR2(100 BYTE),
-   NOM_CONTACTO            VARCHAR2(50 BYTE),
-   DIRECC_CONTACTO         VARCHAR2(100 BYTE),
-   NUM_FICHAE              NUMBER,
-   IND_IMPRES              CHAR,
-   NUM_TELEFO1_2           VARCHAR2(12 BYTE),
-   TELEFO_CONTACTO_2       VARCHAR2(12 BYTE),
-   NUM_TELEFO1             VARCHAR2(12 BYTE),
-   TELEFO_CONTACTO         VARCHAR2(12 BYTE),
-   COD_SISTEMA             VARCHAR2(10 BYTE),
-   COD_SISTEMAUDITA        VARCHAR2(10 BYTE),
-   COD_SECTOR              VARCHAR2(5 BYTE),
-   COD_FAMILIA             VARCHAR2(15 BYTE),
-   NUM_CASA                VARCHAR2(6 BYTE),
-   COD_VIADIRECCION        VARCHAR2(2 BYTE),
-   COD_COMUNAL             VARCHAR2(15 BYTE),
-   COD_CIUDADL             VARCHAR2(15 BYTE),
-   COD_REGIONL             VARCHAR2(2 BYTE)
+      COD_RUTPAC              NUMBER,
+      NUM_CORPAC              NUMBER,
+      NUM_NFICHA              NUMBER,
+      NUM_AFICHA              NUMBER,
+      IND_ESTPAC              CHAR,
+      COD_SERULA              VARCHAR2(7 BYTE),
+      FEC_ULTASI              DATE,
+      NUM_CORHOS              NUMBER,
+      FEC_ULTSER              DATE,
+      COD_ULTSER              VARCHAR2(3 BYTE),
+      IND_ARCHIVO             VARCHAR2(1 BYTE),
+      FEC_IMPRES              DATE,
+      COD_USRCREA             VARCHAR2(60 BYTE),
+      FEC_USRCREA             DATE,
+      COD_USUARI              VARCHAR2(60 BYTE),
+      FEC_AUDITA              DATE,
+      IND_ESTADO              CHAR,
+      COD_EMPRESA             VARCHAR2(5 BYTE),
+      NOM_DIRECC              VARCHAR2(100 BYTE),
+      NOM_CONTACTO            VARCHAR2(50 BYTE),
+      DIRECC_CONTACTO         VARCHAR2(100 BYTE),
+      NUM_FICHAE              NUMBER,
+      IND_IMPRES              CHAR,
+      NUM_TELEFO1_2           VARCHAR2(12 BYTE),
+      TELEFO_CONTACTO_2       VARCHAR2(12 BYTE),
+      NUM_TELEFO1             VARCHAR2(12 BYTE),
+      TELEFO_CONTACTO         VARCHAR2(12 BYTE),
+      COD_SISTEMA             VARCHAR2(10 BYTE),
+      COD_SISTEMAUDITA        VARCHAR2(10 BYTE),
+      COD_SECTOR              VARCHAR2(5 BYTE),
+      COD_FAMILIA             VARCHAR2(15 BYTE),
+      NUM_CASA                VARCHAR2(6 BYTE),
+      COD_VIADIRECCION        VARCHAR2(2 BYTE),
+      COD_COMUNAL             VARCHAR2(15 BYTE),
+      COD_CIUDADL             VARCHAR2(15 BYTE),
+      COD_REGIONL             VARCHAR2(2 BYTE)
 );
 COMMIT;
 /
 
 CREATE TABLE ADMIN.GG_TPACFALLECIDO (
-  NUM_FICHAE              NUMBER NOT NULL,
-  COD_RUTPAC              NUMBER,
-  FEC_FALLECE             DATE,
-  COD_USUARIINF           VARCHAR2(60 BYTE),
-  FEC_INFORMA             DATE,
-  COD_SISINFORMA          VARCHAR2(30 BYTE),
-  COD_USRCREA             VARCHAR2(60 BYTE),
-  FEC_USRCREA             DATE,
-  COD_USUARI              VARCHAR2(60 BYTE),
-  FEC_AUDITA              DATE,
-  IND_ESTADO              VARCHAR2(1 BYTE)
+   NUM_FICHAE              NUMBER NOT NULL,
+   COD_RUTPAC              NUMBER,
+   FEC_FALLECE             DATE,
+   COD_USUARIINF           VARCHAR2(60 BYTE),
+   FEC_INFORMA             DATE,
+   COD_SISINFORMA          VARCHAR2(30 BYTE),
+   COD_USRCREA             VARCHAR2(60 BYTE),
+   FEC_USRCREA             DATE,
+   COD_USUARI              VARCHAR2(60 BYTE),
+   FEC_AUDITA              DATE,
+   IND_ESTADO              VARCHAR2(1 BYTE)
 );
 
 CREATE TABLE ADMIN.GG_TSEXO (
-  IND_SEXO                VARCHAR2(1 BYTE),
-  NOM_SEXO                VARCHAR2(14 BYTE),
-  IND_ESTADO              VARCHAR2(1 BYTE),
-  IND_CODN820             VARCHAR2(2 BYTE)
+   IND_SEXO                VARCHAR2(1 BYTE),
+   NOM_SEXO                VARCHAR2(14 BYTE),
+   IND_ESTADO              VARCHAR2(1 BYTE),
+   IND_CODN820             VARCHAR2(2 BYTE)
 );
 
 Insert into ADMIN.GG_TSEXO (IND_SEXO, NOM_SEXO, IND_ESTADO, IND_CODN820) Values ('F', 'FEMENINO', 'V', '02');

@@ -12,7 +12,16 @@
     }
 ?>
 
-<ul class="nav nav-tabs">
+
+
+
+
+
+
+
+
+
+<ul class="nav nav-tabs" id="myTab2" role="tablist">
     <li role="presentation" class="active"><a data-toggle="tab" href="#ind_medicos">MEDICOS</a></li>
     <li role="presentation"><a data-toggle="tab" href="#ind_enfermero">ENFERMEROS</a></li>
     <li role="presentation"><a data-toggle="tab" href="#ind_tns">TECNICOS PARAMEDICOS</a></li>

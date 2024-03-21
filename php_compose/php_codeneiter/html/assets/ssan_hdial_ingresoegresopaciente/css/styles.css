@@ -30,12 +30,13 @@
     font-size                           :   x-small;
     width                               :   90%;
 }
+
 .table_parapdf tr td p                  {
     font-size                           :   x-small;
 }
 
 .table_parapdf                          {
-    /*border:solid 1px;*/
+    border                              :   solid 1px;
 }
 
 .table_parapdf tr td label              {
@@ -88,5 +89,3 @@
     width                               :   auto;
     display                             :   flex;
 }
-
-
