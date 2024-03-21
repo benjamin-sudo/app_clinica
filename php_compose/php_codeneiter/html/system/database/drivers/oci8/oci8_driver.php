@@ -302,22 +302,62 @@ class CI_DB_oci8_driver extends CI_DB {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Stored Procedure.  Executes a stored procedure
-	 *
-	 * @param	string	package name in which the stored procedure is in
-	 * @param	string	stored procedure name to execute
-	 * @param	array	parameters
-	 * @return	mixed
-	 *
-	 * params array keys
-	 *
-	 * KEY      OPTIONAL  NOTES
-	 * name     no        the name of the parameter should be in :<param_name> format
-	 * value    no        the value of the parameter.  If this is an OUT or IN OUT parameter,
-	 *                    this should be a reference to a variable
-	 * type     yes       the type of the parameter
-	 * length   yes       the max size of the parameter
-	 */
+		 * Stored Procedure.  Executes a stored procedure
+		 *
+		 * @param	string	package name in which the stored procedure is in
+		 * @param	string	stored procedure name to execute
+		 * @param	array	parameters
+		 * @return	mixed
+		 *
+		 * params array keys
+		 *
+		 * KEY      OPTIONAL  NOTES
+		 * name     no        the name of the parameter should be in :<param_name> format
+		 * value    no        the value of the parameter.  If this is an OUT or IN OUT parameter,
+		 *                    this should be a reference to a variable
+		 * type     yes       the type of the parameter
+		 * length   yes       the max size of the parameter
+	*/
+
+	public function stored_procedure_multicursor($package, $procedure, array $params) {
+        if ($package === '' OR $procedure === '') {
+            log_message('error', 'Invalid query: ' . $package . '.' . $procedure);
+            return ($this->db_debug) ? $this->display_error('db_invalid_query') : FALSE;
+        }
+	    // Build the query string
+        $sql			=   'BEGIN ' . $package . '.' . $procedure . '(';
+        $have_cursor	=   FALSE;
+        $arr			=   array();
+        $arr2			=   array();
+        foreach ($params as $param) {
+            $sql .= $param['name'] . ',';
+            if(isset($param['type']) && $param['type'] === OCI_B_CURSOR){
+                $have_cursor		    =   TRUE;
+                $cursor[$param['name']]	=   $param['value'];
+                $arr			=   array_merge(array($param['name'] => $param['value']));
+                $arr2			=   array_merge($arr2, array('value' => $param['value'], 'name' => $param['name']));
+            }
+        }
+		$sql			        =   trim($sql, ',') . '); END;';
+		$this->_reset_stmt_id	=   FALSE;
+		$this->stmt_id		    =   oci_parse($this->conn_id,$sql);
+		$this->_bind_params($params);
+		$result			        =   $this->query($sql,FALSE,$have_cursor);
+		$this->_reset_stmt_id	=   TRUE;
+		$data_return		    =   [];
+		if ($have_cursor){
+			foreach ($cursor  as $i => $data){
+				$aData = array();
+				@oci_execute($data,OCI_DEFAULT);
+				@oci_fetch_all($data,$aData,null,null,OCI_FETCHSTATEMENT_BY_ROW);
+				$data_return[$i]    =	$aData;  
+			}  
+	        return $data_return;
+        } else {
+            return $result;
+        }
+    }
+
 	public function stored_procedure($package, $procedure, array $params)
 	{
 		if ($package === '' OR $procedure === '')
