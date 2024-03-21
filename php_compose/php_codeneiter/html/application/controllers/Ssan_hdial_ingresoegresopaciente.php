@@ -79,8 +79,8 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'data_number'               =>  $data_number,
             'status'                    =>  $status,
             'run'                       =>  $run,
-            'info_prof'                 =>  $data_number["DATA"][":P_INFO_PROFESIONAL"] : [],
-            'ind_existe'                =>  $data_number["DATA"][":P_RETURN_LOGS"] : [],
+            'info_prof'                 =>  $data_number["DATA"][":P_INFO_PROFESIONAL"] ,
+            'ind_existe'                =>  $data_number["DATA"][":P_RETURN_LOGS"] ,
         )));
     }
     
