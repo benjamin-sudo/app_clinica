@@ -14,11 +14,6 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         $this->load->model("sql_class/sqlclass_archivo");
     }
 
-    public function model_asignacion_muestra_x_user($valiable){
-        $result = [];
-        return ['DATA' => $result];
-    }
-
     public function load_busqueda_rrhhdialisis($data_controller) {
         $this->db->trans_start();
         $param              =   array(
@@ -58,7 +53,43 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         );
     }
     
-    
+    public function model_asignacion_muestra_x_user($valiable){
+        $this->db->trans_start();
+        $param              =   array(
+                                    array( 
+                                        'name'      =>  ':V_COD_EMPRESA',
+                                        'value'     =>  $valiable["val_empresa"],
+                                        'length'    =>  20,
+                                        'type'      =>  SQLT_CHR 
+                                    ),
+                                    array( 
+                                        'name'      =>  ':V_RUT_PROFESIONAL',
+                                        'value'     =>  $valiable["rut_profesional"],
+                                        'length'    =>  20,
+                                        'type'      =>  SQLT_CHR 
+                                    ),
+                                    array( 
+                                        'name'      =>  ':P_INFO_PROFESIONAL',
+                                        'value'     =>  $this->db->get_cursor(),
+                                        'length'    =>  -1,
+                                        'type'      =>  OCI_B_CURSOR
+                                    ),
+                                    array( 
+                                        'name'      =>  ':P_RETURN_LOGS',
+                                        'value'     =>  $this->db->get_cursor(),
+                                        'length'    =>  -1,
+                                        'type'      =>  OCI_B_CURSOR
+                                    ),
+                                    
+                                );
+        #$result            =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','DATA_VALIDA_PROFESIONAL',$param);
+        $result             =   [];
+        $this->db->trans_complete();
+        return array(
+            'STATUS'	    =>	$this->db->trans_status(),
+            'DATA'          =>  $result,
+        );
+    }
     
     public function model_elimina_rrhh($data){
         $this->db->trans_start();

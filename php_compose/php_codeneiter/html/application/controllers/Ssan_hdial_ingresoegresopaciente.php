@@ -50,9 +50,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $status_firma                   =   true;
         $contrasena                     =   $this->input->post('contrasena');
         $cod_rutpro                     =   $this->input->post('cod_rutpro');
-        $valida                         =   $this->ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
+        $valida                         =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
         if(count($valida)>0){
-            $data_number                =   $this->ssan_hdial_ingresoegresopaciente_model->model_elimina_rrhh(array(
+            $data_number                =   $this->Ssan_hdial_ingresoegresopaciente_model->model_elimina_rrhh(array(
                 "cod_rutpro"            =>  $cod_rutpro,
                 "session"               =>  explode("-",$this->session->userdata('USERNAME'))[0],
                 "empresa"               =>  $this->session->userdata("COD_ESTAB"),
@@ -71,7 +71,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $status                         =   true;
         $run                            =   $this->input->post('run');
         $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $data_number                    =   $this->ssan_hdial_ingresoegresopaciente_model->model_asignacion_muestra_x_user(array(
+        $data_number                    =   $this->Ssan_hdial_ingresoegresopaciente_model->model_asignacion_muestra_x_user(array(
             "val_empresa"               =>  $empresa,
             "rut_profesional"           =>  $run,
         ));
@@ -79,8 +79,8 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'data_number'               =>  $data_number,
             'status'                    =>  $status,
             'run'                       =>  $run,
-            'info_prof'                 =>  $data_number["DATA"][":P_INFO_PROFESIONAL"] ,
-            'ind_existe'                =>  $data_number["DATA"][":P_RETURN_LOGS"] ,
+            #'info_prof'                 =>  $data_number["DATA"][":P_INFO_PROFESIONAL"] ,
+            #'ind_existe'                =>  $data_number["DATA"][":P_RETURN_LOGS"] ,
         )));
     }
     
@@ -92,9 +92,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $contrasena                     =   $this->input->post('contrasena');
         $status_firma                   =   true;
         $data_number                    =   '';
-        $valida                         =   $this->ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
+        $valida                         =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
         if(count($valida)>0){
-            $data_number                =   $this->ssan_hdial_ingresoegresopaciente_model->model_record_rotulos_por_usuario(array(
+            $data_number                =   $this->Ssan_hdial_ingresoegresopaciente_model->model_record_rotulos_por_usuario(array(
                 "ind_proesional"        =>  $ind_proesional,
                 "session"               =>  explode("-",$this->session->userdata('USERNAME'))[0],
                 "empresa"               =>  $this->session->userdata("COD_ESTAB"),
