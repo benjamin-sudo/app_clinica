@@ -251,10 +251,12 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         return $query->row();
     }
 
+
+    
+
 //    public function INSERT_GuardaDatos($usuario,$empresa,$RUTFir,$DIGFir,$nombrefir,$fic_e,$ind_ing,$Resp_IngEnf_Dial,$Cie10Agrupados){
 //            $this->db->trans_start();
 //            $CITA_ADMISION=$ind_ing;
-//            
 //             $SEQ_ID_PACXPROG = $this->db->sequence($this->own, 'SEQ_AP_TPACXPROGRAMA');    
 //        $dataPreg1 = array(            
 //            'ID_PACXPROG' => $SEQ_ID_PACXPROG,
@@ -360,16 +362,6 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
           $CITA_ADMISION= $ID_HDIAL; 
         }
        
-      
-
-        
-        
-        
-        
-        
-        
-        
-     
         $SEQ_ID_PACXPROG = $this->db->sequence($this->own, 'SEQ_AP_TPACXPROGRAMA');
         $dataPreg1 = array(
             'ID_PACXPROG' => $SEQ_ID_PACXPROG,
@@ -416,33 +408,26 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                 }
             } else {
                 if(is_numeric($idpregunta)){
-//Esto es por que por alguna razon el sistema trae algunos camos 560  como 560-error
-                  
-                      $SEQ_ID_RESXCAMP = $this->db->sequence($this->own, 'SEQ_AP_TRESULTXPROG');
-                $dataPreg2[] = array(
-                    'ID_RESXCAMP' => $SEQ_ID_RESXCAMP,
-                    'ID_CAMPXPROG' => $idpregunta,
-                    'ID_PACXPROG' => $SEQ_ID_PACXPROG,
-                    'RESULTADO' => $Resp,
-                    'COD_DIAGNO' => "",
-                    'FEC_INGRESO' => "SYSDATE",
-                    'COD_USRCREA' => $RUTFir,
-                    'FEC_USRCREA' => "SYSDATE",
-                    'AD_ID_ADMISION' => $CITA_ADMISION
-                );
+                    //Esto es por que por alguna razon el sistema trae algunos camos 560  como 560-error
+                    $SEQ_ID_RESXCAMP = $this->db->sequence($this->own, 'SEQ_AP_TRESULTXPROG');
+                    $dataPreg2[] = array(
+                        'ID_RESXCAMP' => $SEQ_ID_RESXCAMP,
+                        'ID_CAMPXPROG' => $idpregunta,
+                        'ID_PACXPROG' => $SEQ_ID_PACXPROG,
+                        'RESULTADO' => $Resp,
+                        'COD_DIAGNO' => "",
+                        'FEC_INGRESO' => "SYSDATE",
+                        'COD_USRCREA' => $RUTFir,
+                        'FEC_USRCREA' => "SYSDATE",
+                        'AD_ID_ADMISION' => $CITA_ADMISION
+                    );
                     
                 }
-              
             }
         }
         $this->db->insert_batch($this->own . '.AP_TRESULTXPROG', $dataPreg2); //para cualquier caso 
         $this->db->trans_complete();
         return $this->db->trans_status();
-        
-        
-        
-        
-
     }
 
     function mdl_TraeDatosProgpxPaciente($nfichae, $empresa) {
@@ -460,26 +445,22 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         FEC_USRCREA,
         IND_ESTADO,
         COD_EMPRESA
-        from $this->own.AP_TPACXPROGRAMA 
-         WHERE NUM_FICHAE = '$nfichae' AND IND_ESTADO = 1
+        FROM 
+        $this->own.AP_TPACXPROGRAMA 
+        WHERE 
+        NUM_FICHAE = '$nfichae' AND IND_ESTADO = 1
         AND ID_PROGRAMA=16  order by ID_PACXPROG desc");
         return $query->result_array();
     }
     
     function mdl_TraeTextoDiag($cod){    
-        
-         $query = $this->db->query("SELECT
-             COD_DIAGNO_CIE,
-                    DESCRIPCION
-                    FROM
-                     $this->own.TGCD_CIE_DIAGNOSTICOS
-                    WHERE
-                    ID=$cod");
+        $query = $this->db->query("SELECT
+                                        COD_DIAGNO_CIE,
+                                        DESCRIPCION
+                                        FROM
+                                        $this->own.TGCD_CIE_DIAGNOSTICOS
+                                        WHERE
+                                        ID=$cod");
         return $query->result_array();     
-        
-        
     }
-
-
-   
 }

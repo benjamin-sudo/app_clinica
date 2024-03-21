@@ -151,23 +151,20 @@ function js_nuevo_prestador_rrhh(){
 }
 
 function valida_profesional(){
-    var _rut                =   "";
-    var rut_array           =   "";
-    var rut2                =   "";
-    var rut                 =   "";
-    var dv                  =   "";
-    _rut                    =   $("#rut_profesional").val();
-
+    var _rut        =   "";
+    var rut_array   =   "";
+    var rut2        =   "";
+    var rut         =   "";
+    var dv          =   "";
+    _rut            =   $("#rut_profesional").val();
     if(_rut == ''){
        jError("RUN Vac&iacute;o","Clinica Libre");
        return false;
     }
-
     rut_array       =   _rut.split("-");
     rut2		    =   rut_array[0].replace(".","");
     rut			    =   rut2.replace(".","");
     dv			    =   rut_array[1];
-    
     $.ajax({ 
        type		    :   "POST",
        url 		    :   "ssan_hdial_ingresoegresopaciente/fn_valida_profesional",
@@ -230,31 +227,31 @@ function js_guarda_dialisis(){
                type		    :   "POST",
                url 		    :   "ssan_hdial_ingresoegresopaciente/record_rotulos_por_usuario",
                dataType     :   "json",
-               beforeSend	:   function(xhr)           {   
-                                                            console.log(xhr);
-                                                            $('#loadFade').modal('show');
-                                                        },
-               data 		:                           {  
-                                                            contrasena  :   r,
-                                                            info_prof   :   info_prof,
-                                                        },
-               error		:   function(errro)         { 
-                                                            console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                            $("#protocoloPabellon").css("z-index","1500"); 
-                                                            jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                            $('#loadFade').modal('hide');
-                                                        },
-               success		:   function(aData)         {   
-                                                            $('#loadFade').modal('hide');
-                                                            console.log("aData -> ",aData);
-                                                            if(aData.status_firma){
-                                                                showNotification('top','center','Se agrego al RRHH de di&aacute;lisis',1,'fa fa-info');
-                                                                $("#modal_nuevo_prestador_rrhh").modal("hide");
-                                                                js_busqueda_rrhh();
-                                                            }   else  {
-                                                                jError('Contrase&ntilde;a inv&aacute;lida',"e-SISSAN"); 
-                                                            }
-                                                        }, 
+               beforeSend	:   function(xhr)       {   
+                                                        console.log(xhr);
+                                                        $('#loadFade').modal('show');
+                                                    },
+               data 		:                       {  
+                                                        contrasena  :   r,
+                                                        info_prof   :   info_prof,
+                                                    },
+               error		:   function(errro)     { 
+                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                        $("#protocoloPabellon").css("z-index","1500"); 
+                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        $('#loadFade').modal('hide');
+                                                    },
+               success		:   function(aData)     {   
+                                                        $('#loadFade').modal('hide');
+                                                        console.log("aData -> ",aData);
+                                                        if(aData.status_firma){
+                                                            showNotification('top','center','Se agrego al RRHH de di&aacute;lisis',1,'fa fa-info');
+                                                            $("#modal_nuevo_prestador_rrhh").modal("hide");
+                                                            js_busqueda_rrhh();
+                                                        }   else  {
+                                                            jError('Contrase&ntilde;a inv&aacute;lida',"e-SISSAN"); 
+                                                        }
+                                                    }, 
            });
        }
    });

@@ -29,7 +29,6 @@
   <link href="assets/recursos/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
   <!-- select min  -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
-  
   <style>
     .nav-link.activo{ }
   </style>
@@ -52,7 +51,7 @@
         <a href="../../index.html" class="nav-link">Inicio</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Configuraci&oacute;n</a>
+        <a href="javascript:js_confimicuenta();" class="nav-link">Configuraci&oacute;n</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="<?php echo site_url('dashboard/logout');?>" class="nav-link" style="color:red;">Cerrar Sesi&oacute;n</a>
@@ -192,16 +191,10 @@
   <!-- Otros -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
-
   <!-- personalizable --> 
   <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
-
   <!-- web socket -->
   <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
-
-  
-
-
 
   <script>
     $(document).ready(function(){
@@ -284,6 +277,9 @@
         }
       }
   });
+
+
+
 </script>
 
 <section>

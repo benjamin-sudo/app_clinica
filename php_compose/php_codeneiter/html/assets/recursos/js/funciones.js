@@ -1,5 +1,5 @@
- $(function() {
-
+$(document).ready(function(){
+    /*
     $("#firmsimple").dialog({
         autoOpen        :   false,
         modal           :   true,
@@ -10,7 +10,6 @@
         resizable       :   false,
         draggable       :   false
     });
-
     $("#idResetearClave").dialog({
         autoOpen        :   false,
         modal           :   true,
@@ -22,7 +21,6 @@
         draggable       :   false,
         dialogClass     :   'no-close'
     });
-
     $("#popRestabPass").dialog({
         autoOpen        :   false,
         modal           :   true,
@@ -35,7 +33,6 @@
         closeOnEscape   :   false,
         dialogClass     :   'no-close'
     });
-
     $("#validaDatos").dialog({
         autoOpen        :   false,
         modal           :   true,
@@ -58,10 +55,32 @@
         resizable       :   false,
         draggable       :   false
     });
-    setTimeout(function() {
-        moverE();
-    }, 10000);
+    */
+    //setTimeout(function() {  moverE(); },10000);
 });
+
+function js_confimicuenta(){
+    console.log("   ->  js_confimicuenta    <-");
+    $.ajax({ 
+        type        :   "POST",
+        url         :   "Dashboard/configuracion_micuenta",
+        dataType    :   "json",
+        beforeSend  :   function(xhr)   {  $('#loadFade').modal('show');    },
+        complete    :   function(xhr)   {  $('#loadFade').modal('hide');    },
+        data        :                   { },
+        error		:   function(err)   { 
+                                            console.log(err);  
+                                            console.log(err.responseText);    
+                                            jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                        },
+        success     :   function(aData) { 
+                                            console.log("   ##################################  ");
+                                            console.log("   aData   ->  ",aData);
+                                            
+                                        }, 
+    });
+}
+
 
 function change_captcha() {
     AjaxExt({}, 'imgCaptcha', 'traeCod', '', 'inicio');

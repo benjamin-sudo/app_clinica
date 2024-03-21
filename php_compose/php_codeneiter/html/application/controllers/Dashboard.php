@@ -12,7 +12,7 @@ class Dashboard extends CI_Controller {
 
     public function index(){
         $MENUARRFR = [];
-        if(!$this->session->userdata('ID_UID')) {
+        if(!$this->session->userdata('ID_UID')){
             redirect('/'); // Asegúrate de reemplazar 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
         }
         $MENUARRFR = $this->session->userdata('MENUARRFR');
@@ -23,5 +23,12 @@ class Dashboard extends CI_Controller {
         $this->session->sess_destroy();
         redirect('/'); // Reemplaza 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
     }
-    
+
+    public function configuracion_micuenta(){
+        $status = true;
+        
+        return [
+            'status' => $status
+        ];
+    }
 }
