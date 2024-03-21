@@ -41,27 +41,50 @@ $(document).ready(function() {
         $("#btn_guarda_infoxususario").attr('onclick','');
         $("#btn_guarda_infoxususario").prop('disabled',true);
     });
+
     $('#Rut_form').Rut({
-       on_error            :   function(){
-           $('#ErrorRutVF').html("Rut Incorrecto");
-           $("#ErrorRutVF").show('slow').fadeOut('slow').fadeIn('slow');            
-           $('#Hdd_RtInc').val(1);
-          Limpiar1();$("#Dv_form_IngEnf").hide(); $("#resultadoBusqueda_post").html(""); $("#dv_mnj_frm").html("");  
-          //setTimeout(function(){  Limpiar1();$("#Dv_form_IngEnf").hide(); }, 500);
+       on_error : function(){
+            $('#ErrorRutVF').html("Rut Incorrecto");
+            $("#ErrorRutVF").show('slow').fadeOut('slow').fadeIn('slow');            
+            $('#Hdd_RtInc').val(1);
+            Limpiar1();
+            $("#Dv_form_IngEnf").hide(); 
+            $("#resultadoBusqueda_post").html(""); 
+            $("#dv_mnj_frm").html("");  
        },
-       on_success          :   function(){
+
+       on_success : function(){
            $('#Hdd_RtInc').val(0);
            $('#ErrorRutVF').html('');
            $("#ErrorRutVF").hide('slow');
            js_grabadatosPaciente();
        },
-       format_on           :   'keyup'
-   });
+       format_on : 'keyup'
+    });
 
-   //$(".content2").autocomplete_nn();
-   //busquedaPacientes();
-   //busquedaPacientesxMaquina();
+    //$(".content2").autocomplete_nn();
+    //busquedaPacientes();
+    //busquedaPacientesxMaquina();
 });
+
+function js_nuevo_prestador_dialisis(){
+    $.ajax({ 
+        type            :   "POST",
+        url             :   "ssan_hdial_ingresoegresopaciente/get_nuevo_prestador_dialisis",
+        dataType        :   "json",
+        data            :   { },
+        beforeSend      :   function(xhr)       { },
+        error           :   function(errro)     {     
+                                                    console.log(errro.responseText); 
+                                                    jAlert("Comuniquese con el administrador ","E-SISSAN"); 
+                                                },
+        success         :   function(aData)     {     
+                                                console.log("aData  ->  ",aData);
+                                                    $('#html_nuevo_prestador_rrhh').html(aData.out_html);
+                                                    $("#modal_nuevo_prestador_rrhh").modal({backdrop:'static',keyboard:false}).modal("show");
+                                                }, 
+    });
+}
 
 function js_busqueda_rrhh(){
    $.ajax({ 
@@ -122,24 +145,6 @@ function delete_profesional(cod_rutpro){
    });
 }
 
-function js_nuevo_prestador_dialisis(){
-   $.ajax({ 
-       type            :   "POST",
-       url             :   "ssan_hdial_ingresoegresopaciente/get_nuevo_prestador_dialisis",
-       dataType        :   "json",
-       data            :   { },
-       beforeSend      :   function(xhr)       { },
-       error           :   function(errro)     {     
-                                                   console.log(errro.responseText); 
-                                                   jAlert("Comuniquese con el administrador ","E-SISSAN"); 
-                                               },
-       success         :   function(aData)     {     
-                                               console.log("aData  ->  ",aData);
-                                                   $('#html_nuevo_prestador_rrhh').html(aData.out_html);
-                                                   $("#modal_nuevo_prestador_rrhh").modal({backdrop:'static',keyboard:false}).modal("show");
-                                               }, 
-   });
-}
 
 function js_nuevo_prestador_rrhh(){
    console.log("nuevo presta");

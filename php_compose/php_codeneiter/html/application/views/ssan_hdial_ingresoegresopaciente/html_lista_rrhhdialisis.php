@@ -12,31 +12,29 @@
     }
 ?>
 
-
-
-
-
-
-
-
-
-
-<ul class="nav nav-tabs" id="myTab2" role="tablist">
-    <li role="presentation" class="active"><a data-toggle="tab" href="#ind_medicos">MEDICOS</a></li>
-    <li role="presentation"><a data-toggle="tab" href="#ind_enfermero">ENFERMEROS</a></li>
-    <li role="presentation"><a data-toggle="tab" href="#ind_tns">TECNICOS PARAMEDICOS</a></li>
-    <li role="presentation" class="dropdown" id="dropdown_opcionesgen">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span class="caret"></span></a>
-        <ul class="dropdown-menu pull-center">
-            <li class="dropdown-header" style="border-left:1px solid #ececec;">&nbsp;</li>
-            <li class="dropdown-header" style="border-left:1px solid #ececec;">&nbsp;ACCI&Oacute;N DE AGENDA APS</li>
-            <li class="dropdown-header" style="border-left:1px solid #ececec;"><a href="javascript:js_busqueda_rrhh(2)"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;ACTUALIZACI&Oacute;N RRHH</a></li>
+<ul class="nav nav-tabs" id="recurso_humano_dialisis" role="tablist" style="margin-top: 10px;">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="ind_medicos-tab" data-bs-toggle="tab" data-bs-target="#ind_medicos" type="button" role="tab" aria-controls="ind_medicos" aria-selected="true">MEDICOS</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="ind_enfermero-tab" data-bs-toggle="tab" data-bs-target="#ind_enfermero" type="button" role="tab" aria-controls="ind_enfermero" aria-selected="false">ENFERMEROS</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="ind_tns-tab" data-bs-toggle="tab" data-bs-target="#ind_tns" type="button" role="tab" aria-controls="ind_tns" aria-selected="false">TECNICOS PARAMEDICOS</button>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;ACTUALIZACI&Oacute;N RRHH</a></li>
         </ul>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div id="ind_medicos" class="tab-pane fade in active">
+    <div class="tab-pane active" id="ind_medicos" role="tabpanel" aria-labelledby="ind_medicos-tab" tabindex="0">
+        
+        <h3 style="margin-top: 8px;">LISTADO MEDICOS DE DIALISIS</h3>
+
         <table class="table table-striped" width="100%">
             <thead>
                 <tr>
@@ -57,22 +55,23 @@
                                 <td><?php echo $row["NOM_PROFE"]?></td>
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row["COD_RUTPRO"];?>)">
+                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
                                        <i class="fa fa-user-times" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tr>
                        <?php }
                     } else {    ?>
-                        <tr><td colspan="5" style="text-align: center;height:40px">SIN INFORMACI&Oacute;N</td></tr>
+                        <tr><td colspan="5" style="text-align: center;height:40px"><b>SIN INFORMACI&Oacute;N</b></td></tr>
                     <?php 
                     }
                 ?>
             </tbody>
         </table>
     </div>
-    <div id="ind_enfermero" class="tab-pane fade">
-         <table class="table table-striped" width="100%">
+    <div class="tab-pane" id="ind_enfermero" role="tabpanel" aria-labelledby="ind_enfermero-tab" tabindex="0">
+        <h3 style="margin-top: 8px;">LISTADO ENFERMEROS</h3>
+        <table class="table table-striped" width="100%">
             <thead>
                 <tr>
                     <th class="subtitulo_formulario2" width="10%">N&deg;</th>
@@ -92,7 +91,7 @@
                                 <td><?php echo $row["NOM_PROFE"]?></td>
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row["COD_RUTPRO"];?>)">
+                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
                                         <i class="fa fa-refresh" aria-hidden="true"></i>
                                     </button>
                                 </td>
@@ -106,7 +105,8 @@
             </tbody>
         </table>
     </div>
-    <div id="ind_tns" class="tab-pane fade">
+    <div class="tab-pane" id="ind_tns" role="tabpanel" aria-labelledby="ind_tns-tab" tabindex="0">
+        <h3 style="margin-top: 8px;">LISTADO TERNICO PARAMEDICOS</h3>
         <table class="table table-striped" width="100%">
             <thead>
                 <tr>
@@ -127,7 +127,7 @@
                                 <td><?php echo $row["NOM_PROFE"]?></td>
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row["COD_RUTPRO"];?>)">
+                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
                                         <i class="fa fa-user-times" aria-hidden="true"></i>
                                     </button>
                                 </td>

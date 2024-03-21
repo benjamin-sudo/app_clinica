@@ -1,9 +1,8 @@
 <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
     <i class="nav-icon fa fa-tint" aria-hidden="true"></i>&nbsp;<b>INGRESO DE PACIENTES TURNOS EN DIALISIS Y RRHH</b>
 </h4>
-<br>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 8px;">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">LISTADO PACIENTES</button>
     </li>
@@ -18,7 +17,7 @@
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">NUEVO INGREGO A PACIENTE</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">NUEVO PROFESIONAL</a></li>
+            <li><a class="dropdown-item" href="javascript:js_nuevo_prestador_dialisis(1)">NUEVO PROFESIONAL</a></li>
         </ul>
     </li>
 </ul>
@@ -182,10 +181,12 @@
                             <div id="busquedaMes2"></div>
                         </div>
                         <div class="col-lg-6">
-                            <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA VENTANA</button>
-                            <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guarda_infoxususario" disabled="">
-                                <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;GUARDAR RRHH
-                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA VENTANA</button>
+                                <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guarda_infoxususario" disabled="">
+                                    <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;GUARDAR RRHH
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

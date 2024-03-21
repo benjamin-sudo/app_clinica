@@ -19,7 +19,15 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                             ]);
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
     }
-    
+
+    public function get_nuevo_prestador_dialisis() {
+        if (!$this->input->is_ajax_request()) {  show_404();   }
+        $html                           =   $this->load->view("ssan_hdial_ingresoegresopaciente/html_nuevo_profesional_dialisis",[],true);
+        $this->output->set_output(json_encode(array(
+            'out_html'                  =>  $html
+        )));
+    }
+
     /*
     public function html_lista_rrhhdialisis(){
         if(!$this->input->is_ajax_request()) {  show_404();   }
@@ -55,15 +63,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->output->set_output(json_encode(array(
             'status_firma'              =>  $status_firma,
             'status'                    =>  $status
-        )));
-    }
-    
-    
-    public function get_nuevo_prestador_dialisis() {
-        if (!$this->input->is_ajax_request()) {  show_404();   }
-        $html                           =   $this->load->view("ssan_hdial_ingresoegresopaciente/html_nuevo_profesional_dialisis",[],true);
-        $this->output->set_output(json_encode(array(
-            'out_html'                  =>  $html
         )));
     }
     

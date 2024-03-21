@@ -42,17 +42,17 @@
     </div>
 </div>
 <script>
-    $("#modal_new_userxtomamuestra").modal({backdrop:'static',keyboard:false}).modal("show");
+    //$("#modal_new_userxtomamuestra").modal({backdrop:'static',keyboard:false}).modal("show");
     $('#rut_profesional').Rut({
-	on_error    :   function()  {   
-                                        jAlert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(),'Rut Incorrecto'); 
-                                        console.log($("#rut_profesional").val());  
-                                        $("#rut_profesional").css('border-color','red'); 
-                                        $("#rut_profesional").val('') 
-                                    },
-	on_success  :   function()  {   
-                                        $("#rut_profesional").css('border-color','');   
-                                    },
-	format_on   : 'keyup'
-    });
+        on_error    :   function()  {   
+                                            jAlert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(),'Rut Incorrecto'); 
+                                            console.log($("#rut_profesional").val());  
+                                            $("#rut_profesional").css('border-color','red'); 
+                                            $("#rut_profesional").val('') 
+                                        },
+        on_success  :   function()  {   
+                                            $("#rut_profesional").css('border-color','');   
+                                        },
+        format_on   : 'keyup'
+        });
 </script>
