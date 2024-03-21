@@ -107,7 +107,8 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             $this->db->insert($this->own . '.GG_TPROFESIONAL', $dataUs);
         }
 
-            $profxemp   =   $this->consultaPrestadorxEmp($rutfin, $codemp);
+            ###########################################
+            $profxemp = $this->consultaPrestadorxEmp($rutfin, $codemp);
         if ($profxemp) {
             $this->db->set('IND_ESTADO', 'V');
             $this->db->where('COD_RUTPRO', $rutfin);

@@ -749,4 +749,19 @@ class CI_DB_oci8_driver extends CI_DB {
 		$this->limit_used = FALSE;
 		parent::_reset_select();
 	}
+
+    protected function _sequence($own, $name) {
+        $sql = "SELECT " . $own . "." . $name . ".NEXTVAL CORRELATIVO FROM DUAL";
+        $query = $this->query($sql);
+        $row = $query->row();
+        return $row->CORRELATIVO;
+    }
+
+	protected function _currval($own, $name) {
+        $sql = "SELECT " . $own . "." . $name . ".currval CORRELATIVO FROM DUAL";
+        $query = $this->query($sql);
+        $row = $query->row();
+        return $row->CORRELATIVO;
+    }
+	
 }
