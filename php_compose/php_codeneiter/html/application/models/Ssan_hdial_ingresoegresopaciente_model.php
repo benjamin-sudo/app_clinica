@@ -54,7 +54,9 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
     }
     
     public function model_asignacion_muestra_x_user($valiable){
-        $this->db->trans_start();
+        #$this->db->trans_start();
+
+        /*
         $param              =   array(
                                     array( 
                                         'name'      =>  ':V_COD_EMPRESA',
@@ -80,12 +82,12 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                                         'length'    =>  -1,
                                         'type'      =>  OCI_B_CURSOR
                                     ),
-                                    
                                 );
-        $result             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','DATA_VALIDA_PROFESIONAL',$param);
-        $this->db->trans_complete();
+        */                        
+        #$result            =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','DATA_VALIDA_PROFESIONAL',$param);
+        $result             =   [];
+        #$this->db->trans_complete();
         return array(
-            'STATUS'	    =>	$this->db->trans_status(),
             'DATA'          =>  $result,
         );
     }
