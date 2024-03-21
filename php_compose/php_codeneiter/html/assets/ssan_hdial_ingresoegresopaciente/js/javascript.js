@@ -49,8 +49,6 @@ $(function(){
        $("#btn_guarda_infoxususario").attr('onclick','');
        $("#btn_guarda_infoxususario").prop('disabled',true);
    });
-  
-   
 
    $('#Rut_form').Rut({
        on_error            :   function(){
@@ -70,12 +68,9 @@ $(function(){
        format_on           :   'keyup'
    });
    
-   $(".content2").autocomplete_nn();
-   
+   //$(".content2").autocomplete_nn();
    //busquedaPacientes();
-   
    //busquedaPacientesxMaquina();
-
 });
 
 function js_busqueda_rrhh(){
@@ -99,10 +94,6 @@ function js_busqueda_rrhh(){
                                                }, 
    });
 }
-
-
-
-
 
 function delete_profesional(cod_rutpro){
    //console.log("cod_rutpro     ->  ",cod_rutpro);
@@ -165,64 +156,66 @@ function js_nuevo_prestador_rrhh(){
 }
 
 function valida_profesional(){
-   var _rut                =   "";
-   var rut_array           =   "";
-   var rut2                =   "";
-   var rut                 =   "";
-   var dv                  =   "";
-   _rut                    =   $("#rut_profesional").val();
-   if(_rut == ''){
+    var _rut                =   "";
+    var rut_array           =   "";
+    var rut2                =   "";
+    var rut                 =   "";
+    var dv                  =   "";
+    _rut                    =   $("#rut_profesional").val();
+
+    if(_rut == ''){
        jError("RUN Vacio","e-SISSAN");
        return false;
-   }
-   rut_array		    =   _rut.split("-");
-   rut2		    =   rut_array[0].replace(".","");
-   rut			    =   rut2.replace(".","");
-   dv			    =   rut_array[1];
-   $.ajax({ 
-       type		:   "POST",
-       url 		:   "ssan_hdial_ingresoegresopaciente/fn_valida_profesional",
-       dataType        :   "json",
+    }
+
+    rut_array       =   _rut.split("-");
+    rut2		    =   rut_array[0].replace(".","");
+    rut			    =   rut2.replace(".","");
+    dv			    =   rut_array[1];
+    
+    $.ajax({ 
+       type		    :   "POST",
+       url 		    :   "ssan_hdial_ingresoegresopaciente/fn_valida_profesional",
+       dataType     :   "json",
        beforeSend	:   function(xhr)           {   
-                                                       console.log(xhr);
-                                                       $('#loadFade').modal('show');
-                                                   },
+                                                    console.log(xhr);
+                                                    $('#loadFade').modal('show');
+                                                },
        data 		:                           {  
-                                                       run :   rut,
-                                                       dv  :   dv,
-                                                   },
+                                                    run : rut,
+                                                    dv  : dv,
+                                                },
        error		:   function(errro)         { 
-                                                       console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                       $("#protocoloPabellon").css("z-index","1500"); 
-                                                       jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                       $('#loadFade').modal('hide');
-                                                   },
+                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                    $("#protocoloPabellon").css("z-index","1500"); 
+                                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                    $('#loadFade').modal('hide');
+                                                },
        success		:   function(aData)         { 
-                                                       $('#loadFade').modal('hide');
-                                                       
-                                                       console.log("aData  |   ",aData);
-                                                       
-                                                       if(aData.ind_existe.length  > 0){
-                                                           showNotification('top','center','Profesional RUN <b>'+$("#rut_profesional").val()+'</b>, Ya existe en RRHH',4,'fa fa-times');
-                                                           $("#rut_profesional").val('');
-                                                           return false;
-                                                       }
-                                                       if(aData.info_prof.length  == 0){
-                                                           showNotification('top','center','RUN ingresado no existe como prestador en su establecimiento',4,'fa fa-times')
-                                                           js_limpia_panel();
-                                                       } else {
-                                                           $("#numidentificador").html(aData.info_prof[0]['COD_RUTPRO']+'-'+aData.info_prof[0]['COD_DIGVER']);
-                                                           $("#nombreLabel").html(aData.info_prof[0]['NOM_PROFE']);
-                                                           $("#profesionLabel").html(aData.info_prof[0]['DES_TIPOATENCION']);
-                                                           $(".grid_busqueda_rrhh").data().data = aData.info_prof;
-                                                           $("#btn_guarda_infoxususario").attr('onclick','js_guarda_dialisis()');
-                                                           $("#btn_guarda_infoxususario").prop('disabled',false);
-                                                           $("#rut_profesional").prop('disabled',true);
-                                                       }
-                                                   }, 
+                                                    $('#loadFade').modal('hide');
+                                                    console.log("aData  |   ",aData);
+                                                    if(aData.ind_existe.length  > 0){
+                                                        showNotification('top','center','Profesional RUN <b>'+$("#rut_profesional").val()+'</b>, Ya existe en RRHH',4,'fa fa-times');
+                                                        $("#rut_profesional").val('');
+                                                        return false;
+                                                    }
+                                                    
+                                                    if(aData.info_prof.length  == 0){
+                                                        showNotification('top','center','RUN ingresado no existe como prestador en su establecimiento',4,'fa fa-times')
+                                                        js_limpia_panel();
+                                                    } else {
+                                                        $("#numidentificador").html(aData.info_prof[0]['COD_RUTPRO']+'-'+aData.info_prof[0]['COD_DIGVER']);
+                                                        $("#nombreLabel").html(aData.info_prof[0]['NOM_PROFE']);
+                                                        $("#profesionLabel").html(aData.info_prof[0]['DES_TIPOATENCION']);
+                                                        $(".grid_busqueda_rrhh").data().data = aData.info_prof;
+                                                        $("#btn_guarda_infoxususario").attr('onclick','js_guarda_dialisis()');
+                                                        $("#btn_guarda_infoxususario").prop('disabled',false);
+                                                        $("#rut_profesional").prop('disabled',true);
+                                                    }
+
+                                                }, 
    });
 }
-
 
 function js_guarda_dialisis(){
    var info_prof               =   $(".grid_busqueda_rrhh").data('data')[0];
@@ -231,41 +224,38 @@ function js_guarda_dialisis(){
            jError("Firma simple vac&iacute;a","e-SISSAN");
        } else { 
            $.ajax({ 
-               type		:   "POST",
-               url 		:   "ssan_hdial_ingresoegresopaciente/record_rotulos_por_usuario",
-               dataType        :   "json",
+               type		    :   "POST",
+               url 		    :   "ssan_hdial_ingresoegresopaciente/record_rotulos_por_usuario",
+               dataType     :   "json",
                beforeSend	:   function(xhr)           {   
-                                                               console.log(xhr);
-                                                               $('#loadFade').modal('show');
-                                                           },
+                                                            console.log(xhr);
+                                                            $('#loadFade').modal('show');
+                                                        },
                data 		:                           {  
-                                                               contrasena      :   r,
-                                                               info_prof       :   info_prof,
-                                                           },
+                                                            contrasena  :   r,
+                                                            info_prof   :   info_prof,
+                                                        },
                error		:   function(errro)         { 
-                                                               console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                               $("#protocoloPabellon").css("z-index","1500"); 
-                                                               jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                               $('#loadFade').modal('hide');
-                                                           },
+                                                            console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                            $("#protocoloPabellon").css("z-index","1500"); 
+                                                            jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                            $('#loadFade').modal('hide');
+                                                        },
                success		:   function(aData)         {   
-                                                               $('#loadFade').modal('hide');
-                                                               console.log("aData -> ",aData);
-                                                               if(aData.status_firma){
-                                                                   showNotification('top','center','Se agrego al RRHH de di&aacute;lisis',1,'fa fa-info');
-                                                                   $("#modal_nuevo_prestador_rrhh").modal("hide");
-                                                                   js_busqueda_rrhh();
-                                                               }   else  {
-                                                                   jError('Contrase&ntilde;a inv&aacute;lida',"e-SISSAN"); 
-                                                               }
-                                                           }, 
+                                                            $('#loadFade').modal('hide');
+                                                            console.log("aData -> ",aData);
+                                                            if(aData.status_firma){
+                                                                showNotification('top','center','Se agrego al RRHH de di&aacute;lisis',1,'fa fa-info');
+                                                                $("#modal_nuevo_prestador_rrhh").modal("hide");
+                                                                js_busqueda_rrhh();
+                                                            }   else  {
+                                                                jError('Contrase&ntilde;a inv&aacute;lida',"e-SISSAN"); 
+                                                            }
+                                                        }, 
            });
        }
    });
 }
-
-
-
 
 
 //********************************************************************************
@@ -336,18 +326,18 @@ function js_grabadatosPaciente(ed){
  //var txtDv           = $("#txtDv").val();
    var lficha          = $("#lficha").val();
    $.ajax({ 
-       type		: "POST",
-       url 		: "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
-       dataType        : "json",
-       beforeSend      : function(xhr) {     },
+       type		    :   "POST",
+       url 		    :   "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
+       dataType     :   "json",
+       beforeSend   :   function(xhr) {     },
        data 		:   { 
-                               OPCION          : 1,
-                               RUTPAC          : txtBuscar,
-                               RUTDV           : txtDv,
-                               LFICHA          : lficha,
-                           },
-       error		: function(errro){  console.log("1111_1_1_1_1"); alert(errro.responseText); },
-       success		: function(aData){  console.log("22222_2_2_2_2"); if(AjaxExtJsonAll(aData)){ console.log("333_3_3_3"); }; }, 
+                            OPCION          : 1,
+                            RUTPAC          : txtBuscar,
+                            RUTDV           : txtDv,
+                            LFICHA          : lficha,
+                        },
+       error		:   function(errro){  console.log("1111_1_1_1_1"); alert(errro.responseText); },
+       success		:   function(aData){  console.log("22222_2_2_2_2"); if(AjaxExtJsonAll(aData)){ console.log("333_3_3_3"); }; }, 
    });
    
   
@@ -448,25 +438,25 @@ function A_INGRESODIAL(numFichae){
 
            } else {
                $.ajax({ 
-                   type            :   "POST",
-                   url             :   "ssan_hdial_ingresoegresopaciente/guardaNuevoPacienteIngreso",
-                   dataType        :   "json",
-                   beforeSend      :   function(xhr) { console.log(xhr);},
-                   data            :   {   
-                                           password    :   r,
-                                           NumFichae   :   numFichae,
-                                       },
-                   error           :   function(errro){ 
-                                                           jAlert("Error General, Consulte Al Administrador"); 
-                                                           console.log(errro.responseText);  
-                                                       },
-                   success         :   function(aData){ 
-                                               if(aData[0]['validez']){
-                                                   jAlert("Se ha realizado con exito","e-SISSAN");
-                                               } else {
-                                                   jError("Error de contraseña","e-SISSAN");
-                                               }
-                                       }, 
+                   type         :   "POST",
+                   url          :   "ssan_hdial_ingresoegresopaciente/guardaNuevoPacienteIngreso",
+                   dataType     :   "json",
+                   beforeSend   :   function(xhr) { console.log(xhr);},
+                   data         :   {   
+                                        password    :   r,
+                                        NumFichae   :   numFichae,
+                                    },
+                   error        :   function(errro) { 
+                                                        jAlert("Error General, Consulte Al Administrador"); 
+                                                        console.log(errro.responseText);  
+                                                    },
+                   success      :   function(aData) { 
+                                                        if(aData[0]['validez']){
+                                                            jAlert("Se ha realizado con exito","e-SISSAN");
+                                                        } else {
+                                                            jError("Error de contraseña","e-SISSAN");
+                                                        }
+                                                    }, 
                });      
            }
    });
@@ -475,13 +465,18 @@ function A_INGRESODIAL(numFichae){
 
 function js_turnosxmaquina(id){
    $.ajax({ 
-       type		:   "POST",
-       url 		:   "ssan_hdial_ingresoegresopaciente/gestormaquinaxturno",
-       dataType        :   "json",
-       beforeSend      :   function(xhr) { },
-       data 		:   { ID_MAQUINA  : id },
-       error		:   function(errro){ alert(errro.responseText); },
-       success		:   function(aData){ if(AjaxExtJsonAll(aData)){ $("#TURNOXMAQUINA").modal("show"); $("#NOM_MAQUINA").html("TURNO->"+$("#nom_"+id).val()); }; }, 
+        type		:   "POST",
+        url 		:   "ssan_hdial_ingresoegresopaciente/gestormaquinaxturno",
+        dataType    :   "json",
+        beforeSend  :   function(xhr){ },
+        data 		:   { ID_MAQUINA : id },
+        error		:   function(errro){ alert(errro.responseText); },
+        success		:   function(aData){ 
+                                            if(AjaxExtJsonAll(aData)){ 
+                                                $("#TURNOXMAQUINA").modal("show"); 
+                                                $("#NOM_MAQUINA").html("TURNO->"+$("#nom_"+id).val()); 
+                                            };
+                                        }, 
    });
 }
 

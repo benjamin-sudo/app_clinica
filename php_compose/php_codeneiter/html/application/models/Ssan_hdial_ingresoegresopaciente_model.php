@@ -98,16 +98,16 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         $this->db->update($this->own.'.HD_RRHHDIALISIS',array('IND_ESTADO'=>'0','FEC_AUDITA'=>'SYSDATE','COD_AUDITA'=>$data['session']));
         $this->db->trans_complete();
         return array(
-            'STATUS'                        =>	$this->db->trans_status(),
-            'DATA'                          =>  $data,
+            'STATUS'        =>	$this->db->trans_status(),
+            'DATA'          =>  $data,
         );
     }
     
     public function model_record_rotulos_por_usuario($data){
         $this->db->trans_start();
-        $COD_RUTPRO                         =   $data['ind_proesional']['COD_RUTPRO'];
-        $ID_PRO                             =   $data['ind_proesional']['ID_PRO'];
-        $array                              =   $this->db->query("SELECT H.ID_RRHH FROM ADMIN.HD_RRHHDIALISIS H WHERE  H.COD_EMPRESA IN (".$data['empresa'].") AND H.COD_RUTPRO IN (".$COD_RUTPRO.") ")->result_array();
+        $COD_RUTPRO         =   $data['ind_proesional']['COD_RUTPRO'];
+        $ID_PRO             =   $data['ind_proesional']['ID_PRO'];
+        $array              =   $this->db->query("SELECT H.ID_RRHH FROM ADMIN.HD_RRHHDIALISIS H WHERE  H.COD_EMPRESA IN (".$data['empresa'].") AND H.COD_RUTPRO IN (".$COD_RUTPRO.") ")->result_array();
         if(count($array)>0){
             $this->db->where('ID_RRHH',$array[0]['ID_RRHH']); 
             $this->db->update($this->own.'.HD_RRHHDIALISIS',array('IND_ESTADO'=>'1','FEC_AUDITA'=>'SYSDATE','COD_AUDITA'=>$data['session']));

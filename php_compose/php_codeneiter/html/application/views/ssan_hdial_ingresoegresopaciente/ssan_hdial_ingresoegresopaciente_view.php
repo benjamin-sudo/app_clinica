@@ -82,8 +82,8 @@
     </div>
 </div>
 
-
 <section>
+
     <div class="modal fade" id="TURNOXMAQUINA">
         <div class="modal-dialog modal-xl3">
             <div class="modal-content">
@@ -195,8 +195,6 @@
     </div>
 
 </section>
-
-
 
 <!--  ZONA INPUT INGRESO DE PACIENTE -->
 <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
