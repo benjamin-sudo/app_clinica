@@ -1,17 +1,15 @@
 <div class="grid_busqueda_rrhh">
     <div class="grid_busqueda_rrhh1">
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1" style=""><i class="fa fa-user"></i><b>RUN</b></span>
-            <input type="text" id="rut_profesional" name="rut_profesional" class="form-control input-sm" style="width:101px;" onkeypress="validar(event)">
-        </div>
+        <span class="input-group-addon" id="basic-addon1" style=""><i class="fa fa-user"></i><b>RUN</b></span>
+        <input type="text" id="rut_profesional" name="rut_profesional" class="form-control input-sm" style="width:115px;"/>
     </div>
     <div class="grid_busqueda_rrhh3">
-        <button type="button" class="btn btn-xs btn-success btn-fill" id="btn_valida_profesional" onclick="valida_profesional()">
+        <button type="button" class="btn btn-success btn-fill" id="btn_valida_profesional" onclick="valida_profesional()" style="margin-top: 23px;">
             <i class="fa fa-search" aria-hidden="true"></i>
         </button>
     </div>
     <div class="grid_busqueda_rrhh2 card">
-        <table class="table table-striped">
+        <table class="table table-striped"  style="margin-bottom: 0px;">
             <tbody>
                 <tr>
                     <td style="height: 40px">
@@ -41,6 +39,7 @@
         </table>
     </div>
 </div>
+
 <script>
     //$("#modal_new_userxtomamuestra").modal({backdrop:'static',keyboard:false}).modal("show");
     $('#rut_profesional').Rut({

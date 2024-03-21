@@ -176,18 +176,11 @@
                 </div>
                 <div class="modal-body" id="html_nuevo_prestador_rrhh"></div>
                 <div class="modal-footer">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div id="busquedaMes2"></div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i>&nbsp;CIERRA VENTANA</button>
-                                <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guarda_infoxususario" disabled="">
-                                    <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;GUARDAR RRHH
-                                </button>
-                            </div>
-                        </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">CERRAR VENTANA</button>
+                        <button type="button" class="btn btn-success" id="btn_guarda_infoxususario" disabled="">
+                            <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;GUARDAR RRHH
+                        </button>
                     </div>
                 </div>
             </div>
