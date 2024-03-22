@@ -39,17 +39,17 @@ class Constructor extends CI_Controller {
             $_SESSION["FONOSESSION"]    =   $userL->TELEPHONE;
             $_SESSION["loginFr"]        =   'si';
             $_SESSION["COD_ESTAB"]      =   $empresas;
-            $newdata            =   array(
-                'unique'        =>  $unique,
-                'ID_UID'        =>  $userL->ID_UID,
-                'USERNAME'      =>  $userL->USERNAME,
-                'NAMESESSION'   =>  $userL->NAME,
-                'FONOSESSION'   =>  $userL->TELEPHONE,
-                'LASTLOGIN'     =>  $userL->LASTLOGIN,
-                'loginFr'       =>  'si',
-                'MENUARRFR'     =>  $user['menu'],
-                'COD_ESTAB'     =>  $empresas,
-            );
+            $newdata                    =   array(
+                                                'unique'        =>  $unique,
+                                                'ID_UID'        =>  $userL->ID_UID,
+                                                'USERNAME'      =>  $userL->USERNAME,
+                                                'NAMESESSION'   =>  $userL->NAME,
+                                                'FONOSESSION'   =>  $userL->TELEPHONE,
+                                                'LASTLOGIN'     =>  $userL->LASTLOGIN,
+                                                'loginFr'       =>  'si',
+                                                'MENUARRFR'     =>  $user['menu'],
+                                                'COD_ESTAB'     =>  $empresas,
+                                            );
             $this->session->set_userdata($newdata);
             $redirect = 'Dashboard';
         }

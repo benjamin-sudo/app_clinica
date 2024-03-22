@@ -20,7 +20,7 @@
 <div class="grid_perfil_usuario">
     <div class="grid_perfil_usuario1">
         <div class="card">
-            <div class="card-header"><b>INFORMACI&Oacute;N PERSONAL</b>/div>
+            <div class="card-header"><b>INFORMACI&Oacute;N PERSONAL</b></div>
             <div class="card-body">
                 <div class="form-group">
                     <label>RUT</label>
@@ -50,7 +50,7 @@
                     <div class="grid_datos_personales2"> 
                         <label>TELEFONO</label>
                         <div class="input-group">
-                            <div class="input-group-addon">+56 9</div>
+                            <div class="input-group-addon" style="margin-top:7px;margin-right:4px;">+56 9</div>
                             <input type="text" class="form-control" id="txtFono" required="true" placeholder="TELEFONO" value="">
                         </div>
                     </div>
@@ -66,7 +66,7 @@
     </div>
     <div class="grid_perfil_usuario2">
         <div class="card">
-            <div class="card-header"><b>CAMBIO DE CONTRASE&Ntilde;A</b>div>
+            <div class="card-header"><b>CAMBIO DE CONTRASE&Ntilde;A</b></div>
             <div class="card-body">
                 <div class="form-group">
                     <label for="inputPass">CONTRASE&Ntilde;A ANTERIOR</label>
@@ -84,19 +84,39 @@
         </div>
     </div>
 </div>
+
 <div class="grid_perfil_usuario">
     <div class="grid_perfil_usuario4">
         <div class="card">
             <div class="card-header"><b>FIRMA UNICA DIGITAL</b></div>
             <div class="card-body">
-                <div class="col-md-12 text-center" id="miFirma">
-                    Debe generar su Firma Digital Simple
+                <div class="alert alert-warning" role="alert" style="margin: 0; margin-bottom: 9px; color: white;">
+                    <i class="fa fa-info-circle" style="font-size: 22px; color: white;" aria-hidden="true"></i>
+                    &nbsp;&nbsp;&nbsp; Debe generar su firma &uacute;nica digital para actualizar la informaci&oacute;n previamente asignada
                     <br>
-                    <button type="button" class="btn btn-success btn-fill" onclick="nuevaFirma()">
-                    <i class="fa fa-random" aria-hidden="true"></i> Generar Firma</button>                        
+                    La firma debe tener un largo minimo de 6 caracteres y contener números y letras.
                 </div>
+               <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="inputPass">NUEVA FIRMA</label>
+                        <input type="password" class="form-control" onblur="validaExFirm()" id="firmaNew1" name="firmaNew1" required="true" placeholder="NUEVA FIRMA" style="text-transform: none;" value="" maxlength="8">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="inputPass">REPETIR NUEVA FIRMA</label>
+                        <input type="password" class="form-control" id="firmaNew2" name="firmaNew2" required="true" placeholder="REPETIR NUEVA FIRMA" style="text-transform: none;" value="" maxlength="8">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success btn-fill" id="btnFS" onclick="cambiaFirma()"><i class="fa fa-save" aria-hidden="true"></i> 
+                    Confirmar
+                </button>
             </div>
         </div>
     </div>
     <div class="grid_perfil_usuario4">&nbsp;</div>
 </div>
+
+<!-- ZONA DE VARIABLE -->
+<input type="hidden" id="exFirm"    name="exFirm"       value="0">
+<input type="hidden" id="username"  name="username"     value="<?php echo $username;?>">

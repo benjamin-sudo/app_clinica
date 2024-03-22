@@ -277,13 +277,9 @@
         }
       }
   });
-
-
-
 </script>
 
-
-<section>
+    <section>
 
       <div class="modal bg-dark fade" id="loadFade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

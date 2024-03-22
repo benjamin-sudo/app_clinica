@@ -93,6 +93,110 @@ function validaPassSegura() {
     //AjaxExt({ txtPassNueva: txtPassNueva }, 'respuesta', 'validaPassSegura', '', 'perfilUsuario');
 }
 
+function nuevaFirma(){
+
+
+}
+
+function cambiaFirma() {
+    //timerDestroy(1);
+    
+    var firma       =   $('#firmaNew1').val();
+    var firma2      =   $('#firmaNew2').val();
+    var exFirm      =   $('#exFirm').val();
+    var username    =   $('#username').val();
+
+    if (firma == '')    {
+        jWarning('Debe ingresar la nueva firma', 'Informaci\u00F3n');
+        return false;
+    }
+    if (firma2 == '')   {
+        jWarning('Debe repetir la nueva firma', 'Informaci\u00F3n');
+        return false;
+    }
+    if (firma != firma2) {
+        jWarning('Las firmas no coinciden', 'Informaci\u00F3n');
+        return false;
+    }
+    if (firma.length < 6) {
+        jWarning('La firma debe contener un minimo de 6 caracteres', 'Informaci\u00F3n');
+        return false;
+    }
+    if (exFirm == 1) {
+        jWarning('La firma ingresada estÃ¡ dentro del registro de contrase&ntilde;as vulnerables', 'Informaci\u00F3n');
+        return false;
+    }
+
+    var v = 0;
+    if (tiene_letras(firma)) {
+        v++;
+    }
+    if (tiene_numeros(firma)) {
+        v++;
+    }
+    if (v < 2) {
+        jWarning('Estimado Usuario, Su firma debe contener n&uacute;meros y letras', 'Informaci\u00F3n');
+        return false;
+    }
+
+    console.log("-------------------------");
+    console.log("firma      ->  ",firma);
+    console.log("username   ->  ",username);
+    $.ajax({ 
+        type            :   "POST",
+        url             :   "Dashboard/solicitudNuevaFirma",
+        dataType        :   "json",
+        data            :   { 
+                                firma : firma,
+                                username : username
+                            },
+        beforeSend      :   function(xhr)       {   $('#loadFade').modal('show');   },
+        error           :   function(errro)     {     
+                                                    console.log(errro.responseText); 
+                                                    jAlert("Comuniquese con el administrador ","E-SISSAN"); 
+                                                    $('#loadFade').modal('hide');
+                                                },
+        success         :   function(aData)     {   
+                                                    $('#loadFade').modal('hide');  
+                                                    console.log("aData  ->  ",aData);
+
+                                                    console.log("-------------------> ");
+
+                                                    
+                                                }, 
+    });
+
+    /* AjaxExt({ firma: firma, username: username }, 'respuesta', 'solicitudNuevaFirma', '', 'perfilUsuario');*/
+}
+
+function tiene_letras(texto) {
+    texto = texto.toLowerCase();
+    var letras = "abcdefghyjklmnopqrstuvwxyz";
+    for (i = 0; i < texto.length; i++) {
+        if (letras.indexOf(texto.charAt(i), 0) != -1) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function tiene_numeros(texto) {
+    var numeros = "0123456789";
+    for (i = 0; i < texto.length; i++) {
+        if (numeros.indexOf(texto.charAt(i), 0) != -1) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
+
+
 function change_captcha() {
     AjaxExt({}, 'imgCaptcha', 'traeCod', '', 'inicio');
 }
