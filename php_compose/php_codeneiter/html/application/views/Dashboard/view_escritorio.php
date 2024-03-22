@@ -31,6 +31,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
   <style>
     .nav-link.activo{ }
+    #loadFade { z-index: 10500 !important; }
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
@@ -281,7 +282,7 @@
 
     <section>
 
-      <div class="modal bg-dark fade" id="loadFade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
@@ -319,8 +320,8 @@
           <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h3 class="modal-title"><b>CONFIGURACI&Oacute;N CUENTA DE USUARIO</b></h3>
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h3 class="modal-title"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;<b>CONFIGURACI&Oacute;N CUENTA DE USUARIO</b></h3>
+                      <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                   </div>
                   <div class="modal-body" id="html_perfil_usuario"></div>
                   <div class="modal-footer">

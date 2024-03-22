@@ -114,7 +114,17 @@
             </div>
         </div>
     </div>
-    <div class="grid_perfil_usuario4">&nbsp;</div>
+    <div class="grid_perfil_usuario4">&nbsp;
+
+        <i class="bi bi-google"></i>
+        <br>
+        
+        <i class="bi bi-microsoft"></i>
+        <br>
+
+
+
+    </div>
 </div>
 
 <!-- ZONA DE VARIABLE -->

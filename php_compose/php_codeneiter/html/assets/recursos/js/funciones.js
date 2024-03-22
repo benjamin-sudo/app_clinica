@@ -142,6 +142,7 @@ function cambiaFirma() {
     console.log("-------------------------");
     console.log("firma      ->  ",firma);
     console.log("username   ->  ",username);
+
     $.ajax({ 
         type            :   "POST",
         url             :   "Dashboard/solicitudNuevaFirma",
@@ -159,9 +160,7 @@ function cambiaFirma() {
         success         :   function(aData)     {   
                                                     $('#loadFade').modal('hide');  
                                                     console.log("aData  ->  ",aData);
-
                                                     console.log("-------------------> ");
-
                                                     
                                                 }, 
     });
