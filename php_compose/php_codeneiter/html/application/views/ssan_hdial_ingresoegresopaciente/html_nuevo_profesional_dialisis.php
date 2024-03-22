@@ -40,18 +40,27 @@
     </div>
 </div>
 
+
+<div class="alert alert-success alert_profesional_existe" role="alert" style="display:none">
+    <i class="bi bi-exclamation-triangle"></i>&nbsp;Profesional existe como recurso humano correspondiente al sistema de di&aacute;lisis 
+</div>
+
+<div class="alert alert-warning alert_profesional_no_existe" role="alert" style="display:none">
+    <i class="bi bi-check-square"></i>&nbsp;Profesional no existe en RRHH del sistema de di&aacute;lisis. Para agregar presione guardar RRHH
+</div>
+
 <script>
     //$("#modal_new_userxtomamuestra").modal({backdrop:'static',keyboard:false}).modal("show");
     $('#rut_profesional').Rut({
         on_error    :   function()  {   
-                                            jAlert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(),'Rut Incorrecto'); 
-                                            console.log($("#rut_profesional").val());  
-                                            $("#rut_profesional").css('border-color','red'); 
-                                            $("#rut_profesional").val('') 
-                                        },
+                                        jAlert('El Run ingresado es Incorrecto. '+$("#rut_profesional").val(),'Rut Incorrecto'); 
+                                        $("#rut_profesional").css('border-color','red'); 
+                                        $("#rut_profesional").val('');
+                                        console.log($("#rut_profesional").val()); 
+                                    },
         on_success  :   function()  {   
-                                            $("#rut_profesional").css('border-color','');   
-                                        },
+                                        $("#rut_profesional").css('border-color','');   
+                                    },
         format_on   : 'keyup'
     });
 </script>

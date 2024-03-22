@@ -56,10 +56,13 @@ $(document).ready(function(){
         draggable       :   false
     });
     */
+    
     //setTimeout(function() {  moverE(); },10000);
+    
     $('#modal_perfil_usuario').on('hidden.bs.modal',   function(e){ 
         $("#html_perfil_usuario").html('');
     });
+
 });
 
 function js_confimicuenta(){
@@ -69,19 +72,25 @@ function js_confimicuenta(){
         url         :   "Dashboard/configuracion_micuenta",
         dataType    :   "json",
         beforeSend  :   function(xhr)   {  $('#loadFade').modal('show');    },
-        finally     :   function(xhr)   {  $('#loadFade').modal('hide');    },
         data        :                   { },
         error		:   function(err)   { 
                                             console.log(err);  
                                             console.log(err.responseText);    
+                                            $('#loadFade').modal('hide');
                                             jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
                                         },
         success     :   function(aData) { 
-                                            console.log("   ##################################  ");
+                                            $('#loadFade').modal('hide');
                                             console.log("   aData   ->  ",aData);
                                             $("#html_perfil_usuario").html(aData.html);
+                                            $("#modal_perfil_usuario").modal({backdrop:'static',keyboard:false}).modal('show');
                                         }, 
     });
+}
+
+function validaPassSegura() {
+    var txtPassNueva = $('#passNew1').val();
+    //AjaxExt({ txtPassNueva: txtPassNueva }, 'respuesta', 'validaPassSegura', '', 'perfilUsuario');
 }
 
 function change_captcha() {

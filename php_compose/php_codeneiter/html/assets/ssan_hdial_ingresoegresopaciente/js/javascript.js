@@ -41,7 +41,6 @@ $(document).ready(function() {
         $("#btn_guarda_infoxususario").attr('onclick','');
         $("#btn_guarda_infoxususario").prop('disabled',true);
     });
-
     $('#Rut_form').Rut({
        on_error : function(){
             $('#ErrorRutVF').html("Rut Incorrecto");
@@ -60,10 +59,12 @@ $(document).ready(function() {
        },
        format_on : 'keyup'
     });
-
+    
+    
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
+
 });
 
 function js_nuevo_prestador_dialisis(){
@@ -72,15 +73,18 @@ function js_nuevo_prestador_dialisis(){
         url             :   "ssan_hdial_ingresoegresopaciente/get_nuevo_prestador_dialisis",
         dataType        :   "json",
         data            :   { },
-        beforeSend      :   function(xhr)       { },
+        beforeSend      :   function(xhr)       {   $('#loadFade').modal('show');   },
         error           :   function(errro)     {     
                                                     console.log(errro.responseText); 
                                                     jAlert("Comuniquese con el administrador ","E-SISSAN"); 
+                                                    $('#loadFade').modal('hide');
                                                 },
         success         :   function(aData)     {     
-                                                console.log("aData  ->  ",aData);
+                                                    console.log("aData  ->  ",aData);
+                                                    $('#loadFade').modal('hide');
                                                     $('#html_nuevo_prestador_rrhh').html(aData.out_html);
                                                     $("#modal_nuevo_prestador_rrhh").modal({backdrop:'static',keyboard:false}).modal("show");
+                                                    $("#rut_profesional").focus();
                                                 }, 
     });
 }
@@ -137,13 +141,12 @@ function delete_profesional(cod_rutpro){
                                                                        }, 
            });
        } else {
-           console.log("---------------------------------------");
-           console.log("   -> DIJO NO FIRMA SIMPLE <-          ");
-           console.log("---------------------------------------");
+           //console.log("---------------------------------------");
+           //console.log("   -> DIJO NO FIRMA SIMPLE <-          ");
+           //console.log("---------------------------------------");
        }
    });
 }
-
 
 function js_nuevo_prestador_rrhh(){
    console.log("nuevo presta");
@@ -184,11 +187,13 @@ function valida_profesional(){
                                                 },
        success		:   function(aData)         { 
                                                     $('#loadFade').modal('hide');
-                                                    console.log("aData  |   ",aData);
+                                                    console.log("aData -> ",aData);
                                                     if(aData.ind_existe.length  > 0){
                                                         showNotification('top','center','Profesional RUN <b>'+$("#rut_profesional").val()+'</b>, Ya existe en RRHH',4,'fa fa-times');
                                                         $("#rut_profesional").val('');
                                                         return false;
+                                                    } else {
+                                                        $(".alert_profesional_no_existe").show();
                                                     }
                                                     if(aData.info_prof.length  == 0){
                                                         showNotification('top','center','RUN ingresado no existe como prestador en su establecimiento',4,'fa fa-times')
@@ -214,6 +219,7 @@ function js_limpia_panel(){
     $("#btn_guarda_infoxususario").attr('onclick','');
     $("#btn_guarda_infoxususario").prop('disabled',true);
     $("#rut_profesional").prop('disabled',false);
+    $(".alert_profesional_no_existe").hide();
 }
 
 function js_guarda_dialisis(){
