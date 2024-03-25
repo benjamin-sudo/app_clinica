@@ -139,13 +139,20 @@ class Dashboard extends CI_Controller {
             $this->email->subject($subject);
             $body = '<div style="margin:0 auto; width:300px;">
                             Estimado Usuario.<br> 
-                            Se ha generado una solicitud de recuperaci&oacute;n de firma digital simple en el sistema e-SISSAN.<br> <br>                            
+                            Se ha generado una solicitud de recuperaci&oacute;n de firma digital unica en el sistema . Clinica libre
+                            <br> 
+                            <br>                            
                             <div style="border:solid 1px #ccc;padding:5px;font-size:18px">
-                            Su firma digital simple es la siguiente:<br>
-                            <b>' . $passCla . '</b>
-                            </div><br> 
-                            <b>Si usted no ha generado esta solicitud favor comunicarce con el Sub-Departamento de Informática del Servicio de Salud Araucania Norte.</b>
-                            </div>';
+                                Su firma digital simple es la siguiente:
+                                <br>
+                                <b>' . $passCla . '</b>
+                            </div>
+                            <br>
+                            <b>Si usted no ha generado esta solicitud favor comunicarce con el Sub-Departamento de Clinica libre Chile.</b>
+                            <br>
+                            correo: clinicalibrechile@gmail.com
+                            </div>
+                            ';
             $this->email->message($body);
             if ($this->email->send()){
                 $html = 'Correo enviado con exito.';
