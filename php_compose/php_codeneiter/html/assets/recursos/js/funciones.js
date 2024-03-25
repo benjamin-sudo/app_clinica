@@ -113,7 +113,6 @@ function validaPassSegura() {
 
 function nuevaFirma(){
 
-
 }
 
 function cambiaFirma() {

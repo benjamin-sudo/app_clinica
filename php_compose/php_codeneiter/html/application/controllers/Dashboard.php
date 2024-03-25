@@ -108,7 +108,6 @@ class Dashboard extends CI_Controller {
             'html' => $html
         ]));
     }
-    
 
     public function RecuerdaContrasena(){
         if (!$this->input->is_ajax_request()) { show_404(); }
