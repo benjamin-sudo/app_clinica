@@ -145,23 +145,19 @@ function cambiaFirma() {
     }
 
     var v = 0;
-    if (tiene_letras(firma)) {
+    if (tiene_letras(firma)){
         v++;
     }
-    if (tiene_numeros(firma)) {
+    if (tiene_numeros(firma)){
         v++;
     }
     if (v < 2) {
         jWarning('Estimado Usuario, Su firma debe contener n&uacute;meros y letras', 'Informaci\u00F3n');
         return false;
     }
-
-
-
-    console.log("-------------------------");
+    console.log("-------------------------------------------------");
     console.log("firma      ->  ",firma);
     console.log("username   ->  ",username);
-
     $.ajax({ 
         type            :   "POST",
         url             :   "Dashboard/solicitudNuevaFirma",
@@ -177,15 +173,13 @@ function cambiaFirma() {
                                                     $('#loadFade').modal('hide');
                                                 },
         success         :   function(aData)     {   
-                                                    
                                                     $('#loadFade').modal('hide'); 
-                                                    console.log("   aData  ->  ",aData);
-                                                    if (aData.status){
-                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;Correo enviado',4,'');
-
-
+                                                    console.log("aData -> ",aData);
+                                                    if(aData.status){
+                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
+                                                        $(".class_card_firmaunica").html(aData.html_codigo);
                                                     } else {
-                                                        showNotification('top','center','&nbsp;Correo no enviado ',4,'fa fa-thumbs-down');
+                                                        showNotification('top','center','&nbsp;'+aData.html,4,'');
                                                     }
                                                 }, 
     });

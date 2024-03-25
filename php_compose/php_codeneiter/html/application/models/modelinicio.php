@@ -178,5 +178,23 @@ class modelinicio extends CI_Model {
                 ";
         return $this->db->query($sql)->result_array();
     }
-    
+
+
+    public function creaCodigoFirma($username, $codigo, $firma, $datetime){
+        $this->db->trans_start();
+        $dataFun = array(
+            'MAILHASH' => strtolower($firma),
+            'FELOGIN_FORGOTHASH' => $codigo,
+            'FELOGIN_REDIRECTPID' => $datetime
+        );
+        $this->db->where('USERNAME', $username);
+        $this->db->update($this->own . '.FE_USERS', $dataFun);
+        $this->db->trans_complete();
+        return $this->db->trans_status();
+    }
+
+
+
+
+
 }

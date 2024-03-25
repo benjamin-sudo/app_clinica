@@ -26,26 +26,16 @@ class Dashboard extends CI_Controller {
     }
 
     public function configuracion_micuenta(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
         $html_card_firmaunica = '';
-        if(!$this->input->is_ajax_request()){ show_404(); }
         $username = $this->session->userdata('USERNAME');
         $data_user = $this->modelinicio->model_consultaporusuario($username);
         $html = $this->load->view('Dashboard/html_perfil_usuario',['username'=>$username, 'data_user'=>$data_user],true);
-
-
-        $v_firma_simple = $data_user[0]['TX_INTRANETSSAN_CLAVEUNICA'];
-        if(is_null($v_firma_simple)){
-            $html_card_firmaunica = $this->load->view('Dashboard/html_sin_firmaunica',[],true);
-        } else {
-            $html_card_firmaunica = '';
-        }
-        
         $this->output->set_output(json_encode([
             'status' =>  $status,
             'data_user' => $data_user,
             'html' =>  $html,
-            'html_card_firmaunica' => $html_card_firmaunica,
         ]));
     }
 
@@ -54,45 +44,80 @@ class Dashboard extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); return; }
         $html           =   ''; 
         $html_codigo    =   '';
-        
         $status         =   true; 
         $firma          =   $this->input->post('firma');
-        $username       =   strtoupper($this->input->post('USERNAME'));
-        $userEmail      =   'benjamin.castillo03@gmail.com'; 
-        $subject        =   'TEST';
-        
-        $config = [
-            'smtp_user'     => 'clinicalibrechile@gmail.com',
-            'smtp_pass'     => 'hdmbkfrxxrleunqu',
-            'protocol'      => 'smtp',
-            'smtp_host'     => 'smtp.gmail.com',
-            #'smtp_port'    => 465,
-            #'smtp_crypto'  => 'ssl', 
-            'smtp_port'     => 587,
-            'smtp_crypto'   => 'tls', 
-            'mailtype'      => 'html',
-            'starttls'      => true,
-            'newline'       => "\r\n",
-        ];
+        $username       =   $this->session->userdata('USERNAME');
+        $data_user      =   $this->modelinicio->model_consultaporusuario($username);
 
-        $this->load->library('email', $config);
-        $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
-        $this->email->to($userEmail);
-        $this->email->subject($subject);
-        $html_mensaje   =   'Scorpions - Still Loving You';
-        $this->email->message($html_mensaje);
-        if ($this->email->send()){
-            $html       =   'Correo enviado con éxito.';
-            #$html_codigo  =   $this->load->view('Dashboard/html_perfil_usuario',[],true);
+        $fechaAhora     =   $this->sumarMinutosFecha(date('Y-m-d H:i:s'), 5);
+        $datetime       =   strtotime($fechaAhora);
+
+        if(count($data_user)>0){
+            $userEmail      =   $data_user[0]['EMAIL'];
+            $subject        =   'CONFIGURACI&Oacute;N FIRMA UNICA';
+            $config = [
+                'smtp_user'     => 'clinicalibrechile@gmail.com',
+                'smtp_pass'     => 'hdmbkfrxxrleunqu',
+                'protocol'      => 'smtp',
+                'smtp_host'     => 'smtp.gmail.com',
+                #'smtp_port'    => 465,
+                #'smtp_crypto'  => 'ssl', 
+                'smtp_port'     => 587,
+                'smtp_crypto'   => 'tls', 
+                'mailtype'      => 'html',
+                'starttls'      => true,
+                'newline'       => "\r\n",
+            ];
+            $this->load->library('email', $config);
+            $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
+            $this->email->to($userEmail);
+            $this->email->subject($subject);
+
+            $codigo = $this->generateCodigo();
+            $return = $this->modelinicio->creaCodigoFirma($username, $codigo, $firma, $datetime);
+
+            $body   =   '<div style="margin:0 auto; width:300px;">
+                            Estimado Usuario.<br> 
+                            Se ha generado una solicitud de cambio de Firma Digital Simple en el sistema e-SISSAN.<br><br>
+                            <div style="border:solid 1px #ccc;padding:5px;">
+                                Su código de verificación es el siguiente:
+                                <div style="font-size:18px"><b>' . $codigo . '</b></div>
+                                Este código tiene una duración de 5 minutos.
+                            </div><br>
+                            <b>Si usted no ha generado esta solicitud favor responder a correo : clinicalibrechile@gmail.com </b>
+                        </div>';
+
+            $this->email->message($body);
+
+            if ($this->email->send()){
+                $html = 'Correo enviado con exito.';
+                $html_codigo = $this->load->view('Dashboard/html_confirmafirmaunica',[],true);
+            } else {
+                $status = false;
+                $html = 'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
+            }
         } else {
-            $status     =   false;
-            $html       =   'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
+            $status = false;
+            $html = 'Usuario no encontrado';
         }
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode([
+            'html_codigo' => $html_codigo,
             'status' => $status,
             'html' => $html
         ]));
+    }
+    #perfilUsuario
+
+    function generateCodigo($strength = 8){
+        $input = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $input_length = strlen($input);
+        $random_string = '';
+        for ($i = 0; $i < $strength; $i++) {
+            $random_character = $input[mt_rand(0, $input_length - 1)];
+            $random_string .= $random_character;
+        }
+        return $random_string;
     }
 
     function sumarMinutosFecha($FechaStr, $MinASumar)  {

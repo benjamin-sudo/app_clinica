@@ -16,7 +16,6 @@
         gap                                 :  8px;
     }
 </style>
-
 <div class="grid_perfil_usuario">
     <div class="grid_perfil_usuario1">
         <div class="card">
@@ -24,7 +23,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label>RUN</label>
-                    <input type="text" class="form-control" id="txtRut" disabled="" placeholder="RUN" style="width: 140px;" value="<?php echo $data_user[0]['USERNAME'];?>">
+                    <input type="text" class="form-control" id="txtRut" disabled="" placeholder="RUN" style="width: 105px;" value="<?php echo $data_user[0]['USERNAME'];?>">
                 </div>
                 <div class="grid_datos_personales">
                     <div class="grid_datos_personales1"> 
@@ -89,8 +88,15 @@
     <div class="grid_perfil_usuario4">
         <div class="card">
             <div class="card-header"><b>FIRMA UNICA DIGITAL</b></div>
-            <div class="card-body class_card_card_firmaunica">
-                <?php echo $html_card_firmaunica;?>
+            <div class="card-body class_card_firmaunica">
+                <?php
+                    $v_firma_simple = $data_user[0]['TX_INTRANETSSAN_CLAVEUNICA'];
+                    if(is_null($v_firma_simple)){
+                        echo $html_card_firmaunica = $this->load->view('Dashboard/html_sin_firmaunica',[],true);
+                    } else {
+                        echo $html_card_firmaunica = 'En desarrollo';
+                    }
+                ?>
             </div>
         </div>
     </div>
