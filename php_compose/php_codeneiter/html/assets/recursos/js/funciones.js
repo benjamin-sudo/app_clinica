@@ -185,6 +185,53 @@ function cambiaFirma() {
     });
 }
 
+function confirmCambioF(){
+    let codVerif    =   $('#codVerif').val();
+    let firmaNew    =   $('#firmaNew1').val();
+    let username    =   $('#username').val();
+    if (codVerif == ''){
+        jError("Codigo Vacio","Clinica Libre Chile");
+        return false;
+    }
+    
+    console.log("codVerif -> ",codVerif);
+    console.log("firmaNew -> ",firmaNew);
+    console.log("username -> ",username);
+    
+    $.ajax({ 
+        type            :   "POST",
+        url             :   "Dashboard/confirmCambioFirma",
+        dataType        :   "json",
+        data            :   { 
+                                codVerif : codVerif,
+                                firmaNew : firmaNew,
+                                username : username
+                            },
+        beforeSend      :   function(xhr)       {   $('#loadFade').modal('show');   },
+        error           :   function(errro)     {     
+                                                    console.log(errro.responseText); 
+                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                                    $('#loadFade').modal('hide');
+                                                },
+        success         :   function(aData)     {   
+                                                    $('#loadFade').modal('hide'); 
+                                                    console.log("aData -> ",aData);
+                                                    /*
+                                                    if(aData.status){
+                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
+                                                        $(".class_card_firmaunica").html(aData.html_codigo);
+                                                    } else {
+                                                        showNotification('top','center','&nbsp;'+aData.html,4,'');
+                                                    }
+                                                    */
+                                                }, 
+    });
+    
+    //AjaxExt({ codVerif: codVerif, firmaNew: firmaNew, username: username }, 'respuesta', 'confirmCambioFirma', '', 'perfilUsuario');
+}
+
+
+
 function tiene_letras(texto) {
     texto = texto.toLowerCase();
     var letras = "abcdefghyjklmnopqrstuvwxyz";

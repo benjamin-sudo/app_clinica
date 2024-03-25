@@ -193,8 +193,4 @@ class modelinicio extends CI_Model {
         return $this->db->trans_status();
     }
 
-
-
-
-
 }

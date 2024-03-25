@@ -4,6 +4,7 @@
         grid-template-columns               :  65% 34%;
         gap                                 :  8px;
     }
+    
     .grid_datos_personales                  {
         display                             :  grid;
         grid-template-columns               :  1fr 1fr 1fr;
