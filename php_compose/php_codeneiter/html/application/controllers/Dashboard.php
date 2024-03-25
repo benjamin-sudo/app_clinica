@@ -112,59 +112,25 @@ class Dashboard extends CI_Controller {
     public function confirmCambioFirma() {
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
-        
         $codVerif = $this->input->post('codVerif');
         $firmaNew = $this->input->post('firmaNew');
         $username = strtoupper($this->input->post('username'));
-        
-
-
-        /*
-        $html = '';
-        $valida = $this->model_frontend->getValidaCodigo($codVerif, $username);
-        if ($valida) {
-
+        $html_firmaunica = '';
+        $valida = $this->modelinicio->getValidaCodigo($codVerif,$username);
+        if (count($valida)>0){
             $fechaSis = $valida[0]['FH_HOY'];
             $fechaAhora = strtotime(date('Y-m-d H:i:s'));
-
-            if ($fechaAhora > $fechaSis) {
-                $html .= "<script>jConfirm('Estimado Usuario, El código de confirmación a caducado<br>Desea volver a enviar el código de confirmación?', 'Confirmación', function(r){ if(r){ cambiaFirma(); } });</script>";
-            } else {
-                $confirm = $this->model_frontend->confirmaCambioFirma($username);
-                if ($confirm) {
-                    $html .= "<script>jMessage('Estimado Usuario, su firma digital simple ha sido generada correctamente', 'Confirmación', function(){ timerDestroy(); $('#btnsFirma').show('fast'); });</script>";
-
-                    $len = strlen($firmaNew);
-                    if ($len <= 4) {
-                        $FIRMA = substr($firmaNew, -2, 2);
-                        $ns = 2;
-                    } else {
-                        $FIRMA = substr($firmaNew, -3, 3);
-                        $ns = 3;
-                    }
-                    $nChar = $len - $ns;
-                    $ast = '';
-                    for ($i = 0; $i < $nChar; $i++) {
-                        $ast .= '*';
-                    }
-                    $FIRMA = strtolower($ast . $FIRMA);
-                    $html .= "<script>$('#miFirma').html('Su Firma Digital Simple es <div style=\"font-size: 20px;font-weight: bold;\">$FIRMA</div>');</script>";
-                }
-            }
+            $confirm = $this->modelinicio->confirmaCambioFirma($username);
+            $html_firmaunica = $this->load->view('Dashboard/html_firmaunica',['firma'=>$firmaNew],true);
         } else {
-            $html .= '<script>jWarning("El código de confirmación no es valido","Información");</script>';
+            $status = false;
         }
-        */
-
-
         $this->output->set_output(json_encode([
+            'valida' => $valida,
             'status' => $status,
+            'html_firmaunica' => $html_firmaunica
         ]));
-        //$this->output->set_output($html);
     }
-
-
-
 
     function generateCodigo($strength = 8){
         $input = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

@@ -179,7 +179,6 @@ class modelinicio extends CI_Model {
         return $this->db->query($sql)->result_array();
     }
 
-
     public function creaCodigoFirma($username, $codigo, $firma, $datetime){
         $this->db->trans_start();
         $dataFun = array(
@@ -189,6 +188,24 @@ class modelinicio extends CI_Model {
         );
         $this->db->where('USERNAME', $username);
         $this->db->update($this->own . '.FE_USERS', $dataFun);
+        $this->db->trans_complete();
+        return $this->db->trans_status();
+    }
+
+    public function getValidaCodigo($codVerif,$username){
+        $query = $this->db->query("SELECT FELOGIN_FORGOTHASH, FELOGIN_REDIRECTPID AS FH_HOY FROM $this->own.FE_USERS WHERE UPPER(USERNAME) = UPPER('$username') AND FELOGIN_FORGOTHASH = '$codVerif'");
+        return $query->result_array();
+    }
+
+
+    public function confirmaCambioFirma($username)  {
+        $query = $this->db->query("SELECT MAILHASH FROM $this->ownGu.FE_USERS WHERE USERNAME ='$username'");
+        $cl = $query->row();
+        $this->db->trans_start();
+        $this->db->set('TX_INTRANETSSAN_CLAVEUNICA', 'MAILHASH', false);
+        $this->db->set('MAILHASH', '');
+        $this->db->where('USERNAME', $username);
+        $this->db->update($this->ownGu . '.FE_USERS');
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
