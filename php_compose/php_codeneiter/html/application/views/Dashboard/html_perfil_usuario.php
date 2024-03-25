@@ -92,10 +92,10 @@
             <div class="card-body class_card_firmaunica">
                 <?php
                     $v_firma_simple = $data_user[0]['TX_INTRANETSSAN_CLAVEUNICA'];
-                    if(is_null($v_firma_simple)){
+                    if(is_null($v_firma_simple) or $v_firma_simple == ''){
                         echo $html_card_firmaunica = $this->load->view('Dashboard/html_sin_firmaunica',[],true);
                     } else {
-                        echo $html_card_firmaunica = 'En desarrollo';
+                        echo $html_card_firmaunica = $this->load->view('Dashboard/html_firmaunica',['firma'=>$v_firma_simple],true);
                     }
                 ?>
             </div>

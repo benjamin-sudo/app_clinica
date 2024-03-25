@@ -79,7 +79,9 @@ class Dashboard extends CI_Controller {
                         <br>
                         <div style="border:solid 1px #ccc;padding:5px;">
                             Su código de verificación es el siguiente:
-                            <div style="font-size:18px"><b>' . $codigo . '</b></div>
+                            <div style="font-size:18px">
+                                <b>'.$codigo.'</b>
+                            </div>
                             Este código tiene una duración de 5 minutos.
                         </div>
                         <br>
@@ -106,7 +108,20 @@ class Dashboard extends CI_Controller {
             'html' => $html
         ]));
     }
-    #perfilUsuario
+    
+    public function validaFirmaExist(){
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        $status = true;
+        $passNew = $this->input->post('firma');
+        $username = $this->input->post('username');
+        $valida = $this->model_frontend->Consultaexistefirma($passNew, $username);
+        if (count($valida)>0){
+            $status = false
+        }
+        $this->output->set_output(json_encode([
+            'status' => $status,
+        ]));
+    }
 
 
     public function confirmCambioFirma() {

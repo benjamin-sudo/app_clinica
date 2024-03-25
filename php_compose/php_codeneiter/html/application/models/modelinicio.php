@@ -23,24 +23,24 @@ class modelinicio extends CI_Model {
 
     public function login_modelo($user,$pass) {
         $status =   false;
-        $row    =   [];
-        $menu   =   [];
-        $ID_UID =   '';
-        $sql    =   "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
-        $query  =   $this->db->query($sql,array($user));
+        $row = [];
+        $menu = [];
+        $ID_UID = '';
+        $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
+        $query = $this->db->query($sql,array($user));
         if ($query->num_rows()>0){
             $row = $query->row();
             if (password_verify($pass,$row->PASSWORD)){
                 $status = true;
                 $ID_UID = $row->ID_UID;
-                $row    = $row;
-                $menu   = $this->load_menuxuser($ID_UID);
+                $row = $row;
+                $menu = $this->load_menuxuser($ID_UID);
             } 
         } 
         return [
-            'status'    => $status, 
-            'row'       => $row, 
-            'menu'      => $menu
+            'row' => $row, 
+            'menu' => $menu,
+            'status' => $status
         ];
     }
 
@@ -197,17 +197,22 @@ class modelinicio extends CI_Model {
         return $query->result_array();
     }
 
-
     public function confirmaCambioFirma($username)  {
-        $query = $this->db->query("SELECT MAILHASH FROM $this->ownGu.FE_USERS WHERE USERNAME ='$username'");
+        $query = $this->db->query("SELECT MAILHASH FROM $this->own.FE_USERS WHERE USERNAME ='$username'");
         $cl = $query->row();
         $this->db->trans_start();
         $this->db->set('TX_INTRANETSSAN_CLAVEUNICA', 'MAILHASH', false);
         $this->db->set('MAILHASH', '');
         $this->db->where('USERNAME', $username);
-        $this->db->update($this->ownGu . '.FE_USERS');
+        $this->db->update($this->own . '.FE_USERS');
         $this->db->trans_complete();
         return $this->db->trans_status();
+    }
+    
+
+    public function Consultaexistefirma($pwsimple1, $username){
+        $query = $this->db->query("SELECT USERNAME from $this->own.FE_USERS WHERE TX_INTRANETSSAN_CLAVEUNICA = UPPER('$pwsimple1') AND UPPER(USERNAME) <> UPPER('$username')");
+        return $query->result_array();
     }
 
 }

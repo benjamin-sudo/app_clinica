@@ -122,7 +122,6 @@ function cambiaFirma() {
     var firma2      =   $('#firmaNew2').val();
     var exFirm      =   $('#exFirm').val();
     var username    =   $('#username').val();
-
     if (firma == '')    {
         jWarning('Debe ingresar la nueva firma', 'Informaci\u00F3n');
         return false;
@@ -143,7 +142,6 @@ function cambiaFirma() {
         jWarning('La firma ingresada esta dentro del registro de contrase&ntilde;as vulnerables', 'Informaci\u00F3n');
         return false;
     }
-
     var v = 0;
     if (tiene_letras(firma)){
         v++;
@@ -190,10 +188,9 @@ function confirmCambioF(){
     let firmaNew    =   $('#firmaNew1').val();
     let username    =   $('#username').val();
     if (codVerif    == ''){
-        jError("Codigo Vacio","Clinica Libre Chile");
+        jError("C&oacute;digo Vac&iacute;o","Clinica Libre Chile");
         return false;
     }
-    
     console.log("   -----------------------------   ");
     console.log("   codVerif -> ",codVerif);
     console.log("   firmaNew -> ",firmaNew);
@@ -217,12 +214,39 @@ function confirmCambioF(){
                                                     $('#loadFade').modal('hide'); 
                                                     console.log("aData -> ",aData);
                                                     if(aData.status){
-
-
+                                                        $(".class_card_firmaunica").html(aData.html_firmaunica);
                                                     } else {
                                                         showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;Código de confirmación no corresponde',4,'');
                                                     }
                                                 }, 
+    });
+}
+
+
+function validaExFirm(){
+    let firma = $('#firmaNew1').val();
+    let username = $('#username').val();
+    $.ajax({ 
+        type        :   "POST",
+        url         :   "Dashboard/validaFirmaExist",
+        dataType    :   "json",
+        data        :   { 
+                            firma : firma,
+                            username : username,
+                        },
+        beforeSend  :   function(xhr)       {   $('#loadFade').modal('show');   },
+        error       :   function(errro)     {     
+                                                console.log(errro.responseText); 
+                                                jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                                $('#loadFade').modal('hide');
+                                            },
+        success     :   function(aData)     {   
+                                                if(!aData.status){
+                                                    jAlert("La firma unica digital ya existe en otro usuario","Clinica libre Chile");
+                                                    $("#firmaNew1").val('');
+                                                    $("#firmaNew2").val('');
+                                                }
+                                            }, 
     });
 }
 
