@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller {
         parent::__construct();              # Primero, llama al constructor del padre.
         $this->load->library('session');    # Después, carga las bibliotecas y otros recursos.
         $this->load->helper('url');         #
-        $this->load->model('modelinicio');   
+        $this->load->model('modelinicio');  
     }
 
     public function index(){
@@ -38,90 +38,63 @@ class Dashboard extends CI_Controller {
 
 
     //
-    public function solicitudNuevaFirma(){
-        if(!$this->input->is_ajax_request()){ show_404(); }
-        $html           =   '';
-        $status         =   true;
-        $firma          =   $this->input->post('firma');
-        $username       =   strtoupper($this->input->post('username'));
-
-        $userEmail      =   'benjamin.castillo03@gmail.com';
-        $subject        =   'TEST';
-
-        $config['protocol']         =   'smtp';                             # Puedes usar 'smtp' o 'sendmail', dependiendo de tus preferencias.
-        #$config['smtp_host']       =   'smtp.office365.com';               # Por ejemplo: smtp.gmail.com si usas Gmail.
-        $config['smtp_host']        =   'smtp.gmail.com'; 
-        #$config['smtp_port']       =   '587';                              # Por ejemplo: 587 para TLS o 465 para SSL si usas Gmail.
-        $config['smtp_port']        =   '465';                              # Por ejemplo: 587 para TLS o 465 para SSL si usas Gmail.
-        #$config['smtp_user']       =   'noresponder@araucanianorte.cl';    # Tu direcion de correo electeronico
-        #$config['smtp_pass']       =   'Esissan.0023';                     # Tu pass de correo electronico
-        $config['smtp_user']        =   'clinicalibrechile@gmail.com';      # Tu direcion de correo electeronico
-        $config['smtp_pass']        =   'clinica.libre2023';                # Tu pass de correo electronico
-
-        $config['smtp_crypto']      =   'tls';                              # Puedes usar 'tls' o 'ssl' segÃºn el puerto que estÃ©s utilizando.
-        $config['mailtype']         =   'html';                             # Puedes usar 'html' o 'text', dependiendo del contenido del correo.
-        $config['starttls']         =   true;
-
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
-
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
-        $this->email->from('noresponder@araucanianorte.cl', 'e-SISSAN');
-        $this->email->to($userEmail);                                       # replace it with receiver mail id                
-        $this->email->subject($subject);                                    # replace it with relevant subject   
-
-        $fechaAhora                 =   $this->sumarMinutosFecha(date('Y-m-d H:i:s'), 5);
-        $datetime                   =   strtotime($fechaAhora);
-        $this->email->message("Scorpions - Still Loving You");
-
-        /*
-        $consulta       =   $this->model_frontend->tradatos_usuFirmaS1($username);
-        if ($consulta) {
-            $userEmail          =   $consulta[0]["EMAIL"];
-            $subject            =   'Solicitud - Cambio de Firma Digital Simple';
-            $config = array(
-                'protocol'      =>  'sendmail',
-                'smtp_port'     =>  25,
-                'smtp_timeout'  =>  '4',
-                'mailtype'      =>  'html',
-                'charset'       =>  'utf-8'
-            );
-            $this->load->library('email', $config);
-            $this->email->set_newline("\r\n");
-            $this->email->from('noresponder@araucanianorte.cl', 'e-SISSAN');
-            $this->email->to($userEmail);  // replace it with receiver mail id                
-            $this->email->subject($subject); // replace it with relevant subject   
-
-            $fechaAhora     =   $this->sumarMinutosFecha(date('Y-m-d H:i:s'), 5);
-            $datetime       =   strtotime($fechaAhora);
-            $codigo         =   $this->generateCodigo();
-
-            $body = '<div style="margin:0 auto; width:300px;">
-                            Estimado Usuario.<br> 
-                            Se ha generado una solicitud de cambio de Firma Digital Simple en el sistema e-SISSAN.<br><br>
-                            <div style="border:solid 1px #ccc;padding:5px;">
-                                Su código de verificación es el siguiente:
-                                <div style="font-size:18px"><b>' . $codigo . '</b></div>
-                                Este código tiene una duración de 5 minutos.
-                            </div><br>
-                            <b>Si usted no ha generado esta solicitud favor comunicarce con el Departamento de Informática del Servicio de Salud Araucania Norte.</b>
-                            </div>';
-            $this->email->message($body);
-            $return = $this->model_frontend->creaCodigoFirma($username, $codigo, $firma, $datetime);
-            if ($return) {
-                $this->email->send();
-                $html .= "<script>jMessage('Estimado Usuario, se ha enviado el codigo de validación a su correo electronico $userEmail', 'Confirmación',function(){ stratVerif() });</script>";
-            }
-        } else {
-            $html .= '<script>jWarning("Datos de funcionario no encontrados","Información");</script>';
+    public function solicitudNuevaFirma() {
+        // Verificar si la solicitud es AJAX
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+            return;
         }
-        */
+    
+        $status = true; // Estado inicial de la operación
+        $html = ''; // Mensaje a devolver
+    
+        // Recuperar datos enviados por POST
+        $firma = $this->input->post('firma');
+        $username = strtoupper($this->input->post('username')); // Convertir a mayúsculas
+        $userEmail = 'benjamin.castillo03@gmail.com'; // Email del destinatario
+        $subject = 'TEST'; // Asunto del correo
+    
+        // Configuración del correo electrónico
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'smtp.gmail.com',
+            #'smtp_port' => 465,
+            'smtp_port' => 587,
+            'smtp_user' => 'clinicalibrechile@gmail.com',
+            'smtp_pass' => 'hdmbkfrxxrleunqu',
+            #'smtp_crypto' => 'ssl', // Cambiado a 'ssl' para el puerto 465
+            'smtp_crypto' => 'tls', // Cambiado a 'ssl' para el puerto 465
+            'mailtype' => 'html',
+            'starttls' => true,
+            'newline' => "\r\n",
+        ];
+    
+        // Cargar la librería de email con la configuración especificada
+        $this->load->library('email', $config);
+    
+        // Configurar detalles del correo
+        $this->email->from('clinicalibrechile@gmail.com', 'e-SISSAN');
+        $this->email->to($userEmail);
+        $this->email->subject($subject);
+        $this->email->message("Scorpions - Still Loving You");
+    
+        // Intentar enviar el correo y establecer el estado y mensaje basado en el resultado
+        if ($this->email->send()) {
+            $html = 'Correo enviado con éxito.';
+        } else {
+            $status = false;
+            $html = 'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
+        }
+    
+        // Devolver respuesta en formato JSON
+        $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode([
-            'status'    =>  $status,
-            'html'      =>  $html
+            'status' => $status,
+            'html' => $html
         ]));
     }
+    
+    
 
 
     function sumarMinutosFecha($FechaStr, $MinASumar)  {

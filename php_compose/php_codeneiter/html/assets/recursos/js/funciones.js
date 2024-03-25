@@ -159,9 +159,11 @@ function cambiaFirma() {
                                                 },
         success         :   function(aData)     {   
                                                     $('#loadFade').modal('hide');  
-                                                    console.log("aData  ->  ",aData);
+
+                                                    console.log("----------------------");
+                                                    console.error("aData  ->  ",aData);
+                                                    console.log(aData.html);
                                                     console.log("-------------------> ");
-                                                    
                                                 }, 
     });
 
