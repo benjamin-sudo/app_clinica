@@ -44,11 +44,11 @@
 }
 
 .Titt                                   {
-  font-size                             :   x-large !important;  
+    font-size                           :   x-large !important;  
 }
 
 .Titt2                                  {
-  font-size                             :   large;
+    font-size                           :   large;
 }
 
 @media(min-width                        :   900px){

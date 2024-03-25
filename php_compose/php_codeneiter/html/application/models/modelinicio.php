@@ -50,21 +50,21 @@ class modelinicio extends CI_Model {
                         sm.MENP_ID as sub_id, sm.MENP_NOMBRE as sub_nombre, sm.MENP_ESTADO as sub_estado, sm.MENP_RUTA as sub_ruta, sm.MENP_IDPADRE as sub_idpadre, sm.MENP_TIPO as sub_tipo, sm.MENP_ORDER as sub_order, sm.MENP_FRAME as sub_frame, sm.MENP_ICON as sub_icon, sm.MENP_THEME as sub_theme, sm.MENP_ISTOKEN as sub_istoken, sm.MENP_PARAM as sub_param,
                         ex.MENP_ID as ext_id, ex.MENP_NOMBRE as ext_nombre, ex.MENP_ESTADO as ext_estado, ex.MENP_RUTA as ext_ruta, ex.MENP_IDPADRE as ext_idpadre, ex.MENP_TIPO as ext_tipo, ex.MENP_ORDER as ext_order, ex.MENP_FRAME as ext_frame, ex.MENP_ICON as ext_icon, ex.MENP_THEME as ext_theme, ex.MENP_ISTOKEN as ext_istoken, ex.MENP_PARAM as ext_param
                     FROM 
-                        ADMIN.GU_TMENUPRINCIPAL m 
-                        LEFT JOIN ADMIN.GU_TMENUPRINCIPAL sm ON sm.MENP_IDPADRE = m.MENP_ID AND sm.MENP_FRAME = 3
-                        LEFT JOIN ADMIN.GU_TMENUPRINCIPAL ex ON ex.MENP_IDPADRE = sm.MENP_ID AND ex.MENP_FRAME = 3
+                        $own.GU_TMENUPRINCIPAL m 
+                        LEFT JOIN $own.GU_TMENUPRINCIPAL sm ON sm.MENP_IDPADRE = m.MENP_ID AND sm.MENP_FRAME = 3
+                        LEFT JOIN $own.GU_TMENUPRINCIPAL ex ON ex.MENP_IDPADRE = sm.MENP_ID AND ex.MENP_FRAME = 3
                     WHERE 
                         m.MENP_ESTADO = 1 AND 
                         m.MENP_FRAME = 3 AND 
                         m.MENP_IDPADRE = 0
                     ";
-        $menuData           =   $this->db->query($sql)->result_array();
-        $menu               =   [];
+        $menuData = $this->db->query($sql)->result_array();
+        $menu = [];
         if(count($menuData)>0){
             foreach($menuData as $row) {
-                $menuId         =   $row['main_id'];
-                $subMenuId      =   $row['sub_id'];
-                $extensionId    =   $row['ext_id'];
+                $menuId = $row['main_id'];
+                $subMenuId = $row['sub_id'];
+                $extensionId = $row['ext_id'];
                 // Organizar en estructura jerárquica
                 if (!isset($menu[$menuId])) {
                     $menu[$menuId] = [
@@ -103,39 +103,80 @@ class modelinicio extends CI_Model {
     public function model_consultaporusuario($username){
         $status = true;
         $sql = "SELECT 
-                    F.ID_UID, F.PID, F.TSTAMP, 
-                    F.USERNAME, F.PASSWORD, F.USERGROUP, 
-                    F.DISABLE, F.STARTTIME, F.ENDTIME, 
-                    F.NAME, F.FIRST_NAME, F.MIDDLE_NAME, 
-                    F.LAST_NAME, F.ADDRESS, F.TELEPHONE, 
-                    F.FAX, F.EMAIL, F.CRDATE, 
-                    F.CRUSER_ID, F.LOCKTODOMAIN, F.DELETED, 
-                    F.UC, F.TITLE, F.ZIP, 
-                    F.CITY, F.COUNTRY, F.WWW, 
-                    F.COMPANY, F.IMAGE, F.TSCONFIG, 
-                    F.FE_CRUSER_ID, F.LASTLOGIN, F.IS_ONLINE, 
-                    F.TX_EXTBASE_TYPE, F.FELOGIN_REDIRECTPID, F.FELOGIN_FORGOTHASH, 
-                    F.TX_CHCFORUM_AIM, F.TX_CHCFORUM_YAHOO, F.TX_CHCFORUM_MSN, 
-                    F.TX_CHCFORUM_CUSTOMIM, F.MAILHASH, F.ACTIVATED_ON, 
-                    F.PSEUDONYM, F.GENDER, F.DATE_OF_BIRTH, 
-                    F.LANGUAGE, F.ZONE, F.STATIC_INFO_COUNTRY, 
-                    F.TIMEZONE, F.DAYLIGHT, F.MOBILEPHONE, 
-                    F.GTC, F.PRIVACY, F.STATUS, 
-                    F.BY_INVITATION, F.COMMENTS, F.MODULE_SYS_DMAIL_HTML, 
-                    F.MODULE_SYS_DMAIL_CATEGORY, F.TX_EXTERNALIMPORTTUT_CODE, F.TX_EXTERNALIMPORTTUT_DEPARTMEN, 
-                    F.TX_EXTERNALIMPORTTUT_HOLIDAYS, F.TX_INTRANETSSAN_APELLIDOPATERN, F.TX_INTRANETSSAN_APELLIDOMATERN, 
-                    F.TX_INTRANETSSAN_CLAVEUNICA, F.TX_INTRANETSSAN_OBLIGACAMBIARC, F.TX_INTRANETSSAN_PREFERENCIA, 
-                    F.TX_INTRANETSSAN_RUN, F.TX_INTRANETSSAN_DV
+                    F.ID_UID, 
+                    F.PID, 
+                    F.TSTAMP, 
+                    F.USERNAME, 
+                    F.PASSWORD, 
+                    F.USERGROUP, 
+                    F.DISABLE, 
+                    F.STARTTIME, 
+                    F.ENDTIME, 
+                    F.NAME, 
+                    F.FIRST_NAME, 
+                    F.MIDDLE_NAME, 
+                    F.LAST_NAME, 
+                    F.ADDRESS, 
+                    F.TELEPHONE, 
+                    F.FAX, 
+                    F.EMAIL, 
+                    F.CRDATE, 
+                    F.CRUSER_ID, 
+                    F.LOCKTODOMAIN, 
+                    F.DELETED, 
+                    F.UC, 
+                    F.TITLE, 
+                    F.ZIP, 
+                    F.CITY, 
+                    F.COUNTRY, 
+                    F.WWW, 
+                    F.COMPANY, 
+                    F.IMAGE, 
+                    F.TSCONFIG, 
+                    F.FE_CRUSER_ID, 
+                    F.LASTLOGIN, 
+                    F.IS_ONLINE, 
+                    F.TX_EXTBASE_TYPE, 
+                    F.FELOGIN_REDIRECTPID, 
+                    F.FELOGIN_FORGOTHASH, 
+                    F.TX_CHCFORUM_AIM, 
+                    F.TX_CHCFORUM_YAHOO, 
+                    F.TX_CHCFORUM_MSN, 
+                    F.TX_CHCFORUM_CUSTOMIM, 
+                    F.MAILHASH, 
+                    F.ACTIVATED_ON, 
+                    F.PSEUDONYM, 
+                    F.GENDER, 
+                    F.DATE_OF_BIRTH, 
+                    F.LANGUAGE, 
+                    F.ZONE, 
+                    F.STATIC_INFO_COUNTRY, 
+                    F.TIMEZONE, 
+                    F.DAYLIGHT, 
+                    F.MOBILEPHONE, 
+                    F.GTC, 
+                    F.PRIVACY, 
+                    F.STATUS, 
+                    F.BY_INVITATION, 
+                    F.COMMENTS, 
+                    F.MODULE_SYS_DMAIL_HTML, 
+                    F.MODULE_SYS_DMAIL_CATEGORY, 
+                    F.TX_EXTERNALIMPORTTUT_CODE, 
+                    F.TX_EXTERNALIMPORTTUT_DEPARTMEN, 
+                    F.TX_EXTERNALIMPORTTUT_HOLIDAYS, 
+                    F.TX_INTRANETSSAN_APELLIDOPATERN, 
+                    F.TX_INTRANETSSAN_APELLIDOMATERN, 
+                    F.TX_INTRANETSSAN_CLAVEUNICA, 
+                    F.TX_INTRANETSSAN_OBLIGACAMBIARC, 
+                    F.TX_INTRANETSSAN_PREFERENCIA, 
+                    F.TX_INTRANETSSAN_RUN, 
+                    F.TX_INTRANETSSAN_DV
                 FROM 
-                    GUADMIN.FE_USERS F
+                    $own.FE_USERS F
                 WHERE
-                    F.USERNAME IN (?)
+                    F.USERNAME IN ('$username')
                 ";
-        $query = $this->db->query($sql,[$user])->result_array();
-        return [
-            'query' => $query,
-            'status' => $status
-        ];
+        return $this->db->query($sql)->result_array();
     }
-
+    
 }

@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function js_confimicuenta(){
-    console.log("   ->  js_confimicuenta    <-  ");
+    //console.log("   ->  js_confimicuenta    <-  ");
     $.ajax({ 
         type        :   "POST",
         url         :   "Dashboard/configuracion_micuenta",
@@ -95,7 +95,7 @@ function js_confimicuenta(){
                                             console.log(err);  
                                             console.log(err.responseText);    
                                             $('#loadFade').modal('hide');
-                                            jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                         },
         success     :   function(aData) { 
                                             $('#loadFade').modal('hide');
@@ -157,7 +157,7 @@ function cambiaFirma() {
     }
 
 
-    
+
     console.log("-------------------------");
     console.log("firma      ->  ",firma);
     console.log("username   ->  ",username);
@@ -173,7 +173,7 @@ function cambiaFirma() {
         beforeSend      :   function(xhr)       {   $('#loadFade').modal('show');   },
         error           :   function(errro)     {     
                                                     console.log(errro.responseText); 
-                                                    jAlert("Comuniquese con el administrador ","E-SISSAN"); 
+                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
                                                     $('#loadFade').modal('hide');
                                                 },
         success         :   function(aData)     {   
@@ -941,7 +941,6 @@ function salirpopupfirmasimple() {
 }
 
 function CambioFirma() {
-
     if ($('#txtPassFirmaS1pop').val() != $('#txtPassFirmaS2pop').val()) {
         $("#mensaje2pop").html('ContraseÃ±as no coinciden.');
         $("#txtPassFirmaS1pop").css("border-color", "#FA5858");
@@ -955,14 +954,11 @@ function CambioFirma() {
             error = 1;
             errores = '- La firma simple no puede estar vacia\n';
         }
-
         if (firma2 == '') {
             error = 1;
             errores = '- La firma simple no puede estar vacia\n';
         }
-
         if (error == 0) {
-
             var funcion = "cambioPassFirmaSimple0";
             var id = "respuesta";
             var variables = { "firma1": firma1 }
@@ -1000,7 +996,6 @@ function confirmafirmasimple() {
 }
 
 function firmasimplexemail2(idusu, token) {
-
     var variables = { "funcion": 17, "idusu": idusu, "token": token }
     var id = "muestrapagina";
     ajax(variables, id);
@@ -1050,8 +1045,8 @@ $.datepicker.regional['es'] = {
     currentText: 'Hoy',
     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    dayNames: ['Domingo', 'Lunes', 'Martes', 'MiÃ©rcoles', 'Jueves', 'Viernes', 'SÃ¡bado'],
-    dayNamesShort: ['Dom', 'Lun', 'Mar', 'MiÃ©', 'Juv', 'Vie', 'SÃ¡b'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Juv', 'Vie', 'Sab'],
     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'SÃ¡'],
     weekHeader: 'Sm',
     dateFormat: 'dd/mm/yy',
@@ -1061,7 +1056,6 @@ $.datepicker.regional['es'] = {
     yearSuffix: ''
 };
 $.datepicker.setDefaults($.datepicker.regional['es']);
-
 
 //validaciones
 function IsNumber(e) { //SOLO NUMEROS				
@@ -1378,7 +1372,7 @@ function AjaxExtJsonAll(datos) {
         } else if (item.opcion == 'attrSelect') {
             $('#' + item.id_html + ' option[value="' + item.contenido + '"]').attr('selected', 'selected');
         } else if (item.opcion == 'jAlert') {
-            jAlert(item.contenido, "SSAN - e-SISSAN");
+            jAlert(item.contenido, "SSAN - CLINICA LIBRE");
         } else if (item.opcion == 'jConfirm') {
             jConfirm(item.contenido, 'Confirmation Dialog', function(r) {
                 location.reload();
@@ -1394,11 +1388,11 @@ function AjaxExtJsonAll(datos) {
         } else if (item.opcion == 'script') {
             item.contenido;
         } else if (item.opcion == 'jAlertOK') {
-            jAlert(item.contenido, 'E-SISSAN', function(r) {
+            jAlert(item.contenido, 'CLINICA LIBRE', function(r) {
                 location.reload();
             });
         } else if (item.opcion == 'jAlertDiagC') {
-            jAlert(item.contenido, 'E-SISSAN', function(r) {
+            jAlert(item.contenido, 'CLINICA LIBRE', function(r) {
                 $('#' + item.id_html).dialog('close');
             });
         } else if (item.opcion == 'swalOK') {
@@ -1412,7 +1406,7 @@ function AjaxExtJsonAll(datos) {
         } else if (item.opcion == 'find_rm') {
             $('#' + item.id_html).find("option[value='" + item.contenido + "']").remove();
         } else if (item.opcion == 'jError') {
-            jError(item.contenido, 'ERROR - E-SISSAN', function(r) {});
+            jError(item.contenido, 'ERROR - CLINICA LIBRE', function(r) {});
         } else if (item.opcion == 'onclick') {
             $('#' + item.id_html).attr('onClick', item.contenido);
         } else if (item.opcion == 'outonclick') {
@@ -1430,14 +1424,11 @@ function AjaxExtJsonAll(datos) {
     return true;
 }
 
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 
 function NumGuion(e) {
     // extranjero = document.getElementById('inp_ext');

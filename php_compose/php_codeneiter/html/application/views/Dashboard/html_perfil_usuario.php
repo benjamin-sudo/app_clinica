@@ -16,33 +16,32 @@
         gap                                 :  8px;
     }
 </style>
-
 <div class="grid_perfil_usuario">
     <div class="grid_perfil_usuario1">
         <div class="card">
             <div class="card-header"><b>INFORMACI&Oacute;N PERSONAL</b></div>
             <div class="card-body">
                 <div class="form-group">
-                    <label>RUT</label>
-                    <input type="text" class="form-control" id="txtRut" disabled="" placeholder="RUT" style="width: 140px;" value="">
+                    <label>RUN</label>
+                    <input type="text" class="form-control" id="txtRut" disabled="" placeholder="RUN" style="width: 140px;" value="<?php echo $data_user[0]['USERNAME'];?>">
                 </div>
                 <div class="grid_datos_personales">
                     <div class="grid_datos_personales1"> 
                         <div class="form-group">
                             <label>NOMBRES</label>
-                            <input type="text" class="form-control" id="txtNombresUsu" required="true" placeholder="NOMBRES" value="">
+                            <input type="text" class="form-control" id="txtNombresUsu" required="true" placeholder="NOMBRES" value="<?php echo $data_user[0]['FIRST_NAME'];?>">
                         </div>
                     </div>
                     <div class="grid_datos_personales4">
                         <div class="form-group">
                             <label>APELLIDO PATERNO</label>
-                            <input type="text" class="form-control" id="txtApellidoP" required="true" placeholder="APELLIDO PATERNO" value="">
+                            <input type="text" class="form-control" id="txtApellidoP" required="true" placeholder="APELLIDO PATERNO" value="<?php echo $data_user[0]['MIDDLE_NAME'];?>">
                         </div>
                     </div>
                     <div class="grid_datos_personales5"> 
                         <div class="form-group">
                             <label>APELLIDO MATERNO</label>
-                            <input type="text" class="form-control" id="txtApellidoM" required="true" placeholder="APELLIDO MATERNO" value="">
+                            <input type="text" class="form-control" id="txtApellidoM" required="true" placeholder="APELLIDO MATERNO" value="<?php echo $data_user[0]['LAST_NAME'];?>">
                         </div>
                     </div>
                 </div>
@@ -51,13 +50,13 @@
                         <label>TELEFONO</label>
                         <div class="input-group">
                             <div class="input-group-addon" style="margin-top:7px;margin-right:4px;">+56 9</div>
-                            <input type="text" class="form-control" id="txtFono" required="true" placeholder="TELEFONO" value="">
+                            <input type="text" class="form-control" id="txtFono" required="true" placeholder="TELEFONO" value="<?php echo $data_user[0]['TELEPHONE'];?>">
                         </div>
                     </div>
                     <div class="grid_datos_personales3"> 
                         <div class="form-group">
                             <label for="exampleInputEmail1">E-MAIL</label>
-                            <input type="email" class="form-control" id="txtCorreo" required="true" placeholder="EMAIL" style="text-transform: none;" value="">
+                            <input type="email" class="form-control" id="txtCorreo" required="true" placeholder="EMAIL" style="text-transform: none;" value="<?php echo $data_user[0]['EMAIL'];?>">
                         </div>
                     </div>
                 </div>
@@ -89,39 +88,17 @@
     <div class="grid_perfil_usuario4">
         <div class="card">
             <div class="card-header"><b>FIRMA UNICA DIGITAL</b></div>
-            <div class="card-body">
-                <div class="alert alert-warning" role="alert" style="margin: 0; margin-bottom: 9px; color: white;">
-                    <i class="fa fa-info-circle" style="font-size: 22px; color: white;" aria-hidden="true"></i>
-                    &nbsp;&nbsp;&nbsp; Debe generar su firma &uacute;nica digital para actualizar la informaci&oacute;n previamente asignada
-                    <br>
-                    La firma debe tener un largo minimo de 6 caracteres y contener números y letras.
-                </div>
-               <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="inputPass">NUEVA FIRMA</label>
-                        <input type="password" class="form-control" onblur="validaExFirm()" id="firmaNew1" name="firmaNew1" required="true" placeholder="NUEVA FIRMA" style="text-transform: none;" value="" maxlength="8">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="inputPass">REPETIR NUEVA FIRMA</label>
-                        <input type="password" class="form-control" id="firmaNew2" name="firmaNew2" required="true" placeholder="REPETIR NUEVA FIRMA" style="text-transform: none;" value="" maxlength="8">
-                    </div>
-                </div>
-                <button type="button" class="btn btn-success btn-fill" id="btnFS" onclick="cambiaFirma()"><i class="fa fa-save" aria-hidden="true"></i> 
-                    Confirmar
-                </button>
+            <div class="card-body class_card_card_firmaunica">
+                <?php echo $html_card_firmaunica;?>
             </div>
         </div>
     </div>
     <div class="grid_perfil_usuario4">&nbsp;
-
-        <i class="bi bi-google"></i>
-        <br>
-        
-        <i class="bi bi-microsoft"></i>
-        <br>
-
+        <!--
+            <i class="bi bi-google"></i>
+            <br>
+            <i class="bi bi-microsoft"></i>
+        -->
     </div>
 </div>
 
