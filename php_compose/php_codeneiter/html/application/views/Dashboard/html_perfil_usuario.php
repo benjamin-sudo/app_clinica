@@ -1,7 +1,7 @@
 <style>
     .grid_perfil_usuario                    {
         display                             :  grid;
-        grid-template-columns               :  65% 35%;
+        grid-template-columns               :  65% 34%;
         gap                                 :  8px;
     }
     .grid_datos_personales                  {
@@ -16,6 +16,7 @@
         gap                                 :  8px;
     }
 </style>
+
 <div class="grid_perfil_usuario">
     <div class="grid_perfil_usuario1">
         <div class="card">
