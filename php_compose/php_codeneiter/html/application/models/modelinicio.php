@@ -201,7 +201,7 @@ class modelinicio extends CI_Model {
         $query = $this->db->query("SELECT MAILHASH FROM $this->own.FE_USERS WHERE USERNAME ='$username'");
         $cl = $query->row();
         $this->db->trans_start();
-        $this->db->set('TX_INTRANETSSAN_CLAVEUNICA', 'MAILHASH', false);
+        $this->db->set('TX_INTRANETSSAN_CLAVEUNICA', $cl->MAILHASH);
         $this->db->set('MAILHASH', '');
         $this->db->where('USERNAME', $username);
         $this->db->update($this->own . '.FE_USERS');
@@ -209,10 +209,15 @@ class modelinicio extends CI_Model {
         return $this->db->trans_status();
     }
     
-
     public function Consultaexistefirma($pwsimple1, $username){
         $query = $this->db->query("SELECT USERNAME from $this->own.FE_USERS WHERE TX_INTRANETSSAN_CLAVEUNICA = UPPER('$pwsimple1') AND UPPER(USERNAME) <> UPPER('$username')");
         return $query->result_array();
     }
+
+    public function tradatos_usu($iuid){
+        $query = $this->db->query("SELECT USERNAME,FIRST_NAME,NAME,MIDDLE_NAME,LAST_NAME,TELEPHONE,EMAIL,TX_INTRANETSSAN_CLAVEUNICA,PASSWORD,TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) AS TX_INTRANETSSAN_CLAVEUNICA,MAILHASH from $this->own.FE_USERS where ID_UID=$iuid");
+        return $query->result_array();
+    }
+
 
 }

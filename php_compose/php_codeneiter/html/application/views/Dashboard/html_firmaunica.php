@@ -1,9 +1,22 @@
+<?php
+    function tapa_firma($firmaNew){
+        $longitud = strlen($firmaNew); 
+        if ($longitud > 3) {
+            $ultimosTres = substr($firmaNew, -3);
+            $asteriscos = str_repeat("*", $longitud - 3); 
+            $firmaNew = $asteriscos . $ultimosTres; 
+        } else {
+            $firmaNew = $firmaNew;
+        }
+        return $firmaNew;
+    }
+    $firmaProcesada = tapa_firma($firma);
+?>
 <div class="row">
     <div class="col-md-12 text-center" id="miFirma">
         SU FIRMA UNICA ES : 
-    
         <div style="font-size: 20px;font-weight: bold;">
-            <b><?php echo $firma;?></b>       
+            <b><?php echo $firmaProcesada;?></b>       
         </div>
     </div>
 </div>

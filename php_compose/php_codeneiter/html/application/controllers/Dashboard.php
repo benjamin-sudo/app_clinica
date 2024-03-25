@@ -39,7 +39,6 @@ class Dashboard extends CI_Controller {
         ]));
     }
 
-    //
     public function solicitudNuevaFirma() {
         if(!$this->input->is_ajax_request()){ show_404(); return; }
         $html           =   ''; 
@@ -70,6 +69,7 @@ class Dashboard extends CI_Controller {
             $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
             $this->email->to($userEmail);
             $this->email->subject($subject);
+
             $codigo = $this->generateCodigo();
             $return = $this->modelinicio->creaCodigoFirma($username, $codigo, $firma, $datetime);
             $body = '<div style="margin:0 auto; width:300px;">
@@ -109,20 +109,77 @@ class Dashboard extends CI_Controller {
         ]));
     }
     
+
+    public function RecuerdaContrasena(){
+        if (!$this->input->is_ajax_request()) { show_404(); }
+        $status = true;
+        $html = '';
+        $iuid = $this->session->userdata('ID_UID');
+        $consulta = $this->modelinicio->tradatos_usu($iuid);
+        if(count($consulta)>0){
+            $passCla        =   $consulta[0]["TX_INTRANETSSAN_CLAVEUNICA"];
+            $userEmail      =   $consulta[0]["EMAIL"];
+            $subject        =   'Solicitud de recuperación de firma digital';
+            $subject        =   'RECUPERACIÓN FIRMA UNICA';
+            $config         =   [
+                'smtp_user'     =>  'clinicalibrechile@gmail.com',
+                'smtp_pass'     =>  'hdmbkfrxxrleunqu',
+                'protocol'      =>  'smtp',
+                'smtp_host'     =>  'smtp.gmail.com',
+                #'smtp_port'    =>  465,
+                #'smtp_crypto'  =>  'ssl', 
+                'smtp_port'     =>  587,
+                'smtp_crypto'   =>  'tls', 
+                'mailtype'      =>  'html',
+                'starttls'      =>  true,
+                'newline'       =>  "\r\n",
+            ];
+            $this->load->library('email', $config);
+            $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
+            $this->email->to($userEmail);
+            $this->email->subject($subject);
+            $body = '<div style="margin:0 auto; width:300px;">
+                            Estimado Usuario.<br> 
+                            Se ha generado una solicitud de recuperaci&oacute;n de firma digital simple en el sistema e-SISSAN.<br> <br>                            
+                            <div style="border:solid 1px #ccc;padding:5px;font-size:18px">
+                            Su firma digital simple es la siguiente:<br>
+                            <b>' . $passCla . '</b>
+                            </div><br> 
+                            <b>Si usted no ha generado esta solicitud favor comunicarce con el Sub-Departamento de Informática del Servicio de Salud Araucania Norte.</b>
+                            </div>';
+            $this->email->message($body);
+            if ($this->email->send()){
+                $html = 'Correo enviado con exito.';
+                $html_codigo = $this->load->view('Dashboard/html_confirmafirmaunica',['firma'=>$firma],true);
+            } else {
+                $status = false;
+                $html = 'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
+            }
+        } else {
+            $status = false;
+            $html = 'Usuario no encontrado. ';
+        }
+        $this->output->set_output(json_encode([
+            'status' => $status,
+            'html' => $html
+        ]));
+    }
+
+
+
     public function validaFirmaExist(){
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
         $passNew = $this->input->post('firma');
         $username = $this->input->post('username');
-        $valida = $this->model_frontend->Consultaexistefirma($passNew, $username);
+        $valida = $this->modelinicio->Consultaexistefirma($passNew, $username);
         if (count($valida)>0){
-            $status = false
+            $status = false;
         }
         $this->output->set_output(json_encode([
             'status' => $status,
         ]));
     }
-
 
     public function confirmCambioFirma() {
         if (!$this->input->is_ajax_request()){ show_404(); }
@@ -146,6 +203,31 @@ class Dashboard extends CI_Controller {
             'html_firmaunica' => $html_firmaunica
         ]));
     }
+
+    public function html_nuevafirma() {
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        $this->output->set_output(json_encode([
+            'html' => $this->load->view('Dashboard/html_sin_firmaunica',[],true),
+        ]));
+    }
+
+    public function confirmEnvioRecuperacion() {
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        $status = true;
+
+
+
+
+
+        $this->output->set_output(json_encode([
+            'status' => $status
+        ]));
+    }
+
+    
+
+
+
 
     function generateCodigo($strength = 8){
         $input = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

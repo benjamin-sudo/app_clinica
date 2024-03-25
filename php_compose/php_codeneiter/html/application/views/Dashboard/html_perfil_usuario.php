@@ -109,6 +109,8 @@
         -->
     </div>
 </div>
+
+
 <!-- ZONA DE VARIABLE -->
 <div class="info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($data_user),ENT_QUOTES,'UTF-8');?>"></div>
 <input type="hidden" id="exFirm"    name="exFirm"       value="0">

@@ -153,9 +153,9 @@ function cambiaFirma() {
         jWarning('Estimado Usuario, Su firma debe contener n&uacute;meros y letras', 'Informaci\u00F3n');
         return false;
     }
-    console.log("-------------------------------------------------");
-    console.log("firma      ->  ",firma);
-    console.log("username   ->  ",username);
+    //console.log("-------------------------------------------------");
+    //console.log("firma      ->  ",firma);
+    //console.log("username   ->  ",username);
     $.ajax({ 
         type            :   "POST",
         url             :   "Dashboard/solicitudNuevaFirma",
@@ -191,10 +191,6 @@ function confirmCambioF(){
         jError("C&oacute;digo Vac&iacute;o","Clinica Libre Chile");
         return false;
     }
-    console.log("   -----------------------------   ");
-    console.log("   codVerif -> ",codVerif);
-    console.log("   firmaNew -> ",firmaNew);
-    console.log("   username -> ",username);
     $.ajax({ 
         type            :   "POST",
         url             :   "Dashboard/confirmCambioFirma",
@@ -222,7 +218,6 @@ function confirmCambioF(){
     });
 }
 
-
 function validaExFirm(){
     let firma = $('#firmaNew1').val();
     let username = $('#username').val();
@@ -241,12 +236,61 @@ function validaExFirm(){
                                                 $('#loadFade').modal('hide');
                                             },
         success     :   function(aData)     {   
+                                                $('#loadFade').modal('hide');
+                                                console.log("validaFirmaExist -> ",aData);
                                                 if(!aData.status){
                                                     jAlert("La firma unica digital ya existe en otro usuario","Clinica libre Chile");
                                                     $("#firmaNew1").val('');
                                                     $("#firmaNew2").val('');
                                                 }
                                             }, 
+    });
+}
+
+function nuevaFirma(){
+    $.ajax({ 
+        type        :   "POST",
+        url         :   "Dashboard/html_nuevafirma",
+        dataType    :   "json",
+        data        :   { },
+        beforeSend  :   function(xhr)   {   $('#loadFade').modal('show');   },
+        error       :   function(errro) {     
+                                            console.log(errro.responseText); 
+                                            jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                            $('#loadFade').modal('hide');
+                                        },
+        success     :   function(aData) {   
+                                            $('#loadFade').modal('hide');
+                                            console.log("html_nuevafirma -> ",aData);
+                                            $(".class_card_firmaunica").html(aData.html);
+                                        }, 
+    });
+}
+
+function confirmEnvioRecuperacion() {
+    jConfirm('Se enviar&aacute; un correo electronico con su firma digital simple.<br>Desea continuar?', 'Confirmaci\u00F3n', function(r) {
+        if (r) {
+            $.ajax({ 
+                type        :   "POST",
+                url         :   "Dashboard/RecuerdaContrasena",
+                dataType    :   "json",
+                data        :   { },
+                beforeSend  :   function(xhr)   {   $('#loadFade').modal('show');   },
+                error       :   function(errro) {     
+                                                    console.log(errro.responseText); 
+                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                                    $('#loadFade').modal('hide');
+                                                },
+                success     :   function(aData) {   
+                                                    $('#loadFade').modal('hide');
+                                                    if(aData.status){
+                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
+                                                    } else {
+                                                        showNotification('top','center','&nbsp;'+aData.html,4,'');
+                                                    }
+                                                }, 
+            });
+        }
     });
 }
 
@@ -301,7 +345,6 @@ function confirmDatPss() {
     var passNew     =   $('#password1').val();
     var passNew2    =   $('#passNew2Usr').val();
     var nivPass     =   $('#nivContr').val();
-    
     if (nombres === '') {
         err += 'Nombres\n';
     } else if (apePat === '') {
@@ -309,7 +352,7 @@ function confirmDatPss() {
     } else if (apeMat === '') {
         err += 'Apellido Materno\n';
     } else if (email === '') {
-        err += 'Correo ElectrÃ³nico de Contacto\n';
+        err += 'Correo electronico de Contacto\n';
     } else if (fono === '') {
         err += 'Numero Celular de Contacto\n';
     } else if (passActual === '') {
