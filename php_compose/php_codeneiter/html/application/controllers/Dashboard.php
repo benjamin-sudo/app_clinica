@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller {
         parent::__construct();              # Primero, llama al constructor del padre.
         $this->load->library('session');    # Después, carga las bibliotecas y otros recursos.
         $this->load->helper('url');         #
-        $this->load->model('modelinicio');  
+        $this->load->model('modelinicio');  # Consultas MYSQL
     }
 
     public function index(){
@@ -26,76 +26,73 @@ class Dashboard extends CI_Controller {
     }
 
     public function configuracion_micuenta(){
-        $status     = true;
+        $status = true;
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $username   = $this->session->userdata('USERNAME');
-        $html       = $this->load->view('Dashboard/html_perfil_usuario',['username'=>$username],true);
+        $username = $this->session->userdata('USERNAME');
+        $data_user = $this->modelinicio->model_consultaporusuario($username);
+        $html = $this->load->view('Dashboard/html_perfil_usuario',['username'=>$username, 'data_user'=>$data_user],true);
         $this->output->set_output(json_encode([
-            'status'    =>  $status,
-            'html'      =>  $html
+            'html' =>  $html,
+            'status' =>  $status,
+            'data_user' => $data_user,
         ]));
     }
 
-
     //
     public function solicitudNuevaFirma() {
-        // Verificar si la solicitud es AJAX
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-            return;
-        }
-    
-        $status = true; // Estado inicial de la operación
-        $html = ''; // Mensaje a devolver
-    
-        // Recuperar datos enviados por POST
-        $firma = $this->input->post('firma');
-        $username = strtoupper($this->input->post('username')); // Convertir a mayúsculas
-        $userEmail = 'benjamin.castillo03@gmail.com'; // Email del destinatario
-        $subject = 'TEST'; // Asunto del correo
-    
-        // Configuración del correo electrónico
+        if(!$this->input->is_ajax_request()){ show_404(); return; }
+        $html           =   ''; 
+        $html_codigo    =   '';
+        $status         =   true; 
+        $firma          =   $this->input->post('firma');
+        $username       =   strtoupper($this->input->post('username'));
+        
+
+
+
+        $userEmail  =   'benjamin.castillo03@gmail.com'; 
+        $subject    =   'TEST';
+
+        
         $config = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'smtp.gmail.com',
-            #'smtp_port' => 465,
-            'smtp_port' => 587,
-            'smtp_user' => 'clinicalibrechile@gmail.com',
-            'smtp_pass' => 'hdmbkfrxxrleunqu',
-            #'smtp_crypto' => 'ssl', // Cambiado a 'ssl' para el puerto 465
-            'smtp_crypto' => 'tls', // Cambiado a 'ssl' para el puerto 465
-            'mailtype' => 'html',
-            'starttls' => true,
-            'newline' => "\r\n",
+            'smtp_user'     => 'clinicalibrechile@gmail.com',
+            'smtp_pass'     => 'hdmbkfrxxrleunqu',
+            'protocol'      => 'smtp',
+            'smtp_host'     => 'smtp.gmail.com',
+            #'smtp_port'    => 465,
+            #'smtp_crypto'  => 'ssl', 
+            'smtp_port'     => 587,
+            'smtp_crypto'   => 'tls', 
+            'mailtype'      => 'html',
+            'starttls'      => true,
+            'newline'       => "\r\n",
         ];
-    
-        // Cargar la librería de email con la configuración especificada
+        
+        
         $this->load->library('email', $config);
-    
-        // Configurar detalles del correo
-        $this->email->from('clinicalibrechile@gmail.com', 'e-SISSAN');
+        $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
         $this->email->to($userEmail);
         $this->email->subject($subject);
-        $this->email->message("Scorpions - Still Loving You");
-    
-        // Intentar enviar el correo y establecer el estado y mensaje basado en el resultado
-        if ($this->email->send()) {
-            $html = 'Correo enviado con éxito.';
+
+        $html_mensaje   = 'Scorpions - Still Loving You';
+        $this->email->message($html_mensaje);
+        if ($this->email->send()){
+            $html       =   'Correo enviado con éxito.';
+            #$html_codigo  =   $this->load->view('Dashboard/html_perfil_usuario',[],true);
         } else {
-            $status = false;
-            $html = 'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
+            $status     =   false;
+            $html       =   'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
         }
-    
-        // Devolver respuesta en formato JSON
+
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode([
             'status' => $status,
             'html' => $html
         ]));
     }
-    
-    
 
+
+    
 
     function sumarMinutosFecha($FechaStr, $MinASumar)  {
         $FechaStr       =   str_replace("-", " ", $FechaStr);
@@ -113,6 +110,4 @@ class Dashboard extends CI_Controller {
         $FechaNueva     = date("Y-m-d H:i:s", mktime($Horas, $Minutos, $Segundos, $Mes, $Dia, $Ano));
         return $FechaNueva;
     }
-
-
 }

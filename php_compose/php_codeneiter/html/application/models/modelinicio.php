@@ -99,4 +99,43 @@ class modelinicio extends CI_Model {
                             ";
         */
     }
+
+    public function model_consultaporusuario($username){
+        $status = true;
+        $sql = "SELECT 
+                    F.ID_UID, F.PID, F.TSTAMP, 
+                    F.USERNAME, F.PASSWORD, F.USERGROUP, 
+                    F.DISABLE, F.STARTTIME, F.ENDTIME, 
+                    F.NAME, F.FIRST_NAME, F.MIDDLE_NAME, 
+                    F.LAST_NAME, F.ADDRESS, F.TELEPHONE, 
+                    F.FAX, F.EMAIL, F.CRDATE, 
+                    F.CRUSER_ID, F.LOCKTODOMAIN, F.DELETED, 
+                    F.UC, F.TITLE, F.ZIP, 
+                    F.CITY, F.COUNTRY, F.WWW, 
+                    F.COMPANY, F.IMAGE, F.TSCONFIG, 
+                    F.FE_CRUSER_ID, F.LASTLOGIN, F.IS_ONLINE, 
+                    F.TX_EXTBASE_TYPE, F.FELOGIN_REDIRECTPID, F.FELOGIN_FORGOTHASH, 
+                    F.TX_CHCFORUM_AIM, F.TX_CHCFORUM_YAHOO, F.TX_CHCFORUM_MSN, 
+                    F.TX_CHCFORUM_CUSTOMIM, F.MAILHASH, F.ACTIVATED_ON, 
+                    F.PSEUDONYM, F.GENDER, F.DATE_OF_BIRTH, 
+                    F.LANGUAGE, F.ZONE, F.STATIC_INFO_COUNTRY, 
+                    F.TIMEZONE, F.DAYLIGHT, F.MOBILEPHONE, 
+                    F.GTC, F.PRIVACY, F.STATUS, 
+                    F.BY_INVITATION, F.COMMENTS, F.MODULE_SYS_DMAIL_HTML, 
+                    F.MODULE_SYS_DMAIL_CATEGORY, F.TX_EXTERNALIMPORTTUT_CODE, F.TX_EXTERNALIMPORTTUT_DEPARTMEN, 
+                    F.TX_EXTERNALIMPORTTUT_HOLIDAYS, F.TX_INTRANETSSAN_APELLIDOPATERN, F.TX_INTRANETSSAN_APELLIDOMATERN, 
+                    F.TX_INTRANETSSAN_CLAVEUNICA, F.TX_INTRANETSSAN_OBLIGACAMBIARC, F.TX_INTRANETSSAN_PREFERENCIA, 
+                    F.TX_INTRANETSSAN_RUN, F.TX_INTRANETSSAN_DV
+                FROM 
+                    GUADMIN.FE_USERS F
+                WHERE
+                    F.USERNAME IN (?)
+                ";
+        $query = $this->db->query($sql,[$user])->result_array();
+        return [
+            'query' => $query,
+            'status' => $status
+        ];
+    }
+
 }

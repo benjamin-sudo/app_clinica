@@ -32,15 +32,18 @@ $(document).ready(function() {
         $("#busquedaMes").html("");
     });
     $('#MODAL_INFOHOJADIARIA').on('show.bs.modal',     function(e){ });
+    
     $('#MODAL_INFOHOJADIARIA').on('hidden.bs.modal',   function(e){ 
         $("#BODY_INFOHOJADIARIA").html(""); 
         $("#busquedaMes").html("");
     });
+    
     $('#modal_nuevo_prestador_rrhh').on('hidden.bs.modal',   function(e){ 
         $("#html_nuevo_prestador_rrhh").html('');
         $("#btn_guarda_infoxususario").attr('onclick','');
         $("#btn_guarda_infoxususario").prop('disabled',true);
     });
+
     $('#Rut_form').Rut({
        on_error : function(){
             $('#ErrorRutVF').html("Rut Incorrecto");
@@ -59,12 +62,9 @@ $(document).ready(function() {
        },
        format_on : 'keyup'
     });
-    
-    
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
-
 });
 
 function js_nuevo_prestador_dialisis(){

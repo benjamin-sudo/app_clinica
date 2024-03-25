@@ -1,68 +1,86 @@
 $(document).ready(function(){
-    /*
-    $("#firmsimple").dialog({
-        autoOpen        :   false,
-        modal           :   true,
-        height          :   550,
-        width           :   700,
-        hide            :   "scale",
-        show            :   "fold",
-        resizable       :   false,
-        draggable       :   false
+    $('.load-in-frame').click(function(e){
+        e.preventDefault();                       // Evitar que el navegador siga el enlace
+        let url = $(this).attr('href');           // Obtener la URL del enlace
+        localStorage.setItem('ind_llamada_extension',url);
+        star_ajax_extension(url);
     });
-    $("#idResetearClave").dialog({
-        autoOpen        :   false,
-        modal           :   true,
-        height          :   450,
-        width           :   650,
-        hide            :   "scale",
-        show            :   "fold",
-        resizable       :   false,
-        draggable       :   false,
-        dialogClass     :   'no-close'
-    });
-    $("#popRestabPass").dialog({
-        autoOpen        :   false,
-        modal           :   true,
-        height          :   310,
-        width           :   556,
-        hide            :   "scale",
-        show            :   "fold",
-        resizable       :   false,
-        draggable       :   false,
-        closeOnEscape   :   false,
-        dialogClass     :   'no-close'
-    });
-    $("#validaDatos").dialog({
-        autoOpen        :   false,
-        modal           :   true,
-        height          :   690,
-        width           :   700,
-        hide            :   "scale",
-        show            :   "fold",
-        resizable       :   false,
-        draggable       :   false,
-        closeOnEscape   :   false,
-        dialogClass     :   'no-close'
-    });
-    $("#imgPass").dialog({
-        autoOpen        :   false,
-        modal           :   true,
-        height          :   690,
-        width           :   1082,
-        hide            :   "scale",
-        show            :   "fold",
-        resizable       :   false,
-        draggable       :   false
-    });
-    */
-    
-    //setTimeout(function() {  moverE(); },10000);
-    
-    $('#modal_perfil_usuario').on('hidden.bs.modal',   function(e){ 
+    $('#modal_perfil_usuario').on('hidden.bs.modal', function(e){ 
         $("#html_perfil_usuario").html('');
     });
+});
 
+function star_ajax_extension(url){
+    $.ajax({
+        url : url,  // Ruta al metodo del controlador
+        type : 'POST',  // Método HTTP deseado, POST es común para envío de datos
+        data : {},
+        error : function(xhr,status,error)  {
+                                                console.error(error); // Manejo de errores
+                                            },
+        success : function(response)        {
+                                                //console.log("response  ->",response);
+                                                $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
+                                            },
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Define una función para actualizar el estado activo del menú
+    function actualizarEstadoActivo(id){
+      // Elimina la clase activo de todos los elementos
+      document.querySelectorAll('.menu_principal div').forEach(function(el) {
+          el.classList.remove('activo');
+      });
+      // Añade la clase activo al elemento correcto
+      var elementoActivo = document.getElementById(id);
+      if (elementoActivo) {
+          elementoActivo.classList.add('activo');
+      }
+    }
+    // Captura clics en los enlaces del menu y extensiones
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+          //console.log("Guardando ID : ", this.id);  // Verificar en la consola
+          localStorage.setItem('ultimaPosicionMenu', this.id);
+      });
+    });
+    // Evento de clic para el menu principal
+    document.querySelector('.menu_principal').addEventListener('click', function(event) {
+        //console.log("click - menu_principal : ",event.target.id);
+        // Asegúrate de que el clic fue en un elemento del menu
+        if (event.target.id) {
+            // Guardar la posición del menu en localStorage
+            localStorage.setItem('ultimaPosicionMenu', event.target.id);
+            // Actualizar visualmente el menu activo
+            actualizarEstadoActivo(event.target.id);
+        }
+    });
+    // Al cargar la página, verifica si hay una posición guardada y actúa en consecuencia
+    var ultimaPosicion                  =   localStorage.getItem('ultimaPosicionMenu');
+    //console.log("Recuperando posición   :   ",ultimaPosicion);  // Verificar en la consola
+    if (ultimaPosicion) {
+       // Verificar si la posición incluye 'ext-'
+      if (ultimaPosicion.includes('ext-')) {
+          // Código adicional para manejar cuando hay 'ext-'
+          let last_extension = localStorage.getItem('ind_llamada_extension');
+          //console.log("La posición incluye ext- y fue : ",last_extension);
+          star_ajax_extension(last_extension);
+      }
+      var elementoActivo = document.getElementById(ultimaPosicion);
+      if (elementoActivo) {
+          elementoActivo.classList.add('activo');
+          // Desplegar todos los menús padres
+          let parent = elementoActivo.parentElement;
+          while(parent) {
+            if (parent.matches('.nav')) { // Asegúrate de que esta condición coincida con tus elementos de menú
+                parent.style.display = 'block'; // O agrega una clase que muestre el menú
+                parent.classList.add('desplegado'); // Si tienes una clase específica para desplegar menús
+            }
+            parent = parent.parentElement; // Subir en el árbol del DOM
+          }
+      }
+    }
 });
 
 function js_confimicuenta(){
@@ -100,7 +118,6 @@ function nuevaFirma(){
 
 function cambiaFirma() {
     //timerDestroy(1);
-    
     var firma       =   $('#firmaNew1').val();
     var firma2      =   $('#firmaNew2').val();
     var exFirm      =   $('#exFirm').val();
@@ -123,7 +140,7 @@ function cambiaFirma() {
         return false;
     }
     if (exFirm == 1) {
-        jWarning('La firma ingresada estÃ¡ dentro del registro de contrase&ntilde;as vulnerables', 'Informaci\u00F3n');
+        jWarning('La firma ingresada esta dentro del registro de contrase&ntilde;as vulnerables', 'Informaci\u00F3n');
         return false;
     }
 
@@ -139,6 +156,8 @@ function cambiaFirma() {
         return false;
     }
 
+
+    
     console.log("-------------------------");
     console.log("firma      ->  ",firma);
     console.log("username   ->  ",username);
@@ -158,16 +177,18 @@ function cambiaFirma() {
                                                     $('#loadFade').modal('hide');
                                                 },
         success         :   function(aData)     {   
-                                                    $('#loadFade').modal('hide');  
+                                                    
+                                                    $('#loadFade').modal('hide'); 
+                                                    console.log("   aData  ->  ",aData);
+                                                    if (aData.status){
+                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;Correo enviado',4,'');
 
-                                                    console.log("----------------------");
-                                                    console.error("aData  ->  ",aData);
-                                                    console.log(aData.html);
-                                                    console.log("-------------------> ");
+
+                                                    } else {
+                                                        showNotification('top','center','&nbsp;Correo no enviado ',4,'fa fa-thumbs-down');
+                                                    }
                                                 }, 
     });
-
-    /* AjaxExt({ firma: firma, username: username }, 'respuesta', 'solicitudNuevaFirma', '', 'perfilUsuario');*/
 }
 
 function tiene_letras(texto) {
@@ -190,13 +211,6 @@ function tiene_numeros(texto) {
     }
     return false;
 }
-
-
-
-
-
-
-
 
 function change_captcha() {
     AjaxExt({}, 'imgCaptcha', 'traeCod', '', 'inicio');
