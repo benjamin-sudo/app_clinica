@@ -202,7 +202,7 @@ class modelinicio extends CI_Model {
         $cl = $query->row();
         $this->db->trans_start();
         $this->db->set('TX_INTRANETSSAN_CLAVEUNICA', $cl->MAILHASH);
-        $this->db->set('MAILHASH', '');
+        $this->db->set('MAILHASH','');
         $this->db->where('USERNAME', $username);
         $this->db->update($this->own . '.FE_USERS');
         $this->db->trans_complete();

@@ -48,7 +48,7 @@
                 </div>
                 <div class="grid_datos_personales_2">
                     <div class="grid_datos_personales2"> 
-                        <label style="margin-top: 11px;">TELEFONO</label>
+                        <label>TELEFONO</label>
                         <div class="input-group">
                             <div class="input-group-addon" style="margin-top:7px;margin-right:4px;">+56 9</div>
                             <input type="text" class="form-control" id="txtFono" required="true" placeholder="TELEFONO" value="<?php echo $data_user[0]['TELEPHONE'];?>">
@@ -78,6 +78,11 @@
                     <input type="hidden" id="nivContr" value="Pobre">
                     <div id="meter1" style="display:none;">
                         <div class="entropizer-track"><div class="entropizer-bar" style="background-color: rgb(238, 17, 51); width: 0%;"></div><div class="entropizer-text">Pobre (0 bits)</div></div>
+                    </div>
+                </div>
+                <div class="row" style="text-align: end;">
+                    <div class="col">
+                        <button type="button" class="btn btn-success btn-fill" disabled><i class="bi bi-pen"></i>&nbsp;Cambiar Contrase&ntilde;a</button>
                     </div>
                 </div>
             </div>

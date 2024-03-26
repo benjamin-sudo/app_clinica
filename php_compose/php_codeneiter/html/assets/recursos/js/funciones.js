@@ -113,6 +113,7 @@ function validaPassSegura() {
 
 function nuevaFirma(){
 
+
 }
 
 function cambiaFirma() {
@@ -500,7 +501,6 @@ function AjaxExt(variables, id, funcion, tipDest, extension) {
 }
 
 var state = 0;
-
 function menOc() {
     if (state == 0) {
         $('#panelIzq').hide('fast');
@@ -520,7 +520,6 @@ function vistaMenTop() {
 }
 
 var stateM = 0;
-
 function ocMen() {
     if (stateM == 0) {
         $('#panelIzq').hide('fast');
@@ -553,9 +552,7 @@ function selectM(ext, idPrin, idMen, isToken, param) {
 }
 
 function ocultMen() {
-
     if ($('#txtMen0').is(":visible")) {
-
         $("#formMenu").animate({
             width: "40px"
         }, 500);
