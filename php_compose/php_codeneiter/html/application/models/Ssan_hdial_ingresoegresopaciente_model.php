@@ -4,33 +4,16 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 
 class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
 
-    var $tableSpace     =   "ADMIN";
-    var $own            =   "ADMIN";
-    var $ownGu          =   "GUADMIN";
+    var $tableSpace = "ADMIN";
+    var $own        = "ADMIN";
+    var $ownGu      = "GUADMIN";
 
     public function __construct() {
         parent::__construct();
         $this->db = $this->load->database('oracle_conteiner',true);
         $this->load->model("sql_class/sqlclass_archivo");
     }
-    
-    public function validaClave($clave){
-        $this->dbSession = $this->load->database('session', true); 
-        $sql = "SELECT
-                    ID_UID,
-                    USERNAME,
-                    NAME,
-                    MIDDLE_NAME,
-                    LAST_NAME,
-                    TELEPHONE,
-                    EMAIL
-                FROM 
-                    ADMIN.FE_USERS_ 
-                WHERE 
-                    TX_INTRANETSSAN_CLAVEUNICA = ? AND DISABLE = 0";
-        $query = $this->dbSession->query($sql,array($clave));
-        return $query->result_array();
-    }
+
 
     public function load_busqueda_rrhhdialisis($data_controller) {
         $this->db->trans_start();
@@ -62,15 +45,18 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                                         'type'      =>  OCI_B_CURSOR
                                     ),
                                 );
-        #$result                                     =   [];
-        $result                                    =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','LOAD_DATA_LISTA_RRHH',$param);
+        #$result                                  =   [];
+        $result                                   =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_GESTION_DIALISIS','LOAD_DATA_LISTA_RRHH',$param);
         $this->db->trans_complete();
         return array(
-            'return_bd'                             =>  $result,
-            'html_out'                              =>  $this->load->view("ssan_hdial_ingresoegresopaciente/html_lista_rrhhdialisis",array('bd'=>$result),true),
+            'return_bd'                           =>  $result,
+            'html_out'                            =>  $this->load->view("ssan_hdial_ingresoegresopaciente/html_lista_rrhhdialisis",array('bd'=>$result),true),
         );
     }
-    
+
+
+
+
     public function model_asignacion_muestra_x_user($valiable){
         $this->db->trans_start();
         $param              =   array(
@@ -473,4 +459,23 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                                         ID=$cod");
         return $query->result_array();     
     }
+
+    public function validaClave($clave){
+        $this->dbSession = $this->load->database('session', true); 
+        $sql = "SELECT
+                    ID_UID,
+                    USERNAME,
+                    NAME,
+                    MIDDLE_NAME,
+                    LAST_NAME,
+                    TELEPHONE,
+                    EMAIL
+                FROM 
+                    ADMIN.FE_USERS
+                WHERE 
+                    TX_INTRANETSSAN_CLAVEUNICA = ? AND DISABLE = 0";
+        $query = $this->dbSession->query($sql,array($clave));
+        return $query->result_array();
+    }
+
 }

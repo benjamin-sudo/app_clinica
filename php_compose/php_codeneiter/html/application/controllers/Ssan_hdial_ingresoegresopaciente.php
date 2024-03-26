@@ -13,10 +13,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
         $empresa                        =   $this->session->userdata("COD_ESTAB");
+
         $data_ini                       =   $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
                                                 'empresa'       =>  $empresa,
                                                 'ind_opcion'    =>  1,
                                             ]);
+
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
     }
 
@@ -28,7 +30,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         )));
     }
 
-    /*
     public function html_lista_rrhhdialisis(){
         if(!$this->input->is_ajax_request()) {  show_404();   }
         $html                           =   '';
@@ -42,7 +43,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'out_html'                  =>  $aData
         )));
     }
-    */
 
     public function get_eliminar_user(){
         if(!$this->input->is_ajax_request()) {  show_404();   }

@@ -1,8 +1,7 @@
 <?php 
-    #var_dump($bd[":C_RESULT_RRHH"])
-    $arr_medicos        =   array();
-    $arr_enfermeros     =   array();
-    $arr_tns            =   array();
+    $arr_medicos = array();
+    $arr_enfermeros = array();
+    $arr_tns = array();
     if(count($bd[":C_RESULT_RRHH"])>0){
         foreach ($bd[":C_RESULT_RRHH"] as $aux => $row){
             if($row['HTML_OUT']     ==  "slc_medico")       {   array_push($arr_medicos,$row);      }
@@ -23,9 +22,11 @@
         <button class="nav-link" id="ind_tns-tab" data-bs-toggle="tab" data-bs-target="#ind_tns" type="button" role="tab" aria-controls="ind_tns" aria-selected="false">TECNICOS PARAMEDICOS</button>
     </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">ACTUALIZACI&Oacute;N</a>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;ACTUALIZACI&Oacute;N RRHH</a></li>
+            <li><a class="dropdown-item" href="javascript:js_busqueda_rrhh(2)">
+                <i class="bi bi-wrench-adjustable"></i>&nbsp;&nbsp;ACTUALIZACI&Oacute;N&nbsp;LISTA</a>
+            </li>
         </ul>
     </li>
 </ul>
@@ -53,8 +54,8 @@
                                 <td><?php echo $row["NOM_PROFE"]?></td>
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
-                                       <i class="fa fa-user-times" aria-hidden="true"></i>
+                                    <button type="button" class="btn btn-danger btn-xs" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
+                                       <i class="bi bi-person-fill-x" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -89,8 +90,8 @@
                                 <td><?php echo $row["NOM_PROFE"]?></td>
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
-                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    <button type="button" class="btn btn-danger btn-xs" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
+                                        <i class="bi bi-person-fill-x" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -125,8 +126,8 @@
                                 <td><?php echo $row["NOM_PROFE"]?></td>
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-fill" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
-                                        <i class="fa fa-user-times" aria-hidden="true"></i>
+                                    <button type="button" class="btn btn-danger btn-xs" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
+                                        <i class="bi bi-person-fill-x" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tr>

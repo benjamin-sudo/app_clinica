@@ -39,7 +39,6 @@
         </table>
     </div>
 </div>
-
 <div class="alert alert-success alert_profesional_existe" role="alert" style="display:none">
     <i class="bi bi-exclamation-triangle"></i>&nbsp;Profesional existe como recurso humano correspondiente al sistema de di&aacute;lisis 
 </div>

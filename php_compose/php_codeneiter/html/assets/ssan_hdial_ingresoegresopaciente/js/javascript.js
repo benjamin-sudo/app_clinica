@@ -105,11 +105,13 @@ function js_busqueda_rrhh(){
                                                    console.log("---------------------------------------");
                                                    console.log("aData      ->  ",aData);
                                                    console.log("---------------------------------------");
+                                                
                                                    $("#li_busqueda_rrhh").attr('onclick',''); 
                                                    $("#IND_RRHH").html(aData.html); 
-                                               }, 
+                                                }, 
    });
 }
+
 
 function delete_profesional(cod_rutpro){
    //console.log("cod_rutpro     ->  ",cod_rutpro);
@@ -262,9 +264,9 @@ function js_guarda_dialisis(){
    });
 }
 
-
 //********************************************************************************
 //code old
+
 function busquedaPacientesxMaquina(){
    $("#PACIENTEXMAQUINA").html("");
    $.ajax({ 
