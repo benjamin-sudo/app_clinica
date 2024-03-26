@@ -76,7 +76,7 @@ function js_nuevo_prestador_dialisis(){
         beforeSend      :   function(xhr)       {   $('#loadFade').modal('show');   },
         error           :   function(errro)     {     
                                                     console.log(errro.responseText); 
-                                                    jAlert("Comuniquese con el administrador ","E-SISSAN"); 
+                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); 
                                                     $('#loadFade').modal('hide');
                                                 },
         success         :   function(aData)     {     
@@ -99,7 +99,7 @@ function js_busqueda_rrhh(){
        error           :   function(errro)     {     
                                                    console.log(errro);
                                                    console.log(errro.responseText); 
-                                                   jAlert("Comuniquese con el administrador","E-SISSAN"); 
+                                                   jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE"); 
                                                },
        success         :   function(aData)     {
                                                    console.log("---------------------------------------");
@@ -128,15 +128,15 @@ function delete_profesional(cod_rutpro){
                error                               :   function(errro) { 
                                                                            console.error("errro                  ->",errro); 
                                                                            console.error("error.responseText     ->",errro.responseText);
-                                                                           jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                                           jError("Error General, Consulte Al Administrador","CLINICA LIBRE CHILE"); 
                                                                        },
                success                             :   function(aData) { 
                                                                            console.table("out      ->  ",aData);
                                                                            if(aData.status_firma){
-                                                                               jAlert("Se elimin&oacute; RRHH","e-SISSAN");
+                                                                               jAlert("Se elimin&oacute; RRHH","CLINICA LIBRE CHILE");
                                                                                js_busqueda_rrhh();
                                                                            } else {
-                                                                               jError("Error en la firma simple","e-SISSAN");
+                                                                               jError("Error en la firma simple","CLINICA LIBRE CHILE");
                                                                            }
                                                                        }, 
            });
@@ -182,7 +182,7 @@ function valida_profesional(){
        error		:   function(errro)         { 
                                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                                     $("#protocoloPabellon").css("z-index","1500"); 
-                                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                    jError("Error General, Consulte Al Administrador","CLINICA LIBRE CHILE"); 
                                                     $('#loadFade').modal('hide');
                                                 },
        success		:   function(aData)         { 
@@ -225,9 +225,9 @@ function js_limpia_panel(){
 function js_guarda_dialisis(){
    var info_prof               =   $(".grid_busqueda_rrhh").data('data')[0];
    jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar RRHH en dialisis <br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
-       if((r == '') || (r == null)){
-           jError("Firma simple vac&iacute;a","e-SISSAN");
-       } else { 
+        if((r == '') || (r == null)){
+            jError("Firma simple vac&iacute;a","CLINICA LIBRE CHILE");
+        } else { 
            $.ajax({ 
                type		    :   "POST",
                url 		    :   "ssan_hdial_ingresoegresopaciente/record_rotulos_por_usuario",
@@ -243,7 +243,7 @@ function js_guarda_dialisis(){
                error		:   function(errro)     { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","CLINICA LIBRE CHILE"); 
                                                         $('#loadFade').modal('hide');
                                                     },
                success		:   function(aData)     {   
@@ -254,7 +254,7 @@ function js_guarda_dialisis(){
                                                             $("#modal_nuevo_prestador_rrhh").modal("hide");
                                                             js_busqueda_rrhh();
                                                         }   else  {
-                                                            jError('Contrase&ntilde;a inv&aacute;lida',"e-SISSAN"); 
+                                                            jError('Contrase&ntilde;a inv&aacute;lida',"CLINICA LIBRE CHILE"); 
                                                         }
                                                     }, 
            });
@@ -275,7 +275,7 @@ function busquedaPacientesxMaquina(){
        beforeSend      :   function(xhr)       { },
        error           :   function(errro)     {     
                                                    console.log(errro.responseText); 
-                                                   jAlert("Comuniquese con el administrador ","E-SISSAN"); 
+                                                   jAlert("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); 
                                                },
        success         :   function(aData)     {     
                                                    $("#PACIENTEXMAQUINA").html(""); 
@@ -292,7 +292,7 @@ function busquedaMaquinasDeDiaslisis(){
        dataType        :   "json",
        data            :   { },
        beforeSend      :   function(xhr)       { },
-       error           :   function(errro)     {   console.log(errro.responseText); alert("Comuniquese con el administrador ","E-SISSAN"); },
+       error           :   function(errro)     {   console.log(errro.responseText); alert("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); },
        success         :   function(aData)     { 
                                                $("#LISTA_MAQUINA").html(""); 
                                                if(AjaxExtJsonAll(aData)){  }; 
@@ -308,7 +308,7 @@ function busquedaPacientes(){
        dataType        :   "json",
        data            :   {},
        beforeSend      :   function(xhr)     { },
-       error           :   function(errro)   { console.log(errro.responseText); alert("Comuniquese con el administrador ","E-SISSAN"); },
+       error           :   function(errro)   { console.log(errro.responseText); alert("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); },
        success         :   function(aData)   { 
                                                $("#LISTA_PACIENTES").html(""); 
                                                if(AjaxExtJsonAll(aData)){  
@@ -457,9 +457,9 @@ function A_INGRESODIAL(numFichae){
                                                     },
                    success      :   function(aData) { 
                                                         if(aData[0]['validez']){
-                                                            jAlert("Se ha realizado con exito","e-SISSAN");
+                                                            jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE");
                                                         } else {
-                                                            jError("Error de contraseña","e-SISSAN");
+                                                            jError("Error de contraseña","CLINICA LIBRE CHILE");
                                                         }
                                                     }, 
                });      
@@ -540,7 +540,7 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
        $("#idPaciente").css("border-color","");
    if ($("#idPaciente").val()=='0'){
        $("#idPaciente").css("border-color","red");
-       jError("Asignar Paciente","E-sissan");
+       jError("Asignar Paciente","CLINICA LIBRE CHILE");
        return false;
    }
    //console.log(MKN);
@@ -576,13 +576,13 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
                    success         : function(aData){ 
                                            //console.log(aData[3]['sql']);
                                            if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","e-SISSAN",function(r){  
+                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
                                                    console.log("--->"); console.log(r);
                                                    $("#PACIENTEXCUPO").modal("hide");   
                                                    busquedaPacientes(2);
                                                });
                                            } else {
-                                               jError("Error de contrase&ntilde;a","e-SISSAN");
+                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
                                            }
                                        }, 
                });      
@@ -595,7 +595,7 @@ function E_INGRESODIAL(numIgreso,numfichae){
        $("#num_egreso").css("border-color","");
    if (id_egreso==''){
        $("#num_egreso").css("border-color","red");
-       jError("Seleccione Tipo de Egreso","E-sissan");
+       jError("Seleccione Tipo de Egreso","CLINICA LIBRE CHILE");
        return false;
    }
    
@@ -619,13 +619,13 @@ function E_INGRESODIAL(numIgreso,numfichae){
                    success         : function(aData){ 
                                            //console.log(aData[3]['sql']);
                                            if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","e-SISSAN",function(r){  
+                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
                                                    console.log("--->"); console.log(r);
                                                    $("#TURNOXMAQUINA").modal("hide");   
                                                    busquedaPacientes(2);
                                                });
                                            } else {
-                                               jError("Error de contrase&ntilde;a","e-SISSAN");
+                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
                                            }
                                        }, 
                });      
@@ -654,13 +654,13 @@ function liberarCupo(ID_CUPO,MKN,TRN){
                    success         : function(aData){ 
                                            //console.log(aData[3]['sql']);
                                            if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","e-SISSAN",function(r){  
+                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
                                                    console.log("--->"); console.log(r);
                                                    //$("#PACIENTEXCUPO").modal("hide");   
                                                    busquedaPacientes(2);
                                                });
                                            } else {
-                                               jError("Error de contrase&ntilde;a","e-SISSAN");
+                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
                                            }
                                        }, 
                });      
@@ -943,7 +943,7 @@ function js_cBUSQUEDAHANTERIOR(num_fichae,val){
                            nuevo           : val,
                            fecha           : $("#sel_busquedaMes").val()
                        },
-       error       :   function(errro){ console.log(errro.responseText); console.log(errro); jError("Comuniquese con el administrador ","E-SISSAN"); },              
+       error       :   function(errro){ console.log(errro.responseText); console.log(errro); jError("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); },              
        success     :   function(xml) { if (AjaxExtJsonAll(xml)){ 
                            $("#MODAL_HD_ANTERIORES").modal("show");  
                            }; 
@@ -962,7 +962,7 @@ function iPesoseco(numfichae){
        error       :   function(errro){ 
                            console.log(errro.responseText); 
                            console.log(errro); 
-                           jError("Comuniquese con el administrador ","E-SISSAN"); 
+                           jError("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); 
                        },              
        success     :   function(xml) { 
                            if (AjaxExtJsonAll(xml)){ 
@@ -993,11 +993,11 @@ function guardarInfo(numfichae){
                    success         :   function(aData){ 
                                            //console.log(aData[3]['sql']);
                                            if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","e-SISSAN",function(r){  
+                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
                                                   $("#MODAL_INFOHOJADIARIA").modal("hide"); 
                                                });
                                            } else {
-                                               jError("Error de contrase&ntilde;a","e-SISSAN");
+                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
                                            }
                                        }, 
                });      

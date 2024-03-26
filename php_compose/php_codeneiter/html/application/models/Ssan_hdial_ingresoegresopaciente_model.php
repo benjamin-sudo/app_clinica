@@ -13,6 +13,24 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         $this->db = $this->load->database('oracle_conteiner',true);
         $this->load->model("sql_class/sqlclass_archivo");
     }
+    
+    public function validaClave($clave){
+        $this->dbSession = $this->load->database('session', true); 
+        $sql = "SELECT
+                    ID_UID,
+                    USERNAME,
+                    NAME,
+                    MIDDLE_NAME,
+                    LAST_NAME,
+                    TELEPHONE,
+                    EMAIL
+                FROM 
+                    ADMIN.FE_USERS_ 
+                WHERE 
+                    TX_INTRANETSSAN_CLAVEUNICA = ? AND DISABLE = 0";
+        $query = $this->dbSession->query($sql,array($clave));
+        return $query->result_array();
+    }
 
     public function load_busqueda_rrhhdialisis($data_controller) {
         $this->db->trans_start();
@@ -246,14 +264,6 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         return $query->result_array();//  AND PR.COD_EMPRESA=$empresa
     }
 
-    public function validaClave($clave) {
-        $query = $this->db->query($this->sqlclass_archivo->sqlValidaClave($clave));
-        return $query->row();
-    }
-
-
-    
-
 //    public function INSERT_GuardaDatos($usuario,$empresa,$RUTFir,$DIGFir,$nombrefir,$fic_e,$ind_ing,$Resp_IngEnf_Dial,$Cie10Agrupados){
 //            $this->db->trans_start();
 //            $CITA_ADMISION=$ind_ing;
@@ -396,8 +406,8 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                         'ID_RESXCAMP' => $SEQ_ID_RESXCAMP,
                         'ID_CAMPXPROG' => 546,
                         'ID_PACXPROG' => $SEQ_ID_PACXPROG,
-                          'COD_DIAGNO' => $Resp,
-                         'RESULTADO' => "",
+                        'COD_DIAGNO' => $Resp,
+                        'RESULTADO' => "",
                         'FEC_INGRESO' => "SYSDATE",
                         'COD_USRCREA' => $RUTFir,
                         'FEC_USRCREA' => "SYSDATE",

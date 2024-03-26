@@ -1,7 +1,6 @@
 <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
     <i class="nav-icon fa fa-tint" aria-hidden="true"></i>&nbsp;<b>INGRESO DE PACIENTES TURNOS EN DIALISIS Y RRHH</b>
 </h4>
-
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 8px;">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">LISTADO PACIENTES</button>
@@ -21,7 +20,6 @@
         </ul>
     </li>
 </ul>
-
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
     <div class="grid_panel_paciente">
@@ -73,7 +71,6 @@
             </thead>
             <tbody id="LISTA_MAQUINA"> </tbody>
         </table>
-
     </div>
     <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
         <div id="IND_RRHH"><?php echo $html_out;?></div>
@@ -81,13 +78,12 @@
 </div>
 
 <section>
-
     <div class="modal fade" id="TURNOXMAQUINA">
         <div class="modal-dialog modal-xl3">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><b><div id="NOM_MAQUINA"></div> </b></h4>
+                    <h4 class="modal-title"><b><div id="NOM_MAQUINA"></div></b></h4>
                 </div>
                 <div class="modal-body" id="BODYXMAQUINA"></div>
                 <div class="modal-footer">
@@ -188,7 +184,6 @@
             </div>
         </div>
     </div>
-
 </section>
 
 <!--  ZONA INPUT INGRESO DE PACIENTE -->

@@ -43,11 +43,9 @@
 <div class="alert alert-success alert_profesional_existe" role="alert" style="display:none">
     <i class="bi bi-exclamation-triangle"></i>&nbsp;Profesional existe como recurso humano correspondiente al sistema de di&aacute;lisis 
 </div>
-
 <div class="alert alert-warning alert_profesional_no_existe" role="alert" style="display:none;">
     <p style="color:white;margin: 0;"><i class="bi bi-check-square"></i>&nbsp;Profesional no existe en RRHH del sistema de di&aacute;lisis. Para agregar presione guardar RRHH</p>
 </div>
-
 <script>
     $('#rut_profesional').Rut({
         on_error    :   function()  {   
