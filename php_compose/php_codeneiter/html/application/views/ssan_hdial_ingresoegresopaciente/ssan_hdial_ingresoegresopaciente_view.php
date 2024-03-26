@@ -22,10 +22,11 @@
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="javascript:js_nuevo_prestador_dialisis(1)"><i class="bi bi-person-vcard"></i>&nbsp;NUEVO PROFESIONAL</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-universal-access-circle"></i>&nbsp;NUEVO INGREGO A PACIENTE</a></li>
+            <li><a class="dropdown-item" href="javascript:nuevoPacienteAgresado(1)"><i class="bi bi-universal-access-circle"></i>&nbsp;NUEVO INGREGO A PACIENTE</a></li>
         </ul>
     </li>
 </ul>
+
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade margen_tabs show active" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
         <div id="IND_RRHH"><?php echo $html_out;?></div>
@@ -57,7 +58,6 @@
             <tbody id="LISTA_PACIENTES"></tbody>
         </table>
     </div>
-
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <table width="100%" style="margin-top: 14px;">
             <tr>
@@ -83,7 +83,6 @@
         </table>
     </div>
 </div>
-
 <section>
     <div class="modal fade" id="TURNOXMAQUINA">
         <div class="modal-dialog modal-xl3">
@@ -191,10 +190,11 @@
             </div>
         </div>
     </div>
-</section>
 
-<!--  ZONA INPUT INGRESO DE PACIENTE -->
-<input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
-<input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
-<input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
-<div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
+    <!--  ZONA INPUT INGRESO DE PACIENTE -->
+    <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
+    <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
+    <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
+    <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
+
+</section>

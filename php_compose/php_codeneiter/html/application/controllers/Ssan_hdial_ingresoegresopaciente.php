@@ -6,6 +6,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
+        $this->load->model("Ssan_hdial_asignacionpaciente_model");
     }
 
     public function index(){
@@ -849,8 +850,6 @@ $ssss=0;
         //    $html.='<script>console.log("-------------9");</script>';
         }
 
-       
-         
         //$html.='<script>$("#Btn_imp_imng").html("<a class=\'btn btn-info\' href=\'javascript:imprimePdrf()\' aria-label=\'Print\'><i class=\'fa fa-search\' aria-hidden=\'true\'></i> IMPRIMIR</a>")</script>';
         $html.='<script>imprimePdrf();</script>';
       //  $html.='<script>console.log("-------------10");</script>';
@@ -867,10 +866,11 @@ $ssss=0;
         $conIngreso	= '0';
         $aData = $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
         //$TABLA[] = array("id_html" => "LISTA_PACIENTES", "opcion" => "console", "contenido" => $aData);
-        if (count($aData) > 0) {
+        if(count($aData) > 0) {
             foreach ($aData as $i => $row) {
-                $rut_pac_s  = explode("-", $row['RUTPAC']); //rut del usuario        
-                $rut_pac_s  = $rut_pac_s[0];
+                $rut_pac_s = explode("-",$row['RUTPAC']); //rut del usuario        
+                $rut_pac_s = $rut_pac_s[0];
+
                 $html = '
                    <tr>
                         <td>' . ($i + 1) . '</td>
@@ -887,10 +887,12 @@ $ssss=0;
                         <td>' . $row['TXTESTADO'] . '</td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-primary" href="#"> <i class="fa fa-list-alt" aria-hidden="true"></i></a>
-                                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                      <span class="fa fa-caret-down" title="-"></span>
-                                    </a>
+                                <a class="btn btn-primary" href="#">
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                </a>
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span class="fa fa-caret-down" title="-"></span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i> Informacion H. Diaria</a></li>
                                     <li class="divider"></li>     
@@ -912,7 +914,7 @@ $ssss=0;
                 $TABLA[] = array("id_html" => "LISTA_PACIENTES", "opcion" => "append", "contenido" => $html);
             }
         } else {
-            $html = '<tr><td colspan="6" style="text-align:center"><b>SIN PACIENTES</b></td></tr>';
+            $html = '<tr><td colspan="8" style="text-align:center"><b>SIN PACIENTES</b></td></tr>';
             $TABLA[] = array("id_html" => "LISTA_PACIENTES", "opcion" => "append", "contenido" => $html);
         }
         $this->output->set_output(json_encode($TABLA));

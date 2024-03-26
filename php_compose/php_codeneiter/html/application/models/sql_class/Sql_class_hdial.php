@@ -1937,7 +1937,6 @@ class sql_class_hdial extends CI_Model {
                     
                     H.COD_CREA,
                     H.DATE_CREA
-                    
                 FROM 
                     $this->own.HD_TSISCORECION                                  H, 
                     $this->own.GG_TPROFESIONAL                                  A

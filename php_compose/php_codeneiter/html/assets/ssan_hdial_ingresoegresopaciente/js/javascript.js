@@ -62,11 +62,12 @@ $(document).ready(function() {
        },
        format_on : 'keyup'
     });
+    
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
-});
 
+});
 
 function busquedaPacientes(){
     $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
@@ -706,9 +707,10 @@ function js_idPac(value){
 }
 
 function nuevoPacienteAgresado(){
-   $("#nuevoProfesional").modal("show");    
-   Limpiar1(); $("#Rut_form").val(""); 
-   $("#Dv_form_IngEnf").hide();
+    Limpiar1(); 
+    $("#Rut_form").val(""); 
+    $("#Dv_form_IngEnf").hide();
+    $("#nuevoProfesional").modal({backdrop:'static',keyboard:false}).modal("show");
 }
 
 function Cod_o_Text(num){
