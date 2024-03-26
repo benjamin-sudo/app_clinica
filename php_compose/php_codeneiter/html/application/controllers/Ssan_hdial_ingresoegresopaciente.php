@@ -34,7 +34,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         if(!$this->input->is_ajax_request()) {  show_404();   }
         $html                           =   '';
         $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $aData                          =   $this->ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis(array(
+        $aData                          =   $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis(array(
                                                 'empresa'       =>  $empresa,
                                                 'ind_opcion'    =>  1,
                                             )); 
@@ -119,7 +119,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $BTN                            =   '';
         $aData                          =   $this->ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
         $TABLA[]                        =   array("id_html" => "LISTA_MAQUINA", "opcion" => "html", "contenido" => "");
-
         if (count($aData) > 0) {
             foreach ($aData as $i => $row) {
                 $MKN = $row['ID'];
@@ -276,12 +275,14 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                 
 
 
-                            </tbody></table>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
        
             ';
+            
                 $html.= '</td>
         </tr> ';
                 $TABLA[] = array("id_html" => "LISTA_MAQUINA", "opcion" => "append", "contenido" => $html);
@@ -316,8 +317,15 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             $html = '<tr><td colspan="6" style="text-align:center"><b>SIN MAQUINAS</b></td></tr>';
             $TABLA[] = array("id_html" => "LISTA_MAQUINA", "opcion" => "append", "contenido" => $html);
         }
+
         $this->output->set_output(json_encode($TABLA));
     }
+
+
+
+
+
+
 
     public function gestormaquinaxturno() {
         if (!$this->input->is_ajax_request()) {

@@ -3,13 +3,13 @@
 </h4>
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 8px;">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">LISTADO PACIENTES</button>
+        <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><i class="bi bi-person-vcard-fill"></i>&nbsp;RRHH</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link btn_listado_paciente" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"><i class="bi bi-person-wheelchair" onclick="busquedaPacientes()"></i>&nbsp;LISTADO PACIENTES</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">LISTADO DE MAQUINAS</button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">RRHH</button>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
@@ -21,33 +21,37 @@
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-    <div class="grid_panel_paciente">
-        <div class="grid_panel_paciente1">
-            <h2 style="margin-top: 0px;margin-bottom: 0px;"><b>PACIENTE EN DIALISIS</b></h2>
-            <p>LISTA PACIENTES INGRESADOS</p> 
-        </div>
-        <div class="grid_panel_paciente2">
-            <p style="margin-bottom: 0px;"><b>BUSCAR</b>&nbsp;<i class='fa fa-search icon-4x'></i></p> 
-            <input type="text" id="searchTermIng2" class="form-control"  style="width: auto;" onkeyup="doSearch(2)"></b>
-        </div>
+    <div class="tab-pane fade margen_tabs show active" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
+        <div id="IND_RRHH"><?php echo $html_out;?></div>
     </div>
-    <table class="table table-striped" width="100%">
-        <thead>
-            <tr>
-                <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
-                <th class="subtitulo_formulario2" width="10%">RUN</th>
-                <th class="subtitulo_formulario2" width="29%">APELLIDO NOMBRE</th>
-                <th class="subtitulo_formulario2" width="6%" >EDAD</th>
-                <th class="subtitulo_formulario2" width="14%">INGRESO</th>
-                <th class="subtitulo_formulario2" width="10%">INGRESO HISTORICO</th>
-                <th class="subtitulo_formulario2" width="14%">ESTADO</th>
-                <th class="subtitulo_formulario2" width="15%">OPCI&Oacute;N</th>
-            </tr>
-        </thead>
-        <tbody id="LISTA_PACIENTES"></tbody>
-    </table>
+    <div class="tab-pane fade " id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <div class="grid_panel_paciente">
+            <div class="grid_panel_paciente1">
+                <h2 style="margin-top: 0px;margin-bottom: 0px;"><b>PACIENTE EN DIALISIS</b></h2>
+                <p>LISTA PACIENTES INGRESADOS</p> 
+            </div>
+            <div class="grid_panel_paciente2">
+                <p style="margin-bottom: 0px;"><b>BUSCAR</b>&nbsp;<i class='fa fa-search icon-4x'></i></p> 
+                <input type="text" id="searchTermIng2" class="form-control"  style="width: auto;" onkeyup="doSearch(2)"></b>
+            </div>
+        </div>
+        <table class="table table-striped" width="100%">
+            <thead>
+                <tr>
+                    <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
+                    <th class="subtitulo_formulario2" width="10%">RUN</th>
+                    <th class="subtitulo_formulario2" width="29%">APELLIDO NOMBRE</th>
+                    <th class="subtitulo_formulario2" width="6%" >EDAD</th>
+                    <th class="subtitulo_formulario2" width="14%">INGRESO</th>
+                    <th class="subtitulo_formulario2" width="10%">INGRESO HISTORICO</th>
+                    <th class="subtitulo_formulario2" width="14%">ESTADO</th>
+                    <th class="subtitulo_formulario2" width="15%">OPCI&Oacute;N</th>
+                </tr>
+            </thead>
+            <tbody id="LISTA_PACIENTES"></tbody>
+        </table>
     </div>
+
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <table width="100%" style="margin-top: 14px;">
             <tr>
@@ -72,11 +76,7 @@
             <tbody id="LISTA_MAQUINA"> </tbody>
         </table>
     </div>
-    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-        <div id="IND_RRHH"><?php echo $html_out;?></div>
-    </div>
 </div>
-
 
 <section>
     <div class="modal fade" id="TURNOXMAQUINA">

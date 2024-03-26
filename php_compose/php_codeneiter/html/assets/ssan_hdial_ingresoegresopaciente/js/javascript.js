@@ -67,6 +67,73 @@ $(document).ready(function() {
     //busquedaPacientesxMaquina();
 });
 
+
+function busquedaPacientes(){
+    $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
+    $(".btn_listado_paciente").attr('onclick',''); 
+
+    console.log("   _________________   ");
+    console.log("   busquedaPacientes   ");
+    console.log("   _________________   ");
+
+    $.ajax({ 
+        type            :   "POST",
+        url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso",
+        dataType        :   "json",
+        data            :   { },
+        beforeSend      :   function(xhr)   { },
+        beforeSend      :   function(xhr)   { $('#loadFade').modal('show'); },
+        error           :   function(errro) { 
+                                                
+                                                console.log(errro.responseText); 
+                                                jAlert("Comuniquese con el administrador ","CLINICA LIBRE CHILE");
+                                                $('#loadFade').modal('hide'); 
+
+                                            },
+        success         :   function(aData) {
+                                                $("#LISTA_PACIENTES").html(""); 
+                                                $('#loadFade').modal('hide'); 
+                                                console.log("aData  ->  ",aData);
+                                                if(AjaxExtJsonAll(aData)){  
+                                                    busquedaMaquinasDeDiaslisis();  
+                                                };
+                                            }, 
+    });
+ }
+
+
+
+ function busquedaMaquinasDeDiaslisis(){
+    $.ajax({ 
+        type            :   "POST",
+        url             :   "ssan_hdial_ingresoegresopaciente/BusquedaMaquinasDeDialisis",
+        dataType        :   "json",
+        data            :   { },
+        beforeSend      :   function(xhr)       { $('#loadFade').modal('show'); },
+        error           :   function(errro)     {   
+            
+                                                    console.log(errro.responseText); 
+                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE CHILE");
+                                                    $('#loadFade').modal('hide'); 
+            
+                                                },
+        success         :   function(aData)     { 
+                                                    $('#loadFade').modal('hide'); 
+                                                    $("#LISTA_MAQUINA").html(""); 
+
+
+
+
+                                                    if(AjaxExtJsonAll(aData)){  
+
+                                                    }; 
+                                                }, 
+    });
+ }
+ 
+
+
+
 function js_nuevo_prestador_dialisis(){
     $.ajax({ 
         type            :   "POST",
@@ -90,28 +157,28 @@ function js_nuevo_prestador_dialisis(){
 }
 
 function js_busqueda_rrhh(){
-   $.ajax({ 
+    $.ajax({ 
        type            :   "POST",
        url             :   "ssan_hdial_ingresoegresopaciente/html_lista_rrhhdialisis",
        dataType        :   "json",
        data            :   { },
-       beforeSend      :   function(xhr)       { },
+       beforeSend      :   function(xhr)       {  $('#loadFade').modal('show'); },
        error           :   function(errro)     {     
                                                    console.log(errro);
                                                    console.log(errro.responseText); 
                                                    jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE"); 
+                                                   $('#loadFade').modal('hide');
                                                },
        success         :   function(aData)     {
                                                    console.log("---------------------------------------");
                                                    console.log("aData      ->  ",aData);
                                                    console.log("---------------------------------------");
-                                                
+                                                   $('#loadFade').modal('hide');
                                                    $("#li_busqueda_rrhh").attr('onclick',''); 
                                                    $("#IND_RRHH").html(aData.html); 
                                                 }, 
    });
 }
-
 
 function delete_profesional(cod_rutpro){
    //console.log("cod_rutpro     ->  ",cod_rutpro);
@@ -287,38 +354,6 @@ function busquedaPacientesxMaquina(){
    });
 }
 
-function busquedaMaquinasDeDiaslisis(){
-   $.ajax({ 
-       type            :   "POST",
-       url             :   "ssan_hdial_ingresoegresopaciente/BusquedaMaquinasDeDialisis",
-       dataType        :   "json",
-       data            :   { },
-       beforeSend      :   function(xhr)       { },
-       error           :   function(errro)     {   console.log(errro.responseText); alert("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); },
-       success         :   function(aData)     { 
-                                               $("#LISTA_MAQUINA").html(""); 
-                                               if(AjaxExtJsonAll(aData)){  }; 
-                                               }, 
-   });
-}
-
-function busquedaPacientes(){
-   $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
-   $.ajax({ 
-       type            :   "POST",
-       url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso",
-       dataType        :   "json",
-       data            :   {},
-       beforeSend      :   function(xhr)     { },
-       error           :   function(errro)   { console.log(errro.responseText); alert("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); },
-       success         :   function(aData)   { 
-                                               $("#LISTA_PACIENTES").html(""); 
-                                               if(AjaxExtJsonAll(aData)){  
-                                                   busquedaMaquinasDeDiaslisis();  
-                                               }; 
-       }, 
-   });
-}
 
 function js_grabadatosPaciente(ed){    
   Limpiar1();$("#Dv_form_IngEnf").hide(); $("#resultadoBusqueda_post").html(""); $("#dv_mnj_frm").html("");  

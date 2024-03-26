@@ -54,9 +54,6 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         );
     }
 
-
-
-
     public function model_asignacion_muestra_x_user($valiable){
         $this->db->trans_start();
         $param              =   array(

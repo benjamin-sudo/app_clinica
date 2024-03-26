@@ -4,9 +4,9 @@
     $arr_tns = array();
     if(count($bd[":C_RESULT_RRHH"])>0){
         foreach ($bd[":C_RESULT_RRHH"] as $aux => $row){
-            if($row['HTML_OUT']     ==  "slc_medico")       {   array_push($arr_medicos,$row);      }
-            if($row['HTML_OUT']     ==  "slc_enfermeria")   {   array_push($arr_enfermeros,$row);   }
-            if($row['HTML_OUT']     ==  "slc_tecpara")      {   array_push($arr_tns,$row);          }
+            if($row['HTML_OUT'] == "slc_medico")       { array_push($arr_medicos,$row); }
+            if($row['HTML_OUT'] == "slc_enfermeria")   { array_push($arr_enfermeros,$row); }
+            if($row['HTML_OUT'] == "slc_tecpara")      { array_push($arr_tns,$row); }
         }
     }
 ?>
@@ -22,18 +22,19 @@
         <button class="nav-link" id="ind_tns-tab" data-bs-toggle="tab" data-bs-target="#ind_tns" type="button" role="tab" aria-controls="ind_tns" aria-selected="false">TECNICOS PARAMEDICOS</button>
     </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">ACTUALIZACI&Oacute;N</a>
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">&nbsp;&nbsp;ACTUALIZACI&Oacute;N</a>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="javascript:js_busqueda_rrhh(2)">
-                <i class="bi bi-wrench-adjustable"></i>&nbsp;&nbsp;ACTUALIZACI&Oacute;N&nbsp;LISTA</a>
+            <li>
+                <a class="dropdown-item" href="javascript:js_busqueda_rrhh(2)">
+                    <i class="bi bi-wrench-adjustable"></i>&nbsp;&nbsp;ACTUALIZACI&Oacute;N&nbsp;LISTA
+                </a>
             </li>
         </ul>
     </li>
 </ul>
-
 <div class="tab-content">
     <div class="tab-pane active" id="ind_medicos" role="tabpanel" aria-labelledby="ind_medicos-tab" tabindex="0">
-        <h3 style="margin-top: 8px;">LISTADO MEDICOS DE DIALISIS</h3>
+        <h4 style="margin-top: 8px;"><b>LISTADO MEDICOS DE DI&Aacute;LISIS</b></h4>
         <table class="table table-striped" width="100%">
             <thead>
                 <tr>
@@ -55,7 +56,7 @@
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
                                     <button type="button" class="btn btn-danger btn-xs" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
-                                       <i class="bi bi-person-fill-x" aria-hidden="true"></i>
+                                        <i class="bi bi-person-fill-x" aria-hidden="true"></i>&nbsp;&nbsp;ELIMINAR PROFESIONAL
                                     </button>
                                 </td>
                             </tr>
@@ -69,7 +70,7 @@
         </table>
     </div>
     <div class="tab-pane" id="ind_enfermero" role="tabpanel" aria-labelledby="ind_enfermero-tab" tabindex="0">
-        <h3 style="margin-top: 8px;">LISTADO ENFERMEROS</h3>
+        <h4 style="margin-top: 8px;"><b>LISTADO ENFERMEROS DE DI&Aacute;LISIS</b></h4>
         <table class="table table-striped" width="100%">
             <thead>
                 <tr>
@@ -91,7 +92,7 @@
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
                                     <button type="button" class="btn btn-danger btn-xs" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
-                                        <i class="bi bi-person-fill-x" aria-hidden="true"></i>
+                                        <i class="bi bi-person-fill-x" aria-hidden="true"></i>&nbsp;&nbsp;ELIMINAR PROFESIONAL
                                     </button>
                                 </td>
                             </tr>
@@ -105,7 +106,7 @@
         </table>
     </div>
     <div class="tab-pane" id="ind_tns" role="tabpanel" aria-labelledby="ind_tns-tab" tabindex="0">
-        <h3 style="margin-top: 8px;">LISTADO TERNICO PARAMEDICOS</h3>
+        <h4 style="margin-top: 8px;"><b>LISTADO TECNICO PARAMEDICOS DE DI&Aacute;LISIS</b></h4>
         <table class="table table-striped" width="100%">
             <thead>
                 <tr>
@@ -120,14 +121,14 @@
                 <?php
                     if (count($arr_tns)>0){
                         foreach ($arr_tns as $aux => $row){ ?>
-                            <tr style="height: 40px">
+                            <tr style="height:40px">
                                 <td><?php echo $aux+1;?></td>
                                 <td><?php echo $row["COD_RUTPRO"]."-".$row["COD_DIGVER"];?></td>
                                 <td><?php echo $row["NOM_PROFE"]?></td>
                                 <td><?php echo $row["DES_TIPOATENCION"]?></td>
                                 <td>
                                     <button type="button" class="btn btn-danger btn-xs" id="BTN_UPDATE_PANEL_1" onclick="delete_profesional(<?php echo $row['COD_RUTPRO'];?>)">
-                                        <i class="bi bi-person-fill-x" aria-hidden="true"></i>
+                                        <i class="bi bi-person-fill-x" aria-hidden="true"></i>&nbsp;&nbsp;ELIMINAR PROFESIONAL
                                     </button>
                                 </td>
                             </tr>
