@@ -171,8 +171,8 @@
         <div class="modal-dialog modal_imedico">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b>NUEVO RRHH</b></h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title"><b>NUEVO RRHH - DI&Aacute;LISIS</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_nuevo_prestador_rrhh"></div>
                 <div class="modal-footer">

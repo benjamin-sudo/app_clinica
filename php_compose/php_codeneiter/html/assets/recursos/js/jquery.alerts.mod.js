@@ -169,7 +169,7 @@
                     });
                     break;
                 case 'prompt':
-                    $("#popup_message").append('<br><b><label id="txtFirmaS" style="font-weight: bold;">Firma Digital Simple: </label>&nbsp;</b><input type="password" autocomplete="new-password" size="30" style="width: 160px;" id="popup_prompt"/>').after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a> <a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_cancel"><i class="fa fa-ban"></i> CANCELAR</a></div>');
+                    $("#popup_message").append('<br><b><label id="txtFirmaS" style="font-weight: bold;">FIRMA UNICA DIGITAL: </label>&nbsp;</b><input type="password" autocomplete="new-password" size="30" style="width: 160px;" id="popup_prompt"/>').after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a> <a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_cancel"><i class="fa fa-ban"></i> CANCELAR</a></div>');
                     //$("#popup_prompt").width( $("#popup_message").width() );
                     $("#popup_ok").click(function () {
                         var val = $("#popup_prompt").val();
