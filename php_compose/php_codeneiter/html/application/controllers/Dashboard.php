@@ -33,7 +33,7 @@ class Dashboard extends CI_Controller {
         $data_user = $this->modelinicio->model_consultaporusuario($username);
         $html = $this->load->view('Dashboard/html_perfil_usuario',['username'=>$username, 'data_user'=>$data_user],true);
         $this->output->set_output(json_encode([
-            'status' =>  $status,
+            'status' => $status,
             'data_user' => $data_user,
             'html' =>  $html,
         ]));
@@ -69,7 +69,6 @@ class Dashboard extends CI_Controller {
             $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
             $this->email->to($userEmail);
             $this->email->subject($subject);
-
             $codigo = $this->generateCodigo();
             $return = $this->modelinicio->creaCodigoFirma($username, $codigo, $firma, $datetime);
             $body = '<div style="margin:0 auto; width:300px;">
@@ -133,7 +132,7 @@ class Dashboard extends CI_Controller {
                 'starttls'      =>  true,
                 'newline'       =>  "\r\n",
             ];
-            $this->load->library('email', $config);
+            $this->load->library('email',$config);
             $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
             $this->email->to($userEmail);
             $this->email->subject($subject);
@@ -170,8 +169,6 @@ class Dashboard extends CI_Controller {
             'html' => $html
         ]));
     }
-
-
 
     public function validaFirmaExist(){
         if (!$this->input->is_ajax_request()){ show_404(); }
@@ -221,19 +218,10 @@ class Dashboard extends CI_Controller {
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
 
-
-
-
-
         $this->output->set_output(json_encode([
             'status' => $status
         ]));
     }
-
-    
-
-
-
 
     function generateCodigo($strength = 8){
         $input = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

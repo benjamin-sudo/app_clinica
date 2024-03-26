@@ -48,7 +48,7 @@
                 </div>
                 <div class="grid_datos_personales_2">
                     <div class="grid_datos_personales2"> 
-                        <label>TELEFONO</label>
+                        <label style="margin-top: 11px;">TELEFONO</label>
                         <div class="input-group">
                             <div class="input-group-addon" style="margin-top:7px;margin-right:4px;">+56 9</div>
                             <input type="text" class="form-control" id="txtFono" required="true" placeholder="TELEFONO" value="<?php echo $data_user[0]['TELEPHONE'];?>">
