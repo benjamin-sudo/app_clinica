@@ -71,11 +71,6 @@ $(document).ready(function() {
 function busquedaPacientes(){
     $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
     $(".btn_listado_paciente").attr('onclick',''); 
-
-    console.log("   _________________   ");
-    console.log("   busquedaPacientes   ");
-    console.log("   _________________   ");
-
     $.ajax({ 
         type            :   "POST",
         url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso",
@@ -84,26 +79,22 @@ function busquedaPacientes(){
         beforeSend      :   function(xhr)   { },
         beforeSend      :   function(xhr)   { $('#loadFade').modal('show'); },
         error           :   function(errro) { 
-                                                
                                                 console.log(errro.responseText); 
                                                 jAlert("Comuniquese con el administrador ","CLINICA LIBRE CHILE");
                                                 $('#loadFade').modal('hide'); 
-
                                             },
         success         :   function(aData) {
                                                 $("#LISTA_PACIENTES").html(""); 
                                                 $('#loadFade').modal('hide'); 
                                                 console.log("aData  ->  ",aData);
                                                 if(AjaxExtJsonAll(aData)){  
-                                                    busquedaMaquinasDeDiaslisis();  
+                                                    //busquedaMaquinasDeDiaslisis();
                                                 };
                                             }, 
     });
- }
+}
 
-
-
- function busquedaMaquinasDeDiaslisis(){
+function busquedaMaquinasDeDiaslisis(){
     $.ajax({ 
         type            :   "POST",
         url             :   "ssan_hdial_ingresoegresopaciente/BusquedaMaquinasDeDialisis",

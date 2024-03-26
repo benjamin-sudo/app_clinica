@@ -111,15 +111,17 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
     #################
     #code old
     #################
+
     public function BusquedaMaquinasDeDialisis(){
-        if(!$this->input->is_ajax_request()) {  show_404();   }
+        if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $estados                        =   '1';
         $MKN                            =   '';
         $BTN                            =   '';
-        $aData                          =   $this->ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
+        $aData                          =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
         $TABLA[]                        =   array("id_html" => "LISTA_MAQUINA", "opcion" => "html", "contenido" => "");
-        if (count($aData) > 0) {
+        
+        if(count($aData)>0){
             foreach ($aData as $i => $row) {
                 $MKN = $row['ID'];
                 $html = '<tr>
@@ -282,14 +284,14 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                 </div>
        
             ';
-            
+
                 $html.= '</td>
         </tr> ';
                 $TABLA[] = array("id_html" => "LISTA_MAQUINA", "opcion" => "append", "contenido" => $html);
             }//FINAL DE MAQUINA 
             //BUSQUEDA DE PACIENTES YA ASIGNADOS A CUPOS
             //**************************************************************************************
-            $aPaci = $this->ssan_hdial_asignacionpaciente_model->GetPacientesxCupo($empresa);
+            $aPaci = $this->Ssan_hdial_asignacionpaciente_model->GetPacientesxCupo($empresa);
             if (count($aPaci) > 0) {
                 foreach ($aPaci as $i => $r) {
                     $BTN = '<div class="btn-group btn-group-sm">
@@ -435,7 +437,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             $return = true;
             $usuarioh = explode("-", $_SESSION['USERNAME']); //Rut Del Usuario        
             $session = $usuarioh[0];
-            $transaccion = $this->ssan_hdial_asignacionpaciente_model->ModelEgresaPaciente($empresa, $session, $numIgreso, $id_egreso, $num_fichae);
+            $transaccion = $this->Ssan_hdial_asignacionpaciente_model->ModelEgresaPaciente($empresa, $session, $numIgreso, $id_egreso, $num_fichae);
         } else {
             $return = false;
         }
@@ -453,7 +455,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $TABLA[] = array("id_html" => "PACIENTEXMAQUINA", "opcion" => "html", "contenido" => '');
         $estados = '1';
         $ul = '';
-        $aData = $this->ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
+        $aData = $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
         if (count($aData) > 0) {
             foreach ($aData as $i => $row) {
                 $ul = '';
@@ -477,7 +479,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $estados = '1';
         $conIngreso = '1';
 
-        $aData = $this->ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
+        $aData = $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
         $html .= '<div class="card">
                     <div class="header">
                         <h4 class="title"><b>SELECCIONE PACIENTE A ASIGNAR CUPO</b></h4>
@@ -857,15 +859,13 @@ $ssss=0;
 
     public function BusquedaPacientesIngreso() {
         if(!$this->input->is_ajax_request()){  show_404();  }
-	
-        $empresa	= $this->session->userdata("COD_ESTAB");
-        $html		= '';
-        $numFichae	= '';
-        $rutPac		= '';
-        $estados	= '1';
+	    $empresa = $this->session->userdata("COD_ESTAB");
+        $html = '';
+        $numFichae = '';
+        $rutPac = '';
+        $estados = '1';
         $conIngreso	= '0';
-
-        $aData = $this->ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
+        $aData = $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
         //$TABLA[] = array("id_html" => "LISTA_PACIENTES", "opcion" => "console", "contenido" => $aData);
         if (count($aData) > 0) {
             foreach ($aData as $i => $row) {
@@ -1010,7 +1010,7 @@ $ssss=0;
             $return = true;
             $usuarioh = explode("-", $_SESSION['USERNAME']); //Rut Del Usuario        
             $session = $usuarioh[0];
-            $transaccion = $this->ssan_hdial_asignacionpaciente_model->ModelNuevoPacienteIngreso($empresa, $session, $numfichae);
+            $transaccion = $this->Ssan_hdial_asignacionpaciente_model->ModelNuevoPacienteIngreso($empresa, $session, $numfichae);
         } else {
             $return = false;
         }
@@ -1033,7 +1033,7 @@ $ssss=0;
             $return = true;
             $usuarioh = explode("-", $valida->USERNAME); //Rut Del Usuario que firma       
             $session = $usuarioh[0];
-            $transaccion = $this->ssan_hdial_asignacionpaciente_model->ModeleliminaPacientexCupo($empresa, $session, $ID_CUPO, $MKN, $TRN);
+            $transaccion = $this->Ssan_hdial_asignacionpaciente_model->ModeleliminaPacientexCupo($empresa, $session, $ID_CUPO, $MKN, $TRN);
         } else {
             $return = false;
         }
@@ -1064,7 +1064,7 @@ $ssss=0;
             $return = true;
             $usuarioh = explode("-", $valida->USERNAME); //Rut Del Usuario que firma       
             $session = $usuarioh[0];
-            $transaccion = $this->ssan_hdial_asignacionpaciente_model->ModelNuevoPacientexCupo($empresa, $session, $numfichae, $numingreso, $MKN, $GRP, $DIAS);
+            $transaccion = $this->Ssan_hdial_asignacionpaciente_model->ModelNuevoPacientexCupo($empresa, $session, $numfichae, $numingreso, $MKN, $GRP, $DIAS);
         } else {
             $return = false;
         }
