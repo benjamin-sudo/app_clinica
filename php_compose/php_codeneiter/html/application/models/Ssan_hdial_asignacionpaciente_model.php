@@ -923,7 +923,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             //FIN preguntar si tiene agenda    
                 
         foreach ($Fechas as $i => $date){
-                
             //error_log("------------------>".$date);
             /*    
             error_log("------------------>".$date);

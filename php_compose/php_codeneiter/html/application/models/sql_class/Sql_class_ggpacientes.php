@@ -49,9 +49,9 @@ class sql_class_ggpacientes extends CI_Model {
                 }
             }
         }
+        
         #DISTINCT 
-        $sQuery = "
-                SELECT
+        $sQuery = "SELECT_
                     M.NUM_FICHAE                                                                AS FALLECIDO,
                     '1'                                                                         AS RNUM,
                     '1'                                                                         AS RESULT_COUNT,

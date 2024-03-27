@@ -5,10 +5,9 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 
 class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
-    var $tableSpace     =   "ADMIN";
-    var $ownGu          =   "GUADMIN";
-
-    public function __construct() {
+    var $tableSpace = "ADMIN";
+   
+    public function __construct(){
         parent::__construct();
         $this->db = $this->load->database('oracle_conteiner',true);
         $this->load->helper('text');
@@ -78,6 +77,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
           error_log("---------->".$apellidoM);
           error_log("-------------------------------------");
          */
+
         if ($identifier == '' and $pasaporte == ''){
           $query =  $this->db->select('G.NUM_FICHAE            FALLECIDO,
                                 A.COD_PAIS,

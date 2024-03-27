@@ -69,41 +69,42 @@ function nuevoPacienteAgresado(){
 }
 
 function js_grabadatosPaciente(){    
-    var Rut_form     =    $("#rut_paciente").val().replace(/\./g,'');//11111111-0    
-        Rut_form     =    Rut_form.split("-");
-    var txtBuscar    =    Rut_form[0];
-    var txtDv        =    Rut_form[1];
-    //var txtDv      =    $("#txtDv").val();
-    var lficha       =    '';
+    if ($("#rut_paciente").val() == ''){
+        jAlert("RUN del paciente vacio","CLINICA LIBRE CHILE");
+        return false;
+    }
+    let Rut_form    =    $("#rut_paciente").val().replace(/\./g,'').split("-");//11111111-0    
+    let txtBuscar   =    Rut_form[0];
+    let txtDv       =    Rut_form[1];
+    let lficha      =    '';
     
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar);
     console.log("   txtDv       ->  ",txtDv);
-
+    
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
         dataType     :  "json",
         beforeSend   :   function(xhr){ $('#loadFade').modal('show'); },
         data 		 :  { 
-                            OPCION : 1,
-                            RUTPAC : txtBuscar,
-                            RUTDV : txtDv,
-                            LFICHA : lficha,
+                            OPCION  : 1,
+                            RUTPAC  : txtBuscar,
+                            RUTDV   : txtDv,
+                            LFICHA  : lficha,
                         },
         error		:   function(errro) {  
-                                            console.log(errro.responseText); 
+                                            console.log(errro);
                                             jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE");
                                             $("#loadFade").modal('hide'); 
                                         },
         success		:   function(aData) {  
                                             $("#loadFade").modal('hide');
                                             console.log("busqueda_pacientes_parametos ->",aData); 
-
                                         }, 
     });
 
-
+    //alatarde
     /*
     if(txtBuscar!=''){
         var variables   =   {"txtBuscar":txtBuscar,"ed":ed}; 
