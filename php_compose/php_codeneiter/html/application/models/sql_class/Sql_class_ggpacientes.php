@@ -49,13 +49,13 @@ class sql_class_ggpacientes extends CI_Model {
                 }
             }
         }
-        
+
         #DISTINCT 
-        $sQuery = "SELECT_
+        $sQuery = "SELECT
                     M.NUM_FICHAE                                                                AS FALLECIDO,
                     '1'                                                                         AS RNUM,
                     '1'                                                                         AS RESULT_COUNT,
-                    A.NUM_FICHAE                                                                   NUM_FICHAEPACTE,
+                    A.NUM_FICHAE                                                                AS NUM_FICHAEPACTE,
                     (CASE WHEN(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))<>0 THEN 
                         TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12) || DECODE(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12),1, 'YEAR',' YEAR') 
                         ELSE 
@@ -216,14 +216,13 @@ class sql_class_ggpacientes extends CI_Model {
                     A.NUM_FICHAE        = M.NUM_FICHAE(+)   AND
                     M.IND_ESTADO(+)     = 'V' 
             ";
-
+        
         /*
             F.NUM_NFICHA,
             A.ID_FONASA IDFONASA,
             TO_CHAR(FEC_IDFONASA,'DD/MM/YYYY')                                         FECIDFONASA
         */
-        //error_log($sQuery);
-
+        #error_log($sQuery);
         return $sQuery;
     }
 

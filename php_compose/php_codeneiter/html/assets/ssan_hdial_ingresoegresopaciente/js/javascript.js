@@ -50,19 +50,18 @@ $(document).ready(function() {
 
     $('#modal_nuevo_ingreso_paciente').on('hidden.bs.modal',function(e){ 
         //$("#html_nuevo_ingreso_paciente").html('');
+        js_limpiaingreso();
     });
-
     $('#rut_paciente').Rut({
-        on_error : function(){
-            jError("RUN no es correcto","CLINICA LIBRE CHILE");
-        },
-        on_success : function(){
-            js_grabadatosPaciente();
-        },
-        format_on : 'keyup'
+        format_on : 'keyup',
+        on_error : function(){ jError("RUN no es correcto","CLINICA LIBRE CHILE"); },
+        on_success : function(){ js_grabadatosPaciente(); },
     });
-
 });
+
+function js_limpiaingreso(){
+    $(".div_pacienteindentificado,.formulario_ingreso").html('');
+}
 
 function nuevoPacienteAgresado(){
     $("#modal_nuevo_ingreso_paciente").modal({backdrop:'static',keyboard:false}).modal("show");
@@ -77,21 +76,19 @@ function js_grabadatosPaciente(){
     let txtBuscar   =    Rut_form[0];
     let txtDv       =    Rut_form[1];
     let lficha      =    '';
-    
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar);
     console.log("   txtDv       ->  ",txtDv);
-    
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
         dataType     :  "json",
         beforeSend   :   function(xhr){ $('#loadFade').modal('show'); },
         data 		 :  { 
-                            OPCION  : 1,
-                            RUTPAC  : txtBuscar,
-                            RUTDV   : txtDv,
-                            LFICHA  : lficha,
+                            OPCION : 1,
+                            RUTPAC : txtBuscar,
+                            RUTDV : txtDv,
+                            LFICHA : lficha,
                         },
         error		:   function(errro) {  
                                             console.log(errro);
@@ -100,21 +97,17 @@ function js_grabadatosPaciente(){
                                         },
         success		:   function(aData) {  
                                             $("#loadFade").modal('hide');
-                                            console.log("busqueda_pacientes_parametos ->",aData); 
+                                            console.log("busqueda_pacientes_parametos ->",aData);
+                                            if(aData.status){
+                                                showNotification('button','center','<i class="fa fa-check" aria-hidden="true"></i> Nuevo ingreso de paciente a hermodialisis',2,'');
+                                                $(".div_pacienteindentificado").html(aData.html_card_paciente);
+                                                $(".formulario_ingreso").html(aData.html_card_formularioingreso);
+                                            } else {
+                                                showNotification('button','center','<i class="fa fa-check" aria-hidden="true"></i> Paciente no ingreso al aplicativo',2,'');
+                                            }
                                         }, 
     });
-
-    //alatarde
-    /*
-    if(txtBuscar!=''){
-        var variables   =   {"txtBuscar":txtBuscar,"ed":ed}; 
-        var id          =   "respuesta";
-        var funcion     =   "TraeDatIng"; 
-        AjaxExt(variables, id, funcion);
-    }
-    */
 }
-
 
 function busquedaPacientes(){
     $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");

@@ -210,14 +210,15 @@
                                     <input type="text" id="rut_paciente" name="rut_paciente" class="form-control input-sm" style="width:115px;">
                                 </div>
                             </div>
+                            <div class="div_pacienteindentificado"></div>
                         </div>
                         <div class="nuevo_ingreso_pacientehd2">
                             <button type="button" class="btn btn-success btn-fill" id="btn_valida_paciente" onclick="js_grabadatosPaciente()" style="margin-top:23px;">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <div class="nuevo_ingreso_pacientehd3 formulario_ingreso ">
-                            --.--
+                        <div class="nuevo_ingreso_pacientehd3 formulario_ingreso">
+                            ?
                         </div>
                     </div>
 

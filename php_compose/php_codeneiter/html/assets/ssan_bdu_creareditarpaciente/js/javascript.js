@@ -312,19 +312,20 @@ function validarFL(val){
     } else {
        $('#txtFichaFisicaLocal').css('border-color','');
        $.ajax({ 
-            type        : "POST",
-            url         : "ssan_bdu_creareditarpaciente/validaFichaLocal",
-            dataType    : "json",
-            data        : 
-                            { 
+            type        :   "POST",
+            url         :   "ssan_bdu_creareditarpaciente/validaFichaLocal",
+            dataType    :   "json",
+            data        :   { 
                                 val         :   val,
                                 fLPaciente  :   fLPaciente,
                                 nfichaE     :   nfichaE,
                                 COD_ESTAB   :   $("#COD_ESTAB").val(),
                             },
-            error       : function(errro){ console.log(errro.responseText); jAlert("Error General, Consulte Al Administrador"); },
-            success     : function(aData)   { 
+            error       :   function(errro){ console.log(errro.responseText); jAlert("Error General, Consulte Al Administrador"); },
+            success     :   function(aData) { 
+
                                                 AjaxExtJsonAll(aData); 
+
                                             }, 
         });
     }
@@ -477,12 +478,12 @@ function js_cambiaNID(id,val){
         $("#numExtranjero").show();
         $("#txtMenjajefonasa").hide();
     }
-        $("#txtBuscarFonasa").val('');
-        $("#txtDvFoonasa").val('');
-        $("#txtNumIdentiExtra").val('');
-        $("#txtNumIdentiExtra").css("border-color","");
-        $("#txtBuscarFonasa").css("border-color","");
-        $("#txtNumIdentiExtra").css("border-color","");
+    $("#txtBuscarFonasa").val('');
+    $("#txtDvFoonasa").val('');
+    $("#txtNumIdentiExtra").val('');
+    $("#txtNumIdentiExtra").css("border-color","");
+    $("#txtBuscarFonasa").css("border-color","");
+    $("#txtNumIdentiExtra").css("border-color","");
 }
         
 function validaNumeroExtranjero(val,numfichae){
@@ -513,10 +514,10 @@ function validaNumeroExtranjero(val,numfichae){
    
     if(valida == 1){
         $.ajax({ 
-            type        : "POST",
-            url         : "ssan_bdu_creareditarpaciente/buscaPacienteExtranjero",
-            dataType    : "json",
-            cache       : false,
+            type        :   "POST",
+            url         :   "ssan_bdu_creareditarpaciente/buscaPacienteExtranjero",
+            dataType    :   "json",
+            cache       :   false,
             data        : 
                                         { 
                                             numfichae   : numfichae,
@@ -525,14 +526,14 @@ function validaNumeroExtranjero(val,numfichae){
                                             NumFonasa   : $("#txtBuscarFonasa").val(),
                                             DvFonasa    : $("#txtDvFoonasa").val()
                                         },
-            error       : function(errro){ console.log(errro.responseText); jError("Error General, Consulte Al Administrador"); },
-            success     : function(aData){  
-                                            $('#cboNumIdentifica').prop("disabled",true);
-                                            $('#txtNumIdentiExtra').prop("disabled",true);
-                                            $('#btnNumExtranjero').addClass("disabled");
-                                            $("#Btn_bdu").removeClass("disabled");
-                                            if (AjaxExtJsonAll(aData)){ }; 
-                                        }, 
+            error       :   function(errro) { console.log(errro.responseText); jError("Error General, Consulte Al Administrador"); },
+            success     :   function(aData) {  
+                                                $('#cboNumIdentifica').prop("disabled",true);
+                                                $('#txtNumIdentiExtra').prop("disabled",true);
+                                                $('#btnNumExtranjero').addClass("disabled");
+                                                $("#Btn_bdu").removeClass("disabled");
+                                                if (AjaxExtJsonAll(aData)){ }; 
+                                            }, 
         }); 
     } else {
         jError("Numero Identificador Vac&Iacute;o","e-SISSAN");

@@ -26,6 +26,8 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
         $html = '';
+        $html_card_paciente = '';
+        $html_card_formularioingreso = '';
         $accesdata = [];
         $codEmpresa = $this->session->userdata("COD_ESTAB");
         $OPCION = $this->input->post('OPCION');
@@ -39,13 +41,22 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $tipoEx = '1';
         $respuesta_paciente = [];
 
+        /*
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
+        if (count($respuesta_paciente)>0){
+            $html_card_paciente = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_card_pacienteunico',$respuesta_paciente,true); 
+            $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_card_pacienteunico',$respuesta_paciente,true); 
+        } else {
+            $status = false;
+        }
+        */
 
         $this->output->set_output(json_encode([
-            'status' => $status,
             'respuesta_paciente' => $respuesta_paciente,
+            'status' => $status,
+            'html_card_paciente' => $html_card_paciente,
+            'html_card_formularioingreso' => $html_card_formularioingreso
         ]));
-
 
 
         
@@ -115,10 +126,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $TABLA[] = array("id_html" => "", "opcion" => "console", "contenido" => $accesdata);
         $this->output->set_output(json_encode($TABLA));
         */
-
     }
-
-
 
     public function get_nuevo_prestador_dialisis() {
         if (!$this->input->is_ajax_request()) {  show_404();   }
