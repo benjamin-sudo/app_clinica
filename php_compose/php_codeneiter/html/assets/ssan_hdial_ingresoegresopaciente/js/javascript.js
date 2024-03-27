@@ -47,10 +47,10 @@ $(document).ready(function() {
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
+
     $('#modal_nuevo_ingreso_paciente').on('hidden.bs.modal',function(e){ 
         //$("#html_nuevo_ingreso_paciente").html('');
     });
-
 
     $('#rut_paciente').Rut({
         on_error : function(){
@@ -76,18 +76,15 @@ function js_grabadatosPaciente(){
     //var txtDv      =    $("#txtDv").val();
     var lficha       =    '';
 
-
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar);
     console.log("   txtDv       ->  ",txtDv);
 
-
-    /*
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
         dataType     :  "json",
-        beforeSend   :   function(xhr) {     },
+        beforeSend   :   function(xhr){ $('#loadFade').modal('show'); },
         data 		 :  { 
                             OPCION          : 1,
                             RUTPAC          : txtBuscar,
@@ -95,19 +92,18 @@ function js_grabadatosPaciente(){
                             LFICHA          : lficha,
                         },
         error		:   function(errro) {  
-                                            console.log("1111_1_1_1_1"); 
-                                            jAlert(errro.responseText); 
+                                            console.log(errro.responseText); 
+                                            jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE");
+                                            $('#loadFade').modal('hide'); 
                                         },
         success		:   function(aData) {  
-            
-                                            console.log("22222_2_2_2_2"); 
-                                            if(AjaxExtJsonAll(aData)){ 
-                                                console.log("333_3_3_3"); 
-                                            }; 
-                                        
+                                            $('#loadFade').modal('hide');
+                                            console.log("busqueda_pacientes_parametos ->",aData); 
+
+
+                                            
                                         }, 
     });
-    */
 
     /*
     if(txtBuscar!=''){
@@ -117,14 +113,13 @@ function js_grabadatosPaciente(){
         AjaxExt(variables, id, funcion);
     }
     */
-
-
 }
 
 
 function busquedaPacientes(){
     $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
-    $(".btn_listado_paciente").attr('onclick',''); 
+    $(".btn_listado_paciente").attr('onclick','');
+
     $.ajax({ 
         type            :   "POST",
         url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso",

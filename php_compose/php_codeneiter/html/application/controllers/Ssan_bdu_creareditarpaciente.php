@@ -1042,6 +1042,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $aDataPaciente      =    $this->ssan_bdu_creareditarpaciente_model->getPacientes($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, strtoupper($nombre), strtoupper($apellidoP), strtoupper($apellidoM), $LIM_INI, $templete);
         $aDatos[]           =    array('id_html' => 'result', 'opcion' => 'hide', 'contenido' => '');
         $aDatos[]           =    array('id_html' => 'resultados', 'opcion' => 'html', 'contenido' => '');
+        
         if (count($aDataPaciente) > 0) {
             foreach ($aDataPaciente as $i => $row) {
                 $aDatos[]       = array('id_html' => 'resultados', 'opcion' => 'console', 'contenido' => $aDataPaciente);

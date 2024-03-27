@@ -7,21 +7,118 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->library('session');
         $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
         $this->load->model("Ssan_hdial_asignacionpaciente_model");
+        $this->load->model("ssan_bdu_creareditarpaciente_model");
     }
 
     public function index(){
         $this->output->set_template('blank');
         $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-
-        $data_ini                       =   $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
-                                                'empresa'       =>  $empresa,
-                                                'ind_opcion'    =>  1,
-                                            ]);
-
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
+            'empresa' => $empresa,
+            'ind_opcion' => 1,
+        ]);
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
     }
+    
+    public function busqueda_pacientes_parametos() {
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        $status = true;
+        $html = '';
+        $accesdata = [];
+   
+        $OPCION = $this->input->post('OPCION');
+        $RUTPAC = $this->input->post('RUTPAC');
+        $DV = $this->input->post('DV');
+        $LFICHA = $this->input->post('LFICHA');
+
+        $numFichae = '';
+        $identifier = $RUTPAC;
+        $codEmpresa =  $this->session->userdata("COD_ESTAB");
+        $isnal = '1';
+        $pasaporte = '1';
+        $tipoEx = '1';
+
+        $accesdata = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
+
+        $this->output->set_output([
+            'status' => $status,
+            'accesdata' => $accesdata,
+        ]);
+
+
+
+        // 16239053-8
+        /*
+        $TABLA[] = array("id_html" => "resultadoBusqueda_post", "opcion" => "html", "contenido" => '');
+        if ($OPCION == '1') {
+            $accesdata = $this->institucionales_model->busquedaDatosSolicitud($RUTPAC, $empresa);
+        } else if ($OPCION == '2') {
+            $accesdata = $this->institucionales_model->busquedaPacientexFichaLocal($LFICHA, $empresa);
+        }
+        if (count($accesdata) > 0) {
+            foreach ($accesdata as $i => $row) {
+                $html.='<div class="card">
+                            <div class="header">
+                                <h4 class="title"><b>DATOS DEL PACIENTE</b></h4>
+                                <p class="category">Informaci&oacute;n Basica</p>
+                            </div>
+                            <div class="content">
+                                 <dl class="row">
+                                    <dt class="col-sm-2"><i class="fa fa-user-circle" aria-hidden="true"></i></dt>
+                                    <dd class="col-sm-10">' . $row["NOMBRE_PAC"] . '</dd>
+                                    <dt class="col-sm-2"><i class="fa fa-id-card-o" aria-hidden="true"></i></dt>
+                                    <dd class="col-sm-10">' . $row["CAMPO2"] . '-' . $row["CAMPO3"] . '</dd>
+                                    <dt class="col-sm-2"><i class="fa fa-mobile" aria-hidden="true"></i></dt>
+                                    <dd class="col-sm-10">9999999999</dd>
+                                    <dt class="col-sm-2"><i class="fa fa-birthday-cake" aria-hidden="true"></i></dt>
+                                    <dd class="col-sm-10">' . $row["CAMPO5"] . '</dd>
+                                    <hr>                                    
+                                </dl>
+                                <hr>
+                                <dl class="row">
+                                    <dt class="col-sm-6"> FECHA HISTORICO INGRESO</i></dt>
+                                    <dd class="col-sm-6"><div id="fecha">
+                                        <div class="input-group date" id="datetimepicker1"  style="width: 210px;">
+                                            <input type="text" class="form-control" value="' . date("d-m-Y") . '" id="numFecha" name="numFecha"/>
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </dd>
+                                </dl>        
+                                <script>
+                                    $("#datetimepicker1").datetimepicker({
+                                        format          : "DD-MM-YYYY",
+                                        icons           : 
+                                                        {
+                                                            time        : "fa fa-clock-o"       ,
+                                                            date        : "fa fa-calendar"      ,
+                                                            up          : "fa fa-chevron-up"    ,
+                                                            down        : "fa fa-chevron-down"  ,
+                                                            previous    : "fa fa-chevron-left"   ,
+                                                            next        : "fa fa-chevron-right"  ,
+                                                            today       : "fa fa-screenshot"     ,
+                                                            clear       : "fa fa-trash"          ,
+                                                            close       : "fa fa-remove"         ,
+                                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>                        
+                        ';
+                $html.='<script>$("#fic_e").val(' . $row['CAMPO10'] . ');</script>';
+            }
+        } else {
+            $html.='<tr><td colspan="5"> SIN INFORMACI&Ograve;N</td></tr>';
+        }
+        $TABLA[] = array("id_html" => "resultadoBusqueda_post", "opcion" => "append", "contenido" => $html);
+        $TABLA[] = array("id_html" => "", "opcion" => "console", "contenido" => $accesdata);
+        $this->output->set_output(json_encode($TABLA));
+        */
+
+    }
+
+
 
     public function get_nuevo_prestador_dialisis() {
         if (!$this->input->is_ajax_request()) {  show_404();   }
@@ -112,7 +209,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
     #################
     #code old
     #################
-
     public function BusquedaMaquinasDeDialisis(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");
@@ -906,83 +1002,6 @@ $ssss=0;
         $this->output->set_output(json_encode($TABLA));
     }
 
-    public function busqueda_pacientes_parametos() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-        $empresa = $this->session->userdata("COD_ESTAB");
-        $html = '';
-        $accesdata = '';
-        $OPCION = $this->input->post('OPCION');
-        $RUTPAC = $this->input->post('RUTPAC');
-        $DV = $this->input->post('DV');
-        $LFICHA = $this->input->post('LFICHA');
-        $TABLA[] = array("id_html" => "resultadoBusqueda_post", "opcion" => "html", "contenido" => '');
-
-        if ($OPCION == '1') {
-            $accesdata = $this->institucionales_model->busquedaDatosSolicitud($RUTPAC, $empresa);
-        } else if ($OPCION == '2') {
-            $accesdata = $this->institucionales_model->busquedaPacientexFichaLocal($LFICHA, $empresa);
-        }
-
-        if (count($accesdata) > 0) {
-            foreach ($accesdata as $i => $row) {
-                $html.='<div class="card">
-                            <div class="header">
-                                <h4 class="title"><b>DATOS DEL PACIENTE</b></h4>
-                                <p class="category">Informaci&oacute;n Basica</p>
-                            </div>
-                            <div class="content">
-                                 <dl class="row">
-                                    <dt class="col-sm-2"><i class="fa fa-user-circle" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10">' . $row["NOMBRE_PAC"] . '</dd>
-                                    <dt class="col-sm-2"><i class="fa fa-id-card-o" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10">' . $row["CAMPO2"] . '-' . $row["CAMPO3"] . '</dd>
-                                    <dt class="col-sm-2"><i class="fa fa-mobile" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10">9999999999</dd>
-                                    <dt class="col-sm-2"><i class="fa fa-birthday-cake" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10">' . $row["CAMPO5"] . '</dd>
-                                    <hr>                                    
-                                </dl>
-                                <hr>
-                                <dl class="row">
-                                    <dt class="col-sm-6"> FECHA HISTORICO INGRESO</i></dt>
-                                    <dd class="col-sm-6"><div id="fecha">
-                                        <div class="input-group date" id="datetimepicker1"  style="width: 210px;">
-                                            <input type="text" class="form-control" value="' . date("d-m-Y") . '" id="numFecha" name="numFecha"/>
-                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                        </div>
-                                    </dd>
-                                </dl>        
-                                <script>
-                                  $("#datetimepicker1").datetimepicker({
-                                            format          : "DD-MM-YYYY",
-                                            icons           : 
-                                                            {
-                                                                time        : "fa fa-clock-o"       ,
-                                                                date        : "fa fa-calendar"      ,
-                                                                up          : "fa fa-chevron-up"    ,
-                                                                down        : "fa fa-chevron-down"  ,
-                                                                previous    : "fa fa-chevron-left"   ,
-                                                                next        : "fa fa-chevron-right"  ,
-                                                                today       : "fa fa-screenshot"     ,
-                                                                clear       : "fa fa-trash"          ,
-                                                                close       : "fa fa-remove"         ,
-                                                            }
-                                            });
-                                </script>
-                            </div>
-                        </div>                        
-                        ';
-                $html.='<script>$("#fic_e").val(' . $row['CAMPO10'] . ');</script>';
-            }
-        } else {
-            $html.='<tr><td colspan="5"> SIN INFORMACI&Ograve;N</td></tr>';
-        }
-        $TABLA[] = array("id_html" => "resultadoBusqueda_post", "opcion" => "append", "contenido" => $html);
-        $TABLA[] = array("id_html" => "", "opcion" => "console", "contenido" => $accesdata);
-        $this->output->set_output(json_encode($TABLA));
-    }
 
     public function guardaNuevoPacienteIngreso() {
         if (!$this->input->is_ajax_request()) {

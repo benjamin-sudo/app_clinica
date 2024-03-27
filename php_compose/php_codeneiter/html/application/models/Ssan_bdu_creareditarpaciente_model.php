@@ -1,6 +1,8 @@
 <?php
 defined("BASEPATH") OR exit("No direct script access allowed");
+
 //require_once(APPPATH . '/models/ClassFonasa/libsp/nusoapwsf.php');
+
 class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
     var $tableSpace     =   "ADMIN";
@@ -137,6 +139,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         return $query->row();
     }
 
+    #call ingreso paciente
     public function getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx) {
         $query = $this->db->query($this->sql_class_ggpacientes->sqlConsultaPacienteNEW($this->tableSpace, $numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx));
         return $query->result_array();
