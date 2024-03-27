@@ -10,7 +10,6 @@
         }
     }
 ?>
-
 <ul class="nav nav-tabs" id="recurso_humano_dialisis" role="tablist" style="margin-top: 10px;">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="ind_medicos-tab" data-bs-toggle="tab" data-bs-target="#ind_medicos" type="button" role="tab" aria-controls="ind_medicos" aria-selected="true">MEDICOS</button>

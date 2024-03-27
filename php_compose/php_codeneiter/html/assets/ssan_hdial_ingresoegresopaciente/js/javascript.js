@@ -44,30 +44,83 @@ $(document).ready(function() {
         $("#btn_guarda_infoxususario").prop('disabled',true);
     });
 
-    $('#Rut_form').Rut({
-       on_error : function(){
-            $('#ErrorRutVF').html("Rut Incorrecto");
-            $("#ErrorRutVF").show('slow').fadeOut('slow').fadeIn('slow');            
-            $('#Hdd_RtInc').val(1);
-            Limpiar1();
-            $("#Dv_form_IngEnf").hide(); 
-            $("#resultadoBusqueda_post").html(""); 
-            $("#dv_mnj_frm").html("");  
-       },
-       on_success : function(){
-           $('#Hdd_RtInc').val(0);
-           $('#ErrorRutVF').html('');
-           $("#ErrorRutVF").hide('slow');
-           js_grabadatosPaciente();
-       },
-       format_on : 'keyup'
-    });
-    
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
+    $('#modal_nuevo_ingreso_paciente').on('hidden.bs.modal',function(e){ 
+        //$("#html_nuevo_ingreso_paciente").html('');
+    });
+
+
+    $('#rut_paciente').Rut({
+        on_error : function(){
+            jError("RUN no es correcto","CLINICA LIBRE CHILE");
+        },
+        on_success : function(){
+            js_grabadatosPaciente();
+        },
+        format_on : 'keyup'
+    });
 
 });
+
+function nuevoPacienteAgresado(){
+    $("#modal_nuevo_ingreso_paciente").modal({backdrop:'static',keyboard:false}).modal("show");
+}
+
+function js_grabadatosPaciente(){    
+    var Rut_form     =    $("#rut_paciente").val().replace(/\./g,'');//11111111-0    
+        Rut_form     =    Rut_form.split("-");
+    var txtBuscar    =    Rut_form[0];
+    var txtDv        =    Rut_form[1];
+    //var txtDv      =    $("#txtDv").val();
+    var lficha       =    '';
+
+
+    console.log("   -----------------------------   ");
+    console.log("   txtBuscar   ->  ",txtBuscar);
+    console.log("   txtDv       ->  ",txtDv);
+
+
+    /*
+    $.ajax({ 
+        type		 :  "POST",
+        url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
+        dataType     :  "json",
+        beforeSend   :   function(xhr) {     },
+        data 		 :  { 
+                            OPCION          : 1,
+                            RUTPAC          : txtBuscar,
+                            RUTDV           : txtDv,
+                            LFICHA          : lficha,
+                        },
+        error		:   function(errro) {  
+                                            console.log("1111_1_1_1_1"); 
+                                            jAlert(errro.responseText); 
+                                        },
+        success		:   function(aData) {  
+            
+                                            console.log("22222_2_2_2_2"); 
+                                            if(AjaxExtJsonAll(aData)){ 
+                                                console.log("333_3_3_3"); 
+                                            }; 
+                                        
+                                        }, 
+    });
+    */
+
+    /*
+    if(txtBuscar!=''){
+        var variables   =   {"txtBuscar":txtBuscar,"ed":ed}; 
+        var id          =   "respuesta";
+        var funcion     =   "TraeDatIng"; 
+        AjaxExt(variables, id, funcion);
+    }
+    */
+
+
+}
+
 
 function busquedaPacientes(){
     $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
@@ -121,10 +174,7 @@ function busquedaMaquinasDeDiaslisis(){
                                                     }; 
                                                 }, 
     });
- }
- 
-
-
+}
 
 function js_nuevo_prestador_dialisis(){
     $.ajax({ 
@@ -165,6 +215,7 @@ function js_busqueda_rrhh(){
                                                    console.log("---------------------------------------");
                                                    console.log("aData      ->  ",aData);
                                                    console.log("---------------------------------------");
+
                                                    $('#loadFade').modal('hide');
                                                    $("#li_busqueda_rrhh").attr('onclick',''); 
                                                    $("#IND_RRHH").html(aData.html); 
@@ -325,7 +376,6 @@ function js_guarda_dialisis(){
 
 //********************************************************************************
 //code old
-
 function busquedaPacientesxMaquina(){
    $("#PACIENTEXMAQUINA").html("");
    $.ajax({ 
@@ -347,42 +397,6 @@ function busquedaPacientesxMaquina(){
 }
 
 
-function js_grabadatosPaciente(ed){    
-  Limpiar1();$("#Dv_form_IngEnf").hide(); $("#resultadoBusqueda_post").html(""); $("#dv_mnj_frm").html("");  
-   if($("#Hdd_RtInc").val()==1){
-       return false;
-   }
-  //11.111.111-0
-   var Rut_form        = $("#Rut_form").val().replace(/\./g,'');//11111111-0    
-       Rut_form        = Rut_form.split("-");
-   var txtBuscar       = Rut_form[0];
-   var txtDv           = Rut_form[1];
- //var txtDv           = $("#txtDv").val();
-   var lficha          = $("#lficha").val();
-   $.ajax({ 
-       type		    :   "POST",
-       url 		    :   "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
-       dataType     :   "json",
-       beforeSend   :   function(xhr) {     },
-       data 		:   { 
-                            OPCION          : 1,
-                            RUTPAC          : txtBuscar,
-                            RUTDV           : txtDv,
-                            LFICHA          : lficha,
-                        },
-       error		:   function(errro){  console.log("1111_1_1_1_1"); alert(errro.responseText); },
-       success		:   function(aData){  console.log("22222_2_2_2_2"); if(AjaxExtJsonAll(aData)){ console.log("333_3_3_3"); }; }, 
-   });
-   
-  
-   if(txtBuscar!=''){
-       var variables   =   {"txtBuscar":txtBuscar,"ed":ed}; //Variables pasadas por ajax a la funcion
-       var id          =   "respuesta";
-       var funcion     =   "TraeDatIng"; //Funcion del Controlador a Ejecutar 
-       AjaxExt(variables, id, funcion);
-   }
-}
-
 function js_imprimiringeg(RSIND){
    $("#imp_Cod_cie10_1").html("");
    var variables       =   {"txtBuscar":RSIND}; //Variables pasadas por ajax a la funcion
@@ -392,78 +406,75 @@ function js_imprimiringeg(RSIND){
 }
 
 function A_INGRESODIAL(numFichae){    
-   $("#formulario_ing_enf").validate();
+    $("#formulario_ing_enf").validate();
+    //1. ANTECEDENTES PERSONALES_______________________________________
+    var text_ant_qui            =   $("#text_ant_qui").val();
+    var Rdo_infenf_Ant_Alerg    =   $('input[name="Rdo_infenf_Ant_Alerg"]:checked').val();
+    var txt_Alimn               =   $("#txt_Alimn").val();
+    var txt_Medicamnt           =   $("#txt_Medicamnt").val();
+    var txt_Otrs                =   $("#txt_Otrs").val();
+    var agrupadascie10          =   "";
+    var Cie10Agrupados          =   new Array();
+    $('[id^=Hd_Cie10_]').each(function () {  //Obtener valores de Diagnostico
+        // arrpreg
+        var objProducto         =   new Object();
+        objProducto.h           =   $(this).attr('id');
+        objProducto.h           =   objProducto.h.replace('Hd_Cie10_', '');
+        objProducto.RespCie     =   $("#Hd_Cie10_" + objProducto.h).val();//lo que contesto
+        agrupadascie10          +=  $("#Hd_Cie10_" + objProducto.h).val()+',';//lo que contesto
+        Cie10Agrupados.push(objProducto);
+    });
    
-   //1. ANTECEDENTES PERSONALES_______________________________________
-   var text_ant_qui            =   $("#text_ant_qui").val();
-   var Rdo_infenf_Ant_Alerg    =   $('input[name="Rdo_infenf_Ant_Alerg"]:checked').val();
-   var txt_Alimn               =   $("#txt_Alimn").val();
-   var txt_Medicamnt           =   $("#txt_Medicamnt").val();
-   var txt_Otrs                =   $("#txt_Otrs").val();
-   var agrupadascie10          =   "";
-   var Cie10Agrupados          =   new Array();
-   $('[id^=Hd_Cie10_]').each(function () {  //Obtener valores de Diagnostico
-       // arrpreg
-       var objProducto         =   new Object();
-       objProducto.h           =   $(this).attr('id');
-       objProducto.h           =   objProducto.h.replace('Hd_Cie10_', '');
-       objProducto.RespCie     =   $("#Hd_Cie10_" + objProducto.h).val();//lo que contesto
-       agrupadascie10          +=  $("#Hd_Cie10_" + objProducto.h).val()+',';//lo que contesto
-       Cie10Agrupados.push(objProducto);
-   });
-   
-   jAlert(agrupadascie10);
-   var ERROR='';
-   
-   var txt_Est_derUrg      =   $("#txt_Est_derUrg").val();                    
-   var txt_grup_sang       =   $("#txt_grup_sang").val();                         
-   var txt_eRre_H          =   $("#txt_eRre_H").val();                               
-   
-   //2.EXAMEN FISICO GENERAL
-   
-   var text_Pso            =   $("#text_Pso").val();                                      
-   var text_eFeC           =   $("#text_eFeC").val();                                 
-   var text_PeASis         =   $("#text_PeASis").val();                             
-   var text_PeADis         =   $("#text_PeADis").val();                             
-   var text_Tlla           =   $("#text_Tlla").val();                                 
-   var text_Movlidad       =   $("#text_Movlidad").val();                        
-   var text_Nutrcion       =   $("#text_Nutrcion").val();
-   var text_Grad_conci     =   $("#text_Grad_conci").val();
-   var text_Est_Pel        =   $("#text_Est_Pel").val();
-   var text_Conjvas        =   $("#text_Conjvas").val();
-   var text_Yugues         =   $("#text_Yugues").val();
-   var text_Extrdes        =   $("#text_Extrdes").val();
-   var text_Favv           =   $("#text_Favv").val();
-   var text_Fech_Favv      =   $("#text_Fech_Favv").val();
-   var text_Gortex         =   $("#text_Gortex").val();
-   var text_Fech_Gortex    =   $("#text_Fech_Gortex").val();
-   var text_Catter         =   $("#text_Catter").val();
-   var text_Fech_Catter    =   $("#text_Fech_Catter").val();
-   var Rdo_Diuesis         =   $('input[name="Rdo_Diuesis"]:checked').val();
-   var text_Volmen_Diuesis =   $("#text_Volmen_Diuesis").val();
-   var text_Hvvc           =   $("#text_Hvvc").val();
-   var text_Fech_Hvvc      =   $("#text_Fech_Hvvc").val();
-   var text_Hiiv           =   $("#text_Hiiv").val();
-   var text_Fech_Hiiv      =   $("#text_Fech_Hiiv").val();
-   var text_Hbssag         =   $("#text_Hbssag").val();
-   var text_Fech_Hbssag    =   $("#text_Fech_Hbssag").val();
-   
-   //3. ANTECEDENTES HEMODIALISIS____________________________
-   var text_QQB            =   $("#text_QQB").val();
-   var Rdo_QQB             =   $('input[name="Rdo_QQB"]:checked').val();
-   var text_1Dos_hvb       =   $("#text_1Dos_hvb").val();
-   var text_QQD            =   $("#text_QQD").val();
-   var text_Banno_QD       =   $("#text_Banno_QD").val();
-   var text_2Dos_hvb       =   $("#text_2Dos_hvb").val();
-   var text_PesoSco        =   $("#text_PesoSco").val();
-   var text_Banno_QD       =   $("#text_Banno_QD").val();
-   var text_3Dos_hvb       =   $("#text_3Dos_hvb").val();
-   var text_1ref_hvb       =   $("#text_1ref_hvb").val();
-   
-   //4. OBSERVACIONES_____________________________________
-   var text_4Obss          =   $("#text_4Obss").val();
-   var text_Enfera         =   $("#text_Enfera").val();
-   var text_Fech_Enfra     =   $("#text_Fech_Enfra").val();
+    //jAlert(agrupadascie10);
+    var ERROR               =   '';
+    var txt_Est_derUrg      =   $("#txt_Est_derUrg").val();                    
+    var txt_grup_sang       =   $("#txt_grup_sang").val();                         
+    var txt_eRre_H          =   $("#txt_eRre_H").val();                               
+    
+    //2.EXAMEN FISICO GENERAL
+    var text_Pso            =   $("#text_Pso").val();                                      
+    var text_eFeC           =   $("#text_eFeC").val();                                 
+    var text_PeASis         =   $("#text_PeASis").val();                             
+    var text_PeADis         =   $("#text_PeADis").val();                             
+    var text_Tlla           =   $("#text_Tlla").val();                                 
+    var text_Movlidad       =   $("#text_Movlidad").val();                        
+    var text_Nutrcion       =   $("#text_Nutrcion").val();
+    var text_Grad_conci     =   $("#text_Grad_conci").val();
+    var text_Est_Pel        =   $("#text_Est_Pel").val();
+    var text_Conjvas        =   $("#text_Conjvas").val();
+    var text_Yugues         =   $("#text_Yugues").val();
+    var text_Extrdes        =   $("#text_Extrdes").val();
+    var text_Favv           =   $("#text_Favv").val();
+    var text_Fech_Favv      =   $("#text_Fech_Favv").val();
+    var text_Gortex         =   $("#text_Gortex").val();
+    var text_Fech_Gortex    =   $("#text_Fech_Gortex").val();
+    var text_Catter         =   $("#text_Catter").val();
+    var text_Fech_Catter    =   $("#text_Fech_Catter").val();
+    var Rdo_Diuesis         =   $('input[name="Rdo_Diuesis"]:checked').val();
+    var text_Volmen_Diuesis =   $("#text_Volmen_Diuesis").val();
+    var text_Hvvc           =   $("#text_Hvvc").val();
+    var text_Fech_Hvvc      =   $("#text_Fech_Hvvc").val();
+    var text_Hiiv           =   $("#text_Hiiv").val();
+    var text_Fech_Hiiv      =   $("#text_Fech_Hiiv").val();
+    var text_Hbssag         =   $("#text_Hbssag").val();
+    var text_Fech_Hbssag    =   $("#text_Fech_Hbssag").val();
+    
+    //3. ANTECEDENTES HEMODIALISIS____________________________
+    var text_QQB            =   $("#text_QQB").val();
+    var Rdo_QQB             =   $('input[name="Rdo_QQB"]:checked').val();
+    var text_1Dos_hvb       =   $("#text_1Dos_hvb").val();
+    var text_QQD            =   $("#text_QQD").val();
+    var text_Banno_QD       =   $("#text_Banno_QD").val();
+    var text_2Dos_hvb       =   $("#text_2Dos_hvb").val();
+    var text_PesoSco        =   $("#text_PesoSco").val();
+    var text_Banno_QD       =   $("#text_Banno_QD").val();
+    var text_3Dos_hvb       =   $("#text_3Dos_hvb").val();
+    var text_1ref_hvb       =   $("#text_1ref_hvb").val();
+    
+    //4. OBSERVACIONES_____________________________________
+    var text_4Obss          =   $("#text_4Obss").val();
+    var text_Enfera         =   $("#text_Enfera").val();
+    var text_Fech_Enfra     =   $("#text_Fech_Enfra").val();
    
    
    jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al sistema de dialisis <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
@@ -706,12 +717,6 @@ function js_idPac(value){
    console.log(value);
 }
 
-function nuevoPacienteAgresado(){
-    Limpiar1(); 
-    $("#Rut_form").val(""); 
-    $("#Dv_form_IngEnf").hide();
-    $("#nuevoProfesional").modal({backdrop:'static',keyboard:false}).modal("show");
-}
 
 function Cod_o_Text(num){
     if(num == 1){
@@ -720,7 +725,6 @@ function Cod_o_Text(num){
             $('#resp_Cancer_59').val('');  
         }
     }
-
     if(num == 2){//diagnostico cie10
         var nomcie102   =   $('#nomcie102').val(); 
         if(nomcie102==""){
@@ -731,29 +735,24 @@ function Cod_o_Text(num){
 
 function onClickDiagnostico2(codigo, descripcion,cod,gs) {
  var ges='<img  style="width: 30px;padding-bottom: 3px;" src="assets/ssan_seleccionarinterconsulta/img/ges.png"><input type="hidden" value="1" id="1s_g_es">';
- if( $("#Hd_Cie10_"+cod).val() ){
-     //alert("siiii");
- }else{
-         if(gs==0){
-           ges='';              
-         }
-    $("<tr id='TR_Cie10_"+cod+"'><td style='background-color: #bff1ff; border: solid 1px #7bc2d6;'> "+descripcion+ges+"  <input type='hidden' value='"+cod+"'  id='Hd_Cie10_"+cod+"'> </td><td><a style='padding: 1px;background-color: #c91f25;' class='btn btn-small btn-success' onclick='EliminaFilaCie10("+cod+");select_2();'><i class='fa fa-times icon-large'></i></a></td></tr>"  ).appendTo("#Cod_cie10_1");
-   
-   $('.autocompletar2').val('');
-   $('.autocomplete-jquery-results').hide();
- }
-   
+    if( $("#Hd_Cie10_"+cod).val() ){
+        //alert("siiii");
+    }else{
+        if(gs==0){ ges='';}
+        $("<tr id='TR_Cie10_"+cod+"'><td style='background-color: #bff1ff; border: solid 1px #7bc2d6;'> "+descripcion+ges+"  <input type='hidden' value='"+cod+"'  id='Hd_Cie10_"+cod+"'> </td><td><a style='padding: 1px;background-color: #c91f25;' class='btn btn-small btn-success' onclick='EliminaFilaCie10("+cod+");select_2();'><i class='fa fa-times icon-large'></i></a></td></tr>"  ).appendTo("#Cod_cie10_1");
+        $('.autocompletar2').val('');
+        $('.autocomplete-jquery-results').hide();
+    }
 }
+
 function EliminaFilaCie10(idcod){
-   $("#TR_Cie10_"+idcod).remove();
-   
-   if( $("#1s_g_es").val() ){
-       //alert("siiii");
-   }else{
-      // alert("noooooou");
-       $("#Rdo_Ges_0").prop("checked", true);
-   }
-   
+    $("#TR_Cie10_"+idcod).remove();
+    if( $("#1s_g_es").val() ){
+        //alert("siiii");
+    }else{
+        // alert("noooooou");
+        $("#Rdo_Ges_0").prop("checked", true);
+    }
 }
 
 function grabaform(){//segundo formularpo
@@ -885,7 +884,6 @@ function grab(ed){
 
     //jAlert(mensaje);
     //return false;
- 
     //var agrupadascie10="";
     var Cie10Agrupados = new Array();
     $('[id^=Hd_Cie10_]').each(function () {  //Obtener valores de Diagnostico
@@ -948,7 +946,6 @@ function imprimePdrf() {
    var funcion     = "index"; //Funcion del Controlador a Ejecutar
    var variables   = {"fe":fe}; //Variables pasadas por ajax a la funcion
    AjaxExt(variables,id, funcion, '', 'Pdf_ing_paciente'); //Funcion que Ejecuta la llamada del ajax 
-
 }
 
 function js_pdfHTML2(IDHOJADIARIA){

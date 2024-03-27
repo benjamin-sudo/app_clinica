@@ -414,14 +414,13 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 
                 $idAdmision                     = $this->db->sequence($this->own,'SEQ_URG_TADMISION');
                 
-		$query                          = $this->db->query($this->sql_class_hdial->sqlNextValFolio($this->own,$empresa,$PA_ID_PROCARCH));
+		        $query                          = $this->db->query($this->sql_class_hdial->sqlNextValFolio($this->own,$empresa,$PA_ID_PROCARCH));
                 $AD_NUMFOLIO                    = $query->result_array();
-                
                 $AD_FHADMISION                  = explode("-",$fechaHerno);
                 $dataCitas                      = array(
                     'AD_ID_ADMISION'            => $idAdmision,
                     'COD_EMPRESA'               => $empresa,
-                    'AD_NUMFOLIO'		=> $AD_NUMFOLIO[0]['NFOLIO'],
+                    'AD_NUMFOLIO'		        => $AD_NUMFOLIO[0]['NFOLIO'],
                     //'AD_NUMFOLIO'             => $this->own.'.SEQ_URG_TADMISION_FOLIO_$cod_empresa.nextval', 
                     'AD_PROCEDENCIA'            => $PA_ID_PROCARCH,
                     'COD_TRANSPORTE'            => '0',   

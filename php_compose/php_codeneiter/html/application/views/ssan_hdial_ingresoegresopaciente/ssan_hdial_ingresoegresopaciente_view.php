@@ -20,9 +20,9 @@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">OPCIONES</a>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="javascript:js_nuevo_prestador_dialisis(1)"><i class="bi bi-person-vcard"></i>&nbsp;NUEVO PROFESIONAL</a></li>
+            <li><a class="dropdown-item" href="javascript:nuevoPacienteAgresado(1)"><i class="bi bi-universal-access-circle"></i>&nbsp;NUEVO INGREGO A PACIENTE PARA TRATAMIENTO DE HERMODIALISIS</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="javascript:nuevoPacienteAgresado(1)"><i class="bi bi-universal-access-circle"></i>&nbsp;NUEVO INGREGO A PACIENTE</a></li>
+            <li><a class="dropdown-item" href="javascript:js_nuevo_prestador_dialisis(1)"><i class="bi bi-person-vcard"></i>&nbsp;NUEVO PROFESIONAL</a></li>
         </ul>
     </li>
 </ul>
@@ -62,15 +62,15 @@
         <div class="grid_panel_paciente">
             <div class="grid_panel_paciente1">
                 <h4 style="margin-bottom: 0px;"><b>M&Aacute;QUINAS DE DI&Aacute;LISIS</b></h4>
-                <p style="margin-bottom: 8px;">LISTA MAQUINAS DI&Aacute;LISIS POR ESTABLECIMIENTO</p> 
+                <p style="margin-bottom: 8px;">LISTA M&Aacute;QUINAS DI&Aacute;LISIS POR ESTABLECIMIENTO</p> 
             </div>
             <div class="grid_panel_paciente2">&nbsp;</div>
         </div>
         <table class="table table-striped" width="100%" >
             <thead>
                 <tr>
-                    <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
-                    <th class="subtitulo_formulario2" width="40%">MAQUINA (CODIGO)</th>
+                    <th class="subtitulo_formulario2" width="2%">N&deg;</th>
+                    <th class="subtitulo_formulario2" width="40%">MAQUINA (C&Oacute;DIGO)</th>
                     <th class="subtitulo_formulario2" width="20%">FOLIO MAQUINA</th>
                     <th class="subtitulo_formulario2" width="10%">ESTADO</th>
                     <th class="subtitulo_formulario2" width="15%">N&deg; PACIENTE</th>
@@ -81,7 +81,11 @@
         </table>
     </div>
 </div>
+
+<!-- ZONA -->
+
 <section>
+
     <div class="modal fade" id="TURNOXMAQUINA">
         <div class="modal-dialog modal-xl3">
             <div class="modal-content">
@@ -188,7 +192,52 @@
             </div>
         </div>
     </div>
-    <!--  ZONA INPUT INGRESO DE PACIENTE -->
+    
+    <div class="modal fade" id="modal_nuevo_ingreso_paciente">
+        <div class="modal-dialog modal_imedico">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>INGRESO DE PACIENTE DE DI&Aacute;LISIS</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_nuevo_ingreso_paciente">
+
+                    <div class="nuevo_ingreso_pacientehd">
+                        <div class="nuevo_ingreso_pacientehd1">
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-md"></i>&nbsp;<b>RUN PACIENTE</b></span>
+                                    <input type="text" id="rut_paciente" name="rut_paciente" class="form-control input-sm" style="width:115px;">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="nuevo_ingreso_pacientehd2">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_valida_paciente" onclick="valida_paciente()" style="margin-top:23px;">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nuevo_ingreso_pacientehd3">
+
+                                --.--
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-square-fill"></i>&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ZONA INPUT INGRESO DE PACIENTE -->
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
     <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">

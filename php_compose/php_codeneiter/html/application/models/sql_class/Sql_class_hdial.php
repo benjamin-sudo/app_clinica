@@ -1837,7 +1837,6 @@ class sql_class_hdial extends CI_Model {
         return $sQuery;
     }
     
-    
     public function sql_ListadopremisosxHD($empresa,$HD,$LLAVE,$IDCORRECION){
             $sQuery = "
                 SELECT 

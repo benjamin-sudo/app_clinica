@@ -133,6 +133,7 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
     //**************************************************************************
     //code old
     //Forma de realizar una consulta SQL
+    //**************************************************************************
     public function TraeUDingres() {
         $query = $this->db->first_query("SELECT 
             FOLIO_ORIGEN

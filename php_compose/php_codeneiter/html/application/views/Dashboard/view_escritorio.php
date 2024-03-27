@@ -200,6 +200,7 @@
   <!-- web socket -->
   <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
     <section>
+
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -233,7 +234,6 @@
           </div>
         </div>
       </div>
-
       <div class="modal fade" id="modal_perfil_usuario">
           <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
               <div class="modal-content">
@@ -252,7 +252,6 @@
               </div>
           </div>
       </div>
-      
     </section>
   </body>
 </html>

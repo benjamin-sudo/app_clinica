@@ -324,16 +324,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->output->set_output(json_encode($TABLA));
     }
 
-
-
-
-
-
-
-    public function gestormaquinaxturno() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+    public function gestormaquinaxturno(){
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        
         $empresa = $this->session->userdata("COD_ESTAB");
         $html = '';
         $calendar = '';
@@ -635,30 +628,27 @@ $ssss=0;
         if ($exito == 1) {
             $html.='<script>$("#Dv_form_IngEnf").show();</script>';
             $html.='<script>$("#dv_mnj_frm").html("")</script>';
+            
             if($ed!=''){
-                 $html.='<script>$("#spn_BtnEdi").html("<a class=\'btn btn-primary\' onclick=\'grab('.$ed.');\'><i class=\'\'></i> EDITAR</a>");</script>';
-                  $html.='<script>$("#spn_BtnGrab").html("");</script>';
+                $html.='<script>$("#spn_BtnEdi").html("<a class=\'btn btn-primary\' onclick=\'grab('.$ed.');\'><i class=\'\'></i> EDITAR</a>");</script>';
+                $html.='<script>$("#spn_BtnGrab").html("");</script>';
             }else{
-             $html.='<script>$("#spn_BtnEdi").html("");</script>';
-              $html.='<script>$("#spn_BtnGrab").html("<button type=\'submit\' class=\'btn btn-success\'><i class=\'pe-7s-diskette\'></i> INGRESO PROGRAMA HEMODIALISIS </button>");</script>';
-        }
+                $html.='<script>$("#spn_BtnEdi").html("");</script>';
+                $html.='<script>$("#spn_BtnGrab").html("<button type=\'submit\' class=\'btn btn-success\'><i class=\'pe-7s-diskette\'></i> INGRESO PROGRAMA HEMODIALISIS </button>");</script>';
+            }
            
         }
 
         
-         if($ssss!=0){
-                $html.='<script>selec_(542,'.$ssss.');</script>';
-            }
+        if($ssss!=0){
+            $html.='<script>selec_(542,'.$ssss.');</script>';
+        }
         //$html.='<script>$("#Btn_imp_imng").html("<a class=\'btn btn-info\' href=\'javascript:imprimePdrf()\' aria-label=\'Print\'><i class=\'fa fa-search\' aria-hidden=\'true\'></i> IMPRIMIR</a>")</script>';
-
-
         $this->output->set_output($html);
     }
 
     public function TraeDatIng_IMP() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+        if (!$this->input->is_ajax_request()){ show_404(); }
         $txtBuscar = $this->input->post('txtBuscar');
         $row = $this->ssan_hdial_ingresoegresopaciente_model->Cons_ingresoPac($txtBuscar, $this->empresa);
         $html = '';
@@ -834,25 +824,21 @@ $ssss=0;
                 }
             }
 
-            
-           
-
-
-           // $html.='<script>console.log("-------------7");</script>';
+        
+        // $html.='<script>console.log("-------------7");</script>';
         } else {
             $exito = 1;
            // $html.='<script>console.log("-------------8");</script>';
         }
         if ($exito == 1) {
-//            $html.='<script>$("#Dv_form_IngEnf").show();</script>';
-//            $html.='<script>$("#dv_mnj_frm").html("")</script>';
-
-        //    $html.='<script>console.log("-------------9");</script>';
+            //$html.='<script>$("#Dv_form_IngEnf").show();</script>';
+            //$html.='<script>$("#dv_mnj_frm").html("")</script>';
+            //$html.='<script>console.log("-------------9");</script>';
         }
 
         //$html.='<script>$("#Btn_imp_imng").html("<a class=\'btn btn-info\' href=\'javascript:imprimePdrf()\' aria-label=\'Print\'><i class=\'fa fa-search\' aria-hidden=\'true\'></i> IMPRIMIR</a>")</script>';
         $html.='<script>imprimePdrf();</script>';
-      //  $html.='<script>console.log("-------------10");</script>';
+        //$html.='<script>console.log("-------------10");</script>';
         $this->output->set_output($html);
     }
 
