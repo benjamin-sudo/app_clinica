@@ -31,15 +31,15 @@
     <div class="tab-pane fade margen_tabs show active" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
         <div id="IND_RRHH"><?php echo $html_out;?></div>
     </div>
-    <div class="tab-pane fade " id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
         <div class="grid_panel_paciente">
             <div class="grid_panel_paciente1">
-                <h2 style="margin-top: 0px;margin-bottom: 0px;"><b>PACIENTE EN DIALISIS</b></h2>
-                <p>LISTA PACIENTES INGRESADOS</p> 
+                <h4 style="margin-bottom: 0px;"><b>LISTADO TECNICO PARAMEDICOS DE DI&Aacute;LISIS</b></h4>
+                <p style="margin-bottom: 0px;">LISTA PACIENTES INGRESADOS</p> 
             </div>
             <div class="grid_panel_paciente2">
                 <p style="margin-bottom: 0px;"><b>BUSCAR</b>&nbsp;<i class='fa fa-search icon-4x'></i></p> 
-                <input type="text" id="searchTermIng2" class="form-control"  style="width: auto;" onkeyup="doSearch(2)"></b>
+                <input type="text" id="searchTermIng2" class="form-control" style="width: auto;margin-bottom:6px;" onkeyup="doSearch(2)"></b>
             </div>
         </div>
         <table class="table table-striped" width="100%">
@@ -59,15 +59,13 @@
         </table>
     </div>
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        <table width="100%" style="margin-top: 14px;">
-            <tr>
-                <td width="80%">
-                    <h2 style="margin-bottom: 0px;margin-top: 0px;margin-left: 10px;"><b>M&Aacute;QUINAS DE DI&Aacute;LISIS</b></h2>
-                    <p style="margin-left: 10px;">LISTA MAQUINAS DI&Aacute;LISIS POR ESTABLECIMIENTO</p> 
-                </td>
-                <td width="20%" style="text-align:right"></td>
-            </tr>
-        </table>
+        <div class="grid_panel_paciente">
+            <div class="grid_panel_paciente1">
+                <h4 style="margin-bottom: 0px;"><b>M&Aacute;QUINAS DE DI&Aacute;LISIS</b></h4>
+                <p style="margin-bottom: 8px;">LISTA MAQUINAS DI&Aacute;LISIS POR ESTABLECIMIENTO</p> 
+            </div>
+            <div class="grid_panel_paciente2">&nbsp;</div>
+        </div>
         <table class="table table-striped" width="100%" >
             <thead>
                 <tr>
@@ -190,11 +188,9 @@
             </div>
         </div>
     </div>
-
     <!--  ZONA INPUT INGRESO DE PACIENTE -->
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
     <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
-
 </section>
