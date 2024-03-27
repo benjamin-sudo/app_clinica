@@ -88,22 +88,24 @@
                 Factor Sangre	
             </div>
             <div class="grid_ingreso_enfermeria2">
-                <select name="cboFactorSangre" id="cboFactorSangre" onchange="" class="" style="width: 64%;">
+                <select name="cboFactorSangre" id="cboFactorSangre" class="form-select">
                     <option value="">SELECCIONE...</option>
                     <option value="NS">NO SABE</option>
                     <option value="1">RH(+)</option>
                     <option value="0">RH(-)</option>
                 </select>
             </div>
-
-            <div class="card-header featured-header" style="margin-top:-15px;">
+            <div class="card-header featured-header" style="margin-top:-5px;">
                 <b>2. EXAMEN FISICO GENERAL</b>
             </div>
-            
-           
-            
-
-
+            <div class="featured-header">
+                <div class="grid_unoxcuatro">
+                    <div class="grid_unoxcuatro">Peso</div>
+                    <div class="grid_unoxcuatro">FC</div>
+                    <div class="grid_unoxcuatro">P/A</div>
+                    <div class="grid_unoxcuatro">Talla</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -115,8 +117,13 @@
         gap                                 :   8px;
     }
 
-    .featured-header {
-        grid-column: 1 / span 2;
+    .grid_unoxcuatro                        {
+        display                             :   grid;
+        grid-template-columns               :   1fr 1fr 1fr 1fr;
+        gap                                 :   8px;
     }
 
+    .featured-header                        {
+        grid-column                         :   1 / span 2;
+    }
 </style>
