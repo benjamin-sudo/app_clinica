@@ -75,7 +75,6 @@ function js_grabadatosPaciente(){
     var txtDv        =    Rut_form[1];
     //var txtDv      =    $("#txtDv").val();
     var lficha       =    '';
-
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar);
     console.log("   txtDv       ->  ",txtDv);
@@ -100,8 +99,6 @@ function js_grabadatosPaciente(){
                                             $('#loadFade').modal('hide');
                                             console.log("busqueda_pacientes_parametos ->",aData); 
 
-
-                                            
                                         }, 
     });
 

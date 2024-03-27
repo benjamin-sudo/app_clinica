@@ -591,10 +591,9 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 			}
 			//$this->db->insert($this->tableSpace . '.SO_THISTCPACTE', $SO_THISTCPACTE);
 			
-			
-                    $this->db->where('COD_EMPRESA', $codEmpresa);
-                    $this->db->where('NUM_FICHAE', $numFichae);
-                    $this->db->update($this->tableSpace . '.SO_TCPACTE', $creaDatosLocales);
+                $this->db->where('COD_EMPRESA', $codEmpresa);
+                $this->db->where('NUM_FICHAE', $numFichae);
+                $this->db->update($this->tableSpace . '.SO_TCPACTE', $creaDatosLocales);
 		    
                 } else {
 		    
