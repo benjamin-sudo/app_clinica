@@ -75,6 +75,7 @@ function js_grabadatosPaciente(){
     var txtDv        =    Rut_form[1];
     //var txtDv      =    $("#txtDv").val();
     var lficha       =    '';
+    
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar);
     console.log("   txtDv       ->  ",txtDv);
@@ -85,22 +86,23 @@ function js_grabadatosPaciente(){
         dataType     :  "json",
         beforeSend   :   function(xhr){ $('#loadFade').modal('show'); },
         data 		 :  { 
-                            OPCION          : 1,
-                            RUTPAC          : txtBuscar,
-                            RUTDV           : txtDv,
-                            LFICHA          : lficha,
+                            OPCION : 1,
+                            RUTPAC : txtBuscar,
+                            RUTDV : txtDv,
+                            LFICHA : lficha,
                         },
         error		:   function(errro) {  
                                             console.log(errro.responseText); 
                                             jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE");
-                                            $('#loadFade').modal('hide'); 
+                                            $("#loadFade").modal('hide'); 
                                         },
         success		:   function(aData) {  
-                                            $('#loadFade').modal('hide');
+                                            $("#loadFade").modal('hide');
                                             console.log("busqueda_pacientes_parametos ->",aData); 
 
                                         }, 
     });
+
 
     /*
     if(txtBuscar!=''){

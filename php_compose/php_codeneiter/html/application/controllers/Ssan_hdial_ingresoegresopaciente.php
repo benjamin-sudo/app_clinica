@@ -27,30 +27,22 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $status = true;
         $html = '';
         $accesdata = [];
-   
         $OPCION = $this->input->post('OPCION');
-        $RUTPAC = $this->input->post('RUTPAC');
         $DV = $this->input->post('DV');
         $LFICHA = $this->input->post('LFICHA');
 
         $numFichae = '';
-        $identifier = $RUTPAC;
+        $identifier =  $this->input->post('RUTPAC');
         $codEmpresa =  $this->session->userdata("COD_ESTAB");
         $isnal = '1';
         $pasaporte = '1';
         $tipoEx = '1';
         $accesdata = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
 
-
-
-
-
         $this->output->set_output([
             'status' => $status,
             'accesdata' => $accesdata,
         ]);
-
-
 
         // 16239053-8
         /*
