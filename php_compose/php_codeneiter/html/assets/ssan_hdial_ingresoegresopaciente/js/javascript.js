@@ -714,18 +714,19 @@ function nuevoPacienteAgresado(){
 }
 
 function Cod_o_Text(num){
-   if(num==1){
-      var nomcie10=$('#nomcie10').val(); 
-      if(nomcie10==""){
-         $('#resp_Cancer_59').val('');  
-      }
-   }
-    if(num==2){//diagnostico cie10
-      var nomcie102=$('#nomcie102').val(); 
-      if(nomcie102==""){
-         $('#resp_Cancer_60').val('');  
-      }
-   }
+    if(num == 1){
+        var nomcie10    =   $('#nomcie10').val(); 
+        if(nomcie10==""){
+            $('#resp_Cancer_59').val('');  
+        }
+    }
+
+    if(num == 2){//diagnostico cie10
+        var nomcie102   =   $('#nomcie102').val(); 
+        if(nomcie102==""){
+            $('#resp_Cancer_60').val('');  
+        }
+    }
 }
 
 function onClickDiagnostico2(codigo, descripcion,cod,gs) {
