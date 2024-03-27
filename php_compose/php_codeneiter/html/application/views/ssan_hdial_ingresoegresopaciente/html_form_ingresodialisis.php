@@ -2,7 +2,7 @@
     <div class="card-header">
         <b>INGRESO DE ENFERMERIA</b>
         <br>
-        Unidad de Hemodiálisis
+        <i>Unidad de Hemodiálisis</i>
     </div>
     <div class="card-body">
         <div class="grid_ingreso_enfermeria">
