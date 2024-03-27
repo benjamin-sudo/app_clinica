@@ -33,24 +33,20 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $OPCION = $this->input->post('OPCION');
         $DV = $this->input->post('DV');
         $LFICHA = $this->input->post('LFICHA');
-
         $numFichae = '';
         $identifier = $this->input->post('RUTPAC');
         $isnal = '1';
         $pasaporte = '1';
         $tipoEx = '1';
         $respuesta_paciente = [];
-
-        /*
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
+        
         if (count($respuesta_paciente)>0){
-            $html_card_paciente = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_card_pacienteunico',$respuesta_paciente,true); 
-            $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_card_pacienteunico',$respuesta_paciente,true); 
+            $html_card_paciente = $this->load->view('ssan_bdu_creareditarpaciente/html_card_pacienteunico',['info_bdu'=>$respuesta_paciente],true); 
+            $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_form_ingresodialisis',[],true); 
         } else {
             $status = false;
         }
-        */
-
         $this->output->set_output(json_encode([
             'respuesta_paciente' => $respuesta_paciente,
             'status' => $status,
@@ -59,7 +55,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         ]));
 
 
-        
+
         #16239053-8
         /*
         $TABLA[] = array("id_html" => "resultadoBusqueda_post", "opcion" => "html", "contenido" => '');

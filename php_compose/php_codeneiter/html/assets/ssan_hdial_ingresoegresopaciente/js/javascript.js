@@ -68,10 +68,7 @@ function nuevoPacienteAgresado(){
 }
 
 function js_grabadatosPaciente(){    
-    if ($("#rut_paciente").val() == ''){
-        jAlert("RUN del paciente vacio","CLINICA LIBRE CHILE");
-        return false;
-    }
+    if ($("#rut_paciente").val() == ''){ jAlert("RUN del paciente vacio","CLINICA LIBRE CHILE"); return false; }
     let Rut_form    =    $("#rut_paciente").val().replace(/\./g,'').split("-");//11111111-0    
     let txtBuscar   =    Rut_form[0];
     let txtDv       =    Rut_form[1];
@@ -112,7 +109,6 @@ function js_grabadatosPaciente(){
 function busquedaPacientes(){
     $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
     $(".btn_listado_paciente").attr('onclick','');
-
     $.ajax({ 
         type            :   "POST",
         url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso",
@@ -130,7 +126,9 @@ function busquedaPacientes(){
                                                 $('#loadFade').modal('hide'); 
                                                 console.log("aData  ->  ",aData);
                                                 if(AjaxExtJsonAll(aData)){  
+                                                    
                                                     //busquedaMaquinasDeDiaslisis();
+
                                                 };
                                             }, 
     });
@@ -1096,3 +1094,16 @@ function doSearch(num) {
        }
    }
 }
+
+function js_cambio_atencedentes(){
+    let value = $("#ingreso_enfe_antenecentealergia").val();
+    if (value == 1){
+        $("#txt_alimento_alergia,#txt_medicamento_alergia,#txt_otro_alergia").prop('disabled',false);
+    } else {
+        $("#txt_alimento_alergia,#txt_medicamento_alergia,#txt_otro_alergia").prop('disabled',true).val('');
+    }
+}
+
+
+
+
