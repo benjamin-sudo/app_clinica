@@ -26,7 +26,6 @@
         margin-top                          :   8px;
     }
 
-     
     .grid_diuresis                          {
         display                             :   grid;
         grid-template-columns               :   auto 3fr auto 1fr;
@@ -59,7 +58,7 @@
     <div class="card-header">
         <b>INGRESO DE ENFERMERIA</b>
         <br>
-        <i>Unidad de Hemodiálisis</i>
+        <i>Unidad de Hemodi&aacute;lisis</i>
     </div>
     <div class="card-body">
         <div class="grid_ingreso_enfermeria">
@@ -234,7 +233,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
@@ -245,7 +244,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
@@ -256,7 +255,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_diuresis">
@@ -270,7 +269,7 @@
             </div>
             <div class="grid_diuresis3">Fecha</div>
             <div class="grid_diuresis4">
-                <input type="date" class="form-control" id="fecha_diuresis" name="fecha_diuresis" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_diuresis" name="fecha_diuresis" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
@@ -281,7 +280,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
@@ -292,7 +291,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_hiv" name="fecha_hiv" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_hiv" name="fecha_hiv" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
@@ -303,7 +302,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_hbsag" name="fecha_hbsag" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_hbsag" name="fecha_hbsag" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="card-header featured-header" style="margin-top:-5px;">
@@ -373,15 +372,23 @@
         <div class="card-header featured-header" style="margin-top:-5px;">
             <b>4. OBSERVACIONES</b>
         </div>
-
         <textarea class="form-control" id="txt_observaciones_finales" required="" rows="3" style="margin-top: 10px;"></textarea>
-
         <div class="grid_btn_final">
             <div class="grid_btn_final1">&nbsp;</div>
             <div class="grid_btn_final2">
-                <button type="text" class="btn btn-success"><i class="bi bi-floppy2-fill"></i>&nbsp;INGRESO PROGRAMA HEMODI&Aacute;ISIS</button>
+                <button type="text" class="btn btn-success" onclick="js_guarda_ingreso()"><i class="bi bi-floppy2-fill"></i>&nbsp;INGRESO PROGRAMA HEMODI&Aacute;ISIS</button>
             </div>
             <div class="grid_btn_final3">&nbsp;</div>
         </div>
     </div>
 </div>
+
+
+<script>
+
+funtion js_guarda_ingreso(){
+    // como validar toda la informacion
+
+
+}
+</script>
