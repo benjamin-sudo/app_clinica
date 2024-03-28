@@ -372,7 +372,7 @@
         <div class="card-header featured-header" style="margin-top:-5px;">
             <b>4. OBSERVACIONES</b>
         </div>
-        <textarea class="form-control" id="txt_observaciones_finales" required="" rows="3" style="margin-top: 10px;"></textarea>
+        <textarea class="form-control" id="txt_observaciones_finales" name="txt_observaciones_finales" required="" rows="3" style="margin-top: 10px;"></textarea>
         <div class="grid_btn_final">
             <div class="grid_btn_final1">&nbsp;</div>
             <div class="grid_btn_final2">
@@ -383,12 +383,70 @@
     </div>
 </div>
 
-
 <script>
+var idsDeElementos = [
+    'cboFactorSangre',
+    'cboGrupoSangre',
+    'fecha_diuresis',
+    'fecha_fav',
+    'fecha_gorotex',
+    'fecha_hbsag',
+    'fecha_hiv',
+    'ingreso_enfe_antenecentealergia',
+    'num_frecuenciacardiaca',
+    'num_kilogramos',
+    'num_presionsistolica',
+    'nun_presiondistolica',
+    'slc_diuresis',
+    'txt_2da_dosis_hvb',
+    'txt_3da_dosis_hvb',
+    'txt_alimento_alergia',
+    'txt_antecedente_qx',
+    'txt_antecenteshermo_concentrado',
+    'txt_antecenteshermo_pesoseco',
+    'txt_antecenteshermo_qb',
+    'txt_antecenteshermo_qd',
+    'txt_bano_kna',
+    'txt_cateter',
+    'txt_dosis_refuerzo_hvb',
+    'txt_dosisi_hvb',
+    'txt_ef_conjuntivas',
+    'txt_ef_estadodelapiel',
+    'txt_ef_extremidades',
+    'txt_ef_gradoconciencia',
+    'txt_ef_movilidad',
+    'txt_ef_nutricion',
+    'txt_ef_yugulares',
+    'txt_fav',
+    'txt_gorotex',
+    'txt_hbsag',
+    'txt_hepatina_i',
+    'txt_hepatina_m',
+    'txt_hiv',
+    'txt_hvc',
+    'txt_medicamento_alergia',
+    'txt_observaciones_finales',
+    'txt_otro_alergia',
+    'txt_persona_urgencia'
+];
 
-funtion js_guarda_ingreso(){
-    // como validar toda la informacion
 
+function js_guarda_ingreso(){
+    let v_error = [];
+    idsDeElementos.forEach(function(id) {
+        var elemento = document.getElementById(id);
+        if (elemento && elemento.value.trim() === "") {
+            console.log(id + " está vacío.");
+            v_error.push(txt_otro_alergia);
+        } else {
+           
+        }
+    });
 
+    if(v_error.length > 0){
+        console.log("ERRORES");
+    } else {
+        console.log("para enviar");
+    }
 }
 </script>
