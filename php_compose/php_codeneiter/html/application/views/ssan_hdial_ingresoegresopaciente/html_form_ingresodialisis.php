@@ -4,17 +4,14 @@
         grid-template-columns               :   1fr 2fr;
         gap                                 :   8px;
     }
-
     .grid_unoxcuatro                        {
         display                             :   grid;
         grid-template-columns               :   1fr 1fr 2fr 1fr;
         gap                                 :   8px;
     }
-
     .featured-header                        {
         grid-column                         :   1 / span 2;
     }
-
     .grid_acceso_vascular                   {
         display                             :   grid;
         grid-template-columns               :   110px 1fr 2fr auto 1fr;
@@ -188,12 +185,6 @@
                 <input type="text" class="form-control" id="txt_ef_yugulares" required value=""> 
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Yugulares
-            </div>
-            <div class="grid_ingreso_enfermeria2">
-                <input type="text" class="form-control" id="txt_ef_yugulares" required value=""> 
-            </div>
-            <div class="grid_ingreso_enfermeria1">
                 Extremidades
             </div>
             <div class="grid_ingreso_enfermeria2">
@@ -206,9 +197,9 @@
             <div class="grid_acceso_vascular3">
                 <input type="text" class="form-control" id="txt_fav" name="txt_fav" value="" required="">
             </div>
-            <div class="grid_acceso_vascular4">Fecha:</div>
+            <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="2023-01-01" min="2020-01-01" max="2025-12-31">
+                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
@@ -217,36 +208,99 @@
             <div class="grid_acceso_vascular3">
                 <input type="text" class="form-control" id="txt_gorotex" name="txt_gorotex" value="" required="">
             </div>
-            <div class="grid_acceso_vascular4">Fecha:</div>
+            <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="2023-01-01" min="2020-01-01" max="2025-12-31">
+                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
             <div class="grid_acceso_vascular1"></div>
-            <div class="grid_acceso_vascular2">Catéter</div>
+            <div class="grid_acceso_vascular2">Cat&eacute;ter</div>
             <div class="grid_acceso_vascular3">
                 <input type="text" class="form-control" id="txt_cateter" name="txt_cateter" value="" required="">
             </div>
-            <div class="grid_acceso_vascular4">Fecha:</div>
+            <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="2023-01-01" min="2020-01-01" max="2025-12-31">
+                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
+        <div class="grid_diuresis">
+            <div class="grid_diuresis1">Diuresis</div>
+            <div class="grid_diuresis2" style="text-align: -webkit-right;">
+                <select class="form-select" name="slc_diuresis" id="slc_diuresis" style="width:115px;">
+                    <option value="">...</option>
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+            <div class="grid_diuresis3">Fecha</div>
+            <div class="grid_diuresis4">
+                <input type="date" class="form-control" id="fecha_diuresis" name="fecha_diuresis" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+            </div>
+        </div>
+        <div class="grid_acceso_vascular">
+            <div class="grid_acceso_vascular1">Ant&iacute;genos</div>
+            <div class="grid_acceso_vascular2">HVC</div>
+            <div class="grid_acceso_vascular3">
+                <input type="text" class="form-control" id="txt_hvc" name="txt_hvc" value="" required="">
+            </div>
+            <div class="grid_acceso_vascular4">Fecha</div>
+            <div class="grid_acceso_vascular5">
+                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+            </div>
+        </div>
+        <div class="grid_acceso_vascular">
+            <div class="grid_acceso_vascular1">&nbsp;</div>
+            <div class="grid_acceso_vascular2">HIV</div>
+            <div class="grid_acceso_vascular3">
+                <input type="text" class="form-control" id="txt_hiv" name="txt_hiv" value="" required="">
+            </div>
+            <div class="grid_acceso_vascular4">Fecha</div>
+            <div class="grid_acceso_vascular5">
+                <input type="date" class="form-control" id="fecha_hiv" name="fecha_hiv" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+            </div>
+        </div>
+        <div class="grid_acceso_vascular">
+            <div class="grid_acceso_vascular1">&nbsp;</div>
+            <div class="grid_acceso_vascular2">HBSAG</div>
+            <div class="grid_acceso_vascular3">
+                <input type="text" class="form-control" id="txt_hbsag" name="txt_hbsag" value="" required="">
+            </div>
+            <div class="grid_acceso_vascular4">Fecha</div>
+            <div class="grid_acceso_vascular5">
+                <input type="date" class="form-control" id="fecha_hbsag" name="fecha_hbsag" value="<?php echo date("Y-m-d");?>" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+            </div>
+        </div>
+        <div class="card-header featured-header" style="margin-top:-5px;">
+            <b>3. ANTECEDENTES HEMODI&Aacute;ISIS</b>
+        </div>
+        <div class="grid_antecenteshermo">
+            <div class="grid_antecenteshermo1"> 1 </div>
+            <div class="grid_antecenteshermo1"> 2 </div>
+            <div class="grid_antecenteshermo1"> 3 </div>
+            <div class="grid_antecenteshermo1"> 4 </div>
+            <div class="grid_antecenteshermo1"> 5 </div>
+            <div class="grid_antecenteshermo1"> 6 </div>
+            <div class="grid_antecenteshermo1"> 7 </div>
+            <div class="grid_antecenteshermo1"> 8 </div>
+        </div>
+
+        
 
 
 
 
-
-
-
-
-
-
-
+        
 
 
     </div>
 </div>
 
-
+<style>
+    .grid_diuresis                          {
+        display                             :   grid;
+        grid-template-columns               :   auto 3fr auto 1fr;
+        gap                                 :   8px;
+        margin-top                          :   8px;
+    }
+</style>
