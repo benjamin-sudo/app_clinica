@@ -1,3 +1,28 @@
+<style>
+    .grid_ingreso_enfermeria                {
+        display                             :   grid;
+        grid-template-columns               :   1fr 2fr;
+        gap                                 :   8px;
+    }
+
+    .grid_unoxcuatro                        {
+        display                             :   grid;
+        grid-template-columns               :   1fr 1fr 2fr 1fr;
+        gap                                 :   8px;
+    }
+
+    .featured-header                        {
+        grid-column                         :   1 / span 2;
+    }
+
+    .grid_acceso_vascular                   {
+        display                             :   grid;
+        grid-template-columns               :   110px 1fr 2fr auto 1fr;
+        gap                                 :   8px;
+        margin-top                          :   8px;
+    }
+</style>
+
 <div class="card">
     <div class="card-header">
         <b>INGRESO DE ENFERMERIA</b>
@@ -174,36 +199,54 @@
             <div class="grid_ingreso_enfermeria2">
                 <input type="text" class="form-control" id="txt_ef_extremidades" required value=""> 
             </div>
-
-
-
-            <div class="card-header featured-header" style="margin-top:-5px;">
-                <b>2. EXAMEN FISICO GENERAL</b>
-            </div>
-
-
-
-            
-
-
         </div>
+        <div class="grid_acceso_vascular">
+            <div class="grid_acceso_vascular1">Acceso Vascular</div>
+            <div class="grid_acceso_vascular2">FAV</div>
+            <div class="grid_acceso_vascular3">
+                <input type="text" class="form-control" id="txt_fav" name="txt_fav" value="" required="">
+            </div>
+            <div class="grid_acceso_vascular4">Fecha:</div>
+            <div class="grid_acceso_vascular5">
+                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="2023-01-01" min="2020-01-01" max="2025-12-31">
+            </div>
+        </div>
+        <div class="grid_acceso_vascular">
+            <div class="grid_acceso_vascular1"></div>
+            <div class="grid_acceso_vascular2">Gorotex</div>
+            <div class="grid_acceso_vascular3">
+                <input type="text" class="form-control" id="txt_gorotex" name="txt_gorotex" value="" required="">
+            </div>
+            <div class="grid_acceso_vascular4">Fecha:</div>
+            <div class="grid_acceso_vascular5">
+                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="2023-01-01" min="2020-01-01" max="2025-12-31">
+            </div>
+        </div>
+        <div class="grid_acceso_vascular">
+            <div class="grid_acceso_vascular1"></div>
+            <div class="grid_acceso_vascular2">Catéter</div>
+            <div class="grid_acceso_vascular3">
+                <input type="text" class="form-control" id="txt_cateter" name="txt_cateter" value="" required="">
+            </div>
+            <div class="grid_acceso_vascular4">Fecha:</div>
+            <div class="grid_acceso_vascular5">
+                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="2023-01-01" min="2020-01-01" max="2025-12-31">
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 </div>
 
-<style>
-    .grid_ingreso_enfermeria                {
-        display                             :   grid;
-        grid-template-columns               :   1fr 2fr;
-        gap                                 :   8px;
-    }
 
-    .grid_unoxcuatro                        {
-        display                             :   grid;
-        grid-template-columns               :   1fr 1fr 2fr 1fr;
-        gap                                 :   8px;
-    }
-
-    .featured-header                        {
-        grid-column                         :   1 / span 2;
-    }
-</style>

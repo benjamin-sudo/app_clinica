@@ -1103,5 +1103,3 @@ function js_cambio_atencedentes(){
         $("#txt_alimento_alergia,#txt_medicamento_alergia,#txt_otro_alergia").prop('disabled',true).val('');
     }
 }
-
-

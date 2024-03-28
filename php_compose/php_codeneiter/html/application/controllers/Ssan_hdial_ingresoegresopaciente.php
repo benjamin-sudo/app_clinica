@@ -47,11 +47,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             $status = false;
         }
         $this->output->set_output(json_encode([
-            'respuesta_paciente' => $respuesta_paciente,
             'status' => $status,
+            'respuesta_paciente' => $respuesta_paciente,
             'html_card_paciente' => $html_card_paciente,
             'html_card_formularioingreso' => $html_card_formularioingreso
         ]));
+
         #16239053-8
         /*
         $TABLA[] = array("id_html" => "resultadoBusqueda_post", "opcion" => "html", "contenido" => '');
