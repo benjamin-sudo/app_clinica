@@ -1890,9 +1890,7 @@ class sql_class_hdial extends CI_Model {
                     H.IND_ESTADO                                                            AS ESTADO,
                     H.COD_RUTPRO                                                            AS RUTPRO,
                     H.COD_DIGVER,
-                    
                     H.COD_RUTPRO||'-'||H.COD_DIGVER                                         AS RUTPAC,
-                    
                     (SELECT 
                         COUNT(*)
                     FROM 
@@ -1907,7 +1905,6 @@ class sql_class_hdial extends CI_Model {
                     ||' '|| UPPER(A.NOM_NOMBRE)                                             AS NOM_PROFE,
                     
                    
-                    
                     TO_CHAR(H.DATE_INICIO,  'YYYY-MM-DD hh24:mi')                           AS F_INICIO2,
                     TO_CHAR(H.DATE_FINAL,   'YYYY-MM-DD hh24:mi')                           AS F_FINAL2,
                     

@@ -199,6 +199,7 @@
   <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
   <!-- web socket -->
   <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
+  
     <section>
 
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -254,5 +255,6 @@
           </div>
       </div>
     </section>
+    
   </body>
 </html>

@@ -987,7 +987,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
 
             } while(($this->db->insert($this->own.'.URG_TADMISION',$dataCitas))&&($this->db->insert($this->own.'.URG_THISTADMISION',$dataCitasHisto)));
             */
-    
             $num_id_citas               = $this->db->sequence($this->own,'SEQ_AP_NEWCITASAGENDAS_AG_CITA');
             $dataCitas[]                = array(
                 'NUM_CITACION'          => $num_id_citas,

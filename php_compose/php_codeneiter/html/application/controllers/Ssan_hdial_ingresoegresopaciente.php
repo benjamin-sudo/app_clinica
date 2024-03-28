@@ -40,7 +40,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $tipoEx = '1';
         $respuesta_paciente = [];
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
-        
         if (count($respuesta_paciente)>0){
             $html_card_paciente = $this->load->view('ssan_bdu_creareditarpaciente/html_card_pacienteunico',['info_bdu'=>$respuesta_paciente],true); 
             $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_form_ingresodialisis',[],true); 
@@ -53,9 +52,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'html_card_paciente' => $html_card_paciente,
             'html_card_formularioingreso' => $html_card_formularioingreso
         ]));
-
-
-
         #16239053-8
         /*
         $TABLA[] = array("id_html" => "resultadoBusqueda_post", "opcion" => "html", "contenido" => '');

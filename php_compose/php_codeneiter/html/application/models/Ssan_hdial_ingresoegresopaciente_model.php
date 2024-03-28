@@ -269,8 +269,6 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
 //        );       
 //         $this->db->insert($this->own.'.AP_TPACXPROGRAMA', $dataPreg1);
 //         
-//         
-//         
 //         /////////////respuestas______________________________________________________________________
 //          for ($i = 0; $i < count($Resp_IngEnf_Dial); $i++) { //For que recorre las reguntas                 
 //        $idpregunta = $Resp_IngEnf_Dial[$i]["h"];

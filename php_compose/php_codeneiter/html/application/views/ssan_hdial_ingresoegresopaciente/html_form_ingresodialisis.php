@@ -20,7 +20,7 @@
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <select class="form-select" aria-label="Seleccione ..." id="ingreso_enfe_antenecentealergia" onclick="js_cambio_atencedentes()">
-                    <option value="">Seleccione ...</option>
+                    <option value="">Seleccione ... </option>
                     <option value="1">Si</option>
                     <option value="2">No</option>
                     <option value="3">No Sabe</option>
@@ -69,7 +69,6 @@
                     <option value="O">O</option>
                 </select>
             </div>
-
             <div class="grid_ingreso_enfermeria1">
                 Grupo sanguíneo:
             </div>
@@ -83,7 +82,6 @@
                     <option value="O">O</option>
                 </select>
             </div>
-           
             <div class="grid_ingreso_enfermeria1">
                 Factor Sangre	
             </div>
@@ -100,12 +98,94 @@
             </div>
             <div class="featured-header">
                 <div class="grid_unoxcuatro">
-                    <div class="grid_unoxcuatro">Peso</div>
-                    <div class="grid_unoxcuatro">FC</div>
-                    <div class="grid_unoxcuatro">P/A</div>
-                    <div class="grid_unoxcuatro">Talla</div>
+                    <div class="grid_unoxcuatro1">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Peso</span>
+                            <input type="text" class="form-control" placeholder="kg" aria-label="kg" id="num_kilogramos" >
+                        </div>
+                    </div>
+                    <div class="grid_unoxcuatro2">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">FC</span>
+                            <input type="text" class="form-control" placeholder="mn" aria-label="mn" id="num_frecuenciacardiaca">
+                        </div>
+                    </div>
+                    <div class="grid_unoxcuatro3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">P/A</span>
+                            <input type="text" class="form-control" placeholder="D" aria-label="D" id="nun_presiondistolica">
+                            <span class="input-group-text">/</span>
+                            <input type="text" class="form-control" placeholder="S" aria-label="S" id="num_presionsistolica">
+                        </div>
+                    </div>
+                    <div class="grid_unoxcuatro4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Talla</span>
+                            <input type="text" class="form-control" placeholder="kg" aria-label="kg">
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="grid_ingreso_enfermeria1">
+                Movilidad	
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_movilidad" required value=""> 
+            </div>
+            <div class="grid_ingreso_enfermeria1">
+                Nutrici&oacute;n	
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_nutricion" required value=""> 
+            </div>
+            <div class="grid_ingreso_enfermeria1">
+                Grado de conciencia 
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_gradoconciencia" required value=""> 
+            </div>
+            <div class="grid_ingreso_enfermeria1">
+                Estado de la piel
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_estadodelapiel" required value=""> 
+            </div>
+            <div class="grid_ingreso_enfermeria1">
+                Conjuntivas
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_conjuntivas" required value=""> 
+            </div>
+            <div class="grid_ingreso_enfermeria1">
+                Yugulares
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_yugulares" required value=""> 
+            </div>
+            <div class="grid_ingreso_enfermeria1">
+                Yugulares
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_yugulares" required value=""> 
+            </div>
+            <div class="grid_ingreso_enfermeria1">
+                Extremidades
+            </div>
+            <div class="grid_ingreso_enfermeria2">
+                <input type="text" class="form-control" id="txt_ef_extremidades" required value=""> 
+            </div>
+
+
+
+            <div class="card-header featured-header" style="margin-top:-5px;">
+                <b>2. EXAMEN FISICO GENERAL</b>
+            </div>
+
+
+
+            
+
+
         </div>
     </div>
 </div>
@@ -119,7 +199,7 @@
 
     .grid_unoxcuatro                        {
         display                             :   grid;
-        grid-template-columns               :   1fr 1fr 1fr 1fr;
+        grid-template-columns               :   1fr 1fr 2fr 1fr;
         gap                                 :   8px;
     }
 

@@ -22,11 +22,10 @@
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="javascript:nuevoPacienteAgresado(1)"><i class="bi bi-universal-access-circle"></i>&nbsp;NUEVO INGREGO A PACIENTE PARA TRATAMIENTO DE HERMODIALISIS</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="javascript:js_nuevo_prestador_dialisis(1)"><i class="bi bi-person-vcard"></i>&nbsp;NUEVO PROFESIONAL</a></li>
+            <li><a class="dropdown-item" href="javascript:js_nuevo_prestador_dialisis(1)"><i class="bi bi-person-vcard"></i>&nbsp;NUEVO PROFESIONAL PARA HERMODIALISIS</a></li>
         </ul>
     </li>
 </ul>
-
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade margen_tabs show active" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
         <div id="IND_RRHH"><?php echo $html_out;?></div>
@@ -194,14 +193,13 @@
     </div>
     
     <div class="modal fade" id="modal_nuevo_ingreso_paciente">
-        <div class="modal-dialog modal_imedico">
+        <div class="modal-dialog modal_imedico modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b>INGRESO DE PACIENTE DE DI&Aacute;LISIS</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_nuevo_ingreso_paciente">
-
                     <div class="nuevo_ingreso_pacientehd">
                         <div class="nuevo_ingreso_pacientehd1">
                             <div class="card">
@@ -217,20 +215,18 @@
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <div class="nuevo_ingreso_pacientehd3 formulario_ingreso">
-                            ?
-                        </div>
+                        <div class="nuevo_ingreso_pacientehd3 formulario_ingreso">?</div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x-square-fill"></i>&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                        <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- ZONA INPUT INGRESO DE PACIENTE -->
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
