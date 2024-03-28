@@ -1,22 +1,57 @@
 <style>
+    .form-control[type="date"]              {
+        cursor                              :   pointer;
+    }
+    
     .grid_ingreso_enfermeria                {
         display                             :   grid;
         grid-template-columns               :   1fr 2fr;
         gap                                 :   8px;
     }
+    
     .grid_unoxcuatro                        {
         display                             :   grid;
         grid-template-columns               :   1fr 1fr 2fr 1fr;
         gap                                 :   8px;
     }
+    
     .featured-header                        {
         grid-column                         :   1 / span 2;
     }
+
     .grid_acceso_vascular                   {
         display                             :   grid;
         grid-template-columns               :   110px 1fr 2fr auto 1fr;
         gap                                 :   8px;
         margin-top                          :   8px;
+    }
+
+     
+    .grid_diuresis                          {
+        display                             :   grid;
+        grid-template-columns               :   auto 3fr auto 1fr;
+        gap                                 :   8px;
+        margin-top                          :   8px;
+    }
+
+    .grid_antecenteshermo                   {
+        display                             :   grid;
+        grid-template-columns               :   70px 1fr 1fr 1fr auto 1fr;
+        gap                                 :   8px;
+        margin-top                          :   8px;
+    }
+
+    .grid_sub_hepatina                      {
+        display                             :   grid;
+        grid-template-columns               :   auto 1fr auto 1fr;
+        gap                                 :   8px;
+    }
+
+    .grid_btn_final                         {
+        display                             :   grid;
+        grid-template-columns               :   1fr auto 1fr;
+        gap                                 :   8px;
+        margin-top                          :   10px;
     }
 </style>
 
@@ -275,32 +310,78 @@
             <b>3. ANTECEDENTES HEMODI&Aacute;ISIS</b>
         </div>
         <div class="grid_antecenteshermo">
-            <div class="grid_antecenteshermo1"> 1 </div>
-            <div class="grid_antecenteshermo1"> 2 </div>
-            <div class="grid_antecenteshermo1"> 3 </div>
-            <div class="grid_antecenteshermo1"> 4 </div>
-            <div class="grid_antecenteshermo1"> 5 </div>
-            <div class="grid_antecenteshermo1"> 6 </div>
-            <div class="grid_antecenteshermo1"> 7 </div>
-            <div class="grid_antecenteshermo1"> 8 </div>
+            <div class="grid_antecenteshermo1">QB</div>
+            <div class="grid_antecenteshermo2">
+                <input type="text" class="form-control" id="txt_antecenteshermo_qb" required="" value="">
+            </div>
+            <div class="grid_antecenteshermo3">Heparina</div>
+            <div class="grid_antecenteshermo4">
+                <div class="grid_sub_hepatina">
+                    <div class="grid_sub_hepatina1">I</div>
+                    <div class="grid_sub_hepatina1">
+                        <input type="text" value="" class="form-control" required="" id="txt_hepatina_i">
+                    </div>
+                    <div class="grid_sub_hepatina1">M</div>
+                    <div class="grid_sub_hepatina1">
+                        <input type="text" value="" class="form-control" required="" id="txt_hepatina_m" >
+                    </div>
+                </div>
+            </div>
+            <div class="grid_antecenteshermo5">1&deg; Dosis HVB</div>
+            <div class="grid_antecenteshermo6">
+                <input type="text" class="form-control" id="txt_dosisi_hvb" required="" value="">
+            </div>
+        </div>
+        <div class="grid_antecenteshermo">
+            <div class="grid_antecenteshermo1">QD</div>
+            <div class="grid_antecenteshermo2">
+                <input type="text" class="form-control" id="txt_antecenteshermo_qd" required="" value="">
+            </div>
+            <div class="grid_antecenteshermo3">Ba&ntilde;o K+/Na</div>
+            <div class="grid_antecenteshermo4">
+                <input type="text" class="form-control" id="txt_bano_kna" required="" value="">
+            </div>
+            <div class="grid_antecenteshermo5">2&deg; Dosis HVB</div>
+            <div class="grid_antecenteshermo6">
+                <input type="text" class="form-control" id="txt_2da_dosis_hvb" required="" value="">
+            </div>
+        </div>
+        <div class="grid_antecenteshermo">
+            <div class="grid_antecenteshermo1">Peso seco</div>
+            <div class="grid_antecenteshermo2">
+                <input type="text" class="form-control" id="txt_antecenteshermo_pesoseco" required="" value="">
+            </div>
+            <div class="grid_antecenteshermo3">Concentrado</div>
+            <div class="grid_antecenteshermo4">
+                <input type="text" class="form-control" id="txt_antecenteshermo_concentrado" required="" value="">
+            </div>
+            <div class="grid_antecenteshermo5">2&deg; Dosis HVB</div>
+            <div class="grid_antecenteshermo6">
+                <input type="text" class="form-control" id="txt_3da_dosis_hvb" required="" value="">
+            </div>
+        </div>
+        <div class="grid_antecenteshermo">
+            <div class="grid_antecenteshermo1">&nbsp;</div>
+            <div class="grid_antecenteshermo2">&nbsp;</div>
+            <div class="grid_antecenteshermo3">&nbsp;</div>
+            <div class="grid_antecenteshermo4">&nbsp;</div>
+            <div class="grid_antecenteshermo5">1&deg; refuerzo HVB</div>
+            <div class="grid_antecenteshermo6">
+                <input type="text" class="form-control" id="txt_dosis_refuerzo_hvb" required="" value="">
+            </div>
+        </div>
+        <div class="card-header featured-header" style="margin-top:-5px;">
+            <b>4. OBSERVACIONES</b>
         </div>
 
-        
+        <textarea class="form-control" id="txt_observaciones_finales" required="" rows="3" style="margin-top: 10px;"></textarea>
 
-
-
-
-        
-
-
+        <div class="grid_btn_final">
+            <div class="grid_btn_final1">&nbsp;</div>
+            <div class="grid_btn_final2">
+                <button type="text" class="btn btn-success"><i class="bi bi-floppy2-fill"></i>&nbsp;INGRESO PROGRAMA HEMODI&Aacute;ISIS</button>
+            </div>
+            <div class="grid_btn_final3">&nbsp;</div>
+        </div>
     </div>
 </div>
-
-<style>
-    .grid_diuresis                          {
-        display                             :   grid;
-        grid-template-columns               :   auto 3fr auto 1fr;
-        gap                                 :   8px;
-        margin-top                          :   8px;
-    }
-</style>

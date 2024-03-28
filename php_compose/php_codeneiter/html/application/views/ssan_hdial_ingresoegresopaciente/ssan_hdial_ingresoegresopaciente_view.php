@@ -84,7 +84,6 @@
 <!-- ZONA -->
 
 <section>
-
     <div class="modal fade" id="TURNOXMAQUINA">
         <div class="modal-dialog modal-xl3">
             <div class="modal-content">
@@ -215,7 +214,7 @@
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <div class="nuevo_ingreso_pacientehd3 formulario_ingreso">?</div>
+                        <div class="nuevo_ingreso_pacientehd3 formulario_ingreso"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -232,5 +231,5 @@
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
     <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
-    
+
 </section>
