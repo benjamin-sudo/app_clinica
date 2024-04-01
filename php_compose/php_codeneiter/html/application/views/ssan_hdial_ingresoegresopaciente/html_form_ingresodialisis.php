@@ -52,8 +52,11 @@
         gap                                 :   8px;
         margin-top                          :   10px;
     }
-</style>
 
+    .class_input_error                      {
+        border-color                        :   red;
+    }
+</style>
 <div class="card">
     <div class="card-header">
         <b>INGRESO DE ENFERMERIA</b>
@@ -66,7 +69,7 @@
                 <b>1. ANTECEDENTES PERSONALES</b>
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Antecedentes Quirúrgicos:
+                Antecedentes Quir&uacute;rgicos:
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <input type="text" class="form-control" id="txt_antecedente_qx" value="" required="">
@@ -101,7 +104,7 @@
                 <input type="text" class="form-control" id="txt_otro_alergia"  required="" disabled value=""> 
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Diagnóstico de ingreso:
+                Diagn&oacute;stico de ingreso:
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <b>PENDIENTE (UNO A MUCHO)</b>
@@ -113,20 +116,7 @@
                 <input type="text" class="form-control" id="txt_persona_urgencia" required="" disabled value=""> 
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Grupo sanguíneo:
-            </div>
-            <div class="grid_ingreso_enfermeria2">
-                <select name="cboGrupoSangre" id="cboGrupoSangre" class="form-select">
-                    <option value="">SELECCIONE...</option>
-                    <option value="NS">NO SABE</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="AB">AB</option>
-                    <option value="O">O</option>
-                </select>
-            </div>
-            <div class="grid_ingreso_enfermeria1">
-                Grupo sanguíneo:
+                Grupo sangu&iacute;neo:
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <select name="cboGrupoSangre" id="cboGrupoSangre" class="form-select">
@@ -436,17 +426,40 @@ function js_guarda_ingreso(){
     idsDeElementos.forEach(function(id) {
         var elemento = document.getElementById(id);
         if (elemento && elemento.value.trim() === "") {
-            console.log(id + " está vacío.");
-            v_error.push(txt_otro_alergia);
+            v_error.push(id);
+            $("#"+id).addClass('class_input_error');
         } else {
-           
+            $("#"+id).removeClass('class_input_error');
         }
     });
-
     if(v_error.length > 0){
-        console.log("ERRORES");
+        console.log("   ------------------------    ");
+        console.log("   para enviar por ajax        ");
+        console.log("   ------------------------    ");
+        $.ajax({ 
+            type		:   "POST",
+            url 		:   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
+            dataType    :   "json",
+            beforeSend  :   function(xhr){  $('#loadFade').modal('show'); },
+            data 		:   { },
+            error		:   function(errro) {  
+                                                console.log(errro);
+                                                jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE");
+                                                $("#loadFade").modal('hide'); 
+                                            },
+            success		:   function(aData) {  
+                                                $("#loadFade").modal('hide');
+                                                console.log("fn_guarda_ingresohermodialisis ->",aData);
+                                                if (aData.status){
+
+                                                } else {
+
+                                                }
+                                            }, 
+        });
     } else {
-        console.log("para enviar");
+        console.log("ERRORES");
+        showNotification('button','center','<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro ',2,'');
     }
 }
 </script>

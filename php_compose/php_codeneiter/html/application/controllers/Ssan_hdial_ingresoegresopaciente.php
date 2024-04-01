@@ -446,9 +446,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
     }
 
     public function EgresaPaciente() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+        if (!$this->input->is_ajax_request()) {  show_404();   }
         $empresa = $this->session->userdata("COD_ESTAB");
         $transaccion = '';
         $return = '';
@@ -554,14 +552,11 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $nfichaeee = '';
          $ssss=0;
         if ($row) {
-
-
             //TRAER ULTIMO REGISTRO Y PREGUNTAR
             //si cuenta con ingreso ==> no debo mostrar formulario
             //si cuenta con egreso==>traer informacion de formulario aplicado anterior mente, con posibilidad de volver a crear un nuevo ingreso
             //si no tiene ingreso, mostrar formulario vacio, con posibilidades de crear ingreso
             //si cuenta con ingreso en oto hospital, no debo dejar aberir formulario
-
             if ($row[0]['ID_EGRESO'] == '' && $ed=='') {//solo cuenta con ingreso
                 //   $html.='<script>$("#Dv_form_IngEnf").show();</script>';
                 //
@@ -716,66 +711,54 @@ $ssss=0;
             //traer datos obtenidos en formulario anterior
 //$ssss=0;
  
-          $NOM_NOMBRE='';
+            $NOM_NOMBRE='';
             $NOM_PREVIS='';
             $FEC_NACIMI='';
             $NOM_NOMBRE='';
-             $NOM_APEPAT='';
-              $NOM_APEMAT='';
-               $NOM_ESTABL='';
-               $COD_RUTPAC='';
-               $COD_DIGVER='';
-               $edad='';
-          
+            $NOM_APEPAT='';
+            $NOM_APEMAT='';
+            $NOM_ESTABL='';
+            $COD_RUTPAC='';
+            $COD_DIGVER='';
+            $edad='';
 
             $aData22 = $this->ssan_hdial_ingresoegresopaciente_model->TraeREspxProg($nfichaeee, $this->empresa);
             if (count($aData22) > 0) {
                 foreach ($aData22 as $i => $row22) {
                  //   $html.='<script>console.log("-------------5");</script>';
                     $ress_sul = '';
-                    
-
-        
         
                     if($NOM_NOMBRE==''){
-            $NOM_PREVIS=$row22['NOM_PREVIS'];
-            $FEC_NACIMI=$row22['FEC_NACIMI'];
-            //_____________Edad_____________
-            $dias = explode("/", $FEC_NACIMI, 3);
-            $dias = mktime(0, 0, 0, $dias[1], $dias[0], $dias[2]);
-            $edad = (int) ((time() - $dias) / 31556926 );
-//_____________Edad_____________
-            
-            $NOM_NOMBRE= $row22['NOM_NOMBRE'];
-            $NOM_APEPAT=$row22['NOM_APEPAT'];
-              $NOM_APEMAT=$row22['NOM_APEMAT'];
-              $NOM_ESTABL=$row22['NOM_ESTABL'];
-              
-               $COD_RUTPAC=$row22['COD_RUTPAC'];
-                $COD_DIGVER=$row22['COD_DIGVER'];
-              
-                 $html.='<script>$("#imp_Rutpac").val("' .  $COD_RUTPAC . '-'.$COD_DIGVER . '");</script>';
-                     $html.='<script>$("#imp_Nompaciente").val("' . $NOM_NOMBRE . ' ' . $NOM_APEPAT . ' ' . $NOM_APEMAT . '");</script>';
-                         $html.='<script>$("#imp_PrevPac").val("' . $NOM_PREVIS . '");</script>';
-             $html.='<script>$("#imp_EdadPac").val("' . $edad . ' Años");</script>';
-             $html.='<script>$("#imp_Estabreg").val("' . $NOM_ESTABL.'");</script>';
+                        $NOM_PREVIS=$row22['NOM_PREVIS'];
+                        $FEC_NACIMI=$row22['FEC_NACIMI'];
+                        //_____________Edad_____________
+                        $dias = explode("/", $FEC_NACIMI, 3);
+                        $dias = mktime(0, 0, 0, $dias[1], $dias[0], $dias[2]);
+                        $edad = (int) ((time() - $dias) / 31556926 );
+                        //_____________Edad_____________
+
+                        $NOM_NOMBRE= $row22['NOM_NOMBRE'];
+                        $NOM_APEPAT=$row22['NOM_APEPAT'];
+                        $NOM_APEMAT=$row22['NOM_APEMAT'];
+                        $NOM_ESTABL=$row22['NOM_ESTABL'];
+
+                        $COD_RUTPAC=$row22['COD_RUTPAC'];
+                        $COD_DIGVER=$row22['COD_DIGVER'];
+
+                        $html.='<script>$("#imp_Rutpac").val("' .  $COD_RUTPAC . '-'.$COD_DIGVER . '");</script>';
+                        $html.='<script>$("#imp_Nompaciente").val("' . $NOM_NOMBRE . ' ' . $NOM_APEPAT . ' ' . $NOM_APEMAT . '");</script>';
+                        $html.='<script>$("#imp_PrevPac").val("' . $NOM_PREVIS . '");</script>';
+                        $html.='<script>$("#imp_EdadPac").val("' . $edad . ' Años");</script>';
+                        $html.='<script>$("#imp_Estabreg").val("' . $NOM_ESTABL.'");</script>';
              
                     }
             
- 
-  
-  
-    
-
                     $row22['ID_CAMPXPROG'];
                     $row22['RESULTADO'];
                    // $html.='<script>console.log("' . $row22['RESULTADO'] . '");</script>';
-
                     if ($row22['ID_CAMPXPROG'] == 542 || $row22['ID_CAMPXPROG'] == 546 || $row22['ID_CAMPXPROG'] == 568 ) {//|| $row22['ID_CAMPXPROG'] == 577
-
-
                         if ($row22['ID_CAMPXPROG'] == 542) {
-//                             $html.='<script>$("#Rdo_infenf_Ant_Alerg_'.$row22['RESULTADO'].'").prop("checked", true);</script>'; 
+                            //$html.='<script>$("#Rdo_infenf_Ant_Alerg_'.$row22['RESULTADO'].'").prop("checked", true);</script>'; 
                             $ress_sul = '';
                             if ($row22['RESULTADO'] == 1) {
                                 //$ssss=1;
@@ -799,20 +782,15 @@ $ssss=0;
                         }
 
 
-                       
-                        
                         if ($row22['ID_CAMPXPROG'] == 546) {//diagnosicos cie
-                            
-                                $row22['COD_DIAGNO_CIE'];
-                                        $row22['DESCRIPCION'];                               
-                         $html.='<script>$( "<p>' . $row22['COD_DIAGNO_CIE'] . ' - ' . $row22['DESCRIPCION'] . '</p>" ).appendTo( "#imp_Cod_cie10_1" );</script>';
-                                
-                            }
+                            $row22['COD_DIAGNO_CIE'];
+                            $row22['DESCRIPCION'];                               
+                            $html.='<script>$( "<p>' . $row22['COD_DIAGNO_CIE'] . ' - ' . $row22['DESCRIPCION'] . '</p>" ).appendTo( "#imp_Cod_cie10_1" );</script>';
+                        }
 
 
                         if ($row22['ID_CAMPXPROG'] == 568) {
-//                             $html.='<script>$("#Rdo_Diuesis_'.$row22['RESULTADO'].'").prop("checked", true);</script>'; 
-
+                            //$html.='<script>$("#Rdo_Diuesis_'.$row22['RESULTADO'].'").prop("checked", true);</script>'; 
                             if ($row22['RESULTADO'] == 1) {
                                 $ress_sul = 'SI';
                             }
@@ -824,10 +802,10 @@ $ssss=0;
                             }
                             $html.='<script>$("#RESPUESTA_Resp_IngEnf_Dial_568").html("<b>[</b> ' . $ress_sul . ' <b>]</b>");</script>';
                         }
+
 //                        if ($row22['ID_CAMPXPROG'] == 577) {
-////                             $html.='<script>$("#Rdo_QQB_'.$row22['RESULTADO'].'").prop("checked", true);</script>';
-////                             $html.='<script>$("#imp_Rdo_QQB_'.$row22['RESULTADO'].'").prop("checked", true);</script>';
-//
+//                             $html.='<script>$("#Rdo_QQB_'.$row22['RESULTADO'].'").prop("checked", true);</script>';
+//                             $html.='<script>$("#imp_Rdo_QQB_'.$row22['RESULTADO'].'").prop("checked", true);</script>';
 //                            if ($row22['RESULTADO'] == 1) {
 //                                $ress_sul = 'I';
 //                            }
@@ -839,16 +817,14 @@ $ssss=0;
 //                            }
 //                            $html.='<script>$("#RESPUESTA_Resp_IngEnf_Dial_577").html("<b>[</b> ' . $ress_sul . ' <b>]</b>");</script>';
 //                        }
+
                     } else {
-                     //   $html.='<script>console.log("-------------6");</script>';
-//                    $html.='<script>$("#Resp_IngEnf_Dial_'.$row22['ID_CAMPXPROG'].'").val("'.$row22['RESULTADO'].'");</script>';
-                        
+                        //$html.='<script>console.log("-------------6");</script>';
+                        //$html.='<script>$("#Resp_IngEnf_Dial_'.$row22['ID_CAMPXPROG'].'").val("'.$row22['RESULTADO'].'");</script>';
                         $cadena_old=$row22['RESULTADO'] ;
-                       // $cadena_nueva = eregi_replace("[\n|\r|\n\r]", '', $cadena_old);
-                        
-                         $sustituye = array("\r\n", "\n\r", "\n", "\r");
+                        // $cadena_nueva = eregi_replace("[\n|\r|\n\r]", '', $cadena_old);
+                        $sustituye = array("\r\n", "\n\r", "\n", "\r");
                         $cadena_nueva = str_replace($sustituye, "", $cadena_old);
-                        
                         $html.='<script>$("#imp_Resp_IngEnf_Dial_' . $row22['ID_CAMPXPROG'] . '").val("' . $cadena_nueva . '");</script>';
                     }
                 }
@@ -985,10 +961,7 @@ $ssss=0;
     }
 
     public function guardaPacientexCupo() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-
+        if (!$this->input->is_ajax_request()){ show_404(); }
         $empresa = $this->session->userdata("COD_ESTAB");
         $transaccion = '';
         $return = '';
@@ -1093,20 +1066,15 @@ $ssss=0;
     }
 
     public function Graba_Respuesta() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+        if (!$this->input->is_ajax_request()){ show_404(); }
         $html_out = '';
-        
         $ed = $this->input->post('ed');
         $clave = $this->input->post('Clave');
         $fic_e = $this->input->post('fic_e');
         $Resp_IngEnf_Dial = $this->input->post('Resp_IngEnf_Dial');
         $Cie10Agrupados = $this->input->post('Cie10Agrupados');
         $fecha_histo = $this->input->post('fec_histo');
-
         $valida = $this->ssan_hdial_ingresoegresopaciente_model->validaClave($clave);
-
         if ($valida) {//si esta todo ok puedo grabar
             $rut = $valida->USERNAME;
             $rutm = explode("-", $rut);
@@ -1126,4 +1094,14 @@ $ssss=0;
         $this->output->set_output($html_out);
     }
 
+
+    public function fn_guarda_ingresohermodialisis() {
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        $status = true;
+        
+
+        $this->output->set_output(json_encode([
+            'status' => $status,
+        ]));
+    }
 }
