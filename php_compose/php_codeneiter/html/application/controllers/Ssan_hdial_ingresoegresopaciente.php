@@ -1098,7 +1098,6 @@ $ssss=0;
     public function fn_guarda_ingresohermodialisis() {
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
-        
 
         $this->output->set_output(json_encode([
             'status' => $status,

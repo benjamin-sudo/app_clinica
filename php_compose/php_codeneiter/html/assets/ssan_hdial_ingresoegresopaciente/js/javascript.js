@@ -57,6 +57,9 @@ $(document).ready(function() {
         on_error : function(){ jError("RUN no es correcto","CLINICA LIBRE CHILE"); },
         on_success : function(){ js_grabadatosPaciente(); },
     });
+
+    console.log("   --------------------    ");
+    showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
 });
 
 function js_limpiaingreso(){
@@ -96,11 +99,11 @@ function js_grabadatosPaciente(){
                                             $("#loadFade").modal('hide');
                                             console.log("busqueda_pacientes_parametos ->",aData);
                                             if(aData.status){
-                                                showNotification('button','center','<i class="fa fa-check" aria-hidden="true"></i> Nuevo ingreso de paciente a hermodialisis',2,'');
+                                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Nuevo ingreso de paciente a hermodialisis',2,'');
                                                 $(".div_pacienteindentificado").html(aData.html_card_paciente);
                                                 $(".formulario_ingreso").html(aData.html_card_formularioingreso);
                                             } else {
-                                                showNotification('button','center','<i class="fa fa-check" aria-hidden="true"></i> Paciente no ingreso al aplicativo',2,'');
+                                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Paciente no ingreso al aplicativo',2,'');
                                             }
                                         }, 
     });
