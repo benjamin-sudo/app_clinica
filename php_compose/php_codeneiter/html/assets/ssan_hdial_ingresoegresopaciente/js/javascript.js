@@ -76,9 +76,11 @@ function js_grabadatosPaciente(){
     let txtBuscar   =    Rut_form[0];
     let txtDv       =    Rut_form[1];
     let lficha      =    '';
+    
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar);
     console.log("   txtDv       ->  ",txtDv);
+
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",

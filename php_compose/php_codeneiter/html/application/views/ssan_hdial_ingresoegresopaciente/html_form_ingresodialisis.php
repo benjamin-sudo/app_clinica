@@ -110,10 +110,10 @@
                 <b>PENDIENTE (UNO A MUCHO)</b>
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Establecimiento al que se deriva en caso de urgencia	
-            </div>
+                Establecimiento al que se deriva en caso de urgencia  
+        	</div>
             <div class="grid_ingreso_enfermeria2">
-                <input type="text" class="form-control" id="txt_persona_urgencia" required="" disabled value=""> 
+                <input type="text" class="form-control" id="txt_persona_urgencia" value=""> 
             </div>
             <div class="grid_ingreso_enfermeria1">
                 Grupo sangu&iacute;neo:
@@ -140,7 +140,7 @@
                 </select>
             </div>
             <div class="card-header featured-header" style="margin-top:-5px;">
-                <b>2. EXAMEN FISICO GENERAL</b>
+                <b>2. EXAMEN F&Iacute;SICO GENERAL</b>
             </div>
             <div class="featured-header">
                 <div class="grid_unoxcuatro">
@@ -420,32 +420,37 @@ var idsDeElementos = [
     'txt_persona_urgencia'
 ];
 
-
 function js_guarda_ingreso(){
+    let arr_envio = [];
     let v_error = [];
     idsDeElementos.forEach(function(id) {
         var elemento = document.getElementById(id);
+        $("#"+id).removeClass('class_input_error');
         if (elemento && elemento.value.trim() === "") {
             v_error.push(id);
             $("#"+id).addClass('class_input_error');
-        } else {
-            $("#"+id).removeClass('class_input_error');
+        }  else {
+            arr_envio[id] = $("#"+id).val();
         }
     });
-    
+
+    console.log("arr_envio  -> ",arr_envio);
+
     if(v_error.length>0){
-        console.log("ERRORES");
+        console.log("   ********************************   ");
+        console.log("   ****    ERRORES     ***");
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i>  Existe informaci&oacute;n incompleta en el registro ',4,'');
     } else {
         console.log("   ********************************   ");
         console.log("   ****    para enviar por ajax ***   ");
         console.log("   ********************************   ");
+
         $.ajax({ 
             type		:   "POST",
             url 		:   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
             dataType    :   "json",
             beforeSend  :   function(xhr){  $('#loadFade').modal('show'); },
-            data 		:   { },
+            data 		:   { arr_ : arr_envio },
             error		:   function(errro) {  
                                                 console.log(errro);
                                                 jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE");
