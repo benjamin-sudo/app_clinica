@@ -434,17 +434,21 @@ function js_guarda_ingreso(){
         }
     });
 
-    console.log("arr_envio  -> ",arr_envio);
-
+    console.log("   ********************************    ");
+    console.log("   arr_envio -> ",arr_envio);
+    console.log("   ********************************    ");
+    
     if(v_error.length>0){
+        
         console.log("   ********************************   ");
         console.log("   ****    ERRORES     ***");
-        showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i>  Existe informaci&oacute;n incompleta en el registro ',4,'');
+        console.log("   ********************************   ");
+        showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
+
     } else {
         console.log("   ********************************   ");
         console.log("   ****    para enviar por ajax ***   ");
         console.log("   ********************************   ");
-
         $.ajax({ 
             type		:   "POST",
             url 		:   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
@@ -467,6 +471,5 @@ function js_guarda_ingreso(){
                                             }, 
         });
     }
-
 }
 </script>

@@ -44,10 +44,7 @@ $(document).ready(function() {
         $("#btn_guarda_infoxususario").prop('disabled',true);
     });
 
-    //$(".content2").autocomplete_nn();
-    //busquedaPacientes();
-    //busquedaPacientesxMaquina();
-
+    
     $('#modal_nuevo_ingreso_paciente').on('hidden.bs.modal',function(e){ 
         //$("#html_nuevo_ingreso_paciente").html('');
         js_limpiaingreso();
@@ -58,8 +55,12 @@ $(document).ready(function() {
         on_success : function(){ js_grabadatosPaciente(); },
     });
 
-    console.log("   --------------------    ");
-    showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
+    //$(".content2").autocomplete_nn();
+    //busquedaPacientes();
+    //busquedaPacientesxMaquina();
+    //console.log("   --------------------    ");
+    //showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
+
 });
 
 function js_limpiaingreso(){
@@ -80,6 +81,7 @@ function js_grabadatosPaciente(){
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar);
     console.log("   txtDv       ->  ",txtDv);
+    console.log("   -----------------------------   ");
 
     $.ajax({ 
         type		 :  "POST",
@@ -131,9 +133,7 @@ function busquedaPacientes(){
                                                 $('#loadFade').modal('hide'); 
                                                 console.log("aData  ->  ",aData);
                                                 if(AjaxExtJsonAll(aData)){  
-                                                    
                                                     //busquedaMaquinasDeDiaslisis();
-
                                                 };
                                             }, 
     });

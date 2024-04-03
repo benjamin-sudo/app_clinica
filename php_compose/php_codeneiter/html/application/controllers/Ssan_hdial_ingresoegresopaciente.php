@@ -41,6 +41,11 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $respuesta_paciente = [];
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
         if (count($respuesta_paciente)>0){
+            #informacion del cie10
+
+
+
+            
             $html_card_paciente = $this->load->view('ssan_bdu_creareditarpaciente/html_card_pacienteunico',['info_bdu'=>$respuesta_paciente],true); 
             $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_form_ingresodialisis',[],true); 
         } else {
