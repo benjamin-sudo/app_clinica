@@ -398,7 +398,8 @@ $(document).ready(function() {
 
 function realizarBusqueda(query) {
     console.log("   ------------------------    ");
-    console.log("   query  ->  ", query);
+    console.log("       query  ->  ", query,"   ");
+    console.log("   ------------------------    ");
     $.ajax({
         type: "POST",
         url: "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",

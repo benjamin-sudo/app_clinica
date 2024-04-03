@@ -58,10 +58,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
     public function busqueda_informacion_cie10(){
         if (!$this->input->is_ajax_request()) { show_404(); }
-        
+        $v_resultados = [];
 
+        
         $this->output->set_output(json_encode([
-            'status' => true
+            'status' => true,
+            'resultados' => $v_resultados
         ]));
     }
 
