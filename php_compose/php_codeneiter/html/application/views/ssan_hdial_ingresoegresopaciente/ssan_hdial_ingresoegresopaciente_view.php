@@ -231,3 +231,9 @@
     <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
 
 </section>
+
+
+
+<label for="buscador">Buscar:</label>
+<input id="buscador">
+

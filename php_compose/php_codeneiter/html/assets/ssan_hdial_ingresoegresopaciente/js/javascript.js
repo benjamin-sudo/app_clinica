@@ -1,37 +1,51 @@
-$(document).ready(function() {
+$(document).ready(function(){
+
     $("#modal_historialclinico").on('show.bs.modal', function (e){ 
         $("#txtBuscar").focus();
     });
+    
     $('#modal_historialclinico').on('hidden.bs.modal', function(e){ 
         $("#txtBuscar").val(); 
         $("#txtDv").val(); 
         $("#resultadoBusqueda_post").val(); 
     });
+    
     $('#TURNOXMAQUINA').on('show.bs.modal', function (e){ 
         //$("#txtBuscar").focus();
     });
+    
     $('#TURNOXMAQUINA').on('hidden.bs.modal', function(e){ 
         $("#BODYXMAQUINA").html(''); 
         $("#NOM_MAQUINA").html(''); 
     });
+    
     $('#PACIENTEXCUPO').on('show.bs.modal', function (e){ 
     
     });
+    
     $('#PACIENTEXCUPO').on('hidden.bs.modal', function(e){ 
         $("#NUEVOPACIENTEXCUPO").attr('onclick',''); 
         $("#HTML_PACIENE").html('');
     });
+    
     $('#nuevoProfesional').on('hidden.bs.modal', function(e){ 
         $("#txtBuscar").val(''); 
         $("#txtDv").val(''); 
         $("#resultadoBusqueda_post").html('');
     });
-    $('#MODAL_HD_ANTERIORES').on('show.bs.modal',     function(e){ });
+
+    $('#MODAL_HD_ANTERIORES').on('show.bs.modal',     function(e){ 
+
+    });
+
     $('#MODAL_HD_ANTERIORES').on('hidden.bs.modal',   function(e){ 
         $("#BODY_HD_ANTERIORES").html(" "); 
         $("#busquedaMes").html("");
     });
-    $('#MODAL_INFOHOJADIARIA').on('show.bs.modal',     function(e){ });
+
+    $('#MODAL_INFOHOJADIARIA').on('show.bs.modal',     function(e){ 
+
+    });
     
     $('#MODAL_INFOHOJADIARIA').on('hidden.bs.modal',   function(e){ 
         $("#BODY_INFOHOJADIARIA").html(""); 
@@ -44,9 +58,7 @@ $(document).ready(function() {
         $("#btn_guarda_infoxususario").prop('disabled',true);
     });
 
-    
     $('#modal_nuevo_ingreso_paciente').on('hidden.bs.modal',function(e){ 
-        //$("#html_nuevo_ingreso_paciente").html('');
         js_limpiaingreso();
     });
 
@@ -57,19 +69,51 @@ $(document).ready(function() {
             //js_grabadatosPaciente(); 
         },
     });
+
+    var disponibles = [
+        "ActionScript",
+        "AppleScript",
+        "Asp",
+        "BASIC",
+        "C",
+        "C++",
+        "Clojure",
+        "COBOL",
+        "ColdFusion",
+        "Erlang",
+        "Fortran",
+        "Groovy",
+        "Haskell",
+        "Java",
+        "JavaScript",
+        "Lisp",
+        "Perl",
+        "PHP",
+        "Python",
+        "Ruby",
+        "Scala",
+        "Scheme"
+    ];
+
+    $("#buscador").autocomplete({
+        source: disponibles
+    });
+
+    
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
     //console.log("   --------------------    ");
     //showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
-});
 
-function js_limpiaingreso(){
-    $(".div_pacienteindentificado,.formulario_ingreso").html('');
-}
+});
 
 function nuevoPacienteAgresado(){
     $("#modal_nuevo_ingreso_paciente").modal({backdrop:'static',keyboard:false}).modal("show");
+}
+
+function js_limpiaingreso(){
+    $(".div_pacienteindentificado,.formulario_ingreso").html('');
 }
 
 function js_grabadatosPaciente(){    
@@ -78,15 +122,17 @@ function js_grabadatosPaciente(){
     let txtBuscar   =    Rut_form[0];
     let txtDv       =    Rut_form[1];
     let lficha      =    '';
+    
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar,"   ");
     console.log("   txtDv       ->  ",txtDv,"       ");
     console.log("   -----------------------------   ");
+
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
         dataType     :  "json",
-        beforeSend   :   function(xhr){ $('#loadFade').modal('show'); },
+        beforeSend   :  function(xhr){ $('#loadFade').modal('show'); },
         data 		 :  { 
                             OPCION  :   1,
                             RUTPAC  :   txtBuscar,

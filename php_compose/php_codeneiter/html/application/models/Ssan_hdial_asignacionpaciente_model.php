@@ -16,14 +16,12 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     }
 
     public function buscar_diagnosticos($query){
-        $this->db->like('DESCRIPCION', $query);                     # Asume que buscas coincidencias en la columna 'DESCRIPCION'
-        $this->db->or_like('CODIGO_DG_BASE', $query);               # Asume que también quieres buscar en la columna 'CODIGO_DG_BASE'
+        $queryUpper = strtoupper($query);
+        $this->db->like('DESCRIPCION', $queryUpper);                # Asume que buscas coincidencias en la columna 'DESCRIPCION'
+        $this->db->or_like('CODIGO_DG_BASE', $queryUpper);          # Asume que también quieres buscar en la columna 'CODIGO_DG_BASE'
+        $this->db->limit(10);                                       # Limita los resultados a los primeros 10
         $query = $this->db->get('ADMIN.TGCD_CIE_DIAGNOSTICOS');     # Asume que tu tabla se llama 'TGCD_CIE_DIAGNOSTICOS'
-        if ($query->num_rows()>0) {
-            return $query->result_array();
-        } else {
-            return array();
-        }
+        return $query->num_rows() > 0 ? $query->result_array() : [];
     }
 
     public function sql_busquedaEstadoAdmision($AD_ID_ADMISION){
