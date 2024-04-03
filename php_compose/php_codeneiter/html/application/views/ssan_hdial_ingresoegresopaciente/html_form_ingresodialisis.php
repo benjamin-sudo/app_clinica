@@ -69,13 +69,13 @@
                 <b>1. ANTECEDENTES PERSONALES</b>
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Antecedentes Quir&uacute;rgicos:
+                Antecedentes Quir&uacute;rgicos
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <input type="text" class="form-control" id="txt_antecedente_qx" value="" required="">
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Antecedentes Al&eacute;rgicos:
+                Antecedentes Al&eacute;rgicos
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <select class="form-select" aria-label="Seleccione ..." id="ingreso_enfe_antenecentealergia" onclick="js_cambio_atencedentes()">
@@ -104,10 +104,16 @@
                 <input type="text" class="form-control" id="txt_otro_alergia"  required="" disabled value=""> 
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Diagn&oacute;stico de ingreso:
+                Diagn&oacute;stico de ingreso
             </div>
             <div class="grid_ingreso_enfermeria2">
-                <b>PENDIENTE (UNO A MUCHO)</b>
+                
+                <input type="text" id="busquedaInput" class="form-control" placeholder="Escribe para buscar..." autocomplete="off">
+                <hr>
+                <ul class="list-group" id="resultadosBusqueda">
+                    <li class="list-group-item">SIN INFORMACION CARGADA</li>
+                </ul>
+
             </div>
             <div class="grid_ingreso_enfermeria1">
                 Establecimiento al que se deriva en caso de urgencia  
@@ -116,7 +122,7 @@
                 <input type="text" class="form-control" id="txt_persona_urgencia" value=""> 
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Grupo sangu&iacute;neo:
+                Grupo sangu&iacute;neo
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <select name="cboGrupoSangre" id="cboGrupoSangre" class="form-select">
@@ -374,6 +380,64 @@
 </div>
 
 <script>
+
+$(document).ready(function() {
+    let timer;
+    $('#busquedaInput').on('keyup', function() {
+        clearTimeout(timer);
+        const valorInput = $(this).val().trim();
+        if (valorInput.length >= 3) {
+            timer = setTimeout(function() {
+                realizarBusqueda(valorInput);
+            }, 300);
+        } else {
+            $('#resultadosBusqueda').html('<li class="list-group-item">SIN INFORMACION CARGADA</li>');
+        }
+    });
+});
+
+function realizarBusqueda(query) {
+    console.log("   ------------------------    ");
+    console.log("   query  ->  ", query);
+    $.ajax({
+        type: "POST",
+        url: "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
+        dataType: "json",
+        beforeSend: function(xhr) { 
+            $('#loadFade').modal('show'); 
+        },
+        data: {
+            query: query,
+        },
+        error: function(error) {
+            console.log(error);
+            jAlert("Comuniquese con el administrador", "CLINICA LIBRE CHILE");
+            $("#loadFade").modal('hide');
+        },
+        success: function(aData) {
+            $("#loadFade").modal('hide');
+            console.log("busqueda_informacion_cie10 ->", aData);
+            $('#resultadosBusqueda').empty(); // Limpia los resultados anteriores
+            if (aData.status && aData.resultados.length > 0) {
+                // Suponiendo que `aData.resultados` es un array de tus resultados
+                aData.resultados.forEach(function(item) {
+                    // Asumiendo que `item.descripcion` es lo que quieres mostrar
+                    $('#resultadosBusqueda').append('<li class="list-group-item">' + item.descripcion + '</li>');
+                });
+            } else {
+                // Si no hay resultados, mostrar un mensaje
+                $('#resultadosBusqueda').html('<li class="list-group-item">No se encontraron resultados.</li>');
+            }
+        },
+    });
+}
+
+function clearTimeout(){
+    setTimeout(function() {
+        console.log("Este mensaje se muestra después de 2 segundos");
+    }, 300);
+}
+
 var idsDeElementos = [
     'cboFactorSangre',
     'cboGrupoSangre',
@@ -472,4 +536,8 @@ function js_guarda_ingreso(){
         });
     }
 }
+
+
+
+
 </script>
