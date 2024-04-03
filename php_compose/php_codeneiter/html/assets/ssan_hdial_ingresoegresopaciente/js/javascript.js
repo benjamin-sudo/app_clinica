@@ -57,13 +57,11 @@ $(document).ready(function() {
             //js_grabadatosPaciente(); 
         },
     });
-
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
     //console.log("   --------------------    ");
     //showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
-    
 });
 
 function js_limpiaingreso(){
@@ -80,22 +78,20 @@ function js_grabadatosPaciente(){
     let txtBuscar   =    Rut_form[0];
     let txtDv       =    Rut_form[1];
     let lficha      =    '';
-    
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar,"   ");
     console.log("   txtDv       ->  ",txtDv,"       ");
     console.log("   -----------------------------   ");
-
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
         dataType     :  "json",
         beforeSend   :   function(xhr){ $('#loadFade').modal('show'); },
         data 		 :  { 
-                            OPCION : 1,
-                            RUTPAC : txtBuscar,
-                            RUTDV : txtDv,
-                            LFICHA : lficha,
+                            OPCION  :   1,
+                            RUTPAC  :   txtBuscar,
+                            RUTDV   :   txtDv,
+                            LFICHA  :   lficha,
                         },
         error		:   function(errro) {  
                                             console.log(errro);
@@ -159,10 +155,6 @@ function busquedaMaquinasDeDiaslisis(){
         success         :   function(aData)     { 
                                                     $('#loadFade').modal('hide'); 
                                                     $("#LISTA_MAQUINA").html(""); 
-
-
-
-
                                                     if(AjaxExtJsonAll(aData)){  
 
                                                     }; 

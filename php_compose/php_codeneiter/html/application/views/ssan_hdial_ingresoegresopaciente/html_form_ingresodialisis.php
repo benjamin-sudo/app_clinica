@@ -404,12 +404,8 @@ function realizarBusqueda(query) {
         type: "POST",
         url: "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
         dataType: "json",
-        beforeSend: function(xhr) { 
-            $('#loadFade').modal('show'); 
-        },
-        data: {
-            query: query,
-        },
+        beforeSend: function(xhr) { $('#loadFade').modal('show'); },
+        data: { query : query },
         error: function(error) {
             console.log(error);
             jAlert("Comuniquese con el administrador", "CLINICA LIBRE CHILE");
@@ -420,16 +416,15 @@ function realizarBusqueda(query) {
             console.log("busqueda_informacion_cie10 ->", aData);
             $('#resultadosBusqueda').empty(); // Limpia los resultados anteriores
 
-
             if (aData.status && aData.resultados.length > 0) {
                 aData.resultados.forEach(function(item) {
-                    $('#resultadosBusqueda').append('<li class="list-group-item">' + item.descripcion + '</li>');
+                    
+                    $('#resultadosBusqueda').append('<li class="list-group-item"><b>' + item.CODIGO_DG_BASE + '</b> : ' + item.DESCRIPCION + '</li>');
+
                 });
             } else {
                 $('#resultadosBusqueda').html('<li class="list-group-item">NO SE ENCONTRARON RESULTADOS</li>');
             }
-
-
 
         },
     });
