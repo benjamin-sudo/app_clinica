@@ -10,6 +10,24 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->model("ssan_bdu_creareditarpaciente_model");
     }
 
+    public function busqueda_informacion_cie10(){
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        $v_resultados = [];
+        $status = false;
+        $query = $this->input->post('query');
+        if (!empty($query) && strlen($query) > 2) {
+            $v_resultados = $this->ssan_hdial_asignacionpaciente_model->buscar_diagnosticos($query);
+            if (!empty($v_resultados)) {
+                $status = true;
+            }
+        }
+        $this->output->set_output(json_encode(array(
+            'status' => $status,
+            'resultados' => $v_resultados
+        )));
+    }
+
+
     public function index(){
         $this->output->set_template('blank');
         $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
@@ -42,7 +60,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
         if (count($respuesta_paciente)>0){
             #informacion del cie10
-
             $html_card_paciente = $this->load->view('ssan_bdu_creareditarpaciente/html_card_pacienteunico',['info_bdu'=>$respuesta_paciente],true); 
             $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_form_ingresodialisis',[],true); 
         } else {
@@ -56,74 +73,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         ]));
     }
 
-    public function busqueda_informacion_cie10(){
-        if (!$this->input->is_ajax_request()) { show_404(); }
-        $v_resultados = [];
-
-        
-        $this->output->set_output(json_encode([
-            'status' => true,
-            'resultados' => $v_resultados
-        ]));
-    }
-
-    public function CargaHTMLsuspension(){
-        if (!$this->input->is_ajax_request()) { show_404(); }
-        $fecha = '19-12-2016';
-        /*
-        $array	= array(
-            "1"  => "PACIENTE",
-            "2"  => "UNIDADES DE APOYO",
-            "3"  => "ADMINISTRATIVOS",
-            "4"  => "PREPARACI&Oacute;N PREVIA DEL PACIENTE",
-            "5"  => "EQUIPO QUIR&Uacute;RGICO",
-            "5"  => "INFRAESTRUCTURA",
-            "6"  => "GREMIALES",
-            "7"  => "EMERGENCIAS",
-            );
-        */
-        $HTML='     
-                <script>
-                    function  activa(valor){
-                        if (valor==1){
-                            $("#txt_mot_familiarinfo").attr("disabled", "disabled"); 
-                            $("#txt_mot_familiarinfo").val("");
-                        }else{
-                            $("#txt_mot_familiarinfo").attr("disabled", false); 
-                            $("#txt_mot_familiarinfo").focus();
-                        }
-                    }
-                </script> ';
-        $valida = $this->ssan_spab_listaprotocoloqx_model->getbusquedageneraldesuspensiones();
-        $HTML.='<div>';
-        if(count($valida)>0){
-            $opGrup = '';
-            foreach ($valida as $i => $row){
-                //<div class="elemento">'.$row['TXT_SUBMENU'].'<div class="elemento">
-                if($opGrup  != $row["TXT_SUBMENU"]){
-                    $opGrup  = $row["TXT_SUBMENU"];
-                    $HTML.= ' <table class="table table-striped" width="100%"> '
-                            . '<tr> <td colspan ="3"><b>'.$row['TXT_SUBMENU'].'<b></td>';
-                }
-                $HTML.='  
-                            <tr>
-                                <td width="5%">'.($i+1).'</td>
-                                <td width="80%">'.$row["TXTXSUSPENSION"].'</td>
-                                <td width="15%"><input type="checkbox" name="sus_'.$row["ID"].'" id="sus_'.$row["ID"].'" value="'.$row["ID"].'"/></td>
-                            </tr>
-                            ';
-              
-                if($opGrup  != $row["TXT_SUBMENU"]){ $HTML .= '</table>';   }
-            }
-            $HTML.='</div>';
-        }
-        
-        $TABLA[] = array("id_html"=> "HTML_SUSPENSION", "opcion" => "html", "contenido" => $HTML);
-        $this->output->set_output(json_encode($TABLA));
-    }
     
-
-
 
     public function get_nuevo_prestador_dialisis() {
         if (!$this->input->is_ajax_request()) {  show_404();   }

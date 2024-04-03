@@ -419,16 +419,18 @@ function realizarBusqueda(query) {
             $("#loadFade").modal('hide');
             console.log("busqueda_informacion_cie10 ->", aData);
             $('#resultadosBusqueda').empty(); // Limpia los resultados anteriores
+
+
             if (aData.status && aData.resultados.length > 0) {
-                // Suponiendo que `aData.resultados` es un array de tus resultados
                 aData.resultados.forEach(function(item) {
-                    // Asumiendo que `item.descripcion` es lo que quieres mostrar
                     $('#resultadosBusqueda').append('<li class="list-group-item">' + item.descripcion + '</li>');
                 });
             } else {
-                // Si no hay resultados, mostrar un mensaje
-                $('#resultadosBusqueda').html('<li class="list-group-item">No se encontraron resultados.</li>');
+                $('#resultadosBusqueda').html('<li class="list-group-item">NO SE ENCONTRARON RESULTADOS</li>');
             }
+
+
+
         },
     });
 }

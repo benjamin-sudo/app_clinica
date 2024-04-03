@@ -49,10 +49,13 @@ $(document).ready(function() {
         //$("#html_nuevo_ingreso_paciente").html('');
         js_limpiaingreso();
     });
+
     $('#rut_paciente').Rut({
         format_on : 'keyup',
         on_error : function(){ jError("RUN no es correcto","CLINICA LIBRE CHILE"); },
-        on_success : function(){ js_grabadatosPaciente(); },
+        on_success : function(){ 
+            //js_grabadatosPaciente(); 
+        },
     });
 
     //$(".content2").autocomplete_nn();
@@ -60,7 +63,7 @@ $(document).ready(function() {
     //busquedaPacientesxMaquina();
     //console.log("   --------------------    ");
     //showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
-
+    
 });
 
 function js_limpiaingreso(){
@@ -79,8 +82,8 @@ function js_grabadatosPaciente(){
     let lficha      =    '';
     
     console.log("   -----------------------------   ");
-    console.log("   txtBuscar   ->  ",txtBuscar);
-    console.log("   txtDv       ->  ",txtDv);
+    console.log("   txtBuscar   ->  ",txtBuscar,"   ");
+    console.log("   txtDv       ->  ",txtDv,"       ");
     console.log("   -----------------------------   ");
 
     $.ajax({ 
