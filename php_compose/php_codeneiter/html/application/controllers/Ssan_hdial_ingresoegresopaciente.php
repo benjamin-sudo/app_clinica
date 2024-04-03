@@ -2,7 +2,7 @@
 
 class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
-    function __construct() {
+    function __construct(){
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
@@ -16,7 +16,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $status = false;
         $query = $this->input->post('query');
         if (!empty($query) && strlen($query) > 2) {
-            $v_resultados = $this->ssan_hdial_asignacionpaciente_model->buscar_diagnosticos($query);
+            $v_resultados = $this->Ssan_hdial_asignacionpaciente_model->buscar_diagnosticos($query);
             if (!empty($v_resultados)) {
                 $status = true;
             }
