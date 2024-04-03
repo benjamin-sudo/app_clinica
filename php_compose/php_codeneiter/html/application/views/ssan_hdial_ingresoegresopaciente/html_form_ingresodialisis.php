@@ -425,7 +425,6 @@ function realizarBusqueda(query) {
             } else {
                 $('#resultadosBusqueda').html('<li class="list-group-item">NO SE ENCONTRARON RESULTADOS</li>');
             }
-
         },
     });
 }
