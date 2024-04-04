@@ -27,7 +27,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         )));
     }
 
-
     public function index(){
         $this->output->set_template('blank');
         $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");

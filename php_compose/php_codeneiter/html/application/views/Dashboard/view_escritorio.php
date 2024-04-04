@@ -29,10 +29,9 @@
   <link href="assets/recursos/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
   <!-- select min  -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
-  
   <!-- ui | 1.12.1 --> 
+  <!-- autocomplete -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
   <style>
     .nav-link.activo{ }
     #loadFade { z-index: 10500 !important; }

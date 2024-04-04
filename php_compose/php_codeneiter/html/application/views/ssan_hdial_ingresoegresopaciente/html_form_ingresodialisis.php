@@ -108,12 +108,15 @@
             </div>
             <div class="grid_ingreso_enfermeria2">
                 
-                <input type="text" id="busquedaInput" class="form-control" placeholder="Escribe para buscar..." autocomplete="off">
+                <label for="resultadosBusqueda">BUSCADOR CIE10</label>
+                <input class="form-control" id="resultadosBusqueda">
+                
                 <hr>
-                <ul class="list-group" id="resultadosBusqueda">
-                    <li class="list-group-item">SIN INFORMACION CARGADA</li>
-                </ul>
 
+                <ul class="list-group" id="ind_ciediez_selecionados">
+                    <li class="list-group-item">SIN CIE-10 SELECCIONADOS ... </li>
+                </ul>
+            
             </div>
             <div class="grid_ingreso_enfermeria1">
                 Establecimiento al que se deriva en caso de urgencia  
@@ -391,17 +394,51 @@ $(document).ready(function() {
                 realizarBusqueda(valorInput);
             }, 300);
         } else {
-            $('#resultadosBusqueda').html('<li class="list-group-item">SIN INFORMACION CARGADA</li>');
+
+            //$('#resultadosBusqueda').html('<li class="list-group-item">SIN INFORMACION CARGADA</li>');
+
         }
     });
+
+    var disponibles = [
+        "ActionScript",
+        "AppleScript",
+        "Asp",
+        "BASIC",
+        "C",
+        "C++",
+        "Clojure",
+        "COBOL",
+        "ColdFusion",
+        "Erlang",
+        "Fortran",
+        "Groovy",
+        "Haskell",
+        "Java",
+        "JavaScript",
+        "Lisp",
+        "Perl",
+        "PHP",
+        "Python",
+        "Ruby",
+        "Scala",
+        "Scheme"
+    ];
+
+    console.log("disponibles    ->  ",disponibles);
+
+    $("#resultadosBusqueda").autocomplete({
+
+        source: disponibles
+
+    });
+
 });
 
 function realizarBusqueda(query) {
-
     console.log("------------------------");
     console.log(" query  ->  ", query,"  ");
     console.log("------------------------");
-
     $.ajax({
         type: "POST",
         url: "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
@@ -416,16 +453,19 @@ function realizarBusqueda(query) {
         success: function(aData) {
             $("#loadFade").modal('hide');
             console.log("busqueda_informacion_cie10 ->", aData);
-            $('#resultadosBusqueda').empty(); // Limpia los resultados anteriores
+            
+            //$('#resultadosBusqueda').empty(); // Limpia los resultados anteriores
 
             if (aData.status && aData.resultados.length > 0) {
                 aData.resultados.forEach(function(item) {
                     
-                    $('#resultadosBusqueda').append('<li class="list-group-item"><b>' + item.CODIGO_DG_BASE + '</b> : ' + item.DESCRIPCION + '</li>');
+                    //$('#resultadosBusqueda').append('<li class="list-group-item"><b>' + item.CODIGO_DG_BASE + '</b> : ' + item.DESCRIPCION + '</li>');
 
                 });
             } else {
-                $('#resultadosBusqueda').html('<li class="list-group-item">NO SE ENCONTRARON RESULTADOS</li>');
+                
+                //$('#resultadosBusqueda').html('<li class="list-group-item">NO SE ENCONTRARON RESULTADOS</li>');
+
             }
         },
     });

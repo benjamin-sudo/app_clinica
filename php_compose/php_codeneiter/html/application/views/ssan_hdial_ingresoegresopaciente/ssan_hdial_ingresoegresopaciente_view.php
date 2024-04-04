@@ -4,17 +4,17 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 8px;">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
-            <i class="bi bi-person-vcard-fill"></i>&nbsp;RRHH
+            <i class="bi bi-person-vcard-fill"></i>&nbsp;RRHH&nbsp;
         </button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link btn_listado_paciente" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="busquedaPacientes()">
-            <i class="bi bi-person-wheelchair"></i>&nbsp;LISTADO DE PACIENTES
+            <i class="bi bi-person-wheelchair"></i>&nbsp;LISTADO DE PACIENTES&nbsp;
         </button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
-            <i class="bi bi-h-circle-fill"></i>&nbsp;LISTADO DE MAQUINAS
+            <i class="bi bi-h-circle-fill"></i>&nbsp;LISTADO DE MAQUINAS&nbsp;
         </button>
     </li>
     <li class="nav-item dropdown">
@@ -80,6 +80,8 @@
         </table>
     </div>
 </div>
+
+
 <!-- ZONA -->
 <section>
     <div class="modal fade" id="TURNOXMAQUINA">
@@ -223,17 +225,9 @@
             </div>
         </div>
     </div>
-
     <!-- ZONA INPUT INGRESO DE PACIENTE -->
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
     <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
-
 </section>
-
-
-
-<label for="buscador">Buscar:</label>
-<input id="buscador">
-

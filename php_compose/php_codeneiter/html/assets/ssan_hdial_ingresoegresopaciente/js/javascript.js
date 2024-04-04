@@ -70,42 +70,13 @@ $(document).ready(function(){
         },
     });
 
-    var disponibles = [
-        "ActionScript",
-        "AppleScript",
-        "Asp",
-        "BASIC",
-        "C",
-        "C++",
-        "Clojure",
-        "COBOL",
-        "ColdFusion",
-        "Erlang",
-        "Fortran",
-        "Groovy",
-        "Haskell",
-        "Java",
-        "JavaScript",
-        "Lisp",
-        "Perl",
-        "PHP",
-        "Python",
-        "Ruby",
-        "Scala",
-        "Scheme"
-    ];
+   
 
-    $("#buscador").autocomplete({
-        source: disponibles
-    });
-
-    
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
     //console.log("   --------------------    ");
     //showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
-
 });
 
 function nuevoPacienteAgresado(){
@@ -122,12 +93,10 @@ function js_grabadatosPaciente(){
     let txtBuscar   =    Rut_form[0];
     let txtDv       =    Rut_form[1];
     let lficha      =    '';
-    
     console.log("   -----------------------------   ");
     console.log("   txtBuscar   ->  ",txtBuscar,"   ");
     console.log("   txtDv       ->  ",txtDv,"       ");
     console.log("   -----------------------------   ");
-
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
@@ -406,8 +375,10 @@ function js_guarda_dialisis(){
    });
 }
 
-//********************************************************************************
+//********
 //code old
+//********
+
 function busquedaPacientesxMaquina(){
    $("#PACIENTEXMAQUINA").html("");
    $.ajax({ 
