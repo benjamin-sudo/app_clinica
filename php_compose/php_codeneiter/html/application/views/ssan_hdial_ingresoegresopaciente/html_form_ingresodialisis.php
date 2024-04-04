@@ -124,17 +124,19 @@
                 Diagn&oacute;stico de ingreso
             </div>
             <div class="grid_ingreso_enfermeria2">
-                <label for="resultadosBusqueda" class="label_buscador"> <i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10</label>
+                
+                <label for="resultadosBusqueda" class="label_buscador"><i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-exclamation-square-fill"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
                     <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
                 </div>
                 <ul class="list-group" id="ind_ciediez_selecionados">
                     <li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS</i></b></li>
                 </ul>
+
             </div>
             <div class="grid_ingreso_enfermeria1">
-                Establecimiento al que se deriva en caso de urgencia  
+                Establecimiento al que se deriva en caso de urgencia
         	</div>
             <div class="grid_ingreso_enfermeria2">
                 <input type="text" class="form-control" id="txt_persona_urgencia" value=""> 
@@ -535,9 +537,10 @@ var idsDeElementos = [
 
 function js_guarda_ingreso(){
     
-    let arr_envio    = [];
-    let arr_codcie10 = [];
-    let v_error      = [];
+    let arr_envio       =   [];
+    let arr_codcie10    =   [];
+    let v_error         =   [];
+    let num_fichae      =   [];
 
     idsDeElementos.forEach(function(id) {
         var elemento = document.getElementById(id);
@@ -550,14 +553,9 @@ function js_guarda_ingreso(){
         }
     });
 
-    let v_aux = 0;
+    
     $(".item_cie10").each(function(index,element){
-        console.log("   ------------------------------  ");
-        console.log("   index      ->   ",index);
-        console.log("   element    ->   ",element);
-        console.log("   id    ->   ",element.id);
         arr_codcie10.push(element.id);
-        v_aux++;  
     });
 
     console.log("arr_codcie10   -> ",arr_codcie10);

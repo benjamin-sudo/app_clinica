@@ -202,18 +202,23 @@
                     <div class="nuevo_ingreso_pacientehd">
                         <div class="nuevo_ingreso_pacientehd1">
                             <div class="card">
-                                <div class="card-body" style="padding: 10px;">
-                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-md"></i>&nbsp;<b>RUN PACIENTE</b></span>
-                                    <input type="text" id="rut_paciente" name="rut_paciente" class="form-control input-sm" style="width:115px;">
+                                <div class="grid_ingreso_run">
+                                    <div class="grid_ingreso_run1">
+                                        <div class="card-body" style="padding: 10px;">
+                                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-md"></i>&nbsp;<b>RUN PACIENTE</b></span>
+                                            <input type="text" id="rut_paciente" name="rut_paciente" class="form-control input-sm" style="width:115px;">
+                                        </div>
+                                    </div>
+                                    <div class="grid_ingreso_run2">
+                                        <button type="button" class="btn btn-success btn-fill" id="btn_valida_paciente" onclick="js_grabadatosPaciente()" style="margin-top:23px;">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="div_pacienteindentificado"></div>
+                            <div class="div_pacienteindentificado">&nbsp;</div>
                         </div>
-                        <div class="nuevo_ingreso_pacientehd2">
-                            <button type="button" class="btn btn-success btn-fill" id="btn_valida_paciente" onclick="js_grabadatosPaciente()" style="margin-top:23px;">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                        <div class="nuevo_ingreso_pacientehd2">&nbsp;</div>
                         <div class="nuevo_ingreso_pacientehd3 formulario_ingreso"></div>
                     </div>
                 </div>

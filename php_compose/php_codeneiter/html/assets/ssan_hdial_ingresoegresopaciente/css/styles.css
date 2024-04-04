@@ -109,10 +109,15 @@
     z-index                             :   1051 !important; /* El valor debe ser mayor que el z-index del modal */
 }
 
-
-
 .btn_small                              {
     --bs-btn-padding-y                  :   .25rem; 
     --bs-btn-padding-x                  :   .5rem; 
     --bs-btn-font-size                  :   .75rem;
 }
+
+.grid_ingreso_run                       {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+    gap                                 :   8px;
+}
+
