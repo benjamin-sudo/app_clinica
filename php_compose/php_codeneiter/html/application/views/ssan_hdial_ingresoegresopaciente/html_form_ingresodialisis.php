@@ -421,10 +421,11 @@ $(document).ready(function() {
 function add_li_diagnostico(_value){
     console.log("***********************************");
     console.log("_value -> ",_value);
+
     var nuevaTarjeta    =   `<li class="list-group-item item_`+_value.value+`">
-                                <div clas="grid_cieselecionados">
-                                    <div clas="grid_cieselecionados2">`+_value.label+`</div>
-                                    <div clas="grid_cieselecionados3">
+                                <div class="grid_cieselecionados">
+                                    <div class="grid_cieselecionados2">`+_value.label+`</div>
+                                    <div class="grid_cieselecionados3">
                                         <button type="button" class="btn btn-danger btn-xs btn_small" id="item_`+_value.value+`" onclick="js_deletecie(this.id)">
                                             <i class="bi bi-trash"></i>
                                         </button>
