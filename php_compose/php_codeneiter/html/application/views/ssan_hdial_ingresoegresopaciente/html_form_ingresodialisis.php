@@ -387,22 +387,23 @@
 $(document).ready(function() {
     let timer;
     $("#resultadosBusqueda").autocomplete({
-        source: [], // Fuente inicial vacía
-        autoFocus: true,
-        select: function(event, ui) {
-            console.log("Seleccionado: " + ui.item.value + " aka " + ui.item.label);
-        },
-        minLength: 3,
+        source      :   [], // Fuente inicial vacía
+        autoFocus   :   true,
+        select      :   function(event, ui) {
+
+                                                console.log("ui.item        :   ",ui.item);
+                                                console.log("Seleccionado   :   " + ui.item.value + " - " + ui.item.label);
+                                                add_li_diagnostico(ui.item);
+                                            },
+        minLength   :   3,
     }).autocomplete("instance")._renderItem = function(ul, item) {
-        var term = this.term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
-        var re = new RegExp("(" + term + ")", "gi");
-        var t = item.label.replace(re, "<b>$1</b>");
+        var term    =   this.term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
+        var re      =   new RegExp("(" + term + ")", "gi");
+        var t       =   item.label.replace(re, "<b>$1</b>");
         return $("<li>").append("<div>" + t + "</div>").appendTo(ul);
     };
-    // Evento para manejar la entrada de búsqueda
     $('#resultadosBusqueda').on('keyup', function(e) {
-        // Puedes incluir lógica para decidir cuándo realizar la búsqueda, por ejemplo, después de 3 caracteres.
-        let valorInput = $(this).val().trim();
+        let valorInput  = $(this).val().trim();
         if (valorInput.length >= 3) {
             realizarBusqueda(valorInput);
         } else {
@@ -411,49 +412,47 @@ $(document).ready(function() {
     });
 });
 
+
+function add_li_diagnostico(_value){
+    console.log("***********************************");
+    console.log("_value -> ",_value);
+}
+
 function realizarBusqueda(query) {
-    console.log("------------------------");
-    console.log(" query  ->  ", query,"  ");
-    console.log("------------------------");
-    //$('#resultadosBusqueda').prop('disabled', true);
+    console.log("   ------------------------");
+    console.log("       query  ->  ", query,"  ");
+    console.log("   ------------------------");
     $.ajax({
         type        :   "POST",
         url         :   "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
         dataType    :   "json",
-        beforeSend  :   function(xhr){ },
-        data        :   { query : query },
-        error       :   function(error){
+        data        :   { query: query },
+        error       :   function(error) {
                                             console.log(error);
                                             jAlert("Comuniquese con el administrador", "CLINICA LIBRE CHILE");
                                             $('#resultadosBusqueda').prop('disabled', false);
                                         },
-        success     :   function(aData){
-                                            console.log("   busqueda_informacion_cie10      ->      ", aData);
-                                            $("#resultadosBusqueda").autocomplete("option", "source", []);
+        success     :   function(aData) {
+                                            console.log("busqueda_informacion_cie10 ->", aData);
                                             if (aData.status && aData.resultados.length > 0) {
-                                                aData.resultados.forEach(function(item) {
-                                                    let datosAutocomplete = aData.resultados.map(function(item) {
-                                                        return {
-                                                            label: item.CODIGO_DG_BASE + ' : ' + item.DESCRIPCION,
-                                                            value: item.CODIGO_DG_BASE
-                                                        };
-                                                    });
-                                                    $("#resultadosBusqueda").autocomplete("option", "source", datosAutocomplete);
+                                                let datosAutocomplete = aData.resultados.map(function(item) {
+                                                    return {
+                                                        label: item.CODIGO_DG_BASE + ' : ' + item.DESCRIPCION,
+                                                        value: item.CODIGO_DG_BASE
+                                                    };
                                                 });
+                                                $("#resultadosBusqueda").autocomplete("option", "source", datosAutocomplete);
+                                                $("#resultadosBusqueda").autocomplete("search", $("#resultadosBusqueda").val().trim());
                                             } else {
                                                 $("#resultadosBusqueda").autocomplete("option", "source", []);
                                             }
-
-        },
+                                        },
     });
-
 }
 
 function clearTimeout(){
     setTimeout(function() {
-        
-        console.log("Este mensaje se muestra después de 2 segundos");
-
+        //console.log("Este mensaje se muestra después de 2 segundos");
     }, 300);
 }
 
