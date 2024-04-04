@@ -108,13 +108,12 @@
             </div>
             <div class="grid_ingreso_enfermeria2">
                 <label for="resultadosBusqueda" style="color:#888888;">
-                    <span class="ui-icon ui-icon-zoomout"></span>&nbsp;
                     <i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10
                 </label>
                 <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
-                <hr>
+                <br>
                 <ul class="list-group" id="ind_ciediez_selecionados">
-                    <li class="list-group-item">SIN CIE-10 SELECCIONADOS ... </li>
+                    <li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS ...</i></b></li>
                 </ul>
             </div>
             <div class="grid_ingreso_enfermeria1">
@@ -388,11 +387,12 @@ $(document).ready(function() {
     $("#resultadosBusqueda").autocomplete({
         source      :   [], // Fuente inicial vacía
         autoFocus   :   true,
-        select      :   function(event, ui) {
-
+        select      :   function(event,ui)  {
                                                 console.log("ui.item        :   ",ui.item);
-                                                console.log("Seleccionado   :   " + ui.item.value + " - " + ui.item.label);
-                                                add_li_diagnostico(ui.item);
+                                                $(".sin_resultadocie10").remove();
+                                                $("#resultadosBusqueda").val('');
+                                                let html_li = add_li_diagnostico(ui.item);
+                                                $("#ind_ciediez_selecionados").html(html_li);
                                             },
         minLength   :   3,
     }).autocomplete("instance")._renderItem = function(ul, item) {
@@ -425,13 +425,14 @@ function add_li_diagnostico(_value){
                                     </div>
                                 </div>
                             </li>`;
+
+
+                            
     return nuevaTarjeta;
 }
 
 function js_deletecie(_id){
-
     console.log("delete -> ",_id);
-    
 }
 
 function realizarBusqueda(query) {
