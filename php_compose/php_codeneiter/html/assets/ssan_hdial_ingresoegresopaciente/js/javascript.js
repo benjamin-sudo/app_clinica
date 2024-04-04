@@ -89,14 +89,14 @@ function js_limpiaingreso(){
 
 function js_grabadatosPaciente(){    
     if ($("#rut_paciente").val() == ''){ jAlert("RUN del paciente vacio","CLINICA LIBRE CHILE"); return false; }
-    let Rut_form    =    $("#rut_paciente").val().replace(/\./g,'').split("-");//11111111-0    
-    let txtBuscar   =    Rut_form[0];
-    let txtDv       =    Rut_form[1];
-    let lficha      =    '';
-    console.log("   -----------------------------   ");
-    console.log("   txtBuscar   ->  ",txtBuscar,"   ");
-    console.log("   txtDv       ->  ",txtDv,"       ");
-    console.log("   -----------------------------   ");
+    let Rut_form     =    $("#rut_paciente").val().replace(/\./g,'').split("-");//11111111-0    
+    let txtBuscar    =    Rut_form[0];
+    let txtDv        =    Rut_form[1];
+    let lficha       =    '';
+    //console.log("  -----------------------------   ");
+    //console.log("  txtBuscar   ->  ",txtBuscar,"   ");
+    //console.log("  txtDv       ->  ",txtDv,"       ");
+    //console.log("  -----------------------------   ");
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",

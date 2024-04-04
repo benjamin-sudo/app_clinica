@@ -70,8 +70,9 @@
     .label_buscador                         {
         color                               :   #888888;
         padding                             :   6px;
+        margin-bottom                       :   0px;
     }
-</style>
+ </style>
 
 <div class="card">
     <div class="card-header">
@@ -123,11 +124,11 @@
                 Diagn&oacute;stico de ingreso
             </div>
             <div class="grid_ingreso_enfermeria2">
-                <label for="resultadosBusqueda" class="label_buscador">
-                    <i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10
-                </label>
-                <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
-                <br>
+                <label for="resultadosBusqueda" class="label_buscador"> <i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-exclamation-square-fill"></i></span>
+                    <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
+                </div>
                 <ul class="list-group" id="ind_ciediez_selecionados">
                     <li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS</i></b></li>
                 </ul>
@@ -403,21 +404,21 @@ $(document).ready(function() {
     $("#resultadosBusqueda").autocomplete({
         source      :   [], // Fuente inicial vacía
         autoFocus   :   true,
+        minLength   :   3,
         select      :   function(event,ui)  {
                                                 console.log("ui.item        :   ",ui.item);
                                                 $(".sin_resultadocie10").remove();
-                                                $("#resultadosBusqueda").val('');
                                                 let html_li = add_li_diagnostico(ui.item);
                                                 $("#ind_ciediez_selecionados").append(html_li);
+                                                setTimeout(function() {  $("#resultadosBusqueda").val(''); }, 0); // Un r
                                             },
-        minLength   :   3,
     }).autocomplete("instance")._renderItem = function(ul,item){
         var term    =   this.term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
         var re      =   new RegExp("(" + term + ")", "gi");
         var t       =   item.label.replace(re, "<b>$1</b>");
         return $("<li>").append("<div>" + t + "</div>").appendTo(ul);
     };
-    $('#resultadosBusqueda').on('keyup', function(e) {
+    $('#resultadosBusqueda').on('keyup',function(e){
         let valorInput  = $(this).val().trim();
         if (valorInput.length >= 3) {
             realizarBusqueda(valorInput);
@@ -428,9 +429,8 @@ $(document).ready(function() {
 });
 
 function add_li_diagnostico(_value){
-    console.log("***********************************");
-    console.log("_value -> ",_value);
-
+    //console.log("***********************************");
+    //console.log("_value -> ",_value);
     var nuevaTarjeta    =   `<li class="list-group-item item_cie10 item_`+_value.value+`">
                                 <div class="grid_cieselecionados">
                                     <div class="grid_cieselecionados2">`+_value.label+`</div>
@@ -447,18 +447,12 @@ function add_li_diagnostico(_value){
 function js_deletecie(_id){
     console.log("delete -> ",_id);
     $("."+_id).remove();
-    let v_aux  = 0;
-    $("#ind_ciediez_selecionados li").each(function(index, element) {
-        console.log(index + ": " + $(element).text());
-        v_aux++;
-    });
+    let v_aux = 0;
+    $("#ind_ciediez_selecionados li").each(function(index, element) {  console.log(index + ": " + $(element).text());  v_aux++;  });
     if (v_aux == 0){ $("#ind_ciediez_selecionados").append('<li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS</i></b></li>');  }
 }
 
 function realizarBusqueda(query) {
-    console.log("   ------------------------");
-    console.log("       query  ->  ", query,"  ");
-    console.log("   ------------------------");
     $.ajax({
         type        :   "POST",
         url         :   "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
@@ -474,8 +468,8 @@ function realizarBusqueda(query) {
                                             if (aData.status && aData.resultados.length > 0) {
                                                 let datosAutocomplete = aData.resultados.map(function(item) {
                                                     return {
-                                                        label: item.CODIGO_DG_BASE + ' : ' + item.DESCRIPCION,
-                                                        value: item.CODIGO_DG_BASE
+                                                        label : item.CODIGO_DG_BASE + ' : ' + item.DESCRIPCION,
+                                                        value : item.CODIGO_DG_BASE
                                                     };
                                                 });
                                                 $("#resultadosBusqueda").autocomplete("option", "source", datosAutocomplete);
@@ -541,6 +535,7 @@ var idsDeElementos = [
 
 function js_guarda_ingreso(){
     let arr_envio = [];
+    let arr_codcie10 = [];
     let v_error = [];
     idsDeElementos.forEach(function(id) {
         var elemento = document.getElementById(id);
@@ -552,27 +547,29 @@ function js_guarda_ingreso(){
             arr_envio[id] = $("#"+id).val();
         }
     });
-    
-    console.log("   **********************************  ");
-    console.log("   ****    arr_envio -> ",arr_envio,"  ");
-    console.log("   **********************************  ");
 
-    if(v_error.length>0){
-        console.log("   ********************************   ");
-        console.log("   ****    ERRORES     ***");
-        console.log("   ********************************   ");
+
+    let v_aux = 0;
+    $("#ind_ciediez_selecionados li").each(function(index,element){
+        
+        console.log("   ------------------------------  ");
+        console.log("   index      ->   ",index);
+        console.log("   element    ->   ",element);
+
+        v_aux++;  
+    });
+
+    if(v_error.length>0 || v_aux == 0){
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
     } else {
-        
-        console.log("   ********************************   ");
-        console.log("   ****    para enviar por ajax ***   ");
-        console.log("   ********************************   ");
+        console.log("arr_envio -> ", arr_envio);
 
+        /*
         $.ajax({ 
             type		:   "POST",
             url 		:   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
             dataType    :   "json",
-            beforeSend  :   function(xhr){  $('#loadFade').modal('show'); },
+            beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
             data 		:   { arr_ : arr_envio },
             error		:   function(errro) {  
                                                 console.log(errro);
@@ -581,7 +578,9 @@ function js_guarda_ingreso(){
                                             },
             success		:   function(aData) {  
                                                 $("#loadFade").modal('hide');
+
                                                 console.log("fn_guarda_ingresohermodialisis ->",aData);
+
                                                 if (aData.status){
 
                                                 } else {
@@ -589,6 +588,7 @@ function js_guarda_ingreso(){
                                                 }
                                             }, 
         });
+        */
     }
 }
 </script>
