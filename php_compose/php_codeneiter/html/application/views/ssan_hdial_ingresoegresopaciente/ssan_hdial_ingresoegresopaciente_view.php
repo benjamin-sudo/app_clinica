@@ -225,6 +225,8 @@
             </div>
         </div>
     </div>
+
+
     <!-- ZONA INPUT INGRESO DE PACIENTE -->
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>

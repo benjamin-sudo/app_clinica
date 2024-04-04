@@ -109,7 +109,7 @@
             <div class="grid_ingreso_enfermeria2">
                 
                 <label for="resultadosBusqueda" style="color:#888888;"><i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10</label>
-                <input class="form-control" id="resultadosBusqueda">
+                <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
                 
                 <hr>
 
@@ -386,52 +386,30 @@
 
 $(document).ready(function() {
     let timer;
-    $('#busquedaInput').on('keyup', function() {
-        clearTimeout(timer);
-        const valorInput = $(this).val().trim();
-        if (valorInput.length >= 3) {
-            timer = setTimeout(function() {
-                realizarBusqueda(valorInput);
-            }, 300);
-        } else {
-
-            //$('#resultadosBusqueda').html('<li class="list-group-item">SIN INFORMACION CARGADA</li>');
-
+    
+    
+    $("#resultadosBusqueda").autocomplete({
+        source: [], // Fuente inicial vacía
+        select: function(event, ui) {
+            // Acción al seleccionar un ítem
+            console.log("Seleccionado: " + ui.item.value + " aka " + ui.item.label);
         }
     });
 
-    var disponibles = [
-        "ActionScript",
-        "AppleScript",
-        "Asp",
-        "BASIC",
-        "C",
-        "C++",
-        "Clojure",
-        "COBOL",
-        "ColdFusion",
-        "Erlang",
-        "Fortran",
-        "Groovy",
-        "Haskell",
-        "Java",
-        "JavaScript",
-        "Lisp",
-        "Perl",
-        "PHP",
-        "Python",
-        "Ruby",
-        "Scala",
-        "Scheme"
-    ];
 
-    console.log("disponibles    ->  ",disponibles);
-
-    $("#resultadosBusqueda").autocomplete({
-
-        source: disponibles
-
+    // Evento para manejar la entrada de búsqueda
+    $('#resultadosBusqueda').on('keyup', function(e) {
+        // Puedes incluir lógica para decidir cuándo realizar la búsqueda, por ejemplo, después de 3 caracteres.
+        let valorInput = $(this).val().trim();
+        if (valorInput.length >= 3) {
+            realizarBusqueda(valorInput);
+        }
     });
+
+
+
+
+
 
 });
 
@@ -439,36 +417,44 @@ function realizarBusqueda(query) {
     console.log("------------------------");
     console.log(" query  ->  ", query,"  ");
     console.log("------------------------");
+
+    
+    //$('#resultadosBusqueda').prop('disabled', true);
+
     $.ajax({
-        type: "POST",
-        url: "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
-        dataType: "json",
-        beforeSend: function(xhr) { $('#loadFade').modal('show'); },
-        data: { query : query },
-        error: function(error) {
-            console.log(error);
-            jAlert("Comuniquese con el administrador", "CLINICA LIBRE CHILE");
-            $("#loadFade").modal('hide');
-        },
-        success: function(aData) {
-            $("#loadFade").modal('hide');
-            console.log("busqueda_informacion_cie10 ->", aData);
+        type        :   "POST",
+        url         :   "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
+        dataType    :   "json",
+        beforeSend  :   function(xhr){ },
+        data        :   { query : query },
+        error       :   function(error){
+                                            console.log(error);
+                                            jAlert("Comuniquese con el administrador", "CLINICA LIBRE CHILE");
+                                            $('#resultadosBusqueda').prop('disabled', false);
+                                        },
+        success     :   function(aData){
+
             
-            //$('#resultadosBusqueda').empty(); // Limpia los resultados anteriores
+            console.log("   busqueda_informacion_cie10      ->      ", aData);
 
             if (aData.status && aData.resultados.length > 0) {
                 aData.resultados.forEach(function(item) {
-                    
-                    //$('#resultadosBusqueda').append('<li class="list-group-item"><b>' + item.CODIGO_DG_BASE + '</b> : ' + item.DESCRIPCION + '</li>');
-
+                    let datosAutocomplete = aData.resultados.map(function(item) {
+                        return {
+                            label: item.CODIGO_DG_BASE + ' : ' + item.DESCRIPCION,
+                            value: item.CODIGO_DG_BASE
+                        };
+                    });
+                    $("#resultadosBusqueda").autocomplete("option", "source", datosAutocomplete);
                 });
             } else {
-                
-                //$('#resultadosBusqueda').html('<li class="list-group-item">NO SE ENCONTRARON RESULTADOS</li>');
-
+                $("#resultadosBusqueda").autocomplete("option", "source", []);
             }
+
+
         },
     });
+
 }
 
 function clearTimeout(){
@@ -536,18 +522,14 @@ function js_guarda_ingreso(){
             arr_envio[id] = $("#"+id).val();
         }
     });
-
-    console.log("   ********************************    ");
-    console.log("   arr_envio -> ",arr_envio);
-    console.log("   ********************************    ");
-    
+    console.log("   **********************************  ");
+    console.log("   ****    arr_envio -> ",arr_envio,"  ");
+    console.log("   **********************************  ");
     if(v_error.length>0){
-        
         console.log("   ********************************   ");
         console.log("   ****    ERRORES     ***");
         console.log("   ********************************   ");
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
-
     } else {
         console.log("   ********************************   ");
         console.log("   ****    para enviar por ajax ***   ");
@@ -575,8 +557,4 @@ function js_guarda_ingreso(){
         });
     }
 }
-
-
-
-
 </script>
