@@ -1220,5 +1220,22 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         $this->db->trans_complete();
         return $this->db->trans_status(); 
     }
-    
+
+    public function model_ingreso_paciente($aData){
+        $this->db->trans_start();
+
+        $data_inser = [
+
+
+
+        ];
+        
+
+
+
+
+        return [
+            'status' => $this->db->trans_status(); 
+        ];
+    }
 }

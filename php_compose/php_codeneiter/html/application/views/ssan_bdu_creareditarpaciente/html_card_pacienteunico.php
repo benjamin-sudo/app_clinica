@@ -1,5 +1,16 @@
+<style>
+    .grid_bdu_infomacion                {
+        display                             :   grid;
+        grid-template-columns               :   1fr;
+        gap                                 :   8px;
+    }
+</style>
 <div class="card">
-    <div class="card-header"><b>PACIENTE</b></div>
+    <div class="card-header">
+        <b>PACIENTE</b>
+        <br>
+        <i>Informaci&oacute;n b&aacute;sica</i>
+    </div>
     <div class="card-body" style="padding: 5px;">
         <table class="table table-striped">
             <tbody>
@@ -42,6 +53,5 @@
     </div>
 </div>
 
-
-
+<input type="hidden"  id="num_fichae" name="num_fichae" value="<?php echo $info_bdu[0]['NUM_FICHAEPACTE'];?>"/>
 <!-- NUM_FICHAE -->

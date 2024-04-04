@@ -117,7 +117,9 @@
 
 .grid_ingreso_run                       {
     display                             :   grid;
-    grid-template-columns               :   1fr 1fr;
+    grid-template-columns               :   1fr auto;
     gap                                 :   8px;
+    margin-right                        :   25px;
+    align-items                         :   center;
 }
 
