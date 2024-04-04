@@ -56,7 +56,14 @@
     .class_input_error                      {
         border-color                        :   red;
     }
+
+    .grid_cieselecionados                   {
+        display                             :   grid;
+        grid-template-columns               :   1fr auto;
+        gap                                 :   8px;
+    }
 </style>
+
 <div class="card">
     <div class="card-header">
         <b>INGRESO DE ENFERMERIA</b>
@@ -113,7 +120,7 @@
                 <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
                 <br>
                 <ul class="list-group" id="ind_ciediez_selecionados">
-                    <li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS ...</i></b></li>
+                    <li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS</i></b></li>
                 </ul>
             </div>
             <div class="grid_ingreso_enfermeria1">
@@ -392,7 +399,7 @@ $(document).ready(function() {
                                                 $(".sin_resultadocie10").remove();
                                                 $("#resultadosBusqueda").val('');
                                                 let html_li = add_li_diagnostico(ui.item);
-                                                $("#ind_ciediez_selecionados").html(html_li);
+                                                $("#ind_ciediez_selecionados").append(html_li);
                                             },
         minLength   :   3,
     }).autocomplete("instance")._renderItem = function(ul,item){
@@ -416,23 +423,26 @@ function add_li_diagnostico(_value){
     console.log("_value -> ",_value);
     var nuevaTarjeta    =   `<li class="list-group-item item_`+_value.value+`">
                                 <div clas="grid_cieselecionados">
-                                    <div clas="grid_cieselecionados1">`+_value.value+`</div>
                                     <div clas="grid_cieselecionados2">`+_value.label+`</div>
                                     <div clas="grid_cieselecionados3">
-                                        <button type="button" class="btn btn-danger btn_small" id="item_`+_value.value+`" onclick="js_deletecie(this.id)">
+                                        <button type="button" class="btn btn-danger btn-xs btn_small" id="item_`+_value.value+`" onclick="js_deletecie(this.id)">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </div>
                                 </div>
                             </li>`;
-
-
-                            
     return nuevaTarjeta;
 }
 
 function js_deletecie(_id){
     console.log("delete -> ",_id);
+    $("."+_id).remove();
+    let v_aux  = 0;
+    $("#ind_ciediez_selecionados li").each(function(index, element) {
+        console.log(index + ": " + $(element).text());
+        v_aux++;
+    });
+    if (v_aux == 0){ $("#ind_ciediez_selecionados").append('<li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS</i></b></li>');  }
 }
 
 function realizarBusqueda(query) {
