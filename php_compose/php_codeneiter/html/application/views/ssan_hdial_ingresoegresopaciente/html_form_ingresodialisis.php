@@ -62,6 +62,15 @@
         grid-template-columns               :   1fr auto;
         gap                                 :   8px;
     }
+
+    .item_cie10                             {
+        padding                             :   7px;
+    }
+
+    .label_buscador                         {
+        color                               :   #888888;
+        padding                             :   6px;
+    }
 </style>
 
 <div class="card">
@@ -114,7 +123,7 @@
                 Diagn&oacute;stico de ingreso
             </div>
             <div class="grid_ingreso_enfermeria2">
-                <label for="resultadosBusqueda" style="color:#888888;">
+                <label for="resultadosBusqueda" class="label_buscador">
                     <i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10
                 </label>
                 <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
@@ -422,7 +431,7 @@ function add_li_diagnostico(_value){
     console.log("***********************************");
     console.log("_value -> ",_value);
 
-    var nuevaTarjeta    =   `<li class="list-group-item item_`+_value.value+`">
+    var nuevaTarjeta    =   `<li class="list-group-item item_cie10 item_`+_value.value+`">
                                 <div class="grid_cieselecionados">
                                     <div class="grid_cieselecionados2">`+_value.label+`</div>
                                     <div class="grid_cieselecionados3">
