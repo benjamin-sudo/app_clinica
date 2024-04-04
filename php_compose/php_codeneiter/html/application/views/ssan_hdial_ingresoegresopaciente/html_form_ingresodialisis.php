@@ -108,7 +108,7 @@
             </div>
             <div class="grid_ingreso_enfermeria2">
                 
-                <label for="resultadosBusqueda">BUSCADOR CIE10</label>
+                <label for="resultadosBusqueda" style="color:#888888;"><i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10</label>
                 <input class="form-control" id="resultadosBusqueda">
                 
                 <hr>
