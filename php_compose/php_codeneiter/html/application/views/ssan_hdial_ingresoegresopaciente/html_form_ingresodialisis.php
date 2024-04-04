@@ -193,7 +193,7 @@
                     <div class="grid_unoxcuatro4">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Talla</span>
-                            <input type="text" class="form-control" placeholder="kg" aria-label="kg">
+                            <input type="text" class="form-control" placeholder="CM" aria-label="CM" id="txt_talla">
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_gorotex" name="fecha_gorotex" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_cateter" name="fecha_cateter" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_diuresis">
@@ -296,7 +296,7 @@
             </div>
             <div class="grid_acceso_vascular4">Fecha</div>
             <div class="grid_acceso_vascular5">
-                <input type="date" class="form-control" id="fecha_fav" name="fecha_fav" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+                <input type="date" class="form-control" id="fecha_hvc" name="fecha_hvc" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
         <div class="grid_acceso_vascular">
@@ -334,11 +334,11 @@
                 <div class="grid_sub_hepatina">
                     <div class="grid_sub_hepatina1">I</div>
                     <div class="grid_sub_hepatina1">
-                        <input type="text" value="" class="form-control" required="" id="txt_hepatina_i">
+                        <input type="text" value="" class="form-control" required="" id="txt_hepatina_i" style="width: 50px;">
                     </div>
                     <div class="grid_sub_hepatina1">M</div>
                     <div class="grid_sub_hepatina1">
-                        <input type="text" value="" class="form-control" required="" id="txt_hepatina_m" >
+                        <input type="text" value="" class="form-control" required="" id="txt_hepatina_m" style="width: 50px;">
                     </div>
                 </div>
             </div>
@@ -370,7 +370,7 @@
             <div class="grid_antecenteshermo4">
                 <input type="text" class="form-control" id="txt_antecenteshermo_concentrado" required="" value="">
             </div>
-            <div class="grid_antecenteshermo5">2&deg; Dosis HVB</div>
+            <div class="grid_antecenteshermo5">3&deg; Dosis HVB</div>
             <div class="grid_antecenteshermo6">
                 <input type="text" class="form-control" id="txt_3da_dosis_hvb" required="" value="">
             </div>
@@ -502,6 +502,7 @@ var idsDeElementos = [
     'num_kilogramos',
     'num_presionsistolica',
     'nun_presiondistolica',
+    'txt_talla',
     'slc_diuresis',
     'txt_2da_dosis_hvb',
     'txt_3da_dosis_hvb',
@@ -513,6 +514,7 @@ var idsDeElementos = [
     'txt_antecenteshermo_qd',
     'txt_bano_kna',
     'txt_cateter',
+    'fecha_cateter',
     'txt_dosis_refuerzo_hvb',
     'txt_dosisi_hvb',
     'txt_ef_conjuntivas',
@@ -529,6 +531,7 @@ var idsDeElementos = [
     'txt_hepatina_m',
     'txt_hiv',
     'txt_hvc',
+    'fecha_hvc',
     'txt_medicamento_alergia',
     'txt_observaciones_finales',
     'txt_otro_alergia',
@@ -559,9 +562,7 @@ function js_guarda_ingreso(){
     //console.log("   --------------------------------------  ");
     //console.log("   arr_codcie10   -> ",arr_codcie10);
     //console.log("   arr_envio      -> ",arr_envio);
-
     console.log("   arr_envio  ->  ",arr_envio);
-
     if(v_error.length>0 || arr_codcie10.length == 0){
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
     } else {

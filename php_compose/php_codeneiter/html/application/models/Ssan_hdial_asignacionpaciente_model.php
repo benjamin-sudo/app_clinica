@@ -1221,21 +1221,69 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         return $this->db->trans_status(); 
     }
 
-    public function model_ingreso_paciente($aData){
+    public function model_ingreso_paciente(){
         $this->db->trans_start();
 
         $data_inser = [
+            'TXT_ANTECEDENTESQX'    =>  $aData['arr_envio'][0]['txt_antecedente_qx'],
+            'IND_ANTALERGICOS'      =>  $aData['arr_envio'][0]['ingreso_enfe_antenecentealergia'],
+            'TXT_ALIMENTOS'         =>  $aData['arr_envio'][0]['txt_alimento_alergia'],
+            'TXT_MEDICAMENTOS'      =>  $aData['arr_envio'][0]['txt_medicamento_alergia'],
+            'TXT_OTROS'             =>  $aData['arr_envio'][0]['txt_otro_alergia'],
+            'TXT_LLAMAR_URGENCIA'   =>  $aData['arr_envio'][0]['txt_persona_urgencia'],
+            'IND_GRUPO_SANGRE'      =>  $aData['arr_envio'][0]['cboGrupoSangre'],
+            'IND_FACTOR_SANGRE'     =>  $aData['arr_envio'][0]['cboFactorSangre'],
 
+            'TXT_KILOGRAMOS'        =>  $aData['arr_envio'][0]['num_kilogramos'], 
+            'TXT_FRECUENCIAC'       =>  $aData['arr_envio'][0]['num_frecuenciacardiaca'], 
+            'TXT_PDISTOLICA'        =>  $aData['arr_envio'][0]['nun_presiondistolica'], 
+            'TXT_PSISTOLICA'        =>  $aData['arr_envio'][0]['num_presionsistolica'], 
+            'TXT_TALLA'             =>  $aData['arr_envio'][0]['txt_talla'], 
 
+            'TXT_MOVILIDAD'         =>  $aData['arr_envio'][0]['txt_ef_movilidad'],  
+            'TXT_NUTRICION'         =>  $aData['arr_envio'][0]['txt_ef_nutricion'], 
+            'TXT_ESTADOPIEL'        =>  $aData['arr_envio'][0]['txt_ef_estadodelapiel'], 
+            'TXT_CONJUNTIVAS'       =>  $aData['arr_envio'][0]['txt_ef_conjuntivas'],  
+            'TXT_YUGULARES'         =>  $aData['arr_envio'][0]['txt_ef_yugulares'], 
+            'TXT_EXTREMIDADES'      =>  $aData['arr_envio'][0]['txt_ef_extremidades'],  
+
+            'TXT_FAV'               =>  $aData['arr_envio'][0]['txt_fav'], 
+            'DATE_FAV'              =>  "TO_DATE('".$aData['arr_envio'][0]['fecha_fav']."','DD-MM-YYYY')",
+            'TXT_GOROTEX'           =>  $aData['arr_envio'][0]['txt_gorotex'],
+            'DATE_GOROTEX'          =>  "TO_DATE('".$aData['arr_envio'][0]['fecha_gorotex']."','DD-MM-YYYY')",
+            'TXT_CATETER'           =>  $aData['arr_envio'][0]['txt_cateter'],
+            'DATE_CATETER'          =>  "TO_DATE('".$aData['arr_envio'][0]['fecha_cateter']."','DD-MM-YYYY')",
+            'IND_DIURESIS'          =>  $aData['arr_envio'][0]['slc_diuresis'],  
+            'DATE_DIURESIS'         =>  "TO_DATE('".$aData['arr_envio'][0]['fecha_diuresis']."','DD-MM-YYYY')",
+
+            'TXT_HVC'               =>  $aData['arr_envio'][0]['txt_hvc'],
+            'DATE_HVC'              =>  "TO_DATE('".$aData['arr_envio'][0]['fecha_hvc']."','DD-MM-YYYY')",
+            'TXT_HIV'               =>  $aData['arr_envio'][0]['txt_hiv'],
+            'DATE_HIV'              =>  "TO_DATE('".$aData['arr_envio'][0]['fecha_hiv']."','DD-MM-YYYY')",
+            'TXT_HBSAG'             =>  $aData['arr_envio'][0]['txt_hbsag'],
+            'DATE_HBSAG'            =>  "TO_DATE('".$aData['arr_envio'][0]['fecha_hbsag']."','DD-MM-YYYY')",
+
+            
+            'TXT_QB'                =>  $aData['arr_envio'][0]['txt_antecenteshermo_qb'], 
+            'TXT_HEPARINA_I'        =>  $aData['arr_envio'][0]['txt_hepatina_i'], 
+            'TXT_HEPARINA_M'        =>  $aData['arr_envio'][0]['txt_hepatina_m'], 
+            'TXT_1RA_DOSIS_HVB'     =>  $aData['arr_envio'][0]['txt_dosisi_hvb'], 
+
+            'TXT_QD'                =>  $aData['arr_envio'][0]['txt_antecenteshermo_qd'], 
+            'TXT_BANO_KNA'          =>  $aData['arr_envio'][0]['txt_bano_kna'],
+            'TXT_2DA_DOSIS_HVB'     =>  $aData['arr_envio'][0]['txt_2da_dosis_hvb'],
+
+            'TXT_PESOSECO'          =>  $aData['arr_envio'][0]['txt_antecenteshermo_pesoseco'],
+            'TXT_CONCENTRADO'       =>  $aData['arr_envio'][0]['txt_antecenteshermo_concentrado'],
+            'TXT_3DA_DOSIS_HVB'     =>  $aData['arr_envio'][0]['txt_3da_dosis_hvb'],
+            'TXT_REFUERZO_HVB'      =>  $aData['arr_envio'][0]['txt_dosis_refuerzo_hvb'],
+            'TXT_OBSERVACIONES'     =>  $aData['arr_envio'][0]['txt_observaciones_finales'], 
 
         ];
-        
-
-
-
 
         return [
-            'status' => $this->db->trans_status(); 
+            'status' => $this->db->trans_status(),
         ];
     }
+
 }

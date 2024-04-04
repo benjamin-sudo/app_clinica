@@ -54,4 +54,5 @@
 </div>
 
 <input type="hidden"  id="num_fichae" name="num_fichae" value="<?php echo $info_bdu[0]['NUM_FICHAEPACTE'];?>"/>
+
 <!-- NUM_FICHAE -->

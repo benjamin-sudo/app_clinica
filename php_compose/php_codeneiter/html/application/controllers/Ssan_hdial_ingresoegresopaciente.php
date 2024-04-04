@@ -1115,17 +1115,17 @@ $ssss=0;
 
     public function fn_guarda_ingresohermodialisis() {
         if (!$this->input->is_ajax_request()){ show_404(); }
-        $status = true;
-        $empresa = $this->session->userdata("COD_ESTAB");
-        $v_num_fichae = $this->input->post('v_num_fichae');
-        $arr_envio = $this->input->post('arr_envio');
-        $arr_codcie10 = $this->input->post('arr_codcie10');
-        $search = $this->ssan_hdial_ingresoegresopaciente_model->model_ingreso_paciente([
-            'empresa' => $empresa,
-            'v_num_fichae' => $v_num_fichae,
-            'arr_envio' => $arr_envio,
-            'arr_codcie10' => $arr_codcie10
-        ]);
+        $status         =   true;
+        $empresa        =   $this->session->userdata("COD_ESTAB");
+        $v_num_fichae   =   $this->input->post('v_num_fichae');
+        $arr_envio      =   $this->input->post('arr_envio');
+        $arr_codcie10   =   $this->input->post('arr_codcie10');
+        $search         =   $this->ssan_hdial_ingresoegresopaciente_model->model_ingreso_paciente([
+                                'empresa'       =>  $empresa,
+                                'v_num_fichae'  =>  $v_num_fichae,
+                                'arr_envio'     =>  $arr_envio,
+                                'arr_codcie10'  =>  $arr_codcie10
+                            ]);
         $this->output->set_output(json_encode([
             'status' => $status,
             'search' => $search

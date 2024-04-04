@@ -93,12 +93,10 @@ function js_grabadatosPaciente(){
     let txtBuscar    =    Rut_form[0];
     let txtDv        =    Rut_form[1];
     let lficha       =    '';
-
     //console.log("  -----------------------------   ");
     //console.log("  txtBuscar   ->  ",txtBuscar,"   ");
     //console.log("  txtDv       ->  ",txtDv,"       ");
     //console.log("  -----------------------------   ");
-    
     $.ajax({ 
         type		 :  "POST",
         url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
@@ -117,14 +115,11 @@ function js_grabadatosPaciente(){
                                         },
         success		:   function(aData) {  
                                             $("#loadFade").modal('hide');
-                                            console.log("busqueda_pacientes_parametos ->",aData);
+                                            //console.log("busqueda_pacientes_parametos ->",aData);
                                             if(aData.status){
                                                 showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Nuevo ingreso de paciente a hermodialisis',2,'');
                                                 $(".div_pacienteindentificado").html(aData.html_card_paciente);
                                                 $(".formulario_ingreso").html(aData.html_card_formularioingreso);
-
-
-
                                             } else {
                                                 showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Paciente no ingreso al aplicativo',2,'');
                                             }
