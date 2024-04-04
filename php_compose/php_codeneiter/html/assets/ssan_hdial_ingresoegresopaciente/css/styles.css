@@ -108,3 +108,15 @@
 .ui-autocomplete                        {
     z-index                             :   1051 !important; /* El valor debe ser mayor que el z-index del modal */
 }
+
+.grid_cieselecionados                   {
+    display                             :   grid;
+    grid-template-columns               :   auto 1fr auto;
+    gap                                 :   8px;
+}
+
+.btn_small                              {
+    --bs-btn-padding-y                  :   .25rem; 
+    --bs-btn-padding-x                  :   .5rem; 
+    --bs-btn-font-size                  :   .75rem;
+}

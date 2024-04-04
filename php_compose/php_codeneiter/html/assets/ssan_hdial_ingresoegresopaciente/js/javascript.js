@@ -378,7 +378,6 @@ function js_guarda_dialisis(){
 //********
 //code old
 //********
-
 function busquedaPacientesxMaquina(){
    $("#PACIENTEXMAQUINA").html("");
    $.ajax({ 

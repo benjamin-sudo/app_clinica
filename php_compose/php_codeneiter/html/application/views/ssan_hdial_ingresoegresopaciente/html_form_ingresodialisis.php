@@ -107,16 +107,15 @@
                 Diagn&oacute;stico de ingreso
             </div>
             <div class="grid_ingreso_enfermeria2">
-                
-                <label for="resultadosBusqueda" style="color:#888888;"><i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10</label>
+                <label for="resultadosBusqueda" style="color:#888888;">
+                    <span class="ui-icon ui-icon-zoomout"></span>&nbsp;
+                    <i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10
+                </label>
                 <input class="form-control" id="resultadosBusqueda" name="resultadosBusqueda">
-                
                 <hr>
-
                 <ul class="list-group" id="ind_ciediez_selecionados">
                     <li class="list-group-item">SIN CIE-10 SELECCIONADOS ... </li>
                 </ul>
-            
             </div>
             <div class="grid_ingreso_enfermeria1">
                 Establecimiento al que se deriva en caso de urgencia  
@@ -412,10 +411,27 @@ $(document).ready(function() {
     });
 });
 
-
 function add_li_diagnostico(_value){
     console.log("***********************************");
     console.log("_value -> ",_value);
+    var nuevaTarjeta    =   `<li class="list-group-item item_`+_value.value+`">
+                                <div clas="grid_cieselecionados">
+                                    <div clas="grid_cieselecionados1">`+_value.value+`</div>
+                                    <div clas="grid_cieselecionados2">`+_value.label+`</div>
+                                    <div clas="grid_cieselecionados3">
+                                        <button type="button" class="btn btn-danger btn_small" id="item_`+_value.value+`" onclick="js_deletecie(this.id)">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>`;
+    return nuevaTarjeta;
+}
+
+function js_deletecie(_id){
+
+    console.log("delete -> ",_id);
+    
 }
 
 function realizarBusqueda(query) {
@@ -515,18 +531,22 @@ function js_guarda_ingreso(){
             arr_envio[id] = $("#"+id).val();
         }
     });
+    
     console.log("   **********************************  ");
     console.log("   ****    arr_envio -> ",arr_envio,"  ");
     console.log("   **********************************  ");
+
     if(v_error.length>0){
         console.log("   ********************************   ");
         console.log("   ****    ERRORES     ***");
         console.log("   ********************************   ");
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
     } else {
+        
         console.log("   ********************************   ");
         console.log("   ****    para enviar por ajax ***   ");
         console.log("   ********************************   ");
+
         $.ajax({ 
             type		:   "POST",
             url 		:   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
