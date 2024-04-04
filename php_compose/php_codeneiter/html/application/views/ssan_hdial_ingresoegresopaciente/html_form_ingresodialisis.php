@@ -395,7 +395,7 @@ $(document).ready(function() {
                                                 $("#ind_ciediez_selecionados").html(html_li);
                                             },
         minLength   :   3,
-    }).autocomplete("instance")._renderItem = function(ul, item) {
+    }).autocomplete("instance")._renderItem = function(ul,item){
         var term    =   this.term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
         var re      =   new RegExp("(" + term + ")", "gi");
         var t       =   item.label.replace(re, "<b>$1</b>");
