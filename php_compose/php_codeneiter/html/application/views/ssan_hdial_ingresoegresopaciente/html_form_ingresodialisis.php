@@ -431,7 +431,7 @@ $(document).ready(function() {
 function add_li_diagnostico(_value){
     //console.log("***********************************");
     //console.log("_value -> ",_value);
-    var nuevaTarjeta    =   `<li class="list-group-item item_cie10 item_`+_value.value+`">
+    var nuevaTarjeta    =   `<li class="list-group-item item_cie10 item_`+_value.value+`" id="`+_value.value+`">
                                 <div class="grid_cieselecionados">
                                     <div class="grid_cieselecionados2">`+_value.label+`</div>
                                     <div class="grid_cieselecionados3">
@@ -534,9 +534,11 @@ var idsDeElementos = [
 ];
 
 function js_guarda_ingreso(){
-    let arr_envio = [];
+    
+    let arr_envio    = [];
     let arr_codcie10 = [];
-    let v_error = [];
+    let v_error      = [];
+
     idsDeElementos.forEach(function(id) {
         var elemento = document.getElementById(id);
         $("#"+id).removeClass('class_input_error');
@@ -548,21 +550,26 @@ function js_guarda_ingreso(){
         }
     });
 
-
     let v_aux = 0;
-    $("#ind_ciediez_selecionados li").each(function(index,element){
-        
+    $(".item_cie10").each(function(index,element){
         console.log("   ------------------------------  ");
         console.log("   index      ->   ",index);
         console.log("   element    ->   ",element);
-
+        console.log("   id    ->   ",element.id);
+        arr_codcie10.push(element.id);
         v_aux++;  
     });
 
-    if(v_error.length>0 || v_aux == 0){
+    console.log("arr_codcie10   -> ",arr_codcie10);
+    console.log("arr_envio      -> ",arr_envio);
+
+    if(v_error.length>0 || arr_codcie10.length == 0){
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
     } else {
-        console.log("arr_envio -> ", arr_envio);
+
+        console.log("   -----------------------------------------   ");
+        console.log("   arr_envio      -> ", arr_envio);
+        console.log("   arr_codcie10   -> ",  arr_codcie10);
 
         /*
         $.ajax({ 
@@ -578,9 +585,7 @@ function js_guarda_ingreso(){
                                             },
             success		:   function(aData) {  
                                                 $("#loadFade").modal('hide');
-
                                                 console.log("fn_guarda_ingresohermodialisis ->",aData);
-
                                                 if (aData.status){
 
                                                 } else {
