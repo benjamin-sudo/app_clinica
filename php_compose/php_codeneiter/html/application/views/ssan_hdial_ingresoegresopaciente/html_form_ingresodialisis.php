@@ -538,67 +538,61 @@ var idsDeElementos = [
     'txt_persona_urgencia'
 ];
 
-function js_guarda_ingreso(){
-    let arr_envio       =   [];
-    let arr_codcie10    =   [];
-    let v_error         =   [];
-    let v_num_fichae    =   $("#num_fichae").val();
-    idsDeElementos.forEach(function(id){
-        let elemento    =   document.getElementById(id);
-        $("#"+id).removeClass('class_input_error');
-        if(elemento && elemento.disabled) {
-            //console.log("El elemento esta deshabilitado: ", id);
+function js_guarda_ingreso() {
+    let arr_envio = {}; // Cambiado de array a objeto
+    let arr_codcie10 = [];
+    let v_error = [];
+    let v_num_fichae = $("#num_fichae").val();
+    idsDeElementos.forEach(function(id) {
+        let elemento = document.getElementById(id);
+        $("#" + id).removeClass('class_input_error');
+        if (elemento && elemento.disabled) {
+            // Elemento deshabilitado, no se agrega.
         } else {
-            if(elemento && elemento.value.trim() === "") {
+            if (elemento && elemento.value.trim() === "") {
                 v_error.push(id);
-                $("#"+id).addClass('class_input_error');
-            }  else {
-                arr_envio[id] = $("#"+id).val();
+                $("#" + id).addClass('class_input_error');
+            } else {
+                arr_envio[id] = $("#" + id).val(); // Ahora es correcto, usando objeto.
             }
         }
     });
-    $(".item_cie10").each(function(index,element){
+    $(".item_cie10").each(function(index, element) {
         arr_codcie10.push(element.id);
     });
-    if(v_error.length>0 || arr_codcie10.length == 0){
-        showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
+    if (v_error.length > 0 || arr_codcie10.length == 0) {
+        showNotification('top', 'center', '<i class="bi bi-clipboard-x-fill"></i> Existe información incompleta en el registro ', 4, '');
     } else {
-        
         console.log("   -----------------------------------------   ");
-        console.log("   fomulario entrada   ->   ",arr_envio);
-        console.log("   arr_codcie10        ->   ",arr_codcie10);
-        console.log("   v_num_fichae        ->   ",v_num_fichae);
-        
-        $.ajax({ 
-            type		:   "POST",
-            url 		:   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
-            dataType    :   "json",
-            beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
-            data 		:   { 
-                                v_num_fichae    :   v_num_fichae,
-                                arr_envio       :   arr_envio,
-                                arr_codcie10    :   arr_codcie10,
-                            },
-            error		:   function(errro) {  
-                                                console.log(errro);
-                                                jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE");
-                                                $("#loadFade").modal('hide'); 
-                                            },
-            success		:   function(aData) {  
-                                                $("#loadFade").modal('hide');
-                                                console.log("fn_guarda_ingresohermodialisis ->",aData);
-                                                
-                                                /*
-                                                if (aData.status){
-
-                                                } else {
-
-                                                }
-                                                */
-
-                                            }, 
+        console.log("   formulario entrada  ->   ", arr_envio);
+        console.log("   arr_codcie10        ->   ", arr_codcie10);
+        console.log("   v_num_fichae        ->   ", v_num_fichae);
+        $.ajax({
+            type: "POST",
+            url: "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
+            dataType: "json",
+            beforeSend: function(xhr) { $('#loadFade').modal('show'); },
+            data: {
+                v_num_fichae: v_num_fichae,
+                form_ingreso: arr_envio, // Ahora correctamente tratado como un objeto
+                arr_codificacion: arr_codcie10
+            },
+            error: function(error) {
+                console.log(error);
+                jAlert("Comuníquese con el administrador", "CLINICA LIBRE CHILE");
+                $("#loadFade").modal('hide');
+            },
+            success: function(aData) {
+                $("#loadFade").modal('hide');
+                console.log("fn_guarda_ingresohermodialisis ->", aData);
+                // Puedes agregar aquí el código para manejar la respuesta
+            },
         });
-        
     }
 }
 </script>
+
+<!--
+    no le aparece urologia 
+
+-->
