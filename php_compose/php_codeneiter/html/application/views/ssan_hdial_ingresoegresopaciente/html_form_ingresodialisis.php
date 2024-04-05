@@ -569,12 +569,11 @@ function js_guarda_ingreso() {
         console.log("   v_num_fichae        ->   ", v_num_fichae);
         jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al sistema de dialisis <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
             'Confirmaci\u00F3n',function(r){
-                
                 console.log("   __________  ");
-                console.log("   contrasena  ->  ",r);
-
+                console.log(r);
                 if((r=='')||(r==null)){
-
+                    console.log("   __________  ");
+                    console.log(r);
                 } else {
                     $.ajax({
                         type: "POST",
@@ -597,7 +596,7 @@ function js_guarda_ingreso() {
                             console.log("fn_guarda_ingresohermodialisis ->", aData);
                             // Puedes agregar aquí el código para manejar la respuesta
                             if(aData.status){
-                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Realizado con &eacute;xito',2,'');
+                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito',2,'');
                                 //$(".div_pacienteindentificado").html(aData.html_card_paciente);
                                 //$(".formulario_ingreso").html(aData.html_card_formularioingreso);
                             } else {

@@ -1223,7 +1223,13 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
 
     public function model_ingreso_paciente($aData){
         $this->db->trans_start();
-        //print_r($aData['arr_envio']);
+        
+
+        $user_respon =  $aData['user_respon'][0];
+        
+        
+
+
         $data_inser = [
             'TXT_ANTECEDENTESQX'    =>  $aData['arr_envio']['txt_antecedente_qx'],
             
@@ -1265,7 +1271,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'TXT_HBSAG'             =>  $aData['arr_envio']['txt_hbsag'],
             'DATE_HBSAG'            =>  "TO_DATE('".$aData['arr_envio']['fecha_hbsag']."','DD-MM-YYYY')",
 
-            
             'TXT_QB'                =>  $aData['arr_envio']['txt_antecenteshermo_qb'], 
             'TXT_HEPARINA_I'        =>  $aData['arr_envio']['txt_hepatina_i'], 
             'TXT_HEPARINA_M'        =>  $aData['arr_envio']['txt_hepatina_m'], 
@@ -1281,7 +1286,13 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'TXT_REFUERZO_HVB'      =>  $aData['arr_envio']['txt_dosis_refuerzo_hvb'],
             'TXT_OBSERVACIONES'     =>  $aData['arr_envio']['txt_observaciones_finales'], 
 
+            'TXT_NAME'              =>  $user_respon['NAME'],
+            'COD_USERCREA'          =>  $user_respon['USERNAME'],
+            'DATE_CREA'             =>  'SYSDATE'
         ];
+
+
+
 
 
         return [

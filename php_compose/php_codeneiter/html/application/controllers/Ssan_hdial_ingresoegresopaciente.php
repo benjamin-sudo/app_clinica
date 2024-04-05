@@ -1111,8 +1111,8 @@ $ssss=0;
         $this->output->set_output($html_out);
     }
 
-    public function fn_guarda_ingresohermodialisis() {
-        if (!$this->input->is_ajax_request()){ show_404(); }
+    public function fn_guarda_ingresohermodialisis(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
         $status         =   true;
         $empresa        =   $this->session->userdata("COD_ESTAB");
         $v_num_fichae   =   $this->input->post('v_num_fichae');
@@ -1120,7 +1120,7 @@ $ssss=0;
         $arr_codcie10   =   $this->input->post('arr_codcie10');
         $v_contrasena   =   $this->input->post('contrasena');
         $user_respon    =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($v_contrasena);
-        if(count($valida)>0){
+        if(count($user_respon)>0){
             $search     =   $this->Ssan_hdial_asignacionpaciente_model->model_ingreso_paciente([
                                 'empresa'       =>  $empresa,
                                 'user_respon'   =>  $user_respon,
@@ -1132,9 +1132,12 @@ $ssss=0;
             $status     =   false;
         }
         $this->output->set_output(json_encode([
+            'user_respon'   =>  $user_respon,
             'status'        =>  $status,
             'search'        =>  $search,
-            'user_respon'   =>  $user_respon,
+            'post'          =>  $_POST,
         ]));
     }
+
+
 }
