@@ -567,26 +567,41 @@ function js_guarda_ingreso() {
         console.log("   formulario entrada  ->   ", arr_envio);
         console.log("   arr_codcie10        ->   ", arr_codcie10);
         console.log("   v_num_fichae        ->   ", v_num_fichae);
-        $.ajax({
-            type: "POST",
-            url: "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
-            dataType: "json",
-            beforeSend: function(xhr) { $('#loadFade').modal('show'); },
-            data: {
-                v_num_fichae: v_num_fichae,
-                form_ingreso: arr_envio, // Ahora correctamente tratado como un objeto
-                arr_codificacion: arr_codcie10
-            },
-            error: function(error) {
-                console.log(error);
-                jAlert("Comuníquese con el administrador", "CLINICA LIBRE CHILE");
-                $("#loadFade").modal('hide');
-            },
-            success: function(aData) {
-                $("#loadFade").modal('hide');
-                console.log("fn_guarda_ingresohermodialisis ->", aData);
-                // Puedes agregar aquí el código para manejar la respuesta
-            },
+        jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al sistema de dialisis <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
+            'Confirmaci\u00F3n',function(r){
+                if((r=='')||(r==null)){
+
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
+                        dataType: "json",
+                        beforeSend: function(xhr) { $('#loadFade').modal('show'); },
+                        data: {
+                            contrasena : r,
+                            v_num_fichae: v_num_fichae,
+                            arr_envio: arr_envio, 
+                            arr_codificacion: arr_codcie10
+                        },
+                        error: function(error) {
+                            console.log(error);
+                            jAlert("Comun&iacute;quese con el administrador", "CLINICA LIBRE CHILE");
+                            $("#loadFade").modal('hide');
+                        },
+                        success: function(aData) {
+                            $("#loadFade").modal('hide');
+                            console.log("fn_guarda_ingresohermodialisis ->", aData);
+                            // Puedes agregar aquí el código para manejar la respuesta
+                            if(aData.status){
+                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Realizado con &eacute;xito',2,'');
+                                //$(".div_pacienteindentificado").html(aData.html_card_paciente);
+                                //$(".formulario_ingreso").html(aData.html_card_formularioingreso);
+                            } else {
+                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Firma simple incorrecta',2,'');
+                            }
+                        },
+                    });
+                }
         });
     }
 }
@@ -594,5 +609,4 @@ function js_guarda_ingreso() {
 
 <!--
     no le aparece urologia 
-
 -->

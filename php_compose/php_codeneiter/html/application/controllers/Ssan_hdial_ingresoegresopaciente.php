@@ -10,6 +10,18 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->model("ssan_bdu_creareditarpaciente_model");
     }
 
+    public function index(){
+        $this->output->set_template('blank');
+        $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
+        $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
+            'empresa' => $empresa,
+            'ind_opcion' => 1,
+        ]);
+        $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
+    }
+
     public function busqueda_informacion_cie10(){
         if (!$this->input->is_ajax_request()){ show_404(); }
         $v_resultados = [];
@@ -27,18 +39,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         )));
     }
 
-    public function index(){
-        $this->output->set_template('blank');
-        $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
-        $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
-        $empresa = $this->session->userdata("COD_ESTAB");
-        $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
-            'empresa' => $empresa,
-            'ind_opcion' => 1,
-        ]);
-        $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
-    }
-    
     public function busqueda_pacientes_parametos() {
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
@@ -71,8 +71,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'html_card_formularioingreso' => $html_card_formularioingreso
         ]));
     }
-
-    
 
     public function get_nuevo_prestador_dialisis() {
         if (!$this->input->is_ajax_request()) {  show_404();   }
@@ -1120,16 +1118,23 @@ $ssss=0;
         $v_num_fichae   =   $this->input->post('v_num_fichae');
         $arr_envio      =   $this->input->post('arr_envio');
         $arr_codcie10   =   $this->input->post('arr_codcie10');
-        $search         =   $this->Ssan_hdial_asignacionpaciente_model->model_ingreso_paciente([
+        $v_contrasena   =   $this->input->post('contrasena');
+        $valida         =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
+        if(count($valida)>0){
+            $search     =   $this->Ssan_hdial_asignacionpaciente_model->model_ingreso_paciente([
                                 'empresa'       =>  $empresa,
                                 'v_num_fichae'  =>  $v_num_fichae,
                                 'arr_envio'     =>  $arr_envio,
                                 'arr_codcie10'  =>  $arr_codcie10
                             ]);
+        } else {
+            $status         =   false;
+        }
         $this->output->set_output(json_encode([
             'status'    =>  $status,
             'search'    =>  $search,
-            'post' =>  $_POST,
+            'post'      =>  $arr_envio,
         ]));
     }
+    
 }
