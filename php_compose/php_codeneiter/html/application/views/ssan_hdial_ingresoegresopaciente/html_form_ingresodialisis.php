@@ -544,21 +544,20 @@ function js_guarda_ingreso(){
     let v_error         =   [];
     let v_num_fichae    =   $("#num_fichae").val();
 
-    idsDeElementos.forEach(function(id) {
-        let elemento = document.getElementById(id);
-
-        console.log("   ---------------------------------   ");
-        console.log("   elemento   ->  ",elemento);
-
+    idsDeElementos.forEach(function(id){
+        let elemento    =   document.getElementById(id);
         $("#"+id).removeClass('class_input_error');
-        if (elemento && elemento.value.trim() === "") {
-            v_error.push(id);
-            $("#"+id).addClass('class_input_error');
-        }  else {
-            arr_envio[id] = $("#"+id).val();
+        if(elemento && elemento.disabled) {
+            console.log("El elemento esta deshabilitado: ", id);
+        } else {
+            if(elemento && elemento.value.trim() === "") {
+                v_error.push(id);
+                $("#"+id).addClass('class_input_error');
+            }  else {
+                arr_envio[id] = $("#"+id).val();
+            }
         }
     });
-    
 
     $(".item_cie10").each(function(index,element){
         arr_codcie10.push(element.id);
@@ -567,10 +566,12 @@ function js_guarda_ingreso(){
     if(v_error.length>0 || arr_codcie10.length == 0){
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
     } else {
+        
         console.error("   -----------------------------------------   ");
         console.log("   arr_envio      ->   ",arr_envio);
         console.log("   arr_codcie10   ->   ",arr_codcie10);
         console.log("   v_num_fichae   ->   ",v_num_fichae);
+        
         $.ajax({ 
             type		:   "POST",
             url 		:   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
