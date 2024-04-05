@@ -597,7 +597,7 @@ function js_guarda_ingreso() {
                                 //$(".div_pacienteindentificado").html(aData.html_card_paciente);
                                 //$(".formulario_ingreso").html(aData.html_card_formularioingreso);
                             } else {
-                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Firma simple incorrecta',2,'');
+                                showNotification('top','center','<i class="bi bi-exclamation-square-fill"></i>&nbsp;&nbsp;Firma simple incorrecta',4,'');
                             }
                         },
                     });
