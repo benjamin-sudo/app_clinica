@@ -7,7 +7,7 @@
 </style>
 <div class="card">
     <div class="card-header">
-        <b>PACIENTE</b>
+        <b>PACIENTE HEMODI&Aacute;LISIS</b>
         <br>
         <i>Informaci&oacute;n b&aacute;sica</i>
     </div>

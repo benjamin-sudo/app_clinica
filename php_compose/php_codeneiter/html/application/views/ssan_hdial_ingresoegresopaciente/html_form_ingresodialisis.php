@@ -545,7 +545,11 @@ function js_guarda_ingreso(){
     let v_num_fichae    =   $("#num_fichae").val();
 
     idsDeElementos.forEach(function(id) {
-        var elemento = document.getElementById(id);
+        let elemento = document.getElementById(id);
+
+        console.log("   ---------------------------------   ");
+        console.log("   elemento   ->  ",elemento);
+
         $("#"+id).removeClass('class_input_error');
         if (elemento && elemento.value.trim() === "") {
             v_error.push(id);
@@ -555,14 +559,11 @@ function js_guarda_ingreso(){
         }
     });
     
+
     $(".item_cie10").each(function(index,element){
         arr_codcie10.push(element.id);
     });
 
-    //console.log("   --------------------------------------  ");
-    //console.log("   arr_codcie10   -> ",arr_codcie10);
-    //console.log("   arr_envio      -> ",arr_envio);
-    console.log("   arr_envio  ->  ",arr_envio);
     if(v_error.length>0 || arr_codcie10.length == 0){
         showNotification('top','center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ',4,'');
     } else {

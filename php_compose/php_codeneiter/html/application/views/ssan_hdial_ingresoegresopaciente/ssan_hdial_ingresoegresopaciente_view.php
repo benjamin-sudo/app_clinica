@@ -192,7 +192,7 @@
     </div>
     
     <div class="modal fade" id="modal_nuevo_ingreso_paciente">
-        <div class="modal-dialog modal_imedico modal-dialog-scrollable">
+        <div class="modal-dialog  modal-lg modal_imedico modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b>INGRESO DE PACIENTE DE DI&Aacute;LISIS</b></h3>
