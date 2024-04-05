@@ -1221,14 +1221,12 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         return $this->db->trans_status(); 
     }
 
-    public function model_ingreso_paciente(){
+    public function model_ingreso_paciente($aData){
         $this->db->trans_start();
 
+        //var_dump($aData);
 
 
-
-
-        
         $data_inser = [
             'TXT_ANTECEDENTESQX'    =>  $aData['arr_envio'][0]['txt_antecedente_qx'],
             'IND_ANTALERGICOS'      =>  $aData['arr_envio'][0]['ingreso_enfe_antenecentealergia'],

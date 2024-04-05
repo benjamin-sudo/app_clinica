@@ -1120,18 +1120,16 @@ $ssss=0;
         $v_num_fichae   =   $this->input->post('v_num_fichae');
         $arr_envio      =   $this->input->post('arr_envio');
         $arr_codcie10   =   $this->input->post('arr_codcie10');
-        $search         =   $this->ssan_hdial_ingresoegresopaciente_model->model_ingreso_paciente([
+        $search         =   $this->Ssan_hdial_asignacionpaciente_model->model_ingreso_paciente([
                                 'empresa'       =>  $empresa,
                                 'v_num_fichae'  =>  $v_num_fichae,
                                 'arr_envio'     =>  $arr_envio,
                                 'arr_codcie10'  =>  $arr_codcie10
                             ]);
         $this->output->set_output(json_encode([
-            'status' => $status,
-            'search' => $search
+            'status'    =>  $status,
+            'search'    =>  $search,
+            'post' =>  $_POST,
         ]));
     }
-
-
-    
 }

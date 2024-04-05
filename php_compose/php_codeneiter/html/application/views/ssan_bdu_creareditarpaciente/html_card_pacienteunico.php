@@ -12,11 +12,9 @@
         <i>Informaci&oacute;n b&aacute;sica</i>
     </div>
     <div class="card-body" style="padding: 5px;">
-
         <blockquote class="blockquote" style="margin-top: 10px;">
             <p style="font-size: 13px;">Base de datos <b>BDU</b> pacientes</p>
         </blockquote>
-
         <table class="table table-striped">
             <tbody>
                 <tr>
