@@ -1119,17 +1119,17 @@ $ssss=0;
         $arr_envio      =   $this->input->post('arr_envio');
         $arr_codcie10   =   $this->input->post('arr_codcie10');
         $v_contrasena   =   $this->input->post('contrasena');
-        $user_respon    =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
+        $user_respon    =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($v_contrasena);
         if(count($valida)>0){
             $search     =   $this->Ssan_hdial_asignacionpaciente_model->model_ingreso_paciente([
-                                'user_respon'   =>  $user_respon,
                                 'empresa'       =>  $empresa,
+                                'user_respon'   =>  $user_respon,
                                 'v_num_fichae'  =>  $v_num_fichae,
                                 'arr_envio'     =>  $arr_envio,
                                 'arr_codcie10'  =>  $arr_codcie10
                             ]);
         } else {
-            $status         =   false;
+            $status     =   false;
         }
         $this->output->set_output(json_encode([
             'status'        =>  $status,
@@ -1137,5 +1137,4 @@ $ssss=0;
             'user_respon'   =>  $user_respon,
         ]));
     }
-    
 }

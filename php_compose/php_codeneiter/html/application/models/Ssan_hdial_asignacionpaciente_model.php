@@ -1284,8 +1284,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         ];
 
 
-
-
         return [
             'status' => $this->db->trans_status(),
             'data_inser' => $data_inser,

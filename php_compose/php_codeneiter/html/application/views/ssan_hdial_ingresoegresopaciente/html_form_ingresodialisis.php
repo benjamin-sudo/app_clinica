@@ -569,6 +569,10 @@ function js_guarda_ingreso() {
         console.log("   v_num_fichae        ->   ", v_num_fichae);
         jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al sistema de dialisis <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
             'Confirmaci\u00F3n',function(r){
+                
+                console.log("   __________  ");
+                console.log("   contrasena  ->  ",r);
+
                 if((r=='')||(r==null)){
 
                 } else {
@@ -606,7 +610,6 @@ function js_guarda_ingreso() {
     }
 }
 </script>
-
 <!--
     no le aparece urologia 
 -->
