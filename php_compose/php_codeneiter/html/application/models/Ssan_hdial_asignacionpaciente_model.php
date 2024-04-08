@@ -1223,14 +1223,10 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
 
     public function model_ingreso_paciente($aData){
         $this->db->trans_start();
-        
 
-        $user_respon =  $aData['user_respon'][0];
-        
-        
+        $user_respon                =  $aData['user_respon'][0];
 
-
-        $data_inser = [
+        $data_insert = [
             'TXT_ANTECEDENTESQX'    =>  $aData['arr_envio']['txt_antecedente_qx'],
             
             'IND_ANTALERGICOS'      =>  $aData['arr_envio']['ingreso_enfe_antenecentealergia'],
@@ -1291,14 +1287,13 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'DATE_CREA'             =>  'SYSDATE'
         ];
 
-
-
-
-
+        $this->db->trans_start();
+        $this->db->insert($this->own.'.HD_FORMULARIOINGRESO', $data_insert); 
+        $this->db->trans_complete();
+        
         return [
             'status' => $this->db->trans_status(),
             'data_inser' => $data_inser,
         ];
     }
-
 }
