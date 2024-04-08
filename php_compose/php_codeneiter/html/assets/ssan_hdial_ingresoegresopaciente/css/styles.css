@@ -123,3 +123,9 @@
     align-items                         :   center;
 }
 
+.grid_informacion_dialisis              {
+    display                             :   grid;
+    grid-template-columns               :   1fr 2fr 1fr 1fr 1fr;
+    gap                                 :   8px;
+    align-items                         :   center;
+}

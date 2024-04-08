@@ -202,7 +202,18 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                             </div>
                         </fieldset>
                        </div>
-                       
+
+                       <div class="grid_informacion_dialisis">
+                            <div class="grid_informacion_dialisis1">1</div>
+                            <div class="grid_informacion_dialisis2">2</div>
+                            <div class="grid_informacion_dialisis2">3</div>
+                            <div class="grid_informacion_dialisis3">4</div>
+                            <div class="grid_informacion_dialisis4">5</div>
+                       </div>
+
+
+
+
                     <hr>  
                     <div class="content">
                         <div class="contenedor">

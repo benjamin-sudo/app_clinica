@@ -977,7 +977,7 @@ function iPesoseco(numfichae){
     console.log("numfichae  ->  ",numfichae);
     $('#loadFade').modal('show'); 
     $.ajax({
-       url         :   "ssan_hdial_asignacionpaciente/iMedico_PesoSeco",
+       url         :   "ssan_hdial_ingresoegresopaciente/iMedico_PesoSeco",
        type        :   "POST",
        dataType    :   "json",
        data        :   {
