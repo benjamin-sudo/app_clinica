@@ -235,6 +235,7 @@
           </div>
         </div>
       </div>
+      
       <div class="modal fade" id="modal_perfil_usuario">
           <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
               <div class="modal-content">
@@ -253,6 +254,7 @@
               </div>
           </div>
       </div>
+
     </section>
   </body>
 </html>

@@ -1,6 +1,6 @@
 .grid_panel_paciente                    {
     display                             :   grid;
-    grid-template-columns               :   1fr auto;
+    grid-template-columns               :   1fr auto 70px;
     gap                                 :   8px;
     margin-left                         :   10px;
     margin-top                          :   10px;

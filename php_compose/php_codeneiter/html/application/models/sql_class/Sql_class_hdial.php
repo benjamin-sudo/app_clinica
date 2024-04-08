@@ -51,8 +51,7 @@ class sql_class_hdial extends CI_Model {
         
         $where          = '';
         if($conIngresoC == '1'){
-        $where.=   "
-                    AND H.NUM_FICHAE NOT IN(
+        $where.=   "AND H.NUM_FICHAE NOT IN(
                         SELECT 
                             Z.NUM_FICHAE
                         FROM 
@@ -62,38 +61,35 @@ class sql_class_hdial extends CI_Model {
                         )  
                     ";   
         }
-                
-        $sQuery = "
-                SELECT 
-                    H.ID_NUMINGRESO                                             AS ID_INGRESO, 
-                    H.NUM_FICHAE                                                AS NUM_FICHAE, 
-                    H.ID_SIC, 
-                    H.COD_EMPRESA, 
-                    H.COD_USRCREA, 
-                    H.FEC_CREA, 
-                    H.IND_ESTADO,
-                    TO_CHAR(H.FEC_INGRESO, 'DD-MM-YYYY')                        AS FINGRESO,
-                    H.DATE_HISTOINGRESO                                         AS FINGRESO_HISTO,
-                    DECODE(H.IND_ESTADO,
-                                        '1','VIGENTE',
-                                        '2','ELIMINADO',
-                                        '3','EGRESADO',
-                                        'NO INFORMADO')                         AS TXTESTADO,
+        $sQuery = "SELECT 
+                        H.ID_NUMINGRESO                                             AS ID_INGRESO, 
+                        H.NUM_FICHAE                                                AS NUM_FICHAE, 
+                        H.ID_SIC, 
+                        H.COD_EMPRESA, 
+                        H.COD_USRCREA, 
+                        H.FEC_CREA, 
+                        H.IND_ESTADO,
+                        TO_CHAR(H.FEC_INGRESO, 'DD-MM-YYYY')                        AS FINGRESO,
+                        H.DATE_HISTOINGRESO                                         AS FINGRESO_HISTO,
+                        DECODE(H.IND_ESTADO,
+                                            '1','VIGENTE',
+                                            '2','ELIMINADO',
+                                            '3','EGRESADO',
+                                            'NO INFORMADO')                         AS TXTESTADO,
 
-                    G.COD_RUTPAC||'-'||G.COD_DIGVER                             AS RUTPAC,
-                    TRUNC(MONTHS_BETWEEN(SYSDATE,G.FEC_NACIMI)/12)              AS TXTEDAD,
-                    G.NUM_CELULAR                                               AS CELULAR,
-                    G.NOM_APEPAT||' '||G.NOM_APEMAT||' '||G.NOM_NOMBRE          AS NOM_APELLIDO,
-                    G.NOM_NOMBRE||' '||G.NOM_APEPAT||' '||G.NOM_APEMAT          AS NOM_COMPLETO
-
-                FROM 
-                    $this->own.HD_TINGRESO              H, 
-                    $this->own.GG_TGPACTE               G
-                WHERE
-                    H.COD_EMPRESA                       = '$empresa'
-                AND G.NUM_FICHAE                        = H.NUM_FICHAE
-                $where
-                AND H.IND_ESTADO                        = 1
+                        G.COD_RUTPAC||'-'||G.COD_DIGVER                             AS RUTPAC,
+                        TRUNC(MONTHS_BETWEEN(SYSDATE,G.FEC_NACIMI)/12)              AS TXTEDAD,
+                        G.NUM_CELULAR                                               AS CELULAR,
+                        G.NOM_APEPAT||' '||G.NOM_APEMAT||' '||G.NOM_NOMBRE          AS NOM_APELLIDO,
+                        G.NOM_NOMBRE||' '||G.NOM_APEPAT||' '||G.NOM_APEMAT          AS NOM_COMPLETO
+                    FROM 
+                        $this->own.HD_TINGRESO              H, 
+                        $this->own.GG_TGPACTE               G
+                    WHERE
+                        H.COD_EMPRESA                       = '$empresa'
+                    AND G.NUM_FICHAE                        = H.NUM_FICHAE
+                    $where
+                    AND H.IND_ESTADO                        = 1
 
                 ";
          return $sQuery;

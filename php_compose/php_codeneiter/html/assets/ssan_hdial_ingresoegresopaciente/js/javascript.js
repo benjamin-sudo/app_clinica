@@ -113,26 +113,25 @@ function js_grabadatosPaciente(){
                                         },
         success		:   function(aData) {  
                                             $("#loadFade").modal('hide');
+                                            $(".formulario_ingreso,.div_pacienteindentificado").html('');
                                             if(aData.status){
-                                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Nuevo ingreso de paciente a hermodialisis',2,'');
+                                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp; Nuevo ingreso de paciente a hermodialisis',2,'');
                                                 $(".div_pacienteindentificado").html(aData.html_card_paciente);
                                                 $(".formulario_ingreso").html(aData.html_card_formularioingreso);
                                             } else {
-                                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Paciente no ingreso al aplicativo',2,'');
+                                                showNotification('top','center','<i class="bi bi-exclamation-square-fill"></i>&nbsp;Paciente no ingresado a su BDU pacientes',4,'');
                                             }
                                         }, 
     });
 }
 
 function busquedaPacientes(){
-    $("#LISTA_PACIENTES").append("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>");
-    $(".btn_listado_paciente").attr('onclick','');
     $.ajax({ 
         type            :   "POST",
-        url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso",
+        url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso_v2",
         dataType        :   "json",
         data            :   { },
-        beforeSend      :   function(xhr)   { },
+        beforeSend      :   function(xhr)   { $("#LISTA_PACIENTES").html("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>"); },
         beforeSend      :   function(xhr)   { $('#loadFade').modal('show'); },
         error           :   function(errro) { 
                                                 console.log(errro.responseText); 
@@ -140,12 +139,9 @@ function busquedaPacientes(){
                                                 $('#loadFade').modal('hide'); 
                                             },
         success         :   function(aData) {
-                                                $("#LISTA_PACIENTES").html(""); 
+                                                console.log("aData -> ",aData);
                                                 $('#loadFade').modal('hide'); 
-                                                console.log("aData  ->  ",aData);
-                                                if(AjaxExtJsonAll(aData)){  
-                                                    //busquedaMaquinasDeDiaslisis();
-                                                };
+                                                $("#LISTA_PACIENTES").html(aData.html); 
                                             }, 
     });
 }
@@ -1165,6 +1161,7 @@ function js_pdf_ingresoenenfermeria(id){
                                                     $('#modal_informes_pdf').html(Objpdf);
                                                 }
                                                 */
+                                                $('#modal_informes_pdf').html('HOLA');
                                             }, 
     });
 }

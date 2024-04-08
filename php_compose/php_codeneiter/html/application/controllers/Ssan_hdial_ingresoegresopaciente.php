@@ -15,11 +15,92 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
         $empresa = $this->session->userdata("COD_ESTAB");
+
+        $data_ini = [];
+
         $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
             'empresa' => $empresa,
             'ind_opcion' => 1,
         ]);
+
+
+        $htmlBusquedaPacientes = $this->BusquedaPacientesIngreso_v2(true); // Asegúrate de pasar true para obtener la cadena HTML directamente
+        $data_ini['htmlBusquedaPacientes'] = $htmlBusquedaPacientes;
+
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
+    }
+
+    public function BusquedaPacientesIngreso_v2($returnData = false){
+        #if (!$this->input->is_ajax_request()) { show_404(); }
+        $empresa        =   $this->session->userdata("COD_ESTAB");
+        $html           =   '';
+        $numFichae      =   '';
+        $rutPac         =   '';
+        $estados        =   '1';
+        $conIngreso	    =   '0';
+        $aData          =   $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
+        if(count($aData) > 0) {
+            foreach ($aData as $i => $row) {
+                $rut_pac_s = explode("-",$row['RUTPAC']); //rut del usuario        
+                $rut_pac_s = $rut_pac_s[0];
+                $html .= '
+                        <tr>
+                                <td>' . ($i + 1) . '</td>
+                                <td>' .$row['RUTPAC']. '</td>
+                                <td>' . $row['NOM_COMPLETO'] . '
+                                    <input type="hidden" id="nombre_' . $row['ID_INGRESO'] . '"     name="nombre_' . $row['ID_INGRESO'] . '"    value="' . $row['NOM_APELLIDO'] . '"/>
+                                    <input type="hidden" id="edad_' . $row['ID_INGRESO'] . '"       name="edad_' . $row['ID_INGRESO'] . '"      value="' . $row['TXTEDAD'] . '"/>
+                                    <input type="hidden" id="telefono_' . $row['ID_INGRESO'] . '"   name="telefono_' . $row['ID_INGRESO'] . '"  value="' . $row['CELULAR'] . '"/>
+                                    <input type="hidden" id="rut_' . $row['ID_INGRESO'] . '"        name="rut_' . $row['ID_INGRESO'] . '"       value="' . $row['RUTPAC'] . '"/>
+                                </td>
+                                <td>' . $row['TXTEDAD'] . '</td>
+                                <td>' . $row['FINGRESO'] . '</td>
+                                <td>' . $row['FINGRESO_HISTO'] . '</td>
+                                <td>' . $row['TXTESTADO'] . '</td>
+                                <td>
+                                    
+                                
+                                
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary" href="#">
+                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <span class="fa fa-caret-down" title="-"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i> Informacion H. Diaria</a></li>
+                                            <li class="divider"></li>     
+                                            <!--
+                                            <li><a href="javascript:iMedico(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info-circle" aria-hidden="true"></i> Informaci&oacute;n Medico</a></li>
+                                            <li><a href="javascript:iEnfermeria(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-wpforms" aria-hidden="true"></i> I. Enfermeria</a></li>
+                                            <li class="divider"></li>   
+                                            -->    
+                                            <li><a href="javascript:js_imprimiringeg(' . $rut_pac_s . ')"><i class="fa fa-print" aria-hidden="true"></i> Ingreso Enfermeria</a></li>
+                                            <li><a href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Ver Hojas Diarias</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
+                                        </ul>
+                                    </div>
+
+
+
+
+
+
+                                </td>
+                            </tr> 
+                ';
+            
+            }
+        } else {
+            $html = '<tr><td colspan="8" style="text-align:center"><b>SIN PACIENTES</b></td></tr>';
+        }
+        if($returnData) {
+            return $html; // Devuelve la cadena HTML directamente si se solicita
+        } else {
+            $this->output->set_output(json_encode(['html' => $html])); // Comportamiento AJAX original
+        }
     }
 
     public function busqueda_informacion_cie10(){
@@ -59,8 +140,11 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
         if (count($respuesta_paciente)>0){
             #informacion del cie10
+            
             $html_card_paciente = $this->load->view('ssan_bdu_creareditarpaciente/html_card_pacienteunico',['info_bdu'=>$respuesta_paciente],true); 
             $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_form_ingresodialisis',[],true); 
+
+
         } else {
             $status = false;
         }
@@ -866,69 +950,7 @@ $ssss=0;
         $this->output->set_output($html);
     }
 
-    public function BusquedaPacientesIngreso() {
-        if(!$this->input->is_ajax_request()){  show_404();  }
-	    $empresa = $this->session->userdata("COD_ESTAB");
-        $html = '';
-        $numFichae = '';
-        $rutPac = '';
-        $estados = '1';
-        $conIngreso	= '0';
-        $aData = $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
-        //$TABLA[] = array("id_html" => "LISTA_PACIENTES", "opcion" => "console", "contenido" => $aData);
-        if(count($aData) > 0) {
-            foreach ($aData as $i => $row) {
-                $rut_pac_s = explode("-",$row['RUTPAC']); //rut del usuario        
-                $rut_pac_s = $rut_pac_s[0];
-
-                $html = '
-                   <tr>
-                        <td>' . ($i + 1) . '</td>
-                        <td>' .$row['RUTPAC']. '</td>
-                        <td>' . $row['NOM_APELLIDO'] . '
-                            <input type="hidden" id="nombre_' . $row['ID_INGRESO'] . '"     name="nombre_' . $row['ID_INGRESO'] . '"    value="' . $row['NOM_APELLIDO'] . '"/>
-                            <input type="hidden" id="edad_' . $row['ID_INGRESO'] . '"       name="edad_' . $row['ID_INGRESO'] . '"      value="' . $row['TXTEDAD'] . '"/>
-                            <input type="hidden" id="telefono_' . $row['ID_INGRESO'] . '"   name="telefono_' . $row['ID_INGRESO'] . '"  value="' . $row['CELULAR'] . '"/>
-                            <input type="hidden" id="rut_' . $row['ID_INGRESO'] . '"        name="rut_' . $row['ID_INGRESO'] . '"       value="' . $row['RUTPAC'] . '"/>
-                        </td>
-                        <td>' . $row['TXTEDAD'] . '</td>
-                        <td>' . $row['FINGRESO'] . '</td>
-                        <td>' . $row['FINGRESO_HISTO'] . '</td>
-                        <td>' . $row['TXTESTADO'] . '</td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-primary" href="#">
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i>
-                                </a>
-                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <span class="fa fa-caret-down" title="-"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i> Informacion H. Diaria</a></li>
-                                    <li class="divider"></li>     
-                                    <!--
-                                    <li><a href="javascript:iMedico(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info-circle" aria-hidden="true"></i> Informaci&oacute;n Medico</a></li>
-                                    <li><a href="javascript:iEnfermeria(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-wpforms" aria-hidden="true"></i> I. Enfermeria</a></li>
-                                    <li class="divider"></li>   
-                                    -->    
-                                    <li><a href="javascript:js_imprimiringeg(' . $rut_pac_s . ')"><i class="fa fa-print" aria-hidden="true"></i> Ingreso Enfermeria</a></li>
-                                    <li><a href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Ver Hojas Diarias</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr> 
-                ';
-                //<li><a href="javascript:js_cBUSQUEDAHANTERIOR('.$row['NUM_FICHAE'].',1)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Ver Hojas Diarias</a></li>  
-                $TABLA[] = array("id_html" => "LISTA_PACIENTES", "opcion" => "append", "contenido" => $html);
-            }
-        } else {
-            $html = '<tr><td colspan="8" style="text-align:center"><b>SIN PACIENTES</b></td></tr>';
-            $TABLA[] = array("id_html" => "LISTA_PACIENTES", "opcion" => "append", "contenido" => $html);
-        }
-        $this->output->set_output(json_encode($TABLA));
-    }
+   
 
     public function guardaNuevoPacienteIngreso() {
         if (!$this->input->is_ajax_request()) {
@@ -1033,9 +1055,8 @@ $ssss=0;
     }
 
     public function Graba_Respuesta_2() {//segundo formulario
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+        if (!$this->input->is_ajax_request()) {  show_404();  }
+
         $clave = $this->input->post('Clave');
         $Sl_Hipo_sion1 = $this->input->post('Sl_Hipo_sion1');
         $Sl_Hipo_sion2 = $this->input->post('Sl_Hipo_sion2');
@@ -1146,7 +1167,7 @@ $ssss=0;
     public function pdf_ingresoenfermeria(){
         if(!$this->input->is_ajax_request()){ show_404(); }
 
-        
+
         $this->output->set_output(json_encode([
             'html'          =>  'INFORMACION',
         ]));

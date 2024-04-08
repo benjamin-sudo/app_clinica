@@ -3,12 +3,12 @@
 </h4>
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 8px;">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
             <i class="bi bi-person-vcard-fill"></i>&nbsp;RRHH&nbsp;
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link btn_listado_paciente" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="busquedaPacientes()">
+        <button class="nav-link active btn_listado_paciente" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
             <i class="bi bi-person-wheelchair"></i>&nbsp;LISTADO DE PACIENTES&nbsp;
         </button>
     </li>
@@ -27,18 +27,20 @@
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade margen_tabs show active" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
-        <div id="IND_RRHH"><?php echo $html_out;?></div>
-    </div>
-    <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
         <div class="grid_panel_paciente">
             <div class="grid_panel_paciente1">
-                <h4 style="margin-bottom: 0px;"><b>LISTADO TECNICO PARAMEDICOS DE DI&Aacute;LISIS</b></h4>
-                <p style="margin-bottom: 0px;">LISTA PACIENTES INGRESADOS</p> 
+                <h4 style="margin-bottom: 0px;"><b>LISTADO DE PACIENTES DI&Aacute;LISIS</b></h4>
+                <p style="margin-bottom: 0px;">LISTA PACIENTES INGRESADOS A SU ESTABLECIMIENTO</p> 
             </div>
             <div class="grid_panel_paciente2">
                 <p style="margin-bottom: 0px;"><b>BUSCAR</b>&nbsp;<i class='fa fa-search icon-4x'></i></p> 
                 <input type="text" id="searchTermIng2" class="form-control" style="width: auto;margin-bottom:6px;" onkeyup="doSearch(2)"></b>
+            </div>
+            <div class="grid_panel_paciente3">
+                <button type="button" class="btn btn-success btn-fill" id="btn_update_analitica" onclick="busquedaPacientes()">
+                    <i class="bi bi-bootstrap-reboot"></i>
+                </button>
             </div>
         </div>
         <table class="table table-striped" width="100%">
@@ -54,7 +56,7 @@
                     <th class="subtitulo_formulario2" width="15%">OPCI&Oacute;N</th>
                 </tr>
             </thead>
-            <tbody id="LISTA_PACIENTES"></tbody>
+            <tbody id="LISTA_PACIENTES"><?php echo $htmlBusquedaPacientes;?></tbody>
         </table>
     </div>
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
@@ -79,6 +81,11 @@
             <tbody id="LISTA_MAQUINA"> </tbody>
         </table>
     </div>
+
+    <div class="tab-pane fade margen_tabs" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
+        <div id="IND_RRHH"><?php echo $html_out;?></div>
+    </div>
+
 </div>
 
 
@@ -257,4 +264,5 @@
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
     <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
+
 </section>

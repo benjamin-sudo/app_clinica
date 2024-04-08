@@ -568,11 +568,13 @@ function js_guarda_ingreso(){
     if (v_error.length > 0 || arr_codcie10.length == 0) {
         showNotification('top', 'center','<i class="bi bi-clipboard-x-fill"></i>&nbsp;Existe informaci&oacute;n incompleta en el registro', 4, '');
     } else {
+        
         console.log("   -----------------------------------------   ");
         console.log("   formulario entrada  ->   ", arr_envio,"     ");
         console.log("   arr_codcie10        ->   ", arr_codcie10,"  ");
         console.log("   v_num_fichae        ->   ", v_num_fichae,"  ");
         console.log("   -----------------------------------------   ");
+
         jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al sistema de di&aacute;lisis <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
             if((r=='')||(r==null)){
                 console.log("   ------  ");
