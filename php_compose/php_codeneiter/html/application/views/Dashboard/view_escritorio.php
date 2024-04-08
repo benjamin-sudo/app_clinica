@@ -196,10 +196,8 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <!-- shownotificacion -->
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
-  
   <!-- personalizable --> 
   <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
-  
   <!-- web socket -->
   <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
   

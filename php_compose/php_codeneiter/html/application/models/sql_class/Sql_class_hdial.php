@@ -1903,7 +1903,6 @@ class sql_class_hdial extends CI_Model {
                             UPPER(A.NOM_APEPAT)
                     ||' '|| UPPER(A.NOM_APEMAT)
                     ||' '|| UPPER(A.NOM_NOMBRE)                                             AS NOM_PROFE,
-                    
                    
                     TO_CHAR(H.DATE_INICIO,  'YYYY-MM-DD hh24:mi')                           AS F_INICIO2,
                     TO_CHAR(H.DATE_FINAL,   'YYYY-MM-DD hh24:mi')                           AS F_FINAL2,
@@ -1953,4 +1952,4 @@ class sql_class_hdial extends CI_Model {
        return $sQuery;
     }
          
-}    
+}   

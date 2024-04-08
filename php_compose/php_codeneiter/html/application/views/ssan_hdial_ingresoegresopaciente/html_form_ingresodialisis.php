@@ -539,7 +539,7 @@ var idsDeElementos = [
 ];
 
 function js_guarda_ingreso(){
-    let arr_envio       =   {}; //Cambiado de array a objeto
+    let arr_envio       =   {};
     let arr_codcie10    =   [];
     let v_error         =   [];
     let v_num_fichae    =   $("#num_fichae").val();
@@ -566,7 +566,7 @@ function js_guarda_ingreso(){
     });
     $(".item_cie10").each(function(index, element){ arr_codcie10.push(element.id); });
     if (v_error.length > 0 || arr_codcie10.length == 0) {
-        showNotification('top', 'center','<i class="bi bi-clipboard-x-fill"></i> Existe informaci&oacute;n incompleta en el registro ', 4, '');
+        showNotification('top', 'center','<i class="bi bi-clipboard-x-fill"></i>&nbsp;Existe informaci&oacute;n incompleta en el registro', 4, '');
     } else {
         console.log("   -----------------------------------------   ");
         console.log("   formulario entrada  ->   ", arr_envio,"     ");
@@ -599,6 +599,14 @@ function js_guarda_ingreso(){
                                                         console.log("fn_guarda_ingresohermodialisis ->", aData);
                                                         if(aData.status){
                                                             showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito',2,'');
+                                                            $("#modal_nuevo_ingreso_paciente").modal('hide');
+                                                            jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+                                                                if(r){
+                                                                    js_pdf_ingresoenenfermeria(aData.v_num_unico);
+                                                                } else {
+                                                                    //console.log("-> DIJO NO PDF <-");
+                                                                }
+                                                            });
                                                         } else {
                                                             showNotification('top','center','<i class="bi bi-exclamation-square-fill"></i>&nbsp;&nbsp;Firma simple incorrecta',4,'');
                                                         }
@@ -608,5 +616,9 @@ function js_guarda_ingreso(){
             }
         });
     }
+}
+
+function js_pdf_ingresoenenfermeria(v_num_unico){
+    console.log("v_num_unico    -> ",v_num_unico);
 }
 </script>

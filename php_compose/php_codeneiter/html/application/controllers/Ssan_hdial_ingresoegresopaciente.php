@@ -1113,25 +1113,28 @@ $ssss=0;
 
     public function fn_guarda_ingresohermodialisis(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status         =   true;
-        $empresa        =   $this->session->userdata("COD_ESTAB");
-        $v_num_fichae   =   $this->input->post('v_num_fichae');
-        $arr_envio      =   $this->input->post('arr_envio');
-        $arr_codcie10   =   $this->input->post('arr_codcie10');
-        $v_contrasena   =   $this->input->post('contrasena');
-        $user_respon    =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($v_contrasena);
+        $status             =   true;
+        $v_num_unico        =   '';
+        $empresa            =   $this->session->userdata("COD_ESTAB");
+        $v_num_fichae       =   $this->input->post('v_num_fichae');
+        $arr_envio          =   $this->input->post('arr_envio');
+        $arr_codcie10       =   $this->input->post('arr_codcie10');
+        $v_contrasena       =   $this->input->post('contrasena');
+        $user_respon        =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($v_contrasena);
         if(count($user_respon)>0){
-            $search     =   $this->Ssan_hdial_asignacionpaciente_model->model_ingreso_paciente([
-                                'empresa'       =>  $empresa,
-                                'user_respon'   =>  $user_respon,
-                                'v_num_fichae'  =>  $v_num_fichae,
-                                'arr_envio'     =>  $arr_envio,
-                                'arr_codcie10'  =>  $arr_codcie10
-                            ]);
+            $search         =   $this->Ssan_hdial_asignacionpaciente_model->model_ingreso_paciente([
+                                    'empresa'       =>  $empresa,
+                                    'user_respon'   =>  $user_respon,
+                                    'v_num_fichae'  =>  $v_num_fichae,
+                                    'arr_envio'     =>  $arr_envio,
+                                    'arr_codcie10'  =>  $arr_codcie10
+                                ]);
+            $user_respon    =  $search['id_formulario_unico'];                 
         } else {
-            $status     =   false;
+            $status         =   false;
         }
         $this->output->set_output(json_encode([
+            'v_num_unico'   =>  $v_num_unico,
             'user_respon'   =>  $user_respon,
             'status'        =>  $status,
             'search'        =>  $search,

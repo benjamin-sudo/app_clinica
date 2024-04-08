@@ -69,9 +69,6 @@ $(document).ready(function(){
             //js_grabadatosPaciente(); 
         },
     });
-
-   
-
     //$(".content2").autocomplete_nn();
     //busquedaPacientes();
     //busquedaPacientesxMaquina();
@@ -115,7 +112,6 @@ function js_grabadatosPaciente(){
                                         },
         success		:   function(aData) {  
                                             $("#loadFade").modal('hide');
-                                            //console.log("busqueda_pacientes_parametos ->",aData);
                                             if(aData.status){
                                                 showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Nuevo ingreso de paciente a hermodialisis',2,'');
                                                 $(".div_pacienteindentificado").html(aData.html_card_paciente);

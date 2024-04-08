@@ -1223,25 +1223,28 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
 
     public function model_ingreso_paciente($aData){
         $this->db->trans_start();
-        $id_formulario_unico        =   $this->db->sequence($this->own,'SEQ_AP_NEWAGENDA_BLOQUES');
-        $user_respon                =  $aData['user_respon'][0];
+        $id_formulario_unico        =   $this->db->sequence($this->own,'SEQ_FORMULARIOINGRESO');
+        $user_respon                =   $aData['user_respon'][0];
+        $status_trasaccion          =   true;
+        $v_num_fichae               =   $aData['v_num_fichae'];
+        $session                    =   $user_respon['USERNAME'];
 
         $data_insert = [
             'ID_INGRESOHD'          =>  $id_formulario_unico,
-            'NUM_FICHAE'            =>  $aData['v_num_fichae'];
+            'NUM_FICHAE'            =>  $v_num_fichae,
             'TXT_NAME'              =>  $user_respon['NAME'],
-            'COD_USERCREA'          =>  $user_respon['USERNAME'],
+            'COD_CREA'              =>  $session,
             'DATE_CREA'             =>  'SYSDATE',
             'IND_ESTADO'            =>  1,
+            'COD_EMPRESA'           =>  $aData['empresa'],
 
             'TXT_ANTECEDENTESQX'    =>  $aData['arr_envio']['txt_antecedente_qx'],
             'IND_ANTALERGICOS'      =>  $aData['arr_envio']['ingreso_enfe_antenecentealergia'],
             'TXT_ALIMENTOS'         =>  $aData['arr_envio']['txt_alimento_alergia'],
             'TXT_MEDICAMENTOS'      =>  $aData['arr_envio']['txt_medicamento_alergia'],
-
             'TXT_OTROS'             =>  $aData['arr_envio']['txt_otro_alergia'],
             'TXT_LLAMAR_URGENCIA'   =>  $aData['arr_envio']['txt_persona_urgencia'],
-            'IND_GRUPO_SANGRE'      =>  $aData['arr_envio']['cboGrupoSangre'],
+            'IND_GRUPO_SANGUINEO'   =>  $aData['arr_envio']['cboGrupoSangre'],
             'IND_FACTOR_SANGRE'     =>  $aData['arr_envio']['cboFactorSangre'],
 
             'TXT_KILOGRAMOS'        =>  $aData['arr_envio']['num_kilogramos'], 
@@ -1287,15 +1290,31 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'TXT_3DA_DOSIS_HVB'     =>  $aData['arr_envio']['txt_3da_dosis_hvb'],
             'TXT_REFUERZO_HVB'      =>  $aData['arr_envio']['txt_dosis_refuerzo_hvb'],
             'TXT_OBSERVACIONES'     =>  $aData['arr_envio']['txt_observaciones_finales'], 
- 
         ];
+        
+
+        $ID_HDIAL                   =   $this->db->sequence($this->own,'SEQ_HDIAL_PACIENTEDIALISIS');
+        $dataIngreso                =   [
+                                            'ID_NUMINGRESO' =>  $ID_HDIAL, 
+                                            'NUM_FICHAE'    =>  $v_num_fichae, 
+                                            'ID_SIC'        =>  '', 
+                                            'COD_EMPRESA'   =>  $empresa, 
+                                            'COD_USRCREA'   =>  $session,  
+                                            'FEC_INGRESO'   =>  'SYSDATE', 
+                                            'FEC_CREA'      =>  'SYSDATE', 
+                                            'IND_ESTADO'    =>  '1',
+                                        ];
 
         $this->db->trans_start();
+        $this->db->insert($this->own.'.HD_TINGRESO', $dataIngreso); 
         $this->db->insert($this->own.'.HD_FORMULARIOINGRESO', $data_insert); 
         $this->db->trans_complete();
+
         return [
-            'status' => $this->db->trans_status(),
-            'data_inser' => $data_inser,
+            'status'                =>  $this->db->trans_status(),
+            'status_trasaccion'     =>  $status_trasaccion,
+            'id_formulario_unico'   =>  $id_formulario_unico,
+            'data_inser'            =>  $data_inser,
         ];
     }
 }
