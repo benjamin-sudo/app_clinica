@@ -965,33 +965,38 @@ function js_cBUSQUEDAHANTERIOR(num_fichae,val){
                            fecha           : $("#sel_busquedaMes").val()
                        },
        error       :   function(errro){ console.log(errro.responseText); console.log(errro); jError("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); },              
-       success     :   function(xml) { if (AjaxExtJsonAll(xml)){ 
-                           $("#MODAL_HD_ANTERIORES").modal("show");  
-                           }; 
+       success     :   function(xml) { 
+                            if (AjaxExtJsonAll(xml)){ 
+                                $("#MODAL_HD_ANTERIORES").modal("show");  
+                            }; 
                        }
    });
 }
 
 function iPesoseco(numfichae){
-   $.ajax({
+    console.log("numfichae  ->  ",numfichae);
+    $('#loadFade').modal('show'); 
+    $.ajax({
        url         :   "ssan_hdial_asignacionpaciente/iMedico_PesoSeco",
        type        :   "POST",
        dataType    :   "json",
        data        :   {
                            numfichae      : numfichae,
                        },
-       error       :   function(errro){ 
-                           console.log(errro.responseText); 
-                           console.log(errro); 
-                           jError("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); 
-                       },              
-       success     :   function(xml) { 
-                           if (AjaxExtJsonAll(xml)){ 
-                               $("#MODAL_INFOHOJADIARIA").modal("show");  
-                               $("#btn_guardar").attr('onclick','guardarInfo('+numfichae+')');   
-                           }; 
-                       }
+       error       :   function(errro)  { 
+                                            console.log(errro); 
+                                            $('#loadFade').modal('hide'); 
+                                            jError("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); 
+                                        },              
+       success     :   function(aData) {
+                                            console.log("   ->  ",aData);
+                                            $('#loadFade').modal('hide'); 
+                                            $("#MODAL_INFOHOJADIARIA").modal({backdrop:'static',keyboard:false}).modal("show"); 
+                                            $("#BODY_INFOHOJADIARIA").html(aData.html);
+                                            $("#btn_guardar").attr('onclick','guardarInfo('+numfichae+')');
+                                    }
    });
+
 }
 
 function guardarInfo(numfichae){
@@ -1053,7 +1058,7 @@ function num_coma(e, field) {
 }
 
 function cal_fecha(value,i){
-   console.log(value);
+   //console.log(value);
    var f               =   new Date();
    var fechaAlrevez    =   value.split("-");
    var fecha           =   fechaAlrevez[2]+"-"+fechaAlrevez[1]+"-"+fechaAlrevez[0];
@@ -1114,8 +1119,6 @@ function js_cambio_atencedentes(){
 function js_guarda_ingreso(){
     
 }
-
-
 
 function js_pdf_ingresoenenfermeria(id){
     $("#modal_informes_pdf").modal({backdrop:'static',keyboard:false}).modal("show");

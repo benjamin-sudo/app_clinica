@@ -38,7 +38,7 @@
                 <input type="text" id="searchTermIng2" class="form-control" style="width: auto;margin-bottom:6px;" onkeyup="doSearch(2)"></b>
             </div>
             <div class="grid_panel_paciente3">
-                <button type="button" class="btn btn-success btn-fill" id="btn_update_analitica" onclick="busquedaPacientes()">
+                <button type="button" class="btn btn-success btn-fill" id="btn_update_analitica" onclick="busquedaPacientes()" style="margin-top: 24px;">
                     <i class="bi bi-bootstrap-reboot"></i>
                 </button>
             </div>

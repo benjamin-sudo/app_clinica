@@ -1366,50 +1366,48 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function sqlInformacionComplementaria($empresa,$numfichae){
-        $sQuety = " 
-                SELECT 
-                    H.ID_IMEDICO, 
-                    H.NUM_FICHAE, 
-                    H.COD_USRCREA, 
-                    H.FEC_USRCREA, 
-                    H.COD_USRAUDITA, 
-                    H.FEC_USRAUDITA, 
-                    H.IND_ESTADO, 
-                   
-                    H.TXTACCESOVAS_1, 
-                    H.TXTACCESOVAS_2, 
+        $sQuety = "SELECT 
+                        H.ID_IMEDICO, 
+                        H.NUM_FICHAE, 
+                        H.COD_USRCREA, 
+                        H.FEC_USRCREA, 
+                        H.COD_USRAUDITA, 
+                        H.FEC_USRAUDITA, 
+                        H.IND_ESTADO, 
                     
-                    --H.NUM_DIASVAS_1,
-                    --H.NUM_DIASVAS_2, 
-                    
-                    TO_CHAR(H.FEC_DIASVAS_1,'DD-MM-YYYY')        AS FEC_DIASVAS_1,
-                    TO_CHAR(H.FEC_DIASVAS_2,'DD-MM-YYYY')        AS FEC_DIASVAS_2,
-                    
-                    trunc(sysdate-H.FEC_DIASVAS_1)               AS NUM_DIASVAS_1,
-                    trunc(sysdate-H.FEC_DIASVAS_2)               AS NUM_DIASVAS_2,
-            
-            
-                    H.NUM_ARTERIAL, 
-                    H.NUM_VENOSO, 
-                    H.NUM_INICIO, 
-                    H.NUM_MANTENCION, 
-                    H.NUM_QT, 
-                    H.NUM_QB, 
-                    H.NUM_QD, 
-                    H.NUM_UFMAX, 
-                    H.NUM_K, 
-                    H.NUM_NA, 
-                    H.NUM_CONCENTRADO, 
-                    H.NUM_HEPARINA_MAN, 
-                    H.NUM_HEPARINA_INICIO, 
-                    H.NUM_TROCAR_VENOSO, 
-                    H.NUM_TROCAR_ARTERIAL,
-                    H.NUM_PESOSECO 
-                    
-                FROM 
-                    ADMIN.HD_IMEDICO H
-                WHERE
-                    H.NUM_FICHAE = '$numfichae' AND H.IND_ESTADO = 1
+                        H.TXTACCESOVAS_1, 
+                        H.TXTACCESOVAS_2, 
+                        
+                        --H.NUM_DIASVAS_1,
+                        --H.NUM_DIASVAS_2, 
+                        
+                        TO_CHAR(H.FEC_DIASVAS_1,'DD-MM-YYYY')        AS FEC_DIASVAS_1,
+                        TO_CHAR(H.FEC_DIASVAS_2,'DD-MM-YYYY')        AS FEC_DIASVAS_2,
+                        
+                        trunc(sysdate-H.FEC_DIASVAS_1)               AS NUM_DIASVAS_1,
+                        trunc(sysdate-H.FEC_DIASVAS_2)               AS NUM_DIASVAS_2,
+                
+                        H.NUM_ARTERIAL, 
+                        H.NUM_VENOSO, 
+                        H.NUM_INICIO, 
+                        H.NUM_MANTENCION, 
+                        H.NUM_QT, 
+                        H.NUM_QB, 
+                        H.NUM_QD, 
+                        H.NUM_UFMAX, 
+                        H.NUM_K, 
+                        H.NUM_NA, 
+                        H.NUM_CONCENTRADO, 
+                        H.NUM_HEPARINA_MAN, 
+                        H.NUM_HEPARINA_INICIO, 
+                        H.NUM_TROCAR_VENOSO, 
+                        H.NUM_TROCAR_ARTERIAL,
+                        H.NUM_PESOSECO 
+                        
+                    FROM 
+                        ADMIN.HD_IMEDICO H
+                    WHERE
+                        H.NUM_FICHAE = '$numfichae' AND H.IND_ESTADO = 1
                 ";
         
             return $sQuety;   

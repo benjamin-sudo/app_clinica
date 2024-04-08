@@ -15,18 +15,13 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
         $empresa = $this->session->userdata("COD_ESTAB");
-
         $data_ini = [];
-
         $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
             'empresa' => $empresa,
             'ind_opcion' => 1,
         ]);
-
-
         $htmlBusquedaPacientes = $this->BusquedaPacientesIngreso_v2(true); // Asegúrate de pasar true para obtener la cadena HTML directamente
         $data_ini['htmlBusquedaPacientes'] = $htmlBusquedaPacientes;
-
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
     }
 
@@ -43,65 +38,234 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             foreach ($aData as $i => $row) {
                 $rut_pac_s = explode("-",$row['RUTPAC']); //rut del usuario        
                 $rut_pac_s = $rut_pac_s[0];
-                $html .= '
-                        <tr>
-                                <td>' . ($i + 1) . '</td>
-                                <td>' .$row['RUTPAC']. '</td>
-                                <td>' . $row['NOM_COMPLETO'] . '
-                                    <input type="hidden" id="nombre_' . $row['ID_INGRESO'] . '"     name="nombre_' . $row['ID_INGRESO'] . '"    value="' . $row['NOM_APELLIDO'] . '"/>
-                                    <input type="hidden" id="edad_' . $row['ID_INGRESO'] . '"       name="edad_' . $row['ID_INGRESO'] . '"      value="' . $row['TXTEDAD'] . '"/>
-                                    <input type="hidden" id="telefono_' . $row['ID_INGRESO'] . '"   name="telefono_' . $row['ID_INGRESO'] . '"  value="' . $row['CELULAR'] . '"/>
-                                    <input type="hidden" id="rut_' . $row['ID_INGRESO'] . '"        name="rut_' . $row['ID_INGRESO'] . '"       value="' . $row['RUTPAC'] . '"/>
-                                </td>
-                                <td>' . $row['TXTEDAD'] . '</td>
-                                <td>' . $row['FINGRESO'] . '</td>
-                                <td>' . $row['FINGRESO_HISTO'] . '</td>
-                                <td>' . $row['TXTESTADO'] . '</td>
-                                <td>
-                                    
-                                
-                                
-                                    <div class="btn-group">
-                                        <a class="btn btn-primary" href="#">
-                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <span class="fa fa-caret-down" title="-"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i> Informacion H. Diaria</a></li>
-                                            <li class="divider"></li>     
-                                            <!--
-                                            <li><a href="javascript:iMedico(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info-circle" aria-hidden="true"></i> Informaci&oacute;n Medico</a></li>
-                                            <li><a href="javascript:iEnfermeria(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-wpforms" aria-hidden="true"></i> I. Enfermeria</a></li>
-                                            <li class="divider"></li>   
-                                            -->    
-                                            <li><a href="javascript:js_imprimiringeg(' . $rut_pac_s . ')"><i class="fa fa-print" aria-hidden="true"></i> Ingreso Enfermeria</a></li>
-                                            <li><a href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Ver Hojas Diarias</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
-                                        </ul>
-                                    </div>
-
-
-
-
-
-
-                                </td>
-                            </tr> 
+                $html .= '<tr>
+                            <td>' . ($i + 1) . '</td>
+                            <td>' .$row['RUTPAC']. '</td>
+                            <td>' . $row['NOM_COMPLETO'] . '
+                                <input type="hidden" id="nombre_' . $row['ID_INGRESO'] . '"     name="nombre_' . $row['ID_INGRESO'] . '"    value="' . $row['NOM_APELLIDO'] . '"/>
+                                <input type="hidden" id="edad_' . $row['ID_INGRESO'] . '"       name="edad_' . $row['ID_INGRESO'] . '"      value="' . $row['TXTEDAD'] . '"/>
+                                <input type="hidden" id="telefono_' . $row['ID_INGRESO'] . '"   name="telefono_' . $row['ID_INGRESO'] . '"  value="' . $row['CELULAR'] . '"/>
+                                <input type="hidden" id="rut_' . $row['ID_INGRESO'] . '"        name="rut_' . $row['ID_INGRESO'] . '"       value="' . $row['RUTPAC'] . '"/>
+                            </td>
+                            <td>' . $row['TXTEDAD'] . '</td>
+                            <td>' . $row['FINGRESO'] . '</td>
+                            <td>' . $row['FINGRESO_HISTO'] . '</td>
+                            <td>' . $row['TXTESTADO'] . '</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;Informaci&oacute;n H. Diaria</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="javascript:js_imprimiringeg(' . $rut_pac_s . ')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Ingreso Enfermeria</a></li>
+                                        <li><a class="dropdown-item" href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="bi bi-file-pdf"></i>&nbsp;Ver Hojas Diarias</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr> 
                 ';
-            
             }
         } else {
             $html = '<tr><td colspan="8" style="text-align:center"><b>SIN PACIENTES</b></td></tr>';
         }
         if($returnData) {
-            return $html; // Devuelve la cadena HTML directamente si se solicita
+            return $html;
         } else {
-            $this->output->set_output(json_encode(['html' => $html])); // Comportamiento AJAX original
+            $this->output->set_output(json_encode(['html' => $html]));
         }
     }
+
+    public function iMedico_PesoSeco() {
+        if(!$this->input->is_ajax_request()) {  show_404();  }
+        $empresa                    = $this->session->userdata("COD_ESTAB");
+        $numfichae                  = $this->input->post('numfichae');
+        $html                       = '';
+        $TXTACCESOVAS_2             = '';
+        $TXTACCESOVAS_1             = '';
+        $NUM_DIASVAS_1              = '';
+        $NUM_DIASVAS_2              = '';
+        $FEC_DIASVAS_1              = '';
+        $FEC_DIASVAS_2              = '';
+        $NUM_TROCAR_ARTERIAL        = '';
+        $NUM_TROCAR_VENOSO          = '';
+        $NUM_HEPARINA_INICIO        = '';
+        $NUM_HEPARINA_MAN           = '';
+        $NUM_QT                     = '';
+        $NUM_QB                     = '';
+        $NUM_QD                     = '';
+        $NUM_UFMAX                  = '';
+        $NUM_K                      = '';
+        $NUM_NA                     = '';
+        $NUM_CONCENTRADO            = '';
+        $NUM_PESOSECO               = '';
+        $SCRIPT                     = '';
+       
+        $aData                      = $this->Ssan_hdial_asignacionpaciente_model->ModelInformacionComplementaria($empresa,$numfichae);    
+        if(count($aData)>0){
+            $TXTACCESOVAS_1         = $aData[0]['TXTACCESOVAS_1'];
+            $NUM_DIASVAS_1          = $aData[0]['NUM_DIASVAS_1'];
+            
+            $TXTACCESOVAS_2         = $aData[0]['TXTACCESOVAS_2'];
+            $NUM_DIASVAS_2          = $aData[0]['NUM_DIASVAS_2'];
+            
+            $FEC_DIASVAS_1          = $aData[0]['FEC_DIASVAS_1'];
+            $FEC_DIASVAS_2          = $aData[0]['FEC_DIASVAS_2'];
+            
+            $NUM_TROCAR_ARTERIAL    = $aData[0]['NUM_TROCAR_ARTERIAL'];
+            $NUM_TROCAR_VENOSO      = $aData[0]['NUM_TROCAR_VENOSO'];
+            $NUM_HEPARINA_INICIO    = $aData[0]['NUM_HEPARINA_INICIO'];
+            $NUM_HEPARINA_MAN       = $aData[0]['NUM_HEPARINA_MAN'];
+            $NUM_QT                 = $aData[0]['NUM_QT'];
+            $NUM_QB                 = $aData[0]['NUM_QB'];
+            $NUM_QD                 = $aData[0]['NUM_QD']; 
+            $NUM_UFMAX              = $aData[0]['NUM_UFMAX']; 
+            $NUM_K                  = $aData[0]['NUM_K']; 
+            $NUM_NA                 = $aData[0]['NUM_NA']; 
+            $NUM_CONCENTRADO        = $aData[0]['NUM_CONCENTRADO']; 
+            //INICIO
+            $NUM_PESOSECO           = $aData[0]['NUM_PESOSECO']; 
+        }
+        
+        $html.='
+            <form id="Formimedico" name="Formimedico">
+                <div class="card">
+                        <div class="header">
+                            <h4 class="title"><b> INDICACIONES MEDICAS </b></h4>
+                            <p class="category">Informaci&oacute;n Complementaria</p>
+                        </div>
+                        <div class="content">
+                           <fieldset>
+                             <div class="form-group">
+                                <label class="col-sm-3 control-label">ACCESO VASCULAR 1</label>
+                                <div class="col-sm-5"><input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_1"   name="TXT_ACCESOVAS_1" value="'.$TXTACCESOVAS_1.'"></div>
+                                <label class="col-sm-1 control-label"><div id="txtdia_1"> FECHA 1</div></label>
+                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="FEC_DIAS_1"   name="FEC_DIAS_1" value="'.$FEC_DIASVAS_1.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,1)" ></div>
+                                <label class="col-sm-1 control-label"><div id="num_dias_1">'.$NUM_DIASVAS_1.'</div></label>
+                                <script>
+                                $("#FEC_DIAS_1").datetimepicker({
+                                    format          : "DD-MM-YYYY",
+                                    maxDate         : new Date(),
+                                    locale          : "es-us",
+                                    icons           : 
+                                                    {
+                                                        time        : "fa fa-clock-o"       ,
+                                                        date        : "fa fa-calendar"      ,
+                                                        up          : "fa fa-chevron-up"    ,
+                                                        down        : "fa fa-chevron-down"  ,
+                                                        previous    : "fa fa-chevron-left"  ,
+                                                        next        : "fa fa-chevron-right" ,
+                                                        today       : "fa fa-screenshot"    ,
+                                                        clear       : "fa fa-trash"         ,
+                                                        close       : "fa fa-remove"        ,
+                                                    }
+                                });
+                                </script>
+                                <!--
+                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="NUM_DIAS_1"   name="NUM_DIAS_1" value="'.$NUM_DIASVAS_1.'"></div>
+                                -->
+                             </div>
+                        </fieldset>
+                        
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">ACCESO VASCULAR 2</label>
+                                <div class="col-sm-5"><input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_2"   name="TXT_ACCESOVAS_2" value="'.$TXTACCESOVAS_2.'"></div>
+                                <label class="col-sm-1 control-label">FECHA 2:</label>
+                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="FEC_DIAS_2"   name="FEC_DIAS_2" value="'.$FEC_DIASVAS_2.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,2)"></div>
+                                <label class="col-sm-1 control-label"><div id="num_dias_2">'.$NUM_DIASVAS_2.'</div></label>
+                                <script>
+                                $("#FEC_DIAS_2").datetimepicker({
+                                    format          : "DD-MM-YYYY",
+                                    maxDate         : new Date(),
+                                    locale          : "es-us",
+                                    icons           : 
+                                                    {
+                                                        time        : "fa fa-clock-o"       ,
+                                                        date        : "fa fa-calendar"      ,
+                                                        up          : "fa fa-chevron-up"    ,
+                                                        down        : "fa fa-chevron-down"  ,
+                                                        previous    : "fa fa-chevron-left"  ,
+                                                        next        : "fa fa-chevron-right" ,
+                                                        today       : "fa fa-screenshot"    ,
+                                                        clear       : "fa fa-trash"         ,
+                                                        close       : "fa fa-remove"        ,
+                                                    }
+                                });
+                                </script>     
+                                <!--
+                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="NUM_DIAS_1"   name="NUM_DIAS_1" value="'.$NUM_DIASVAS_1.'"></div>
+                                -->
+                            </div>
+                        </fieldset>
+                       </div>
+                       
+                    <hr>  
+                    <div class="content">
+                        <div class="contenedor">
+                            <div class="form-group">
+                                <label for="QT"><b>TROCAR <br>(ARTERIAL)</b></label>
+                                <input type="text"  placeholder="ARTERIAL" class="form-control input-sm"    id="NUM_ARTERIAL" name="NUM_ARTERIAL"   STYLE="WIDTH: 90PX;"  value="'.$NUM_TROCAR_ARTERIAL.'"  onKeyPress="return num(event)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="QT"><b>TROCAR <br>(VENOSO)</b></label>
+                                <input type="text"  placeholder="VENOSO" class="form-control input-sm"      id="NUM_VENOSO"   name="NUM_VENOSO"     STYLE="WIDTH: 90PX;" value="'.$NUM_TROCAR_VENOSO.'"  onKeyPress="return num(event)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="QT"><b>HEPARINA <br>(I)</b></label>
+                                <input type="text"  placeholder="INICIO" class="form-control input-sm"      id="NUM_INICIO" name="NUM_INICIO"   STYLE="WIDTH: 90PX;" value="'.$NUM_HEPARINA_INICIO.'"  onKeyPress="return num(event)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="QT"><b>HEPARINA <br>(M)</b></label>
+                                <input type="text"  placeholder="VENOSO" class="form-control input-sm"      id="NUM_MANTENCION"   name="NUM_MANTENCION"     STYLE="WIDTH: 90PX;" value="'.$NUM_HEPARINA_MAN.'"  onKeyPress="return num(event)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="QT"><br><b>QT</b></label>
+                                <input type="text"  placeholder="QT" class="form-control input-sm"          id="NUM_QT" name="NUM_QT" STYLE="WIDTH: 75PX;" value="'.$NUM_QT.'"  onKeyPress="return num_coma(event, this)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="QB"><br><b>QB</b></label>
+                                <input type="text"  placeholder="QB" class="form-control input-sm"          id="NUM_QB" name="NUM_QB" STYLE="WIDTH: 75PX;" value="'.$NUM_QB.'"  onKeyPress="return num(event)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="QD"><br><b>QD</b></label>
+                                <input type="text"  placeholder="QD" class="form-control input-sm"          id="NUM_QD" name="NUM_QD" STYLE="WIDTH: 75PX;" value="'.$NUM_QD.'"  onKeyPress="return num(event)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="MAX"><br><b>UF MAX</b></label>
+                                <input type="text"  placeholder="UF MAX" class="form-control input-sm"      id="NUM_UFMAX" name="NUM_UFMAX" STYLE="WIDTH: 75PX;" value="'.$NUM_UFMAX.'"  onKeyPress="return num(event)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="K"><br><b>K</b></label>
+                                <input type="text"  placeholder="K" class="form-control input-sm"           id="NUM_K" name="NUM_K" STYLE="WIDTH: 75PX;" value="'.$NUM_K.'"  onKeyPress="return num_coma(event, this)" style="width: 90px;"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Na"><br><b>Na</b></label>
+                                <input type="text"  placeholder="Na" class="form-control input-sm"          id="NUM_NA" name="NUM_NA" STYLE="WIDTH: 75PX;" value="'.$NUM_NA.'"  onKeyPress="return num(event)" style="width: 90px;"/> 
+                            </div>
+                            <div class="form-group">
+                                <label for="CONCENTRADO"><br><b>CONCENTRADO</b></label>
+                                <input type="text"  placeholder="CONCENTRADO" class="form-control input-sm" id="NUM_CONCENTRADO" name="NUM_CONCENTRADO" STYLE="WIDTH: 120PX;" value="'.$NUM_CONCENTRADO.'" /> 
+                            </div>
+                            <div class="form-group">
+                                <label for="Na"><br><b>Peso Seco(gr)</b></label>
+                                <input type="text"  placeholder="-" class="form-control input-sm"           id="input_pesoSeco" name="input_pesoSeco" STYLE="WIDTH: 75PX;" value="'.$NUM_PESOSECO.'"  onKeyPress="return num_coma(event, this)" style="width: 90px;"/> 
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </form>
+            ';     
+        //$TABLA[] = array("id_html" => "BODY_INFOHOJADIARIA", "opcion" => "append", "contenido" => $html);
+        //$this->output->set_output(json_encode($TABLA));
+        $this->output->set_output(json_encode(['html' => $html])); // Comportamiento AJAX original
+    }  
+
+
+
 
     public function busqueda_informacion_cie10(){
         if (!$this->input->is_ajax_request()){ show_404(); }
