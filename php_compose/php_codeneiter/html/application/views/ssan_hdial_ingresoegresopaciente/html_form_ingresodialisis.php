@@ -553,14 +553,14 @@ function js_guarda_ingreso(){
                 $("#" + id).addClass('class_input_error');
                 v_error.push(id);
             } else {
-                let v_texto = '';
+                let v_texto     =   '';
                 if (elemento.type === 'date'){
                     let arr_fecha = $("#" + id).val().split("-");
-                    v_texto = arr_fecha[2]+'-'+arr_fecha[1]+'-'+arr_fecha[0];
+                    v_texto     =   arr_fecha[2]+'-'+arr_fecha[1]+'-'+arr_fecha[0];
                 } else {
-                    v_texto = $("#" + id).val();
+                    v_texto     =   $("#" + id).val();
                 }
-                arr_envio[id] = v_texto;
+                arr_envio[id]   =   v_texto;
             }
         }
     });
