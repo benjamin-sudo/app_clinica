@@ -1129,7 +1129,7 @@ $ssss=0;
                                     'arr_envio'     =>  $arr_envio,
                                     'arr_codcie10'  =>  $arr_codcie10
                                 ]);
-            $user_respon    =  $search['id_formulario_unico'];                 
+            $v_num_unico    =  $search['id_ingreso_dialisis'];      
         } else {
             $status         =   false;
         }

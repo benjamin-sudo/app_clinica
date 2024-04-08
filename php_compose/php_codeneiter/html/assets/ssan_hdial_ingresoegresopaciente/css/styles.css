@@ -106,7 +106,7 @@
 }
 
 .ui-autocomplete                        {
-    z-index                             :   1051 !important; /* El valor debe ser mayor que el z-index del modal */
+    z-index                             :   1051 !important;
 }
 
 .btn_small                              {

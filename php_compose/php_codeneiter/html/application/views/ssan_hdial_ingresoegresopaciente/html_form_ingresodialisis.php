@@ -598,7 +598,7 @@ function js_guarda_ingreso(){
                                                         $("#loadFade").modal('hide');
                                                         console.log("fn_guarda_ingresohermodialisis ->", aData);
                                                         if(aData.status){
-                                                            showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito',2,'');
+                                                            //showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito',2,'');
                                                             $("#modal_nuevo_ingreso_paciente").modal('hide');
                                                             jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                                                 if(r){
@@ -620,5 +620,6 @@ function js_guarda_ingreso(){
 
 function js_pdf_ingresoenenfermeria(v_num_unico){
     console.log("v_num_unico    -> ",v_num_unico);
+    alert(v_num_unico);
 }
 </script>
