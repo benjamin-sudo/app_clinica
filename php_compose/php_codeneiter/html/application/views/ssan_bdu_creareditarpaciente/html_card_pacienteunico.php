@@ -5,7 +5,7 @@
         gap                                 :   8px;
     }
 </style>
-<div class="card position-sticky" style="top: 0;" >
+<div class="card">
     <div class="card-header">
         <b>PACIENTE HEMODI&Aacute;LISIS</b>
         <br>

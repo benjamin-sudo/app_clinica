@@ -1222,7 +1222,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     }
 
     public function model_ingreso_paciente($aData){
-        $this->db->trans_start();
+       
         $user_respon                =   $aData['user_respon'][0];
         $status_trasaccion          =   true;
         $v_num_fichae               =   $aData['v_num_fichae'];
@@ -1311,10 +1311,10 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         
         return [
             'status'                =>  $this->db->trans_status(),
+            'data_inser'            =>  $data_inser,
             'status_trasaccion'     =>  $status_trasaccion,
             'id_formulario_unico'   =>  $id_formulario_unico,
             'id_ingreso_dialisis'   =>  $ID_HDIAL,
-            'data_inser'            =>  $data_inser,
         ];
     }
 }

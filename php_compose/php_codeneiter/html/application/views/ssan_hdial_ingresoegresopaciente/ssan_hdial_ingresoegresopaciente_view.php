@@ -169,6 +169,25 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal_informes_pdf">
+        <div class="modal-dialog modal_imedico">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b>PDF</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_informes_pdf"></div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR VENTANA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modal_nuevo_prestador_rrhh">
         <div class="modal-dialog modal_imedico">
             <div class="modal-content">
@@ -218,7 +237,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="div_pacienteindentificado">&nbsp;</div>
+                            <div class="div_pacienteindentificado position-sticky" style="top: 0;">&nbsp;</div>
                         </div>
                         <div class="nuevo_ingreso_pacientehd2">&nbsp;</div>
                         <div class="nuevo_ingreso_pacientehd3 formulario_ingreso"></div>

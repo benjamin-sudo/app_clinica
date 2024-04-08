@@ -1141,4 +1141,14 @@ $ssss=0;
             'post'          =>  $_POST,
         ]));
     }
+
+
+    public function pdf_ingresoenfermeria(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+
+        
+        $this->output->set_output(json_encode([
+            'html'          =>  'INFORMACION',
+        ]));
+    }
 }

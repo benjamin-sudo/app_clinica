@@ -60,6 +60,7 @@ $(document).ready(function(){
 
     $('#modal_nuevo_ingreso_paciente').on('hidden.bs.modal',function(e){ 
         js_limpiaingreso();
+        $("#rut_paciente").val('');
     });
 
     $('#rut_paciente').Rut({
@@ -894,8 +895,6 @@ function grab(ed){
         Cie10Agrupados.push(objProducto);
     });     
     //console.log("-"+agrupadascie10);
-
-
     jPrompt('Con esta acci&oacute;n se proceder&aacute; a realizar el registro de datos.<br /><br />&iquest;Est&aacute; seguro de continuar?', '', 'Confirmaci\u00f3n', function (r) {
         if (r){
             var variables = {
@@ -1116,13 +1115,56 @@ function js_cambio_atencedentes(){
     }
 }
 
-
 function js_guarda_ingreso(){
-
-
-
-
-
-
     
+}
+
+
+
+function js_pdf_ingresoenenfermeria(id){
+    $("#modal_informes_pdf").modal({backdrop:'static',keyboard:false}).modal("show");
+    $.ajax({ 
+        type		:   "POST",
+        url 		:   "ssan_hdial_ingresoegresopaciente/pdf_ingresoenfermeria",
+        dataType    :   "json",
+        beforeSend  :   function(xhr)       {   
+                                                //console.log(xhr);
+                                                console.log("generando PDF");
+                                                $('#modal_informes_pdf').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
+                                            },
+        data 		:                       { 
+                                                id:id,
+                                            },
+        error		:   function(errro)     { 
+                                                console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                $("#protocoloPabellon").css("z-index","1500"); 
+                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                $('#modal_informes_pdf').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+                                            },
+        success		:   function(aData)     { 
+                                                console.log("aData  ->  ",aData);
+                                                /*
+                                                if(!aData["STATUS"]){
+                                                    jError("error al cargar protocolo PDF","e-SISSAN");
+                                                    return false;
+                                                } else {
+                                                    var base64str           =   aData["html"];
+                                                    //decode base64 string, Eliminar espacio para compatibilidad con IE
+                                                    var binary              =   atob(base64str.replace(/\s/g,''));
+                                                    var len                 =   binary.length;
+                                                    var buffer              =   new ArrayBuffer(len);
+                                                    var view                =   new Uint8Array(buffer);
+                                                    for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                                    var blob                =   new Blob([view],{type:"application/pdf"});
+                                                    var blobURL             =   URL.createObjectURL(blob);
+                                                    Objpdf                  =   document.createElement('object');
+                                                    Objpdf.setAttribute('data',blobURL);
+                                                    Objpdf.setAttribute('width','100%');
+                                                    Objpdf.setAttribute('style','height:700px;');
+                                                    Objpdf.setAttribute('title','PDF');
+                                                    $('#modal_informes_pdf').html(Objpdf);
+                                                }
+                                                */
+                                            }, 
+    });
 }
