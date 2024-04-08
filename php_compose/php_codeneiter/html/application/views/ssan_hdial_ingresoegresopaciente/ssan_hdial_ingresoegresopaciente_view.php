@@ -156,25 +156,22 @@
         </div>
     </div>
 
-    <div class="modal fade" id="MODAL_INFOHOJADIARIA">
-        <div class="modal-dialog modal_imedico">
+    <div class="modal" tabindex="-1" id="MODAL_INFOHOJADIARIA">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3 class="modal-title"><b>- INFORMACI&Oacute;N DE HOJA DIARIA </b></h3></div>
-                <div class="modal-body" id="BODY_INFOHOJADIARIA"></div>
+                <div class="modal-header">
+                    <h5 class="modal-title">INFORMACI&Oacute;N DE HOJA DIARIA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"  id="BODY_INFOHOJADIARIA"></div>
                 <div class="modal-footer">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div id="busquedaMes2"></div>
-                        </div>
-                        <div class="col-lg-6">
-                            <button type="button" class="btn btn-danger btn-fill btn-wd"  data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
-                            <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guardar"><i class="bi bi-x-square-fill"></i> GUARDAR INFORMACI&Oacute;N </button>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA</button>
+                    <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guardar"><i class="bi bi-x-square-fill"></i> GUARDAR INFORMACI&Oacute;N </button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="modal_informes_pdf">
         <div class="modal-dialog modal_imedico">

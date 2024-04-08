@@ -133,85 +133,72 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $html.='
             <form id="Formimedico" name="Formimedico">
                 <div class="card">
-                        <div class="header">
-                            <h4 class="title"><b> INDICACIONES MEDICAS </b></h4>
-                            <p class="category">Informaci&oacute;n Complementaria</p>
-                        </div>
-                        <div class="content">
-                           <fieldset>
-                             <div class="form-group">
-                                <label class="col-sm-3 control-label">ACCESO VASCULAR 1</label>
-                                <div class="col-sm-5"><input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_1"   name="TXT_ACCESOVAS_1" value="'.$TXTACCESOVAS_1.'"></div>
-                                <label class="col-sm-1 control-label"><div id="txtdia_1"> FECHA 1</div></label>
-                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="FEC_DIAS_1"   name="FEC_DIAS_1" value="'.$FEC_DIASVAS_1.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,1)" ></div>
-                                <label class="col-sm-1 control-label"><div id="num_dias_1">'.$NUM_DIASVAS_1.'</div></label>
-                                <script>
-                                $("#FEC_DIAS_1").datetimepicker({
-                                    format          : "DD-MM-YYYY",
-                                    maxDate         : new Date(),
-                                    locale          : "es-us",
-                                    icons           : 
-                                                    {
-                                                        time        : "fa fa-clock-o"       ,
-                                                        date        : "fa fa-calendar"      ,
-                                                        up          : "fa fa-chevron-up"    ,
-                                                        down        : "fa fa-chevron-down"  ,
-                                                        previous    : "fa fa-chevron-left"  ,
-                                                        next        : "fa fa-chevron-right" ,
-                                                        today       : "fa fa-screenshot"    ,
-                                                        clear       : "fa fa-trash"         ,
-                                                        close       : "fa fa-remove"        ,
-                                                    }
-                                });
-                                </script>
-                                <!--
-                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="NUM_DIAS_1"   name="NUM_DIAS_1" value="'.$NUM_DIASVAS_1.'"></div>
-                                -->
-                             </div>
-                        </fieldset>
-                        
-                        <fieldset>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">ACCESO VASCULAR 2</label>
-                                <div class="col-sm-5"><input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_2"   name="TXT_ACCESOVAS_2" value="'.$TXTACCESOVAS_2.'"></div>
-                                <label class="col-sm-1 control-label">FECHA 2:</label>
-                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="FEC_DIAS_2"   name="FEC_DIAS_2" value="'.$FEC_DIASVAS_2.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,2)"></div>
-                                <label class="col-sm-1 control-label"><div id="num_dias_2">'.$NUM_DIASVAS_2.'</div></label>
-                                <script>
-                                $("#FEC_DIAS_2").datetimepicker({
-                                    format          : "DD-MM-YYYY",
-                                    maxDate         : new Date(),
-                                    locale          : "es-us",
-                                    icons           : 
-                                                    {
-                                                        time        : "fa fa-clock-o"       ,
-                                                        date        : "fa fa-calendar"      ,
-                                                        up          : "fa fa-chevron-up"    ,
-                                                        down        : "fa fa-chevron-down"  ,
-                                                        previous    : "fa fa-chevron-left"  ,
-                                                        next        : "fa fa-chevron-right" ,
-                                                        today       : "fa fa-screenshot"    ,
-                                                        clear       : "fa fa-trash"         ,
-                                                        close       : "fa fa-remove"        ,
-                                                    }
-                                });
-                                </script>     
-                                <!--
-                                <div class="col-sm-2"><input type="text" class="form-control input-sm"  id="NUM_DIAS_1"   name="NUM_DIAS_1" value="'.$NUM_DIASVAS_1.'"></div>
-                                -->
-                            </div>
-                        </fieldset>
-                       </div>
+
+                    <div class="card-header">
+                        <h5 class="card-title">INDICACIONES MEDICAS</h5>
+                    </div>
 
                        <div class="grid_informacion_dialisis">
-                            <div class="grid_informacion_dialisis1">1</div>
-                            <div class="grid_informacion_dialisis2">2</div>
-                            <div class="grid_informacion_dialisis2">3</div>
-                            <div class="grid_informacion_dialisis3">4</div>
-                            <div class="grid_informacion_dialisis4">5</div>
+                            <div class="grid_informacion_dialisis2">
+                                <label for="QT"><b>ACCESO VASCULAR 1</b></label>
+                                <input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_1"   name="TXT_ACCESOVAS_1" value="'.$TXTACCESOVAS_1.'">
+                             
+                                <label for="QT"><b> FECHA 1</b></label>
+                                <input type="text" class="form-control input-sm"  id="FEC_DIAS_1"   name="FEC_DIAS_1" value="'.$FEC_DIASVAS_1.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,1)" >
+                             
+                                <label class="col-sm-1 control-label"><div id="num_dias_1">'.$NUM_DIASVAS_1.'</div></label>
+                                <script>
+                                    $("#FEC_DIAS_1").datetimepicker({
+                                        format          : "DD-MM-YYYY",
+                                        maxDate         : new Date(),
+                                        locale          : "es-us",
+                                        icons           : 
+                                                        {
+                                                            time        : "fa fa-clock-o"       ,
+                                                            date        : "fa fa-calendar"      ,
+                                                            up          : "fa fa-chevron-up"    ,
+                                                            down        : "fa fa-chevron-down"  ,
+                                                            previous    : "fa fa-chevron-left"  ,
+                                                            next        : "fa fa-chevron-right" ,
+                                                            today       : "fa fa-screenshot"    ,
+                                                            clear       : "fa fa-trash"         ,
+                                                            close       : "fa fa-remove"        ,
+                                                        }
+                                    });
+                                </script>
+                            </div>
+                            <div class="grid_informacion_dialisis2">|</div>
+                            <div class="grid_informacion_dialisis3">
+
+                                <label for="QT"><b>ACCESO VASCULAR 2</b></label>
+                                <input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_2"   name="TXT_ACCESOVAS_2" value="'.$TXTACCESOVAS_2.'">
+                                    
+                                <label for="QT"><b> FECHA 2</b></label>       
+                                <input type="text" class="form-control input-sm"  id="FEC_DIAS_2"   name="FEC_DIAS_2" value="'.$FEC_DIASVAS_2.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,2)">
+
+                                <label class="col-sm-1 control-label"><div id="num_dias_2">'.$NUM_DIASVAS_2.'</div></label>
+
+                                <script>
+                                    $("#FEC_DIAS_2").datetimepicker({
+                                        format          : "DD-MM-YYYY",
+                                        maxDate         : new Date(),
+                                        locale          : "es-us",
+                                        icons           : 
+                                                        {
+                                                            time        : "fa fa-clock-o"       ,
+                                                            date        : "fa fa-calendar"      ,
+                                                            up          : "fa fa-chevron-up"    ,
+                                                            down        : "fa fa-chevron-down"  ,
+                                                            previous    : "fa fa-chevron-left"  ,
+                                                            next        : "fa fa-chevron-right" ,
+                                                            today       : "fa fa-screenshot"    ,
+                                                            clear       : "fa fa-trash"         ,
+                                                            close       : "fa fa-remove"        ,
+                                                        }
+                                    });
+                                </script> 
+                            </div>
                        </div>
-
-
 
 
                     <hr>  

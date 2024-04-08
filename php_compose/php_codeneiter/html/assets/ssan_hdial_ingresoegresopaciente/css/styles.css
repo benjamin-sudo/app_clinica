@@ -125,7 +125,11 @@
 
 .grid_informacion_dialisis              {
     display                             :   grid;
-    grid-template-columns               :   1fr 2fr 1fr 1fr 1fr;
+    grid-template-columns               :   1fr 15px 1fr;
     gap                                 :   8px;
     align-items                         :   center;
+    margin-left                         :   12px;
+    margin-right                        :   12px;
+    margin-top                          :   9px;
 }
+
