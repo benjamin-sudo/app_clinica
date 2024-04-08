@@ -555,8 +555,8 @@ function js_guarda_ingreso(){
                 v_error.push(id);
             } else {
                 let v_texto         =   '';
-                console.log("---------------------------------------------------");
-                console.log("   elemento.type     ->  ",elemento.type);
+                //console.log("---------------------------------------------------");
+                //console.log("   elemento.type     ->  ",elemento.type);
                 if (elemento.type === 'date'){
                     let arr_fecha   =   $("#" + id).val().split("-");
                     v_texto         =   arr_fecha[2]+'-'+arr_fecha[1]+'-'+arr_fecha[0];
