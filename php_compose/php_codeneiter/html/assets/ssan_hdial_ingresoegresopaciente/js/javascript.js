@@ -1124,14 +1124,14 @@ function js_guarda_ingreso(){
 
 function js_imprimiringeg(id){
     $("#modal_informes_pdf").modal({backdrop:'static',keyboard:false}).modal("show");
+    //return false;
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_hdial_ingresoegresopaciente/pdf_ingresoenfermeria",
         dataType    :   "json",
         beforeSend  :   function(xhr)       {   
-                                                //console.log(xhr);
                                                 console.log("generando PDF");
-                                                $('#modal_informes_pdf').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
+                                                $('#html_informes_pdf').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span>');
                                             },
         data 		:                       { 
                                                 id:id,
@@ -1140,7 +1140,7 @@ function js_imprimiringeg(id){
                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
                                                 $("#protocoloPabellon").css("z-index","1500"); 
                                                 jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                $('#modal_informes_pdf').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+                                                $('#html_informes_pdf').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                             },
         success		:   function(aData)     { 
                                                 console.log("aData  ->  ",aData);
@@ -1163,12 +1163,10 @@ function js_imprimiringeg(id){
                                                     Objpdf.setAttribute('width','100%');
                                                     Objpdf.setAttribute('style','height:700px;');
                                                     Objpdf.setAttribute('title','PDF');
-                                                    $('#modal_informes_pdf').html(Objpdf);
+                                                    $('#html_informes_pdf').html(Objpdf);
                                                 }
                                                 */
-
-                                                //$('#html_informes_pdf').html('HOLA');
-                                                
+                                                $('#html_informes_pdf').html('HOLA');
                                             }, 
     });
 }

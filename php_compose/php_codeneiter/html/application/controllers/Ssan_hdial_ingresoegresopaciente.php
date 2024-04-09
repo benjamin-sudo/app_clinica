@@ -1321,6 +1321,16 @@ $ssss=0;
 
     public function pdf_ingresoenfermeria(){
         if(!$this->input->is_ajax_request()){ show_404(); }
+        $id                 =   $this->input->post('id');
+
+
+
+
+
+
+
+
+
 
 
         $this->output->set_output(json_encode([

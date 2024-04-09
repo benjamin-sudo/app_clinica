@@ -242,7 +242,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">INFORMACI&Oacute;N DE HOJA DIARIA</b></h3>
+                    <h3 class="modal-title"><b style="color:#e34f49">PDF</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_informes_pdf"></div>
