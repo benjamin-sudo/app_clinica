@@ -156,17 +156,17 @@
         </div>
     </div>
 
-    <div class="modal" tabindex="-1" id="MODAL_INFOHOJADIARIA">
+    <div class="modal fade" tabindex="1000" id="MODAL_INFOHOJADIARIA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">INFORMACI&Oacute;N DE HOJA DIARIA</h5>
+                    <h5 class="modal-title" style="color:#e34f49">INFORMACI&Oacute;N DE HOJA DIARIA</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body"  id="BODY_INFOHOJADIARIA"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;CIERRA VENTANA</button>
-                    <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guardar"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N </button>
+                    <button type="button" class="btn btn-success" id="btn_guardar"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N </button>
                 </div>
             </div>
         </div>
@@ -260,5 +260,4 @@
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
     <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
-
 </section>

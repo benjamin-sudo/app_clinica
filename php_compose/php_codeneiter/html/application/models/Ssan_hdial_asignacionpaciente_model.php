@@ -244,23 +244,19 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         return $this->db->trans_status();
     }
 
-
-
-    
     public function ModelguardaInformacionimedico_2($aData){
-        
-        
-        $empresa = $aData['empresa'];
-        $session =  $aData['session'];
-        $numfichae = $aData['numfichae'];
-        $form = = $aData['numfichae'];
-
+        $empresa        =   $aData['empresa'];
+        $session        =   $aData['session'];
+        $numfichae      =   $aData['numfichae'];
+        $form           =   $aData['numfichae'];
         $this->db->trans_start();
-        $UpdTurno               =   array('IND_ESTADO'=> 0,'COD_USRAUDITA' => $session,'FEC_USRAUDITA'=>'SYSDATE');
+
+        $UpdTurno       =   array('IND_ESTADO'=> 0,'COD_USRAUDITA' => $session,'FEC_USRAUDITA'=>'SYSDATE');
         $this->db->where('NUM_FICHAE', $numfichae);
         $this->db->update($this->own.'.HD_IMEDICO', $UpdTurno);
-        $ID_MEDICO              =   $this->db->sequence($this->own,'SEQ_HDIAL_IMEDICO');
-        $dataIngreso            =   array('COD_USRCREA'=> $session,'FEC_USRCREA'=> 'SYSDATE' , 'ID_IMEDICO' => $ID_MEDICO ,  'NUM_FICHAE' => $numfichae ,'IND_ESTADO'=>1);
+        $ID_MEDICO      =   $this->db->sequence($this->own,'SEQ_HDIAL_IMEDICO');
+        $dataIngreso    =   array('COD_USRCREA'=> $session,'FEC_USRCREA'=> 'SYSDATE' , 'ID_IMEDICO' => $ID_MEDICO ,  'NUM_FICHAE' => $numfichae ,'IND_ESTADO'=>1);
+
         if (count($form)>0){
             foreach($form as $From){
                 if($From['name'] == 'TXT_ACCESOVAS_1')  { $dataIngreso = array_merge($dataIngreso, array('TXTACCESOVAS_1'           => $From['value']));}
@@ -293,7 +289,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 if($From['name'] == 'input_pesoSeco')   { $dataIngreso = array_merge($dataIngreso, array('NUM_PESOSECO'             => $From['value']));}
             }
         }
-        $this->db->insert($this->own.'.HD_IMEDICO', $dataIngreso); 
+        $this->db->insert($this->own.'.HD_IMEDICO_', $dataIngreso); 
         $this->db->trans_complete();
         return $this->db->trans_status();
     }

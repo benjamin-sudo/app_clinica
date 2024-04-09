@@ -234,7 +234,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
     }  
 
 
-    public function guardaInformacionimedico(){
+    public function guardaInformacionimedico_2(){
         if(!$this->input->is_ajax_request()) { show_404(); }
         $transaccion            =   [];
         $return                 =   true;
@@ -244,15 +244,14 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $form                   =   $this->input->post('form');//ARRAY
         $valida                 =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
         if(count($valida)>0)    {
-            $usuarioh           =   explode("-",$valida->USERNAME);  
+            $usuarioh           =   explode("-",$valida[0]['USERNAME']);  
             $session            =   $usuarioh[0];
-            #$transaccion       =   $this->ssan_hdial_asignacionpaciente_model->ModelguardaInformacionimedico($empresa,$session,$numfichae,$form); 
-            $transaccion        =   $this->Ssan_hdial_asignacionpaciente_model->ModelguardaInformacionimedico_2(array(
+            $transaccion        =   $this->Ssan_hdial_asignacionpaciente_model->ModelguardaInformacionimedico_2([
                 "empresa"       =>  $this->session->userdata("COD_ESTAB"),
                 "session"       =>  explode("-",$this->session->userdata('USERNAME'))[0],
                 "numfichae"     =>  $numfichae,
                 "form"          =>  $form
-            ));
+            ]);
         } else {
             $return             =   false;        
         }
@@ -264,16 +263,16 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
     public function busqueda_informacion_cie10(){
         if (!$this->input->is_ajax_request()){ show_404(); }
-        $v_resultados = [];
-        $status = false;
-        $query = $this->input->post('query');
+        $v_resultados           =   [];
+        $status                 =   false;
+        $query                  =   $this->input->post('query');
         if (!empty($query) && strlen($query) > 2) {
             $v_resultados = $this->Ssan_hdial_asignacionpaciente_model->buscar_diagnosticos($query);
             if (!empty($v_resultados)){ $status = true; }
         }
         $this->output->set_output(json_encode(array(
-            'status' => $status,
-            'resultados' => $v_resultados
+            'status'            =>  $status,
+            'resultados'        =>  $v_resultados
         )));
     }
 

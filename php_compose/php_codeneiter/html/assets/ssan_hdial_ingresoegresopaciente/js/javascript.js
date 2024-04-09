@@ -997,45 +997,6 @@ function iPesoseco(numfichae){
                                                 $("#MODAL_INFOHOJADIARIA").modal({backdrop:'static',keyboard:false}).modal("show"); 
                                                 $("#BODY_INFOHOJADIARIA").html(aData.html);
                                                 $("#btn_guardar").attr('onclick','guardarInfo('+numfichae+')');
-                                                
-                                                /*
-                                                $("#FEC_DIAS_1").datetimepicker({
-                                                    format          : "DD-MM-YYYY",
-                                                    maxDate         : new Date(),
-                                                    locale          : "es-us",
-                                                    icons           : 
-                                                                    {
-                                                                        time        : "fa fa-clock-o"       ,
-                                                                        date        : "fa fa-calendar"      ,
-                                                                        up          : "fa fa-chevron-up"    ,
-                                                                        down        : "fa fa-chevron-down"  ,
-                                                                        previous    : "fa fa-chevron-left"  ,
-                                                                        next        : "fa fa-chevron-right" ,
-                                                                        today       : "fa fa-screenshot"    ,
-                                                                        clear       : "fa fa-trash"         ,
-                                                                        close       : "fa fa-remove"        ,
-                                                                    }
-                                                });
-
-                                                $("#FEC_DIAS_2").datetimepicker({
-                                                    format          : "DD-MM-YYYY",
-                                                    maxDate         : new Date(),
-                                                    locale          : "es-us",
-                                                    icons           : 
-                                                                    {
-                                                                        time        : "fa fa-clock-o"       ,
-                                                                        date        : "fa fa-calendar"      ,
-                                                                        up          : "fa fa-chevron-up"    ,
-                                                                        down        : "fa fa-chevron-down"  ,
-                                                                        previous    : "fa fa-chevron-left"  ,
-                                                                        next        : "fa fa-chevron-right" ,
-                                                                        today       : "fa fa-screenshot"    ,
-                                                                        clear       : "fa fa-trash"         ,
-                                                                        close       : "fa fa-remove"        ,
-                                                                    }
-                                                });
-                                                */
-
                                             }
                                         }
    });
@@ -1044,37 +1005,38 @@ function iPesoseco(numfichae){
 
 function guardarInfo(numfichae){
     let arr_infomedico = $("#Formimedico").serializeArray();
-    //console.log("arr_infomedico  -> ",arr_infomedico);
+    console.log("arr_infomedico  -> ",arr_infomedico);
+    
     //return false;
-    jPrompt('Con esta acc&oacute;n se proceder&aacute; a guardar informacion para que aparezca en hoja diaria del paciente <br/>&iquest;Est&aacute; seguro de continuar?<br />', '','Confirmaci\u00F3n',function(r){
-           if((r=='')||(r==null)){
-               console.log("-----------");
-           } else {
-               $.ajax({ 
-                   type            :   "POST",
-                   url             :   "ssan_hdial_asignacionpaciente/guardaInformacionimedico",
-                   dataType        :   "json",
-                   beforeSend      :   function(xhr) { console.log(xhr); },
-                   data            :   {   
-                                           password     :   r,
-                                           numfichae    :   numfichae,
-                                           form         :   arr_infomedico,
-                                       },
-                   error           :   function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
-                   success         :   function(aData)  {
-                    
-                                                            //console.log(aData[3]['sql']);
-                                                            if(aData[0]['validez']){
-                                                                jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
-                                                                    $("#MODAL_INFOHOJADIARIA").modal("hide"); 
-                                                                });
-                                                            } else {
-                                                                jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
-                                                            }
 
-                                                        }, 
-               });      
-           }
+    jPrompt('Con esta acc&oacute;n se proceder&aacute; a guardar informacion para que aparezca en hoja diaria del paciente <br/>&iquest;Est&aacute; seguro de continuar?<br />', '','Confirmaci\u00F3n',function(r){
+        if((r=='')||(r==null)){
+            console.log("-----------");
+        } else {
+            $.ajax({ 
+                type        :   "POST",
+                url         :   "ssan_hdial_asignacionpaciente/guardaInformacionimedico_2",
+                dataType    :   "json",
+                beforeSend  :   function(xhr) { console.log(xhr); },
+                data        :   {   
+                                    password     :   r,
+                                    numfichae    :   numfichae,
+                                    form         :   arr_infomedico,
+                                },
+                error       :   function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
+                success     :   function(aData)  {
+                                                    console.log("   --------------------------  ");
+                                                    console.log("   aData  ->  ",aData);
+                                                    if(aData.status){
+                                                        jAlert("Se ha realizado con &eacute;xito","CLINICA LIBRE CHILE",function(r){  
+                                                            $("#MODAL_INFOHOJADIARIA").modal("hide"); 
+                                                        });
+                                                    } else {
+                                                        jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
+                                                    }
+                                                }, 
+            });      
+        }
    });
 }
 
