@@ -200,6 +200,9 @@
   <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
   <!-- web socket -->
   <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
+
+  <!-- bootstrap-datetimejs -->          
+  <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
    
     <section>
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">

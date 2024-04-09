@@ -43,17 +43,17 @@
                 </button>
             </div>
         </div>
-        <table class="table table-striped" width="100%">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th class="subtitulo_formulario2" width="2%" >N&deg;</th>
-                    <th class="subtitulo_formulario2" width="10%">RUN</th>
-                    <th class="subtitulo_formulario2" width="29%">APELLIDO NOMBRE</th>
-                    <th class="subtitulo_formulario2" width="6%" >EDAD</th>
-                    <th class="subtitulo_formulario2" width="14%">INGRESO</th>
-                    <th class="subtitulo_formulario2" width="10%">INGRESO HISTORICO</th>
-                    <th class="subtitulo_formulario2" width="14%">ESTADO</th>
-                    <th class="subtitulo_formulario2" width="15%">OPCI&Oacute;N</th>
+                    <th width="2%" >N&deg;</th>
+                    <th width="10%">RUN</th>
+                    <th width="29%">APELLIDO NOMBRE</th>
+                    <th width="6%" >EDAD</th>
+                    <th width="14%">INGRESO</th>
+                    <th width="20%">INGRESO HISTORICO</th>
+                    <th width="14%">ESTADO</th>
+                    <th width="5%">OPCI&Oacute;N</th>
                 </tr>
             </thead>
             <tbody id="LISTA_PACIENTES"><?php echo $htmlBusquedaPacientes;?></tbody>

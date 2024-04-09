@@ -81,53 +81,56 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
     public function iMedico_PesoSeco() {
         if(!$this->input->is_ajax_request()) {  show_404();  }
-        $empresa                    = $this->session->userdata("COD_ESTAB");
-        $numfichae                  = $this->input->post('numfichae');
-        $html                       = '';
-        $TXTACCESOVAS_2             = '';
-        $TXTACCESOVAS_1             = '';
-        $NUM_DIASVAS_1              = '';
-        $NUM_DIASVAS_2              = '';
-        $FEC_DIASVAS_1              = '';
-        $FEC_DIASVAS_2              = '';
-        $NUM_TROCAR_ARTERIAL        = '';
-        $NUM_TROCAR_VENOSO          = '';
-        $NUM_HEPARINA_INICIO        = '';
-        $NUM_HEPARINA_MAN           = '';
-        $NUM_QT                     = '';
-        $NUM_QB                     = '';
-        $NUM_QD                     = '';
-        $NUM_UFMAX                  = '';
-        $NUM_K                      = '';
-        $NUM_NA                     = '';
-        $NUM_CONCENTRADO            = '';
-        $NUM_PESOSECO               = '';
-        $SCRIPT                     = '';
+        $empresa                    =   $this->session->userdata("COD_ESTAB");
+        $numfichae                  =   $this->input->post('numfichae');
+        $status                     =   true;
+
+        $html                       =   '';
+        $TXTACCESOVAS_2             =   '';
+        $TXTACCESOVAS_1             =   '';
+        $NUM_DIASVAS_1              =   '';
+        $NUM_DIASVAS_2              =   '';
+        $FEC_DIASVAS_1              =   '';
+        $FEC_DIASVAS_2              =   '';
+        $NUM_TROCAR_ARTERIAL        =   '';
+        $NUM_TROCAR_VENOSO          =   '';
+        $NUM_HEPARINA_INICIO        =   '';
+        $NUM_HEPARINA_MAN           =   '';
+        $NUM_QT                     =   '';
+        $NUM_QB                     =   '';
+        $NUM_QD                     =   '';
+        $NUM_UFMAX                  =   '';
+        $NUM_K                      =   '';
+        $NUM_NA                     =   '';
+        $NUM_CONCENTRADO            =   '';
+        $NUM_PESOSECO               =   '';
+        $SCRIPT                     =   '';
        
-        $aData                      = $this->Ssan_hdial_asignacionpaciente_model->ModelInformacionComplementaria($empresa,$numfichae);    
+        $aData                      =   $this->Ssan_hdial_asignacionpaciente_model->ModelInformacionComplementaria($empresa,$numfichae);    
         if(count($aData)>0){
-            $TXTACCESOVAS_1         = $aData[0]['TXTACCESOVAS_1'];
-            $NUM_DIASVAS_1          = $aData[0]['NUM_DIASVAS_1'];
+
+            $TXTACCESOVAS_1         =   $aData[0]['TXTACCESOVAS_1'];
+            $NUM_DIASVAS_1          =   $aData[0]['NUM_DIASVAS_1'];
             
-            $TXTACCESOVAS_2         = $aData[0]['TXTACCESOVAS_2'];
-            $NUM_DIASVAS_2          = $aData[0]['NUM_DIASVAS_2'];
+            $TXTACCESOVAS_2         =   $aData[0]['TXTACCESOVAS_2'];
+            $NUM_DIASVAS_2          =   $aData[0]['NUM_DIASVAS_2'];
             
-            $FEC_DIASVAS_1          = $aData[0]['FEC_DIASVAS_1'];
-            $FEC_DIASVAS_2          = $aData[0]['FEC_DIASVAS_2'];
+            $FEC_DIASVAS_1          =   $aData[0]['FEC_DIASVAS_1'];
+            $FEC_DIASVAS_2          =   $aData[0]['FEC_DIASVAS_2'];
             
-            $NUM_TROCAR_ARTERIAL    = $aData[0]['NUM_TROCAR_ARTERIAL'];
-            $NUM_TROCAR_VENOSO      = $aData[0]['NUM_TROCAR_VENOSO'];
-            $NUM_HEPARINA_INICIO    = $aData[0]['NUM_HEPARINA_INICIO'];
-            $NUM_HEPARINA_MAN       = $aData[0]['NUM_HEPARINA_MAN'];
-            $NUM_QT                 = $aData[0]['NUM_QT'];
-            $NUM_QB                 = $aData[0]['NUM_QB'];
-            $NUM_QD                 = $aData[0]['NUM_QD']; 
-            $NUM_UFMAX              = $aData[0]['NUM_UFMAX']; 
-            $NUM_K                  = $aData[0]['NUM_K']; 
-            $NUM_NA                 = $aData[0]['NUM_NA']; 
-            $NUM_CONCENTRADO        = $aData[0]['NUM_CONCENTRADO']; 
+            $NUM_TROCAR_ARTERIAL    =   $aData[0]['NUM_TROCAR_ARTERIAL'];
+            $NUM_TROCAR_VENOSO      =   $aData[0]['NUM_TROCAR_VENOSO'];
+            $NUM_HEPARINA_INICIO    =   $aData[0]['NUM_HEPARINA_INICIO'];
+            $NUM_HEPARINA_MAN       =   $aData[0]['NUM_HEPARINA_MAN'];
+            $NUM_QT                 =   $aData[0]['NUM_QT'];
+            $NUM_QB                 =   $aData[0]['NUM_QB'];
+            $NUM_QD                 =   $aData[0]['NUM_QD']; 
+            $NUM_UFMAX              =   $aData[0]['NUM_UFMAX']; 
+            $NUM_K                  =   $aData[0]['NUM_K']; 
+            $NUM_NA                 =   $aData[0]['NUM_NA']; 
+            $NUM_CONCENTRADO        =   $aData[0]['NUM_CONCENTRADO']; 
             //INICIO
-            $NUM_PESOSECO           = $aData[0]['NUM_PESOSECO']; 
+            $NUM_PESOSECO           =   $aData[0]['NUM_PESOSECO']; 
         }
         
         $html.='
@@ -167,7 +170,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                     });
                                 </script>
                             </div>
-                            <div class="grid_informacion_dialisis2">|</div>
+                            <div class="grid_informacion_dialisis2">.</div>
                             <div class="grid_informacion_dialisis3">
 
                                 <label for="QT"><b>ACCESO VASCULAR 2</b></label>
@@ -257,8 +260,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                 </div>
             </form>
             ';     
-        //$TABLA[] = array("id_html" => "BODY_INFOHOJADIARIA", "opcion" => "append", "contenido" => $html);
-        //$this->output->set_output(json_encode($TABLA));
+       
         $this->output->set_output(json_encode(['html' => $html])); // Comportamiento AJAX original
     }  
 
@@ -301,9 +303,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
         if (count($respuesta_paciente)>0){
             #informacion del cie10
-            $a_ingreso_valido = $this->Ssan_hdial_ingresoegresopaciente_model->busqueda_paciente_ingresos([
+            $a_ingreso_valido = $this->Ssan_hdial_asignacionpaciente_model->busqueda_paciente_ingresos([
                                     'empresa' => $empresa,
-                                    'num_fichae' =>  $respuesta_paciente[0]['NUM_FICHAE'],
+                                    'num_fichae' => $respuesta_paciente[0]['NUM_FICHAE'],
                                 ]);
             if (count($a_ingreso_valido)>0){
                 $b_existe_ingreso = true;

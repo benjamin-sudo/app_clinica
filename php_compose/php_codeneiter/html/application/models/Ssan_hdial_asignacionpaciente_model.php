@@ -1319,9 +1319,11 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                         TO_CHAR(I.FEC_INGRESO,'DD-MM-YYYY'),
                         I.COD_EMPRESA
                     FROM
-                        $this->own..HD_FORMULARIOINGRESO I
+                        $this->own.HD_TINGRESO I
                     WHERE
                         I.IND_ESTADO IN (1)
+                    AND 
+                        I.NUM_FICHAE IN (".$aData['num_fichae'].")    
                     ";
         return $this->db->query($v_sql)->result_array();
     }

@@ -447,12 +447,12 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
     
     function mdl_TraeTextoDiag($cod){    
         $query = $this->db->query("SELECT
-                                        COD_DIAGNO_CIE,
-                                        DESCRIPCION
-                                        FROM
-                                        $this->own.TGCD_CIE_DIAGNOSTICOS
-                                        WHERE
-                                        ID=$cod");
+                                    COD_DIAGNO_CIE,
+                                    DESCRIPCION
+                                    FROM
+                                    $this->own.TGCD_CIE_DIAGNOSTICOS
+                                    WHERE
+                                    ID=$cod");
         return $query->result_array();     
     }
 

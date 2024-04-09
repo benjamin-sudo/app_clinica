@@ -114,6 +114,7 @@ function js_grabadatosPaciente(){
                                             if(aData.status){
                                                 if (aData.b_existe_ingreso){
                                                     jError("Paciente ya tiene ingreso activo","Clinica Libre");
+                                                    $("#rut_paciente").val('');
                                                 } else {
                                                     showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp; Nuevo ingreso de paciente a hermodialisis',2,'');
                                                     $(".div_pacienteindentificado").html(aData.html_card_paciente);
