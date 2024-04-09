@@ -156,21 +156,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="1000" id="MODAL_INFOHOJADIARIA">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color:#e34f49">INFORMACI&Oacute;N DE HOJA DIARIA</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body"  id="BODY_INFOHOJADIARIA"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;CIERRA VENTANA</button>
-                    <button type="button" class="btn btn-success" id="btn_guardar"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N </button>
-                </div>
-            </div>
-        </div>
-    </div>
+  
 
     <div class="modal fade" id="modal_informes_pdf">
         <div class="modal-dialog modal_imedico">
@@ -250,6 +236,23 @@
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
                         <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal-dialog-scrollable -->
+    <div class="modal fade" id="MODAL_INFOHOJADIARIA">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">INFORMACI&Oacute;N DE HOJA DIARIA 2 </b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="BODY_INFOHOJADIARIA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
+                    <button type="button" class="btn btn-success" id="btn_guardar"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N</button>
                 </div>
             </div>
         </div>

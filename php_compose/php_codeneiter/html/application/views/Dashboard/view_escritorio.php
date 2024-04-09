@@ -203,7 +203,6 @@
   <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
   <!-- personalizable --> 
   <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
-
   <!-- moment.min.js -->
   <!-- moment.js -->
   <!-- bootstrap-datetimejs -->  

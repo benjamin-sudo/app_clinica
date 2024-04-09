@@ -1006,16 +1006,13 @@ function iPesoseco(numfichae){
 function guardarInfo(numfichae){
     let arr_infomedico = $("#Formimedico").serializeArray();
     console.log("arr_infomedico  -> ",arr_infomedico);
-    
-    //return false;
-
     jPrompt('Con esta acc&oacute;n se proceder&aacute; a guardar informacion para que aparezca en hoja diaria del paciente <br/>&iquest;Est&aacute; seguro de continuar?<br />', '','Confirmaci\u00F3n',function(r){
         if((r=='')||(r==null)){
             console.log("-----------");
         } else {
             $.ajax({ 
                 type        :   "POST",
-                url         :   "ssan_hdial_asignacionpaciente/guardaInformacionimedico_2",
+                url         :   "Ssan_hdial_ingresoegresopaciente/guardaInformacionimedico_2",
                 dataType    :   "json",
                 beforeSend  :   function(xhr) { console.log(xhr); },
                 data        :   {   
@@ -1023,8 +1020,8 @@ function guardarInfo(numfichae){
                                     numfichae    :   numfichae,
                                     form         :   arr_infomedico,
                                 },
-                error       :   function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
-                success     :   function(aData)  {
+                error       :   function(errro) {   console.log(errro);  jAlert("Error General, Consulte Al Administrador");  },
+                success     :   function(aData) {
                                                     console.log("   --------------------------  ");
                                                     console.log("   aData  ->  ",aData);
                                                     if(aData.status){
@@ -1032,7 +1029,7 @@ function guardarInfo(numfichae){
                                                             $("#MODAL_INFOHOJADIARIA").modal("hide"); 
                                                         });
                                                     } else {
-                                                        jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
+                                                        showNotification('top','center','<i class="bi bi-exclamation-square-fill"></i>&nbsp;&nbsp;Firma simple incorrecta',4,'');
                                                     }
                                                 }, 
             });      

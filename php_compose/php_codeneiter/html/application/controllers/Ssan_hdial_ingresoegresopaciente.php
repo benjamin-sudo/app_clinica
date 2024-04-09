@@ -16,10 +16,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
         $empresa = $this->session->userdata("COD_ESTAB");
         $data_ini = [];
-        $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis([
-            'empresa' => $empresa,
-            'ind_opcion' => 1,
-        ]);
+        $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis(['empresa' => $empresa, 'ind_opcion' => 1 ]);
         $htmlBusquedaPacientes = $this->BusquedaPacientesIngreso_v2(true);
         $data_ini['htmlBusquedaPacientes'] = $htmlBusquedaPacientes;
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
@@ -84,7 +81,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $empresa                    =   $this->session->userdata("COD_ESTAB");
         $numfichae                  =   $this->input->post('numfichae');
         $status                     =   true;
-
         $html                       =   '';
         $TXTACCESOVAS_2             =   '';
         $TXTACCESOVAS_1             =   '';
@@ -105,19 +101,14 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $NUM_CONCENTRADO            =   '';
         $NUM_PESOSECO               =   '';
         $SCRIPT                     =   '';
-       
         $aData                      =   $this->Ssan_hdial_asignacionpaciente_model->ModelInformacionComplementaria($empresa,$numfichae);    
         if(count($aData)>0){
-
             $TXTACCESOVAS_1         =   $aData[0]['TXTACCESOVAS_1'];
             $NUM_DIASVAS_1          =   $aData[0]['NUM_DIASVAS_1'];
-            
             $TXTACCESOVAS_2         =   $aData[0]['TXTACCESOVAS_2'];
             $NUM_DIASVAS_2          =   $aData[0]['NUM_DIASVAS_2'];
-            
             $FEC_DIASVAS_1          =   $aData[0]['FEC_DIASVAS_1'];
             $FEC_DIASVAS_2          =   $aData[0]['FEC_DIASVAS_2'];
-            
             $NUM_TROCAR_ARTERIAL    =   $aData[0]['NUM_TROCAR_ARTERIAL'];
             $NUM_TROCAR_VENOSO      =   $aData[0]['NUM_TROCAR_VENOSO'];
             $NUM_HEPARINA_INICIO    =   $aData[0]['NUM_HEPARINA_INICIO'];
@@ -232,7 +223,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'status'=>true
         ]));
     }  
-
 
     public function guardaInformacionimedico_2(){
         if(!$this->input->is_ajax_request()) { show_404(); }
