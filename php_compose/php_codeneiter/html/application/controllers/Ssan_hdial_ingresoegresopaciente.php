@@ -137,11 +137,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                             <div class="grid_acceso_vascular">
                                 <div class="grid_acceso_vascular1">
                                     <label for="QT"><b> FECHA 1</b></label>
-                                    <input type="date" class="form-control" id="FEC_DIAS_1" name="FEC_DIAS_1" value="" min="'.date("Y-m-d", strtotime("-30 years")).'" max="'.date("Y-m-d").'">
+                                    <input type="date" class="form-control" id="FEC_DIAS_1" name="FEC_DIAS_1" value="'.$FEC_DIASVAS_1.'" min="'.date("Y-m-d", strtotime("-30 years")).'" max="'.date("Y-m-d").'">
                                 </div>
                                 <div class="grid_acceso_vascular2">
                                     <label for="num_dias_1"><b>N&deg;  DE DIAS</b></label>
-                                    <label class="col-sm-1 control-label"><div id="num_dias_1">'.$NUM_DIASVAS_1.'</div></label>
+                                    <br>
+                                    <h5 style="margin-top: 6px;margin-right: 10px;margin-left: 6px;"><div id="num_dias_2">'.$NUM_DIASVAS_1.'</div></h5>
                                 </div>
                             </div>
                         </div>
@@ -152,11 +153,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                             <div class="grid_acceso_vascular">
                                 <div class="grid_acceso_vascular1">
                                     <label for="QT"><b> FECHA 2</b></label>       
-                                    <input type="date" class="form-control input-sm"  id="FEC_DIAS_2"   name="FEC_DIAS_2" value="'.$FEC_DIASVAS_2.'" style="width:auto;" onblur="cal_fecha(this.value,2)">
+                                    <input type="date" class="form-control" id="FEC_DIAS_2" name="FEC_DIAS_2" value="'.$FEC_DIASVAS_2.'" min="'.date("Y-m-d", strtotime("-30 years")).'" max="'.date("Y-m-d").'">
                                 </div>
                                 <div class="grid_acceso_vascular2">
                                     <label for="num_dias_1"><b>N&deg;  DE DIAS</b></label>
-                                    <label class="col-sm-1 control-label"><div id="num_dias_2">'.$NUM_DIASVAS_2.'</div></label>
+                                    <br>
+                                    <h5 style="margin-top: 6px;margin-right: 10px;margin-left: 6px;"><div id="num_dias_2">'.$NUM_DIASVAS_2.'</div></h5>
                                 </div>
                             </div>
                         </div>

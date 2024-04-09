@@ -394,13 +394,6 @@ function busquedaPacientesxMaquina(){
 }
 
 
-function js_imprimiringeg(RSIND){
-   $("#imp_Cod_cie10_1").html("");
-   var variables       =   {"txtBuscar":RSIND}; //Variables pasadas por ajax a la funcion
-   var id              =   "respuesta";
-   var funcion         =   "TraeDatIng_IMP"; //Funcion del Controlador a Ejecutar 
-   AjaxExt(variables,id,funcion);
-}
 
 function A_INGRESODIAL(numFichae){    
     $("#formulario_ing_enf").validate();
@@ -1129,7 +1122,7 @@ function js_guarda_ingreso(){
     
 }
 
-function js_pdf_ingresoenenfermeria(id){
+function js_imprimiringeg(id){
     $("#modal_informes_pdf").modal({backdrop:'static',keyboard:false}).modal("show");
     $.ajax({ 
         type		:   "POST",
@@ -1173,7 +1166,9 @@ function js_pdf_ingresoenenfermeria(id){
                                                     $('#modal_informes_pdf').html(Objpdf);
                                                 }
                                                 */
-                                                $('#modal_informes_pdf').html('HOLA');
+
+                                                //$('#html_informes_pdf').html('HOLA');
+                                                
                                             }, 
     });
 }

@@ -252,10 +252,8 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         $this->db->trans_start();
         $this->db->where('NUM_FICHAE', $numfichae);
         $this->db->update($this->own.'.HD_IMEDICO', ['IND_ESTADO'=> 0,'COD_USRAUDITA' => $session,'FEC_USRAUDITA'=>'SYSDATE']);
-        
         $ID_MEDICO      =   $this->db->sequence($this->own,'SEQ_HDIAL_IMEDICO');
         $dataIngreso    =   array('COD_USRCREA'=> $session,'FEC_USRCREA'=> 'SYSDATE' , 'ID_IMEDICO' => $ID_MEDICO ,  'NUM_FICHAE' => $numfichae ,'IND_ESTADO'=>1);
-
         if (count($form)>0){
             foreach($form as $From){
                 if($From['name'] == 'TXT_ACCESOVAS_1')  { $dataIngreso = array_merge($dataIngreso, array('TXTACCESOVAS_1'           => $From['value']));}
@@ -263,10 +261,10 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 if($From['name'] == 'TXT_ACCESOVAS_2')  { $dataIngreso = array_merge($dataIngreso, array('TXTACCESOVAS_2'           => $From['value']));}
                 //if($From['name'] == 'NUM_DIAS_2')       { $dataIngreso = array_merge($dataIngreso, array('NUM_DIASVAS_2'            => $From['value']));}
                 
-                if($From['name'] == 'FEC_DIAS_1')       { $dataIngreso = array_merge($dataIngreso, array('FEC_DIASVAS_1'            => "TO_DATE('".$From['value']."', 'DD-MM-YYYY')",  ));}
+                if($From['name'] == 'FEC_DIAS_1')       { $dataIngreso = array_merge($dataIngreso, array('FEC_DIASVAS_1'            => "TO_DATE('".$From['value']."', 'YYYY-MM-DD')",  ));}
                 if($From['name'] == 'FEC_DIAS_2' && $From['value'] != ''){ 
-                                                          $dataIngreso = array_merge($dataIngreso, array('FEC_DIASVAS_2'            => "TO_DATE('".$From['value']."', 'DD-MM-YYYY')",  ));
-                                                        } else { error_log("------------------NO FEC_DIAS_2>"); }
+                                                          $dataIngreso = array_merge($dataIngreso, array('FEC_DIASVAS_2'            => "TO_DATE('".$From['value']."', 'YYYY-MM-DD')",  ));
+                                                        } else { error_log(" - NO FEC_DIAS_2 - "); }
                 
                 if($From['name'] == 'NUM_ARTERIAL')     { $dataIngreso = array_merge($dataIngreso, array('NUM_TROCAR_ARTERIAL'      => $From['value']));}
                 if($From['name'] == 'NUM_VENOSO')       { $dataIngreso = array_merge($dataIngreso, array('NUM_TROCAR_VENOSO'        => $From['value']));}

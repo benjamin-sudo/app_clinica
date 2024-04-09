@@ -157,26 +157,6 @@
     </div>
 
   
-
-    <div class="modal fade" id="modal_informes_pdf">
-        <div class="modal-dialog modal_imedico">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"><b>PDF</b></h3>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body" id="html_informes_pdf"></div>
-                <div class="modal-footer">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
-                            <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR VENTANA
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="modal_nuevo_prestador_rrhh">
         <div class="modal-dialog modal_imedico">
             <div class="modal-content">
@@ -253,6 +233,21 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
                     <button type="button" class="btn btn-success" id="btn_guardar"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_informes_pdf">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">INFORMACI&Oacute;N DE HOJA DIARIA</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_informes_pdf"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
                 </div>
             </div>
         </div>
