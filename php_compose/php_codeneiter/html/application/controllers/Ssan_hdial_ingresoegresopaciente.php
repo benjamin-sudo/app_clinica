@@ -20,7 +20,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'empresa' => $empresa,
             'ind_opcion' => 1,
         ]);
-        $htmlBusquedaPacientes = $this->BusquedaPacientesIngreso_v2(true); // Asegúrate de pasar true para obtener la cadena HTML directamente
+        $htmlBusquedaPacientes = $this->BusquedaPacientesIngreso_v2(true);
         $data_ini['htmlBusquedaPacientes'] = $htmlBusquedaPacientes;
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
     }
@@ -262,9 +262,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $this->output->set_output(json_encode(['html' => $html])); // Comportamiento AJAX original
     }  
 
-
-
-
     public function busqueda_informacion_cie10(){
         if (!$this->input->is_ajax_request()){ show_404(); }
         $v_resultados = [];
@@ -282,9 +279,10 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         )));
     }
 
-    public function busqueda_pacientes_parametos() {
+    public function busqueda_pacientes_parametos(){
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
+        $v_num_fichae = '';
         $html = '';
         $html_card_paciente = '';
         $html_card_formularioingreso = '';
@@ -299,19 +297,27 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $pasaporte = '1';
         $tipoEx = '1';
         $respuesta_paciente = [];
+        $b_existe_ingreso = false;
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
         if (count($respuesta_paciente)>0){
             #informacion del cie10
-            
-            $html_card_paciente = $this->load->view('ssan_bdu_creareditarpaciente/html_card_pacienteunico',['info_bdu'=>$respuesta_paciente],true); 
-            $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_form_ingresodialisis',[],true); 
-
-
+            $a_ingreso_valido = $this->Ssan_hdial_ingresoegresopaciente_model->busqueda_paciente_ingresos([
+                                    'empresa' => $empresa,
+                                    'num_fichae' =>  $respuesta_paciente[0]['NUM_FICHAE'],
+                                ]);
+            if (count($a_ingreso_valido)>0){
+                $b_existe_ingreso = true;
+            } else {
+                $html_card_paciente = $this->load->view('ssan_bdu_creareditarpaciente/html_card_pacienteunico',['info_bdu'=>$respuesta_paciente],true); 
+                $html_card_formularioingreso = $this->load->view('Ssan_hdial_ingresoegresopaciente/html_form_ingresodialisis',[],true); 
+            }                 
         } else {
             $status = false;
         }
         $this->output->set_output(json_encode([
             'status' => $status,
+            'v_num_fichae' => $v_num_fichae,
+            'b_existe_ingreso' => $b_existe_ingreso,
             'respuesta_paciente' => $respuesta_paciente,
             'html_card_paciente' => $html_card_paciente,
             'html_card_formularioingreso' => $html_card_formularioingreso

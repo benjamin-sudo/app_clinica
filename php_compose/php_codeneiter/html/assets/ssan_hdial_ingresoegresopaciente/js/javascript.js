@@ -64,17 +64,13 @@ $(document).ready(function(){
     });
 
     $('#rut_paciente').Rut({
-        format_on : 'keyup',
-        on_error : function(){ jError("RUN no es correcto","CLINICA LIBRE CHILE"); },
-        on_success : function(){ 
+        format_on   :   'keyup',
+        on_error    :   function(){ jError("RUN no es correcto","CLINICA LIBRE CHILE"); },
+        on_success  :   function(){ 
             //js_grabadatosPaciente(); 
         },
     });
-    //$(".content2").autocomplete_nn();
-    //busquedaPacientes();
-    //busquedaPacientesxMaquina();
-    //console.log("   --------------------    ");
-    //showNotification('top','center','&nbsp;<i class="fa fa-check" aria-hidden="true"></i> Existe informaci&oacute;n incompleta en el registro',4,'');
+
 });
 
 function nuevoPacienteAgresado(){
@@ -96,11 +92,11 @@ function js_grabadatosPaciente(){
     //console.log("  txtDv       ->  ",txtDv,"       ");
     //console.log("  -----------------------------   ");
     $.ajax({ 
-        type		 :  "POST",
-        url 		 :  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
-        dataType     :  "json",
-        beforeSend   :  function(xhr){ $('#loadFade').modal('show'); },
-        data 		 :  { 
+        type		:  "POST",
+        url 		:  "ssan_hdial_ingresoegresopaciente/busqueda_pacientes_parametos",
+        dataType    :  "json",
+        beforeSend  :  function(xhr){ $('#loadFade').modal('show'); },
+        data 		:  { 
                             OPCION  :   1,
                             RUTPAC  :   txtBuscar,
                             RUTDV   :   txtDv,
@@ -114,10 +110,15 @@ function js_grabadatosPaciente(){
         success		:   function(aData) {  
                                             $("#loadFade").modal('hide');
                                             $(".formulario_ingreso,.div_pacienteindentificado").html('');
+                                            console.log("aData  ->  ",aData);
                                             if(aData.status){
-                                                showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp; Nuevo ingreso de paciente a hermodialisis',2,'');
-                                                $(".div_pacienteindentificado").html(aData.html_card_paciente);
-                                                $(".formulario_ingreso").html(aData.html_card_formularioingreso);
+                                                if (aData.b_existe_ingreso){
+                                                    jError("Paciente ya tiene ingreso activo","Clinica Libre");
+                                                } else {
+                                                    showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp; Nuevo ingreso de paciente a hermodialisis',2,'');
+                                                    $(".div_pacienteindentificado").html(aData.html_card_paciente);
+                                                    $(".formulario_ingreso").html(aData.html_card_formularioingreso);
+                                                }
                                             } else {
                                                 showNotification('top','center','<i class="bi bi-exclamation-square-fill"></i>&nbsp;Paciente no ingresado a su BDU pacientes',4,'');
                                             }
@@ -1168,3 +1169,4 @@ function js_pdf_ingresoenenfermeria(id){
                                             }, 
     });
 }
+

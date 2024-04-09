@@ -1222,13 +1222,11 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     }
 
     public function model_ingreso_paciente($aData){
-       
-        $user_respon                =   $aData['user_respon'][0];
+       $user_respon                =   $aData['user_respon'][0];
         $status_trasaccion          =   true;
         $v_num_fichae               =   $aData['v_num_fichae'];
         $session                    =   $user_respon['USERNAME'];
         $id_formulario_unico        =   $this->db->sequence($this->own,'SEQ_FORMULARIOINGRESO');
-        
         $data_insert                =   [
             'ID_INGRESOHD'          =>  $id_formulario_unico,
             'NUM_FICHAE'            =>  $v_num_fichae,
@@ -1291,7 +1289,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'TXT_REFUERZO_HVB'      =>  $aData['arr_envio']['txt_dosis_refuerzo_hvb'],
             'TXT_OBSERVACIONES'     =>  $aData['arr_envio']['txt_observaciones_finales'], 
         ];
-        
         $ID_HDIAL                   =   $this->db->sequence($this->own,'SEQ_HDIAL_PACIENTEDIALISIS');
         $dataIngreso                =   [
                                             'ID_NUMINGRESO' =>  $ID_HDIAL, 
@@ -1308,7 +1305,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         $this->db->insert($this->own.'.HD_FORMULARIOINGRESO', $data_insert); 
         $this->db->insert($this->own.'.HD_TINGRESO', $dataIngreso); 
         $this->db->trans_complete();
-        
         return [
             'status'                =>  $this->db->trans_status(),
             'data_inser'            =>  $data_inser,
@@ -1317,4 +1313,17 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'id_ingreso_dialisis'   =>  $ID_HDIAL,
         ];
     }
+
+    public function busqueda_paciente_ingresos($aData){
+        $v_sql =    "SELECT 
+                        TO_CHAR(I.FEC_INGRESO,'DD-MM-YYYY'),
+                        I.COD_EMPRESA
+                    FROM
+                        $this->own..HD_FORMULARIOINGRESO I
+                    WHERE
+                        I.IND_ESTADO IN (1)
+                    ";
+        return $this->db->query($v_sql)->result_array();
+    }
+
 }
