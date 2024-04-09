@@ -993,17 +993,60 @@ function iPesoseco(numfichae){
        success     :   function(aData) {
                                             console.log("   ->  ",aData);
                                             $('#loadFade').modal('hide'); 
-                                            $("#MODAL_INFOHOJADIARIA").modal({backdrop:'static',keyboard:false}).modal("show"); 
-                                            $("#BODY_INFOHOJADIARIA").html(aData.html);
-                                            $("#btn_guardar").attr('onclick','guardarInfo('+numfichae+')');
-                                    }
+                                            if (aData.status){
+                                                $("#MODAL_INFOHOJADIARIA").modal({backdrop:'static',keyboard:false}).modal("show"); 
+                                                $("#BODY_INFOHOJADIARIA").html(aData.html);
+                                                $("#btn_guardar").attr('onclick','guardarInfo('+numfichae+')');
+                                                
+                                                /*
+                                                $("#FEC_DIAS_1").datetimepicker({
+                                                    format          : "DD-MM-YYYY",
+                                                    maxDate         : new Date(),
+                                                    locale          : "es-us",
+                                                    icons           : 
+                                                                    {
+                                                                        time        : "fa fa-clock-o"       ,
+                                                                        date        : "fa fa-calendar"      ,
+                                                                        up          : "fa fa-chevron-up"    ,
+                                                                        down        : "fa fa-chevron-down"  ,
+                                                                        previous    : "fa fa-chevron-left"  ,
+                                                                        next        : "fa fa-chevron-right" ,
+                                                                        today       : "fa fa-screenshot"    ,
+                                                                        clear       : "fa fa-trash"         ,
+                                                                        close       : "fa fa-remove"        ,
+                                                                    }
+                                                });
+
+                                                $("#FEC_DIAS_2").datetimepicker({
+                                                    format          : "DD-MM-YYYY",
+                                                    maxDate         : new Date(),
+                                                    locale          : "es-us",
+                                                    icons           : 
+                                                                    {
+                                                                        time        : "fa fa-clock-o"       ,
+                                                                        date        : "fa fa-calendar"      ,
+                                                                        up          : "fa fa-chevron-up"    ,
+                                                                        down        : "fa fa-chevron-down"  ,
+                                                                        previous    : "fa fa-chevron-left"  ,
+                                                                        next        : "fa fa-chevron-right" ,
+                                                                        today       : "fa fa-screenshot"    ,
+                                                                        clear       : "fa fa-trash"         ,
+                                                                        close       : "fa fa-remove"        ,
+                                                                    }
+                                                });
+                                                */
+
+                                            }
+                                        }
    });
 
 }
 
 function guardarInfo(numfichae){
-   jPrompt('Con esta acc&oacute;n se proceder&aacute; a guardar informacion para que aparezca en hoja diaria del paciente <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
-           'Confirmaci\u00F3n',function(r){
+    let arr_infomedico = $("#Formimedico").serializeArray();
+    //console.log("arr_infomedico  -> ",arr_infomedico);
+    //return false;
+    jPrompt('Con esta acc&oacute;n se proceder&aacute; a guardar informacion para que aparezca en hoja diaria del paciente <br/>&iquest;Est&aacute; seguro de continuar?<br />', '','Confirmaci\u00F3n',function(r){
            if((r=='')||(r==null)){
                console.log("-----------");
            } else {
@@ -1013,21 +1056,23 @@ function guardarInfo(numfichae){
                    dataType        :   "json",
                    beforeSend      :   function(xhr) { console.log(xhr); },
                    data            :   {   
-                                           password    : r,
-                                           numfichae   : numfichae,
-                                           form        : $("#Formimedico").serializeArray(),
+                                           password     :   r,
+                                           numfichae    :   numfichae,
+                                           form         :   arr_infomedico,
                                        },
                    error           :   function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
-                   success         :   function(aData){ 
-                                           //console.log(aData[3]['sql']);
-                                           if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
-                                                  $("#MODAL_INFOHOJADIARIA").modal("hide"); 
-                                               });
-                                           } else {
-                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
-                                           }
-                                       }, 
+                   success         :   function(aData)  {
+                    
+                                                            //console.log(aData[3]['sql']);
+                                                            if(aData[0]['validez']){
+                                                                jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
+                                                                    $("#MODAL_INFOHOJADIARIA").modal("hide"); 
+                                                                });
+                                                            } else {
+                                                                jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
+                                                            }
+
+                                                        }, 
                });      
            }
    });

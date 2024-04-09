@@ -32,6 +32,11 @@
   <!-- ui | 1.12.1 --> 
   <!-- autocomplete -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
+
+
   <style>
     .nav-link.activo{ }
     #loadFade { z-index: 10500 !important; }
@@ -196,14 +201,27 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <!-- shownotificacion -->
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
-  <!-- personalizable --> 
-  <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
   <!-- web socket -->
   <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
+  <!-- personalizable --> 
+  <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
 
-  <!-- bootstrap-datetimejs -->          
+  
+  <!-- moment.min.js -->
+  <!-- moment.js -->
+  <!-- bootstrap-datetimejs -->  
+  
+  <!--
+  <script type="text/javascript" src="assets/recursos/js/moment.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/js/moment.js"></script>
   <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
-   
+  -->
+
+  <!--
+  <script src="https://cdn.jsdelivr.net/npm/moment@latest/min/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+  -->
+  
     <section>
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

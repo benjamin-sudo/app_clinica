@@ -165,13 +165,12 @@
                 </div>
                 <div class="modal-body"  id="BODY_INFOHOJADIARIA"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA</button>
-                    <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guardar"><i class="bi bi-x-square-fill"></i> GUARDAR INFORMACI&Oacute;N </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;CIERRA VENTANA</button>
+                    <button type="button" class="btn btn-success btn-fill btn-wd" id="btn_guardar"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N </button>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" id="modal_informes_pdf">
         <div class="modal-dialog modal_imedico">

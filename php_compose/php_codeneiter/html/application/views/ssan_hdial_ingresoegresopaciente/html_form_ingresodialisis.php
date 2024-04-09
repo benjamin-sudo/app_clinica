@@ -400,7 +400,6 @@
 </div>
 
 <script>
-
 $(document).ready(function() {
     let timer;
     $("#resultadosBusqueda").autocomplete({

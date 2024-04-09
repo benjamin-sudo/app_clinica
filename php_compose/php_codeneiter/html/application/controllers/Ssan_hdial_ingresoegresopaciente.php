@@ -136,74 +136,40 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $html.='
             <form id="Formimedico" name="Formimedico">
                 <div class="card">
-
                     <div class="card-header">
-                        <h5 class="card-title">INDICACIONES MEDICAS</h5>
+                        <h5 class="card-title"><b>INDICACIONES MEDICAS</b></h5>
                     </div>
-
-                       <div class="grid_informacion_dialisis">
-                            <div class="grid_informacion_dialisis2">
-                                <label for="QT"><b>ACCESO VASCULAR 1</b></label>
-                                <input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_1"   name="TXT_ACCESOVAS_1" value="'.$TXTACCESOVAS_1.'">
-                             
-                                <label for="QT"><b> FECHA 1</b></label>
-                                <input type="text" class="form-control input-sm"  id="FEC_DIAS_1"   name="FEC_DIAS_1" value="'.$FEC_DIASVAS_1.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,1)" >
-                             
-                                <label class="col-sm-1 control-label"><div id="num_dias_1">'.$NUM_DIASVAS_1.'</div></label>
-                                <script>
-                                    $("#FEC_DIAS_1").datetimepicker({
-                                        format          : "DD-MM-YYYY",
-                                        maxDate         : new Date(),
-                                        locale          : "es-us",
-                                        icons           : 
-                                                        {
-                                                            time        : "fa fa-clock-o"       ,
-                                                            date        : "fa fa-calendar"      ,
-                                                            up          : "fa fa-chevron-up"    ,
-                                                            down        : "fa fa-chevron-down"  ,
-                                                            previous    : "fa fa-chevron-left"  ,
-                                                            next        : "fa fa-chevron-right" ,
-                                                            today       : "fa fa-screenshot"    ,
-                                                            clear       : "fa fa-trash"         ,
-                                                            close       : "fa fa-remove"        ,
-                                                        }
-                                    });
-                                </script>
+                    <div class="grid_informacion_dialisis">
+                        <div class="grid_informacion_dialisis2">
+                            <label for="QT"><b>ACCESO VASCULAR 1</b></label>
+                            <input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_1"   name="TXT_ACCESOVAS_1" value="'.$TXTACCESOVAS_1.'">
+                            <div class="grid_acceso_vascular">
+                                <div class="grid_acceso_vascular1">
+                                    <label for="QT"><b> FECHA 1</b></label>
+                                    <input type="date" class="form-control" id="FEC_DIAS_1" name="FEC_DIAS_1" value="" min="'.date("Y-m-d", strtotime("-30 years")).'" max="'.date("Y-m-d").'">
+                                </div>
+                                <div class="grid_acceso_vascular2">
+                                    <label for="num_dias_1"><b>N&deg;  DE DIAS</b></label>
+                                    <label class="col-sm-1 control-label"><div id="num_dias_1">'.$NUM_DIASVAS_1.'</div></label>
+                                </div>
                             </div>
-                            <div class="grid_informacion_dialisis2">.</div>
-                            <div class="grid_informacion_dialisis3">
-
-                                <label for="QT"><b>ACCESO VASCULAR 2</b></label>
-                                <input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_2"   name="TXT_ACCESOVAS_2" value="'.$TXTACCESOVAS_2.'">
-                                    
-                                <label for="QT"><b> FECHA 2</b></label>       
-                                <input type="text" class="form-control input-sm"  id="FEC_DIAS_2"   name="FEC_DIAS_2" value="'.$FEC_DIASVAS_2.'" STYLE="WIDTH: 95PX;" onblur="cal_fecha(this.value,2)">
-
-                                <label class="col-sm-1 control-label"><div id="num_dias_2">'.$NUM_DIASVAS_2.'</div></label>
-
-                                <script>
-                                    $("#FEC_DIAS_2").datetimepicker({
-                                        format          : "DD-MM-YYYY",
-                                        maxDate         : new Date(),
-                                        locale          : "es-us",
-                                        icons           : 
-                                                        {
-                                                            time        : "fa fa-clock-o"       ,
-                                                            date        : "fa fa-calendar"      ,
-                                                            up          : "fa fa-chevron-up"    ,
-                                                            down        : "fa fa-chevron-down"  ,
-                                                            previous    : "fa fa-chevron-left"  ,
-                                                            next        : "fa fa-chevron-right" ,
-                                                            today       : "fa fa-screenshot"    ,
-                                                            clear       : "fa fa-trash"         ,
-                                                            close       : "fa fa-remove"        ,
-                                                        }
-                                    });
-                                </script> 
+                        </div>
+                        <div class="grid_informacion_dialisis2">&nbsp;</div>
+                        <div class="grid_informacion_dialisis3">
+                            <label for="QT"><b>ACCESO VASCULAR 2</b></label>
+                            <input type="text" class="form-control input-sm"  id="TXT_ACCESOVAS_2"   name="TXT_ACCESOVAS_2" value="'.$TXTACCESOVAS_2.'">
+                            <div class="grid_acceso_vascular">
+                                <div class="grid_acceso_vascular1">
+                                    <label for="QT"><b> FECHA 2</b></label>       
+                                    <input type="date" class="form-control input-sm"  id="FEC_DIAS_2"   name="FEC_DIAS_2" value="'.$FEC_DIASVAS_2.'" style="width:auto;" onblur="cal_fecha(this.value,2)">
+                                </div>
+                                <div class="grid_acceso_vascular2">
+                                    <label for="num_dias_1"><b>N&deg;  DE DIAS</b></label>
+                                    <label class="col-sm-1 control-label"><div id="num_dias_2">'.$NUM_DIASVAS_2.'</div></label>
+                                </div>
                             </div>
-                       </div>
-
-
+                        </div>
+                    </div>
                     <hr>  
                     <div class="content">
                         <div class="contenedor">
@@ -261,8 +227,40 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             </form>
             ';     
        
-        $this->output->set_output(json_encode(['html' => $html])); // Comportamiento AJAX original
+        $this->output->set_output(json_encode([
+            'html'=>$html,
+            'status'=>true
+        ]));
     }  
+
+
+    public function guardaInformacionimedico(){
+        if(!$this->input->is_ajax_request()) { show_404(); }
+        $transaccion            =   [];
+        $return                 =   true;
+        $empresa                =   $this->session->userdata("COD_ESTAB");
+        $password               =   $this->input->post('password');
+        $numfichae              =   $this->input->post('numfichae');
+        $form                   =   $this->input->post('form');//ARRAY
+        $valida                 =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
+        if(count($valida)>0)    {
+            $usuarioh           =   explode("-",$valida->USERNAME);  
+            $session            =   $usuarioh[0];
+            #$transaccion       =   $this->ssan_hdial_asignacionpaciente_model->ModelguardaInformacionimedico($empresa,$session,$numfichae,$form); 
+            $transaccion        =   $this->Ssan_hdial_asignacionpaciente_model->ModelguardaInformacionimedico_2(array(
+                "empresa"       =>  $this->session->userdata("COD_ESTAB"),
+                "session"       =>  explode("-",$this->session->userdata('USERNAME'))[0],
+                "numfichae"     =>  $numfichae,
+                "form"          =>  $form
+            ));
+        } else {
+            $return             =   false;        
+        }
+        $this->output->set_output(json_encode([
+            'status'            =>  $return,
+            'transaccion'       =>  $transaccion
+        ]));
+    }
 
     public function busqueda_informacion_cie10(){
         if (!$this->input->is_ajax_request()){ show_404(); }
@@ -271,9 +269,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $query = $this->input->post('query');
         if (!empty($query) && strlen($query) > 2) {
             $v_resultados = $this->Ssan_hdial_asignacionpaciente_model->buscar_diagnosticos($query);
-            if (!empty($v_resultados)) {
-                $status = true;
-            }
+            if (!empty($v_resultados)){ $status = true; }
         }
         $this->output->set_output(json_encode(array(
             'status' => $status,
@@ -302,11 +298,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $b_existe_ingreso = false;
         $respuesta_paciente = $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx);
         if (count($respuesta_paciente)>0){
-            #informacion del cie10
-            $a_ingreso_valido = $this->Ssan_hdial_asignacionpaciente_model->busqueda_paciente_ingresos([
-                                    'empresa' => $empresa,
-                                    'num_fichae' => $respuesta_paciente[0]['NUM_FICHAE'],
-                                ]);
+            $a_ingreso_valido = $this->Ssan_hdial_asignacionpaciente_model->busqueda_paciente_ingresos(['empresa' => $empresa, 'num_fichae' => $respuesta_paciente[0]['NUM_FICHAE']]);
             if (count($a_ingreso_valido)>0){
                 $b_existe_ingreso = true;
             } else {

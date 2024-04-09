@@ -1384,8 +1384,8 @@ class sql_class_hdial extends CI_Model {
                         TO_CHAR(H.FEC_DIASVAS_1,'DD-MM-YYYY')        AS FEC_DIASVAS_1,
                         TO_CHAR(H.FEC_DIASVAS_2,'DD-MM-YYYY')        AS FEC_DIASVAS_2,
                         
-                        trunc(sysdate-H.FEC_DIASVAS_1)               AS NUM_DIASVAS_1,
-                        trunc(sysdate-H.FEC_DIASVAS_2)               AS NUM_DIASVAS_2,
+                        TRUNC(sysdate-H.FEC_DIASVAS_1)               AS NUM_DIASVAS_1,
+                        TRUNC(sysdate-H.FEC_DIASVAS_2)               AS NUM_DIASVAS_2,
                 
                         H.NUM_ARTERIAL, 
                         H.NUM_VENOSO, 
