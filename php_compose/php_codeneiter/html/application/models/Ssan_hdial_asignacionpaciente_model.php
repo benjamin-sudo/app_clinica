@@ -248,12 +248,11 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         $empresa        =   $aData['empresa'];
         $session        =   $aData['session'];
         $numfichae      =   $aData['numfichae'];
-        $form           =   $aData['numfichae'];
+        $form           =   $aData['form'];
         $this->db->trans_start();
-
-        $UpdTurno       =   array('IND_ESTADO'=> 0,'COD_USRAUDITA' => $session,'FEC_USRAUDITA'=>'SYSDATE');
         $this->db->where('NUM_FICHAE', $numfichae);
-        $this->db->update($this->own.'.HD_IMEDICO', $UpdTurno);
+        $this->db->update($this->own.'.HD_IMEDICO', ['IND_ESTADO'=> 0,'COD_USRAUDITA' => $session,'FEC_USRAUDITA'=>'SYSDATE']);
+        
         $ID_MEDICO      =   $this->db->sequence($this->own,'SEQ_HDIAL_IMEDICO');
         $dataIngreso    =   array('COD_USRCREA'=> $session,'FEC_USRCREA'=> 'SYSDATE' , 'ID_IMEDICO' => $ID_MEDICO ,  'NUM_FICHAE' => $numfichae ,'IND_ESTADO'=>1);
 
@@ -289,14 +288,10 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 if($From['name'] == 'input_pesoSeco')   { $dataIngreso = array_merge($dataIngreso, array('NUM_PESOSECO'             => $From['value']));}
             }
         }
-        $this->db->insert($this->own.'.HD_IMEDICO_', $dataIngreso); 
+        $this->db->insert($this->own.'.HD_IMEDICO', $dataIngreso); 
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
-
-
-
-
 
     public function sqlRegistraConsultaHistorialExamenes($NAME,$firmado_por,$NUM_FICHAE,$sistema,$idcita,$token,$RUT_PAC,$TIPO_ACCESS){
         $this->db->trans_start();

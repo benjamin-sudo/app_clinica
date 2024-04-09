@@ -1007,23 +1007,26 @@ function guardarInfo(numfichae){
     let arr_infomedico = $("#Formimedico").serializeArray();
     console.log("arr_infomedico  -> ",arr_infomedico);
     jPrompt('Con esta acc&oacute;n se proceder&aacute; a guardar informacion para que aparezca en hoja diaria del paciente <br/>&iquest;Est&aacute; seguro de continuar?<br />', '','Confirmaci\u00F3n',function(r){
+        console.log(" - ",r);
         if((r=='')||(r==null)){
             console.log("-----------");
         } else {
+            $('#loadFade').modal('show'); 
             $.ajax({ 
                 type        :   "POST",
                 url         :   "Ssan_hdial_ingresoegresopaciente/guardaInformacionimedico_2",
                 dataType    :   "json",
                 beforeSend  :   function(xhr) { console.log(xhr); },
                 data        :   {   
-                                    password     :   r,
+                                    contrasena   :   r,
                                     numfichae    :   numfichae,
                                     form         :   arr_infomedico,
                                 },
-                error       :   function(errro) {   console.log(errro);  jAlert("Error General, Consulte Al Administrador");  },
+                error       :   function(errro) {   console.log(errro);  jAlert("Error General, Consulte Al Administrador");  $('#loadFade').modal('hide');  },
                 success     :   function(aData) {
                                                     console.log("   --------------------------  ");
                                                     console.log("   aData  ->  ",aData);
+                                                    $('#loadFade').modal('hide');
                                                     if(aData.status){
                                                         jAlert("Se ha realizado con &eacute;xito","CLINICA LIBRE CHILE",function(r){  
                                                             $("#MODAL_INFOHOJADIARIA").modal("hide"); 

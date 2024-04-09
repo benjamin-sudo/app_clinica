@@ -219,8 +219,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             ';     
        
         $this->output->set_output(json_encode([
-            'html'=>$html,
-            'status'=>true
+            'status'    =>  true,
+            'html'      =>  $html,
+            'aData'     =>  $aData
         ]));
     }  
 
@@ -229,11 +230,11 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $transaccion            =   [];
         $return                 =   true;
         $empresa                =   $this->session->userdata("COD_ESTAB");
-        $password               =   $this->input->post('password');
+        $contrasena             =   $this->input->post('contrasena');
         $numfichae              =   $this->input->post('numfichae');
-        $form                   =   $this->input->post('form');//ARRAY
+        $form                   =   $this->input->post('form');
         $valida                 =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
-        if(count($valida)>0)    {
+        if(count($valida)>0){
             $usuarioh           =   explode("-",$valida[0]['USERNAME']);  
             $session            =   $usuarioh[0];
             $transaccion        =   $this->Ssan_hdial_asignacionpaciente_model->ModelguardaInformacionimedico_2([
@@ -247,7 +248,8 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         }
         $this->output->set_output(json_encode([
             'status'            =>  $return,
-            'transaccion'       =>  $transaccion
+            'transaccion'       =>  $transaccion,
+            'v_firma'           =>  $valida
         ]));
     }
 
