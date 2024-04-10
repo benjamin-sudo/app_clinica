@@ -133,11 +133,11 @@ function busquedaPacientes(){
         url             :   "ssan_hdial_ingresoegresopaciente/BusquedaPacientesIngreso_v2",
         dataType        :   "json",
         data            :   { },
-        beforeSend      :   function(xhr)   { $("#LISTA_PACIENTES").html("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>"); },
-        beforeSend      :   function(xhr)   { $('#loadFade').modal('show'); },
+        beforeSend      :   function(xhr)   {   $("#LISTA_PACIENTES").html("<tr><td colspan='8' style='text-align:center'><i class='fa fa-spinner fa-spin fa-3x fa-fw'></i><span class='sr-only'>Cargando...</span></td></tr>"); },
+        beforeSend      :   function(xhr)   {   $('#loadFade').modal('show');   },
         error           :   function(errro) { 
                                                 console.log(errro.responseText); 
-                                                jAlert("Comuniquese con el administrador ","CLINICA LIBRE CHILE");
+                                                jAlert("Comuniquese con el administrador","CLINICA LIBRE CHILE");
                                                 $('#loadFade').modal('hide'); 
                                             },
         success         :   function(aData) {

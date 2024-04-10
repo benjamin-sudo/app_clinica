@@ -31,10 +31,10 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $estados        =   '1';
         $conIngreso	    =   '0';
         $aData          =   $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
-        if(count($aData) > 0) {
-            foreach ($aData as $i => $row) {
-                $rut_pac_s = explode("-",$row['RUTPAC']); //rut del usuario        
-                $rut_pac_s = $rut_pac_s[0];
+        if(count($aData)>0){
+            foreach ($aData as $i => $row){
+                $rut_pac_s  =   explode("-",$row['RUTPAC']); 
+                $rut_pac_s  =   $rut_pac_s[0];
                 $html .= '<tr>
                             <td>' . ($i + 1) . '</td>
                             <td>' .$row['RUTPAC']. '</td>
@@ -47,7 +47,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                             <td>' . $row['TXTEDAD'] . '</td>
                             <td>' . $row['FINGRESO'] . '</td>
                             <td>' . $row['FINGRESO_HISTO'] . '</td>
-                            <td>' . $row['TXTESTADO'] . '</td>
+                            <td>
+                                <div class="p-3 mb-2 bg-success text-white">'.$row['TXTESTADO'].'</div>
+                            </td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,7 +58,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <li><a class="dropdown-item" href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;Informaci&oacute;n H. Diaria</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="javascript:js_imprimiringeg(' . $rut_pac_s . ')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Ingreso Enfermeria</a></li>
+                                        <li><a class="dropdown-item" href="javascript:js_imprimiringeg(' . $row['ID_FORMULARIO'] . ')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>PDF</b> Ingreso Enfermer&iacute;a</a></li>
                                         <li><a class="dropdown-item" href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="bi bi-file-pdf"></i>&nbsp;Ver Hojas Diarias</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
@@ -1335,6 +1337,7 @@ $ssss=0;
 
         $this->output->set_output(json_encode([
             'html'          =>  'INFORMACION',
+            'id'            =>  $id
         ]));
     }
 }

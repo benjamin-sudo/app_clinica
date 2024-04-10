@@ -63,7 +63,10 @@ class sql_class_hdial extends CI_Model {
         }
         $sQuery = "SELECT 
                         H.ID_NUMINGRESO                                             AS ID_INGRESO, 
-                        H.NUM_FICHAE                                                AS NUM_FICHAE, 
+                        H.NUM_FICHAE                                                AS NUM_FICHAE,
+
+                        H.ID_INGRESOHD                                              AS ID_FORMULARIO,
+
                         H.ID_SIC, 
                         H.COD_EMPRESA, 
                         H.COD_USRCREA, 
@@ -88,7 +91,7 @@ class sql_class_hdial extends CI_Model {
                     WHERE
                         H.COD_EMPRESA                       = '$empresa'
                     AND G.NUM_FICHAE                        = H.NUM_FICHAE
-                    $where
+                        $where
                     AND H.IND_ESTADO                        = 1
 
                 ";
