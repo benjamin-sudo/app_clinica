@@ -1,7 +1,8 @@
 <?php
 
 defined("BASEPATH") OR exit("No direct script access allowed");
-require_once APPPATH . '/third_party/mpdf/mpdf.php';
+
+//require_once APPPATH . '/third_party/mpdf/mpdf.php';
 
 class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
@@ -1321,17 +1322,23 @@ $ssss=0;
         ]));
     }
 
+    
     public function pdf_ingresoenfermeria(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $id                 =   $this->input->post('id');
-
-        
-
+        $status             =   true;
+        $html               =   $this->load->view('Ssan_hdial_ingresoegresopaciente/pdf_ingresoenfe',[],true);
+        $this->pdf->pdf->WriteHTML($html);
+        $out                =   $this->pdf->pdf->Output('archivo','S');
+        $base64_pdf         =   base64_encode($out);
         $this->output->set_output(json_encode([
-            'html'          =>  'INFORMACIÓN',
-            'id'            =>  $id
+            'base64_pdf'    =>  $base64_pdf,
+            'html'          =>  $html,
+            'id'            =>  $id,
+            'status'        =>  $status
         ]));
     }
+
 
     function pdf_por_servicio(){
         if(!$this->input->is_ajax_request()){ show_404(); }

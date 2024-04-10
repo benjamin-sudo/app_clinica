@@ -73,7 +73,6 @@
         margin-bottom                       :   0px;
     }
  </style>
-
 <div class="card">
     <div class="card-header">
         <b>INGRESO DE ENFERMERIA</b>
@@ -82,6 +81,7 @@
     </div>
     <div class="card-body">
         <div class="grid_ingreso_enfermeria">
+
             <div class="card-header featured-header" style="margin-top:-15px;">
                 <b>1. ANTECEDENTES PERSONALES</b>
             </div>
@@ -165,6 +165,8 @@
                     <option value="0">RH(-)</option>
                 </select>
             </div>
+
+
             <div class="card-header featured-header" style="margin-top:-5px;">
                 <b>2. EXAMEN F&Iacute;SICO GENERAL</b>
             </div>
@@ -321,6 +323,8 @@
                 <input type="date" class="form-control" id="fecha_hbsag" name="fecha_hbsag" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>
         </div>
+
+
         <div class="card-header featured-header" style="margin-top:-5px;">
             <b>3. ANTECEDENTES HEMODI&Aacute;ISIS</b>
         </div>
@@ -389,6 +393,8 @@
             <b>4. OBSERVACIONES</b>
         </div>
         <textarea class="form-control" id="txt_observaciones_finales" name="txt_observaciones_finales" required="" rows="3" style="margin-top: 10px;"></textarea>
+
+
         <div class="grid_btn_final">
             <div class="grid_btn_final1">&nbsp;</div>
             <div class="grid_btn_final2">

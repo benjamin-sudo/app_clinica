@@ -1144,30 +1144,38 @@ function js_imprimiringeg(id){
                                             },
         success		:   function(aData)     { 
                                                 console.log("aData  ->  ",aData);
-                                                
-                                                /*
-                                                if(!aData["STATUS"]){
-                                                    jError("error al cargar protocolo PDF","e-SISSAN");
-                                                    return false;
+                                                if(aData.status){
+                                                  
+                                                    var base64str = aData.base64_pdf;
+                                                    var binary = atob(base64str.replace(/\s/g, ''));
+                                                    var len = binary.length;
+                                                    var buffer = new ArrayBuffer(len);
+                                                    var view = new Uint8Array(buffer);
+                                                    for (var i = 0; i < len; i++) { view[i] = binary.charCodeAt(i); }
+                                                    var blob = new Blob([view], { type: "application/pdf" });
+                                                    var blobURL = URL.createObjectURL(blob);
+                                                    // Crear el elemento 'object' para visualizar el PDF
+                                                    var Objpdf = document.createElement('object');
+                                                    Objpdf.data = blobURL;
+                                                    Objpdf.width = '100%';
+                                                    Objpdf.style.height = '700px';
+                                                    Objpdf.title = 'PDF';
+                                                    // Crear un enlace para descargar
+                                                    var downloadLink = document.createElement('a');
+                                                    downloadLink.href = blobURL;
+                                                    downloadLink.download = "nombre_personalizado.pdf"; // Asignar un nombre de archivo personalizado aquí
+                                                    downloadLink.textContent = 'Descargar PDF';
+                                                    downloadLink.className = 'btn btn-primary'; // Añadir clases de estilos si es necesario
+                                                    // Limpiar el contenedor y agregar el objeto PDF y el enlace de descarga
+                                                    var container = $('#html_informes_pdf');
+                                                    container.html(''); // Limpiar el contenido anterior
+                                                    container.append(Objpdf);
+                                                    container.append('<br>'); // Añadir un espacio entre el PDF y el botón
+                                                    container.append(downloadLink);
+
                                                 } else {
-                                                    var base64str           =   aData["html"];
-                                                    //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                    var binary              =   atob(base64str.replace(/\s/g,''));
-                                                    var len                 =   binary.length;
-                                                    var buffer              =   new ArrayBuffer(len);
-                                                    var view                =   new Uint8Array(buffer);
-                                                    for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                    var blob                =   new Blob([view],{type:"application/pdf"});
-                                                    var blobURL             =   URL.createObjectURL(blob);
-                                                    Objpdf                  =   document.createElement('object');
-                                                    Objpdf.setAttribute('data',blobURL);
-                                                    Objpdf.setAttribute('width','100%');
-                                                    Objpdf.setAttribute('style','height:700px;');
-                                                    Objpdf.setAttribute('title','PDF');
-                                                    $('#html_informes_pdf').html(Objpdf);
+                                                    jError("error al cargar protocolo PDF","e-SISSAN");
                                                 }
-                                                */
-                                                $('#html_informes_pdf').html('HOLA');
                                             }, 
     });
 }

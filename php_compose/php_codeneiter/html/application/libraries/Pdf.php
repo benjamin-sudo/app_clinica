@@ -1,11 +1,19 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-include_once APPPATH.'/third_party/mpdf/mpdf.php';
+require_once APPPATH.'/third_party/mpdf/mpdf.php'; // Asegúrate de que esta ruta sea correcta
 
-class Pdf extends \Mpdf\Mpdf {
-    
-    public function __construct($params = [])
+class Pdf {
+
+    public $param;
+    public $pdf;
+
+    public function __construct($params = array())
     {
-        parent::__construct($params);
+        $this->param = $params;
+        
+        if ($this->param == null) {
+            $this->param = '"en-GB-x","A4","","",10,10,10,10,6,3'; // Parámetros por defecto
+        }
+        $this->pdf = new mPDF($this->param);
     }
 }
