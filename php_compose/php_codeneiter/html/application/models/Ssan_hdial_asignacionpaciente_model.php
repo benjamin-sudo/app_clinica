@@ -120,37 +120,36 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     }
     
     public function profActvNuevaAgenda_por_mantenedor($empresa){
-         $query = "  
-            SELECT 
-                A.COD_RUTPRO,  
-                A.ID_PROFESIONAL                                                                   AS ID_PRO,
-                A.COD_DIGVER                                                                       AS COD_DIGVER,
-                DECODE (C.IND_TIPOATENCION,
-                '01','slc_medico','15','slc_medico',
-                '02','slc_enfermeria',
-                '12','slc_tecpara','no_info')                                                      AS HTML_OUT,
-                UPPER(A.NOM_APEPAT)||' ' ||UPPER(A.NOM_APEMAT)||' ' ||UPPER(A.NOM_NOMBRE)          AS NOM_PROFE,
-                C.DES_TIPOATENCION                                                                 AS DES_TIPOATENCION,
-                B.COD_TPROFE                                                                       AS COD_TPROFE,
-                B.NOM_TPROFE                                                                       AS NOM_TPROFE,
-                C.IND_TIPOATENCION                                                                 AS IND_TIPOATENCION
-            FROM 
-                ADMIN.GG_TPROFESIONAL           A,
-                ADMIN.GG_TPROFESION             B,
-                ADMIN.AP_TTIPOATENCION          C,
-                ADMIN.AP_TPROFXESTABL           D,
-                ADMIN.HD_RRHHDIALISIS           H
-            WHERE 
-                A.IND_ESTADO                    =   'V'
-                AND D.IND_ESTADO                =   'V'
-                AND A.COD_TPROFE                =   B.COD_TPROFE
-                AND B.IND_TIPOATENCION          =   C.IND_TIPOATENCION
-                AND A.COD_RUTPRO                =   D.COD_RUTPRO
-                AND D.COD_EMPRESA               IN  ($empresa)
-                AND H.COD_RUTPRO                =   A.COD_RUTPRO
-                AND H.IND_ESTADO                IN  (1)
-            ORDER BY C.IND_TIPOATENCION, A.NOM_APEPAT ";
-        return  $this->db->query($query)->result_array();
+         $query = "SELECT 
+                    A.COD_RUTPRO,  
+                    A.ID_PROFESIONAL                                                                   AS ID_PRO,
+                    A.COD_DIGVER                                                                       AS COD_DIGVER,
+                    DECODE (C.IND_TIPOATENCION,
+                    '01','slc_medico','15','slc_medico',
+                    '02','slc_enfermeria',
+                    '12','slc_tecpara','no_info')                                                      AS HTML_OUT,
+                    UPPER(A.NOM_APEPAT)||' ' ||UPPER(A.NOM_APEMAT)||' ' ||UPPER(A.NOM_NOMBRE)          AS NOM_PROFE,
+                    C.DES_TIPOATENCION                                                                 AS DES_TIPOATENCION,
+                    B.COD_TPROFE                                                                       AS COD_TPROFE,
+                    B.NOM_TPROFE                                                                       AS NOM_TPROFE,
+                    C.IND_TIPOATENCION                                                                 AS IND_TIPOATENCION
+                FROM 
+                    ADMIN.GG_TPROFESIONAL           A,
+                    ADMIN.GG_TPROFESION             B,
+                    ADMIN.AP_TTIPOATENCION          C,
+                    ADMIN.AP_TPROFXESTABL           D,
+                    ADMIN.HD_RRHHDIALISIS           H
+                WHERE 
+                    A.IND_ESTADO                    =   'V'
+                    AND D.IND_ESTADO                =   'V'
+                    AND A.COD_TPROFE                =   B.COD_TPROFE
+                    AND B.IND_TIPOATENCION          =   C.IND_TIPOATENCION
+                    AND A.COD_RUTPRO                =   D.COD_RUTPRO
+                    AND D.COD_EMPRESA               IN  ($empresa)
+                    AND H.COD_RUTPRO                =   A.COD_RUTPRO
+                    AND H.IND_ESTADO                IN  (1)
+                ORDER BY C.IND_TIPOATENCION, A.NOM_APEPAT ";
+            return  $this->db->query($query)->result_array();
     }
     
     public function getbusquedadecuposporagendahd($fechaini,$fechafin,$empresa,$numfichae) {
@@ -167,7 +166,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         $query = $this->db->query($this->sql_class_hdial->sqlInformacionComplementaria($empresa,$numfichae));
         return $query->result_array();
     }
-    
+ 
     public function sqlInformacionComplementariaPesoSeco($empresa,$numfichae){
         $query = $this->db->query($this->sql_class_hdial->sqlInformacionComplementariaPesoSeco($empresa,$numfichae));
         return $query->result_array();
@@ -1299,7 +1298,9 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'TXT_TALLA'             =>  $aData['arr_envio']['txt_talla'], 
 
             'TXT_MOVILIDAD'         =>  $aData['arr_envio']['txt_ef_movilidad'],  
-            'TXT_NUTRICION'         =>  $aData['arr_envio']['txt_ef_nutricion'], 
+            'TXT_NUTRICION'         =>  $aData['arr_envio']['txt_ef_nutricion'],
+            'TXT_GRADOCONCIENCIA'   =>  $aData['arr_envio']['txt_ef_gradoconciencia'],
+
             'TXT_ESTADOPIEL'        =>  $aData['arr_envio']['txt_ef_estadodelapiel'], 
             'TXT_CONJUNTIVAS'       =>  $aData['arr_envio']['txt_ef_conjuntivas'],  
             'TXT_YUGULARES'         =>  $aData['arr_envio']['txt_ef_yugulares'], 
@@ -1374,5 +1375,108 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                     ";
         return $this->db->query($v_sql)->result_array();
     }
+
+    public function informacio_formularioingreso($aData){
+        $ID_FORMULARIO = $aData['ID_FORMULARIO'];
+        $v_sql = "SELECT 
+
+                    UPPER(G.NOM_NOMBRE||' '||G.NOM_APEPAT||' '||G.NOM_APEMAT)   AS NOMPAC,
+                    G.COD_RUTPAC||'-'||G.COD_DIGVER                             AS RUTPAC,
+                    TO_CHAR(G.FEC_NACIMI,'DD-MM-YYYY')                          AS NACIMIENTO,
+
+
+
+                    FLOOR(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI) / 12) AS NUM_YEAR,
+                    FLOOR(MOD(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI), 12)) AS MESES,
+                    FLOOR(SYSDATE - ADD_MONTHS(G.FEC_NACIMI, FLOOR(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI)))) AS DIAS,
+
+
+
+                    C.ID_INGRESOHD,
+                    C.NUM_FICHAE,
+                    C.TXT_NAME,
+                    C.COD_CREA,
+                    C.TXT_NOMBRECREA,
+                    C.DATE_CREA,
+                    C.IND_ESTADO,
+                    C.COD_EMPRESA,
+
+                    C.TXT_ANTECEDENTESQX,
+                    C.IND_ANTALERGICOS,
+                    DECODE (C.IND_ANTALERGICOS,
+                        '1','SI',
+                        '0','NO',
+                        '2','NO SABE','NO INFORMADO')                                                   AS TXT_ANTALERGICOS,
+                    CASE WHEN C.IND_ANTALERGICOS = 1 THEN C.TXT_ALIMENTOS ELSE 'No informado' END       AS TXT_ALIMENTOS,
+                    CASE WHEN C.IND_ANTALERGICOS = 1 THEN C.TXT_MEDICAMENTOS ELSE 'No informado' END    AS TXT_MEDICAMENTOS,
+                    CASE WHEN C.IND_ANTALERGICOS = 1 THEN C.TXT_OTROS ELSE 'No informado' END           AS TXT_OTROS,
+                    C.TXT_LLAMAR_URGENCIA,
+                    C.IND_GRUPO_SANGUINEO, 
+                    C.IND_FACTOR_SANGRE, 
+                    DECODE (C.IND_ANTALERGICOS,
+                        '1','RH(+)',
+                        '0','RH(-)',
+                        'NS','NO SABE','NO INFORMADO')                                                   AS TXT_FACTOR_SANGRE,
+                    C.TXT_KILOGRAMOS, 
+                    C.TXT_FRECUENCIAC, 
+                    C.TXT_PDISTOLICA, 
+                    C.TXT_PSISTOLICA, 
+                    C.TXT_TALLA,
+                    C.TXT_MOVILIDAD, 
+                    C.TXT_NUTRICION,
+                    'SUBIR A BD' AS TXT_GRADOCONCIENCIA,
+                    C.TXT_ESTADOPIEL, 
+                    C.TXT_CONJUNTIVAS, 
+                    C.TXT_YUGULARES, 
+                    C.TXT_EXTREMIDADES, 
+                    C.TXT_FAV, 
+                    TO_CHAR(C.DATE_FAV,'DD-MM-YYYY')        AS DATE_FAV,
+                    C.TXT_GOROTEX, 
+                    TO_CHAR(C.DATE_GOROTEX,'DD-MM-YYYY')    AS DATE_GOROTEX,
+                    C.TXT_CATETER, 
+                    TO_CHAR(C.DATE_CATETER,'DD-MM-YYYY')    AS DATE_CATETER,
+                    DECODE (C.IND_DIURESIS,
+                        '1','SI',
+                        '0','NO','NO INFORMADO')            AS TXT_DIURESIS,
+                    TO_CHAR(C.DATE_DIURESIS,'DD-MM-YYYY')   AS DATE_DIURESIS,
+                    C.TXT_HVC, 
+                    TO_CHAR(C.DATE_HVC,'DD-MM-YYYY')        AS DATE_HVC,
+                    C.TXT_HIV, 
+                    TO_CHAR(C.DATE_HIV,'DD-MM-YYYY')        AS DATE_HIV,
+                    C.TXT_HBSAG, 
+                    TO_CHAR(C.DATE_HBSAG,'DD-MM-YYYY')      AS DATE_HBSAG,
+
+
+                    C.TXT_QB, 
+                    C.TXT_HEPARINA_I, 
+                    C.TXT_HEPARINA_M,
+                    C.TXT_1RA_DOSIS_HVB,
+
+                    C.TXT_QD, 
+                    C.TXT_BANO_KNA, 
+                    C.TXT_2DA_DOSIS_HVB, 
+                    C.TXT_PESOSECO, 
+                    C.TXT_CONCENTRADO, 
+                    C.TXT_3DA_DOSIS_HVB, 
+                    C.TXT_REFUERZO_HVB, 
+                    C.TXT_OBSERVACIONES,
+                    C.TXT_NAME_AUDITA,
+                    C.COD_AUDITA,
+                    C.DATE_AUDITA
+                FROM 
+                    ADMIN.HD_FORMULARIOINGRESO C,
+                    ADMIN.GG_TGPACTE G
+                WHERE 
+                    C.ID_INGRESOHD = $ID_FORMULARIO AND 
+                    G.NUM_FICHAE = C.NUM_FICHAE AND 
+                    C.IND_ESTADO IN (1)
+
+                ";
+        return $this->db->query($v_sql)->result_array();
+    }
+
+
+
+
 
 }

@@ -75,9 +75,11 @@
  </style>
 <div class="card">
     <div class="card-header">
+        
         <b>INGRESO DE ENFERMERIA</b>
         <br>
         <i>Unidad de Hemodi&aacute;lisis</i>
+
     </div>
     <div class="card-body">
         <div class="grid_ingreso_enfermeria">
@@ -98,8 +100,8 @@
                 <select class="form-select" aria-label="Seleccione ..." id="ingreso_enfe_antenecentealergia" onclick="js_cambio_atencedentes()">
                     <option value="">Seleccione ... </option>
                     <option value="1">Si</option>
-                    <option value="2">No</option>
-                    <option value="3">No Sabe</option>
+                    <option value="0">No</option>
+                    <option value="2">No Sabe</option>
                 </select>
             </div>
             <div class="grid_ingreso_enfermeria1">
@@ -124,7 +126,6 @@
                 Diagn&oacute;stico de ingreso
             </div>
             <div class="grid_ingreso_enfermeria2">
-                
                 <label for="resultadosBusqueda" class="label_buscador"><i class="bi bi-database"></i>&nbsp;BUSCADOR CIE:10</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
@@ -133,7 +134,6 @@
                 <ul class="list-group" id="ind_ciediez_selecionados">
                     <li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS</i></b></li>
                 </ul>
-
             </div>
             <div class="grid_ingreso_enfermeria1">
                 Establecimiento al que se deriva en caso de urgencia

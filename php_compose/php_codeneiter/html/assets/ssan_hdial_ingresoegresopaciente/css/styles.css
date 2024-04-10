@@ -133,10 +133,21 @@
     margin-top                          :   9px;
 }
 
-.grid_acceso_vascular{
+.grid_acceso_vascular                   {
     display                             :   grid;
     grid-template-columns               :   1fr 1fr;
     gap                                 :   8px;
     margin-top                          :   10px;
 }
+
+
+
+.grid_egresa_paciente                   {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr 1fr 1fr;
+    gap                                 :   8px;
+    margin-top                          :   10px;
+}
+
+
 

@@ -659,27 +659,37 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
     }
 
     public function controller_egresopaciente() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-        $empresa = $this->session->userdata("COD_ESTAB");
-        $ID = $this->input->post('ID');
-        $html = '';
-        $html.='<div class="card">
+        if (!$this->input->is_ajax_request()){  show_404(); }
+        $empresa    =   $this->session->userdata("COD_ESTAB");
+        $ID         =   $this->input->post('ID');
+        $html       =   '';
+        $html       .=  '<div class="card">
                             <div class="header">
                                 <h4 class="title"><b>DATOS DEL PACIENTE</b></h4>
                                 <p class="category">Informaci&oacute;n Basica</p>
                             </div>
                             <div class="content">
                                  <dl class="row">
-                                    <dt class="col-sm-2"><i class="fa fa-user-circle" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10"><b>- ' . $this->input->post('NOMBRE_PAC') . '</b></dd>
-                                    <dt class="col-sm-2"><i class="fa fa-id-card-o" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10"><b>- ' . $this->input->post('RUT_PAC') . '</b></dd>
-                                    <dt class="col-sm-2"><i class="fa fa-mobile" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10"><b>- ' . $this->input->post('CELULAR') . '</b></dd>
-                                    <dt class="col-sm-2"><i class="fa fa-birthday-cake" aria-hidden="true"></i></dt>
-                                    <dd class="col-sm-10"><b>- ' . $this->input->post('EDAD') . '</b></dd>
+
+                                     <div class="grid_egresa_paciente">
+                                        <div class="grid_egresa_paciente1">
+                                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                            <b> ' . $this->input->post('NOMBRE_PAC') . '</b>
+                                        </div>
+                                        <div class="grid_egresa_paciente2">
+                                            <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                            <b>' . $this->input->post('RUT_PAC') . '</b>
+                                        </div>
+                                        <div class="grid_egresa_paciente3">
+                                            <i class="fa fa-mobile" aria-hidden="true"></i>
+                                            <b> ' . $this->input->post('CELULAR') . '</b>
+                                        </div>
+                                        <div class="grid_egresa_paciente4">
+                                            <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+                                            ' . $this->input->post('EDAD') . '
+                                        </div>
+                                    </div>
+
                                     <hr>
                                     <dt class="col-sm-12" style="text-align:center">
                                         <hr>
@@ -701,9 +711,10 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                             </div>
                         </div>
                         ';
-
-        $TABLA[] = array("id_html" => "BODYXMAQUINA", "opcion" => "append", "contenido" => $html);
-        $this->output->set_output(json_encode($TABLA));
+        //$TABLA[] = array("id_html" => "BODYXMAQUINA", "opcion" => "append", "contenido" => $html);
+        $this->output->set_output(json_encode([
+            'html' => $html
+        ]));
     }
 
     public function EgresaPaciente() {
@@ -1325,20 +1336,21 @@ $ssss=0;
     
     public function pdf_ingresoenfermeria(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $id                 =   $this->input->post('id');
+        $ID_FORMULARIO      =   $this->input->post('ID_FORMULARIO');
         $status             =   true;
-        $html               =   $this->load->view('Ssan_hdial_ingresoegresopaciente/pdf_ingresoenfe',[],true);
+        $aData              =   $this->Ssan_hdial_asignacionpaciente_model->informacio_formularioingreso(['ID_FORMULARIO' => $ID_FORMULARIO]);
+        $html               =   $this->load->view('Ssan_hdial_ingresoegresopaciente/pdf_ingresoenfe',['aData'=>$aData],true);
         $this->pdf->pdf->WriteHTML($html);
         $out                =   $this->pdf->pdf->Output('archivo','S');
         $base64_pdf         =   base64_encode($out);
         $this->output->set_output(json_encode([
+            'aData'         =>  $aData,
             'base64_pdf'    =>  $base64_pdf,
             'html'          =>  $html,
             'id'            =>  $id,
             'status'        =>  $status
         ]));
     }
-
 
     function pdf_por_servicio(){
         if(!$this->input->is_ajax_request()){ show_404(); }
@@ -1363,4 +1375,13 @@ $ssss=0;
         ]));
     }
 
+
+    function calendario_hermodialisis(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $status                 =   false;
+    
+        $this->output->set_output(json_encode([
+            'status'            =>  $status,
+        ]));
+    }
 }

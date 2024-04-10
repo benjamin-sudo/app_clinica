@@ -253,6 +253,21 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal_egresa_paciente">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">EGRESO DE PACIENTE</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_egresa_paciente"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ZONA INPUT INGRESO DE PACIENTE -->
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>

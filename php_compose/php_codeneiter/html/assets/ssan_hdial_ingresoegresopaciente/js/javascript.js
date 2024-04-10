@@ -516,12 +516,12 @@ function js_turnosxmaquina(id){
 }
 
 function egresar(id,numfichae){
-   $("#TURNOXMAQUINA").modal("show");
-   $.ajax({ 
-       type		:   "POST",
-       url 		:   "ssan_hdial_ingresoegresopaciente/controller_egresopaciente",
-       dataType        :   "json",
-       beforeSend      :   function(xhr) { },
+    $("#modal_egresa_paciente").modal({backdrop:'static',keyboard:false}).modal("show"); 
+    $.ajax({ 
+       type		    :   "POST",
+       url 		    :   "ssan_hdial_ingresoegresopaciente/controller_egresopaciente",
+       dataType     :   "json",
+       beforeSend   :   function(xhr) { },
        data 		:   { 
                                ID          : id, 
                                numfichae   : numfichae,
@@ -530,13 +530,14 @@ function egresar(id,numfichae){
                                RUT_PAC     : $("#rut_"+id).val(),
                                CELULAR     : $("#telefono_"+id).val(),
                            },
-       error		:   function(errro){ alert(errro.responseText); },
-       success		:   function(aData){ 
-                               if(AjaxExtJsonAll(aData)){  
-                                   $("#NOM_MAQUINA").html("EGRESO PACIENTE"); 
-                               }; 
-                           }, 
-   });
+       error		:   function(errro)     {   jAlert(errro.responseText); },
+       success		:   function(aData)     { 
+                                            
+                                                console.log("aData  ->  ",aData);
+                                                $("#html_egresa_paciente").html(aData.html);
+                                            
+                                            }, 
+    });
 }
 
 function asigarCupo(MKN,GRP,TRN){
@@ -947,25 +948,33 @@ function cargaCalendario(num_fichae){
 }
 
 function js_cBUSQUEDAHANTERIOR(num_fichae,val){
-   //console.log($("#busquedaMes").val());
-   $.ajax({
-       url         :   "ssan_hdial_asignacionpaciente/cargaHDanteriores",
+    //console.log($("#busquedaMes").val());
+    $('#loadFade').modal('show'); 
+    $.ajax({
+       url         :   "ssan_hdial_ingresoegresopaciente/calendario_hermodialisis",
        type        :   "POST",
        dataType    :   "json",
-       data        :   
-                       {
-                           num_fichae      : num_fichae,
-                           historico       : 1,
-                           nuevo           : val,
-                           fecha           : $("#sel_busquedaMes").val()
-                       },
-       error       :   function(errro){ console.log(errro.responseText); console.log(errro); jError("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); },              
-       success     :   function(xml) { 
-                            if (AjaxExtJsonAll(xml)){ 
-                                $("#MODAL_HD_ANTERIORES").modal("show");  
-                            }; 
-                       }
-   });
+       data        :    {
+                            num_fichae  :   num_fichae,
+                            historico   :   1,
+                            nuevo       :   val,
+                            //fecha     :   $("#sel_busquedaMes").val()
+                        },
+       error       :   function(errro)  { 
+                                            console.log(errro);
+                                            $('#loadFade').modal('hide');  
+                                            jError("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); 
+                                        },              
+       success     :   function(aData)  { 
+                                            $('#loadFade').modal('hide');
+                                            console.log("aData  ->  ",aData);
+                                            if (aData.status){
+
+                                            } else {
+                                                showNotification('top','center','<i class="bi bi-exclamation-square-fill"></i>&nbsp;&nbsp;Paciente no cuenta con hojas iniciadas',4,'');
+                                            }
+                                        }
+    });
 }
 
 function iPesoseco(numfichae){
@@ -1122,7 +1131,7 @@ function js_guarda_ingreso(){
     
 }
 
-function js_imprimiringeg(id){
+function js_imprimiringeg(ID_FORMULARIO){
     $("#modal_informes_pdf").modal({backdrop:'static',keyboard:false}).modal("show");
     //return false;
     $.ajax({ 
@@ -1134,7 +1143,7 @@ function js_imprimiringeg(id){
                                                 $('#html_informes_pdf').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span>');
                                             },
         data 		:                       { 
-                                                id:id,
+                                                ID_FORMULARIO   :   ID_FORMULARIO,
                                             },
         error		:   function(errro)     { 
                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
@@ -1145,7 +1154,6 @@ function js_imprimiringeg(id){
         success		:   function(aData)     { 
                                                 console.log("aData  ->  ",aData);
                                                 if(aData.status){
-                                                  
                                                     var base64str = aData.base64_pdf;
                                                     var binary = atob(base64str.replace(/\s/g, ''));
                                                     var len = binary.length;
@@ -1172,7 +1180,6 @@ function js_imprimiringeg(id){
                                                     container.append(Objpdf);
                                                     container.append('<br>'); // Añadir un espacio entre el PDF y el botón
                                                     container.append(downloadLink);
-
                                                 } else {
                                                     jError("error al cargar protocolo PDF","e-SISSAN");
                                                 }
