@@ -1327,7 +1327,7 @@ $ssss=0;
 
 
 
-
+        
 
 
 
@@ -1336,7 +1336,7 @@ $ssss=0;
 
 
         $this->output->set_output(json_encode([
-            'html'          =>  'INFORMACION',
+            'html'          =>  'INFORMACIÓN',
             'id'            =>  $id
         ]));
     }
