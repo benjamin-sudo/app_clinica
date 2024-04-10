@@ -1144,6 +1144,7 @@ function js_imprimiringeg(id){
                                             },
         success		:   function(aData)     { 
                                                 console.log("aData  ->  ",aData);
+                                                
                                                 /*
                                                 if(!aData["STATUS"]){
                                                     jError("error al cargar protocolo PDF","e-SISSAN");

@@ -1,10 +1,14 @@
 <?php
 
+defined("BASEPATH") OR exit("No direct script access allowed");
+require_once APPPATH . '/third_party/mpdf/mpdf.php';
+
 class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
     function __construct(){
         parent::__construct();
         $this->load->library('session');
+        $this->load->library('pdf');
         $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
         $this->load->model("Ssan_hdial_asignacionpaciente_model");
         $this->load->model("ssan_bdu_creareditarpaciente_model");
@@ -35,38 +39,35 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             foreach ($aData as $i => $row){
                 $rut_pac_s  =   explode("-",$row['RUTPAC']); 
                 $rut_pac_s  =   $rut_pac_s[0];
-                $html .= '<tr>
-                            <td>' . ($i + 1) . '</td>
-                            <td>' .$row['RUTPAC']. '</td>
-                            <td>' . $row['NOM_COMPLETO'] . '
-                                <input type="hidden" id="nombre_' . $row['ID_INGRESO'] . '"     name="nombre_' . $row['ID_INGRESO'] . '"    value="' . $row['NOM_APELLIDO'] . '"/>
-                                <input type="hidden" id="edad_' . $row['ID_INGRESO'] . '"       name="edad_' . $row['ID_INGRESO'] . '"      value="' . $row['TXTEDAD'] . '"/>
-                                <input type="hidden" id="telefono_' . $row['ID_INGRESO'] . '"   name="telefono_' . $row['ID_INGRESO'] . '"  value="' . $row['CELULAR'] . '"/>
-                                <input type="hidden" id="rut_' . $row['ID_INGRESO'] . '"        name="rut_' . $row['ID_INGRESO'] . '"       value="' . $row['RUTPAC'] . '"/>
-                            </td>
-                            <td>' . $row['TXTEDAD'] . '</td>
-                            <td>' . $row['FINGRESO'] . '</td>
-                            <td>' . $row['FINGRESO_HISTO'] . '</td>
-                            <td>
-                                <div class="p-3 mb-2 bg-success text-white">'.$row['TXTESTADO'].'</div>
-                            </td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-wrench"></i>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;Informaci&oacute;n H. Diaria</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="javascript:js_imprimiringeg(' . $row['ID_FORMULARIO'] . ')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>PDF</b> Ingreso Enfermer&iacute;a</a></li>
-                                        <li><a class="dropdown-item" href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="bi bi-file-pdf"></i>&nbsp;Ver Hojas Diarias</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr> 
-                ';
+                $html .=    '<tr>
+                                <td>' . ($i + 1) . '</td>
+                                <td>' .$row['RUTPAC']. '</td>
+                                <td>' . $row['NOM_COMPLETO'] . '
+                                    <input type="hidden" id="nombre_' . $row['ID_INGRESO'] . '"     name="nombre_' . $row['ID_INGRESO'] . '"    value="' . $row['NOM_APELLIDO'] . '"/>
+                                    <input type="hidden" id="edad_' . $row['ID_INGRESO'] . '"       name="edad_' . $row['ID_INGRESO'] . '"      value="' . $row['TXTEDAD'] . '"/>
+                                    <input type="hidden" id="telefono_' . $row['ID_INGRESO'] . '"   name="telefono_' . $row['ID_INGRESO'] . '"  value="' . $row['CELULAR'] . '"/>
+                                    <input type="hidden" id="rut_' . $row['ID_INGRESO'] . '"        name="rut_' . $row['ID_INGRESO'] . '"       value="' . $row['RUTPAC'] . '"/>
+                                </td>
+                                <td>' . $row['TXTEDAD'] . '</td>
+                                <td>' . $row['FINGRESO'] . '</td>
+                                <td>' . $row['FINGRESO_HISTO'] . '</td>
+                                <td><div class="p-3 mb-2 bg-success text-white" style="border-radius: 9px;text-align: -webkit-center;">'.$row['TXTESTADO'].'</div></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-wrench"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item" href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;Informaci&oacute;n H. Diaria</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="javascript:js_imprimiringeg(' . $row['ID_FORMULARIO'] . ')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>PDF</b> Ingreso Enfermer&iacute;a</a></li>
+                                            <li><a class="dropdown-item" href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="bi bi-file-pdf"></i>&nbsp;Ver Hojas Diarias</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>';
             }
         } else {
             $html = '<tr><td colspan="8" style="text-align:center"><b>SIN PACIENTES</b></td></tr>';
