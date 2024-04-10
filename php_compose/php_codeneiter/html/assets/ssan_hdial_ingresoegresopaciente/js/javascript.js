@@ -636,21 +636,21 @@ function E_INGRESODIAL(numIgreso,numfichae){
                console.log("-----------");
            } else {
                $.ajax({ 
-                   type            : "POST",
-                   url             : "ssan_hdial_ingresoegresopaciente/EgresaPaciente",
-                   dataType        : "json",
-                   beforeSend      : function(xhr) { console.log(xhr); },
-                   data            :   {   
+                   type            :    "POST",
+                   url             :    "ssan_hdial_ingresoegresopaciente/EgresaPaciente",
+                   dataType        :    "json",
+                   beforeSend      :    function(xhr) { console.log(xhr); },
+                   data            :    {   
                                            password    :    r,
                                            numIgreso   :    numIgreso,
                                            numfichae   :    numfichae,
                                            id_egreso   :    id_egreso,
-                                       },
-                   error           : function(errro)    {   
+                                        },
+                   error           :    function(errro)    {   
                                                             console.log(errro); 
                                                             jAlert("Error General, Consulte Al Administrador"); 
                                                         },
-                   success         : function(aData)    {
+                   success         :    function(aData)    {
                                                             console.log("aData  ->  ",aData);
                                                             if(aData.validez){
                                                                 jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
