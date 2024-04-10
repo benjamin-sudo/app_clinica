@@ -383,40 +383,37 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
 
     public function ModelEgresaPaciente($empresa, $session, $numIgreso ,$id_egreso , $numfichae){
         $this->db->trans_start();
-            //******************************************************************
-            $query          = $this->db->query($this->sql_class_hdial->sqlNumDialEgresos($empresa,$numIgreso, $numfichae));
-            $INDDATOS       = $query->result_array();
+        $query          = $this->db->query($this->sql_class_hdial->sqlNumDialEgresos($empresa,$numIgreso, $numfichae));
+        $INDDATOS       = $query->result_array();
 	    if (count($INDDATOS)>0){
-		$UpdTurno               = array(
-		    'IND_ESTADO'        => 0,
-		    'COD_AUDITA'        => $session,
-		    'DATE_AUDITA'       => 'SYSDATE'
-		);
-		$this->db->where('ID_TURNOSXDIAS', $INDDATOS[0]['ID_TURNOSXDIAS']);
-		$this->db->where('ID_RMDIALISIS', $INDDATOS[0]['ID_RMDIALISIS']);
-		$this->db->update($this->own.'.HD_TURNODIALISIS', $UpdTurno);
+            $UpdTurno   =   array(
+                                'IND_ESTADO'        => 0,
+                                'COD_AUDITA'        => $session,
+                                'DATE_AUDITA'       => 'SYSDATE'
+                            );
+            $this->db->where('ID_TURNOSXDIAS', $INDDATOS[0]['ID_TURNOSXDIAS']);
+            $this->db->where('ID_RMDIALISIS', $INDDATOS[0]['ID_RMDIALISIS']);
+            $this->db->update($this->own.'.HD_TURNODIALISIS', $UpdTurno);
 	    }
-            //******************************************************************
-            $dataEgreso    =  array(
-                                    'ID_EGRESO'     => $id_egreso,  
-                                    'FEC_AUDITA'    => 'SYSDATE', 
-                                    'COD_AUDITA'    => $session, 
-                                    'IND_ESTADO'    => '0' 
-                                );
-            $this->db->where('ID_NUMINGRESO', $numIgreso);
-            $this->db->update($this->own.'.HD_TINGRESO', $dataEgreso);
-            //******************************************************************
-            $UpdIngreso             = array(
-                'IND_ESTADO'        => 0,
-                'COD_AUDITA'        => $session,
-                'FEC_AUDITA'        => 'SYSDATE'
-            );
-            $this->db->where('NUM_INGRESO', $numIgreso);
-            $this->db->update($this->own.'.HD_NPACIENTEXCUPO', $UpdIngreso);
-            //******************************************************************
+        $dataEgreso    =  array(
+                                'ID_EGRESO'     => $id_egreso,  
+                                'FEC_AUDITA'    => 'SYSDATE', 
+                                'COD_AUDITA'    => $session, 
+                                'IND_ESTADO'    => '0' 
+                            );
+        $this->db->where('ID_NUMINGRESO', $numIgreso);
+        $this->db->update($this->own.'.HD_TINGRESO', $dataEgreso);
+        $UpdIngreso     =   array(
+                                'IND_ESTADO'        => 0,
+                                'COD_AUDITA'        => $session,
+                                'FEC_AUDITA'        => 'SYSDATE'
+                            );
+        $this->db->where('NUM_INGRESO', $numIgreso);
+        $this->db->update($this->own.'.HD_NPACIENTEXCUPO', $UpdIngreso);
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
+
     
     public function ModelborraSignoVital($empresa,$session,$id){
         $this->db->trans_start();

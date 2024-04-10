@@ -641,24 +641,27 @@ function E_INGRESODIAL(numIgreso,numfichae){
                    dataType        : "json",
                    beforeSend      : function(xhr) { console.log(xhr); },
                    data            :   {   
-                                           password    : r,
-                                           numIgreso   : numIgreso,
-                                           numfichae   : numfichae,
-                                           id_egreso   : id_egreso,
+                                           password    :    r,
+                                           numIgreso   :    numIgreso,
+                                           numfichae   :    numfichae,
+                                           id_egreso   :    id_egreso,
                                        },
-                   error           : function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
-                   success         : function(aData){ 
-                                           //console.log(aData[3]['sql']);
-                                           if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
-                                                   console.log("--->"); console.log(r);
-                                                   $("#TURNOXMAQUINA").modal("hide");   
-                                                   busquedaPacientes(2);
-                                               });
-                                           } else {
-                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
-                                           }
-                                       }, 
+                   error           : function(errro)    {   
+                                                            console.log(errro); 
+                                                            jAlert("Error General, Consulte Al Administrador"); 
+                                                        },
+                   success         : function(aData)    {
+                                                            console.log("aData  ->  ",aData);
+                                                            if(aData.validez){
+                                                                jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
+                                                                    console.log("--->"); console.log(r);
+                                                                    $("#modal_egresa_paciente").modal("hide");   
+                                                                    busquedaPacientes(2);
+                                                                });
+                                                            } else {
+                                                                jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
+                                                            }
+                                                        }, 
                });      
            }
    });

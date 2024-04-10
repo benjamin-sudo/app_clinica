@@ -686,15 +686,14 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                         </div>
                                         <div class="grid_egresa_paciente4">
                                             <i class="fa fa-birthday-cake" aria-hidden="true"></i>
-                                            ' . $this->input->post('EDAD') . '
+                                            ' . $this->input->post('EDAD') . ' Años
                                         </div>
                                     </div>
-
                                     <hr>
                                     <dt class="col-sm-12" style="text-align:center">
                                         <hr>
                                             <h4 class="title"><b>TIPO DE EGRESO:</b></h4>
-                                            <select id="num_egreso" name="egreso" onchange="js_tipoTraslado(this.value)">
+                                            <select id="num_egreso" name="egreso"  onchange="js_tipoTraslado(this.value)" class="form-control">
                                                 <option value="" >--</option>
                                                 <option value="1">TRASLADO PERMANENTE</option>
                                                 <option value="2">TRASLADO TRANSITORIO</option>
@@ -719,27 +718,32 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
     public function EgresaPaciente() {
         if (!$this->input->is_ajax_request()) {  show_404();   }
-        $empresa = $this->session->userdata("COD_ESTAB");
-        $transaccion = '';
-        $return = '';
-        $password = $this->input->post('password');
-        $numIgreso = $this->input->post('numIgreso');
-        $id_egreso = $this->input->post('id_egreso');
-        $num_fichae = $this->input->post('numfichae');
-        $valida = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
-        if ($valida) {
-            $return = true;
-            $usuarioh = explode("-", $_SESSION['USERNAME']); //Rut Del Usuario        
-            $session = $usuarioh[0];
-            $transaccion = $this->Ssan_hdial_asignacionpaciente_model->ModelEgresaPaciente($empresa, $session, $numIgreso, $id_egreso, $num_fichae);
+        $empresa        =   $this->session->userdata("COD_ESTAB");
+        $transaccion    =   '';
+        $return         =   '';
+        $password       =   $this->input->post('password');
+        $numIgreso      =   $this->input->post('numIgreso');
+        $id_egreso      =   $this->input->post('id_egreso');
+        $num_fichae     =   $this->input->post('numfichae');
+        $valida         =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
+        if (count($valida)) {
+            $return         =   true;
+            $usuarioh       =   explode("-", $_SESSION['USERNAME']); //Rut Del Usuario        
+            $session        =   $usuarioh[0];
+            $transaccion    =   $this->Ssan_hdial_asignacionpaciente_model->ModelEgresaPaciente($empresa, $session, $numIgreso, $id_egreso, $num_fichae);
         } else {
-            $return = false;
+            $return     =   false;
         }
-        $TABLA[0] = array("validez" => $return);
-        $TABLA[1] = array("transaccion" => $transaccion);
-        $TABLA[3] = array("sql" => '');
-        $this->output->set_output(json_encode($TABLA));
+        $this->output->set_output(json_encode([
+            "validez"       =>  $return,
+            "transaccion"   =>  $transaccion,
+            "sql"           =>  '',
+        ]));
     }
+
+
+
+
 
     public function pacientexMaquina() {
         if (!$this->input->is_ajax_request()) {
