@@ -1320,24 +1320,39 @@ $ssss=0;
         ]));
     }
 
-
     public function pdf_ingresoenfermeria(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $id                 =   $this->input->post('id');
 
-
-
         
-
-
-
-
-
-
 
         $this->output->set_output(json_encode([
             'html'          =>  'INFORMACIÓN',
             'id'            =>  $id
         ]));
     }
+
+    function pdf_por_servicio(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $status                 =   true;
+        $empresa                =   $this->session->userdata("COD_ESTAB");
+        $date                   =   $this->input->post('date');
+        $all_restriciones       =   $this->input->post('all_restriciones');
+        $arr_numhospitaliza     =   $this->input->post('arr_numhospitaliza');  
+        $txt_name_pdf           =   'LISTADO RESTRICIONES.pdf';
+        $dompdf                 =   new mPDF('','',0,'',15,15,16,16,9,9,'L');
+        $dompdf->AddPage();
+        $html                   =   "hola";
+        $dompdf->WriteHTML($html);
+        $dompdf->SetHTMLFooter('MODULO DE CONTROL DE ACCESO');
+        $out                    =   $dompdf->Output($txt_name_pdf,'S');
+        $base64_pdf             =   base64_encode($out);
+        $this->output->set_output(json_encode([
+            'html'              =>  $html,
+            'restriciones'      =>  $bd_restricion,
+            'status'            =>  $status,
+            'PDF_MODEL'         =>  $base64_pdf,
+        ]));
+    }
+
 }
