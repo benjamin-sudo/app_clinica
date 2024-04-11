@@ -81,13 +81,10 @@
             <tbody id="LISTA_MAQUINA"> </tbody>
         </table>
     </div>
-
     <div class="tab-pane fade margen_tabs" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
         <div id="IND_RRHH"><?php echo $html_out;?></div>
     </div>
-
 </div>
-
 
 <!-- ZONA -->
 <section>

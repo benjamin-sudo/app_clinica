@@ -75,15 +75,21 @@
  </style>
 <div class="card">
     <div class="card-header">
-        
-        <b>INGRESO DE ENFERMERIA</b>
-        <br>
-        <i>Unidad de Hemodi&aacute;lisis</i>
-
+        <div class="grid_titulo_ingreso">
+            <div class="grid_titulo_ingreso1">
+                <b>INGRESO DE ENFERMERIA</b>
+                <br>
+                <i>Unidad de Hemodi&aacute;lisis</i>
+            </div>
+            <div class="grid_titulo_ingreso2"> 1 
+                <small><b style="color:#888888;">FECHA DE INGRESO</b></small>
+                <br>
+                <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <div class="grid_ingreso_enfermeria">
-
             <div class="card-header featured-header" style="margin-top:-15px;">
                 <b>1. ANTECEDENTES PERSONALES</b>
             </div>
@@ -406,223 +412,7 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    let timer;
-    $("#resultadosBusqueda").autocomplete({
-        source      :   [], // Fuente inicial vacía
-        autoFocus   :   true,
-        minLength   :   3,
-        select      :   function(event,ui)  {
-                                                console.log("ui.item        :   ",ui.item);
-                                                $(".sin_resultadocie10").remove();
-                                                let html_li = add_li_diagnostico(ui.item);
-                                                $("#ind_ciediez_selecionados").append(html_li);
-                                                setTimeout(function(){ $("#resultadosBusqueda").val(''); },0);
-                                            },
-    }).autocomplete("instance")._renderItem = function(ul,item){
-        var term    =   this.term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
-        var re      =   new RegExp("(" + term + ")", "gi");
-        var t       =   item.label.replace(re, "<b>$1</b>");
-        return $("<li>").append("<div>" + t + "</div>").appendTo(ul);
-    };
-    $('#resultadosBusqueda').on('keyup',function(e){
-        let valorInput  = $(this).val().trim();
-        if (valorInput.length >= 3) {
-            realizarBusqueda(valorInput);
-        } else {
-            $("#resultadosBusqueda").autocomplete("option", "source", []);
-        }
+    $(document).ready(function(){ 
+        ini_form_ingreso(); 
     });
-});
-
-function add_li_diagnostico(_value){
-    //console.log("***********************************");
-    //console.log("_value -> ",_value);
-    var nuevaTarjeta    =   `<li class="list-group-item item_cie10 item_`+_value.value+`" id="`+_value.value+`">
-                                <div class="grid_cieselecionados">
-                                    <div class="grid_cieselecionados2">`+_value.label+`</div>
-                                    <div class="grid_cieselecionados3">
-                                        <button type="button" class="btn btn-danger btn-xs btn_small" id="item_`+_value.value+`" onclick="js_deletecie(this.id)">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>`;
-    return nuevaTarjeta;
-}
-
-function js_deletecie(_id){
-    console.log("delete -> ",_id);
-    $("."+_id).remove();
-    let v_aux = 0;
-    $("#ind_ciediez_selecionados li").each(function(index, element) {  console.log(index + ": " + $(element).text());  v_aux++;  });
-    if (v_aux == 0){ $("#ind_ciediez_selecionados").append('<li class="list-group-item sin_resultadocie10"><b><i>SIN CIE-10 SELECCIONADOS</i></b></li>');  }
-}
-
-function realizarBusqueda(query) {
-    $.ajax({
-        type        :   "POST",
-        url         :   "ssan_hdial_ingresoegresopaciente/busqueda_informacion_cie10",
-        dataType    :   "json",
-        data        :   { query: query },
-        error       :   function(error) {
-                                            console.log(error);
-                                            jAlert("Comuniquese con el administrador", "CLINICA LIBRE CHILE");
-                                            $('#resultadosBusqueda').prop('disabled', false);
-                                        },
-        success     :   function(aData) {
-                                            console.log("busqueda_informacion_cie10 ->", aData);
-                                            if (aData.status && aData.resultados.length > 0) {
-                                                let datosAutocomplete = aData.resultados.map(function(item) {
-                                                    return {
-                                                        label : item.CODIGO_DG_BASE + ' : ' + item.DESCRIPCION,
-                                                        value : item.CODIGO_DG_BASE
-                                                    };
-                                                });
-                                                $("#resultadosBusqueda").autocomplete("option", "source", datosAutocomplete);
-                                                $("#resultadosBusqueda").autocomplete("search", $("#resultadosBusqueda").val().trim());
-                                            } else {
-                                                $("#resultadosBusqueda").autocomplete("option", "source", []);
-                                            }
-                                        },
-    });
-}
-
-function clearTimeout(){
-    setTimeout(function() {
-        //console.log("Este mensaje se muestra después de 2 segundos");
-    }, 300);
-}
-
-var idsDeElementos = [
-    'cboFactorSangre',
-    'cboGrupoSangre',
-    'fecha_diuresis',
-    'fecha_fav',
-    'fecha_gorotex',
-    'fecha_hbsag',
-    'fecha_hiv',
-    'ingreso_enfe_antenecentealergia',
-    'num_frecuenciacardiaca',
-    'num_kilogramos',
-    'num_presionsistolica',
-    'nun_presiondistolica',
-    'txt_talla',
-    'slc_diuresis',
-    'txt_2da_dosis_hvb',
-    'txt_3da_dosis_hvb',
-    'txt_alimento_alergia',
-    'txt_antecedente_qx',
-    'txt_antecenteshermo_concentrado',
-    'txt_antecenteshermo_pesoseco',
-    'txt_antecenteshermo_qb',
-    'txt_antecenteshermo_qd',
-    'txt_bano_kna',
-    'txt_cateter',
-    'fecha_cateter',
-    'txt_dosis_refuerzo_hvb',
-    'txt_dosisi_hvb',
-    'txt_ef_conjuntivas',
-    'txt_ef_estadodelapiel',
-    'txt_ef_extremidades',
-    'txt_ef_gradoconciencia',
-    'txt_ef_movilidad',
-    'txt_ef_nutricion',
-    'txt_ef_yugulares',
-    'txt_fav',
-    'txt_gorotex',
-    'txt_hbsag',
-    'txt_hepatina_i',
-    'txt_hepatina_m',
-    'txt_hiv',
-    'txt_hvc',
-    'fecha_hvc',
-    'txt_medicamento_alergia',
-    'txt_observaciones_finales',
-    'txt_otro_alergia',
-    'txt_persona_urgencia'
-];
-
-function js_guarda_ingreso(){
-    let arr_envio       =   {};
-    let arr_codcie10    =   [];
-    let v_error         =   [];
-    let v_num_fichae    =   $("#num_fichae").val();
-    idsDeElementos.forEach(function(id) {
-        let elemento    =   document.getElementById(id);
-        $("#" + id).removeClass('class_input_error');
-        if (elemento && elemento.disabled) {
-            // Elemento deshabilitado, no se agrega.
-        } else {
-            if (elemento && elemento.value.trim() === "") {
-                $("#" + id).addClass('class_input_error');
-                v_error.push(id);
-            } else {
-                let v_texto     =   '';
-                if (elemento.type === 'date'){
-                    let arr_fecha = $("#" + id).val().split("-");
-                    v_texto     =   arr_fecha[2]+'-'+arr_fecha[1]+'-'+arr_fecha[0];
-                } else {
-                    v_texto     =   $("#" + id).val();
-                }
-                arr_envio[id]   =   v_texto;
-            }
-        }
-    });
-    $(".item_cie10").each(function(index, element){ arr_codcie10.push(element.id); });
-    if (v_error.length > 0 || arr_codcie10.length == 0) {
-        showNotification('top', 'center','<i class="bi bi-clipboard-x-fill"></i>&nbsp;Existe informaci&oacute;n incompleta en el registro', 4, '');
-    } else {
-        
-        console.log("   -----------------------------------------   ");
-        console.log("   formulario entrada  ->   ", arr_envio,"     ");
-        console.log("   arr_codcie10        ->   ", arr_codcie10,"  ");
-        console.log("   v_num_fichae        ->   ", v_num_fichae,"  ");
-        console.log("   -----------------------------------------   ");
-
-        jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al sistema de di&aacute;lisis <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
-            if((r=='')||(r==null)){
-                console.log("   ------  ");
-            } else {
-                $.ajax({
-                    type        :   "POST",
-                    url         :   "ssan_hdial_ingresoegresopaciente/fn_guarda_ingresohermodialisis",
-                    dataType    :   "json",
-                    beforeSend  :   function(xhr) { $('#loadFade').modal('show'); },
-                    data        :   {
-                                        contrasena          :   r,
-                                        v_num_fichae        :   v_num_fichae,
-                                        arr_envio           :   arr_envio, 
-                                        arr_codificacion    :   arr_codcie10
-                                    },
-                    error       :   function(error) {
-                                                        $("#loadFade").modal('hide');
-                                                        console.log(error);
-                                                        jAlert("Comun&iacute;quese con el administrador", "CLINICA LIBRE CHILE");
-                                                    },
-                    
-                    success     :   function(aData) {
-                                                        $("#loadFade").modal('hide');
-                                                        console.log("fn_guarda_ingresohermodialisis ->", aData);
-                                                        let v_numero_unico = aData.v_num_unico;
-                                                        if(aData.status){
-                                                            //showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito',2,'');
-                                                            $("#modal_nuevo_ingreso_paciente").modal('hide');
-                                                            jConfirm('<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito - &iquest;desea Impimir informe?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
-                                                                if(r){
-                                                                    js_pdf_ingresoenenfermeria(v_numero_unico);
-                                                                } else {
-                                                                    //console.log("-> DIJO NO PDF <-");
-                                                                }
-                                                            });
-                                                        } else {
-                                                            showNotification('top','center','<i class="bi bi-exclamation-square-fill"></i>&nbsp;&nbsp;Firma simple incorrecta',4,'');
-                                                        }
-                                                    },
-                });
-
-            }
-        });
-    }
-}
 </script>

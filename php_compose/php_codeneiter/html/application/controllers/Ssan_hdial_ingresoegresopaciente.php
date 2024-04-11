@@ -741,10 +741,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         ]));
     }
 
-
-
-
-
     public function pacientexMaquina() {
         if (!$this->input->is_ajax_request()) {
             show_404();
