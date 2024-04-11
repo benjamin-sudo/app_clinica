@@ -72,7 +72,16 @@
         padding                             :   6px;
         margin-bottom                       :   0px;
     }
- </style>
+
+    .grid_titulo_ingreso                    {
+        display                             :   grid;
+        grid-template-columns               :   1fr auto;
+        gap                                 :   8px;
+        margin-top                          :   10px;
+    }
+
+</style>
+
 <div class="card">
     <div class="card-header">
         <div class="grid_titulo_ingreso">
@@ -81,8 +90,8 @@
                 <br>
                 <i>Unidad de Hemodi&aacute;lisis</i>
             </div>
-            <div class="grid_titulo_ingreso2"> 1 
-                <small><b style="color:#888888;">FECHA DE INGRESO</b></small>
+            <div class="grid_titulo_ingreso2">
+                <i tyle="color:#888888;"><b>Fecha de ingreso</b></i>
                 <br>
                 <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso" value="" min="<?php echo date("Y-m-d", strtotime("-30 years"));?>" max="<?php echo date("Y-m-d");?>">
             </div>

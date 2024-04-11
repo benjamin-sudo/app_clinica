@@ -9,28 +9,26 @@ class sql_class_hdial extends CI_Model {
     var $ownGu       = 'GUADMIN';
     
     public function sqlgetbusquedaTabsMes($empresa,$indEstado){
-        $sQuery = "
-                SELECT 
-                    H.ID_RMDIALISIS             AS ID, 
-                    H.COD_RMDIALISIS, 
-                    H.NOM_RMDIALISIS            AS TXT_DIAL, 
-                    H.IND_ESTADO, 
-                    H.NUM_SERIE, 
-                    H.NUM_LORE, 
-                    H.COD_EMPRESA
-                FROM  
-                    $this->own.HD_RMDIALISIS H
-                WHERE
-                        H.COD_EMPRESA           = '$empresa'  
-                    AND H.IND_ESTADO            = 1 
+        $sQuery = "SELECT 
+                        H.ID_RMDIALISIS             AS ID, 
+                        H.COD_RMDIALISIS, 
+                        H.NOM_RMDIALISIS            AS TXT_DIAL, 
+                        H.IND_ESTADO, 
+                        H.NUM_SERIE, 
+                        H.NUM_LORE, 
+                        H.COD_EMPRESA
+                    FROM  
+                        $this->own.HD_RMDIALISIS H
+                    WHERE
+                            H.COD_EMPRESA           = '$empresa'  
+                        AND H.IND_ESTADO            = 1 
                 ";
          return $sQuery;
     }
     
     public function sql_Listadopermisosgenerados($empresa,$estados){
                 
-        $sQuery = "
-                SELECT 
+        $sQuery = "SELECT 
                     H.ID_PEDICION,
                     H.IND_PERMISO,
                     H.IND_ESTADO,
@@ -99,37 +97,33 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function sqlNumDialEgresos($empresa,$numIgreso,$numfichae){
-        $sQuery = " 
-            
-            SELECT 
-               H.ID_CUPOXPACIENTE, 
-               H.COD_EMPRESA, 
-               H.NUM_FICHAE, 
-               H.NUM_INGRESO, 
-               H.ID_RMDIALISIS, 
-               H.ID_TURNOSXDIAS, 
-               H.COD_USRCREA, 
-               H.DATE_CREA, 
-               H.IND_ESTADO, 
-               H.COD_AUDITA, 
-               H.FEC_AUDITA
-            FROM 
-                $this->own.HD_NPACIENTEXCUPO H
-            WHERE
-                H.NUM_INGRESO   = $numIgreso
-                AND
-                NUM_FICHAE      = $numfichae
-                AND
-                IND_ESTADO      = 1
+        $sQuery = "SELECT 
+                        H.ID_CUPOXPACIENTE, 
+                        H.COD_EMPRESA, 
+                        H.NUM_FICHAE, 
+                        H.NUM_INGRESO, 
+                        H.ID_RMDIALISIS, 
+                        H.ID_TURNOSXDIAS, 
+                        H.COD_USRCREA, 
+                        H.DATE_CREA, 
+                        H.IND_ESTADO, 
+                        H.COD_AUDITA, 
+                        H.FEC_AUDITA
+                    FROM 
+                        $this->own.HD_NPACIENTEXCUPO H
+                    WHERE
+                        H.NUM_INGRESO   = $numIgreso
+                        AND
+                        NUM_FICHAE      = $numfichae
+                        AND
+                        IND_ESTADO      = 1
             ";
-        
         return $sQuery ;
     }
 
     public function sqlPacientesxCupo($empresa){
         
-        $sQuery = " 
-                    SELECT 
+        $sQuery = "SELECT 
                         H.ID_CUPOXPACIENTE                                          AS ID_CUPO,
                         UPPER(G.NOM_APEPAT||' '||G.NOM_APEMAT||' '|| G.NOM_NOMBRE)  AS NOMPAC,
                         G.COD_RUTPAC||'-'||G.COD_DIGVER                             AS RUTPAC,

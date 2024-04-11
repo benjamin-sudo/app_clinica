@@ -1,5 +1,5 @@
 <h4 class="title" style="color:#e34f49;margin:0px;margin-left:12px;">
-    <i class="nav-icon fa fa-tint" aria-hidden="true"></i>&nbsp;<b>INGRESO DE PACIENTES TURNOS EN DIALISIS Y RRHH</b>
+    <i class="nav-icon fa fa-tint" aria-hidden="true"></i>&nbsp;<b>INGRESO DE PACIENTES TURNOS EN DIALISIS - RRHH - MAQUINAS </b>
 </h4>
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 8px;">
     <li class="nav-item" role="presentation">

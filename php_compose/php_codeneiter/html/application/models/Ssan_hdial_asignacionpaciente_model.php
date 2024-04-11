@@ -1265,10 +1265,13 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     }
 
     public function model_ingreso_paciente($aData){
-       $user_respon                =   $aData['user_respon'][0];
+        $user_respon                =   $aData['user_respon'][0];
         $status_trasaccion          =   true;
         $v_num_fichae               =   $aData['v_num_fichae'];
         $session                    =   $user_respon['USERNAME'];
+        $date_fecha_ingreso         =   $aData['arr_envio']['fecha_ingreso'];
+        $v_empresa                  =   $aData['empresa'];
+
         $id_formulario_unico        =   $this->db->sequence($this->own,'SEQ_FORMULARIOINGRESO');
         $data_insert                =   [
             'ID_INGRESOHD'          =>  $id_formulario_unico,
@@ -1277,7 +1280,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'COD_CREA'              =>  $session,
             'DATE_CREA'             =>  'SYSDATE',
             'IND_ESTADO'            =>  1,
-            'COD_EMPRESA'           =>  $aData['empresa'],
+            'COD_EMPRESA'           =>  $v_empresa,
 
             'TXT_ANTECEDENTESQX'    =>  $aData['arr_envio']['txt_antecedente_qx'],
             'IND_ANTALERGICOS'      =>  $aData['arr_envio']['ingreso_enfe_antenecentealergia'],
@@ -1334,12 +1337,13 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             'TXT_REFUERZO_HVB'      =>  $aData['arr_envio']['txt_dosis_refuerzo_hvb'],
             'TXT_OBSERVACIONES'     =>  $aData['arr_envio']['txt_observaciones_finales'], 
         ];
+
         $ID_HDIAL                   =   $this->db->sequence($this->own,'SEQ_HDIAL_PACIENTEDIALISIS');
         $dataIngreso                =   [
                                             'ID_NUMINGRESO' =>  $ID_HDIAL, 
                                             'NUM_FICHAE'    =>  $v_num_fichae, 
                                             'ID_SIC'        =>  '', 
-                                            'COD_EMPRESA'   =>  $empresa, 
+                                            'COD_EMPRESA'   =>  $v_empresa, 
                                             'COD_USRCREA'   =>  $session,  
                                             'FEC_INGRESO'   =>  'SYSDATE', 
                                             'FEC_CREA'      =>  'SYSDATE', 
@@ -1347,6 +1351,20 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                                             'ID_INGRESOHD'  =>  $id_formulario_unico,
                                         ];
         $this->db->trans_start();
+        $arr_codcie10                   =   $aData['arr_codcie10'];   
+        if (count($arr_codcie10)>0)     {
+            foreach($arr_codcie10 as $i => $row) {
+                $data_relacion  = [
+                    'ID_RELACION'       =>  $this->db->sequence($this->own,'SEQ_CIE10XINGRESODIAL'),
+                    'ID_INGRESO'        =>  $ID_HDIAL,          #Asume que este es el ID del ingreso recién insertado
+                    'ID_DIAGNOSTICO'    =>  $row,
+                    'FECHA_DIAGNOSTICO' =>  'SYSDATE',          #Asume que tienes una fecha específica para cada diagnóstico
+                    'IND_ESTADO'        =>  1,                  #o cualquier otro valor relevante para el estado
+                ];
+                $this->db->insert($this->own.'.TGCD_INGRESO_CIE_REL', $data_relacion);
+            }
+        }
+
         $this->db->insert($this->own.'.HD_FORMULARIOINGRESO', $data_insert); 
         $this->db->insert($this->own.'.HD_TINGRESO', $dataIngreso); 
         $this->db->trans_complete();

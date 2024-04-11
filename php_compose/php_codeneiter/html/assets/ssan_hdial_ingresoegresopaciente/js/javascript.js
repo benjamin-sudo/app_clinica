@@ -1129,10 +1129,6 @@ function js_cambio_atencedentes(){
     }
 }
 
-function js_guarda_ingreso(){
-    
-}
-
 function js_imprimiringeg(ID_FORMULARIO){
     $("#modal_informes_pdf").modal({backdrop:'static',keyboard:false}).modal("show");
     //return false;
@@ -1259,7 +1255,7 @@ function realizarBusqueda(query) {
                                                 let datosAutocomplete = aData.resultados.map(function(item) {
                                                     return {
                                                         label : item.CODIGO_DG_BASE + ' : ' + item.DESCRIPCION,
-                                                        value : item.CODIGO_DG_BASE
+                                                        value : item.ID
                                                     };
                                                 });
                                                 $("#resultadosBusqueda").autocomplete("option", "source", datosAutocomplete);
@@ -1278,6 +1274,7 @@ function clearTimeout(){
 }
 
 var idsDeElementos = [
+    'fecha_ingreso',
     'cboFactorSangre',
     'cboGrupoSangre',
     'fecha_diuresis',
@@ -1354,14 +1351,14 @@ function js_guarda_ingreso(){
     });
     $(".item_cie10").each(function(index, element){ arr_codcie10.push(element.id); });
     if (v_error.length > 0 || arr_codcie10.length == 0) {
-        showNotification('top', 'center','<i class="bi bi-clipboard-x-fill"></i>&nbsp;Existe informaci&oacute;n incompleta en el registro', 4, '');
+        showNotification('top', 'center','<i class="bi bi-clipboard-x-fill"></i>&nbsp;Existe informaci&oacute;n incompleta en el registro',4,'');
     } else {
         
-        console.log("   -----------------------------------------   ");
-        console.log("   formulario entrada  ->   ", arr_envio,"     ");
-        console.log("   arr_codcie10        ->   ", arr_codcie10,"  ");
-        console.log("   v_num_fichae        ->   ", v_num_fichae,"  ");
-        console.log("   -----------------------------------------   ");
+        console.log("   ---------------------------------------------       ");
+        console.log("       formulario entrada  ->   ", arr_envio,"         ");
+        console.log("       arr_codcie10        ->   ", arr_codcie10,"      ");
+        console.log("       v_num_fichae        ->   ", v_num_fichae,"      ");
+        console.log("   ---------------------------------------------       ");
 
         jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al sistema de di&aacute;lisis <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
             if((r=='')||(r==null)){
@@ -1376,7 +1373,7 @@ function js_guarda_ingreso(){
                                         contrasena          :   r,
                                         v_num_fichae        :   v_num_fichae,
                                         arr_envio           :   arr_envio, 
-                                        arr_codificacion    :   arr_codcie10
+                                        arr_codificacion    :   arr_codcie10,
                                     },
                     error       :   function(error) {
                                                         $("#loadFade").modal('hide');

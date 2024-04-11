@@ -36,6 +36,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $estados        =   '1';
         $conIngreso	    =   '0';
         $aData          =   $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
+
         if(count($aData)>0){
             foreach ($aData as $i => $row){
                 $rut_pac_s  =   explode("-",$row['RUTPAC']); 
@@ -52,7 +53,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                 <td>' . $row['TXTEDAD'] . '</td>
                                 <td>' . $row['FINGRESO'] . '</td>
                                 <td>' . $row['FINGRESO_HISTO'] . '</td>
-                                <td><div class="p-3 mb-2 bg-success text-white" style="border-radius: 9px;text-align: -webkit-center;">'.$row['TXTESTADO'].'</div></td>
+                                <td>
+                                    <div class="p-3 mb-2 bg-success text-white" style="border-radius: 9px;text-align: -webkit-center;">'.$row['TXTESTADO'].'</div>
+                                </td>
                                 <td>
                                     <div class="dropdown">
                                         <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -1333,7 +1336,6 @@ $ssss=0;
         ]));
     }
 
-    
     public function pdf_ingresoenfermeria(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $ID_FORMULARIO      =   $this->input->post('ID_FORMULARIO');

@@ -128,7 +128,11 @@
     <tr>
         <td>Diagnóstico de ingreso</td>
         <td>
+            
+            <!-- editando --> 
+
             [Buscador CIE-10, SIN CIE-10 SELECCIONADOS]
+
         </td>
     </tr>
     <tr>
