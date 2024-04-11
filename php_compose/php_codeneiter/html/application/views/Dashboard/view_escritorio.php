@@ -101,7 +101,6 @@
                   }
                 echo '</p>';
                 echo '</a>';
-
                 // Submenús
                 if (!empty($mainItem['submenus'])){
                     echo '<ul class="nav nav-treeview">';
@@ -270,6 +269,6 @@
       </div>
 
     </section>
-    
+
   </body>
 </html>

@@ -24,8 +24,35 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis(['empresa' => $empresa, 'ind_opcion' => 1 ]);
         $htmlBusquedaPacientes = $this->BusquedaPacientesIngreso_v2(true);
         $data_ini['htmlBusquedaPacientes'] = $htmlBusquedaPacientes;
+        $liListadomaquinaspaciente = $this->pacientexMaquina(true);
+        $data_ini['li_listadopacientemaquina'] = $liListadomaquinaspaciente;
         $this->load->view('Ssan_hdial_ingresoegresopaciente/Ssan_hdial_ingresoegresopaciente_view',$data_ini);
     }
+
+
+    public function pacientexMaquina($returnData = false) {
+        #if (!$this->input->is_ajax_request()){ show_404(); }
+        $empresa    =   $this->session->userdata("COD_ESTAB");
+        $status     =   true;
+        $estados    =   '1';
+        $ul         =   '';
+        $html       =   '';
+        $aData      =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
+        if (count($aData)>0){
+            foreach ($aData as $i => $row) {
+                $html   .=  $this->load->view('Ssan_hdial_ingresoegresopaciente/li_listadomaquinasporpaciente',[],true);
+            }
+        } else {
+            $html   =   '';
+        }
+       
+        if($returnData) {
+            return $html;
+        } else {
+            $this->output->set_output(json_encode(['html' => $html]));
+        }
+    }
+
 
     public function BusquedaPacientesIngreso_v2($returnData = false){
         #if (!$this->input->is_ajax_request()) { show_404(); }
@@ -406,7 +433,232 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
     #################
     #code old
     #################
+
+    
     public function BusquedaMaquinasDeDialisis(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $empresa                        =   $this->session->userdata("COD_ESTAB");
+        $estados                        =   '1';
+        $MKN                            =   '';
+        $BTN                            =   '';
+        $aData                          =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
+        $TABLA[]                        =   array("id_html" => "LISTA_MAQUINA", "opcion" => "html", "contenido" => "");
+        if(count($aData)>0){
+            foreach ($aData as $i => $row) {
+                $MKN = $row['ID'];
+                $html = '<tr>
+                            <td>' . ($i + 1) . ''
+                        . '<input type="hidden" name="nom_' . $row['ID'] . '" id="nom_' . $row['ID'] . '" value="' . $row['NOMDIAL'] . '"/>'
+                        . '<input type="hidden" name="ser_' . $row['ID'] . '" id="ser_' . $row['ID'] . '" value="' . $row['SERIE'] . '"/>
+                            </td>
+                            <td>' . $row['NOMDIAL'] . ' <b>(' . $row['SERIE'] . ')</b></td>
+                            <td>' . $row['COD'] . '</td>
+                            <td>' . $row['TXTESTADO'] . '</td>
+                            <td>  -  </td>
+                            <td>
+                                <!--
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary" href="#"><i class="fa fa-list-alt" aria-hidden="true"></i></a>
+                                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <span class="fa fa-caret-down" title="-"></span>
+                                            </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#"><i class="fa fa-pencil fa-fw"></i>Editar</a></li>
+                                            <li><a href="#"><i class="fa fa-trash-o fa-fw"></i>Egresar</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Informaci&oacute;n</a></li>
+                                        </ul>
+                                    </div>
+                                -->
+                            </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">';
+
+                $html.='        
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-target="#collapseOne_' . $i . '" href="#" data-toggle="collapse">
+                                    <i class="fa fa-file-text" aria-hidden="true"></i> &nbsp;&nbsp; HOJAS HEMODIALISIS X MAQUINA
+                                <b class="caret"></b>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne_' . $i . '" class="panel-collapse collapse">
+                        <div class="panel-body">
+                                            
+                        <table class="table table-striped table-sm" style="width:100%">
+                            <tbody>
+                                <!--
+                                    <tr>
+                                        <td colspan="4" style="text-align:center"><b> - MAQUINA (' . $MKN . ')</b></td>
+                                    </tr>
+                                -->
+                                <tr>
+                                    <td colspan="2" style="text-align:center"> 
+                                        <i class="fa fa-wheelchair" aria-hidden="true"></i><b>- GRUPO 1 (LUNES - MIERCOLES - VIERNES)</b>
+                                        &nbsp;
+                                        <!--
+                                            <a class="btn btn-info btn-sm btn-fill btn-wd" href="javascript:asigarTurno(' . $MKN . ',1)">
+                                                <i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp;TURNO&nbsp;(' . $MKN . ')
+                                            </a>
+                                        -->
+                                        <input type="hidden" id="MKN_' . $MKN . '_1" name="MKN_' . $MKN . '_1" value="0"/>
+                                        <input type="hidden" id="MKN_' . $MKN . '_1" name="MKN_' . $MKN . '_1" value="2"/>
+                                        <input type="hidden" id="MKN_' . $MKN . '_1" name="MKN_' . $MKN . '_1" value="4"/>
+                                    </td>
+                                    <td colspan="2" style="text-align:center"> 
+                                        <i class="fa fa-wheelchair" aria-hidden="true"></i><b>- GRUPO 2 (MARTES - JUEVES - SABADO)</b>
+                                        &nbsp;
+                                        <!--
+                                            <a class="btn btn-info btn-sm btn-fill btn-wd" href="javascript:asigarTurno(' . $MKN . ',2)">
+                                                <i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp;TURNO&nbsp;(' . $MKN . ')
+                                            </a>
+                                        -->
+                                        <input type="hidden" id="MKN_' . $MKN . '_2" name="MKN_' . $MKN . '_2" value="1"/>
+                                        <input type="hidden" id="MKN_' . $MKN . '_2" name="MKN_' . $MKN . '_2" value="3"/>
+                                        <input type="hidden" id="MKN_' . $MKN . '_2" name="MKN_' . $MKN . '_2" value="5"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;text-align:center"><b>-HOJA 1</b></td>
+                                    <td style="width:40%;text-align:left">
+                                        <div id="CUPO_' . $MKN . '_1">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',1,1)" style="width: 340px;">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 1
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="width:10%;text-align:center"><b>-HOJA 1</b></td>
+                                    <td style="width:40%;text-align:left">
+                                        <div id="CUPO_' . $MKN . '_4">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',4,2)" style="width: 340px;">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 1
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><b>-HOJA 2</b></td>
+                                    <td style="text-align:left">
+                                        <div id="CUPO_' . $MKN . '_2">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',2,1)" style="width: 340px;">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 2 
+                                            </a>
+                                        </div>    
+                                    </td>
+                                    <td style="text-align:center"><b>-HOJA 2</b></td>
+                                    <td style="text-align:left">
+                                        <div id="CUPO_' . $MKN . '_5">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',5,2)" style="width: 340px;">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 2
+                                            </a>
+                                        </div>    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><b>-HOJA 3</b></td>
+                                    <td style="text-align:left">
+                                        <div id="CUPO_' . $MKN . '_3">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',3,1)" style="width: 340px;">
+                                              <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 3 
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center"><b>-HOJA 3</b></td>
+                                    <td style="text-align:left">
+                                        <div id="CUPO_' . $MKN . '_6">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',6,2)" style="width: 340px;">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 3 
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                                <!-- AGREGADO 16.04.2020 POR PANDEMIA -->
+                                <tr>
+                                    <td style="text-align:center"><b>-HOJA 4</b></td>
+                                    <td style="text-align:left">
+                                        <div id="CUPO_' . $MKN . '_7">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',7,1)" style="width: 340px;">
+                                              <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 4 
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center"><b>-HOJA 4</b></td>
+                                    <td style="text-align:left">
+                                        <div id="CUPO_' . $MKN . '_8">
+                                            <a class="btn btn-success btn-sm btn-fill btn-wd" href="javascript:asigarCupo(' . $MKN . ',8,2)" style="width: 340px;">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i> AGREGAR PACIENTE TURNO 4 
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+       
+            ';
+
+                $html.= '</td>
+        </tr> ';
+                $TABLA[] = array("id_html" => "LISTA_MAQUINA", "opcion" => "append", "contenido" => $html);
+            }
+            
+            
+            
+            
+            
+            //FINAL DE MAQUINA 
+            //BUSQUEDA DE PACIENTES YA ASIGNADOS A CUPOS
+            //**************************************************************************************
+            $aPaci = $this->Ssan_hdial_asignacionpaciente_model->GetPacientesxCupo($empresa);
+            if (count($aPaci) > 0) {
+                foreach ($aPaci as $i => $r) {
+                    $BTN = '<div class="btn-group btn-group-sm">
+                            <a class="btn btn-primary btn-fill btn-wd" href="#" style="width: 340px;">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>'
+                            . $r['NOMPAC'] . '
+                            </a>
+                            <a class="btn btn-primary btn-fill dropdown-toggle" data-toggle="dropdown" href="#">
+                              <span class="fa fa-caret-down" title="-"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!--
+                                <li><a href="#"><i class="fa fa-pencil fa-fw"></i>Cambio de Cupo</a></li>
+                                -->
+                                <li><a href="javascript:liberarCupo(' . $r['ID_CUPO'] . ',' . $r['MKN'] . ',' . $r['TRN'] . ')"><i class="fa fa-trash-o fa-fw"></i>Liberar Cupo</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Ver Hojas Dias</a></li>
+                            </ul>
+                        </div>';
+                    $TABLA[] = array("id_html" => "CUPO_" . $r['MKN'] . "_" . $r['TRN'], "opcion" => "html", "contenido" => $BTN);
+                }
+            }
+            //**************************************************************************************
+        } else {
+            $html = '<tr><td colspan="6" style="text-align:center"><b>SIN MAQUINAS</b></td></tr>';
+            $TABLA[] = array("id_html" => "LISTA_MAQUINA", "opcion" => "append", "contenido" => $html);
+        }
+
+        $this->output->set_output(json_encode($TABLA));
+    }
+
+
+
+
+
+
+
+
+    public function BusquedaMaquinasDeDialisis_old(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $estados                        =   '1';
@@ -582,7 +834,13 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                 $html.= '</td>
         </tr> ';
                 $TABLA[] = array("id_html" => "LISTA_MAQUINA", "opcion" => "append", "contenido" => $html);
-            }//FINAL DE MAQUINA 
+            }
+            
+            
+            
+            
+            
+            //FINAL DE MAQUINA 
             //BUSQUEDA DE PACIENTES YA ASIGNADOS A CUPOS
             //**************************************************************************************
             $aPaci = $this->Ssan_hdial_asignacionpaciente_model->GetPacientesxCupo($empresa);
@@ -616,10 +874,11 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
         $this->output->set_output(json_encode($TABLA));
     }
+    
+
 
     public function gestormaquinaxturno(){
         if (!$this->input->is_ajax_request()){ show_404(); }
-        
         $empresa = $this->session->userdata("COD_ESTAB");
         $html = '';
         $calendar = '';
@@ -743,23 +1002,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         ]));
     }
 
-    public function pacientexMaquina() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-        $empresa = $this->session->userdata("COD_ESTAB");
-        $TABLA[] = array("id_html" => "PACIENTEXMAQUINA", "opcion" => "html", "contenido" => '');
-        $estados = '1';
-        $ul = '';
-        $aData = $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
-        if (count($aData) > 0) {
-            foreach ($aData as $i => $row) {
-                $ul = '';
-            }
-        }
-        $TABLA[] = array("id_html" => "PACIENTEXMAQUINA", "opcion" => "append", "contenido" => $empresa);
-        $this->output->set_output(json_encode($TABLA));
-    }
+    
 
     public function addcupoPaciente() {
         if (!$this->input->is_ajax_request()) {
@@ -1341,7 +1584,7 @@ $ssss=0;
         $ID_INGRESO         =   $this->input->post('ID_INGRESO'); 
         $status             =   true;
         $aData              =   $this->Ssan_hdial_asignacionpaciente_model->informacio_formularioingreso([
-                                    'ID_FORMULARIO' => $ID_FORMULARIO
+                                    'ID_FORMULARIO' => $ID_FORMULARIO,
                                     'ID_INGRESO'    => $ID_INGRESO
                                 ]);
         $html               =   $this->load->view('Ssan_hdial_ingresoegresopaciente/pdf_ingresoenfe',[

@@ -1076,8 +1076,7 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function sqlListadoMaquinasDialisis($empresa,$estados){
-        $sQuery = " 
-                    SELECT 
+        $sQuery =   "SELECT 
                         H.ID_RMDIALISIS             AS ID, 
                         H.COD_RMDIALISIS            AS COD, 
                         H.NOM_RMDIALISIS            AS NOMDIAL, 
@@ -1092,7 +1091,6 @@ class sql_class_hdial extends CI_Model {
                         ADMIN.HD_RMDIALISIS H
                     WHERE 
                         H.COD_EMPRESA = '$empresa' AND  H.IND_ESTADO IN ($estados)
-
                   ";
         return $sQuery;
     }

@@ -65,21 +65,30 @@
                 <h4 style="margin-bottom: 0px;"><b>M&Aacute;QUINAS DE DI&Aacute;LISIS</b></h4>
                 <p style="margin-bottom: 8px;">LISTA M&Aacute;QUINAS DI&Aacute;LISIS POR ESTABLECIMIENTO</p> 
             </div>
-            <div class="grid_panel_paciente2">&nbsp;</div>
+            <div class="grid_panel_paciente2">
+                <button type="button" class="btn btn-primary" onclick="busquedaPacientesxMaquina()">
+                    <i class="bi bi-arrow-up-square-fill"></i>&nbsp;&nbsp;ACTUALIZACI&Oacute;N
+                </button>
+            </div>
         </div>
-        <table class="table table-striped" width="100%" >
-            <thead>
-                <tr>
-                    <th class="subtitulo_formulario2" width="2%">N&deg;</th>
-                    <th class="subtitulo_formulario2" width="40%">MAQUINA (C&Oacute;DIGO)</th>
-                    <th class="subtitulo_formulario2" width="20%">FOLIO MAQUINA</th>
-                    <th class="subtitulo_formulario2" width="10%">ESTADO</th>
-                    <th class="subtitulo_formulario2" width="15%">N&deg; PACIENTE</th>
-                    <th class="subtitulo_formulario2" width="13%">OPCI&Oacute;N</th>
-                </tr>
-            </thead>
-            <tbody id="LISTA_MAQUINA"> </tbody>
-        </table>
+        <!--
+            <table class="table table-striped" width="100%">
+                <thead>
+                    <tr>
+                        <th class="subtitulo_formulario2" width="2%">N&deg;</th>
+                        <th class="subtitulo_formulario2" width="40%">MAQUINA&nbsp;(C&Oacute;DIGO)</th>
+                        <th class="subtitulo_formulario2" width="20%">FOLIO MAQUINA</th>
+                        <th class="subtitulo_formulario2" width="10%">ESTADO</th>
+                        <th class="subtitulo_formulario2" width="15%">N&deg; PACIENTE</th>
+                        <th class="subtitulo_formulario2" width="13%">OPCI&Oacute;N</th>
+                    </tr>
+                </thead>
+                <tbody id="LISTA_MAQUINA"></tbody>
+            </table>
+        -->
+        <div class="list-group" id="listado_maquinasporpaciente">
+            <?php echo $li_listadopacientemaquina;?>
+        </div>
     </div>
     <div class="tab-pane fade margen_tabs" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
         <div id="IND_RRHH"><?php echo $html_out;?></div>

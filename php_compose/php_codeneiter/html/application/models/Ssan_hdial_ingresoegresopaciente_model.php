@@ -131,16 +131,15 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
     
     #   code old
     #   Forma de realizar una consulta SQL
-    
     public function TraeUDingres() {
         $query = $this->db->first_query("SELECT 
                                             FOLIO_ORIGEN
-                                            FROM 
+                                        FROM 
                                             ADMIN.AP_TPACXPROGRAMA
-                                            WHERE     
-                                                NUM_FICHAE = 74666
-                                            AND ID_PROGRAMA = 17
-                                            AND FOLIO_ORIGEN = (SELECT MAX (FOLIO_ORIGEN)  FROM ADMIN.AP_TPACXPROGRAMA  WHERE NUM_FICHAE = 74666 AND ID_PROGRAMA = 17)");
+                                        WHERE     
+                                            NUM_FICHAE = 74666
+                                        AND ID_PROGRAMA = 17
+                                        AND FOLIO_ORIGEN = (SELECT MAX (FOLIO_ORIGEN)  FROM ADMIN.AP_TPACXPROGRAMA  WHERE NUM_FICHAE = 74666 AND ID_PROGRAMA = 17)");
         return $query->result_array();
     }
 
@@ -309,11 +308,9 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
 //        }
 //        }
 //        
-//        
 //             $this->db->insert_batch($this->own.'.AP_TRESULTXPROG', $dataPreg2); //para cualquier caso 
 //              $this->db->trans_complete();        
 //             return $this->db->trans_status();
-//        
 //        
 //    }
 

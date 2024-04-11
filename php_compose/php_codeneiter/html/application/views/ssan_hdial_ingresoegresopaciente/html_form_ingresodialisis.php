@@ -81,7 +81,6 @@
     }
 
 </style>
-
 <div class="card">
     <div class="card-header">
         <div class="grid_titulo_ingreso">

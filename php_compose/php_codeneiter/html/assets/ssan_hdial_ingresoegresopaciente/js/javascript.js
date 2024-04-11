@@ -67,6 +67,8 @@ $(document).ready(function(){
         format_on   :   'keyup',
         on_error    :   function(){ jError("RUN no es correcto","CLINICA LIBRE CHILE"); },
         on_success  :   function(){ 
+            console.log("  this -> ",this);
+            console.log(this.id);
             //js_grabadatosPaciente(); 
         },
     });
@@ -374,8 +376,9 @@ function js_guarda_dialisis(){
 //code old
 //********
 function busquedaPacientesxMaquina(){
-   $("#PACIENTEXMAQUINA").html("");
-   $.ajax({ 
+    //$("#PACIENTEXMAQUINA").html("");
+    $("#loadFade").modal('show');
+    $.ajax({ 
        type            :   "POST",
        url             :   "ssan_hdial_ingresoegresopaciente/pacientexMaquina",
        dataType        :   "json",
@@ -384,11 +387,13 @@ function busquedaPacientesxMaquina(){
        error           :   function(errro)     {     
                                                    console.log(errro.responseText); 
                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE CHILE"); 
+                                                   $("#loadFade").modal('hide');
                                                },
        success         :   function(aData)     {     
-                                                   $("#PACIENTEXMAQUINA").html(""); 
-                                                   if(AjaxExtJsonAll(aData)){  
-                                                   }; 
+                                                    console.log("aData  ->  ",aData);
+                                                    $("#loadFade").modal('hide');
+                                                    $("#listado_maquinasporpaciente").html(aData.html); 
+                                                    //if(AjaxExtJsonAll(aData)){ }; 
                                                }, 
    });
 }

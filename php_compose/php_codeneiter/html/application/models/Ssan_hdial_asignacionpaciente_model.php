@@ -1481,7 +1481,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                     C.IND_ESTADO IN (1)
                 ";
 
-        $sql_v = "SELECT _
+        $sql_v = "SELECT
                     IC.ID_RELACION,
                     IC.ID_INGRESO,
                     IC.ID_DIAGNOSTICO,
@@ -1500,10 +1500,9 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 WHERE
                     IC.ID_INGRESO = $ID_INGRESO -- Aquí sustituyes :ID_INGRESO por el valor real del ID de ingreso.
         ";            
-
         return [
             'arr_formulario'    =>  $this->db->query($v_sql)->result_array(),
-            'arr_cie10'         =>  $this->db->query($sql_v)->result_array();
+            'arr_cie10'         =>  $this->db->query($sql_v)->result_array(),
         ];
     }
 
