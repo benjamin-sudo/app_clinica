@@ -393,7 +393,7 @@ function busquedaPacientesxMaquina(){
                                                     console.log("aData  ->  ",aData);
                                                     $("#loadFade").modal('hide');
                                                     $("#listado_maquinasporpaciente").html(aData.html); 
-                                                    //if(AjaxExtJsonAll(aData)){ }; 
+                                                    //if(AjaxExtJsonAll(aData)){ };
                                                }, 
    });
 }
