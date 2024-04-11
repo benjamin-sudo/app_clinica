@@ -126,12 +126,14 @@
         <td><?php echo $aData[0]['TXT_OTROS'];?></td>
     </tr>
     <tr>
-        <td>Diagnóstico de ingreso</td>
+        <td>Diagn&oacute;stico de ingreso</td>
         <td>
-            
             <!-- editando --> 
-
+            
+            
             [Buscador CIE-10, SIN CIE-10 SELECCIONADOS]
+
+
 
         </td>
     </tr>

@@ -36,7 +36,6 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $estados        =   '1';
         $conIngreso	    =   '0';
         $aData          =   $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
-
         if(count($aData)>0){
             foreach ($aData as $i => $row){
                 $rut_pac_s  =   explode("-",$row['RUTPAC']); 
@@ -54,7 +53,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                 <td>' . $row['FINGRESO'] . '</td>
                                 <td>' . $row['FINGRESO_HISTO'] . '</td>
                                 <td>
-                                    <div class="p-3 mb-2 bg-success text-white" style="border-radius: 9px;text-align: -webkit-center;">'.$row['TXTESTADO'].'</div>
+                                    <div class="bg-success text-white" style="border-radius: 9px; text-align: -webkit-center;">'.$row['TXTESTADO'].'</div>
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -62,12 +61,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                                             <i class="bi bi-wrench"></i>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li><a class="dropdown-item" href="javascript:iPesoseco(' . $row['NUM_FICHAE'] . ')"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;Informaci&oacute;n H. Diaria</a></li>
+                                            <li><a class="dropdown-item" href="javascript:iPesoseco('.$row['NUM_FICHAE'].')"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;Informaci&oacute;n H. Diaria</a></li>
                                             <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="javascript:js_imprimiringeg(' . $row['ID_FORMULARIO'] . ')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>PDF</b> Ingreso Enfermer&iacute;a</a></li>
-                                            <li><a class="dropdown-item" href="javascript:js_cBUSQUEDAHANTERIOR(' . $row['NUM_FICHAE'] . ',1)"><i class="bi bi-file-pdf"></i>&nbsp;Ver Hojas Diarias</a></li>
+                                            <li><a class="dropdown-item" href="javascript:js_imprimiringeg('.$row['ID_FORMULARIO'].','.$row['ID_INGRESO'].')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>PDF</b> Ingreso Enfermer&iacute;a</a></li>
+                                            <li><a class="dropdown-item" href="javascript:js_cBUSQUEDAHANTERIOR('.$row['NUM_FICHAE'].',1)"><i class="bi bi-file-pdf"></i>&nbsp;Ver Hojas Diarias</a></li>
                                             <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="javascript:egresar(' . $row['ID_INGRESO'] . ',' . $row['NUM_FICHAE'] . ')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
+                                            <li><a class="dropdown-item" href="javascript:egresar('.$row['ID_INGRESO'].','.$row['NUM_FICHAE'].')"><i class="fa fa-user-times" aria-hidden="true"></i> Egresar</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -1312,7 +1311,7 @@ $ssss=0;
         $empresa            =   $this->session->userdata("COD_ESTAB");
         $v_num_fichae       =   $this->input->post('v_num_fichae');
         $arr_envio          =   $this->input->post('arr_envio');
-        $arr_codcie10       =   $this->input->post('arr_codcie10');
+        $arr_codcie10       =   $this->input->post('arr_codificacion');
         $v_contrasena       =   $this->input->post('contrasena');
         $user_respon        =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($v_contrasena);
         if(count($user_respon)>0){
@@ -1339,9 +1338,16 @@ $ssss=0;
     public function pdf_ingresoenfermeria(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $ID_FORMULARIO      =   $this->input->post('ID_FORMULARIO');
+        $ID_INGRESO         =   $this->input->post('ID_INGRESO'); 
         $status             =   true;
-        $aData              =   $this->Ssan_hdial_asignacionpaciente_model->informacio_formularioingreso(['ID_FORMULARIO' => $ID_FORMULARIO]);
-        $html               =   $this->load->view('Ssan_hdial_ingresoegresopaciente/pdf_ingresoenfe',['aData'=>$aData],true);
+        $aData              =   $this->Ssan_hdial_asignacionpaciente_model->informacio_formularioingreso([
+                                    'ID_FORMULARIO' => $ID_FORMULARIO
+                                    'ID_INGRESO'    => $ID_INGRESO
+                                ]);
+        $html               =   $this->load->view('Ssan_hdial_ingresoegresopaciente/pdf_ingresoenfe',[
+                                    'aData'     =>  $aData['arr_formulario'],
+                                    'cie_10'    =>  $aData['arr_cie10']
+                                ],true);
         $this->pdf->pdf->WriteHTML($html);
         $out                =   $this->pdf->pdf->Output('archivo','S');
         $base64_pdf         =   base64_encode($out);

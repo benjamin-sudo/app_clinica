@@ -1129,7 +1129,7 @@ function js_cambio_atencedentes(){
     }
 }
 
-function js_imprimiringeg(ID_FORMULARIO){
+function js_imprimiringeg(ID_FORMULARIO,ID_INGRESO){
     $("#modal_informes_pdf").modal({backdrop:'static',keyboard:false}).modal("show");
     //return false;
     $.ajax({ 
@@ -1141,7 +1141,8 @@ function js_imprimiringeg(ID_FORMULARIO){
                                                 $('#html_informes_pdf').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span>');
                                             },
         data 		:                       { 
-                                                ID_FORMULARIO   :   ID_FORMULARIO,
+                                                ID_FORMULARIO : ID_FORMULARIO,
+                                                ID_INGRESO : ID_INGRESO
                                             },
         error		:   function(errro)     { 
                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
@@ -1388,11 +1389,12 @@ function js_guarda_ingreso(){
                                                         if(aData.status){
                                                             //showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito',2,'');
                                                             $("#modal_nuevo_ingreso_paciente").modal('hide');
-                                                            jConfirm('<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito - &iquest;desea Impimir informe?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+                                                            busquedaPacientes()
+                                                            jConfirm('<i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Realizado con &eacute;xito - &iquest;desea Impimir informe?','ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                                                 if(r){
-                                                                    js_pdf_ingresoenenfermeria(v_numero_unico);
+                                                                    js_imprimiringeg(v_numero_unico);
                                                                 } else {
-                                                                    //console.log("-> DIJO NO PDF <-");
+
                                                                 }
                                                             });
                                                         } else {

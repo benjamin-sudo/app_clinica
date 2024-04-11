@@ -1271,7 +1271,9 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         $session                    =   $user_respon['USERNAME'];
         $date_fecha_ingreso         =   $aData['arr_envio']['fecha_ingreso'];
         $v_empresa                  =   $aData['empresa'];
-
+        $arr_codcie10               =   $aData['arr_codcie10'];  
+        #var_dump($arr_codcie10);
+        #return false;
         $id_formulario_unico        =   $this->db->sequence($this->own,'SEQ_FORMULARIOINGRESO');
         $data_insert                =   [
             'ID_INGRESOHD'          =>  $id_formulario_unico,
@@ -1351,9 +1353,8 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                                             'ID_INGRESOHD'  =>  $id_formulario_unico,
                                         ];
         $this->db->trans_start();
-        $arr_codcie10                   =   $aData['arr_codcie10'];   
         if (count($arr_codcie10)>0)     {
-            foreach($arr_codcie10 as $i => $row) {
+            foreach($arr_codcie10 as $row) {
                 $data_relacion  = [
                     'ID_RELACION'       =>  $this->db->sequence($this->own,'SEQ_CIE10XINGRESODIAL'),
                     'ID_INGRESO'        =>  $ID_HDIAL,          #Asume que este es el ID del ingreso recién insertado
@@ -1364,7 +1365,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 $this->db->insert($this->own.'.TGCD_INGRESO_CIE_REL', $data_relacion);
             }
         }
-
         $this->db->insert($this->own.'.HD_FORMULARIOINGRESO', $data_insert); 
         $this->db->insert($this->own.'.HD_TINGRESO', $dataIngreso); 
         $this->db->trans_complete();
@@ -1392,21 +1392,16 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     }
 
     public function informacio_formularioingreso($aData){
-        $ID_FORMULARIO = $aData['ID_FORMULARIO'];
-        $v_sql = "SELECT 
+        $ID_FORMULARIO  =   $aData['ID_FORMULARIO'];
+        $ID_INGRESO     =   $aData['ID_INGRESO'];
 
+        $v_sql = "SELECT 
                     UPPER(G.NOM_NOMBRE||' '||G.NOM_APEPAT||' '||G.NOM_APEMAT)   AS NOMPAC,
                     G.COD_RUTPAC||'-'||G.COD_DIGVER                             AS RUTPAC,
                     TO_CHAR(G.FEC_NACIMI,'DD-MM-YYYY')                          AS NACIMIENTO,
-
-
-
                     FLOOR(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI) / 12) AS NUM_YEAR,
                     FLOOR(MOD(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI), 12)) AS MESES,
                     FLOOR(SYSDATE - ADD_MONTHS(G.FEC_NACIMI, FLOOR(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI)))) AS DIAS,
-
-
-
                     C.ID_INGRESOHD,
                     C.NUM_FICHAE,
                     C.TXT_NAME,
@@ -1461,7 +1456,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                     C.TXT_HBSAG, 
                     TO_CHAR(C.DATE_HBSAG,'DD-MM-YYYY')      AS DATE_HBSAG,
 
-
                     C.TXT_QB, 
                     C.TXT_HEPARINA_I, 
                     C.TXT_HEPARINA_M,
@@ -1485,13 +1479,32 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                     C.ID_INGRESOHD = $ID_FORMULARIO AND 
                     G.NUM_FICHAE = C.NUM_FICHAE AND 
                     C.IND_ESTADO IN (1)
-
                 ";
-        return $this->db->query($v_sql)->result_array();
+
+        $sql_v = "SELECT _
+                    IC.ID_RELACION,
+                    IC.ID_INGRESO,
+                    IC.ID_DIAGNOSTICO,
+                    IC.FECHA_DIAGNOSTICO,
+                    IC.IND_ESTADO,
+                    CD.CODIGO_DG_BASE,
+                    CD.DESCRIPCION,
+                    CD.IND_GES,
+                    CD.IND_SEXO,
+                    CD.IND_CRONICANOT,
+                    CD.PRIORIDAD_ID
+                FROM
+                    ADMIN.TGCD_INGRESO_CIE_REL IC
+                JOIN
+                    ADMIN.TGCD_CIE_DIAGNOSTICOS CD ON IC.ID_DIAGNOSTICO = CD.ID
+                WHERE
+                    IC.ID_INGRESO = $ID_INGRESO -- Aquí sustituyes :ID_INGRESO por el valor real del ID de ingreso.
+        ";            
+
+        return [
+            'arr_formulario'    =>  $this->db->query($v_sql)->result_array(),
+            'arr_cie10'         =>  $this->db->query($sql_v)->result_array();
+        ];
     }
-
-
-
-
 
 }
