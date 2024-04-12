@@ -89,6 +89,15 @@
                     callback(result);
             });
         },
+        firmaUnica: function (message, value, title, callback) {
+            var title = 'Firma Única'; // Título fijo para este tipo de diálogo
+            $.alerts._show(title, message, value, 'firmaUnica', function (result) {
+                if (callback)
+                    console.log("111111111111111111111111111");
+                    callback(result);
+            });
+        },
+
         // Private methods
 
         _show: function (title, msg, value, type, callback) {
@@ -109,8 +118,6 @@
 
             // IE6 Fix
             var pos = ($.browser.msie && parseInt($.browser.version) <= 6) ? 'absolute' : 'fixed';
-
-
 
             var zMax2 = $.maxZIndex() + 1;
             $("#popup_container").css({
@@ -134,6 +141,7 @@
             $.alerts._maintainPosition(true);
 
             switch (type) {
+
                 case 'alert':
                     $("#popup_message").after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a></div>');
 //                    $("#popup_message").after('<div id="popup_panel"><input type="button" value="' + $.alerts.okButton + '" id="popup_ok" /></div>');
@@ -146,6 +154,7 @@
                             $("#popup_ok").trigger('click');
                     });
                     break;
+
                 case 'confirm':
                     //$("#popup_message").after('<div id="popup_panel"><input type="button" value="SI" id="popup_ok" /> <input type="button" value="NO" id="popup_cancel" /></div>');
 
@@ -191,8 +200,8 @@
                     if (value)
                         $("#popup_prompt").val(value);
                     $("#popup_prompt").focus().select();
-
                     break;
+
                 case 'message':
                     $("#popup_message").after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a></div>');
                     $("#popup_ok").click(function () {
@@ -204,6 +213,7 @@
                             $("#popup_ok").trigger('click');
                     });
                     break;
+
                 case 'warning':
                     $("#popup_message").after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a></div>');
                     $("#popup_ok").click(function () {
@@ -215,6 +225,7 @@
                             $("#popup_ok").trigger('click');
                     });
                     break;
+
                 case 'error':
                     $("#popup_message").after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a></div>');
                     $("#popup_ok").click(function () {
@@ -226,6 +237,58 @@
                             $("#popup_ok").trigger('click');
                     });
                     break;
+
+
+                case 'firmaUnica':
+                    $("#popup_message").append(`
+                        <br>
+                        <table style="margin-left: 70px;">
+                            <tr>
+                                <td> <label id="txtRun" style="font-weight: bold;">RUN: </label>&nbsp;</td>
+                                <td><input type="text" autocomplete="run usuario" size="30" style="width:100px;" id="txt_run_prompt"/></td>
+                            </tr>
+                            <tr>
+                                <td> <label id="txtFirmaS" style="font-weight: bold;">FIRMA SIMPLE DIGITAL: </label>&nbsp;</td>
+                                <td><input type="password" autocomplete="new-password" size="30" style="width: 160px;" id="popup_prompt"/></td>
+                            </tr>
+                        </table>
+                        `).after(`
+                            <div id="popup_panel">
+                                <a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a> 
+                                <a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_cancel"><i class="fa fa-ban"></i> CANCELAR</a>
+                            </div>
+                        `);
+
+                        let v_status_run = false;
+                        $('#txt_run_prompt').Rut({
+                            format_on   :   'keyup',
+                            on_error    :   function(){  v_status_run = false; $("#txt_run_prompt").css("border","1px solid red"); },
+                            on_success  :   function(){  v_status_run = true;  },
+                        });
+                        $("#popup_ok").click(function () {
+                            let v_run = $("#txt_run_prompt").val();
+                            let val = $("#popup_prompt").val();
+                            $.alerts._hide();
+                            if (callback){
+                                callback({'v_run':v_run,'v_pass':val,'status_run':v_status_run});
+                            }
+                        });
+                        $("#popup_cancel").click(function () {
+                            $.alerts._hide();
+                            if (callback)
+                                callback(null);
+                        });
+                        $("#txt_run_prompt, #popup_prompt, #popup_ok, #popup_cancel").keypress(function(e){
+                            if (e.keyCode == 13)
+                                $("#popup_ok").trigger('click');
+                            if (e.keyCode == 27)
+                                $("#popup_cancel").trigger('click');
+                        });
+                        if (value)
+                            $("#txt_run_prompt").val(value);
+                            $("#txt_run_prompt").focus().select();
+                        break;
+
             }
 
 
@@ -325,5 +388,11 @@
     jError = function (message, title, callback) {
         $.alerts.error(message, title, callback);        
     }
+
+    //mondongo
+    jFirmaUnica = function (message, value, title, callback) {
+        $.alerts.firmaUnica(message, value, title, callback);
+    };
+
 
 })(jQuery);

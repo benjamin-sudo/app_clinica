@@ -528,42 +528,38 @@ function egresar(id,numfichae){
        dataType     :   "json",
        beforeSend   :   function(xhr) { },
        data 		:   { 
-                               ID          : id, 
-                               numfichae   : numfichae,
-                               NOMBRE_PAC  : $("#nombre_"+id).val(),
-                               EDAD        : $("#edad_"+id).val(),
-                               RUT_PAC     : $("#rut_"+id).val(),
-                               CELULAR     : $("#telefono_"+id).val(),
+                               ID          :    id, 
+                               numfichae   :    numfichae,
+                               NOMBRE_PAC  :    $("#nombre_"+id).val(),
+                               EDAD        :    $("#edad_"+id).val(),
+                               RUT_PAC     :    $("#rut_"+id).val(),
+                               CELULAR     :    $("#telefono_"+id).val(),
                            },
        error		:   function(errro)     {   jAlert(errro.responseText); },
        success		:   function(aData)     { 
-                                            
                                                 console.log("aData  ->  ",aData);
                                                 $("#html_egresa_paciente").html(aData.html);
-                                            
                                             }, 
     });
 }
 
 function asigarCupo(MKN,GRP,TRN){
-   //MAQUINA UNICA MKN
-   //GRP = TURNO UNICO
-   //TRN = GRUPO MANANA - TARDE
-   $.ajax({ 
-       type		:   "POST",
-       url 		:   "ssan_hdial_ingresoegresopaciente/addcupoPaciente",
-       dataType        :   "json",
-       beforeSend      :   function(xhr) { console.log(xhr); },
-       data 		:   { MKN : MKN , GRP : GRP },
-       error		:   function(errro){ alert(errro.responseText); },
-       success		:   function(aData){ 
-                               if(AjaxExtJsonAll(aData)){
-                                   
-                               }; 
-                           }, 
-   });
-   $("#NUEVOPACIENTEXCUPO").attr('onclick','NUEVOPACIENTEXCUPO('+MKN+','+GRP+','+TRN+')'); 
-   $("#PACIENTEXCUPO").modal("show");
+    //  MAQUINA UNICA MKN
+    //  GRP = TURNO UNICO
+    //  TRN = GRUPO MANANA - TARDE
+    $("#PACIENTEXCUPO").modal({backdrop:'static',keyboard:false}).modal("show"); 
+    $.ajax({ 
+       type		        :   "POST",
+       url 		        :   "ssan_hdial_ingresoegresopaciente/addcupoPaciente",
+       dataType         :   "json",
+       beforeSend       :   function(xhr) { console.log(xhr); },
+       data 		    :   { MKN : MKN , GRP : GRP },
+       error		    :   function(errro){    jAlert(errro.responseText); },
+       success		    :   function(aData){ 
+                                                $("#NUEVOPACIENTEXCUPO").attr('onclick','NUEVOPACIENTEXCUPO('+MKN+','+GRP+','+TRN+')'); 
+                                                $("#HTML_PACIENE").html(aData.html);
+                                            }, 
+    });
 }
 
 function iEnfermeria(ID_INGRESO,NUM_FICHAE){
@@ -572,13 +568,13 @@ function iEnfermeria(ID_INGRESO,NUM_FICHAE){
 }
 
 function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
-   var arreglo_dias   = new Array();
+    var arreglo_dias   = new Array();
        $("#idPaciente").css("border-color","");
-   if ($("#idPaciente").val()=='0'){
+    if ($("#idPaciente").val()=='0'){
        $("#idPaciente").css("border-color","red");
        jError("Asignar Paciente","CLINICA LIBRE CHILE");
        return false;
-   }
+    }
    //console.log(MKN);
    //console.log(GRP);
    //console.log(TRN);
@@ -589,39 +585,57 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
        console.log(value.value);
        arreglo_dias.push({txtdia: value.value});        
    });
- 
-   //**************************************************************************
-   jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
-           'Confirmaci\u00F3n',function(r){
-           if((r=='')||(r==null)){
-               console.log("-----------");
-           } else {
-               $.ajax({ 
-                   type            : "POST",
-                   url             : "ssan_hdial_ingresoegresopaciente/guardaPacientexCupo",
-                   dataType        : "json",
-                   beforeSend      : function(xhr) { console.log(xhr); },
-                   data            :   {   
-                                           password    : r,
-                                           datoPac     : $("#idPaciente").val(),
-                                           MKN         : MKN,
-                                           GRP         : GRP,
-                                           DIAS        : arreglo_dias
-                                       },
-                   error           : function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
-                   success         : function(aData){ 
-                                           //console.log(aData[3]['sql']);
-                                           if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
-                                                   console.log("--->"); console.log(r);
-                                                   $("#PACIENTEXCUPO").modal("hide");   
-                                                   busquedaPacientes(2);
-                                               });
-                                           } else {
-                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
-                                           }
-                                       }, 
-               });      
+
+   jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
+
+        console.log("obj_salida   -> ",obj_salida);
+
+        let txt_firma               =   obj_salida.v_run;
+        let v_pass                  =   obj_salida.v_pass;
+        let status_run              =   obj_salida.status_run;
+        console.log("txt_firma      ->  ",txt_firma);
+        console.log("v_pass         ->  ",v_pass);
+        console.log("status_run     ->  ",status_run);
+        
+        if((txt_firma=='')||(txt_firma==null)){
+            console.log("-----------");
+        } else {
+            console.log(" obj_salida ");
+                /*
+                $.ajax({ 
+                    type            :    "POST",
+                    url             :    "ssan_hdial_ingresoegresopaciente/guardaPacientexCupo",
+                    dataType        :    "json",
+                    beforeSend      :    function(xhr) { console.log(xhr); },
+                    data            :    {   
+                                            password    :   r,
+                                            datoPac     :   $("#idPaciente").val(),
+                                            MKN         :   MKN,
+                                            GRP         :   GRP,
+                                            DIAS        :   arreglo_dias
+                                        },
+                    error           :    function(errro)    {   
+                                                                console.log(errro); 
+                                                                jAlert("Error General, Consulte Al Administrador"); 
+                                                            },
+                   success         :    function(aData) { 
+                                                            //console.log(aData[3]['sql']);
+                                                            if(aData[0]['validez']){
+                                                            
+                                                                jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
+                                                                    console.log("--->"); console.log(r);
+                                                                    $("#PACIENTEXCUPO").modal("hide");   
+                                                                    busquedaPacientes(2);
+                                                                });
+
+                                                            } else {
+                                                                jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
+                                                            }
+
+                                                        }, 
+               }); 
+               */
+
            }
    });
 }

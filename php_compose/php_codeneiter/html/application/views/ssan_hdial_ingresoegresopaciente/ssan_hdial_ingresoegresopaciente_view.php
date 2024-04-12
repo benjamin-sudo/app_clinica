@@ -127,22 +127,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="PACIENTEXCUPO">
-        <div class="modal-dialog modal-xl3">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><b>AGREGAR PACIENTE POR CUPO</b></h4>
-                </div>
-                <div class="modal-body" id="HTML_PACIENE"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal">CIERRA VENTANA (NO GRABA)</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="NUEVOPACIENTEXCUPO">GRABA PACIENTE</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="modal fade" id="MODAL_HD_ANTERIORES">
         <div class="modal-dialog modal_ANTERIORES">
             <div class="modal-content">
@@ -274,9 +259,25 @@
         </div>
     </div>
 
+    <div class="modal fade" id="PACIENTEXCUPO">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">AGREGAR PACIENTE POR CUPO</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_PACIENE"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
+                    <button type="button" class="btn btn-primary" id="NUEVOPACIENTEXCUPO"><i class="bi bi-floppy"></i>&nbsp;GRABA PACIENTE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ZONA INPUT INGRESO DE PACIENTE -->
+    <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
-    <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
 </section>

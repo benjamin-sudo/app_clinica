@@ -222,6 +222,9 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
                                 </tbody>
                             </table>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -989,72 +992,49 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         ]));
     }
 
-    
-
     public function addcupoPaciente() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-        $empresa = $this->session->userdata("COD_ESTAB");
-        $MKN = $this->input->post('MKN');
-        $GRP = $this->input->post('GRP');
-        $html = '';
+        if (!$this->input->is_ajax_request()) {  show_404();   }
+        $empresa        =   $this->session->userdata("COD_ESTAB");
+        $MKN            =   $this->input->post('MKN');
+        $GRP            =   $this->input->post('GRP');
+        $html           =   '';
         //busqueda de pacientes que no tengas cupo asignado
-        $rutPac = '';
-        $numFichae = '';
-        $estados = '1';
-        $conIngreso = '1';
-
-        $aData = $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
-        $html .= '<div class="card">
-                    <div class="header">
-                        <h4 class="title"><b>SELECCIONE PACIENTE A ASIGNAR CUPO</b></h4>
-                        <p class="category">Informaci&oacute;n Basica</p>
-                    </div>
-                    <dt class="col-sm-12" style="text-align:center">
-                        <select id="idPaciente" name="idPaciente" class="form-control" onchange="js_idPac(this.id)">
-                            <option value="0"> Seleccione ...</option> ';
-        if (count($aData) > 0) {
-            foreach ($aData as $row) {
-                $html.='<option value="' . $row['ID_INGRESO'] . '#' . $row['NUM_FICHAE'] . '">' . $row['NOM_APELLIDO'] . '</option>';
-            }
-        } else {
-            $html.='<option value="0"> SIN PACIENTES ...</option>';
-        }
-        $html.='</select>
-                            </dt>
-                            <hr>
-                            <div class="content">
-                                <dl class="row">
-                                <!--
-                                   <dt class="col-sm-2"><i class="fa fa-id-card-o" aria-hidden="true"></i></dt>
-                                   <dd class="col-sm-10">&nbsp;&nbsp;</dd>
-                                   <dt class="col-sm-2"><i class="fa fa-mobile" aria-hidden="true"></i></dt>
-                                   <dd class="col-sm-10">&nbsp;&nbsp;</dd>
-                                   <dt class="col-sm-2"><i class="fa fa-birthday-cake" aria-hidden="true"></i></dt>
-                                   <dd class="col-sm-10">&nbsp;&nbsp;</dd>
-                                   <hr>
-                                -->
-                                </dl>
-                            </div>
-                        </div>
-                    ';
-
-        $TABLA[] = array("id_html" => "HTML_PACIENE", "opcion" => "append", "contenido" => $html);
-        $this->output->set_output(json_encode($TABLA));
+        $rutPac         =   '';
+        $numFichae      =   '';
+        $estados        =   '1';
+        $conIngreso     =   '1';
+        $aData          =   $this->Ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDial($empresa, $estados, $numFichae, $rutPac, $conIngreso);
+        $html           =   '<div class="card">
+                                <h5 class="card-header"><b>SELECCIONE PACIENTE A ASIGNAR CUPO</b></h5>
+                                <div class="card-body">
+                                    <select id="idPaciente" name="idPaciente" class="form-control" onchange="js_idPac(this.id)">
+                                    <option value="0"> Seleccione ...</option> ';
+                                    if (count($aData) > 0) {
+                                        foreach ($aData as $row) {
+                                            $html.='<option value="' . $row['ID_INGRESO'] . '#' . $row['NUM_FICHAE'] . '">' . $row['NOM_APELLIDO'] . '</option>';
+                                        }
+                                    } else {
+                                        $html.='<option value="0"> SIN PACIENTES ...</option>';
+                                    }
+                                    $html.='
+                                    </select>
+                                </div>
+                            </div>';
+        $this->output->set_output(json_encode([
+            'html'      =>  $html
+        ]));
     }
 
-    public function TraeDatIng() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-        $txtBuscar = $this->input->post('txtBuscar');
-        $ed = $this->input->post('ed');//contiene origen a editar
-        $row = $this->ssan_hdial_ingresoegresopaciente_model->Cons_ingresoPac($txtBuscar, $this->empresa);
-        $html = '';
-        $exito = '';
-        $nfichaeee = '';
-         $ssss=0;
+    public function TraeDatIng(){
+        if (!$this->input->is_ajax_request()){ show_404(); }
+        $txtBuscar  =   $this->input->post('txtBuscar');
+        $ed         =   $this->input->post('ed');//contiene origen a editar
+        $row        =   $this->ssan_hdial_ingresoegresopaciente_model->Cons_ingresoPac($txtBuscar, $this->empresa);
+        $html       =   '';
+        $exito      =   '';
+        $nfichaeee  =   '';
+        $ssss       =   0;
+
         if ($row) {
             //TRAER ULTIMO REGISTRO Y PREGUNTAR
             //si cuenta con ingreso ==> no debo mostrar formulario
