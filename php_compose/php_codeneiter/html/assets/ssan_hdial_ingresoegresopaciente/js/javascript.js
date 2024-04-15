@@ -552,7 +552,7 @@ function asigarCupo(MKN,GRP,TRN){
        type		        :   "POST",
        url 		        :   "ssan_hdial_ingresoegresopaciente/addcupoPaciente",
        dataType         :   "json",
-       beforeSend       :   function(xhr) { console.log(xhr); },
+       beforeSend       :   function(xhr) { $('#HTML_PACIENE').html('<div class="spinner-border text-primary" role="status"></div>'); },
        data 		    :   { MKN : MKN , GRP : GRP },
        error		    :   function(errro){    jAlert(errro.responseText); },
        success		    :   function(aData){ 
@@ -566,8 +566,6 @@ function iEnfermeria(ID_INGRESO,NUM_FICHAE){
    console.log(ID_INGRESO);
    console.log(NUM_FICHAE);
 }
-
-
 
 function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
     var arreglo_dias   = new Array();
@@ -588,7 +586,6 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
             if((r=='')||(r==null)){
                 console.log("-----------");
             } else {
-                
                 $.ajax({ 
                     type            : "POST",
                     url             : "ssan_hdial_ingresoegresopaciente/guardaPacientexCupo",
