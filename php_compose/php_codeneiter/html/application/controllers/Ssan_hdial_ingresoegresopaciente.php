@@ -40,15 +40,20 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         $aPaci                  =   $this->Ssan_hdial_asignacionpaciente_model->GetPacientesxCupo($empresa);
         if (count($aPaci)>0) {
             foreach($aPaci as $i => $r) {
-                $html_btn       =   '<div class="dropdown">
-                                        <button class="btn btn-primary btn-small dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="width: -webkit-fill-available;">
-                                            <i class="fa fa-user-o" aria-hidden="true"></i>' . $r['NOMPAC'] . '
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="javascript:liberarCupo(' . $r['ID_CUPO'] . ',' . $r['MKN'] . ',' . $r['TRN'] . ')">
-                                            <i class="bi bi-person-slash"></i>LIBERAR CUPO </a></li>
-                                        </ul>
-                                    </div>';
+                $html_btn       =   '
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary btn-small dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="width: -webkit-fill-available;">
+                                                <i class="fa fa-user-o" aria-hidden="true"></i>' . $r['NOMPAC'] . '
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li class="dropdown-item">
+                                                    <a href="javascript:liberarCupo(' . $r['ID_CUPO'] . ',' . $r['MKN'] . ',' . $r['TRN'] . ')">
+                                                        <i class="bi bi-person-slash"></i>&nbsp;&nbsp;LIBERAR CUPO 
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    ';
                 $v_id_input     =   "CUPO_" . $r['MKN'] . "_" . $r['TRN'];
                 $v_mkn          =   $r['MKN'];
                 $arr_cupos_ocupados[$v_mkn][] = [
@@ -57,7 +62,7 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
                 ];
             }
         }
-        $aData  =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa,$estados);
+        $aData                  =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa,$estados);
         if (count($aData)>0){
             foreach ($aData as $i => $row) {
                 $num    =   $i + 1;

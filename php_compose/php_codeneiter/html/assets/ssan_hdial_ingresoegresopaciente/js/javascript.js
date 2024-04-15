@@ -737,9 +737,10 @@ function E_INGRESODIAL(numIgreso,numfichae){
 
 function liberarCupo(ID_CUPO,MKN,TRN){
 
-    console.log("ID_CUPO    ->  ",ID_CUPO);
-    console.log("MKN        ->  ",MKN);
-    console.log("TRN        ->  ",TRN);
+    console.log("   ------------------------------------------  ");
+    console.log("   ID_CUPO    ->  ",ID_CUPO);
+    console.log("   MKN        ->  ",MKN);
+    console.log("   TRN        ->  ",TRN);
     
     jPrompt('Con esta acc&oacute;n se proceder&aacute; a eliminar cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
            if((r=='')||(r==null)){

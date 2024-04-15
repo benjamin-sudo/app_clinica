@@ -1,4 +1,4 @@
-<a href="javascript:void(0);" class="list-group-item" id="li_<?php echo $num;?>" onclick="event.preventDefault();">
+<a href="javascript:void(0);" class="list-group-item" id="li_<?php echo $num;?>" >
     <div class="grid_listadomaquixpac">
         <div class="grid_listadomaquixpac1"><?php echo $num;?></div>
         <div class="grid_listadomaquixpac2">
@@ -6,11 +6,12 @@
             <p class="mb-1"><b><?php echo $row['SERIE'];?>, <?php echo $row['NUM_LORE'];?></b></p>
         </div>
         <div class="grid_listadomaquixpac3">
-            <?php echo $row['TXTESTADO'];?>
+            <span class="badge bg-success" style="padding: 10px;"><?php echo $row['TXTESTADO'];?></span>
         </div>
         <div class="grid_listadomaquixpac3" style="text-align: center;">
-            <button type="button" class="btn btn-success" style="display:none" id="num_pacientes_<?php echo $num;?>">
-                N&deg; DE PACIENTES EN MAQUINA <span class="badge bg-secondary" id="txt_pacientes_<?php echo $num;?>">0</span>
+            <button type="button" class="btn btn-primary position-relative" style="display:none"  id="num_pacientes_<?php echo $num;?>">N&deg; DE PACIENTES EN MAQUINA
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="txt_pacientes_<?php echo $num;?>">0
+                <span class="visually-hidden"></span></span>
             </button>
         </div>
         <div class="grid_listadomaquixpac4" style="text-align: end;">
@@ -18,7 +19,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">OPCIONES</button>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                     <b class="dropdown-item"  data-bs-toggle="collapse" data-bs-target="#collapse_<?php echo $num;?>" aria-expanded="false" aria-controls="collapse_<?php echo $num;?>">
-                        HOJAS HEMODIALISIS X MAQUINA
+                        GESTI&Oacute;N CUPOS DE PACIENTES POR MAQUINA
                     </b>
                 </ul>
             </div>
@@ -119,7 +120,7 @@
                     </tr>
                 </tbody>
             </table>
-           <?php
+            <?php
             if (count($pac)>0){
                 $aux = 0;
                 echo "<script>$('#num_pacientes_$num').show();";
@@ -127,11 +128,9 @@
                     echo "$('#".$row['value']."').html(`".$row['html']."`);";
                     $aux++;
                 }
-                echo "$('#txt_pacientes_$num').html('$aux')";
-                echo "</script>";
+                echo "$('#txt_pacientes_$num').html('$aux')</script>";
             }
             ?>
-            
         </div>
     </div>
 </a>
