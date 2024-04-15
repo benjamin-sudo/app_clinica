@@ -562,10 +562,6 @@ function asigarCupo(MKN,GRP,TRN){
     });
 }
 
-function iEnfermeria(ID_INGRESO,NUM_FICHAE){
-   console.log(ID_INGRESO);
-   console.log(NUM_FICHAE);
-}
 
 function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
     var arreglo_dias   = new Array();
@@ -581,48 +577,52 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
         console.log(value.value);
         arreglo_dias.push({txtdia: value.value});        
     });
-    jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
-            'Confirmaci\u00F3n',function(r){
-            if((r=='')||(r==null)){
-                console.log("-----------");
-            } else {
-                $.ajax({ 
-                    type            : "POST",
-                    url             : "ssan_hdial_ingresoegresopaciente/guardaPacientexCupo",
-                    dataType        : "json",
-                    beforeSend      : function(xhr) { console.log(xhr); },
-                    data            :   {   
-                                            password    : r,
-                                            datoPac     : $("#idPaciente").val(),
-                                            MKN         : MKN,
-                                            GRP         : GRP,
-                                            DIAS        : arreglo_dias
-                                        },
-                    error           : function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
-                    success         : function(aData){ 
-                                            
-                        
-                                                        //console.log(aData[3]['sql']);
-                                                        if(aData[0]['validez']){
-                                                            jAlert("Se ha realizado con exito","e-SISSAN",function(r){  
-                                                                console.log("--->"); console.log(r);
-                                                                $("#PACIENTEXCUPO").modal("hide");   
-                                                                busquedaPacientes(2);
-                                                            });
+    jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
+        if((r=='')||(r==null)){
+            console.log("-----------");
+        } else {
+            $.ajax({ 
+                type            :   "POST",
+                url             :   "ssan_hdial_ingresoegresopaciente/guardaPacientexCupo",
+                dataType        :   "json",
+                beforeSend      :   function(xhr)   { 
+                                                        $('#NUEVOPACIENTEXCUPO').prop('disabled',true);
+                                                        $(".spinner_btn").show();
+                                                    },
+                data            :   {   
+                                        password    :   r,
+                                        datoPac     :   $("#idPaciente").val(),
+                                        MKN         :   MKN,
+                                        GRP         :   GRP,
+                                        DIAS        :   arreglo_dias
+                                    },
+                error           :   function(errro){    
+                                                        console.log(errro); 
+                                                        jAlert("Error General, Consulte Al Administrador");  
+                                                        $('#NUEVOPACIENTEXCUPO').prop('disabled',false);
+                                                        $(".spinner_btn").hide();
+                                                    },
+                success         :   function(aData){ 
+                                                        $('#NUEVOPACIENTEXCUPO').prop('disabled',false);
+                                                        $(".spinner_btn").hide();
+                                                        if(aData.status){
+                                                            $("#PACIENTEXCUPO").modal("hide");   
+                                                            busquedaPacientes(2);
+                                                            jAlert("Se ha realizado con &eacute;xito","Clinica Libre",function(r){ });
                                                         } else {
-                                                            jError("Error de contrase&ntilde;a","e-SISSAN");
+                                                            jError("Error de contrase&ntilde;a","Clinica Libre");
                                                         }
-
-
                                                     }, 
-                });      
-            }
+            });
+        }
     });
 }
 
-
-
-
+function iEnfermeria(ID_INGRESO,NUM_FICHAE){
+    console.log(ID_INGRESO);
+    console.log(NUM_FICHAE);
+}
+ 
 function NUEVOPACIENTEXCUPO_OLD(MKN,GRP,TRN){
     var arreglo_dias   = new Array();
     $("#idPaciente").css("border-color","");
@@ -736,8 +736,12 @@ function E_INGRESODIAL(numIgreso,numfichae){
 }
 
 function liberarCupo(ID_CUPO,MKN,TRN){
-   jPrompt('Con esta acc&oacute;n se proceder&aacute; a eliminar cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
-           'Confirmaci\u00F3n',function(r){
+
+    console.log("ID_CUPO    ->  ",ID_CUPO);
+    console.log("MKN        ->  ",MKN);
+    console.log("TRN        ->  ",TRN);
+    
+    jPrompt('Con esta acc&oacute;n se proceder&aacute; a eliminar cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
            if((r=='')||(r==null)){
                console.log("-----------");
            } else {
@@ -768,6 +772,10 @@ function liberarCupo(ID_CUPO,MKN,TRN){
                });      
            }
    });
+
+
+
+
 }
 
 function asigarTurno(MKN,GRP){

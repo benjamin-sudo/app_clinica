@@ -31,19 +31,41 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
 
     public function pacientexMaquina($returnData = false) {
-        #if (!$this->input->is_ajax_request()){ show_404(); }
-        $empresa    =   $this->session->userdata("COD_ESTAB");
-        $status     =   true;
-        $estados    =   '1';
-        $ul         =   '';
-        $html       =   '';
-        $aData      =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa, $estados);
+        $empresa                =   $this->session->userdata("COD_ESTAB");
+        $status                 =   true;
+        $estados                =   '1';
+        $ul                     =   '';
+        $html                   =   '';
+        $arr_cupos_ocupados     =   [];
+        $aPaci                  =   $this->Ssan_hdial_asignacionpaciente_model->GetPacientesxCupo($empresa);
+        if (count($aPaci)>0) {
+            foreach($aPaci as $i => $r) {
+                $html_btn       =   '<div class="dropdown">
+                                        <button class="btn btn-primary btn-small dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="width: -webkit-fill-available;">
+                                            <i class="fa fa-user-o" aria-hidden="true"></i>' . $r['NOMPAC'] . '
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" href="javascript:liberarCupo(' . $r['ID_CUPO'] . ',' . $r['MKN'] . ',' . $r['TRN'] . ')">
+                                            <i class="bi bi-person-slash"></i>LIBERAR CUPO </a></li>
+                                        </ul>
+                                    </div>';
+                $v_id_input     =   "CUPO_" . $r['MKN'] . "_" . $r['TRN'];
+                $v_mkn          =   $r['MKN'];
+                $arr_cupos_ocupados[$v_mkn][] = [
+                    'html'      =>  $html_btn,
+                    'value'     =>  $v_id_input,
+                ];
+            }
+        }
+        $aData  =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa,$estados);
         if (count($aData)>0){
             foreach ($aData as $i => $row) {
                 $num    =   $i + 1;
+                $mkn    =    $row['ID'];
                 $html   .=  $this->load->view('Ssan_hdial_ingresoegresopaciente/li_listadomaquinasporpaciente',[
                     'num'   =>  $num,
-                    'row'   =>  $row
+                    'row'   =>  $row,
+                    'pac'   =>  array_key_exists($mkn,$arr_cupos_ocupados)?$arr_cupos_ocupados[$mkn]:[],
                 ],true);
             }
         } else {
@@ -52,7 +74,12 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
         if($returnData) {
             return $html;
         } else {
-            $this->output->set_output(json_encode(['html' => $html,'aData' => $aData]));
+            $this->output->set_output(json_encode([
+                'html'                  =>  $html,
+                'aData'                 =>  $aData, 
+                'aPaci'                 =>  $aPaci,
+                'arr_cupos_ocupados'    =>  $arr_cupos_ocupados,
+            ]));
         }
     }
 

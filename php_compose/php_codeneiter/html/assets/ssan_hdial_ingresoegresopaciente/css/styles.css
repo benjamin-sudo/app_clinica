@@ -149,7 +149,7 @@
 
 .grid_listadomaquixpac                   {
     display                             :   grid;
-    grid-template-columns               :   18px auto auto 1fr auto;
+    grid-template-columns               :   18px 1fr auto 1fr auto;
     gap                                 :   8px;
 }
 

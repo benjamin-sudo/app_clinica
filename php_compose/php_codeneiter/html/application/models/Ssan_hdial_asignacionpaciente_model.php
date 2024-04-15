@@ -1,5 +1,4 @@
 <?php
-
 defined("BASEPATH") OR exit("No direct script access allowed");
 
 class ssan_hdial_asignacionpaciente_model extends CI_Model {
@@ -24,6 +23,11 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
         return $query->num_rows() > 0 ? $query->result_array() : [];
     }
 
+    public function ListadoMaquinasDialisis($empresa,$estados){
+        $query = $this->db->query($this->sql_class_hdial->sqlListadoMaquinasDialisis($empresa,$estados));
+        return $query->result_array();
+    }
+
     public function sql_busquedaEstadoAdmision($AD_ID_ADMISION){
         $query = $this->db->query($this->sql_class_hdial->sql_busquedaEstadoAdmision($AD_ID_ADMISION));
         return $query->result_array();
@@ -36,11 +40,6 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     
     public function sql_FechaEgreso($AD_ID_ADMISION){
         $query = $this->db->query($this->sql_class_hdial->sql_FechaEgreso($AD_ID_ADMISION));
-        return $query->result_array();
-    }
-    
-    public function ListadoMaquinasDialisis($empresa,$estados){
-        $query = $this->db->query($this->sql_class_hdial->sqlListadoMaquinasDialisis($empresa,$estados));
         return $query->result_array();
     }
     

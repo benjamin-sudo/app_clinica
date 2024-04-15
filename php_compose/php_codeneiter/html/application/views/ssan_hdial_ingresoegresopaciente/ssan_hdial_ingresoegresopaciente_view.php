@@ -86,9 +86,12 @@
                 <tbody id="LISTA_MAQUINA"></tbody>
             </table>
         -->
+        
         <div class="list-group" id="listado_maquinasporpaciente">
             <?php echo $li_listadopacientemaquina;?>
         </div>
+
+
     </div>
     <div class="tab-pane fade margen_tabs" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
         <div id="IND_RRHH"><?php echo $html_out;?></div>
@@ -269,7 +272,10 @@
                 <div class="modal-body" id="HTML_PACIENE"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
-                    <button type="button" class="btn btn-primary" id="NUEVOPACIENTEXCUPO"><i class="bi bi-floppy"></i>&nbsp;GRABA PACIENTE</button>
+                    <button type="button" class="btn btn-primary" id="NUEVOPACIENTEXCUPO">
+                        <span class="spinner_btn spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                        <i class="bi bi-floppy"></i>&nbsp;GRABA PACIENTE
+                    </button>
                 </div>
             </div>
         </div>

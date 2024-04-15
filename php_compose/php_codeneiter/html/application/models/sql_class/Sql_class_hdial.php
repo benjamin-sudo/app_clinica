@@ -125,15 +125,16 @@ class sql_class_hdial extends CI_Model {
         
         $sQuery = "SELECT 
                         H.ID_CUPOXPACIENTE                                          AS ID_CUPO,
-                        UPPER(G.NOM_APEPAT||' '||G.NOM_APEMAT||' '|| G.NOM_NOMBRE)  AS NOMPAC,
+                        UPPER(G.NOM_NOMBRE||' '||G.NOM_APEPAT||' '||G.NOM_APEMAT)   AS NOMPAC,
                         G.COD_RUTPAC||'-'||G.COD_DIGVER                             AS RUTPAC,
                         TO_CHAR(G.FEC_NACIMI, 'DD-MM-YYYY')                         AS NACIMIENTO,
                         G.NUM_FICHAE                                                AS NUM_FICHAE,
-                       
                         H.COD_EMPRESA                                               AS EMPRESA, 
                         H.NUM_INGRESO                                               AS NUM_INGRESO, 
+                        
                         H.ID_RMDIALISIS                                             AS MKN, 
-                        H.ID_TURNOSXDIAS                                            AS TRN, 
+                        H.ID_TURNOSXDIAS                                            AS TRN,
+
                         H.COD_USRCREA, 
                         H.DATE_CREA, 
                         H.IND_ESTADO                                                AS IND_ESTADO
@@ -1094,6 +1095,7 @@ class sql_class_hdial extends CI_Model {
                   ";
         return $sQuery;
     }
+
     
     public function sqlListadoTurnosxDiasG(){
         $sQuery = " 

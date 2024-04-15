@@ -89,11 +89,12 @@
                     callback(result);
             });
         },
+
+        //hito 3
         firmaUnica: function (message, value, title, callback) {
             var title = 'Firma Única'; // Título fijo para este tipo de diálogo
             $.alerts._show(title, message, value, 'firmaUnica', function (result) {
                 if (callback)
-                    console.log("111111111111111111111111111");
                     callback(result);
             });
         },
@@ -238,7 +239,7 @@
                     });
                     break;
 
-
+                //hito    
                 case 'firmaUnica':
                     $("#popup_message").append(`
                         <br>
@@ -258,7 +259,6 @@
                                 <a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_cancel"><i class="fa fa-ban"></i> CANCELAR</a>
                             </div>
                         `);
-
                         let v_status_run = false;
                         $('#txt_run_prompt').Rut({
                             format_on   :   'keyup',
@@ -290,9 +290,6 @@
                         break;
 
             }
-
-
-
 
             // Make draggable
             if ($.alerts.draggable) {
@@ -389,7 +386,7 @@
         $.alerts.error(message, title, callback);        
     }
 
-    //mondongo
+    //hito 2
     jFirmaUnica = function (message, value, title, callback) {
         $.alerts.firmaUnica(message, value, title, callback);
     };
