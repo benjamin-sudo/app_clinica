@@ -1384,8 +1384,8 @@ $ssss=0;
     public function guardaPacientexCupo() {
         if (!$this->input->is_ajax_request()){ show_404(); }
         $empresa = $this->session->userdata("COD_ESTAB");
-        $transaccion = '';
-        $return = '';
+        $transaccion = [];
+        $return = true;
         $password = $this->input->post('password');
         $datoPac = explode("#", $this->input->post('datoPac'));
         $numfichae = $datoPac[1];
@@ -1393,20 +1393,20 @@ $ssss=0;
         $MKN = $this->input->post('MKN');
         $GRP = $this->input->post('GRP');
         $DIAS = $this->input->post('DIAS');
-
-        $valida = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+        #$valida = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+        $valida = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
         if ($valida) {
-            $return = true;
             $usuarioh = explode("-", $valida->USERNAME); //Rut Del Usuario que firma       
             $session = $usuarioh[0];
             $transaccion = $this->Ssan_hdial_asignacionpaciente_model->ModelNuevoPacientexCupo($empresa, $session, $numfichae, $numingreso, $MKN, $GRP, $DIAS);
         } else {
             $return = false;
         }
-        $TABLA[0] = array("validez" => $return);
-        $TABLA[1] = array("transaccion" => $transaccion);
-        $TABLA[3] = array("sql" => '');
-        $this->output->set_output(json_encode($TABLA));
+        $this->output->set_output(json_encode([
+            'status' => $return,
+            'transaccion' => $transaccion,
+            'valida' => $valida
+        ]));
     }
 
     public function autocompletar2() {

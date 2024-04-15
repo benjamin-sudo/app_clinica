@@ -326,31 +326,31 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     
     public function ModelNuevoPacientexCupo($empresa,$session,$numfichae,$numingreso,$MKN,$GRP,$DIAS){
         $this->db->trans_start();
-            $numcupoxpaciente           = $this->db->sequence($this->own,'SEQ_HDIAL_NPACIENTEXCUPO');
-            $dataAngenda                = array(
-                'ID_CUPOXPACIENTE'		=> $numcupoxpaciente,
-                'COD_EMPRESA'			=> $empresa,
-                'NUM_FICHAE'			=> $numfichae,
-                'NUM_INGRESO'			=> $numingreso,
-                'ID_RMDIALISIS'			=> $MKN,
-                'ID_TURNOSXDIAS'		=> $GRP,
-                'COD_USRCREA'			=> $session,
-                'DATE_CREA'			=> 'SYSDATE',
-                'IND_ESTADO'			=> '1',
+            $numcupoxpaciente           =   $this->db->sequence($this->own,'SEQ_HDIAL_NPACIENTEXCUPO');
+            $dataAngenda                =   array(
+                'ID_CUPOXPACIENTE'		=>  $numcupoxpaciente,
+                'COD_EMPRESA'			=>  $empresa,
+                'NUM_FICHAE'			=>  $numfichae,
+                'NUM_INGRESO'			=>  $numingreso,
+                'ID_RMDIALISIS'			=>  $MKN,
+                'ID_TURNOSXDIAS'		=>  $GRP,
+                'COD_USRCREA'			=>  $session,
+                'DATE_CREA'			    =>  'SYSDATE',
+                'IND_ESTADO'			=>  '1',
             );
             $this->db->insert($this->own.'.HD_NPACIENTEXCUPO',$dataAngenda); 
             if(count($DIAS)>0){
                 foreach ($DIAS as $num){
                     $TURNODIALISIS              = $this->db->sequence($this->own,'SEQ_HDIAL_TURNODIALISIS');
                     $data[] = array(
-                            'ID_TURNODIALISIS'  => $TURNODIALISIS,
-                            'ID_TURNOSXDIAS'    => $GRP,
-                            'ID_NDIA'           => $num["txtdia"],
-                            'IND_ESTADO'        => 1,
-                            'ID_RMDIALISIS'     => $MKN,
-                            'COD_USRCREA'       => $session,
-                            'DATE_CREA'         => 'SYSDATE',
-                            'COD_EMPRESA'       => $empresa,
+                            'ID_TURNODIALISIS'  =>  $TURNODIALISIS,
+                            'ID_TURNOSXDIAS'    =>  $GRP,
+                            'ID_NDIA'           =>  $num["txtdia"],
+                            'IND_ESTADO'        =>  1,
+                            'ID_RMDIALISIS'     =>  $MKN,
+                            'COD_USRCREA'       =>  $session,
+                            'DATE_CREA'         =>  'SYSDATE',
+                            'COD_EMPRESA'       =>  $empresa,
                         );
                 }
                 $this->db->insert_batch($this->own.'.HD_TURNODIALISIS', $data);

@@ -567,36 +567,91 @@ function iEnfermeria(ID_INGRESO,NUM_FICHAE){
    console.log(NUM_FICHAE);
 }
 
+
+
 function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
     var arreglo_dias   = new Array();
-       $("#idPaciente").css("border-color","");
+        $("#idPaciente").css("border-color","");
+    if ($("#idPaciente").val()=='0'){
+        $("#idPaciente").css("border-color","red");
+        jError("Asignar Paciente","E-sissan");
+        return false;
+    }
+    var idval       = "MKN_"+MKN+"_"+TRN;
+    $('[id^='+idval+']').each(function(index,value){
+       // console.log("---------------");
+        console.log(value.value);
+        arreglo_dias.push({txtdia: value.value});        
+    });
+    jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />', '',
+            'Confirmaci\u00F3n',function(r){
+            if((r=='')||(r==null)){
+                console.log("-----------");
+            } else {
+                
+                $.ajax({ 
+                    type            : "POST",
+                    url             : "ssan_hdial_ingresoegresopaciente/guardaPacientexCupo",
+                    dataType        : "json",
+                    beforeSend      : function(xhr) { console.log(xhr); },
+                    data            :   {   
+                                            password    : r,
+                                            datoPac     : $("#idPaciente").val(),
+                                            MKN         : MKN,
+                                            GRP         : GRP,
+                                            DIAS        : arreglo_dias
+                                        },
+                    error           : function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
+                    success         : function(aData){ 
+                                            
+                        
+                                                        //console.log(aData[3]['sql']);
+                                                        if(aData[0]['validez']){
+                                                            jAlert("Se ha realizado con exito","e-SISSAN",function(r){  
+                                                                console.log("--->"); console.log(r);
+                                                                $("#PACIENTEXCUPO").modal("hide");   
+                                                                busquedaPacientes(2);
+                                                            });
+                                                        } else {
+                                                            jError("Error de contrase&ntilde;a","e-SISSAN");
+                                                        }
+
+
+                                                    }, 
+                });      
+            }
+    });
+}
+
+
+
+
+function NUEVOPACIENTEXCUPO_OLD(MKN,GRP,TRN){
+    var arreglo_dias   = new Array();
+    $("#idPaciente").css("border-color","");
     if ($("#idPaciente").val()=='0'){
        $("#idPaciente").css("border-color","red");
        jError("Asignar Paciente","CLINICA LIBRE CHILE");
        return false;
     }
-   //console.log(MKN);
-   //console.log(GRP);
-   //console.log(TRN);
-   var idval       = "MKN_"+MKN+"_"+TRN;
-   //console.log(idval);
-   $('[id^='+idval+']').each(function(index,value){
+    //console.log(MKN);
+    //console.log(GRP);
+    //console.log(TRN);
+    var idval       = "MKN_"+MKN+"_"+TRN;
+    //console.log(idval);
+    $('[id^='+idval+']').each(function(index,value){
       // console.log("---------------");
        console.log(value.value);
        arreglo_dias.push({txtdia: value.value});        
-   });
-
-   jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
-
+    });
+    jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
         console.log("obj_salida   -> ",obj_salida);
-
         let txt_firma               =   obj_salida.v_run;
         let v_pass                  =   obj_salida.v_pass;
         let status_run              =   obj_salida.status_run;
         console.log("txt_firma      ->  ",txt_firma);
         console.log("v_pass         ->  ",v_pass);
         console.log("status_run     ->  ",status_run);
-        
         if((txt_firma=='')||(txt_firma==null)){
             console.log("-----------");
         } else {
@@ -635,7 +690,6 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
                                                         }, 
                }); 
                */
-
            }
    });
 }
@@ -648,7 +702,6 @@ function E_INGRESODIAL(numIgreso,numfichae){
        jError("Seleccione Tipo de Egreso","CLINICA LIBRE CHILE");
        return false;
    }
-   
    jPrompt('Con esta acc&oacute;n se proceder&aacute; a egresar paciente <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
            if((r=='')||(r==null)){
                console.log("-----------");
