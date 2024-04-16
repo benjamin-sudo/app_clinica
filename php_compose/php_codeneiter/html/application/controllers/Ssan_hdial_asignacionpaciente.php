@@ -7,6 +7,7 @@ class Ssan_hdial_asignacionpaciente extends CI_Controller {
         $this->load->library('session');
         $this->load->model("Ssan_hdial_hojatratamiento_model");
         $this->load->model("Ssan_hdial_asignacionpaciente_model");
+        $this->load->model("Ssan_hdial_eliminacionhojadiara_model");
     }
 
     public function index() {
@@ -647,11 +648,11 @@ public function cargaCalendarioPacientesHT() {
             if($AD_ID_ADMISION  == ''){
                     //  cambio 04.04.2020
                     if ($templete == '1' or $templete == '3'){
-                        $btn.='<span class="label label-default">               <i class="fa fa-times" aria-hidden="true"></i> NO INICIADO</span>';
+                        $btn.='<span class="badge bg-primary">               <i class="fa fa-times" aria-hidden="true"></i> NO INICIADO</span>';
                     } else {
                         $btn.='<button class="btn btn-primary btn-fill btn-wd"  onclick="js_primeraDatosProgramacion('.$row["NUMFICHAE"].')"> INICIO <br> PROGRAMACI&Oacute;N </button>';
                     }
-                        $msj = '<span class="label label-default">              <i class="fa fa-times" aria-hidden="true"></i> NO INICIADO</span>';
+                        $msj = '<span class="badge bg-primary">              <i class="fa fa-times" aria-hidden="true"></i> NO INICIADO</span>';
             } else {
                 //cambio 04.04.2020
                 if ($templete == '3'){
@@ -713,7 +714,6 @@ public function cargaCalendarioPacientesHT() {
                                     <td class="text-center"><div class="content">'.$btn.'</div></td>
                                 </tr>
                                 ';
-            
             $TABLA[]        =   array("id_html"=>"maquina_1","opcion" => "append",    "contenido"=> $html);   
         }
     } else{
@@ -771,8 +771,9 @@ public function cargahtmlcarga(){
     $empresa                    =   $this->session->userdata("COD_ESTAB");
     $numfichae                  =   $this->input->post("NUMFICHAE");
     #PREGUNTAR SI TIENE YA YIENE UNA HOJA ACTIVA
-    $date                       =   date("d-m-Y");   
-    $DATA_HOJA                  =   $this->ssan_hdial_eliminacionhojadiara_model->al_dia_hojaactiva($numfichae,$date);
+    $date                       =   date("d-m-Y");
+    $DATA_HOJA                  =   $this->Ssan_hdial_eliminacionhojadiara_model->al_dia_hojaactiva($numfichae,$date);
+
     if(count($DATA_HOJA)>0){
         $TABLA[]                =   array("id_html"=>'',  "opcion" => "console",  "contenido"=> "SI TIENE HOJA EL DIA DE HOY");
         $ADMISION_ACTIVA        =   false;
@@ -789,15 +790,15 @@ public function cargahtmlcarga(){
         }
     } else {
         $TABLA[]                =   array("id_html"=>'',  "opcion" => "console",  "contenido"=> "NOOO -> al_dia_hojaactiva");
-    }        
+    }
     //**********************************************************************
     $NUM_PESOSECO               =   '';
-    $aData                      =   $this->ssan_hdial_asignacionpaciente_model->sqlInformacionComplementariaPesoSeco($empresa,$numfichae);  
+    $aData                      =   $this->Ssan_hdial_asignacionpaciente_model->sqlInformacionComplementariaPesoSeco($empresa,$numfichae);  
     if(count($aData)>0){    
     $NUM_PESOSECO               =   $aData[0]["NUM_PESOSECO"];  }
     $TABLA[]                    =   array("id_html"=>"HTML_INICIODEDIALISIS","opcion" => "html","contenido"=>$this->htmlINICIOPROGRAMACION($NUM_PESOSECO));
     #$aData                      =   $this->ssan_hdial_asignacionpaciente_model->profActvNuevaAgenda($empresa);
-    $aData                      =   $this->ssan_hdial_asignacionpaciente_model->profActvNuevaAgenda_por_mantenedor($empresa);
+    $aData                      =   $this->Ssan_hdial_asignacionpaciente_model->profActvNuevaAgenda_por_mantenedor($empresa);
     if(count($aData)>0){
         foreach ($aData as $row){
             $id_HTML            =   '';
@@ -818,6 +819,9 @@ public function cargahtmlcarga(){
         'TABLA'     =>  $TABLA,
     ))); 
 }
+
+
+
 
 
 public function htmlINICIOPROGRAMACION($NUM_PESOSECO){

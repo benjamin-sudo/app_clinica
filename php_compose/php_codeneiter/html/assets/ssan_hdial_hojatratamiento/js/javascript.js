@@ -98,32 +98,24 @@ $(document).ready(function() {
     $("#maquina_1").append('<tr><td colspan="6"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">&nbsp;&nbsp;CARGANDO PACIENTE ...</span></td></tr>');
     //cargaMaquinas(1);
     //star_websocket_hoja_dialisis();
-
-    
     let v_fecha = $('#numFecha').val();
-    
     cargaPacientes(v_fecha);
-
 });
 
 function cargaPacientes(fecha){
-    if(fecha == ''){
-        jError("Selecione Fecha valida ...","e-SISSAN");
-        return false;
-    }
-
+    if(fecha==''){  jError("Selecione Fecha valida ...","Clinica Libre");  return false;  }
     $("#maquina_1").html('');
-    var loding      ='<tr><td colspan="6"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only"> CARGANDO PACIENTE ... </span></td></tr>';
+    var loding      ='<tr><td colspan="6"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">&nbsp;&nbsp;CARGANDO PACIENTE ... </span></td></tr>';
     $("#maquina_1").append(loding);
     var txt =   txt_fecha(fecha);
     $("#fecha_busqueda").html('<b class="plomo">'+txt+'</b>');
-    
-    console.log("------------------------------------------------------");
-    console.log("fecha              ->  ",fecha,"<-                    ");
-    console.log("num_Maquina        ->  ",$("#num_Maquina").val(),"<-  ");
-    console.log("id_templete        ->  ",$("#id_templete").val(),"<-  ");
-    console.log("------------------------------------------------------");
-
+    /*
+    console.log(    "------------------------------------------------------");
+    console.log(    "fecha              ->  ",fecha,"<-                    ");
+    console.log(    "num_Maquina        ->  ",$("#num_Maquina").val(),"<-  ");
+    console.log(    "id_templete        ->  ",$("#id_templete").val(),"<-  ");
+    console.log(    "------------------------------------------------------");
+    */
     $('#loadFade').modal('show'); 
     $.ajax({
         url         :   "ssan_hdial_hojatratamiento/cargaCalendarioPacientesHT",
@@ -141,13 +133,11 @@ function cargaPacientes(fecha){
                                             console.log(errro); 
                                             jError("Comuniquese con el administrador ","E-SISSAN");
                                             $('#loadFade').modal('hide'); 
- 
                                         },              
-        success     :   function(xml){      
-                                            $('#loadFade').modal('hide'); 
+        success     :   function(xml)   {      
                                             if (AjaxExtJsonAll(xml)){
-                                                
-                                            } 
+                                                $('#loadFade').modal('hide'); 
+                                            }
                                         }
     });
 }
@@ -225,12 +215,9 @@ function js_disabled_medica(i){
    $("#OBS_MEDICAS").prop("disabled",i);
 }
 
-
-
-
 function txt_fecha(get_fecha){
-   var arr_fecha               =   get_fecha.split('-');
-   var nom_dias                =   [
+    var arr_fecha               =   get_fecha.split('-');
+    var nom_dias                =   [
                                        'DOMINGO',
                                        'LUNES',
                                        'MARTES',
@@ -239,18 +226,15 @@ function txt_fecha(get_fecha){
                                        'VIERNES',
                                        'S&Aacute;BADO'
                                    ];
-   var numeroDia               =   new Date(arr_fecha[2]+'-'+arr_fecha[1]+'-'+arr_fecha[0]+" 23:59:59").getDay();
-   var nombreDia               =   nom_dias[numeroDia];
-   var fecha                   =   new Date(arr_fecha[2],arr_fecha[1],arr_fecha[0]);
-   var options                 =   {
+    var numeroDia               =   new Date(arr_fecha[0]+'-'+arr_fecha[1]+'-'+arr_fecha[2]+" 23:59:59").getDay();
+    var nombreDia               =   nom_dias[numeroDia];
+    var fecha                   =   new Date(arr_fecha[0],arr_fecha[1],arr_fecha[2]);
+    var options                 =   {
                                        year    :   'numeric', 
                                        month   :   'long', 
                                        day     :   'numeric' 
                                    };
-   console.log("-----------------------------------------------------------------------------------");                                
-   console.log("arr_fecha      ->  ",arr_fecha);
-   console.log("               ->  ",nombreDia+'. '+fecha.toLocaleDateString("es-ES",options));
-   return nombreDia+' '+fecha.toLocaleDateString("es-ES",options).toUpperCase();
+    return nombreDia+' '+fecha.toLocaleDateString("es-ES",options).toUpperCase();
 }
 
 function js_formReacionesad(hd){
@@ -312,7 +296,12 @@ function js_inicioProgama(NUMFICHAE,NUM_CITA,IDHOJADIARIA,OPMEDIC){
 }
 
 function js_primeraDatosProgramacion(NUMFICHAE){
-   $.ajax({
+
+
+    $('#loadFade').modal('show'); 
+
+
+    $.ajax({
        url         :   "ssan_hdial_asignacionpaciente/cargahtmlcarga",
        type        :   "POST",
        dataType    :   "json",
@@ -323,13 +312,16 @@ function js_primeraDatosProgramacion(NUMFICHAE){
                        },
        error       :   function(errro)     { 
                                                console.log(errro.responseText); /*$("#respuesta").html();*/ 
-                                               jError("Comuniquese con el administrador ","E-SISSAN"); },              
+                                               jError("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                               $('#loadFade').modal('hide'); 
+                                            },              
        success     :   function(aData)     { 
-           
-                                               console.log("-------------------------------------");
-                                               console.log("aData  ->  ",aData);
-                                               console.log("-------------------------------------");
-                                               if(AjaxExtJsonAll(aData['TABLA'])){
+
+                                                console.log("-------------------------------------");
+                                                console.log("aData  ->  ",aData);
+                                                console.log("-------------------------------------");
+                                                $('#loadFade').modal('hide'); 
+                                                if(AjaxExtJsonAll(aData['TABLA'])){
                                                    if(aData['STATUS']){
                                                        $(".selectpicker").selectpicker();
                                                        $("#BTN_INICIO").attr('onclick','guardarPrimeraProgramacion('+NUMFICHAE+')');
@@ -337,9 +329,10 @@ function js_primeraDatosProgramacion(NUMFICHAE){
                                                    } else {
                                                        eventosBuscar($("#num_Maquina").val());
                                                    }
-                                               } 
+                                                } 
                                            }
    });
+
 }
 
 //inicio js_signovitales

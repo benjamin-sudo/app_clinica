@@ -136,21 +136,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="MODAL_INICIODIALIS">
-        <div class="modal-dialog modal_xl_900">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">INICIO TRATAMIENTO</b></h4>
-                </div>
-                <div class="modal-body" id="HTML_INICIODEDIALISIS"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-fill btn-wd" data-dismiss="modal"> <i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
-                    <button type="button" class="btn btn-primary btn-fill btn-wd" id="BTN_INICIO"> <i class="fa fa-check-square" aria-hidden="true"></i> GUARDAR INFORMACI&Oacute;N </button>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <div class="modal fade" id="MODAL_PDF">
         <div class="modal-dialog class_modal_pdf">
@@ -207,7 +193,7 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div id="busquedaMes"/></div>
+                            <div id="busquedaMes"c></div>
                         </div>
                         <div class="col-lg-6">
                             <button type="button" class="btn btn-danger btn-sm btn-fill btn-wd" data-dismiss="modal"> <i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
@@ -226,12 +212,30 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div id="busquedaMes_EXM"/></div>
+                            <div id="busquedaMes_EXM"></div>
                         </div>
                         <div class="col-lg-6">
                             <button type="button" class="btn btn-danger btn-sm btn-fill btn-wd" data-dismiss="modal"> <i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA </button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal deputado -->
+
+    <div class="modal fade" id="MODAL_INICIODIALIS">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">INICIO TRATAMIENTO</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_PACIENE"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
+                    <button type="button" class="btn btn-primary btn-fill btn-wd" id="BTN_INICIO"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N</button>
                 </div>
             </div>
         </div>
@@ -247,4 +251,6 @@
     <form id="actualizacion_hoja_diaria" method="post" action="#"></form>
 
 </section>
+
+
 

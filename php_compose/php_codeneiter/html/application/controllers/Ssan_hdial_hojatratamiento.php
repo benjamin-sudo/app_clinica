@@ -21,9 +21,7 @@ class Ssan_hdial_hojatratamiento extends CI_Controller {
         $empresa                    =   $this->session->userdata("COD_ESTAB");
         $v_arr_maquinas             =   $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa,$estados);
         $data['arr_maquinas']       =   $v_arr_maquinas;
-        
-        $data['ID_MAQUINA']         =   $v_arr_maquinas[0]['ID'];
-
+        #$data['ID_MAQUINA']         =   $v_arr_maquinas[0]['ID'];
         $this->load->view('Ssan_hdial_hojatratamiento/Ssan_hdial_hojatratamiento_view',$data);
     }
 
@@ -56,11 +54,10 @@ class Ssan_hdial_hojatratamiento extends CI_Controller {
             $fecha_hasta                =   $this->input->post("fecha");
         } 
         $TABLA[]                        =   array("id_html"=>"maquina_1","opcion" => "html","contenido"=> "");
-        
-       //$estados                       =   '1';
-       //$aData                         =   $this->ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDialxMaquina($empresa,$estados,$numFichae,$rutPac,$num_Maquina,$fecha_desde,$fecha_hasta);
-       //$aData                         =   $this->ssan_hdial_asignacionpaciente_model->getbusquedaListadoPacienteHDxMaquinaCAdmision($empresa,$num_Maquina,$fechaBusqueda);
-       //$aData                         =   $this->ssan_hdial_asignacionpaciente_model->proBusquedaHoradiaria($empresa,$fecha_hasta,$num_Maquina); 
+        #$estados                       =   '1';
+        #$aData                         =   $this->ssan_hdial_asignacionpaciente_model->ModelbusquedaListadoPacienteHDialxMaquina($empresa,$estados,$numFichae,$rutPac,$num_Maquina,$fecha_desde,$fecha_hasta);
+        #$aData                         =   $this->ssan_hdial_asignacionpaciente_model->getbusquedaListadoPacienteHDxMaquinaCAdmision($empresa,$num_Maquina,$fechaBusqueda);
+        #$aData                         =   $this->ssan_hdial_asignacionpaciente_model->proBusquedaHoradiaria($empresa,$fecha_hasta,$num_Maquina);
         $aData                          =   $this->Ssan_hdial_asignacionpaciente_model->proBusquedaHoradiaria_profActvNuevaAgenda($empresa,$fecha_hasta,$num_Maquina);
         if(count($aData)>0){
             foreach($aData as $row){
@@ -115,7 +112,6 @@ class Ssan_hdial_hojatratamiento extends CI_Controller {
                         }
                     }
                 }
-        
                 #########################################################################
                 $arr_row        =   htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');
                 $txt_cumpleanos =   $row["IND_AYER"] == 1 ?'<br><span class="label label-warning"><i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;FELIZ CUMPEA&Ntilde;OS</span>':''; 
@@ -143,20 +139,18 @@ class Ssan_hdial_hojatratamiento extends CI_Controller {
                                         <td class="text-center"><div class="content">'.$btn.'</div></td>
                                     </tr>
                                     ';
-                
                 $TABLA[]        =   array("id_html"=>"maquina_1","opcion" => "append",    "contenido"=> $html);   
             }
-        } else{
-                $txtMenjaje=    '<div class="alert alert-danger">
-                                    <strong>  <i class="fa fa-user-times" aria-hidden="true"></i> SIN PACIENTE </strong> No se han encontrados pacientes en el turno y m&aacute;quina para el d&iacute;a seleccionado 
-                                </div> 
-                                ';
-                $TABLA[]        = array("id_html"=>"maquina_1","opcion"=>"append","contenido"=>"<tr><td colspan='6'>$txtMenjaje</td></tr>");   
+        } else {
+            $txtMenjaje=    '
+                            <tr>
+                                <td colspan="6" style="text-align: center;">
+                                    <b><i class="bi bi-x"></i>&nbsp;SIN PACIENTE</b> No se han encontrados pacientes en el turno y m&aacute;quina para el d&iacute;a seleccionado
+                                </td>
+                            </tr>
+                            ';
+            $TABLA[]        = array("id_html"=>"maquina_1","opcion"=>"html","contenido"=>$txtMenjaje);   
         }
-
-
-
-
         $this->output->set_output(json_encode($TABLA));
     }
 
