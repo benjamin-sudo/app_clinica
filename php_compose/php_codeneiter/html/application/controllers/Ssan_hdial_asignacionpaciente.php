@@ -8,6 +8,7 @@ class Ssan_hdial_asignacionpaciente extends CI_Controller {
         $this->load->model("Ssan_hdial_hojatratamiento_model");
         $this->load->model("Ssan_hdial_asignacionpaciente_model");
         $this->load->model("Ssan_hdial_eliminacionhojadiara_model");
+        $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
     }
 
     public function index() {
@@ -19,7 +20,6 @@ class Ssan_hdial_asignacionpaciente extends CI_Controller {
         #$v_out['arr_maquinas']  = $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa,$estados);
         $this->load->view("ssan_hdial_asignacionpaciente/ssan_hdial_asignacionpaciente_view",$v_out);
     }
-      
 
     //***************************************************************************
     public function cargaEXAMENESanteriores(){
@@ -842,12 +842,12 @@ public function htmlINICIOPROGRAMACION($NUM_PESOSECO){
                         <div class="contenedor">
                             <div class="form-group">
                                 <label for="txtHoraIngresoPre"><b>HR CONEXI&Oacute;N</b></label>
-                                <input type="time" class="form-control input-sm" id="txtHoraIngresoPre" name="txtHoraIngresoPre" style="width:auto;height:31px">
+                                <input type="time" class="form-control" id="txtHoraIngresoPre" name="txtHoraIngresoPre" style="width:auto;">
                             </div>
                             <div class="form-group">
                                 <label for="input_pesoSeco"><b>PESO SECO</b></label>
                                 <div class="input-group mb-3">
-                                    <input type="number"  placeholder="KG" class="form-control input-sm" id="input_pesoSeco" name="input_pesoSeco" style="width:70px;" size="6" max="6" maxlength="6" value="'.$NUM_PESOSECO.'"/>
+                                    <input type="number" placeholder="KG" class="form-control input-sm" id="input_pesoSeco" name="input_pesoSeco" style="width:70px;" size="6" max="6" maxlength="6" value="'.$NUM_PESOSECO.'"/>
                                     <span class="input-group-text">KG</span>
                                 </div>
                             </div>
@@ -889,7 +889,7 @@ public function htmlINICIOPROGRAMACION($NUM_PESOSECO){
             </div>
             <div class=" card grid_primera_programacion2"  style="margin-bottom: 0px">
                 <form method="get" action="#" class="form-horizontal" id="rrhhConexion" name="rrhhConexion" >
-                    <div class="" style="margin-bottom: 0px">
+                    <div class="" style="margin: 12px 0px 0px 12px;"
                         <div class="header"  style="margin: 12px 0px 0px 12px;">
                             <h4 class="title"><b>PROFESIONALES CONEXI&Oacute;N</b></h4>
                             <p class="category">Informaci&oacute;n RRHH di&aacute;lisis</p>
@@ -897,11 +897,17 @@ public function htmlINICIOPROGRAMACION($NUM_PESOSECO){
                         <div class="content">
                             <div class="grid_lista_profesionales_conexion">
                                 <div class="grid_lista_profesionales_conexion1"><i class="fa fa-user-circle" aria-hidden="true"></i>ENFERMERO</div>
-                                <div class="grid_lista_profesionales_conexion2"><select id="slc_enfermeria" name="slc_enfermeria" style="width: 100%;"  class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true"></select></div>
+                                <div class="grid_lista_profesionales_conexion2">
+                                    <select id="slc_enfermeria" name="slc_enfermeria" data-width="100%" class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true"></select>
+                                </div>
                                 <div class="grid_lista_profesionales_conexion3"><i class="fa fa-user-circle-o" aria-hidden="true"></i> TEC. ENFERMERIA</div>
-                                <div class="grid_lista_profesionales_conexion4"><select id="slc_tecpara" name="slc_tecpara" style="width: 100%;"        class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true"></select></div>
+                                <div class="grid_lista_profesionales_conexion4">
+                                    <select id="slc_tecpara" name="slc_tecpara" data-width="100%" class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true"></select>
+                                </div>
                                 <div class="grid_lista_profesionales_conexion5"><i class="fa fa-user-md" aria-hidden="true"></i> MEDICO</div>
-                                <div class="grid_lista_profesionales_conexion6"><select id="slc_medico" name="slc_medico" style="width: 100%;"          class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true"></select></div>
+                                <div class="grid_lista_profesionales_conexion6">
+                                    <select id="slc_medico" name="slc_medico" data-width="100%" class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true"></select>
+                                </div>
                             </div>
                         </div>
                     </div> 
@@ -911,8 +917,8 @@ public function htmlINICIOPROGRAMACION($NUM_PESOSECO){
         <div class="grid_segunda_programacion2">
             <div class="card" style="margin-bottom: 0px">
                 <div class="header">
-                    <h4 class="title"><b>- SIGNOS VITALES PRE-DIALISIS</b></h4>
-                    <p class="category">Ingrese Signos vitales antes de la conexion de la maquina - (*) Datos no obligatorio</p>
+                    <h4 class="title" style="margin: 12px 0px 0px 25px;"><b>SIGNOS VITALES PRE-DIALISIS</b></h4>
+                    <p class="category" style="margin-left: 27px;">ingrese signos vitales antes de la conexi&oacute;n de la m&aacute;quina - (*) datos no obligatorio</p>
                 </div>'.$this->htmlTomaSisnos(1).'
             </div>
         </div>
@@ -928,7 +934,7 @@ public function HtmlCierrehemodialisis(){
     $html       =   '
                     <div class="grid_body_cierrehermo">
                         <div class=" card grid_body_cierrehermo1" style="margin-bottom:0px;">
-                            <div class="" style="margin-bottom:0px;">
+                            <div class="" style="margin: 12px 0px 0px 12px;">
                                 <div class="header">
                                      <h4 class="title"><b>DATOS DEL PACIENTE</b></h4>
                                      <p class="category">Informaci&oacute;n Basica</p>
@@ -949,7 +955,7 @@ public function HtmlCierrehemodialisis(){
                         </div>
                         
                         <div class="card grid_body_cierrehermo2" style="margin-bottom:0px;">
-                            <div class="" style="margin-bottom:0px;">
+                            <div class="" style="margin: 12px 0px 0px 12px;">
                                 <div class="header">
                                     <h4 class="title"><b>FINAL PROGRAMACI&Oacute;N</b></h4>
                                     <p class="category">Informaci&oacute;n Basica</p>
@@ -974,7 +980,7 @@ public function HtmlCierrehemodialisis(){
                         </div>
                         <div class="card grid_body_cierrehermo3" style="margin-bottom:0px;">
                             <form method="get" action="#" class="form-horizontal" id="terminoDialisis" name="terminoDialisis" >    
-                                <div class="" style="margin-bottom:0px;">
+                                <div class="" style="margin: 12px 0px 0px 12px;">
                                     <div class="header">
                                         <h4 class="title"><b>PROFESIONALES DECONEXI&Oacute;N</b></h4>
                                         <p class="category">Informaci&oacute;n Basica</p>
@@ -996,7 +1002,7 @@ public function HtmlCierrehemodialisis(){
 
                     <div class="row" style="margin-bottom: 6px;">
                         <div class="col-md-12">
-                            <div class="card"  style="margin-bottom:0px;">
+                            <div class="card" style="margin: 12px 0px 0px 12px;">
                                 <div class="header">
                                     <h4 class="title"><b>DATOS DE DECONEXI&Oacute;N</b></h4>
                                     <p class="category">Informaci&oacute;n Basica</p>
@@ -1054,7 +1060,7 @@ public function HtmlCierrehemodialisis(){
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card" style="margin-bottom:0px;">
+                            <div class="card" style="margin: 12px 0px 0px 12px;">
                                 <div class="header">
                                     <h4 class="title"><b>* SIGNOS VITALES POST-DIALISIS</b></h4>
                                     <p class="category">Ingrese Signos vitales posterior de la conexi&oacute;n de la m&aacute;quina - (*) Datos no obligatorio</p>
@@ -1093,10 +1099,7 @@ public function htmlTomaSisnos($val){
         <div class="contenedor">
             <div class="form-group">
                 <label for="txtHoraIngresoPre"><b>HORA</b></label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                    <input type="time" class="form-control input-sm" id="txtHoraIngreso" name="txtHoraIngreso" style="width:90px;height:31px" >
-                 </div>
+                <input type="time" class="form-control input-sm" id="txtHoraIngreso" name="txtHoraIngreso" style="width:90px;" >
             </div>
             <div class="form-group">
                 <label for="txtpresionalterial"><b>P.ARTERIAL(MM/HG)</b></label>
@@ -1128,9 +1131,9 @@ public function htmlTomaSisnos($val){
             </div>
             <div class="form-group">
                 <label for="TXTPA"><b>PA(-300-60)(*)</b></label>
-                <div class="input-group">
+                <div class="input-group mb-3">
                     <input type="number"  placeholder="PA" class="form-control input-sm" id="TXTPA" name="TXTPA" onKeyPress="return num(event)" style="width: 70px;"/>
-                    <span class="input-group-addon">mmHg</span>
+                    <span class="input-group-text">mmHg</span>
                 </div>
             </div>
             <div class="form-group">
@@ -1147,7 +1150,7 @@ public function htmlTomaSisnos($val){
             </div>
             <div class="form-group">
                 <label for="TXTUFH"><b>UFH(ml/Hr)(*)</b></label>
-                <input type="n " placeholder="UFH." class="form-control input-sm" id="TXTUFH" name="TXTUFH" onKeyPress="return num(event)" style="width: 90px;" />
+                <input type="number " placeholder="UFH." class="form-control input-sm" id="TXTUFH" name="TXTUFH" onKeyPress="return num(event)" style="width: 90px;" />
             </div>
             <div class="form-group">
                 <!--
@@ -2465,56 +2468,58 @@ public function HTML_addSignosVitales(){
 
 public function guardaNuevoPacienteDeHermo(){
     if (!$this->input->is_ajax_request()) { show_404(); }
-    $transaccion        = '';
-    $empresa            = $this->session->userdata("COD_ESTAB");
-    $password           = $this->input->post('contrasena');
-    $Fechas             = $this->input->post('Fechas');
-    $NUMINGRESO         = $this->input->post('NUMINGRESO');
-    $NUM_FICHAE         = $this->input->post('NUM_FICHAE');
-    $HR_INICIO          = $this->input->post('HR_INICIO');
-    $HR_FINAL           = $this->input->post('HR_FINAL');
-    $numRecurso         = $this->input->post('numRecurso');
-    $MesWork            = explode("#",$this->input->post("MesWork"));
-        $valida         = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $transaccion        =   '';
+    $empresa            =   $this->session->userdata("COD_ESTAB");
+    $password           =   $this->input->post('contrasena');
+    $Fechas             =   $this->input->post('Fechas');
+    $NUMINGRESO         =   $this->input->post('NUMINGRESO');
+    $NUM_FICHAE         =   $this->input->post('NUM_FICHAE');
+    $HR_INICIO          =   $this->input->post('HR_INICIO');
+    $HR_FINAL           =   $this->input->post('HR_FINAL');
+    $numRecurso         =   $this->input->post('numRecurso');
+    $MesWork            =   explode("#",$this->input->post("MesWork"));
+    $valida             =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     if ($valida){
-        $return         = true;
-        $usuarioh       = explode("-",$valida->USERNAME);  
-        $session        = $usuarioh[0];
-        $transaccion    = $this->ssan_hdial_asignacionpaciente_model->ModelconfirmaNuevoPaciente($empresa,$session,$Fechas,$NUMINGRESO,$NUM_FICHAE,$HR_INICIO,$HR_FINAL,$MesWork[0],$MesWork[1],$numRecurso); 
+        $return         =   true;
+        $usuarioh       =   explode("-",$valida->USERNAME);  
+        $session        =   $usuarioh[0];
+        $transaccion    =   $this->Ssan_hdial_asignacionpaciente_model->ModelconfirmaNuevoPaciente($empresa,$session,$Fechas,$NUMINGRESO,$NUM_FICHAE,$HR_INICIO,$HR_FINAL,$MesWork[0],$MesWork[1],$numRecurso); 
     } else {
-        $return         = false;        
+        $return         =   false;        
     }
-    $TABLA[0]           = array("validez"         => $return); 
-    $TABLA[1]           = array("transaccion"     => $transaccion); 
-    $TABLA[3]           = array("sql"             => $Fechas); 
+    $TABLA[0]           =   array("validez"         => $return); 
+    $TABLA[1]           =   array("transaccion"     => $transaccion); 
+    $TABLA[3]           =   array("sql"             => $Fechas); 
     $this->output->set_output(json_encode($TABLA)); 
 }
 
 public function guardaInfdormacionDialisis(){
     if(!$this->input->is_ajax_request()) { show_404(); }
-    $transaccion        = '';
-    $empresa            = $this->session->userdata("COD_ESTAB");
-    $HrsIngreso         = $this->input->post('HrsIngreso'); 
-    $password           = $this->input->post('contrasena');
-    $NUMCITA            = $this->input->post('NUM_CITA');
-    $NUMFICHAE          = $this->input->post('NUMFICHAE');
-    $num_Maquina        = $this->input->post('num_Maquina');
-    $fechaHerno         = $this->input->post('fechaHerno'); 
-    $datosDialisis      = $this->input->post('datosDialisis');//ARRAY
-    $hojatra            = $this->input->post('hojatra');
-    $valida             = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $transaccion        =   '';
+    $empresa            =   $this->session->userdata("COD_ESTAB");
+    $HrsIngreso         =   $this->input->post('HrsIngreso'); 
+    $password           =   $this->input->post('contrasena');
+    $NUMCITA            =   $this->input->post('NUM_CITA');
+    $NUMFICHAE          =   $this->input->post('NUMFICHAE');
+    $num_Maquina        =   $this->input->post('num_Maquina');
+    $fechaHerno         =   $this->input->post('fechaHerno'); 
+    $datosDialisis      =   $this->input->post('datosDialisis');//ARRAY
+    $hojatra            =   $this->input->post('hojatra');
+    $valida             =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     if ($valida){
-        $return         = true;
-        $usuarioh       = explode("-",$valida->USERNAME);  
-        $session        = $usuarioh[0];
-        $name           = $valida->NAME;
-        $transaccion    = $this->ssan_hdial_asignacionpaciente_model->ModelhoraTratamiento($empresa,$session,$NUMCITA,$NUMFICHAE,$num_Maquina,$datosDialisis,$hojatra,$name,$HrsIngreso,$fechaHerno); 
+        $return         =   true;
+        $usuarioh       =   explode("-",$valida->USERNAME);  
+        $session        =   $usuarioh[0];
+        $name           =   $valida->NAME;
+        $transaccion    =   $this->Ssan_hdial_asignacionpaciente_model->ModelhoraTratamiento($empresa,$session,$NUMCITA,$NUMFICHAE,$num_Maquina,$datosDialisis,$hojatra,$name,$HrsIngreso,$fechaHerno); 
     } else {
-        $return         = false;        
+        $return         =   false;        
     }
-    $TABLA[0]           = array("validez"         => $return); 
-    $TABLA[1]           = array("transaccion"     => $transaccion); 
-    $TABLA[3]           = array("sql"             => $valida); 
+
+
+    $TABLA[0]           =   array("validez"         => $return); 
+    $TABLA[1]           =   array("transaccion"     => $transaccion); 
+    $TABLA[3]           =   array("sql"             => $valida); 
     $this->output->set_output(json_encode($TABLA)); 
 }
 
@@ -2527,7 +2532,8 @@ public function guardaInformacionPrevio(){
     $datosDialisis      = $this->input->post('CreacionDialisis');//ARRAY
     $opcion             = $this->input->post('opcion');
     $fecha_aplicado     = $this->input->post('fecha_aplicado');
-    $valida             = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    #$valida             = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $valida             = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     if($valida){
         $return         = true;
         $usuarioh       = explode("-",$_SESSION['USERNAME']);  
@@ -2763,7 +2769,8 @@ public function borraSignosVitales(){
     $empresa            = $this->session->userdata("COD_ESTAB");
     $password           = $this->input->post('contrasena');
     $id                 = $this->input->post('id');
-    $valida             = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    #$valida            = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $valida             = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     if($valida){
         $return         = true;
         $usuarioh       = explode("-",$valida->USERNAME);  
@@ -2785,7 +2792,8 @@ public function guardaInformacionimedico(){
     $password           = $this->input->post('password');
     $numfichae          = $this->input->post('numfichae');
     $form               = $this->input->post('form');//ARRAY
-    $valida             = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    #$valida             = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $valida             = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     if($valida){
         $return         = true;
         $usuarioh       = explode("-",$valida->USERNAME);  
@@ -3001,7 +3009,7 @@ public function correcion_ingreso_egreso(){
                                             <label for="txtHoraIngresoPre"><b>HORA DESCONEXI&Oacute;N</b></label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                                                <input type="time" class="form-control input-sm" id="txtHoraEgreso" name="txtHoraEgreso" style="width:90px;height:31px" >
+                                                <input type="time" class="form-control input-sm" id="txtHoraEgreso" name="txtHoraEgreso" style="width:100px;height:31px" >
                                              </div>
                                         </div>
                                         <div class="form-group">
@@ -3171,7 +3179,8 @@ public function guardacorrecionhd(){
     $form                   = $this->input->post('datosDialisis');//ARRAY
     $IDCORRECION            = $this->input->post('IDCORRECION'); 
     $KEY                    = $this->input->post('KEY'); 
-    $valida                 = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    #$valida                 = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $valida             = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     if($valida){
         $return             = true;
         $usuarioh           = explode("-",$valida->USERNAME);  
@@ -3203,7 +3212,8 @@ public function validaCodigo(){
     $this->session->unset_userdata('HD');
     $this->session->unset_userdata('SY');
     $this->session->unset_userdata('M5');
-    $valida                 = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    #$valida                 = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $valida                 = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     //IND_ESTADO
     if($valida){
         $return             = true;
@@ -3258,8 +3268,8 @@ public function desabilitahd(){
     $IDHOJADIARIA           = $this->input->post('IDHOJADIARIA');
     $AD_ID_ADMISION         = $this->input->post('AD_ID_ADMISION');
     $ID_TE                  = $this->input->post('ID_TE');
-    
-    $valida                 = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    #$valida                 = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+    $valida             = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
     if($valida){
         $return             = true;
         $usuarioh           = explode("-",$valida->USERNAME);  

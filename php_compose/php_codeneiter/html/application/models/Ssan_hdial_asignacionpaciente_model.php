@@ -465,7 +465,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 
                 $idAdmision                     = $this->db->sequence($this->own,'SEQ_URG_TADMISION');
                 
-		        $query                          = $this->db->query($this->sql_class_hdial->sqlNextValFolio($this->own,$empresa,$PA_ID_PROCARCH));
+                $query                          = $this->db->query($this->sql_class_hdial->sqlNextValFolio($this->own,$empresa,$PA_ID_PROCARCH));
                 $AD_NUMFOLIO                    = $query->result_array();
                 $AD_FHADMISION                  = explode("-",$fechaHerno);
                 $dataCitas                      = array(
@@ -948,8 +948,10 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
             $sec_numRecurso                 = '';
             $sec_numAgenda                  = '';
             //INI preguntar si tiene agenda
+                
                 $sec_numAgenda              = $this->db->sequence($this->own,'SEQ_AP_NEWAGENDA_BLOQUES');
                 $sec_numRecurso             = $this->db->sequence($this->own,'SEQ_AP_RECURSOSXAGENDA');
+
                 $dataAngenda                = array(
                     'ID_NUMAGENDA'          => $sec_numAgenda,
                     'FEC_INICIOAGENDA'      => "TO_DATE('01-12-2017 00:00', 'DD-MM-YYYY hh24:mi')",

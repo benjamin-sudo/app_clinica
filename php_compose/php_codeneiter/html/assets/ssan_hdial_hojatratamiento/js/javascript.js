@@ -315,10 +315,10 @@ function js_primeraDatosProgramacion(NUMFICHAE){
                                                 console.log("-------------------------------------");
                                                 console.log("aData  ->  ",aData);
                                                 console.log("-------------------------------------");
-
                                                 $('#loadFade').modal('hide'); 
                                                 if(AjaxExtJsonAll(aData['TABLA'])){
                                                    if(aData['STATUS']){
+                                                        console.error("selectpicker");
                                                         $(".selectpicker").selectpicker();
                                                         $("#BTN_INICIO").attr('onclick','guardarPrimeraProgramacion('+NUMFICHAE+')');
                                                         $('#MODAL_INICIODIALIS').modal({backdrop:'static',keyboard:false}).modal("show");
@@ -396,21 +396,21 @@ function guardarPrimeraProgramacion(NUMFICHAE){
        CreacionDialisis.rrhh_conexion.push(        {   FormdrrhhConexion      :    $('#rrhhConexion').serializeArray()});
    //**************************************************************************
    
-   var fecha       =   '';
-   if($("#op_fecha_especial").val() == '' || $("#op_fecha_especial").val() == 'undefined' || $("#op_fecha_especial").val() == null){
-       fecha       =   $('#numFecha').val();
-   } else {
-       fecha       =   $('#op_fecha_especial').val();  
-   }
+    var fecha       =   '';
+    if($("#op_fecha_especial").val() == '' || $("#op_fecha_especial").val() == 'undefined' || $("#op_fecha_especial").val() == null){
+        fecha       =   $('#numFecha').val();
+    } else {
+        fecha       =   $('#op_fecha_especial').val();  
+    }
    
-   
-   if(aDatosVacios.length == '0'){
+    if(aDatosVacios.length == '0'){
        jPrompt('Se envian datos para inicio Programaci&oacute;n.</b><br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
            if (r == null){
                jError("Contrase&ntilde;a vacia","e-SISSAN");
            } else {
                //console.log(CreacionDialisis); 
                $('#BTN_INICIO').prop('disabled',true);
+
                $.ajax({
                    url         :   "ssan_hdial_asignacionpaciente/guardaInfdormacionDialisis",
                    type        :   "POST",
@@ -427,7 +427,7 @@ function guardarPrimeraProgramacion(NUMFICHAE){
                                    },
                    error       :   function(errro)     {   
                                                            console.log(errro.responseText); 
-                                                           jError("Comuniquese con el administrador","E-SISSAN"); 
+                                                           jError("Comuniquese con el administrador","Clinica Libre"); 
                                                            $('#BTN_INICIO').prop('disabled',false);
 
                                                        },              
@@ -446,14 +446,14 @@ function guardarPrimeraProgramacion(NUMFICHAE){
                                                                   }
                                                                });
                                                            } else {
-                                                               jError("Firma Simple Incorrecta","e-SISSAN Restricci\u00f3n");
+                                                               jError("Firma Simple Incorrecta","Clinica Libre - Restricci\u00f3n");
                                                            }
                                                        }
                });   
            }
        });
    } else {
-       jError("Existe informaci&oacute;n incompleta","e-SISSAN");
+       jError("Existe informaci&oacute;n incompleta","Clinica Libre");
    }
 }
 
