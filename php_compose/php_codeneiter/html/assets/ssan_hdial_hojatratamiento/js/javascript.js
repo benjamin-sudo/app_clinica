@@ -296,11 +296,7 @@ function js_inicioProgama(NUMFICHAE,NUM_CITA,IDHOJADIARIA,OPMEDIC){
 }
 
 function js_primeraDatosProgramacion(NUMFICHAE){
-
-
     $('#loadFade').modal('show'); 
-
-
     $.ajax({
        url         :   "ssan_hdial_asignacionpaciente/cargahtmlcarga",
        type        :   "POST",
@@ -316,23 +312,22 @@ function js_primeraDatosProgramacion(NUMFICHAE){
                                                $('#loadFade').modal('hide'); 
                                             },              
        success     :   function(aData)     { 
-
                                                 console.log("-------------------------------------");
                                                 console.log("aData  ->  ",aData);
                                                 console.log("-------------------------------------");
+
                                                 $('#loadFade').modal('hide'); 
                                                 if(AjaxExtJsonAll(aData['TABLA'])){
                                                    if(aData['STATUS']){
-                                                       $(".selectpicker").selectpicker();
-                                                       $("#BTN_INICIO").attr('onclick','guardarPrimeraProgramacion('+NUMFICHAE+')');
-                                                       $('#MODAL_INICIODIALIS').modal({backdrop:'static',keyboard:false}).modal("show");
+                                                        $(".selectpicker").selectpicker();
+                                                        $("#BTN_INICIO").attr('onclick','guardarPrimeraProgramacion('+NUMFICHAE+')');
+                                                        $('#MODAL_INICIODIALIS').modal({backdrop:'static',keyboard:false}).modal("show");
                                                    } else {
                                                        eventosBuscar($("#num_Maquina").val());
                                                    }
                                                 } 
                                            }
    });
-
 }
 
 //inicio js_signovitales

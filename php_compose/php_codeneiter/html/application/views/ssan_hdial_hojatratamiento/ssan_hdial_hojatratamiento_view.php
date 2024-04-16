@@ -224,15 +224,14 @@
     </div>
 
     <!-- modal deputado -->
-
     <div class="modal fade" id="MODAL_INICIODIALIS">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">INICIO TRATAMIENTO</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body" id="HTML_PACIENE"></div>
+                <div class="modal-body" id="HTML_INICIODEDIALISIS"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
                     <button type="button" class="btn btn-primary btn-fill btn-wd" id="BTN_INICIO"><i class="bi bi-floppy"></i>&nbsp;GUARDAR INFORMACI&Oacute;N</button>

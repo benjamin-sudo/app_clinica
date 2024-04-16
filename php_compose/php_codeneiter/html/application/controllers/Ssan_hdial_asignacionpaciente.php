@@ -773,7 +773,6 @@ public function cargahtmlcarga(){
     #PREGUNTAR SI TIENE YA YIENE UNA HOJA ACTIVA
     $date                       =   date("d-m-Y");
     $DATA_HOJA                  =   $this->Ssan_hdial_eliminacionhojadiara_model->al_dia_hojaactiva($numfichae,$date);
-
     if(count($DATA_HOJA)>0){
         $TABLA[]                =   array("id_html"=>'',  "opcion" => "console",  "contenido"=> "SI TIENE HOJA EL DIA DE HOY");
         $ADMISION_ACTIVA        =   false;
@@ -791,6 +790,7 @@ public function cargahtmlcarga(){
     } else {
         $TABLA[]                =   array("id_html"=>'',  "opcion" => "console",  "contenido"=> "NOOO -> al_dia_hojaactiva");
     }
+
     //**********************************************************************
     $NUM_PESOSECO               =   '';
     $aData                      =   $this->Ssan_hdial_asignacionpaciente_model->sqlInformacionComplementariaPesoSeco($empresa,$numfichae);  
@@ -826,28 +826,29 @@ public function cargahtmlcarga(){
 
 public function htmlINICIOPROGRAMACION($NUM_PESOSECO){
     #onKeyPress="return num_coma(event, this)"
-     $html ='
+    #a la tade 16.04.2024
+
+    $html ='
         <div class="grid_primera_programacion">
             <div class=" card grid_primera_programacion1" style="margin-bottom: 0px">
                 <div class="" style="margin-bottom: 0px">
-                    <div class="header">
+
+                    <div class="header"  style="margin: 12px 0px 0px 12px;">
                         <h4 class="title"><b>HORA, DATOS DE PROGRAMACI&Oacute;N</b></h4>
                         <p class="category"> (*) Informaci&oacute;n no obligatoria</p>
                     </div>
+
                     <form id="formulario_histo" name="formulario_histo">
                         <div class="contenedor">
                             <div class="form-group">
                                 <label for="txtHoraIngresoPre"><b>HR CONEXI&Oacute;N</b></label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                                    <input type="time" class="form-control input-sm" id="txtHoraIngresoPre" name="txtHoraIngresoPre" style="width:auto;height:31px">
-                                </div>
+                                <input type="time" class="form-control input-sm" id="txtHoraIngresoPre" name="txtHoraIngresoPre" style="width:auto;height:31px">
                             </div>
                             <div class="form-group">
                                 <label for="input_pesoSeco"><b>PESO SECO</b></label>
-                                <div class="input-group">
+                                <div class="input-group mb-3">
                                     <input type="number"  placeholder="KG" class="form-control input-sm" id="input_pesoSeco" name="input_pesoSeco" style="width:70px;" size="6" max="6" maxlength="6" value="'.$NUM_PESOSECO.'"/>
-                                    <span class="input-group-addon">KG</span>
+                                    <span class="input-group-text">KG</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -889,7 +890,7 @@ public function htmlINICIOPROGRAMACION($NUM_PESOSECO){
             <div class=" card grid_primera_programacion2"  style="margin-bottom: 0px">
                 <form method="get" action="#" class="form-horizontal" id="rrhhConexion" name="rrhhConexion" >
                     <div class="" style="margin-bottom: 0px">
-                        <div class="header">
+                        <div class="header"  style="margin: 12px 0px 0px 12px;">
                             <h4 class="title"><b>PROFESIONALES CONEXI&Oacute;N</b></h4>
                             <p class="category">Informaci&oacute;n RRHH di&aacute;lisis</p>
                         </div>
