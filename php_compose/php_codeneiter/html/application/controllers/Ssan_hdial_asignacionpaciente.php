@@ -6,6 +6,7 @@ class Ssan_hdial_asignacionpaciente extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_hdial_hojatratamiento_model");
+        $this->load->model("Ssan_hdial_asignacionpaciente_model");
     }
 
     public function index() {
@@ -13,7 +14,9 @@ class Ssan_hdial_asignacionpaciente extends CI_Controller {
         $this->load->js("assets/ssan_hdial_asignacionpaciente/js/javascript.js");
         $this->load->js("assets/ssan_hdial_hojatratamiento/js/javascript_hd.js");
         $this->load->css("assets/ssan_hdial_asignacionpaciente/css/styles.css");
-        $this->load->view("ssan_hdial_asignacionpaciente/ssan_hdial_asignacionpaciente_view");
+        $v_out = [];
+        #$v_out['arr_maquinas']  = $this->Ssan_hdial_asignacionpaciente_model->ListadoMaquinasDialisis($empresa,$estados);
+        $this->load->view("ssan_hdial_asignacionpaciente/ssan_hdial_asignacionpaciente_view",$v_out);
     }
       
 
@@ -500,9 +503,9 @@ function draw_calendar2($month,$year,$act,$numCale,$cod_rutpro){
     $calendar           = '';
     if($month<10)       { $month = sprintf("%02d", $month);  } 
     $running_day        = date('w',mktime(0,0,0,$month,1,$year));
-$days_in_month      = date('t',mktime(0,0,0,$month,1,$year));
+    $days_in_month      = date('t',mktime(0,0,0,$month,1,$year));
     $days_in_this_week  = 1;
-$day_counter        = 0;
+    $day_counter        = 0;
     //**********************************************************************************************
     $calendar.='<div class="container-fluid">';
     $calendar.='<div class="card">';

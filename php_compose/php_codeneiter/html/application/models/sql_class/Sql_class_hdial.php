@@ -151,30 +151,29 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function profActvNuevaAgenda($empresa) {
-        $sQuery = "
-            SELECT
-                A.COD_RUTPRO,  
-                UPPER(A.NOM_APEPAT)||' '||UPPER(A.NOM_APEMAT)||' '||UPPER(A.NOM_NOMBRE)                 AS NOM_PROFE,
-                C.DES_TIPOATENCION                                                                      AS DES_TIPOATENCION,
-                A.COD_DIGVER                                                                            AS COD_DIGVER,
-                B.COD_TPROFE                                                                            AS COD_TPROFE,
-                B.NOM_TPROFE                                                                            AS NOM_TPROFE,
-                C.IND_TIPOATENCION                                                                      AS IND_TIPOATENCION
-            FROM
-                $this->own.GG_TPROFESIONAL         A,
-                $this->own.GG_TPROFESION           B,
-                $this->own.AP_TTIPOATENCION        C,
-                $this->own.AP_TPROFXESTABL         D
-            WHERE
-                A.IND_ESTADO                        =   'V'                   AND
-                D.IND_ESTADO                        =   'V'                   AND
-                A.COD_TPROFE                        =   B.COD_TPROFE          AND
-                B.IND_TIPOATENCION                  =   C.IND_TIPOATENCION    AND
-                A.COD_RUTPRO                        =   D.COD_RUTPRO          AND
-                D.COD_EMPRESA                       =   '$empresa'
-            ORDER BY
-                C.IND_TIPOATENCION, A.NOM_APEPAT
-            ";
+        $sQuery = " SELECT
+                        A.COD_RUTPRO,  
+                        UPPER(A.NOM_APEPAT)||' '||UPPER(A.NOM_APEMAT)||' '||UPPER(A.NOM_NOMBRE)                 AS NOM_PROFE,
+                        C.DES_TIPOATENCION                                                                      AS DES_TIPOATENCION,
+                        A.COD_DIGVER                                                                            AS COD_DIGVER,
+                        B.COD_TPROFE                                                                            AS COD_TPROFE,
+                        B.NOM_TPROFE                                                                            AS NOM_TPROFE,
+                        C.IND_TIPOATENCION                                                                      AS IND_TIPOATENCION
+                    FROM
+                        $this->own.GG_TPROFESIONAL         A,
+                        $this->own.GG_TPROFESION           B,
+                        $this->own.AP_TTIPOATENCION        C,
+                        $this->own.AP_TPROFXESTABL         D
+                    WHERE
+                        A.IND_ESTADO                        =   'V'                   AND
+                        D.IND_ESTADO                        =   'V'                   AND
+                        A.COD_TPROFE                        =   B.COD_TPROFE          AND
+                        B.IND_TIPOATENCION                  =   C.IND_TIPOATENCION    AND
+                        A.COD_RUTPRO                        =   D.COD_RUTPRO          AND
+                        D.COD_EMPRESA                       =   '$empresa'
+                    ORDER BY
+                        C.IND_TIPOATENCION, A.NOM_APEPAT
+                    ";
         return $sQuery;
     }
     
@@ -188,8 +187,7 @@ class sql_class_hdial extends CI_Model {
                 P.COD_RUTPAC    = G.COD_RUTPAC AND 
                 P.COD_EMPRESA   = '$empresa')                           AS F_LOCAL,
         */
-        $sQuery = "
-                SELECT 
+        $sQuery = "SELECT 
                     'NO INICIADO'                                               AS HRS_INICIO,
                     ''                                                          AS FECHA_DIAL,
                     ''                                                          AS ID_TDHOJADIARIA,
@@ -248,9 +246,7 @@ class sql_class_hdial extends CI_Model {
                 P.COD_EMPRESA   = '$empresa') AS F_LOCAL,
                             
          */
-        $sQuery = "
-            
-                SELECT 
+        $sQuery = "SELECT 
                  
                     TO_CHAR(AD.AD_FHADMISION,'HH24:MI')                         AS HRS_INICIO,
                     TO_CHAR(AD.AD_FHADMISION, 'DD-MM-YYYY')                     AS FECHA_DIAL,
@@ -294,170 +290,167 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function proBusquedaHoradiaria_profActvNuevaAgenda($empresa,$fecha,$num_Maquina){ 
-        $sQuery =" 
-            SELECT 
-                CASE 
-                    WHEN TO_CHAR(SYSDATE,'DD-MM') = TO_CHAR(G.FEC_NACIMI,'DD-MM')   
-                    THEN '1' ELSE '0'
-                END                                                                     AS IND_AYER,
-                TO_CHAR (AD.AD_FHADMISION,'HH24:MI')                                    AS HRS_INICIO,
-                TO_CHAR (AD.AD_FHADMISION,'DD-MM-YYYY')                                 AS FECHA_DIAL,
-                HD.ID_TDHOJADIARIA                                                      AS ID_TDHOJADIARIA,
-                AD.AD_ID_ADMISION                                                       AS AD_ADMISION,
-                CI.CI_ID_CIERRE                                                         AS AD_CIERRE,
-                UPPER (G.NOM_APEPAT || ' ' || G.NOM_APEMAT || ' ' || G.NOM_NOMBRE)      AS NOMPAC,
-                G.COD_RUTPAC || '-' || G.COD_DIGVER                                     AS RUTPAC,
-                TO_CHAR (G.FEC_NACIMI, 'DD-MM-YYYY')                                    AS NACIMIENTO,
-                G.NUM_FICHAE                                                            AS NUMFICHAE,
-                H.ID_CUPOXPACIENTE                                                      AS ID_CUPO,
-                H.COD_EMPRESA                                                           AS EMPRESA,
-                H.NUM_INGRESO                                                           AS NUM_INGRESO,
-                H.ID_RMDIALISIS                                                         AS MKN,
-                H.ID_TURNOSXDIAS                                                        AS TRN,
-                H.COD_USRCREA,
-                H.DATE_CREA,
-                H.IND_ESTADO                                                            AS IND_ESTADO,
-                NULL                                                                    AS DIA,
-                HD.IND_HDESTADO                                                         AS CIERREHD
-            FROM 
-                ADMIN.HD_NPACIENTEXCUPO         H,
-                ADMIN.GG_TGPACTE                G,
-                ADMIN.HD_TDHOJADIARIA           HD,
-                ADMIN.URG_TADMISION             AD,
-                ADMIN.URG_TCIERRE               CI
-           WHERE 
-                AD.AD_FHADMISION 
-                                BETWEEN 
-                                    TO_DATE ('$fecha 00:00:00','DD-MM-YYYY hh24:mi:ss')
-                                AND 
-                                    TO_DATE ('$fecha 23:59:59','DD-MM-YYYY hh24:mi:ss')
-                AND H.COD_EMPRESA                                               = $empresa
-                AND HD.ID_RMDIALISIS                                            = $num_Maquina
-                AND AD.AD_ID_ADMISION                                           = CI.AD_ID_ADMISION(+)
-                AND AD.AD_ID_ADMISION                                           = HD.AD_ID_ADMISION
-                AND AD.NUM_FICHAE                                               = HD.NUM_FICHAE
-                AND H.NUM_FICHAE                                                = HD.NUM_FICHAE
-                AND G.NUM_FICHAE                                                = H.NUM_FICHAE 
-                AND H.IND_ESTADO                                                = 1
-                AND AD.AD_ACTIVA                                                = 1
-        UNION 
-            SELECT
-                NULL                                                            AS IND_AYER,
-                NULL                                                            AS HRS_INICIO,
-                NULL                                                            AS FECHA_DIAL,
-                NULL                                                            AS ID_TDHOJADIARIA,
-                NULL                                                            AS AD_ADMISION,
-                NULL                                                            AS AD_CIERRE,
-                UPPER(G.NOM_APEPAT||' '||G.NOM_APEMAT||' '||G.NOM_NOMBRE)       AS NOMPAC,
-                G.COD_RUTPAC || '-' || G.COD_DIGVER                             AS RUTPAC,
-                TO_CHAR (G.FEC_NACIMI, 'DD-MM-YYYY')                            AS NACIMIENTO,
-                G.NUM_FICHAE                                                    AS NUMFICHAE,
-                H.ID_CUPOXPACIENTE                                              AS ID_CUPO,
-                H.COD_EMPRESA                                                   AS EMPRESA,
-                H.NUM_INGRESO                                                   AS NUM_INGRESO,
-                H.ID_RMDIALISIS                                                 AS MKN,
-                H.ID_TURNOSXDIAS                                                AS TRN,
-                H.COD_USRCREA,
-                H.DATE_CREA,
-                H.IND_ESTADO                                                    AS IND_ESTADO,
-                T.ID_NDIA                                                       AS DIA,
-                NULL                                                            AS CIERREHD
-                
-            FROM 
-                ADMIN.HD_NPACIENTEXCUPO     H,
-                ADMIN.GG_TGPACTE            G,
-                ADMIN.HD_TURNODIALISIS      T
-            WHERE     
-                    H.COD_EMPRESA           =   $empresa
-                AND H.COD_EMPRESA           =   T.COD_EMPRESA
-                AND H.ID_RMDIALISIS         =   T.ID_RMDIALISIS
-                AND G.NUM_FICHAE            =   H.NUM_FICHAE
-                AND H.ID_TURNOSXDIAS        =   T.ID_TURNOSXDIAS
-                AND H.IND_ESTADO            =   1
-                AND T.IND_ESTADO            =   1
-                
-                AND (
-                    SELECT 
-                        AD.AD_ID_ADMISION||'#'||TO_CHAR(AD.AD_FHADMISION,'HH24:MI')||'#'||HD.ID_TDHOJADIARIA 
-                    FROM  
-                        ADMIN.URG_TADMISION     AD, 
-                        ADMIN.HD_TDHOJADIARIA   HD 
-                    WHERE  
-                            AD.AD_FHADMISION  
-                                BETWEEN 
-                            TO_DATE('$fecha 00:00:00','DD-MM-YYYY hh24:mi:ss') 
-                                AND 
-                            TO_DATE('$fecha 23:59:59','DD-MM-YYYY hh24:mi:ss') 
+        $sQuery ="SELECT 
+                    CASE 
+                        WHEN TO_CHAR(SYSDATE,'DD-MM') = TO_CHAR(G.FEC_NACIMI,'DD-MM') THEN '1' ELSE '0'
+                    END                                                                     AS IND_AYER,
+                    TO_CHAR (AD.AD_FHADMISION,'HH24:MI')                                    AS HRS_INICIO,
+                    TO_CHAR (AD.AD_FHADMISION,'DD-MM-YYYY')                                 AS FECHA_DIAL,
+                    HD.ID_TDHOJADIARIA                                                      AS ID_TDHOJADIARIA,
+                    AD.AD_ID_ADMISION                                                       AS AD_ADMISION,
+                    CI.CI_ID_CIERRE                                                         AS AD_CIERRE,
+                    UPPER (G.NOM_NOMBRE|| ' ' || G.NOM_APEPAT || ' ' || G.NOM_APEMAT)       AS NOMPAC,
+                    G.COD_RUTPAC || '-' || G.COD_DIGVER                                     AS RUTPAC,
+                    TO_CHAR (G.FEC_NACIMI, 'DD-MM-YYYY')                                    AS NACIMIENTO,
+                    G.NUM_FICHAE                                                            AS NUMFICHAE,
+                    H.ID_CUPOXPACIENTE                                                      AS ID_CUPO,
+                    H.COD_EMPRESA                                                           AS EMPRESA,
+                    H.NUM_INGRESO                                                           AS NUM_INGRESO,
+                    H.ID_RMDIALISIS                                                         AS MKN,
+                    H.ID_TURNOSXDIAS                                                        AS TRN,
+                    H.COD_USRCREA,
+                    H.DATE_CREA,
+                    H.IND_ESTADO                                                            AS IND_ESTADO,
+                    NULL                                                                    AS DIA,
+                    HD.IND_HDESTADO                                                         AS CIERREHD
+                FROM 
+                    ADMIN.HD_NPACIENTEXCUPO         H,
+                    ADMIN.GG_TGPACTE                G,
+                    ADMIN.HD_TDHOJADIARIA           HD,
+                    ADMIN.URG_TADMISION             AD,
+                    ADMIN.URG_TCIERRE               CI
+            WHERE 
+                    AD.AD_FHADMISION 
+                        BETWEEN 
+                            TO_DATE ('$fecha 00:00:00','YYYY-MM-DD hh24:mi:ss')
                         AND 
-                            G.NUM_FICHAE        = HD.NUM_FICHAE 
-                        AND 
-                            HD.AD_ID_ADMISION   = AD.AD_ID_ADMISION 
-                        AND
-                            AD.AD_ACTIVA        = 1
-                    )                                                          IS NULL 
-                AND H.ID_RMDIALISIS                                            = $num_Maquina
-                AND T.ID_NDIA                                                  = (SELECT DECODE(
-                                                                                    RTRIM(
-                                                                                        LTRIM(
-                                                                                            TO_CHAR(TO_DATE('$fecha'),
-                                                                                                'DAY',
-                                                                                                'NLS_DATE_LANGUAGE=SPANISH'))),
-                                                                                                'LUNES',        0,
-                                                                                                'MARTES',       1,
-                                                                                                'MIÉRCOLES',    2,
-                                                                                                'JUEVES',       3,
-                                                                                                'VIERNES',      4,
-                                                                                                'SÁBADO',       5,
-                                                                                                'DOMINGO',      6) AS NUM_DIA
-                                                                                   FROM DUAL)   
+                            TO_DATE ('$fecha 23:59:59','YYYY-MM-DD hh24:mi:ss')
+                    AND H.COD_EMPRESA                                               = $empresa
+                    AND HD.ID_RMDIALISIS                                            = $num_Maquina
+                    AND AD.AD_ID_ADMISION                                           = CI.AD_ID_ADMISION(+)
+                    AND AD.AD_ID_ADMISION                                           = HD.AD_ID_ADMISION
+                    AND AD.NUM_FICHAE                                               = HD.NUM_FICHAE
+                    AND H.NUM_FICHAE                                                = HD.NUM_FICHAE
+                    AND G.NUM_FICHAE                                                = H.NUM_FICHAE 
+                    AND H.IND_ESTADO                                                = 1
+                    AND AD.AD_ACTIVA                                                = 1
+            UNION 
+                SELECT
+                    NULL                                                            AS IND_AYER,
+                    NULL                                                            AS HRS_INICIO,
+                    NULL                                                            AS FECHA_DIAL,
+                    NULL                                                            AS ID_TDHOJADIARIA,
+                    NULL                                                            AS AD_ADMISION,
+                    NULL                                                            AS AD_CIERRE,
+                    UPPER(G.NOM_APEPAT||' '||G.NOM_APEMAT||' '||G.NOM_NOMBRE)       AS NOMPAC,
+                    G.COD_RUTPAC || '-' || G.COD_DIGVER                             AS RUTPAC,
+                    TO_CHAR (G.FEC_NACIMI, 'DD-MM-YYYY')                            AS NACIMIENTO,
+                    G.NUM_FICHAE                                                    AS NUMFICHAE,
+                    H.ID_CUPOXPACIENTE                                              AS ID_CUPO,
+                    H.COD_EMPRESA                                                   AS EMPRESA,
+                    H.NUM_INGRESO                                                   AS NUM_INGRESO,
+                    H.ID_RMDIALISIS                                                 AS MKN,
+                    H.ID_TURNOSXDIAS                                                AS TRN,
+                    H.COD_USRCREA,
+                    H.DATE_CREA,
+                    H.IND_ESTADO                                                    AS IND_ESTADO,
+                    T.ID_NDIA                                                       AS DIA,
+                    NULL                                                            AS CIERREHD
+                    
+                FROM 
+                    ADMIN.HD_NPACIENTEXCUPO     H,
+                    ADMIN.GG_TGPACTE            G,
+                    ADMIN.HD_TURNODIALISIS      T
+                WHERE     
+                        H.COD_EMPRESA           =   $empresa
+                    AND H.COD_EMPRESA           =   T.COD_EMPRESA
+                    AND H.ID_RMDIALISIS         =   T.ID_RMDIALISIS
+                    AND G.NUM_FICHAE            =   H.NUM_FICHAE
+                    AND H.ID_TURNOSXDIAS        =   T.ID_TURNOSXDIAS
+                    AND H.IND_ESTADO            =   1
+                    AND T.IND_ESTADO            =   1
+                    
+                    AND (
+                        SELECT 
+                            AD.AD_ID_ADMISION||'#'||TO_CHAR(AD.AD_FHADMISION,'HH24:MI')||'#'||HD.ID_TDHOJADIARIA 
+                        FROM  
+                            ADMIN.URG_TADMISION     AD, 
+                            ADMIN.HD_TDHOJADIARIA   HD 
+                        WHERE  
+                                AD.AD_FHADMISION  
+                                    BETWEEN 
+                                TO_DATE('$fecha 00:00:00','YYYY-MM-DD hh24:mi:ss') 
+                                    AND 
+                                TO_DATE('$fecha 23:59:59','YYYY-MM-DD hh24:mi:ss') 
+                            AND 
+                                G.NUM_FICHAE        = HD.NUM_FICHAE 
+                            AND 
+                                HD.AD_ID_ADMISION   = AD.AD_ID_ADMISION 
+                            AND
+                                AD.AD_ACTIVA        = 1
+                        )                                                          IS NULL 
+                    AND H.ID_RMDIALISIS                                            = $num_Maquina
+                    AND T.ID_NDIA                                                  = (SELECT DECODE(
+                                                                                        RTRIM(
+                                                                                            LTRIM(
+                                                                                                TO_CHAR(TO_DATE('$fecha'),
+                                                                                                    'DAY',
+                                                                                                    'NLS_DATE_LANGUAGE=SPANISH'))),
+                                                                                                    'LUNES',        0,
+                                                                                                    'MARTES',       1,
+                                                                                                    'MIÉRCOLES',    2,
+                                                                                                    'JUEVES',       3,
+                                                                                                    'VIERNES',      4,
+                                                                                                    'SÁBADO',       5,
+                                                                                                    'DOMINGO',      6) AS NUM_DIA
+                                                                                    FROM DUAL)   
                 ";
                 return $sQuery;
     }        
 
     public function proBuscaHojaDiaria($empresa,$fecha,$num_Maquina){ 
     
-        $sQuery =" 
-            SELECT 
-                TO_CHAR (AD.AD_FHADMISION, 'HH24:MI')                                   AS HRS_INICIO,
-                TO_CHAR (AD.AD_FHADMISION, 'DD-MM-YYYY')                                AS FECHA_DIAL,
-                HD.ID_TDHOJADIARIA                                                      AS ID_TDHOJADIARIA,
-                AD.AD_ID_ADMISION                                                       AS AD_ADMISION,
-                CI.CI_ID_CIERRE                                                         AS AD_CIERRE,
-                UPPER (G.NOM_APEPAT || ' ' || G.NOM_APEMAT || ' ' || G.NOM_NOMBRE)      AS NOMPAC,
-                G.COD_RUTPAC || '-' || G.COD_DIGVER                                     AS RUTPAC,
-                TO_CHAR (G.FEC_NACIMI, 'DD-MM-YYYY')                                    AS NACIMIENTO,
-                G.NUM_FICHAE                                                            AS NUMFICHAE,
-                H.ID_CUPOXPACIENTE                                                      AS ID_CUPO,
-                H.COD_EMPRESA                                                           AS EMPRESA,
-                H.NUM_INGRESO                                                           AS NUM_INGRESO,
-                H.ID_RMDIALISIS                                                         AS MKN,
-                H.ID_TURNOSXDIAS                                                        AS TRN,
-                H.COD_USRCREA,
-                H.DATE_CREA,
-                H.IND_ESTADO                                                            AS IND_ESTADO,
-                NULL                                                                    AS DIA,
-                HD.IND_HDESTADO                                                         AS CIERREHD
-            FROM 
-                ADMIN.HD_NPACIENTEXCUPO         H,
-                ADMIN.GG_TGPACTE                G,
-                ADMIN.HD_TDHOJADIARIA           HD,
-                ADMIN.URG_TADMISION             AD,
-                ADMIN.URG_TCIERRE               CI
-           WHERE 
-                    AD.AD_FHADMISION 
-                                BETWEEN 
-                                    TO_DATE ('$fecha 00:00:00','DD-MM-YYYY hh24:mi:ss')
-                                AND 
-                                    TO_DATE ('$fecha 23:59:59','DD-MM-YYYY hh24:mi:ss')
-                AND H.COD_EMPRESA                                               = $empresa
-                AND HD.ID_RMDIALISIS                                            = $num_Maquina
-                AND AD.AD_ID_ADMISION                                           = CI.AD_ID_ADMISION
-                AND AD.AD_ID_ADMISION                                           = HD.AD_ID_ADMISION
-                AND AD.NUM_FICHAE                                               = HD.NUM_FICHAE
-                AND H.NUM_FICHAE                                                = HD.NUM_FICHAE
-                AND G.NUM_FICHAE                                                = H.NUM_FICHAE 
-                AND H.IND_ESTADO                                                = 1
-                AND AD.AD_ACTIVA                                                = 1
+        $sQuery ="SELECT 
+                    TO_CHAR (AD.AD_FHADMISION, 'HH24:MI')                                   AS HRS_INICIO,
+                    TO_CHAR (AD.AD_FHADMISION, 'DD-MM-YYYY')                                AS FECHA_DIAL,
+                    HD.ID_TDHOJADIARIA                                                      AS ID_TDHOJADIARIA,
+                    AD.AD_ID_ADMISION                                                       AS AD_ADMISION,
+                    CI.CI_ID_CIERRE                                                         AS AD_CIERRE,
+                    UPPER (G.NOM_APEPAT || ' ' || G.NOM_APEMAT || ' ' || G.NOM_NOMBRE)      AS NOMPAC,
+                    G.COD_RUTPAC || '-' || G.COD_DIGVER                                     AS RUTPAC,
+                    TO_CHAR (G.FEC_NACIMI, 'DD-MM-YYYY')                                    AS NACIMIENTO,
+                    G.NUM_FICHAE                                                            AS NUMFICHAE,
+                    H.ID_CUPOXPACIENTE                                                      AS ID_CUPO,
+                    H.COD_EMPRESA                                                           AS EMPRESA,
+                    H.NUM_INGRESO                                                           AS NUM_INGRESO,
+                    H.ID_RMDIALISIS                                                         AS MKN,
+                    H.ID_TURNOSXDIAS                                                        AS TRN,
+                    H.COD_USRCREA,
+                    H.DATE_CREA,
+                    H.IND_ESTADO                                                            AS IND_ESTADO,
+                    NULL                                                                    AS DIA,
+                    HD.IND_HDESTADO                                                         AS CIERREHD
+                FROM 
+                    ADMIN.HD_NPACIENTEXCUPO         H,
+                    ADMIN.GG_TGPACTE                G,
+                    ADMIN.HD_TDHOJADIARIA           HD,
+                    ADMIN.URG_TADMISION             AD,
+                    ADMIN.URG_TCIERRE               CI
+            WHERE 
+                        AD.AD_FHADMISION 
+                                    BETWEEN 
+                                        TO_DATE ('$fecha 00:00:00','DD-MM-YYYY hh24:mi:ss')
+                                    AND 
+                                        TO_DATE ('$fecha 23:59:59','DD-MM-YYYY hh24:mi:ss')
+                    AND H.COD_EMPRESA                                               = $empresa
+                    AND HD.ID_RMDIALISIS                                            = $num_Maquina
+                    AND AD.AD_ID_ADMISION                                           = CI.AD_ID_ADMISION
+                    AND AD.AD_ID_ADMISION                                           = HD.AD_ID_ADMISION
+                    AND AD.NUM_FICHAE                                               = HD.NUM_FICHAE
+                    AND H.NUM_FICHAE                                                = HD.NUM_FICHAE
+                    AND G.NUM_FICHAE                                                = H.NUM_FICHAE 
+                    AND H.IND_ESTADO                                                = 1
+                    AND AD.AD_ACTIVA                                                = 1
                 ";
         return $sQuery;
     }
@@ -465,8 +458,7 @@ class sql_class_hdial extends CI_Model {
     
     public function proBuscaHojaDiaria_HD($HD){ 
         
-        $sQuery =" 
-                    SELECT 
+        $sQuery ="SELECT 
                         TO_CHAR (AD.AD_FHADMISION, 'HH24:MI')                                   AS HRS_INICIO,
                         TO_CHAR (AD.AD_FHADMISION, 'DD-MM-YYYY')                                AS FECHA_DIAL,
                         HD.ID_TDHOJADIARIA                                                      AS ID_TDHOJADIARIA,
@@ -509,8 +501,7 @@ class sql_class_hdial extends CI_Model {
 
     public function sqlbusquedaListadoPacienteHDxMaquinaCAdmision($empresa,$idMaquina,$fechaBusqueda){
 
-            $sQuery = " 
-                        SELECT
+            $sQuery = "SELECT
                             TO_CHAR(AD.AD_FHADMISION,'HH24:MI')                                                                         AS HRS_INICIO,
                             H.AD_ID_ADMISION                                                                                            AS NUMCITA,
                             H.ID_TDHOJADIARIA                                                                                           AS ID_TDHOJADIARIA,
@@ -554,9 +545,7 @@ class sql_class_hdial extends CI_Model {
     }
     public function sql_busquedaEstadoAdmision($AD_ID_ADMISION){
            
-        $sQuery="
-            
-            SELECT
+        $sQuery="SELECT
                 
                     U.AD_ID_ADMISION, 
                     TO_CHAR(U.AD_FHADMISION,    'DD-MM-YYYY hh24:mi')           AS FEC_ADMISION,
@@ -668,8 +657,7 @@ class sql_class_hdial extends CI_Model {
     
     public function sqlFichalocal($numfichae,$empresa){
         
-        $sQuery = " 
-                SELECT 
+        $sQuery = "SELECT 
                     B.NUM_NFICHA  AS FICHA_LOCAL
                 FROM 
                     ADMIN.SO_TCPACTE B 
@@ -683,8 +671,7 @@ class sql_class_hdial extends CI_Model {
 
     //change 19.04.2021
     public function sqlDatosGeneralesxDial($IDHOJADIARIA){
-        $sQuery = " 
-                SELECT 
+        $sQuery = "SELECT 
                     (
                         SELECT 
                             U.AD_ID_ADMISION
@@ -900,20 +887,19 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function getbusquedadecuposporagendahd($fechaini,$fechafin,$empresa,$num_fichae){
-        $sQuery ="
-                SELECT  
-                        TO_CHAR(A.DATE_REALIZAHD,'DD-MM-YYYY')                  AS FECHA,
-                        A.ID_TDHOJADIARIA                                       AS ID_TDHOJADIARIA,
-                        COUNT(*)                                                AS NUM_ACTIVIDAS
-                FROM 
-                        ADMIN.HD_TDHOJADIARIA A
-                WHERE 
-                            A.DATE_REALIZAHD BETWEEN TO_DATE('$fechaini 00:00','DD/MM/YYYY hh24:mi') AND TO_DATE('$fechafin 23:59','DD/MM/YYYY  hh24:mi') 
-                        AND A.NUM_FICHAE = $num_fichae
-                GROUP BY 
-                       TO_CHAR(A.DATE_REALIZAHD, 'DD-MM-YYYY'),A.ID_TDHOJADIARIA 
-                HAVING 
-                        COUNT(*)> 0
+        $sQuery ="SELECT  
+                            TO_CHAR(A.DATE_REALIZAHD,'DD-MM-YYYY')                  AS FECHA,
+                            A.ID_TDHOJADIARIA                                       AS ID_TDHOJADIARIA,
+                            COUNT(*)                                                AS NUM_ACTIVIDAS
+                    FROM 
+                            ADMIN.HD_TDHOJADIARIA A
+                    WHERE 
+                                A.DATE_REALIZAHD BETWEEN TO_DATE('$fechaini 00:00','DD/MM/YYYY hh24:mi') AND TO_DATE('$fechafin 23:59','DD/MM/YYYY  hh24:mi') 
+                            AND A.NUM_FICHAE = $num_fichae
+                    GROUP BY 
+                        TO_CHAR(A.DATE_REALIZAHD, 'DD-MM-YYYY'),A.ID_TDHOJADIARIA 
+                    HAVING 
+                            COUNT(*)> 0
 
                 ";
         /*
@@ -1131,19 +1117,18 @@ class sql_class_hdial extends CI_Model {
     
     public static function sqlNextValFolio($tableSpace, $codEmpresa, $sistema) {
 
-        $sQuery = "
-                SELECT
-                        (
-                            CASE
-                                WHEN MAX(A.AD_NUMFOLIO) IS NULL
-                                THEN 1
-                                ELSE MAX(A.AD_NUMFOLIO) + 1
-                            END
-                        ) AS NFOLIO
-                FROM
-                        " . $tableSpace . ".URG_TADMISION A
-                WHERE
-                        A.COD_EMPRESA = '" . $codEmpresa . "' AND A.AD_PROCEDENCIA = " . $sistema . " ";
+        $sQuery = "SELECT
+                            (
+                                CASE
+                                    WHEN MAX(A.AD_NUMFOLIO) IS NULL
+                                    THEN 1
+                                    ELSE MAX(A.AD_NUMFOLIO) + 1
+                                END
+                            ) AS NFOLIO
+                    FROM
+                            " . $tableSpace . ".URG_TADMISION A
+                    WHERE
+                            A.COD_EMPRESA = '" . $codEmpresa . "' AND A.AD_PROCEDENCIA = " . $sistema . " ";
         return $sQuery;
 // 		$sQuery = "SELECT
 // 					(
@@ -1201,8 +1186,7 @@ class sql_class_hdial extends CI_Model {
            $where.=" AND A.DATE_AGENDAINICIO BETWEEN TO_DATE('$fecha_desde 00:00:00','DD/MM/YYYY hh24:mi:ss') AND TO_DATE('$fecha_hasta 23:59:59','DD/MM/YYYY hh24:mi:ss')"; 
         }
         
-        $sQuery = " 
-                    SELECT 
+        $sQuery = "SELECT 
                         ''                                                                                                          AS NUM_HERMODIALIS,
                         A.ID_TAGENDA                                                                                                AS NUM_BLOQUE,
                         A.NUM_CITACION                                                                                              AS NUMCITA,
@@ -1305,8 +1289,7 @@ class sql_class_hdial extends CI_Model {
                 $where = '';
                 if($OP!=''){ $where.= ' AND B.IND_HDESTAPA ='.$OP;  }
         
-                $sm_sql = " 
-                        SELECT 
+                $sm_sql = "SELECT 
                             B.ID_TDHOJADIARIA                                                           AS ID,
                             A.COD_RUTPRO,
                             A.NOM_NOMBRE,
@@ -1341,8 +1324,7 @@ class sql_class_hdial extends CI_Model {
     
     public function sqlExisteimedico($empresa,$numfichae){
 
-        $sQuety = " 
-                    SELECT 
+        $sQuety = "SELECT 
                        H.ID_IMEDICO                 AS ID, 
                        H.NUM_FICHAE, 
                        H.COD_USRCREA, 
@@ -1411,22 +1393,19 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function sqlInformacionComplementariaPesoSeco($empresa,$numfichae){
-        $sQuety = " 
-                SELECT 
-                    H.ID_IMEDICO, 
-                    H.NUM_PESOSECO 
-                FROM 
-                    ADMIN.HD_IMEDICO H
-                WHERE
-                    H.NUM_FICHAE = '$numfichae' AND IND_ESTADO = 1
-                ";
-        
+        $sQuety = "SELECT 
+                        H.ID_IMEDICO, 
+                        H.NUM_PESOSECO 
+                    FROM 
+                        ADMIN.HD_IMEDICO H
+                    WHERE
+                        H.NUM_FICHAE = '$numfichae' AND IND_ESTADO = 1
+                    ";
             return $sQuety; 
     }
     
     public function sqlDatosReacionesAdversas($hojadiaria){
-        $sQuety = " 
-            SELECT 
+        $sQuety = "SELECT 
                     H.ID_RADVERSA                                                AS ID,
                     DECODE(H.ID_RADVERSA,
                                      '1', 'emboleaaerea'
@@ -1469,8 +1448,7 @@ class sql_class_hdial extends CI_Model {
      }
      
       public function sqlbusquedaExamenes($fechaini,$fechafin,$empresa,$num_fichae){
-            $sql="    
-                SELECT  
+            $sql="SELECT  
                     TO_CHAR(M.IE_FHINDICACION,'DD-MM-YYYY')                     AS FECHA,
                     COUNT(M.IE_FHINDICACION)                                    AS NUM_EXAMENES
                 FROM  
@@ -1488,8 +1466,7 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function sql_reacionesAdversas($hojadiaria){
-        $sql="  
-                SELECT 
+        $sql="SELECT 
                     H.ID_RADVERSA                                               AS ID,
                     H.TXT_OBSERVACIONES                                         AS TXTOBS, 
                     R.TXT_RADVERSA                                              AS NAMEREACION,
@@ -1511,8 +1488,7 @@ class sql_class_hdial extends CI_Model {
     }
      
     public function sqlbusquedanombreexamen($fechaini,$fechafin,$empresa,$num_fichae){
-        $sql="    
-            SELECT  
+        $sql="SELECT  
                 M.IE_ID_INDICAEX, 
                 M.RC_ID_TIPORC, 
                 M.EI_ID_ESTINDI, 
@@ -1565,38 +1541,34 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function sqlExisteCierrexAdmision($AD_ID_ADMISION){
-        $sQuety = " 
-            SELECT
-                AD_ID_ADMISION, 
-                CI_ID_CIERRE
-            FROM
-                ADMIN.URG_TCIERRE
-            WHERE
-                AD_ID_ADMISION = $AD_ID_ADMISION
-            ";
+        $sQuety = "SELECT
+                        AD_ID_ADMISION, 
+                        CI_ID_CIERRE
+                    FROM
+                        ADMIN.URG_TCIERRE
+                    WHERE
+                        AD_ID_ADMISION = $AD_ID_ADMISION
+                    ";
         return $sQuety;
     }
     
     public function sqlExisteFuncion($rutpro,$etapa,$hd){
-        $sQuety = " 
-            SELECT
-                ID_RPROFE
-            FROM
-                ADMIN.HD_RHERMOPROFE
-            WHERE
-                COD_RUTPAC      = '$rutpro' 
-            AND 
-                IND_HDESTAPA    = $etapa
-            AND
-                ID_TDHOJADIARIA = $hd
-            ";
+        $sQuety = "SELECT
+                        ID_RPROFE
+                    FROM
+                        ADMIN.HD_RHERMOPROFE
+                    WHERE
+                        COD_RUTPAC      = '$rutpro' 
+                    AND 
+                        IND_HDESTAPA    = $etapa
+                    AND
+                        ID_TDHOJADIARIA = $hd
+                    ";
         return $sQuety;
     }
     
     public function sql_guardaHistorial_HD($id,$session,$ip_equipo){
-        $sQuery = "
-            
-            INSERT INTO  
+        $sQuery = "INSERT INTO  
                     ADMIN.HD_HISTO_TDHOJADIARIA(
                     
                         ID_TDHOJADIARIA,
@@ -1774,82 +1746,80 @@ class sql_class_hdial extends CI_Model {
             $where  = '';
             if ($estado == '1') { $where.="  H.IND_ESTADO    = 1  AND ";}
         
-            $sQuery = "
-                SELECT 
-                    H.ID_PEDICION                                               AS ID,
-                    H.IND_PERMISO                                               AS IND,
-                    
-                    (SELECT 
-                        COUNT(*)
-                    FROM 
-                        ADMIN.HD_REGEDICION J
-                    WHERE
-                        J.COD_TLLAVE = '$LLAVE' 
-                    AND 
-                        J.IND_ESTADO = 1)                                       AS NUM_REDICION,
+            $sQuery = "SELECT 
+                        H.ID_PEDICION                                               AS ID,
+                        H.IND_PERMISO                                               AS IND,
+                        
+                        (SELECT 
+                            COUNT(*)
+                        FROM 
+                            ADMIN.HD_REGEDICION J
+                        WHERE
+                            J.COD_TLLAVE = '$LLAVE' 
+                        AND 
+                            J.IND_ESTADO = 1)                                       AS NUM_REDICION,
 
-                    DECODE(H.IND_ESTADO,
-                        '1','PENDIENTE',
-                        '0','LISTO',
-                        'NO INFORMADO')                                         AS TXT_ESTADO,
+                        DECODE(H.IND_ESTADO,
+                            '1','PENDIENTE',
+                            '0','LISTO',
+                            'NO INFORMADO')                                         AS TXT_ESTADO,
+                            
+                        DECODE(H.IND_ESTADO,
+                            '1','P',
+                            '0','OK',
+                            'NO INFORMADO')                                         AS TXT_ESTADO2,
+                            
+                        DECODE(H.IND_PERMISO,
+                            '1','INGRESO DE PACIENTE',
+                            '2','HOJA DIARIA',
+                            '3','EGRESO DEL PACIENTE',
+                            '4','DESHABILITAR HOJA DIARIA',
+                            'NO INFORMADO')                                         AS TXT_PERMISO,
                         
-                    DECODE(H.IND_ESTADO,
-                        '1','P',
-                        '0','OK',
-                        'NO INFORMADO')                                         AS TXT_ESTADO2,
-                        
-                    DECODE(H.IND_PERMISO,
-                        '1','INGRESO DE PACIENTE',
-                        '2','HOJA DIARIA',
-                        '3','EGRESO DEL PACIENTE',
-                        '4','DESHABILITAR HOJA DIARIA',
-                        'NO INFORMADO')                                         AS TXT_PERMISO,
-                       
-                    DECODE(H.IND_PERMISO,
-                        '1','INGRESO DE PACIENTE',
-                        '2','HOJA DIARIA',
-                        '3','EGRESO DEL PACIENTE',
-                        '4','DESHABILITAR HOJA DIARIA',
-                        'NO INFORMADO')                                         AS TXT_PERMISO
-                FROM 
-                    ADMIN.HD_REGEDICION         H, 
-                    ADMIN.HD_TSISCORECION       I
-                WHERE
-                    H.ID_TCORECION  = I.ID_TCORECION    AND 
-                    $where 
-                    I.COD_TLLAVE    = '$LLAVE'
-                ORDER BY
-                    H.IND_PERMISO
+                        DECODE(H.IND_PERMISO,
+                            '1','INGRESO DE PACIENTE',
+                            '2','HOJA DIARIA',
+                            '3','EGRESO DEL PACIENTE',
+                            '4','DESHABILITAR HOJA DIARIA',
+                            'NO INFORMADO')                                         AS TXT_PERMISO
+                    FROM 
+                        ADMIN.HD_REGEDICION         H, 
+                        ADMIN.HD_TSISCORECION       I
+                    WHERE
+                        H.ID_TCORECION  = I.ID_TCORECION    AND 
+                        $where 
+                        I.COD_TLLAVE    = '$LLAVE'
+                    ORDER BY
+                        H.IND_PERMISO
             ";
         return $sQuery;
     }
     
     public function sql_ListadopremisosxHD($empresa,$HD,$LLAVE,$IDCORRECION){
-            $sQuery = "
-                SELECT 
-                    I.ID_TCORECION                                  AS CORRECION,
-                    H.ID_PEDICION                                   AS ID,
-                    H.IND_PERMISO                                   AS IND,
-                    DECODE(H.IND_PERMISO,
-                        '1','INGRESO DE PACIENTE',
-                        '2','HOJA DIARIA',
-                        '3','EGRESO DEL PACIENTE',
-                        '4','DESHABILITAR HOJA DIARIA',
-                        'NO INFORMADO')                             AS TXT_PERMISO
-                        
-                FROM 
-                    ADMIN.HD_REGEDICION                             H, 
-                    ADMIN.HD_TSISCORECION                           I
-                    
-                WHERE
-                    H.ID_TCORECION          = I.ID_TCORECION        AND 
-                    H.COD_TLLAVE            = I.COD_TLLAVE          AND 
-                    H.IND_ESTADO            = 1                     AND 
-                    H.ID_PEDICION           <> $IDCORRECION         AND
-                    I.ID_TDHOJADIARIA       = '$HD'                 AND
-                    I.COD_TLLAVE            = '$LLAVE'    
-                ORDER BY
-                    H.IND_PERMISO
+            $sQuery = "SELECT 
+                            I.ID_TCORECION                                  AS CORRECION,
+                            H.ID_PEDICION                                   AS ID,
+                            H.IND_PERMISO                                   AS IND,
+                            DECODE(H.IND_PERMISO,
+                                '1','INGRESO DE PACIENTE',
+                                '2','HOJA DIARIA',
+                                '3','EGRESO DEL PACIENTE',
+                                '4','DESHABILITAR HOJA DIARIA',
+                                'NO INFORMADO')                             AS TXT_PERMISO
+                                
+                        FROM 
+                            ADMIN.HD_REGEDICION                             H, 
+                            ADMIN.HD_TSISCORECION                           I
+                            
+                        WHERE
+                            H.ID_TCORECION          = I.ID_TCORECION        AND 
+                            H.COD_TLLAVE            = I.COD_TLLAVE          AND 
+                            H.IND_ESTADO            = 1                     AND 
+                            H.ID_PEDICION           <> $IDCORRECION         AND
+                            I.ID_TDHOJADIARIA       = '$HD'                 AND
+                            I.COD_TLLAVE            = '$LLAVE'    
+                        ORDER BY
+                            H.IND_PERMISO
             ";
         return $sQuery;
     }
@@ -1859,8 +1829,7 @@ class sql_class_hdial extends CI_Model {
         $where      = '';
         if($KEY !== ''){  $where.= " H.COD_TLLAVE  = '$KEY' AND "; }
         
-        $sQuery = "
-                SELECT 
+        $sQuery = "SELECT 
                     H.ID_TCORECION                                                          AS ID,
                     CASE 
                         WHEN 
@@ -1932,9 +1901,7 @@ class sql_class_hdial extends CI_Model {
     }
     
     public function sqlExisteKey($pass){
-        $sQuery=    " 
-                        SELECT COUNT(*) AS NUM FROM ADMIN.HD_TSISCORECION WHERE COD_TLLAVE =  '$pass' 
-                    " ;
+        $sQuery=    "SELECT COUNT(*) AS NUM FROM ADMIN.HD_TSISCORECION WHERE COD_TLLAVE = '$pass'" ;
         //error_log($sQuery);
        return $sQuery;
     }

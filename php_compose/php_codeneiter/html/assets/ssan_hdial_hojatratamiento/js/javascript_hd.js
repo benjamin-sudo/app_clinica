@@ -17,7 +17,6 @@ function star_websocket_hoja_dialisis(){
 function ws_actualiza_hoja_diaria(socket){
     console.log("-----------------------");
     console.log("       Star ws         ");
-
     $(document).on('submit','#actualizacion_hoja_diaria',function(){
         console.log("submit         ->  ","actualizacion_hoja_diaria");
         socket.emit('ssan_dialisis:inicio_hoja_diaria',{

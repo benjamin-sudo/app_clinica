@@ -1,11 +1,12 @@
 $(document).ready(function() {
-   var todayDate       =   new Date().getDate();
-   console.log("---------------------------------------");
-   console.log("todayDate  =>  ",todayDate,"   <=      ");
-   console.log("---------------------------------------");
-   $("#datetimepicker1").datetimepicker({
+    var todayDate       =   new Date().getDate();
+    console.log("---------------------------------------");
+    console.log("todayDate  =>  ",todayDate,"   <=      ");
+    console.log("---------------------------------------");
+    /*
+    $("#datetimepicker1").datetimepicker({
        format          :   'DD-MM-YYYY',
-       //minDate         :   new Date(new Date().setDate((todayDate)-(5))), 
+       //minDate       :   new Date(new Date().setDate((todayDate)-(5))), 
        maxDate         :   new Date(),
        locale          :   'es-us',
        icons           : 
@@ -20,79 +21,169 @@ $(document).ready(function() {
                                clear       :   "fa fa-trash"         ,
                                close       :   "fa fa-remove"        ,
                            }
-   }).on('dp.change',function(e){ 
-       var MKN                     =   $("#num_Maquina").val();;
-       eventosBuscar(MKN);
-       console.log("------------------datetimepicker----------------------");
-       console.log("e              ->  ",e);
-       var formatedValue           =   e.date.format(e.date._f);  
-       console.log("formatedValue  ->  ",formatedValue); 
-       console.log("               ->  ",$("#numFecha").val()); 
-       console.log("------------------datetimepicker----------------------");
-   });
-   $('#MODAL_PDF').on('show.bs.modal',                 function(e){ });
-   $('#MODAL_PDF').on('hidden.bs.modal',               function(e){ 
-       $('.main-panel').perfectScrollbar('destroy');
-       document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
-   });
-   $('#MODAL_TOMADESIGNO').on('show.bs.modal',         function(e){ });
-   $('#MODAL_TOMADESIGNO').on('hidden.bs.modal',       function(e){ 
-       $("#BODY_TOMASIGNO").html(" "); 
-       $("#BTN_GSIGNOS").attr('onclick',''); 
-       $('.main-panel').perfectScrollbar('destroy');
-       document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
-   });
-   $('#MODAL_CIERREHERMO').on('show.bs.modal',         function(e){ });
-   $('#MODAL_CIERREHERMO').on('hidden.bs.modal',       function(e){ 
-       $("#BODY_CIERREHERMO").html(" "); 
-       $("#BTN_CIERREHERMO").attr('onclick',''); 
-       $('.main-panel').perfectScrollbar('destroy');
-       document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
-   });
-   $('#MODAL_HD_ANTERIORES').on('show.bs.modal',       function(e){ });
-   $('#MODAL_HD_ANTERIORES').on('hidden.bs.modal',     function(e){ 
-       $("#BODY_HD_ANTERIORES").html(" "); 
-       $("#busquedaMes").html("");
-       $('.main-panel').perfectScrollbar('destroy');
-       document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
-   });
-   $('#MODAL_EXM_ANTERIORES').on('show.bs.modal',      function(e){ 
-       console.log("e->",e); 
-   });
-   $('#MODAL_EXM_ANTERIORES').on('hidden.bs.modal',    function(e){ 
-       $("#BODY_EXM_ANTERIORES").html(" "); 
-       $("#busquedaMes_EXM").html("");
-       $('.main-panel').perfectScrollbar('destroy');
-       document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
-   });
-   $('#MODAL_HORADIARIA').on('show.bs.modal',          function(e){ 
-       //$('.modal .modal-body').css('overflow-y','auto'); 
-       //var _height     =   $(window).height()*0.8;
-       //$('.modal .modal-body').css('max-height',_height);
-       console.log("------> MODAL_HORADIARIA show<---------    -> ",$("#MODAL_HORADIARIA").data('hojaactiva'));
-   });
-   $('#MODAL_HORADIARIA').on('hidden.bs.modal',        function(e){
-       $("#txt_prohoja").html(""); 
-       $("#HTML_TRATAMIENTO").html(""); 
-       $("#MODAL_HORADIARIA").data().hojaactiva        = '';
-       console.log("------> MODAL_HORADIARIA hide <---------   ->",$("#MODAL_HORADIARIA").data('hojaactiva'));
-       /*$("#Btn_guardar3").attr('onclick',''); */  
-   });
-   $('#MODAL_INICIODIALIS').on('show.bs.modal',        function(e){ 
-       var _height = $(window).height()*0.8;
-       $('.modal .modal-body').css('max-height',_height);
-       $('.modal .modal-body').css('overflow-x','auto'); 
-   });
-   $('#MODAL_INICIODIALIS').on('hidden.bs.modal',      function(e){ 
-       $("#BTN_INICIO").attr('onclick',''); 
-       $("#HTML_INICIODEDIALISIS").html(" ");    
-   });
-   console.log("showNotification");
-   //showNotification('top','center','RUN ingresado no existe como prestador en su establecimiento',4,'fa fa-times');
-   $("#maquina_1").append('<tr><td colspan="6"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">&nbsp;&nbsp;CARGANDO PACIENTE ...</span></td></tr>');
-   cargaMaquinas(1);
-   //star_websocket_hoja_dialisis();
+    }).on('dp.change',function(e){ 
+        var MKN                     =   $("#num_Maquina").val();;
+        eventosBuscar(MKN);
+        console.log("------------------datetimepicker----------------------");
+        console.log("e              ->  ",e);
+        var formatedValue           =   e.date.format(e.date._f);  
+        console.log("formatedValue  ->  ",formatedValue); 
+        console.log("               ->  ",$("#numFecha").val()); 
+        console.log("------------------datetimepicker----------------------");
+    });
+    */
+
+    $('#MODAL_PDF').on('show.bs.modal',                 function(e){ });
+    $('#MODAL_PDF').on('hidden.bs.modal',               function(e){ 
+        $('.main-panel').perfectScrollbar('destroy');
+        document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
+    });
+
+    $('#MODAL_TOMADESIGNO').on('show.bs.modal',         function(e){ });
+    $('#MODAL_TOMADESIGNO').on('hidden.bs.modal',       function(e){ 
+        $("#BODY_TOMASIGNO").html(" "); 
+        $("#BTN_GSIGNOS").attr('onclick',''); 
+        $('.main-panel').perfectScrollbar('destroy');
+        document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
+    });
+
+    $('#MODAL_CIERREHERMO').on('show.bs.modal',         function(e){ });
+    $('#MODAL_CIERREHERMO').on('hidden.bs.modal',       function(e){ 
+        $("#BODY_CIERREHERMO").html(" "); 
+        $("#BTN_CIERREHERMO").attr('onclick',''); 
+        $('.main-panel').perfectScrollbar('destroy');
+        document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
+    });
+    $('#MODAL_HD_ANTERIORES').on('show.bs.modal',       function(e){ });
+    $('#MODAL_HD_ANTERIORES').on('hidden.bs.modal',     function(e){ 
+        $("#BODY_HD_ANTERIORES").html(" "); 
+        $("#busquedaMes").html("");
+        $('.main-panel').perfectScrollbar('destroy');
+        document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
+    });
+    $('#MODAL_EXM_ANTERIORES').on('show.bs.modal',      function(e){ 
+        console.log("e->",e); 
+    });
+    $('#MODAL_EXM_ANTERIORES').on('hidden.bs.modal',    function(e){ 
+        $("#BODY_EXM_ANTERIORES").html(" "); 
+        $("#busquedaMes_EXM").html("");
+        $('.main-panel').perfectScrollbar('destroy');
+        document.getElementById("MODAL_HORADIARIA").style.overflowY = 'auto';
+    });
+    $('#MODAL_HORADIARIA').on('show.bs.modal',          function(e){ 
+        //$('.modal .modal-body').css('overflow-y','auto'); 
+        //var _height     =   $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        console.log("------> MODAL_HORADIARIA show<---------    -> ",$("#MODAL_HORADIARIA").data('hojaactiva'));
+    });
+        
+    $('#MODAL_HORADIARIA').on('hidden.bs.modal',        function(e){
+        $("#txt_prohoja").html(""); 
+        $("#HTML_TRATAMIENTO").html(""); 
+        $("#MODAL_HORADIARIA").data().hojaactiva        = '';
+        console.log("------> MODAL_HORADIARIA hide <---------   ->",$("#MODAL_HORADIARIA").data('hojaactiva'));
+        /*$("#Btn_guardar3").attr('onclick',''); */  
+    });
+    $('#MODAL_INICIODIALIS').on('show.bs.modal',        function(e){ 
+        var _height = $(window).height()*0.8;
+        $('.modal .modal-body').css('max-height',_height);
+        $('.modal .modal-body').css('overflow-x','auto'); 
+    });
+    $('#MODAL_INICIODIALIS').on('hidden.bs.modal',      function(e){ 
+        $("#BTN_INICIO").attr('onclick',''); 
+        $("#HTML_INICIODEDIALISIS").html(" ");    
+    });
+    console.log("showNotification");
+    //showNotification('top','center','RUN ingresado no existe como prestador en su establecimiento',4,'fa fa-times');
+    $("#maquina_1").append('<tr><td colspan="6"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">&nbsp;&nbsp;CARGANDO PACIENTE ...</span></td></tr>');
+    //cargaMaquinas(1);
+    //star_websocket_hoja_dialisis();
+
+    
+    let v_fecha = $('#numFecha').val();
+    
+    cargaPacientes(v_fecha);
+
 });
+
+function cargaPacientes(fecha){
+    if(fecha == ''){
+        jError("Selecione Fecha valida ...","e-SISSAN");
+        return false;
+    }
+
+    $("#maquina_1").html('');
+    var loding      ='<tr><td colspan="6"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only"> CARGANDO PACIENTE ... </span></td></tr>';
+    $("#maquina_1").append(loding);
+    var txt =   txt_fecha(fecha);
+    $("#fecha_busqueda").html('<b class="plomo">'+txt+'</b>');
+    
+    console.log("------------------------------------------------------");
+    console.log("fecha              ->  ",fecha,"<-                    ");
+    console.log("num_Maquina        ->  ",$("#num_Maquina").val(),"<-  ");
+    console.log("id_templete        ->  ",$("#id_templete").val(),"<-  ");
+    console.log("------------------------------------------------------");
+
+    $('#loadFade').modal('show'); 
+    $.ajax({
+        url         :   "ssan_hdial_hojatratamiento/cargaCalendarioPacientesHT",
+        type        :   "POST",
+        dataType    :   "json",
+        data        :                   {
+                                            ind_template    :   2,
+                                            fecha           :   fecha,
+                                            MesWork         :   '',
+                                            num_Maquina     :   $("#num_Maquina").val(),
+                                            templete        :   $("#id_templete").val(),
+                                        },
+        error       :   function(errro){ 
+                                            console.log(errro.responseText); 
+                                            console.log(errro); 
+                                            jError("Comuniquese con el administrador ","E-SISSAN");
+                                            $('#loadFade').modal('hide'); 
+ 
+                                        },              
+        success     :   function(xml){      
+                                            $('#loadFade').modal('hide'); 
+                                            if (AjaxExtJsonAll(xml)){
+                                                
+                                            } 
+                                        }
+    });
+}
+
+function cargaMaquinas(i){
+    var fecha       =   '';
+    if($("#op_fecha_especial").val() == '' || $("#op_fecha_especial").val() == 'undefined' || $("#op_fecha_especial").val() == null){
+       fecha       =   $('#numFecha').val();
+    } else {
+       fecha       =   $('#op_fecha_especial').val();  
+    }
+    console.log("------------------------------------------");
+    console.log("fecha         -> ",fecha);
+    console.log("cargaMaquinas -> ",i);
+    $.ajax({
+        url         :   "ssan_hdial_asignacionpaciente/cargaMaquinas",
+        type        :   "POST",
+        dataType    :   "json",
+        data        :   {
+                            ind_template    :   1,
+                            val             :   i
+                        },
+        error       :   function(errro)     { 
+                                                console.log(errro.responseText); 
+                                                console.log(errro); 
+                                                jError("Comuniquese con el administrador","E-SISSAN"); 
+                                            },              
+        success     :   function(xml)       { 
+                                                console.log(xml); 
+                                                if(AjaxExtJsonAll(xml)){ 
+                                                    cargaPacientes(fecha); 
+                                                }; 
+                                            }
+    });
+ }
+ 
 
 function checkA(id,value){
    if($("#"+id).prop('checked')){
@@ -104,40 +195,14 @@ function checkA(id,value){
    }
 }
 
-
-function cargaMaquinas(i){
-
-   console.log("cargaMaquinas -> ",i);
-   return false;
-
-   var fecha       =   '';
-   if($("#op_fecha_especial").val() == '' || $("#op_fecha_especial").val() == 'undefined' || $("#op_fecha_especial").val() == null){
-       fecha       =   $('#numFecha').val();
+function checkA(id,value){
+   if($("#"+id).prop('checked')){
+       //console.log("CHECK");
+       js_disabled_medica(true);
    } else {
-       fecha       =   $('#op_fecha_especial').val();  
+       //console.log("NO CHECK");
+       js_disabled_medica(false);
    }
-   $.ajax({
-       url         :   "ssan_hdial_asignacionpaciente/cargaMaquinas",
-       type        :   "POST",
-       dataType    :   "json",
-       data        :   {
-                           ind_template    :   1,
-                           val             :   i
-                       },
-       error       :   function(errro)     { 
-                                               console.log(errro.responseText); 
-                                               console.log(errro); 
-                                               jError("Comuniquese con el administrador","E-SISSAN"); 
-                                           },              
-       success     :   function(xml)       { 
-                                               console.log(xml); 
-                                               if(AjaxExtJsonAll(xml)){ 
-                                                   cargaPacientes(fecha); 
-                                               }; 
-                                           }
-   });
-
-
 }
 
 function js_disabled_medica(i){
@@ -161,49 +226,7 @@ function js_disabled_medica(i){
 }
 
 
-function cargaPacientes(fecha){
-   if(fecha == ''){
-       jError("Selecione Fecha valida","e-SISSAN");
-       return false;
-   }
-   $("#maquina_1").html('');
-   var loding      ='<tr><td colspan="6"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only"> CARGANDO PACIENTE ... </span></td></tr>';
-   $("#maquina_1").append(loding);
-   var txt =   txt_fecha(fecha);
-   $("#fecha_busqueda").html('<b class="plomo">'+txt+'</b>');
-   console.log("------------------------------------------------------");
-   console.log("fecha              ->  ",fecha,"<-                    ");
-   console.log("num_Maquina        ->  ",$("#num_Maquina").val(),"<-  ");
-   console.log("id_templete        ->  ",$("#id_templete").val(),"<-  ");
-   console.log("------------------------------------------------------");
-   $('#loadFade').modal('show'); 
-   $.ajax({
-       url         :   "ssan_hdial_asignacionpaciente/cargaCalendarioPacientesHT",
-       type        :   "POST",
-       dataType    :   "json",
-       data        :                   {
-                                           ind_template    :   2,
-                                           fecha           :   fecha,
-                                           MesWork         :   '',
-                                           num_Maquina     :   $("#num_Maquina").val(),
-                                           templete        :   $("#id_templete").val(),
-                                       },
-       error       :   function(errro){ 
-                                           console.log(errro.responseText); 
-                                           console.log(errro); 
-                                           jError("Comuniquese con el administrador ","E-SISSAN");
-                                           $('#loadFade').modal('hide'); 
 
-                                       },              
-       success     :   function(xml){      
-                                           $('#loadFade').modal('hide'); 
-                                           if (AjaxExtJsonAll(xml)){
-                                               
-                                               
-                                           } 
-                                       }
-   });
-}
 
 function txt_fecha(get_fecha){
    var arr_fecha               =   get_fecha.split('-');

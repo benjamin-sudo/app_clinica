@@ -1357,19 +1357,14 @@ $ssss=0;
             //$html.='<script>$("#dv_mnj_frm").html("")</script>';
             //$html.='<script>console.log("-------------9");</script>';
         }
-
         //$html.='<script>$("#Btn_imp_imng").html("<a class=\'btn btn-info\' href=\'javascript:imprimePdrf()\' aria-label=\'Print\'><i class=\'fa fa-search\' aria-hidden=\'true\'></i> IMPRIMIR</a>")</script>';
         $html.='<script>imprimePdrf();</script>';
         //$html.='<script>console.log("-------------10");</script>';
         $this->output->set_output($html);
     }
 
-   
-
     public function guardaNuevoPacienteIngreso() {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
+        if (!$this->input->is_ajax_request()){ show_404(); }
         $empresa = $this->session->userdata("COD_ESTAB");
         $transaccion = '';
         $return = '';

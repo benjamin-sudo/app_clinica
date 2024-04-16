@@ -79,7 +79,6 @@
         <div id="IND_RRHH"><?php echo $html_out;?></div>
     </div>
 </div>
-
 <!-- ZONA -->
 <section>
     <div class="modal fade" id="TURNOXMAQUINA">
