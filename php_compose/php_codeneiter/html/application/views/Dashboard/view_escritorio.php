@@ -197,8 +197,6 @@
   <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
   <!-- jalert y otro -->
   <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
-  <!-- Otros -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
   <!-- shownotificacion -->
   <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
   <!-- web socket -->
@@ -218,11 +216,8 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
   -->
 
-  
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     <section>
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">

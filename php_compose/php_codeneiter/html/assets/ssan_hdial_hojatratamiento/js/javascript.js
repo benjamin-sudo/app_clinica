@@ -258,18 +258,18 @@ function js_formReacionesad(hd){
 }
 
 function js_inicioProgama(NUMFICHAE,NUM_CITA,IDHOJADIARIA,OPMEDIC){
-   var fecha       =   '';
-   if($("#op_fecha_especial").val() == '' || $("#op_fecha_especial").val() == 'undefined' || $("#op_fecha_especial").val() == null){
+    var fecha       =   '';
+    if($("#op_fecha_especial").val() == '' || $("#op_fecha_especial").val() == 'undefined' || $("#op_fecha_especial").val() == null){
        fecha       =   $('#numFecha').val();
-   } else {
+    } else {
        fecha       =   $('#op_fecha_especial').val();  
-   }
+    }
    
-   $.ajax({
+    $.ajax({
        url         :   "ssan_hdial_asignacionpaciente/cargahtmlHojaDiaria",
        type        :   "POST",
        dataType    :   "json",
-       beforeSend  :   function(xhr)     {    },
+       beforeSend  :   function(xhr)     {  $('#loadFade').modal('show');   },
        data        :   {
                            NUM_CITA        :   NUM_CITA,
                            NUMFICHAE       :   NUMFICHAE,
@@ -281,12 +281,14 @@ function js_inicioProgama(NUMFICHAE,NUM_CITA,IDHOJADIARIA,OPMEDIC){
                            fechaHD         :   fecha,
                        },
        error       :   function(errro)     {   
-                                               console.log(errro.responseText); 
-                                               jError("Error en aplicativo","E-SISSAN"); 
+                                               console.log(errro); 
+                                               jError("Error en aplicativo","CLINICA LIBRE"); 
+                                               $('#loadFade').modal('hide'); 
                                            },              
        success     :   function(aData)     {
                                                console.log("--------------------------------");
                                                console.log("aData      =>  ",aData);
+                                               $('#loadFade').modal('hide'); 
                                                if (AjaxExtJsonAll(aData)){
                                                    console.log("add numero activo");
                                                    $('#MODAL_HORADIARIA').data().hojaactiva = IDHOJADIARIA;
@@ -410,7 +412,6 @@ function guardarPrimeraProgramacion(NUMFICHAE){
            } else {
                //console.log(CreacionDialisis); 
                $('#BTN_INICIO').prop('disabled',true);
-
                $.ajax({
                    url         :   "ssan_hdial_asignacionpaciente/guardaInfdormacionDialisis",
                    type        :   "POST",

@@ -448,11 +448,14 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     public function ModelhoraTratamiento($empresa,$session,$NUMCITA,$NUMFICHAE,$num_Maquina,$datosDialisis,$hojatra,$name,$HrsIngreso,$fechaHerno){
         $this->db->trans_start();
         if($hojatra == ''){
-                $COD_ACTIVIDAD                  = '289';//Hermodialisis
-                $COD_TRAZADORA                  = '16'; //Procedimiento
-                $PA_ID_PROCARCH                 = '17'; //ID_SISTEMA DE DIALISIS
-                $idSistema                      = '17'; //ID_SISTEMA DE DIALISIS
-                
+                $COD_ACTIVIDAD                  =   '289';//Hermodialisis
+                $COD_TRAZADORA                  =   '16'; //Procedimiento
+                $PA_ID_PROCARCH                 =   '17'; //ID_SISTEMA DE DIALISIS
+                $idSistema                      =   '17'; //ID_SISTEMA DE DIALISIS
+                $AD_FHADMISION                  =   explode("-",$fechaHerno);
+                $session                        =   '16869726';
+                $txt_date                       =   $AD_FHADMISION[2]."-".$AD_FHADMISION[1]."-".$AD_FHADMISION[0];
+
                 if(!isset($observacion)         || $observacion         == "")  { $observacion          = "SIN OBSERVACIONES";  }
                 if(!isset($aCompan)             || $aCompan             == "")  { $aCompan              = "SIN ACOMPA&Ntilde;ANTE"; }
                 if(!isset($aCompfono)           || $aCompfono           == "")  { $aCompfono            = "0"; }
@@ -464,41 +467,42 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 if(!isset($fechaRegistro)       || $fechaRegistro       == "")  { $fechaRegistro        = @date("Y-m-d H:i:s");     }
                 
                 $idAdmision                     = $this->db->sequence($this->own,'SEQ_URG_TADMISION');
-                
                 $query                          = $this->db->query($this->sql_class_hdial->sqlNextValFolio($this->own,$empresa,$PA_ID_PROCARCH));
                 $AD_NUMFOLIO                    = $query->result_array();
-                $AD_FHADMISION                  = explode("-",$fechaHerno);
+               
                 $dataCitas                      = array(
-                    'AD_ID_ADMISION'            => $idAdmision,
-                    'COD_EMPRESA'               => $empresa,
-                    'AD_NUMFOLIO'		        => $AD_NUMFOLIO[0]['NFOLIO'],
-                    //'AD_NUMFOLIO'             => $this->own.'.SEQ_URG_TADMISION_FOLIO_$cod_empresa.nextval', 
-                    'AD_PROCEDENCIA'            => $PA_ID_PROCARCH,
-                    'COD_TRANSPORTE'            => '0',   
-                    'COD_PROCED'                => '0',  
-                    'ES_ID_ESTAPROC'            => '0',      
-                    'AD_FHADMISION'             => $AD_FHADMISION[0]."/".$AD_FHADMISION[1]."/".$AD_FHADMISION[2]." ".$HrsIngreso.":00,000000",      
-                    'AD_ACOMPA'                 => $aCompan, 
-                    'AD_FONOACOMP'              => '1', 
-                    'AD_MOTIVOCONSUL'           => 'HEMODIALISIS', 
-                    'PR_PROFREG'                => $session, 
+                    'AD_ID_ADMISION'            =>  $idAdmision,
+                    'COD_EMPRESA'               =>  $empresa,
+                    'AD_NUMFOLIO'		        =>  $AD_NUMFOLIO[0]['NFOLIO'],
+                    //'AD_NUMFOLIO'             =>  $this->own.'.SEQ_URG_TADMISION_FOLIO_$cod_empresa.nextval', 
+                    'AD_PROCEDENCIA'            =>  $PA_ID_PROCARCH,
+                    'COD_TRANSPORTE'            =>  '0',   
+                    'COD_PROCED'                =>  '0',  
+                    'ES_ID_ESTAPROC'            =>  '0',      
+                    #'AD_FHADMISION'             => ." ".$HrsIngreso.":00,000000", 
+                    'AD_FHADMISION'             =>  "TO_DATE('$fechaHerno $HrsIngreso:00', 'YYYY-MM-DD HH24:MI:SS')",
+                    'AD_ACOMPA'                 =>  $aCompan, 
+                    'AD_FONOACOMP'              =>  '1', 
+                    'AD_MOTIVOCONSUL'           =>  'HEMODIALISIS', 
+                    #'PR_PROFREG'                =>  $session, 
+                    'PR_PROFREG'                =>  $session,
                     //'PR_PROFEDIT'             => '', 
-                    'PR_NOMBREPROFREG'          => $name, 
-                    'PR_NOMBREPROFEDIT'         => $name, 
-                    'AD_FHREGISTRO'             => @date("d-m-Y H:i:s"), 
-                    'AD_FHEDIT'                 => @date("d-m-Y H:i:s"), 
-                    'AD_FHCREACION'             => @date("d-m-Y H:i:s"), 
-                    'ES_ID_ESTADO'              => '1', 
-                    'TA_ID_TIPATENCION'         => '1', 
-                    //'AD_PREVISION'            => '', 
-                    'COD_RUTPRO'                => $session,
-                    'TI_ID_TIPINGRESO'          => '1', 
-                    'TA_ID_TIPACCIDENTE'        => '8', 
-                    'AD_ID_ESTADOATENCION'      => '1', 
-                    'AD_ACTIVA'                 => '1', 
-                    'IND_ESTADODERIVA'          => '0', 
-                    'AD_HIPODIAGNO'             => 'HEMODIALISIS', 
-                    'NUM_FICHAE'                => $NUMFICHAE, 
+                    'PR_NOMBREPROFREG'          =>  $name, 
+                    'PR_NOMBREPROFEDIT'         =>  $name, 
+                    'AD_FHREGISTRO'             =>  'SYSDATE',
+                    'AD_FHEDIT'                 =>  'SYSDATE',
+                    'AD_FHCREACION'             =>  'SYSDATE',
+                    'ES_ID_ESTADO'              =>  '1', 
+                    'TA_ID_TIPATENCION'         =>  '1', 
+                    //'AD_PREVISION'            =>  '', 
+                    'COD_RUTPRO'                =>  $session,
+                    'TI_ID_TIPINGRESO'          =>  '1', 
+                    'TA_ID_TIPACCIDENTE'        =>  '8', 
+                    'AD_ID_ESTADOATENCION'      =>  '1', 
+                    'AD_ACTIVA'                 =>  '1', 
+                    'IND_ESTADODERIVA'          =>  '0', 
+                    'AD_HIPODIAGNO'             =>  'HEMODIALISIS', 
+                    'NUM_FICHAE'                =>  $NUMFICHAE, 
                 );
                 $this->db->insert($this->own.'.URG_TADMISION',$dataCitas);
                 
@@ -570,14 +574,14 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                                             'FEC_CREA'              => 'SYSDATE', 
                                             'AD_ID_ADMISION'        => $idAdmision,
                                             'ID_RMDIALISIS'         => $num_Maquina,
-                                            'DATE_REALIZAHD'        => "TO_DATE('".$fechaHerno." ".$HrsIngreso."', 'DD-MM-YYYY hh24:mi')", 
+                                            'DATE_REALIZAHD'        => "TO_DATE('".$txt_date." ".$HrsIngreso."', 'DD-MM-YYYY hh24:mi')", 
 
                                             'TXTACCESOVAS_1'        => $TXTACCESOVAS_1,
                                             'NUM_DIASVAS_1'         => $NUM_DIASVAS_1,
                                             'TXTACCESOVAS_2'        => $TXTACCESOVAS_2,
                                             'NUM_DIASVAS_2'         => $NUM_DIASVAS_2,
                                             
-                                            'FEC_DIASVAS_1'         => "TO_DATE('".$FEC_DIASVAS_1."', 'DD-MM-YYYY')", 
+                                            'FEC_DIASVAS_1'         => "TO_DATE('".$FEC_DIASVAS_1."', 'YYYY-MM-DD')", 
                                             
                                             'NUM_TROCAR_ARTERIAL'   => $NUM_TROCAR_ARTERIAL,
                                             'NUM_TROCAR_VENOSO'     => $NUM_TROCAR_VENOSO,
@@ -594,7 +598,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                                         );
                  
                     if ($FEC_DIASVAS_2 != ''){
-                            $dataIngreso = array_merge($dataIngreso, array('FEC_DIASVAS_2'=> "TO_DATE('".$FEC_DIASVAS_2."', 'DD-MM-YYYY')"));
+                            $dataIngreso = array_merge($dataIngreso, array('FEC_DIASVAS_2'=> "TO_DATE('".$FEC_DIASVAS_2."','YYYY-MM-DD')"));
                     }
              
         } else {
@@ -637,6 +641,9 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                                                 'USR_CREA'              => $session,
                                                 'DATE_CREA'             => 'SYSDATE'
                                             );
+
+
+                                            
                     foreach($FormdatosPresion as $From){
                         if($From['name'] == 'txtHoraIngreso')           { $datasSingnoVital = array_merge($datasSingnoVital, array('DATE_HORA'          => "TO_DATE('".date("d-m-Y")." ".$From['value']."', 'DD-MM-YYYY hh24:mi')"));}
                         //if($From['name'] == 'txtpresionalterial')     { $datasSingnoVital = array_merge($datasSingnoVital, array('NUM_PARTERIAL'      => $From['value']));}
@@ -671,12 +678,14 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 $this->db->insert($this->own.'.HD_TDSIGNOSVITALES',$datasSingnoVital); 
 
             } else if($infObject == 'rrhh_conexion'){
-                $FormdatosPresion   = $Object[0]['FormdrrhhConexion'];   
-                $rrhhDiario         = array('USR_CREA'=>$session,'DATE_CREA'=>'SYSDATE','ID_TDHOJADIARIA'=>$ID_HTRATA,'IND_ESTADO'=>1);
+                $FormdatosPresion = $Object[0]['FormdrrhhConexion'];   
+                $rrhhDiario = array('USR_CREA'=>$session,'DATE_CREA'=>'SYSDATE','ID_TDHOJADIARIA'=>$ID_HTRATA,'IND_ESTADO'=>1);
                 foreach ($FormdatosPresion as $From){
-                    if($From['name'] == 'slc_enfermeria'){ $rrhhDiario       = array_merge($rrhhDiario, array('COD_RUTPAC'=>$From['value'] ,'IND_HDESTAPA'=> '1'));  $this->db->insert($this->own.'.HD_RHERMOPROFE',$rrhhDiario); }
-                    if($From['name'] == 'slc_tecpara')   { $rrhhDiario       = array_merge($rrhhDiario, array('COD_RUTPAC'=>$From['value'] ,'IND_HDESTAPA'=> '1'));  $this->db->insert($this->own.'.HD_RHERMOPROFE',$rrhhDiario); }
-                    if($From['name'] == 'slc_medico')    { $rrhhDiario       = array_merge($rrhhDiario, array('COD_RUTPAC'=>$From['value'] ,'IND_HDESTAPA'=> '1'));  $this->db->insert($this->own.'.HD_RHERMOPROFE',$rrhhDiario); }
+
+                    if($From['name'] == 'slc_enfermeria'){ $rrhhDiario = array_merge($rrhhDiario, array('ID_RPROFE'=>$this->db->sequence($this->own,'TRG_HDIAL_RPROFESIONALHEMO'), 'COD_RUTPAC'=>$From['value'] ,'IND_HDESTAPA'=> '1'));  $this->db->insert($this->own.'.HD_RHERMOPROFE',$rrhhDiario); }
+                    if($From['name'] == 'slc_tecpara')   { $rrhhDiario = array_merge($rrhhDiario, array('ID_RPROFE'=>$this->db->sequence($this->own,'TRG_HDIAL_RPROFESIONALHEMO'),'COD_RUTPAC'=>$From['value'] ,'IND_HDESTAPA'=> '1'));  $this->db->insert($this->own.'.HD_RHERMOPROFE',$rrhhDiario); }
+                    if($From['name'] == 'slc_medico')    { $rrhhDiario = array_merge($rrhhDiario, array('ID_RPROFE'=>$this->db->sequence($this->own,'TRG_HDIAL_RPROFESIONALHEMO'),'COD_RUTPAC'=>$From['value'] ,'IND_HDESTAPA'=> '1'));  $this->db->insert($this->own.'.HD_RHERMOPROFE',$rrhhDiario); }
+
                 }
             }
         }

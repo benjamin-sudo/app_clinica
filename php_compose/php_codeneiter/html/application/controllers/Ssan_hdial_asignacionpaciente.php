@@ -1210,7 +1210,7 @@ public function cargahtmlHojaDiaria(){
     //**********************************************************************
     $TABLA[]                =   array("id_html"=>"","opcion" => "console","contenido"=>$templete); 
   //$TABLA[]                =   array("id_html"=>"","opcion" => "console","contenido"=> date("w",mktime(0,0,0,$fechaHD[1],$fechaHD[0],$fechaHD[2])) ); 
-    $dataPro                =   $this->ssan_hdial_asignacionpaciente_model->getDatosGeneralesxDial($IDHOJADIARIA);
+    $dataPro                =   $this->Ssan_hdial_asignacionpaciente_model->getDatosGeneralesxDial($IDHOJADIARIA);
     if($dataPro[0]['ADMISION_ACTIVA'] == ''){
         $TABLA[]            =   array("id_html"=>"",            "opcion" => "jError",   "contenido"=>"Hoja diaria ha cambiado de estado");
         $TABLA[]            =   array("id_html"=>"respuesta",   "opcion" => "append",   "contenido"=>"<script>eventosBuscar($num_Maquina)</script>");
@@ -1223,7 +1223,7 @@ public function cargahtmlHojaDiaria(){
     $dias                   =   array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado");
     $meses                  =   array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     $fecha                  =   $dias[date("w",mktime(0,0,0,$fechaHD[1],$fechaHD[0],$fechaHD[2]))]." ".$fechaHD[0]." de ".$meses[$fechaHD[1]-1]. " del ".$fechaHD[2];
-    $dataVit                =   $this->ssan_hdial_asignacionpaciente_model->getDatosSignosVitales($IDHOJADIARIA,'');
+    $dataVit                =   $this->Ssan_hdial_asignacionpaciente_model->getDatosSignosVitales($IDHOJADIARIA,'');
     $htmlVit                =   '';
     $NUM_HDPESOANTERIOR     =   '';
     $NUM_PESOPOSTDIALISIS   =   '';
@@ -2515,8 +2515,6 @@ public function guardaInfdormacionDialisis(){
     } else {
         $return         =   false;        
     }
-
-
     $TABLA[0]           =   array("validez"         => $return); 
     $TABLA[1]           =   array("transaccion"     => $transaccion); 
     $TABLA[3]           =   array("sql"             => $valida); 
