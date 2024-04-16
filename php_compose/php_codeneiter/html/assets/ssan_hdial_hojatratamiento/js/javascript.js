@@ -287,17 +287,15 @@ function js_inicioProgama(NUMFICHAE,NUM_CITA,IDHOJADIARIA,OPMEDIC){
        success     :   function(aData)     {
                                                 console.log("--------------------------------");
                                                 console.log("aData => ",aData);
-
                                                 $('#loadFade').modal('hide'); 
-
+                                                $('#HTML_TRATAMIENTO').html(aData.html);
+                                                $('#MODAL_HORADIARIA').modal({backdrop:'static',keyboard:false}).modal("show").data().hojaactiva = IDHOJADIARIA;
                                                 /*
                                                 if(AjaxExtJsonAll(aData)){
                                                    console.log("add numero activo");
                                                    $('#MODAL_HORADIARIA').data().hojaactiva = IDHOJADIARIA;
                                                 }
                                                 */
-
-
                                            }
    });
 }
