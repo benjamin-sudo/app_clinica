@@ -98,9 +98,7 @@
                     callback(result);
             });
         },
-
         // Private methods
-
         _show: function (title, msg, value, type, callback) {
 
             $.alerts._hide();

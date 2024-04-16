@@ -577,6 +577,7 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
         console.log(value.value);
         arreglo_dias.push({txtdia: value.value});        
     });
+
     jPrompt('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
         if((r=='')||(r==null)){
             console.log("-----------");
@@ -607,7 +608,7 @@ function NUEVOPACIENTEXCUPO(MKN,GRP,TRN){
                                                         $(".spinner_btn").hide();
                                                         if(aData.status){
                                                             $("#PACIENTEXCUPO").modal("hide");   
-                                                            busquedaPacientes(2);
+                                                            busquedaPacientesxMaquina();
                                                             jAlert("Se ha realizado con &eacute;xito","Clinica Libre",function(r){ });
                                                         } else {
                                                             jError("Error de contrase&ntilde;a","Clinica Libre");
@@ -736,47 +737,42 @@ function E_INGRESODIAL(numIgreso,numfichae){
 }
 
 function liberarCupo(ID_CUPO,MKN,TRN){
-
-    console.log("   ------------------------------------------  ");
-    console.log("   ID_CUPO    ->  ",ID_CUPO);
-    console.log("   MKN        ->  ",MKN);
-    console.log("   TRN        ->  ",TRN);
     
+    console.log("   ------------------------------------------  ");
+    console.log("   ID_CUPO    ->  ",ID_CUPO,"                  ");
+    console.log("   MKN        ->  ",MKN,"                      ");
+    console.log("   TRN        ->  ",TRN,"                      ");
+    console.log("   ------------------------------------------  ");
+
     jPrompt('Con esta acc&oacute;n se proceder&aacute; a eliminar cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
-           if((r=='')||(r==null)){
-               console.log("-----------");
-           } else {
-               $.ajax({ 
-                   type            : "POST",
-                   url             : "ssan_hdial_ingresoegresopaciente/eliminaPacientexCupo",
-                   dataType        : "json",
-                   beforeSend      : function(xhr) { console.log(xhr); },
-                   data            :   {   
-                                           password    : r,
-                                           ID_CUPO     : ID_CUPO,
-                                           MKN         : MKN,
-                                           TRN         : TRN
-                                       },
-                   error           : function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro.responseText);  },
-                   success         : function(aData){ 
-                                           //console.log(aData[3]['sql']);
-                                           if(aData[0]['validez']){
-                                               jAlert("Se ha realizado con exito","CLINICA LIBRE CHILE",function(r){  
-                                                   console.log("--->"); console.log(r);
-                                                   //$("#PACIENTEXCUPO").modal("hide");   
-                                                   busquedaPacientes(2);
-                                               });
-                                           } else {
-                                               jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
-                                           }
-                                       }, 
-               });      
-           }
+        if((r=='')||(r==null)){
+            console.log("-----------");
+        } else {
+            $.ajax({ 
+                type            : "POST",
+                url             : "ssan_hdial_ingresoegresopaciente/eliminaPacientexCupo",
+                dataType        : "json",
+                beforeSend      : function(xhr) {     $("#loadFade").modal('show');  console.log(xhr); },
+                data            :   {   
+                                        password :   r,
+                                        ID_CUPO  :   ID_CUPO,
+                                        MKN      :   MKN,
+                                        TRN      :   TRN
+                                    },
+                error           : function(errro){ jAlert("Error General, Consulte Al Administrador"); console.log(errro);  $("#loadFade").modal('hide');},
+                success         : function(aData){ 
+                                        console.log(aData);
+                                        $("#loadFade").modal('hide');
+                                        busquedaPacientesxMaquina();
+                                        if(aData.validez){
+                                            jAlert("Se ha realizado con &eacute;xito","CLINICA LIBRE CHILE",function(r){ });
+                                        } else {
+                                            jError("Error de contrase&ntilde;a","CLINICA LIBRE CHILE");
+                                        }
+                                    }, 
+            });
+        }
    });
-
-
-
-
 }
 
 function asigarTurno(MKN,GRP){

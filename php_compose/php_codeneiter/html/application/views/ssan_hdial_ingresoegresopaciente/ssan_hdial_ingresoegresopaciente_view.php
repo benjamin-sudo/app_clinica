@@ -3,13 +3,13 @@
 </h4>
 <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 8px;">
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
-            <i class="bi bi-person-vcard-fill"></i>&nbsp;RRHH&nbsp;
+        <button class="nav-link active btn_listado_paciente" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+            <i class="bi bi-person-wheelchair"></i>&nbsp;LISTADO DE PACIENTES&nbsp;
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link active btn_listado_paciente" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
-            <i class="bi bi-person-wheelchair"></i>&nbsp;LISTADO DE PACIENTES&nbsp;
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+            <i class="bi bi-person-vcard-fill"></i>&nbsp;RRHH&nbsp;
         </button>
     </li>
     <li class="nav-item" role="presentation">
@@ -71,27 +71,9 @@
                 </button>
             </div>
         </div>
-        <!--
-            <table class="table table-striped" width="100%">
-                <thead>
-                    <tr>
-                        <th class="subtitulo_formulario2" width="2%">N&deg;</th>
-                        <th class="subtitulo_formulario2" width="40%">MAQUINA&nbsp;(C&Oacute;DIGO)</th>
-                        <th class="subtitulo_formulario2" width="20%">FOLIO MAQUINA</th>
-                        <th class="subtitulo_formulario2" width="10%">ESTADO</th>
-                        <th class="subtitulo_formulario2" width="15%">N&deg; PACIENTE</th>
-                        <th class="subtitulo_formulario2" width="13%">OPCI&Oacute;N</th>
-                    </tr>
-                </thead>
-                <tbody id="LISTA_MAQUINA"></tbody>
-            </table>
-        -->
-        
         <div class="list-group" id="listado_maquinasporpaciente">
             <?php echo $li_listadopacientemaquina;?>
         </div>
-
-
     </div>
     <div class="tab-pane fade margen_tabs" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0" style="padding: 2px;margin-top: 2px;margin-left: 30px;margin-right: 30px;">
         <div id="IND_RRHH"><?php echo $html_out;?></div>

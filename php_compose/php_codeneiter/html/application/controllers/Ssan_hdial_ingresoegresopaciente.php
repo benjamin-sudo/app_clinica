@@ -1398,8 +1398,9 @@ $ssss=0;
         $ID_CUPO = $this->input->post('ID_CUPO');
         $MKN = $this->input->post('MKN');
         $TRN = $this->input->post('TRN');
-        $valida = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
-        if ($valida) {
+        #$valida = $this->ssan_spab_listaprotocoloqx_model->validaClave($password);
+        $valida = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($password);
+        if (count($valida)>0) {
             $return = true;
             $usuarioh = explode("-", $valida->USERNAME); //Rut Del Usuario que firma       
             $session = $usuarioh[0];
@@ -1407,10 +1408,11 @@ $ssss=0;
         } else {
             $return = false;
         }
-        $TABLA[0] = array("validez" => $return);
-        $TABLA[1] = array("transaccion" => $transaccion);
-        $TABLA[3] = array("sql" => '');
-        $this->output->set_output(json_encode($TABLA));
+
+        $this->output->set_output(json_encode([
+            "validez" => $return,
+            "transaccion" => $transaccion
+        ]));
     }
 
     public function guardaPacientexCupo() {

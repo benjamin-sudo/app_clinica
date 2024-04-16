@@ -942,8 +942,7 @@ class sql_class_hdial extends CI_Model {
         $where = '';
         if ($ETAPA != ''){ $where= '  H.IND_TOMASIGNO = '.$ETAPA.' AND';  }
         
-        $sQuery = " 
-                    SELECT 
+        $sQuery =   "SELECT 
                         H.ID_TDSIGNOSVITALES AS ID, 
                         H.ID_TDHOJADIARIA, 
                         UPPER(SUBSTR(P.NOM_NOMBRE, 1, 1)  
@@ -1008,8 +1007,7 @@ class sql_class_hdial extends CI_Model {
     
     public function sqldatoHojaTratamiento($IDHOJADIARIA){
         
-        $sQuery = " 
-                SELECT 
+        $sQuery = "SELECT 
                 
                     H.ID_TDHOJADIARIA, 
                     H.NUM_FICHAE, 
@@ -1098,35 +1096,34 @@ class sql_class_hdial extends CI_Model {
 
     
     public function sqlListadoTurnosxDiasG(){
-        $sQuery = " 
-            SELECT 
+        $sQuery = " SELECT 
             
-                A.ID_TURNO, 
-                B.ID_GRUPO,
+                        A.ID_TURNO, 
+                        B.ID_GRUPO,
 
-                A.TXT_TURNO, 
-                C.TXT_NDIACORTO,
-                C.TXT_NDIA,
+                        A.TXT_TURNO, 
+                        C.TXT_NDIACORTO,
+                        C.TXT_NDIA,
 
-                DECODE(A.ID_TURNO,'1','GRUPO 1','2','GRUPO 2','3','GRUPO 3') AS TXTGRUPO,
-                DECODE(B.ID_GRUPO,'1','LUNES - MIERCOLES - VIERNES','2','MARTES - JUEVES - SABADO') AS TXT_GRUPO,
-                
-                B.HD_TURNOSXDIAS, 
-                B.ID_NDIA, 
-                B.IND_ESTADO
+                        DECODE(A.ID_TURNO,'1','GRUPO 1','2','GRUPO 2','3','GRUPO 3') AS TXTGRUPO,
+                        DECODE(B.ID_GRUPO,'1','LUNES - MIERCOLES - VIERNES','2','MARTES - JUEVES - SABADO') AS TXT_GRUPO,
+                        
+                        B.HD_TURNOSXDIAS, 
+                        B.ID_NDIA, 
+                        B.IND_ESTADO
 
-            FROM 
+                    FROM 
 
-                ADMIN.HD_TURNOS         A, 
-                ADMIN.HD_TURNOSXDIAS    B,
-                ADMIN.HD_DIASSEMANA     C
+                        ADMIN.HD_TURNOS         A, 
+                        ADMIN.HD_TURNOSXDIAS    B,
+                        ADMIN.HD_DIASSEMANA     C
 
-            WHERE 
+                    WHERE 
 
-                A.ID_TURNO              = B.ID_TURNO    AND 
-                B.ID_NDIA               = C.ID_NDIA
-                
-                ORDER BY B.ID_GRUPO,A.ID_TURNO,C.ID_NDIA
+                        A.ID_TURNO              = B.ID_TURNO    AND 
+                        B.ID_NDIA               = C.ID_NDIA
+                        
+                        ORDER BY B.ID_GRUPO,A.ID_TURNO,C.ID_NDIA
 
             ";
         return $sQuery;

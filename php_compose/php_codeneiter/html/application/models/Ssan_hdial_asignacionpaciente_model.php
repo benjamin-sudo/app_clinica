@@ -360,18 +360,18 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     
     public function ModeleliminaPacientexCupo($empresa, $session, $ID_CUPO, $MKN , $TRN){
         $this->db->trans_start();
-            $UpdAngenda             = array(
-                'IND_ESTADO'        => 0,
-                'COD_AUDITA'        => $session,
-                'FEC_AUDITA'        => 'SYSDATE'
+            $UpdAngenda             =   array(
+                'IND_ESTADO'        =>  0,
+                'COD_AUDITA'        =>  $session,
+                'FEC_AUDITA'        =>  'SYSDATE'
             );
             $this->db->where('ID_CUPOXPACIENTE',$ID_CUPO); 
             $this->db->update($this->own.'.HD_NPACIENTEXCUPO', $UpdAngenda);
             //******************************************************************
-            $UpdTurno               = array(
-                'IND_ESTADO'        => 0,
-                'COD_AUDITA'        => $session,
-                'DATE_AUDITA'       => 'SYSDATE'
+            $UpdTurno               =   array(
+                'IND_ESTADO'        =>  0,
+                'COD_AUDITA'        =>  $session,
+                'DATE_AUDITA'       =>  'SYSDATE'
             );
             $this->db->where('ID_TURNOSXDIAS', $TRN);
             $this->db->where('ID_RMDIALISIS', $MKN);
