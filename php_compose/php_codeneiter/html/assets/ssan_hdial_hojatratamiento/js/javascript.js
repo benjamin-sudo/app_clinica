@@ -264,9 +264,8 @@ function js_inicioProgama(NUMFICHAE,NUM_CITA,IDHOJADIARIA,OPMEDIC){
     } else {
        fecha       =   $('#op_fecha_especial').val();  
     }
-   
     $.ajax({
-       url         :   "ssan_hdial_asignacionpaciente/cargahtmlHojaDiaria",
+       url         :   "ssan_hdial_asignacionpaciente/cargahtmlHojaDiaria_new",
        type        :   "POST",
        dataType    :   "json",
        beforeSend  :   function(xhr)     {  $('#loadFade').modal('show');   },
@@ -286,13 +285,19 @@ function js_inicioProgama(NUMFICHAE,NUM_CITA,IDHOJADIARIA,OPMEDIC){
                                                $('#loadFade').modal('hide'); 
                                            },              
        success     :   function(aData)     {
-                                               console.log("--------------------------------");
-                                               console.log("aData      =>  ",aData);
-                                               $('#loadFade').modal('hide'); 
-                                               if (AjaxExtJsonAll(aData)){
+                                                console.log("--------------------------------");
+                                                console.log("aData => ",aData);
+
+                                                $('#loadFade').modal('hide'); 
+
+                                                /*
+                                                if(AjaxExtJsonAll(aData)){
                                                    console.log("add numero activo");
                                                    $('#MODAL_HORADIARIA').data().hojaactiva = IDHOJADIARIA;
-                                               }
+                                                }
+                                                */
+
+
                                            }
    });
 }

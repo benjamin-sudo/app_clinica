@@ -106,20 +106,7 @@
 
 <section>
 
-    <div class="modal fade" id="MODAL_HORADIARIA" data-hojaactiva="">
-        <div class="modal-dialog modal-xl3 "> <!-- modal-xl3-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3 class="modal-title"><b>HOJA DE TRATAMIENTO </b></h3>
-                </div>
-                <div class="modal-body" id="HTML_TRATAMIENTO"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-sm btn-fill btn-wd" data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA</button>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <div class="modal fade" id="TURNO_REACIONESADVERSAS">
         <div class="modal-dialog modal-xl3">
@@ -240,6 +227,21 @@
         </div>
     </div>
 
+    
+    <div class="modal fade" id="MODAL_HORADIARIA" data-hojaactiva="">
+        <div class="modal-dialog modal-95">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">HOJA DE TRATAMIENTO</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_TRATAMIENTO"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--  ZONA INPUT HOJA DE TRATAMIENTO -->
     <input type="hidden" name="id_templete" id="id_templete" value="2"/>
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>

@@ -1313,6 +1313,8 @@ public function cargahtmlHojaDiaria(){
             </li>
         </ul>
         
+
+        
         <div class="tab-content">
             <div id="RECETA_MEDICA" class="tab-pane">
                 <div class="pabel_recetas_iframe">--</div>
@@ -1561,18 +1563,17 @@ public function cargahtmlHojaDiaria(){
                                                            format          : "DD-MM-YYYY",
                                                            maxDate         : new Date(),
                                                            locale          : "es-us",
-                                                           icons           : 
-                                                               {
-                                                                   time        : "fa fa-clock-o"       ,
-                                                                   date        : "fa fa-calendar"      ,
-                                                                   up          : "fa fa-chevron-up"    ,
-                                                                   down        : "fa fa-chevron-down"  ,
-                                                                   previous    : "fa fa-chevron-left"  ,
-                                                                   next        : "fa fa-chevron-right" ,
-                                                                   today       : "fa fa-screenshot"    ,
-                                                                   clear       : "fa fa-trash"         ,
-                                                                   close       : "fa fa-remove"        ,
-                                                               }
+                                                           icons           :    {
+                                                                                    time        : "fa fa-clock-o"       ,
+                                                                                    date        : "fa fa-calendar"      ,
+                                                                                    up          : "fa fa-chevron-up"    ,
+                                                                                    down        : "fa fa-chevron-down"  ,
+                                                                                    previous    : "fa fa-chevron-left"  ,
+                                                                                    next        : "fa fa-chevron-right" ,
+                                                                                    today       : "fa fa-screenshot"    ,
+                                                                                    clear       : "fa fa-trash"         ,
+                                                                                    close       : "fa fa-remove"        ,
+                                                                                }
                                                        });
                                                        </script>     
                                                    </div>
@@ -2002,11 +2003,9 @@ public function cargahtmlHojaDiaria(){
             }
     }
     $html.="</script>"; 
-    
-    
     $TABLA[]                    =   array("id_html"=>"HTML_TRATAMIENTO","opcion" => "append","contenido"=>$html); 
     //DATOSREACIONESADVERSAS
-    $formReacionesAd            =   $this->ssan_hdial_asignacionpaciente_model->getDatosReacionesAdversas($IDHOJADIARIA);
+    $formReacionesAd            =   $this->Ssan_hdial_asignacionpaciente_model->getDatosReacionesAdversas($IDHOJADIARIA);
     if(count($formReacionesAd)>0){
         foreach ($formReacionesAd as $row){
             $TABLA[]            =   array("id_html"=>"sl_".$row["IDHTML"],      "opcion" => "val",          "contenido"=>'1');  
@@ -2015,9 +2014,30 @@ public function cargahtmlHojaDiaria(){
         }
     }
     
-    $TABLA[]                    =   array("id_html"=>"MODAL_HORADIARIA",        "opcion" => "modalShow",    "contenido"=>""); 
+    $TABLA[] = array("id_html"=>"MODAL_HORADIARIA",        "opcion" => "modalShow",    "contenido"=>""); 
+
     $this->output->set_output(json_encode($TABLA));
 }
+
+
+public function cargahtmlHojaDiaria_new(){
+    if(!$this->input->is_ajax_request()){   show_404();     }
+
+
+
+    $html   =    $this->load->view("ssan_hdial_hojatratamiento/html_hojatratamientodialisis",[],true);
+
+
+    $this->output->set_output(json_encode([
+        'html' => $html,
+    ]));
+}
+
+
+
+
+
+
 
 public function iframeHistorialClinico(){
     if(!$this->input->is_ajax_request()){   show_404();     }
@@ -2547,22 +2567,24 @@ public function guardaInformacionPrevio(){
 }
 
 public function cargaIframeSolicitudExamenes($IDHOJADIARIA,$NUMFICHAE,$RUT_PAC){
-    $RUTPAC_ARE         = explode("-",$RUT_PAC);
-    $NUM_FICHAE         = $NUMFICHAE;
-    $rut                = $_SESSION['USERNAME'];
-    $NAME               = '--';
-    $rutm               = explode("-",$rut);
-    $firmado_por        = $rutm[0];  
-    $sistema            = '56';
-    $token1             = md5(rand(20,1000));
-    $token              = $IDHOJADIARIA.$token1.date("dmymis");
-    $TIPO_ACCESS        = 0;
-    $valida             = $this->ssan_hdial_asignacionpaciente_model->sqlRegistraConsultaHistorialExamenes($NAME,$firmado_por,$NUM_FICHAE,$sistema,$IDHOJADIARIA,$token,$RUTPAC_ARE[0],$TIPO_ACCESS);
+    $RUTPAC_ARE         =   explode("-",$RUT_PAC);
+    $iframe             =   '';
+    $NUM_FICHAE         =   $NUMFICHAE;
+    $rut                =   $_SESSION['USERNAME'];
+    $NAME               =   '--';
+    $rutm               =   explode("-",$rut);
+    $firmado_por        =   $rutm[0];  
+    $sistema            =   '56';
+    $token1             =   md5(rand(20,1000));
+    $token              =   $IDHOJADIARIA.$token1.date("dmymis");
+    $TIPO_ACCESS        =   0;
+    $valida             =   [];
+    #$valida            =   $this->Ssan_hdial_asignacionpaciente_model->sqlRegistraConsultaHistorialExamenes($NAME,$firmado_por,$NUM_FICHAE,$sistema,$IDHOJADIARIA,$token,$RUTPAC_ARE[0],$TIPO_ACCESS);
     if ($valida){
-        $iframe         = '<iframe src="https://www.esissan.cl/solicituddeexamenes?token='.$token.'" style="overflow:hidden;height:500px;width:100%;" width="100%"></iframe>'; 
-        //$iframe       = '<iframe src="http://10.5.183.210/solicituddeexamenes?token='.$token.'" style="overflow:hidden;height:500px;width:100%;" width="100%"></iframe>'; 
+        //$iframe       =   '<iframe src="https://www.esissan.cl/solicituddeexamenes?token='.$token.'" style="overflow:hidden;height:500px;width:100%;" width="100%"></iframe>'; 
+        //$iframe       =   '<iframe src="http://10.5.183.210/solicituddeexamenes?token='.$token.'" style="overflow:hidden;height:500px;width:100%;" width="100%"></iframe>'; 
     } else {
-        $iframe         = '<b>PROBLEMAS AL CARGAR</b>';
+        $iframe         =   '<b>PROBLEMAS AL CARGAR</b>';
     }
     return $iframe;
 }
