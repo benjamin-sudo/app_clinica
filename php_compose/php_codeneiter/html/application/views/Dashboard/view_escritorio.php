@@ -13,7 +13,11 @@
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   <!-- Font Awesome -->
+  <!--
   <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  -->
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Font Awesome -->
   <!--
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
@@ -33,9 +37,11 @@
   <!--
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
   -->
-  <!-- Latest compiled and minified CSS -->
+  <!--  Select Picker Plugin css -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
+  <!-- css datetimepicker -->
+  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css" >
   <style>
     .nav-link.activo{ }
     #loadFade { z-index: 10500 !important; }
@@ -178,7 +184,10 @@
 
   <div id="respuesta"></div>
   <!-- jQuery v3.6.0 -->
+  <!--
   <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
+  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <!-- jQuery UI - v1.12.0-rc.2  -->
   <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
   <!-- Bootstrap 5.2.3
@@ -205,15 +214,20 @@
   <!-- bootstrap-datetimejs -->  
   <script type="text/javascript" src="assets/recursos/js/moment.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/moment.js"></script>
-  <!--
+  
+  <<!--  Select Picker Plugin js -->
   <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
-  -->
+  
   <!--
   <script src="https://cdn.jsdelivr.net/npm/moment@latest/min/moment.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
   -->
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+  
+  <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-select.min.js"></script>
+      
+
+
 
     <section>
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -268,7 +282,7 @@
               </div>
           </div>
       </div>
-      
+
     </section>
   </body>
 </html>

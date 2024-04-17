@@ -1,7 +1,3 @@
-
-
-
-
 <div class="PANEL_MAIN">
     <div class="DIV_LEFT">
         <h4 class="title" style="color : #e34f49;margin-left: 20px;margin-bottom:10px;">
@@ -30,16 +26,15 @@
 
 <div class="grid_body_panel">
     <div class="grid_body_panel1" style="padding: 10px;">
+
         <div class="card" id="card_fechas">
-            <div class="header">
-                <h4 class="title"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b>FECHA</b></h4>
-                <p>Seleccione Fecha</p>
-            </div>
-            <div class="content">
-                <div id="fecha_out"></div>
-            </div>
-            <div class="footer text-center">
-                <hr style="margin:15px;">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b>FECHA</b></h5>
+                <br>
+                <h6 class="card-subtitle mb-2 text-muted">Seleccione fecha</h6>
+                <div class="content">
+                    <div id="fecha_out"></div>
+                </div>
                 <div class="btn-group pull-center text-center">
                     <button type="button" class="btn btn-small btn-success btn-fill" id="plan_1" onclick="ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(1)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="ACTUALIZAR DIA">
                         <i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;
@@ -51,14 +46,9 @@
                         <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;
                     </button>
                 </div>
-                <div id="btn_excel" style="display: none">
-                    <button type="button" class="btn btn-small btn-warning btn-fill" id="plan_2" onclick="load_exel(1)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="VER EXCEL">
-                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                    </button>
-                    <a href="<?php echo base_url();?>ssan_spab_gestionlistaquirurgica/load_excel?id=11111101010" target="_blank"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
-                </div>
             </div>
-        </div>  
+        </div>
+
     </div>
     <div class="grid_body_panel2" style="padding: 10px;">
         <div id="tabs_listasolicitudes">

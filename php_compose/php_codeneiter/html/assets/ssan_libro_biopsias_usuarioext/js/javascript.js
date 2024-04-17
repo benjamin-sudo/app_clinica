@@ -1,16 +1,13 @@
 $(document).ready(function(){
-    console.log("   ->  ");
-    /*
+    //console.log("   ->  ");
     var todayDate = new Date().getDate();
     $('#fecha_out').datetimepicker({
-        useCurrent		        :   false, //esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
+        useCurrent		        :   false,
         inline			        :   true,
         sideBySide		        :   true,
         format			        :   'DD-MM-YYYY',
         locale			        :   'es-us',
-        //daysOfWeekDisabled	:   [0,6],
         maxDate                 :   new Date(),
-        //minDate		        :   new Date(new Date().setDate((todayDate)-(120))),
         defaultDate		        :   new Date(new Date().setDate((todayDate)-(0))), 
         icons			        :   {
                                         time        :   'fa fa-clock-o',
@@ -23,16 +20,18 @@ $(document).ready(function(){
                                         clear       :   'fa fa-trash',
                                         close       :   'fa fa-remove',
                                     }
-    });
-    $(".timepicker").remove();
-    
-    $('#fecha_out').on('dp.change',function(e){ 
+    }).on('dp.change',function(e){ 
+
         //console.log("e---------->",JSON.stringify(e));
 	    //console.log("date------->",JSON.stringify(e.date));
-        var fecha               =   fecha_cale("fecha_out");
-        $("#txt_fecha_panel_1,#txt_fecha_panel_2,#txt_fecha_panel_3,#txt_fecha_panel_4,#txt_fecha_panel_5").html('<b><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;'+fecha+'</b>');
-        ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
+        //var fecha               =   fecha_cale("fecha_out");
+        //$("#txt_fecha_panel_1,#txt_fecha_panel_2,#txt_fecha_panel_3,#txt_fecha_panel_4,#txt_fecha_panel_5").html('<b><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;'+fecha+'</b>');
+        //ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
+
     });
+
+    $(".timepicker").remove();
+
     $("#MODAL_INICIO_SOLICITUD_ANATOMIA").on("show.bs.modal",function(e){ 
         var _height = $(window).height()*0.8;
         $('.modal .modal-body').css('max-height',_height);
@@ -67,8 +66,9 @@ $(document).ready(function(){
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
-    */
+    
     //$("#li_panel_rectificacion").show();
+
 });
 
 function js_busquedapacientes(val){
