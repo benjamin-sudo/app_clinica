@@ -215,15 +215,13 @@
   <script type="text/javascript" src="assets/recursos/js/moment.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/moment.js"></script>
   
-  <<!--  Select Picker Plugin js -->
+  <!--  Select Picker Plugin js -->
   <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
-  
   <!--
   <script src="https://cdn.jsdelivr.net/npm/moment@latest/min/moment.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
   -->
-  <!-- Latest compiled and minified JavaScript -->
-  
+  <!-- bootstrap-select.min.js -->
   <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-select.min.js"></script>
       
 
