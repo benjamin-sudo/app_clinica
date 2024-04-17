@@ -13,25 +13,21 @@
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   <!-- FontAwesome Icons -->
-  <!--
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/font-awesome.min.css">
   <!-- Font Awesome -->
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!--   https://adminlte.io/docs/3.2/javascript/iframe.html -->
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
   <!-- jalert css -->
   <link type="text/css" rel="stylesheet" media="screen" href="assets/recursos/jalert/jquery.alerts.css"/>
   <!-- select min  -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
   <!-- ui | 1.12.1 --> 
   <!-- autocomplete -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!--  Select Picker Plugin css -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <!--  bootstrap-select.min.css -->
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css" >
   <style>

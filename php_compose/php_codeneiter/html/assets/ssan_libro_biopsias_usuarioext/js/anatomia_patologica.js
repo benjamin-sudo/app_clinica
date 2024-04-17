@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-    //16-10-2023
     $('#modal_new_subrotulo').on('hidden.bs.modal',function(e){ 
         $("#html_new_subrotulo").html('');
         $("#btn_subrotulo").attr('onclick','');
@@ -8,7 +7,7 @@ $(document).ready(function(){
 
     //MODAL GLOBAL DE ETIQUETAS
     $("#MODAL_INFORMACION_ETIQUETA").on('show.bs.modal',function(e){ 
-	$('.modal .modal-body').css('overflow-y','auto'); 
+	    $('.modal .modal-body').css('overflow-y','auto'); 
         var _height = $(window).height()*0.8;
         $('.modal .modal-body').css('max-height',_height);
         $('.modal .modal-body').css('min-height',_height);
@@ -16,13 +15,14 @@ $(document).ready(function(){
         //$('#get_etiqueta_modal').focus();
         //document.getElementById("get_etiqueta_modal").focus();
     });
+
     $('#MODAL_INFORMACION_ETIQUETA').on('hidden.bs.modal',function(e){ 
         console.log("e  ->  ",e);
         document.getElementById("get_etiqueta").disabled    =   false;
         $('.popover').popover('hide');
         $("#HTML_INFORMACION_ETIQUETA").html(''); 
     });
-    //**************************************************************************
+
     $('#MODAL_INFORMACION_HISTORIAL').on('hidden.bs.modal',function(e){ 
         $("#HTML_INFORMACION_HISTORIAL").html(''); 
     });
