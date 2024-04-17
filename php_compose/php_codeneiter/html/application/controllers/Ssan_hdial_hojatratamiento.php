@@ -154,7 +154,6 @@ class Ssan_hdial_hojatratamiento extends CI_Controller {
         $this->output->set_output(json_encode($TABLA));
     }
 
-
     public function cargaPacientesHD() {
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                    =   $this->session->userdata("COD_ESTAB");

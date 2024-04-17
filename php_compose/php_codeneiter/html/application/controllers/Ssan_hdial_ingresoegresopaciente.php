@@ -677,10 +677,10 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
             'data_number'               =>  $data_number,
         )));
     }
+
     #################
     #code old
     #################
-
     public function BusquedaMaquinasDeDialisis_old(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");

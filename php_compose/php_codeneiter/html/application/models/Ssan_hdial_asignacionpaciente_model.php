@@ -1404,13 +1404,12 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
     public function informacio_formularioingreso($aData){
         $ID_FORMULARIO  =   $aData['ID_FORMULARIO'];
         $ID_INGRESO     =   $aData['ID_INGRESO'];
-
         $v_sql = "SELECT 
-                    UPPER(G.NOM_NOMBRE||' '||G.NOM_APEPAT||' '||G.NOM_APEMAT)   AS NOMPAC,
-                    G.COD_RUTPAC||'-'||G.COD_DIGVER                             AS RUTPAC,
-                    TO_CHAR(G.FEC_NACIMI,'DD-MM-YYYY')                          AS NACIMIENTO,
-                    FLOOR(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI) / 12) AS NUM_YEAR,
-                    FLOOR(MOD(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI), 12)) AS MESES,
+                    UPPER(G.NOM_NOMBRE||' '||G.NOM_APEPAT||' '||G.NOM_APEMAT)                               AS NOMPAC,
+                    G.COD_RUTPAC||'-'||G.COD_DIGVER                                                         AS RUTPAC,
+                    TO_CHAR(G.FEC_NACIMI,'DD-MM-YYYY')                                                      AS NACIMIENTO,
+                    FLOOR(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI) / 12)                                       AS NUM_YEAR,
+                    FLOOR(MOD(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI), 12))                                   AS MESES,
                     FLOOR(SYSDATE - ADD_MONTHS(G.FEC_NACIMI, FLOOR(MONTHS_BETWEEN(SYSDATE, G.FEC_NACIMI)))) AS DIAS,
                     C.ID_INGRESOHD,
                     C.NUM_FICHAE,
@@ -1491,6 +1490,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                     C.IND_ESTADO IN (1)
                 ";
 
+        # Aqui sustituyes :ID_INGRESO por el valor real del ID de ingreso.
         $sql_v = "SELECT
                     IC.ID_RELACION,
                     IC.ID_INGRESO,
@@ -1508,7 +1508,7 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
                 JOIN
                     ADMIN.TGCD_CIE_DIAGNOSTICOS CD ON IC.ID_DIAGNOSTICO = CD.ID
                 WHERE
-                    IC.ID_INGRESO = $ID_INGRESO -- Aquí sustituyes :ID_INGRESO por el valor real del ID de ingreso.
+                    IC.ID_INGRESO = $ID_INGRESO 
         ";            
         return [
             'arr_formulario'    =>  $this->db->query($v_sql)->result_array(),

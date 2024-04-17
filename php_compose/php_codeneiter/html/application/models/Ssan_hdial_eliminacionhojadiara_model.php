@@ -39,8 +39,7 @@ class Ssan_hdial_eliminacionhojadiara_model extends CI_Model {
     
     public function al_dia_hojaactiva($NUMFICHAE,$FECHA){
         $query  =   $this->db->query(
-                "
-                    SELECT 
+                "SELECT 
                         H.ID_TDHOJADIARIA, 
                         H.NUM_FICHAE, 
                         (
@@ -102,8 +101,4 @@ class Ssan_hdial_eliminacionhojadiara_model extends CI_Model {
         return $this->db->trans_status(); 
    }
 
-
-
-
-    
 }

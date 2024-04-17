@@ -439,7 +439,7 @@ function guardarPrimeraProgramacion(NUMFICHAE){
                                                            //console.log(aData[3]['sql']);
                                                            $('#BTN_INICIO').prop('disabled',false);
                                                            if(aData[0]['validez']){
-                                                               jAlert('Se ha Realizado con exito','Restricci\u00f3n',function(r){
+                                                               jAlert('Se ha Realizado con &eacute;xito','Restricci\u00f3n',function(r){
                                                                    if(r){
                                                                        $("#MODAL_INICIODIALIS").modal('hide'); 
                                                                        localStorage.setItem("ind_tipo_mensaje",1);

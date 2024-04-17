@@ -14,4 +14,5 @@ class Ssan_hdial_hojatratamiento_model extends CI_Model {
     }
 
 
+    
 }

@@ -91,13 +91,14 @@
         },
 
         //hito 3
-        firmaUnica: function (message, value, title, callback) {
+        firmaUnica : function (message, value, title, callback) {
             var title = 'Firma Única'; // Título fijo para este tipo de diálogo
             $.alerts._show(title, message, value, 'firmaUnica', function (result) {
                 if (callback)
                     callback(result);
             });
         },
+
         // Private methods
         _show: function (title, msg, value, type, callback) {
 
@@ -156,7 +157,6 @@
 
                 case 'confirm':
                     //$("#popup_message").after('<div id="popup_panel"><input type="button" value="SI" id="popup_ok" /> <input type="button" value="NO" id="popup_cancel" /></div>');
-
                     $("#popup_message").after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> SI</a> <a class="btn btn-small  btn-alert" style="font-size: 11px !important;" id="popup_cancel"><i class="fa fa-ban"></i> NO</a></div>');
                     $("#popup_ok").click(function () {
                         $.alerts._hide();
@@ -176,6 +176,7 @@
                             $("#popup_cancel").trigger('click');
                     });
                     break;
+                    
                 case 'prompt':
                     $("#popup_message").append('<br><b><label id="txtFirmaS" style="font-weight: bold;">FIRMA UNICA DIGITAL: </label>&nbsp;</b><input type="password" autocomplete="new-password" size="30" style="width: 160px;" id="popup_prompt"/>').after('<div id="popup_panel"><a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_ok"><i class="fa fa-check"></i> ACEPTAR</a> <a class="btn btn-small  btn-alert" href="javascript:" style="font-size: 11px !important;" id="popup_cancel"><i class="fa fa-ban"></i> CANCELAR</a></div>');
                     //$("#popup_prompt").width( $("#popup_message").width() );

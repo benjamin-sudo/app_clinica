@@ -215,7 +215,6 @@ public function cargaHDanteriores(){
     if($month == $meses && $year == $ano){ $selected = 'selected'; }
         $opcion	    .=	"<option value='$mesano' $selected > MES: $meses / A&Ntilde;O: $ano</option>";
     }
-    
         $select      = '<div class="container">
                             <div class="col-lg-6" class="row justify-content-md-center">
                                 <div class="input-group my-group"> 
@@ -227,18 +226,18 @@ public function cargaHDanteriores(){
                             </div>
                         <div>';
         
-        $TABLA[]    = array("id_html"=>"busquedaMes",  "opcion" => "append",  "contenido"=> $select); 
-        $day        = '01';
-        $imes       = date("m");
-        $year       = date("Y");
+        $TABLA[]    =   array("id_html"=>"busquedaMes",  "opcion" => "append",  "contenido"=> $select); 
+        $day        =   '01';
+        $imes       =   date("m");
+        $year       =   date("Y");
     } else {
-        $MesWork    = explode("-",$this->input->post("fecha"));
-        $day        = $MesWork[0];
-        $imes       = $MesWork[1];
-        $year       = $MesWork[2];
+        $MesWork    =   explode("-",$this->input->post("fecha"));
+        $day        =   $MesWork[0];
+        $imes       =   $MesWork[1];
+        $year       =   $MesWork[2];
     }
-    //$TABLA[]      = array("id_html"=>"",  "opcion" => "console",  "contenido"=> $imes); 
-    //$TABLA[]      = array("id_html"=>"",  "opcion" => "console",  "contenido"=> $year); 
+    //$TABLA[]      =   array("id_html"=>"",  "opcion" => "console",  "contenido"=> $imes); 
+    //$TABLA[]      =   array("id_html"=>"",  "opcion" => "console",  "contenido"=> $year); 
     $fecha          =   new DateTime($year."-".$imes."-".$day);
     $fecha->modify('last day of this month');
     $fechafin       =   $fecha->format('d-m-Y'); 

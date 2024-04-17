@@ -252,6 +252,3 @@
     <form id="actualizacion_hoja_diaria" method="post" action="#"></form>
 
 </section>
-
-
-

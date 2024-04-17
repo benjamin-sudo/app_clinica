@@ -1806,7 +1806,6 @@ class sql_class_hdial extends CI_Model {
                                 '3','EGRESO DEL PACIENTE',
                                 '4','DESHABILITAR HOJA DIARIA',
                                 'NO INFORMADO')                             AS TXT_PERMISO
-                                
                         FROM 
                             ADMIN.HD_REGEDICION                             H, 
                             ADMIN.HD_TSISCORECION                           I
