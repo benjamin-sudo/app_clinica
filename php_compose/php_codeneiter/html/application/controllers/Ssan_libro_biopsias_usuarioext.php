@@ -28,7 +28,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
                 "NUM_FICHAE"                    =>  $NUM_FICHAE,
                 "ADMISION"                      =>  $ADMISION,
             ));
-        #$html                     =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
+        $html                                   =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
         $this->output->set_output(json_encode([
             "GET_HTML" => '',
             "SALIDA_DIRECTA" => true,
