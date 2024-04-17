@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    console.log("   ->  ");
+    /*
     var todayDate = new Date().getDate();
     $('#fecha_out').datetimepicker({
         useCurrent		        :   false, //esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
@@ -65,6 +67,7 @@ $(document).ready(function(){
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
+    */
     //$("#li_panel_rectificacion").show();
 });
 
