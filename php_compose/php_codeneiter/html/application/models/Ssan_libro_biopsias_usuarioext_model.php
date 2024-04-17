@@ -13,7 +13,51 @@ class Ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db = $this->load->database('oracle_conteiner',true);
     }
 
-
+    public function data_pre_nuevasoliciud_anatomia($DATA){
+        $this->db->trans_start();
+        $param                      =   array(
+                                            array( 
+                                                'name'      =>  ':V_COD_EMPRESA',
+                                                'value'     =>  $DATA["COD_EMPRESA"],
+                                                'length'    =>  20,
+                                                'type'      =>  SQLT_CHR 
+                                            ),
+                                            array( 
+                                                'name'      =>  ':V_USR_SESSION',
+                                                'value'     =>  $DATA["USR_SESSION"],
+                                                'length'    =>  20,
+                                                'type'      =>  SQLT_CHR 
+                                            ),
+                                            array( 
+                                                'name'      =>  ':C_LISTADOSERVICIOS',
+                                                'value'     =>  $this->db->get_cursor(),
+                                                'length'    =>  -1,
+                                                'type'      =>  OCI_B_CURSOR
+                                            ),
+                                            array( 
+                                                'name'      =>  ':C_LISTADOMEDICOS',
+                                                'value'     =>  $this->db->get_cursor(),
+                                                'length'    =>  -1,
+                                                'type'      =>  OCI_B_CURSOR
+                                            ),
+                                            array( 
+                                                'name'      =>  ':C_ESPECIALIDADES',
+                                                'value'     =>  $this->db->get_cursor(),
+                                                'length'    =>  -1,
+                                                'type'      =>  OCI_B_CURSOR
+                                            ),
+                                        );
+        $result                             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','GET_INFOPRESOLICITUD',$param);
+        $this->db->trans_complete();
+        $this->db->trans_status();
+        return array(
+            'STATUS'                        =>  true,
+            'C_LISTADOSERVICIOS'            =>  empty($result[':C_LISTADOSERVICIOS'])?null:$result[':C_LISTADOSERVICIOS'],
+            'C_ESPECIALIDADES'              =>  empty($result[':C_ESPECIALIDADES'])?null:$result[':C_ESPECIALIDADES'],
+            'C_LISTADOMEDICOS'              =>  empty($result[':C_LISTADOMEDICOS'])?null:$result[':C_LISTADOMEDICOS'],
+        );
+    }
+    
 
     public function load_info_ap($data_controller){
         $this->db->trans_start();
@@ -1803,8 +1847,7 @@ class Ssan_libro_biopsias_usuarioext_model extends CI_Model {
     }
     
     public function busqueda_historial($DATA){
-        return $this->db->query("
-        SELECT 
+        return $this->db->query("SELECT 
             P.ID_LINETIMEHISTO, 
             P.ID_NUM_CARGA, 
             P.ID_SOLICITUD_HISTO, 
@@ -1825,8 +1868,7 @@ class Ssan_libro_biopsias_usuarioext_model extends CI_Model {
     }
     
     public function LOAD_BUSQUEDA_INFO($DATA){
-        return $this->db->query("
-            SELECT 
+        return $this->db->query(" SELECT 
                 P.ID_SOLICITUD_HISTO, 
                 P.NUM_FICHAE, 
                 P.COD_USRCREA, 
@@ -1997,51 +2039,6 @@ class Ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'P_ANATOMIA_PATOLOGICA_MUESTRAS'                =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
             'P_AP_MUESTRAS_CITOLOGIA'                       =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
             'P_INFO_LOG_ADVERSOS'                           =>	empty($result[':P_INFO_LOG_ADVERSOS'])?null:$result[':P_INFO_LOG_ADVERSOS'],          
-        );
-    }
-    
-    public function data_pre_nuevasoliciud_anatomia($DATA){
-        $this->db->trans_start();
-        $param                      =   array(
-                                            array( 
-                                                'name'      =>  ':V_COD_EMPRESA',
-                                                'value'     =>  $DATA["COD_EMPRESA"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':V_USR_SESSION',
-                                                'value'     =>  $DATA["USR_SESSION"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':C_LISTADOSERVICIOS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':C_LISTADOMEDICOS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':C_ESPECIALIDADES',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                        );
-        $result                             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','GET_INFOPRESOLICITUD',$param);
-        $this->db->trans_complete();
-        $this->db->trans_status();
-        return array(
-            'STATUS'                        =>  true,
-            'C_LISTADOSERVICIOS'            =>  empty($result[':C_LISTADOSERVICIOS'])?null:$result[':C_LISTADOSERVICIOS'],
-            'C_ESPECIALIDADES'              =>  empty($result[':C_ESPECIALIDADES'])?null:$result[':C_ESPECIALIDADES'],
-            'C_LISTADOMEDICOS'              =>  empty($result[':C_LISTADOMEDICOS'])?null:$result[':C_LISTADOMEDICOS'],
         );
     }
     

@@ -14,9 +14,6 @@
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   <!-- FontAwesome Icons -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/font-awesome.min.css">
-  <!-- Font Awesome -->
-  <!-- Google Font: Source Sans Pro -->
-  <!--   https://adminlte.io/docs/3.2/javascript/iframe.html -->
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
   <!-- jalert css -->

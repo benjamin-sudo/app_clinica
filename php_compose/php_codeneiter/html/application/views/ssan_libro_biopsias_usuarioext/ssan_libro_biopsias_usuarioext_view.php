@@ -94,9 +94,8 @@
     </div>
 </div>    
 
-    
-
 <section>
+    
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
         <div class="modal-dialog">
             <div class="modal-content">

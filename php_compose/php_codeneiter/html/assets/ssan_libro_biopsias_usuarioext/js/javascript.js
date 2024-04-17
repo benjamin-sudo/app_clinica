@@ -64,10 +64,38 @@ $(document).ready(function(){
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
-    
     //$("#li_panel_rectificacion").show();
-
 });
+
+
+function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
+    //console.table({"NUM_FICHAE":NUM_FICHAE,"ADMISION":ADMISION});
+    $.ajax({ 
+        type                :   "POST",
+        url                 :   "ssan_spab_gestionlistaquirurgica/new_nueva_solicitud_anatomia_ext",
+        dataType            :   "json",
+        beforeSend          :   function(xhr)   {   
+                                                    //console.log("xhr->",xhr);   
+                                                    $("#loadFade").modal('show'); 
+                                                },
+        data                :                   {
+                                                    NUM_FICHAE  :   NUM_FICHAE,
+                                                    ADMISION    :   ADMISION,
+                                                },
+        error		    :   function(errro)     { 
+                                                    console.log(errro);
+                                                    $("#loadFade").modal('hide');  
+                                                    jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                                                },
+        success             :   function(aData) { 
+                                                    console.table(aData);
+                                                    $("#loadFade").modal('hide'); 
+                                                    $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
+                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show"); 
+                                                    $("#PA_ID_PROCARCH").val('65');
+                                                }, 
+    });
+}
 
 function js_busquedapacientes(val){
     $.ajax({ 
@@ -278,35 +306,7 @@ function load_exel()        {
     window.location.href    =   link;
 }
 
-function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
-    //console.table({"NUM_FICHAE":NUM_FICHAE,"ADMISION":ADMISION});
-    $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/new_nueva_solicitud_anatomia_ext",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    //console.log("xhr->",xhr);   
-                                                    $("#loadFade").modal('show'); 
-                                                },
-        data                :                   {
-                                                    NUM_FICHAE  :   NUM_FICHAE,
-                                                    ADMISION    :   ADMISION,
-                                                },
-        error		    :   function(errro)     { 
-                                                    console.log(errro);
-                                                    console.log(errro.responseText);  
-                                                    jAlert("Error General, Consulte Al Administrador"); 
-                                                    $("#loadFade").modal('hide'); 
-                                                },
-        success             :   function(aData) { 
-                                                    console.table(aData);
-                                                    $("#loadFade").modal('hide'); 
-                                                    $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
-                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show"); 
-                                                    $("#PA_ID_PROCARCH").val('65');
-                                                }, 
-    });
-}
+
 
 function js_cambio_fecha(id){
     let fecha_hora      =   $("#DATA_"+id).data('paciente').FECHA_TOMA_MUESTRA;
