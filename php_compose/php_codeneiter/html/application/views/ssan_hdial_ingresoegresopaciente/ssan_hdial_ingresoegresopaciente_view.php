@@ -261,7 +261,10 @@
             </div>
         </div>
     </div>
-    <!-- ZONA INPUT INGRESO DE PACIENTE -->
+    
+    <!--    
+        ZONA INPUT INGRESO DE PACIENTE 
+    -->
     <input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>">
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>
     <input type="hidden" id="TOKEN_ONE" name="TOKEN_ONE" value="<?php echo $TOKEN_ONE;?>"/>
