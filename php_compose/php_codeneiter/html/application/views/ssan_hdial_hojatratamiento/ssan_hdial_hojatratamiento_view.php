@@ -242,6 +242,7 @@
             </div>
         </div>
     </div>
+    
     <!--  ZONA INPUT HOJA DE TRATAMIENTO -->
     <input type="hidden" name="id_templete" id="id_templete" value="2"/>
     <input type="hidden" id="TOKEN_PDF" name="TOKEN_PDF" value="<?php echo $TOKEN_SESSION;?>"/>

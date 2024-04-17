@@ -203,9 +203,9 @@ Full screen Modal
 }
 
 
-@media (min-width: 576px) { /* Aplica estilos solo en pantallas mayores a 576px */
+@media (min-width: 576px)               { 
     .modal-95 {
-        max-width: 95%; /* 95% del ancho de la pantalla */
-        margin: auto;
+        max-width                       :   95%; 
+        margin                          :   auto;
     }
 }
