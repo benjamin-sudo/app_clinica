@@ -65,7 +65,7 @@
                 <div class="card" style="margin-top: 8px;">
                     <div class="grid_panel_header">
                         <div class="grid_panel_header1">
-                            <h4 class="title"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<b>LISTADO DE NUEVAS SOLICITUDES</b></h4>
+                            <h5 class="title"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<b>LISTADO DE NUEVAS SOLICITUDES</b></h5>
                         </div>
                         <div class="grid_panel_header2">
                             <h5 id="txt_fecha_panel_5" style="margin: 0px 0px 0px 0px;"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b><?php echo date("d-m-Y");?></b></h5>

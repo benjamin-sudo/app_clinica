@@ -13,7 +13,10 @@
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   <!-- FontAwesome Icons -->
+  <!--
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  -->
+  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/font-awesome.min.css">
   <!-- Font Awesome -->
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -29,7 +32,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!--  Select Picker Plugin css -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
- <!-- css datetimepicker -->
+  <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css" >
   <style>
     #loadFade         { z-index: 10500 !important; }
@@ -45,7 +48,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa fa-list" aria-hidden="true"></i></a>
       </li>
     </ul>
     <!-- Right navbar links -->
@@ -94,7 +97,7 @@
                 echo '<i class="nav-icon ' . $mainItem['data']['main_icon'] . '"></i>';
                 echo '<p>' . $mainItem['data']['main_nombre'];
                   if (!empty($mainItem['submenus'])) {
-                    echo '<i class="right fas fa-angle-left"></i>';
+                    echo ' <i class="right fa fa-caret-down" aria-hidden="true"></i>';
                   }
                 echo '</p>';
                 echo '</a>';
@@ -104,10 +107,10 @@
                     foreach ($mainItem['submenus'] as $subId => $subItem) {
                         echo '<li class="nav-item">';
                         echo '<a href="' . $subItem['data']['sub_ruta'] . '" class="nav-link" id="menu-' . $mainId . '-sub-' . $subId . '">';
-                        echo '<i class="far fa-circle nav-icon"></i>';
+                        echo '<i class="fa fa-folder-open-o"></i> ';
                         echo '<p>' . $subItem['data']['sub_nombre'];
                         if (!empty($subItem['extensions'])) {
-                            echo '<i class="right fas fa-angle-left"></i>';
+                            //echo '<i class="right fas fa-angle-left"></i>';
                         }
                         echo '</p>';
                         echo '</a>';
@@ -117,7 +120,7 @@
                             foreach ($subItem['extensions'] as $extId => $extItem) {
                               echo '<li class="nav-item">';
                               echo '<a href="' . $extItem['ext_ruta'] . '" class="nav-link load-in-frame" id="menu-' . $mainId . '-sub-' . $subId . '-ext-' . $extId . '">';
-                              echo '<i class="far fa-dot-circle nav-icon"></i>';
+                              echo '<i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;';
                               echo '<p>' . $extItem['ext_nombre'] . '</p>';
                               echo '</a>';
                               echo '</li>';
@@ -174,12 +177,12 @@
 
   <div id="respuesta"></div>
  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/jquery.min.js"></script>
   <!-- jQuery UI - v1.12.0-rc.2  -->
   <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/popper.min.js"></script>
   <!-- Bootstrap 5.0.1 -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/bootstrap.min.js"></script>
   <!-- AdminLTE App -->
   <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
   <!-- Validador rut -->
@@ -201,7 +204,7 @@
   <!--  bootstrap-datetimepicker.js -->
   <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
   <!-- bootstrap-select.min.js -->
-  <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-select.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
 
     <section>
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
