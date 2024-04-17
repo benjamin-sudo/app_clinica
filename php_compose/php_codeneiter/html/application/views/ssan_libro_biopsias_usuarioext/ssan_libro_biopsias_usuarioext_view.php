@@ -16,13 +16,13 @@
                 <i class="fa fa-question-circle-o" aria-hidden="true"></i>
             </button>
             <button type="button" class="btn btn-info btn-fill" id="btn_informacion_sistema" onclick="nueva_solicitud_anatomia(null,null)">
-                <i class="fa fa-user-plus" aria-hidden="true"></i><b>&nbsp;NUEVA&nbsp;SOLICITUD&nbsp;ANATOMIA&nbsp;(SIN&nbsp;CITA)</b>
+                <i class="fa fa-user-plus" aria-hidden="true"></i><b>&nbsp;NUEVA&nbsp;SOLICITUD&nbsp;ANATOMIA&nbsp;</b>
             </button>
         </div>
     </div>
 </div>
 
-<hr style="margin: 0px 0px 8px 0px;">
+<br>
 
 <div class="grid_body_panel">
     <div class="grid_body_panel1" style="padding: 10px;">
@@ -34,6 +34,7 @@
                 <div class="content" style="margin-bottom: 20px;">
                     <div id="fecha_out"></div>
                 </div>
+                <hr>
                 <div class="grid_buton">
                     <div class="grid_buton1">&nbsp;</div>
                     <div class="grid_buton1"> 
@@ -95,53 +96,42 @@
 </div>    
 
 <section>
-    
+
+    <!-- class_modal_ancho -->
+
+
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="title" style="color:#e34f49">
-                        <b>SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</b>
-                        <p class="category">Divida un flujo complicado en varios pasos</p>
-                    </h4>
+                    <h3 class="modal-title"><b style="color:#e34f49">SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="HTML_SOLICITUD_ANATOMIA"></div>
-                <div class="modal-footer" style="text-align: start;">
-                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="MODAL_PDF_ANATOMIA_PATOLOGICA">
-        <div class="modal-dialog modal-xl3">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3 class="modal-title"><b>PDF</b></h3>
-                </div>
-                <div class="modal-body" id="HTML_PDF_ANATOMIA_PATOLOGICA"></div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">CIERRA VENTANA</button>
-            </div>
-            </div>
-        </div>
-    </div>
+  
 
     <div class="modal fade" id="MODAL_CALENDARIO_RESUMENSOLICITUDES">
         <div class="modal-dialog modal-xl3">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
                     <h3 class="modal-title"><b>PDF</b></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    
                 </div>
                 <div class="modal-body" id="HTML_CALENDARIO_RESUMENSOLICITUDES"></div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">CIERRA VENTANA</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">CIERRA VENTANA</button>
+                </div>
             </div>
         </div>
     </div>

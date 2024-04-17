@@ -1060,7 +1060,7 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         $NUM_FICHAE                             =   $this->input->post('NUM_FICHAE');
         $ADMISION                               =   $this->input->post('ADMISION');
         $session                                =   $session_arr[0];
-        $DATA_CURSOR                            =   $this->ssan_libro_biopsias_usuarioext_model->data_pre_nuevasoliciud_anatomia(array(
+        $DATA_CURSOR                            =   $this->Ssan_libro_biopsias_usuarioext_model->data_pre_nuevasoliciud_anatomia(array(
                 "COD_EMPRESA"                   =>  $empresa,
                 "USR_SESSION"                   =>  $session,
                 "DATE_FROM"                     =>  date("d-m-Y"),
@@ -1068,7 +1068,7 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
                 "NUM_FICHAE"                    =>  $NUM_FICHAE,
                 "ADMISION"                      =>  $ADMISION,
             ));
-        $TABLA["GET_HTML"]                      =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
+        //$TABLA["GET_HTML"]                      =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
         $TABLA["DATA_INFO"]                     =   $DATA_CURSOR;
         $TABLA["SALIDA_DIRECTA"]                =   true;
         $this->output->set_output(json_encode($TABLA));

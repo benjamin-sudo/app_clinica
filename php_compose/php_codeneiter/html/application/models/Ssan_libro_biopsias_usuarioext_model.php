@@ -2,7 +2,7 @@
 
 defined("BASEPATH") OR exit("No direct script access allowed");
 
-class Ssan_libro_biopsias_usuarioext_model extends CI_Model {
+class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
     var $tableSpace =   "ADMIN";
     var $own        =   "ADMIN";

@@ -69,10 +69,9 @@ $(document).ready(function(){
 
 
 function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
-    //console.table({"NUM_FICHAE":NUM_FICHAE,"ADMISION":ADMISION});
     $.ajax({ 
         type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/new_nueva_solicitud_anatomia_ext",
+        url                 :   "ssan_libro_biopsias_usuarioext/new_nueva_solicitud_anatomia_ext",
         dataType            :   "json",
         beforeSend          :   function(xhr)   {   
                                                     //console.log("xhr->",xhr);   
@@ -88,7 +87,7 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
                                                     jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
                                                 },
         success             :   function(aData) { 
-                                                    console.table(aData);
+                                                    console.log(aData);
                                                     $("#loadFade").modal('hide'); 
                                                     $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
                                                     $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show"); 

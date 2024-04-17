@@ -133,10 +133,26 @@
     justify-items               :   flex-start;
 }
 
-.grid_buton {
+.grid_buton                     {
     display                     :   grid;
     grid-template-columns       :   1fr auto 1fr;
     align-items                 :   center;
     justify-items               :   flex-start;
-  }
+}
+
+@media(min-width                :   900px){
+    .class_modal_ancho          {
+        width                   :   85%;
+        max-width               :   90%;
+    }
+}
+
+@media(min-width                :   900px){
+    .modal-xl3          {
+        width                   :   85%;
+        max-width               :   90%;
+    }
+}
+
+
 
