@@ -26,76 +26,75 @@
 
 <div class="grid_body_panel">
     <div class="grid_body_panel1" style="padding: 10px;">
-
         <div class="card" id="card_fechas">
             <div class="card-body">
                 <h5 class="card-title"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b>FECHA</b></h5>
                 <br>
-                <h6 class="card-subtitle mb-2 text-muted">Seleccione fecha</h6>
-                <div class="content">
+                <h6 class="">Seleccione fecha</h6>
+                <div class="content" style="margin-bottom: 20px;">
                     <div id="fecha_out"></div>
                 </div>
-                <div class="btn-group pull-center text-center">
-                    <button type="button" class="btn btn-small btn-success btn-fill" id="plan_1" onclick="ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(1)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="ACTUALIZAR DIA">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;
-                    </button>
-                    <button type="button" class="btn btn-small btn-warning btn-fill" style="display: none" id="plan_2" onclick="ver_calendario(1)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="VER CALENDARIO">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;
-                    </button>
-                    <button type="button" class="btn btn-small btn-info btn-fill" id="plan_1" onclick="nueva_solicitud_anatomia(null,null)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="NUEVA SOLICITUD">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;
-                    </button>
+                <div class="grid_buton">
+                    <div class="grid_buton1">&nbsp;</div>
+                    <div class="grid_buton1"> 
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-small btn-success btn-fill" id="plan_1" onclick="ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(1)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="ACTUALIZAR DIA">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;
+                            </button>
+                            <button type="button" class="btn btn-small btn-warning btn-fill" style="display: none" id="plan_2" onclick="ver_calendario(1)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="VER CALENDARIO">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;
+                            </button>
+                            <button type="button" class="btn btn-small btn-info btn-fill" id="plan_1" onclick="nueva_solicitud_anatomia(null,null)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="NUEVA SOLICITUD">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid_buton1">&nbsp;</div>
                 </div>
             </div>
         </div>
-
     </div>
     <div class="grid_body_panel2" style="padding: 10px;">
-        <div id="tabs_listasolicitudes">
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;MIS SOLICITUDES ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>
-                <li style="display: none" id="li_panel_rectificacion"><a data-toggle="tab" href="#menu1"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;RECTIFICACI&Oacute;N DE ERROR SOLICITUD DE ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="home" class="tab-pane fade in active" style="padding: 0px">
-                    <div class="card" style="margin-bottom: 0px;">
-                        <div class="grid_panel_header">
-                            <div class="grid_panel_header1">
-                                <h4 class="title"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<b>LISTADO DE NUEVAS SOLICITUDES</b></h4>
-                            </div>
-                            <div class="grid_panel_header2">
-                                <h5 id="txt_fecha_panel_5" style="margin: 0px 0px 0px 0px;"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b><?php echo date("d-m-Y");?></b></h5>
-                            </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">MIS SOLICITUDES ANATOM&Iacute;A PATOL&Oacute;GICA</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div class="card" style="margin-top: 8px;">
+                    <div class="grid_panel_header">
+                        <div class="grid_panel_header1">
+                            <h4 class="title"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<b>LISTADO DE NUEVAS SOLICITUDES</b></h4>
                         </div>
-                        <div style="padding: 10px;">
-                            <table class="table card table-striped" id="TABLE_ID_5">
-                                <thead>
-                                    <tr>
-                                        <th width="2%"  scope="col" style="height: 40px;">#</th>
-                                        <th width="20%" scope="col">INFORMACI&Oacute;N PACIENTE</th>
-                                        <th width="20%" scope="col">INFORMACI&Oacute;N MEDICO</th>
-                                        <th width="20%" scope="col">DATOS SOLICITUD</th>
-                                        <th width="15%" scope="col" style="text-align: center">ESTADO</th>
-                                        <th width="15%" scope="col" style="text-align: center">FECHA</th>
-                                        <th width="4%"  scope="col" style="text-align: center"><i class="fa fa-info-circle" aria-hidden="true"></i></th>
-                                        <th width="4%"  scope="col" style="text-align: center"><i class="fa fa-cog" aria-hidden="true"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="RETURN_DATA_5">
-                                    <?php echo $HTML_SOLICITUDEAP["NUEVAS_SOLICITUDES"];?>
-                                </tbody>
-                            </table>
+                        <div class="grid_panel_header2">
+                            <h5 id="txt_fecha_panel_5" style="margin: 0px 0px 0px 0px;"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b><?php echo date("d-m-Y");?></b></h5>
                         </div>
                     </div>
-                </div>
-                <div id="menu1" class="tab-pane fade sin_padding">
-                    <b>Cargando lista ... </b>
+                    <table class="table table-striped" id="TABLE_ID_5" style="margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th width="2%"  scope="col" style="height: 40px;">#</th>
+                                <th width="20%" scope="col">INFO. PACIENTE</th>
+                                <th width="20%" scope="col">INFO. MEDICO</th>
+                                <th width="20%" scope="col">DATOS SOLICITUD</th>
+                                <th width="15%" scope="col" style="text-align: center">ESTADO</th>
+                                <th width="15%" scope="col" style="text-align: center">FECHA</th>
+                                <th width="4%"  scope="col" style="text-align: center"><i class="fa fa-info-circle" aria-hidden="true"></i></th>
+                                <th width="4%"  scope="col" style="text-align: center"><i class="fa fa-cog" aria-hidden="true"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="RETURN_DATA_5">
+                            <?php echo $HTML_SOLICITUDEAP;?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
-</div>
+</div>    
 
+    
 
 <section>
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">

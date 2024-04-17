@@ -12,16 +12,9 @@
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap.min.css" >
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
-  <!-- Font Awesome -->
-  <!--
-  <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-  -->
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Font Awesome -->
-  <!--
-  <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
-  -->
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!--   https://adminlte.io/docs/3.2/javascript/iframe.html -->
@@ -34,17 +27,14 @@
   <!-- ui | 1.12.1 --> 
   <!-- autocomplete -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!--
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
-  -->
   <!--  Select Picker Plugin css -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
-  <!-- css datetimepicker -->
+ <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css" >
   <style>
-    .nav-link.activo{ }
-    #loadFade { z-index: 10500 !important; }
+    #loadFade         { z-index: 10500 !important; }
+    .nav-link.activo  { }
+    .text-center      { text-align: center;  }
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
@@ -183,16 +173,10 @@
 <!-- ./wrapper -->
 
   <div id="respuesta"></div>
-  <!-- jQuery v3.6.0 -->
-  <!--
-  <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
-  -->
+ 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <!-- jQuery UI - v1.12.0-rc.2  -->
   <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
-  <!-- Bootstrap 5.2.3
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
   <!-- Bootstrap 5.0.1 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
@@ -214,18 +198,10 @@
   <!-- bootstrap-datetimejs -->  
   <script type="text/javascript" src="assets/recursos/js/moment.min.js"></script>
   <script type="text/javascript" src="assets/recursos/js/moment.js"></script>
-  
-  <!--  Select Picker Plugin js -->
+  <!--  bootstrap-datetimepicker.js -->
   <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
-  <!--
-  <script src="https://cdn.jsdelivr.net/npm/moment@latest/min/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-  -->
   <!-- bootstrap-select.min.js -->
   <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-select.min.js"></script>
-      
-
-
 
     <section>
       <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">

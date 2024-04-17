@@ -6,7 +6,6 @@ $(document).ready(function(){
         $("#btn_subrotulo").attr('onclick','');
     });
 
-
     //MODAL GLOBAL DE ETIQUETAS
     $("#MODAL_INFORMACION_ETIQUETA").on('show.bs.modal',function(e){ 
 	$('.modal .modal-body').css('overflow-y','auto'); 

@@ -12,7 +12,12 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     public function index(){
         $this->output->set_template('blank');
         $empresa        =   $this->session->userdata("COD_ESTAB");
-        $data = [];
+        $data           =   [];
+
+        $data['HTML_SOLICITUDEAP'] =   '<tr style="text-align: center;">
+                                            <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
+                                        </tr>';
+
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_usuarioext/js/javascript.js");
         $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);

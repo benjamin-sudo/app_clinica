@@ -21,13 +21,11 @@ $(document).ready(function(){
                                         close       :   'fa fa-remove',
                                     }
     }).on('dp.change',function(e){ 
-
         //console.log("e---------->",JSON.stringify(e));
 	    //console.log("date------->",JSON.stringify(e.date));
         //var fecha               =   fecha_cale("fecha_out");
         //$("#txt_fecha_panel_1,#txt_fecha_panel_2,#txt_fecha_panel_3,#txt_fecha_panel_4,#txt_fecha_panel_5").html('<b><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;'+fecha+'</b>');
         //ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
-
     });
 
     $(".timepicker").remove();

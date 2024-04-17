@@ -132,3 +132,11 @@
     align-items                 :   center;
     justify-items               :   flex-start;
 }
+
+.grid_buton {
+    display                     :   grid;
+    grid-template-columns       :   1fr auto 1fr;
+    align-items                 :   center;
+    justify-items               :   flex-start;
+  }
+
