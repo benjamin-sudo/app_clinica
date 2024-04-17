@@ -13,20 +13,18 @@
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
   <!-- Font Awesome -->
   <!--
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   -->
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- 
-    https://adminlte.io/docs/3.2/javascript/iframe.html
-  -->
+  <!--   https://adminlte.io/docs/3.2/javascript/iframe.html -->
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
   <!-- jalert css -->
-  <link href="assets/recursos/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+  <link type="text/css" rel="stylesheet" media="screen" href="assets/recursos/jalert/jquery.alerts.css"/>
   <!-- select min  -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
   <!-- ui | 1.12.1 --> 
@@ -35,7 +33,6 @@
   <!--
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
   -->
-
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
@@ -215,7 +212,6 @@
   <script src="https://cdn.jsdelivr.net/npm/moment@latest/min/moment.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
   -->
-
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
@@ -272,6 +268,7 @@
               </div>
           </div>
       </div>
+      
     </section>
   </body>
 </html>
