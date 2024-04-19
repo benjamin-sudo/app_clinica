@@ -244,7 +244,7 @@ function test_js_newtabs(){
     $('#UL_TABS_MUESTRA').tab();
     $('#UL_TABS_MUESTRA li:last-child a').tab('show');
 }
-   
+
 /*
     $('#UL_TABS_MUESTRA a[href="#profile"]').tab('show'); 
     $('#UL_TABS_MUESTRA li:first-child a').tab('show');

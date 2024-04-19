@@ -1049,7 +1049,7 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
     }
     
     #################################################
-    #SOLICITUD DE : ANATOMIA PATOLOGICA 
+    #SOLICITUD DE : ANATOMIA PATOLOGICA #############
     #PACIENTE + SERVICIO + FORMULARIO + GET = PDF
     #MODAL 50%
     ##################################################
@@ -1068,10 +1068,12 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
                 "NUM_FICHAE"                    =>  $NUM_FICHAE,
                 "ADMISION"                      =>  $ADMISION,
             ));
-        //$TABLA["GET_HTML"]                      =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
-        $TABLA["DATA_INFO"]                     =   $DATA_CURSOR;
-        $TABLA["SALIDA_DIRECTA"]                =   true;
-        $this->output->set_output(json_encode($TABLA));
+        $html                                   =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
+        $this->output->set_output(json_encode([
+            'html' => $html,
+            'DATA_INFO' => $DATA_CURSOR,
+            'SALIDA_DIRECTA' => true.
+        ]));
     }
 
     public function php_generar_zpl_to_pdf(){

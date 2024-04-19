@@ -3014,5 +3014,4 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'status' => $this->db->trans_status(),
         );
     }
-
 }

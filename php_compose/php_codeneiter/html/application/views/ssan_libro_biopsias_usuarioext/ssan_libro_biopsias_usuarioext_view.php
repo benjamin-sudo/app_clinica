@@ -96,10 +96,7 @@
 </div>    
 
 <section>
-
     <!-- class_modal_ancho -->
-
-
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -117,16 +114,12 @@
         </div>
     </div>
 
-  
-
     <div class="modal fade" id="MODAL_CALENDARIO_RESUMENSOLICITUDES">
         <div class="modal-dialog modal-xl3">
             <div class="modal-content">
                 <div class="modal-header">
-
                     <h3 class="modal-title"><b>PDF</b></h3>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    
                 </div>
                 <div class="modal-body" id="HTML_CALENDARIO_RESUMENSOLICITUDES"></div>
                 <div class="modal-footer">
