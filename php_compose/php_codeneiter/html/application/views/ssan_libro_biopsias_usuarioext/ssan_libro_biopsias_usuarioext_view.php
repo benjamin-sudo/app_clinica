@@ -96,12 +96,15 @@
 </div>    
 
 <section>
+    
     <!-- class_modal_ancho -->
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</b></h3>
+                    <h3 class="modal-title"><b style="color:#e34f49">
+                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</b>
+                    </h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="HTML_SOLICITUD_ANATOMIA"></div>
@@ -186,13 +189,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">x</button>
-            </div>
+                    <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">x</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="Dv_verdocumentos" style=" z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
+    <div class="modal fade" id="Dv_verdocumentos" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
         <div class="modal-dialog modal-xl3" style="width:80%;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -207,8 +210,7 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="modal_edita_fecha" style=" z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
+    <div class="modal fade" id="modal_edita_fecha" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
