@@ -369,9 +369,9 @@ $(document).ready(function () {
         'onNext'            :   function(tab, navigation, index) {
             
             console.log("   ##############################      ");
-            console.log("   tab         ->  ",tab);
-            console.log("   navigation  ->  ",navigation);
-            console.log("   index       ->  ",index);
+            console.log("   tab         ->  ",tab,"             ");
+            console.log("   navigation  ->  ",navigation,"      ");
+            console.log("   index       ->  ",index,"           ");
             console.log("   ##############################      ");
             
             if (index == 1){
@@ -422,7 +422,7 @@ $(document).ready(function () {
                     //return true;
                     $.ajax({ 
                         type                :   "POST",
-                        url                 :   "ssan_spab_gestionlistaquirurgica/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
+                        url                 :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
                         dataType            :   "json",
                         beforeSend          :   function(xhr)   {
                                                                     var HTML_BEFORESEND =   '<tbody id="msj_busqueda" style="display: none">'+
@@ -449,9 +449,9 @@ $(document).ready(function () {
                                                                     IND_GESPAB          :   0
                                                                 },
                         error		:   function(errro)     {  
-                                                                    jAlert("<b>Error General, Consulte Al Administrador</b>"); 
+                                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                                     console.log(errro);
-                                                                    console.log(errro.responseText);
+                                                                    //console.log(errro.responseText);
                                                                     $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
                                                                     $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
                         },
@@ -470,10 +470,8 @@ $(document).ready(function () {
 
 
                 if (index == 3){
-
-                    jAlert("HOLA","Clinica Libre");
+                    jAlert("Valida Formulario","Clinica Libre");
                 }
-
             }
 
 

@@ -149,7 +149,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         )));
     }
 
-
+    
     public function FORMULARIO_ANATOMIA_PATOLOGICA_V2(){
         if(!$this->input->is_ajax_request()) { show_404(); }
         $empresa                        =   $this->session->userdata('COD_ESTAB');
