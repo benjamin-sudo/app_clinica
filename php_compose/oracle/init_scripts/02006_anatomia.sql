@@ -1,7 +1,637 @@
 ALTER SESSION SET CONTAINER = FREEPDB1;
 ALTER SESSION SET CURRENT_SCHEMA = ADMIN;
 
+CREATE TABLE ADMIN.PB_INFOROTULADO (
+    ID_ROTULADO      NUMBER NOT NULL,
+    COD_EMPRESA      VARCHAR2(50 BYTE),
+    TXT_OBSERVACION  VARCHAR2(255 BYTE),
+    IND_ESTADO       NUMBER,
+    IND_GESPAB       NUMBER,
+    IND_ZONA_GESPAB  VARCHAR2(50 BYTE),
+    ID_SERDEP        NUMBER,
+    IND_ESTADISTICA  NUMBER DEFAULT 0,
+    PRIMARY KEY (ID_ROTULADO)
+);
+COMMIT;
+
 /
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (1, '100', 'H.ANGOL | PABELLÓN CENTRAL', 1, 1, 
+    'CE', NULL, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (2, '100', 'H.ANGOL | PABELLÓN MENOR', 1, 1, 
+    'ME', NULL, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (3, '106', 'H.VICTORIA | PABELLÓN CENTRAL', 1, 1, 
+    'CE', NULL, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (4, '106', 'H.VICTORIA | PABELLÓN MENOR', 1, 1, 
+    'ME', NULL, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (5, '029', 'SSAN | PABELLÓN CENTRAL', 1, 1, 
+    'CE', NULL, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (6, '029', 'SSAN | PABELLÓN MENOR', 1, 1, 
+    'ME', NULL, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (7, '100', 'LIBRO ALCOHOL Y DROGAS', 1, 0, 
+    NULL, 41, 1);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (18, '106', 'TOMA MUESTRA UROLOGIA', 1, 0, 
+    NULL, 266, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (20, '106', 'TOMA MUESTRA CIRUGIA', 1, 0, 
+    NULL, 14, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (17, '106', 'TOMA MUESTRA ALCOHOL Y DROGAS', 1, 0, 
+    NULL, 41, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (28, '100', 'TOMA MUESTRA CIRUGIA INFANTIL', 1, 0, 
+    NULL, 145, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (29, '100', 'TOMA MUESTRA CARDIOCIRUGIA INFANTIL', 1, 0, 
+    NULL, 191, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (30, '100', 'TOMA MUESTRA AREA QUIRURGICA', 1, 0, 
+    NULL, 265, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (32, '100', 'TOMA MUESTRA CIR.CARDIOVASCULAR', 1, 0, 
+    NULL, 74, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (34, '106', 'TOMA MUESTRA AREA QUIRURGICA', 1, 0, 
+    NULL, 265, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (35, '107', 'TOMA MUESTRA ALCOHOL Y DROGAS', 1, 0, 
+    NULL, 41, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (53, '100', 'TOMA MUESTRA POLICLINICO CIRUGIA', 1, 0, 
+    NULL, 118, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (41, '100', 'TOMA MUESTRA BANCO SANGRE', 1, 0, 
+    NULL, 16, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (44, '303', 'TOMA MUESTRA DENTAL', 1, 0, 
+    NULL, 253, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (45, '304', 'TOMA MUESTRA SIN SERVICIO', 1, 0, 
+    NULL, 283, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (46, '100', 'TOMA MUESTRA DERMATOLOGIA', 1, 0, 
+    NULL, 190, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (13, '100', 'TOMA MUESTRA AREA MEDICA', 1, 0, 
+    NULL, 151, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (14, '100', 'TOMA MUESTRA UROLOGIA', 1, 0, 
+    NULL, 266, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (15, '100', 'TOMA MUESTRA TRAUM.Y ORTOPEDIA INFANTIL', 1, 0, 
+    NULL, 264, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (16, '100', 'TOMA MUESTRA GINECOLOGIA', 1, 0, 
+    NULL, 193, 1);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (22, '029', 'TOMA MUESTRA CIRUGIA', 1, 0, 
+    NULL, 14, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (31, '029', 'TOMA MUESTRA GINECOLOGIA', 1, 0, 
+    NULL, 193, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (38, '100', 'TOMA MUESTRA U.T.I. QUEMADOS', 1, 0, 
+    NULL, 226, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (42, '100', 'TOMA MUESTRA POLICLINICO MATERNAL', 1, 0, 
+    NULL, 252, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (51, '100', 'TOMA MUESTRA OBSTETRICIA', 1, 0, 
+    NULL, 112, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (52, '100', 'TOMA MUESTRA NEUROCIRUGIA INDIFERENCIADO', 1, 0, 
+    NULL, 42, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (21, '100', 'TOMA MUESTRA CIRUGIA', 1, 0, 
+    NULL, 14, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (23, '029', 'TOMA MUESTRA CIRUGIA INFANTIL', 1, 0, 
+    NULL, 145, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (24, '029', 'TOMA MUESTRA UCI PEDIATRIA', 1, 0, 
+    NULL, 196, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (25, '029', 'TOMA MUESTRA CIR.BLANDA INFANTIL', 1, 0, 
+    NULL, 12, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (26, '029', 'TOMA MUESTRA CIR.CARDIOVASCULAR', 1, 0, 
+    NULL, 74, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (27, '029', 'TOMA MUESTRA ALCOHOL Y DROGAS', 1, 0, 
+    NULL, 41, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (36, '300', 'TOMA MUESTRA SUR', 1, 0, 
+    NULL, 282, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (37, '104', 'TOMA MUESTRA ALCOHOL Y DROGAS', 1, 0, 
+    NULL, 41, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (40, '104', 'TOMA MUESTRA CIRUGIA', 1, 0, 
+    NULL, 14, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (19, '106', 'TOMA MUESTRA AREA MEDICA', 1, 0, 
+    NULL, 151, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (33, '100', 'TOMA MUESTRA INFECCIOSOS', 1, 0, 
+    NULL, 79, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (39, '303', 'TOMA MUESTRA POLICLINICO MEDICOS', 1, 0, 
+    NULL, 178, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (43, '100', 'LIBRO ANATOMIA PATOLOGICA', 1, 0, 
+    NULL, 202, 1);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (47, '100', 'TOMA MUESTRA LABORATORIO', 1, 0, 
+    NULL, 179, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (48, '100', 'TOMA MUESTRA CIRUGIA MENOR OFTALMOLOGIA', 1, 0, 
+    NULL, 243, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (49, '100', 'TOMA MUESTRA ENDOSCOPIA', 1, 0, 
+    NULL, 215, 0);
+Insert into ADMIN.PB_INFOROTULADO
+   (ID_ROTULADO, COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, IND_GESPAB, 
+    IND_ZONA_GESPAB, ID_SERDEP, IND_ESTADISTICA)
+ Values
+   (50, '029', 'TOMA MUESTRA CARDIOCIRUGIA INFANTIL', 1, 0, 
+    NULL, 191, 0);
+COMMIT;
+
+/
+CREATE SEQUENCE ADMIN.SEQ_TOMAMUESTRAXESPEC
+  START WITH 54
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 0
+  NOCYCLE
+  NOCACHE
+  NOORDER;
+COMMIT;
+/
+CREATE TABLE ADMIN.PB_NMUESTRA_AUTOCOMPLETADO (
+    ID_AUTOCOMPLETADO  NUMBER  NOT NULL,
+    TXT_CHARACTER      VARCHAR2(500 BYTE),
+    TXT_REALNAME       VARCHAR2(500 BYTE),
+    IND_ESTADO         NUMBER,
+    PRIMARY KEY (ID_AUTOCOMPLETADO)
+);
+COMMIT;
+/
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (1, 'ESÓFAGO DISTAL', '1', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (2, 'ESÓFAGO MEDIO', '2', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (3, 'ESÓFAGO PROXIMAL', '3', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (4, 'PÓLIPO', '4', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (5, 'CARDIAS', '5', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (6, 'ANTRO I', '6', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (7, 'ANTRO II', '7', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (8, 'ANGULO', '8', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (9, 'CUERPO I', '9', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (10, 'CUERPO II', '10', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (11, 'LESIÓN DE CUERPO', '11', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (12, 'OBS. NEOPLASIA', '12', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (13, 'ÚLCERA', '13', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (14, 'EROSIÓN', '14', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (15, 'ESÓFAGO DE BARRETT', '15', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (16, 'ILEÓN', '16', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (17, 'YEYUNO', '17', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (18, 'DUODENO', '18', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (19, 'PAPILA DUODENAL', '19', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (20, 'CIEGO', '20', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (21, 'COLON ASCENDENTE', '21', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (22, 'COLON TRANSVERSO', '22', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (23, 'COLON DESCENDENTE', '23', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (24, 'COLON SIGMOIDE', '24', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (25, 'RECTO', '25', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (26, 'PÓLIPO ADENOMATOSO', '26', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (27, 'PÓLIPO HIPERPLÁSICO', '27', 1);
+Insert into ADMIN.PB_NMUESTRA_AUTOCOMPLETADO
+   (ID_AUTOCOMPLETADO, TXT_CHARACTER, TXT_REALNAME, IND_ESTADO)
+ Values
+   (28, 'PÓLIPO GÁSTRICO', '28', 1);
+COMMIT;
+/
+
+CREATE TABLE ADMIN.PB_INFOROTULADO_SUB (
+    ID_ROTULADO_SUB  NUMBER,
+    ID_ROTULADO      NUMBER,
+    COD_EMPRESA      VARCHAR2(50 BYTE),
+    TXT_OBSERVACION  VARCHAR2(1000 BYTE),
+    IND_ESTADO       NUMBER(1),
+    DATE_CREA        DATE,
+    ID_UID           NUMBER,
+    DATE_AUDITA      DATE,
+    ID_UID_AUDITA    NUMBER
+);
+
+
+CREATE TABLE ADMIN.PB_SOLICITUD_HISTO (
+    ID_SOLICITUD_HISTO           NUMBER,
+    NUM_FICHAE                   NUMBER,
+    COD_USRCREA                  NUMBER,
+    FEC_USRCREA                  DATE,
+    COD_EMPRESA                  VARCHAR2(25 BYTE),
+    DES_SITIOEXT                 VARCHAR2(255 BYTE),
+    DES_UBICACION                VARCHAR2(255 BYTE),
+    DES_TAMANNO                  VARCHAR2(255 BYTE),
+    ID_TIPO_LESION               NUMBER,
+    ID_ASPECTO                   NUMBER,
+    ID_ANT_PREVIOS               NUMBER,
+    NUM_ANTECEDENTES             VARCHAR2(10 BYTE),
+    DES_BIPSIA                   VARCHAR2(1000 BYTE),
+    DES_CITOLOGIA                VARCHAR2(1000 BYTE),
+    DES_OBSERVACIONES            VARCHAR2(1000 BYTE),
+    IND_ESTADO                   NUMBER,
+    FEC_REVISION                 DATE,
+    ID_TABLA                     NUMBER,
+    DES_TIPOMUESTRA              VARCHAR2(255 BYTE),
+    NUM_SUBNUMERACION            NUMBER,
+    COD_USRCREA_TO_MUE           NUMBER,
+    FEC_USRCREA_TO_MUE           DATE,
+    COD_USRCREA_ENV              NUMBER,
+    FEC_USRCREA_ENV              DATE,
+    COD_USRCREA_RECEP            NUMBER,
+    FEC_USRCREA_RECEP            DATE,
+    COD_EMPRESA_RECEP            VARCHAR2(5 BYTE),
+    COD_USRCREA_INFORMADA        NUMBER,
+    FEC_USRCREA_INFORMADA        DATE,
+    COD_EMPRESA_INFORMADA        VARCHAR2(5 BYTE),
+    ID_ARCHIVO_SUBIDO            NUMBER,
+    COD_USRCREA_RECH             NUMBER,
+    FEC_USRCREA_RECH             DATE,
+    COD_EMPRESA_RECH             VARCHAR2(5 BYTE),
+    TIPO_RECHAZO                 NUMBER,
+    OBS_RECHAZO                  VARCHAR2(3000 BYTE),
+    ID_HISTO_ESTADO              NUMBER           DEFAULT 1,
+    AD_ID_ADMISION               NUMBER,
+    ID_SERDEP                    NUMBER(10),
+    PA_ID_PROCARCH               NUMBER(10),
+    IND_TIPO_BIOPSIA             NUMBER(3),
+    IND_TEMPLATE                 NUMBER,
+    DATE_INICIOREGISTRO          DATE,
+    COD_RUTPRO                   NUMBER,
+    TXT_DIAGNOSTICO              VARCHAR2(500 BYTE),
+    NUM_PLANTILLA                NUMBER,
+    IND_USOCASSETTE              NUMBER,
+    IND_INFOPOST                 NUMBER,
+    IND_ESTADO_MUESTRAS          NUMBER,
+    LAST_USR_AUDITA              VARCHAR2(50 BYTE),
+    LAST_DATE_AUDITA             DATE,
+    ID_NUM_CARGA                 NUMBER,
+    ID_UID                       NUMBER,
+    TXT_NAMEAUDITA               VARCHAR2(255 BYTE),
+    ID_ROTULADO                  NUMBER,
+    IND_NOTIF_CANCER             NUMBER,
+    FEC_AUDITA                   DATE,
+    USR_AUDITA                   VARCHAR2(50 BYTE),
+    NUM_NOTIFICACION             NUMBER,
+    ID_PROFESIONAL               NUMBER,
+    DATE_CHEQUEO_SOME            DATE,
+    DATE_REVISION_BD             DATE,
+    DATE_REVISION_INFORME        DATE,
+    DATE_ARCHIVADA_EN_FICHA      DATE,
+    NUM_BENEFICIARIOS            NUMBER,
+    IND_MES_CRITICO              NUMBER,
+    DATE_IMPRESION_INFORME       DATE,
+    DATE_ENTREGA_INFORME         DATE,
+    ID_PROFESIONAL_RECIBE_INFO   NUMBER,
+    ID_PROFESIONAL_ENTREGA_INFO  NUMBER,
+    NUM_PLAZO_BIOPSIA            NUMBER,
+    NUM_DIAS_ENTCANCER           NUMBER,
+    NUM_ASIGNACION96HRS          NUMBER,
+    DATE_INICIO_CANCER           DATE,
+    DATE_FINAL_CANCER            DATE,
+    IND_ESTADIO_OLGA             NUMBER,
+    TXT_DIADNOSTICO_AP           VARCHAR2(4000 BYTE),
+    DATE_FECHA_MACRO             DATE,
+    DATE_FECHA_CORTE             DATE,
+    IND_COLOR_TACO               NUMBER,
+    IND_ESTADO_OLGA              NUMBER,
+    DATE_INTERCONSULTA           DATE,
+    NUM_CP_INTERCONSULTA         NUMBER,
+    NUM_FRAGMENTOS               NUMBER,
+    NUM_AZUK_ALCIAN_S            NUMBER,
+    NUM_PAS_SERIADA              NUMBER,
+    NUM_DIFF_SERIADA             NUMBER,
+    NUM_HE_SERIADA               NUMBER,
+    NUM_LAMINAS_SERIADAS         NUMBER,
+    NUM_HE_RAPIDA                NUMBER,
+    NUM_TACOS_CORTADOS           NUMBER,
+    NUM_EXTENDIDOS               NUMBER,
+    DATE_TRASLADO                DATE,
+    ID_UID_TRASLADO              NUMBER,
+    ID_USER_TRASLADO             VARCHAR2(50 BYTE),
+    ID_UID_TRASPORTE_OK          NUMBER,
+    ID_UID_RECEPCIONA_OK         NUMBER,
+    COD_SESSION_RECEPCIONA       VARCHAR2(50 BYTE),
+    ID_HISTO_ZONA                NUMBER           DEFAULT 0,
+    TXT_DESC_MACROSCOPICA        VARCHAR2(1000 BYTE),
+    DATE_STAR_SALA_PROCESO       DATE,
+    DATE_END_SALA_PROCESO        DATE,
+    ID_UID_INICIO_SPROCESO       NUMBER,
+    IND_SALA_PROCESO             NUMBER,
+    ID_UID_FINAL_SPROCESO        NUMBER,
+    IND_TEC_INCLUCION            NUMBER,
+    IND_TEC_CORTE                NUMBER,
+    IND_TEC_TINCION              NUMBER,
+    IND_ALL_TECNICAS             NUMBER,
+    ID_UID_RECHAZA               NUMBER,
+    TXT_OBS_RECHAZA              VARCHAR2(256 BYTE),
+    ID_UID_CANCELA               NUMBER,
+    FEC_CANCELA                  DATE,
+    NUM_INTERNO_AP               NUMBER,
+    DATE_AUDITA_ADMINISTRATIVO   DATE,
+    IND_GEST_ADMINISTRATIVO      NUMBER,
+    ID_UID_ADMINISTRATIVO        NUMBER,
+    DATE_FECHA_DIAGNOSTICO       DATE,
+    IND_CONF_CANCER              NUMBER,
+    CI_ID_CITACION               NUMBER,
+    IND_TIPOSECUENCIA            NUMBER,
+    TXT_CITOLOGICO               VARCHAR2(4000 BYTE),
+    NUM_CO_CITOLOGIA             NUMBER,
+    NUM_CO_PAP                   NUMBER,
+    TXT_DIAG_CITOLOGIA           VARCHAR2(4000 BYTE),
+    ID_PROFESIONAL_CITOLOGICO    NUMBER,
+    IND_TIPO_INFORME             NUMBER           DEFAULT 0,
+    NUM_NOF_CANCER               NUMBER,
+    IND_CONF_PAG                 NUMBER           DEFAULT 0,
+    IND_DERIVACION_IC            NUMBER           DEFAULT 0,
+    ID_SIC                       NUMBER,
+    COD_ESTABLREF                VARCHAR2(50 BYTE),
+    IND_TIPO_PROCESO             NUMBER           DEFAULT 0,
+    IND_NOTIFICACANCER           NUMBER(1)        DEFAULT 0,
+    DATE_NOTIFICACANCER          DATE,
+    IND_TIPO_NOTIFICACION        NUMBER,
+    ID_UID_NOTIFICA_CANCER       NUMBER,
+    ID_UID_RC_NOTIFICA_CANCER    NUMBER,
+    IND_SOLICITUD_EDITADA        NUMBER,
+    IND_PROBLEMA_SOL             NUMBER,
+    ID_UID_CUSTODIA              NUMBER,
+    DATE_LAST_CUSTODIA           DATE,
+    ID_UID_TECNICAS              NUMBER,
+    USR_TECNICAS                 NUMBER,
+    DATE_TECNICAS                DATE,
+    ID_ROTULADO_SUB              NUMBER,
+
+    PRIMARY KEY (ID_SOLICITUD_HISTO)
+);
+
+
+CREATE TABLE ADMIN.PB_HISTO_NMUESTRAS (
+    ID_NMUESTRA            NUMBER,
+    ID_SOLICITUD_HISTO     NUMBER,
+    N_MUESTRA              NUMBER,
+    TXT_MUESTRA            VARCHAR2(50 BYTE),
+    IND_ESTADO             NUMBER,
+    USR_CREA               VARCHAR2(50 BYTE),
+    DATE_CREA              DATE,
+    USR_AUDITA             VARCHAR2(50 BYTE),
+    DATE_AUDITA            DATE,
+    ID_TABLA               NUMBER,
+    IND_ETIQUETA           NUMBER,
+    IND_ESTADO_REG         NUMBER,
+    IND_TIPOMUESTRA        NUMBER,
+    NUM_ML                 NUMBER,
+    NUM_CASSETTE           NUMBER,
+    ID_CASETE              NUMBER,
+    IND_ESTADO_CU          NUMBER,
+    ID_NUM_CARGA           NUMBER,
+    TXT_DESC_MACROSCOPICA  VARCHAR2(4000 BYTE),
+    TXT_DESC_MICROSCOPICA  VARCHAR2(4000 BYTE),
+    USR_AUDITA_ANALITICO   VARCHAR2(50 BYTE),
+    DATE_AUDITA_ANALITICO  DATE,
+    PRIMARY KEY (ID_NMUESTRA)
+);
+COMMIT;
+/
+
 CREATE OR REPLACE PACKAGE ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
     PROCEDURE GET_INFOPRESOLICITUD(
         V_COD_EMPRESA           IN VARCHAR2,
@@ -10,6 +640,29 @@ CREATE OR REPLACE PACKAGE ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
         C_LISTADOMEDICOS        OUT SYS_REFCURSOR,
         C_ESPECIALIDADES        OUT SYS_REFCURSOR
     );
+    -----------------------------------------------------
+    --DATOS PARA FORMULARIO UNICO DE ANATOMIA PATOLOGICA
+    -----------------------------------------------------
+    PROCEDURE FORM_START_HISPATOLOGICO(
+        V_COD_EMPRESA                           IN VARCHAR2,
+        V_CALL_FASE                             IN VARCHAR2,
+        V_IND_SISTEMA                           IN VARCHAR2,
+        V_IND_GESPAB                            IN VARCHAR2,
+        V_ZONA_PAB                              IN VARCHAR2,
+        V_IND_ADMISION                          IN VARCHAR2,
+        V_PA_ID_PROCARCH                        IN VARCHAR2,
+        VAL_ID_SERDEP                           IN VARCHAR2,
+        C_DATA_ROTULADO                         OUT SYS_REFCURSOR,
+        C_DATA_ROTULADO_SUB                     OUT SYS_REFCURSOR,
+        C_AUTOCOMPLETE_MUESTRAS                 OUT SYS_REFCURSOR,
+        C_GETDATAACTIVE                         OUT SYS_REFCURSOR,
+        C_RETURN_ESTADOS                        OUT SYS_REFCURSOR,
+        P_ANATOMIA_PATOLOGICA_MAIN              OUT SYS_REFCURSOR,
+        P_ANATOMIA_PATOLOGICA_MUESTRAS          OUT SYS_REFCURSOR,
+        P_AP_MUESTRAS_CITOLOGIA                 OUT SYS_REFCURSOR,
+        P_LOGS                                  OUT SYS_REFCURSOR
+    );
+
 END PROCE_ANATOMIA_PATOLOGIA;
 
 /
@@ -23,89 +676,559 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
     ) IS
     BEGIN
   
+        OPEN C_ESPECIALIDADES FOR 
+        SELECT
+            A.COD_GRUPO                                                          AS VALUE,
+            A.ID_GRUPO                                                           AS ID_VALUE,
+            A.NOM_GRUPO                                                          AS OPCION
+        FROM
+            ADMIN.GG_TGRUESP                                                     A, 
+            ADMIN.SO_TMOTICIQ                                                    B
+        WHERE    
+            A.IND_ESTADO                                                         = 'V' 
+            AND A.COD_GRUPO                                                      = B.COD_ESPEC 
+            AND A.COD_GRUPO                                                      <> 'NOAP'
+        GROUP BY 
+            A.COD_GRUPO,
+            A.ID_GRUPO,
+            A.NOM_GRUPO 
+        ORDER BY A.NOM_GRUPO;
     
-    OPEN C_ESPECIALIDADES FOR 
-    SELECT
-        A.COD_GRUPO                                                                                           AS VALUE,
-        A.ID_GRUPO                                                                                              AS ID_VALUE,
-        A.NOM_GRUPO                                                                                           AS OPCION
-    FROM
-        ADMIN.GG_TGRUESP                                                                                  A, 
-        ADMIN.SO_TMOTICIQ                                                                                 B
-    WHERE    
-        A.IND_ESTADO                                                                                          = 'V' 
-        AND A.COD_GRUPO                                                                                    = B.COD_ESPEC 
-        AND A.COD_GRUPO                                                                                    <> 'NOAP'
-    GROUP BY 
-        A.COD_GRUPO,
-        A.ID_GRUPO,
-        A.NOM_GRUPO 
-    ORDER BY A.NOM_GRUPO;
+        OPEN C_LISTADOSERVICIOS FOR 
+            SELECT  * 
+        FROM (
+            SELECT  
+                GG_TSERVICIO.ID_SERDEP                                            AS ID, 
+                GG_TSERVICIO.NOM_SERVIC                                           AS TXT_DES
+            FROM 
+                ADMIN.GG_TSERVICIO, 
+                ADMIN.GG_TSERVICIOXEMP 
+            WHERE 
+                GG_TSERVICIOXEMP.ID_SERDEP                                        = GG_TSERVICIO.ID_SERDEP 
+                AND (GG_TSERVICIOXEMP.IND_MED                                     = '1' OR GG_TSERVICIO.ID_SERDEP IN('268','266'))
+                AND GG_TSERVICIOXEMP.COD_EMPRESA                                  IN (V_COD_EMPRESA)
+                AND GG_TSERVICIO.IND_SERDEP                                       = 'S'
+            UNION 
+                SELECT A.ID_SERDEP                                                AS ID,
+                A.NOM_SERVIC                                                      AS TXT_DES 
+                FROM  ADMIN.GG_TSERVICIO A, ADMIN.GG_TSERVICIOXEMP B
+                WHERE  A.ID_SERDEP=B.ID_SERDEP
+                AND B.COD_EMPRESA IN (V_COD_EMPRESA) AND IND_MED=1 AND
+                ((IND_SERDEP='S' AND AF_ID_AREAFUNCIONAL IS NOT NULL) OR  IND_SERDEP='D')
+                AND A.ID_SERDEP NOT IN (229)
+            ) ORDER   BY TXT_DES;
     
 
-    
-    OPEN C_LISTADOSERVICIOS FOR 
-          SELECT  * 
-    FROM (
-        SELECT  
-            GG_TSERVICIO.ID_SERDEP                                            AS ID, 
-            GG_TSERVICIO.NOM_SERVIC                                           AS TXT_DES
+        OPEN C_LISTADOMEDICOS FOR 
+        SELECT 
+            A.COD_RUTPRO,  
+            A.ID_PROFESIONAL                                                                                                     AS ID_PRO,
+            A.COD_DIGVER                                                                                                           AS COD_DIGVER,
+            UPPER(A.NOM_APEPAT)||' ' ||UPPER(A.NOM_APEMAT)||' ' ||UPPER(A.NOM_NOMBRE)    AS NOM_PROFE,
+            C.DES_TIPOATENCION                                                                                                AS DES_TIPOATENCION,
+            B.COD_TPROFE                                                                                                          AS COD_TPROFE,
+            B.NOM_TPROFE                                                                                                          AS NOM_TPROFE,
+            C.IND_TIPOATENCION                                                                                                  AS IND_TIPOATENCION
         FROM 
-            ADMIN.GG_TSERVICIO, 
-            ADMIN.GG_TSERVICIOXEMP 
-        WHERE 
-            GG_TSERVICIOXEMP.ID_SERDEP                                        = GG_TSERVICIO.ID_SERDEP 
-            AND (GG_TSERVICIOXEMP.IND_MED                                     = '1' OR GG_TSERVICIO.ID_SERDEP IN('268','266'))
-            AND GG_TSERVICIOXEMP.COD_EMPRESA                                  IN (V_COD_EMPRESA)
-            AND GG_TSERVICIO.IND_SERDEP                                       = 'S'
-        UNION 
-            SELECT A.ID_SERDEP                                                AS ID,
-            A.NOM_SERVIC                                                      AS TXT_DES 
-            FROM  ADMIN.GG_TSERVICIO A, ADMIN.GG_TSERVICIOXEMP B
-            WHERE  A.ID_SERDEP=B.ID_SERDEP
-            AND B.COD_EMPRESA IN (V_COD_EMPRESA) AND IND_MED=1 AND
-            ((IND_SERDEP='S' AND AF_ID_AREAFUNCIONAL IS NOT NULL) OR  IND_SERDEP='D')
-            AND A.ID_SERDEP NOT IN (229)
-        ) ORDER   BY TXT_DES;
-    
-
-    OPEN C_LISTADOMEDICOS FOR 
-    SELECT 
-        A.COD_RUTPRO,  
-        A.ID_PROFESIONAL                                                                                                     AS ID_PRO,
-        A.COD_DIGVER                                                                                                           AS COD_DIGVER,
-        UPPER(A.NOM_APEPAT)||' ' ||UPPER(A.NOM_APEMAT)||' ' ||UPPER(A.NOM_NOMBRE)    AS NOM_PROFE,
-        C.DES_TIPOATENCION                                                                                                AS DES_TIPOATENCION,
-        B.COD_TPROFE                                                                                                          AS COD_TPROFE,
-        B.NOM_TPROFE                                                                                                          AS NOM_TPROFE,
-        C.IND_TIPOATENCION                                                                                                  AS IND_TIPOATENCION
-    FROM 
-        ADMIN.GG_TPROFESIONAL   A,
-        ADMIN.GG_TPROFESION     B,
-        ADMIN.AP_TTIPOATENCION  C,
-        ADMIN.AP_TPROFXESTABL   D
-    WHERE     
-        A.IND_ESTADO            = 'V'
-        AND D.IND_ESTADO        = 'V'
-        AND A.COD_TPROFE        = B.COD_TPROFE
-        AND B.IND_TIPOATENCION  = C.IND_TIPOATENCION
-        AND A.COD_RUTPRO        = D.COD_RUTPRO
-        AND D.COD_EMPRESA       IN (V_COD_EMPRESA)
-    ORDER BY 
-        C.IND_TIPOATENCION, 
-        A.NOM_APEPAT;
-        
+            ADMIN.GG_TPROFESIONAL   A,
+            ADMIN.GG_TPROFESION     B,
+            ADMIN.AP_TTIPOATENCION  C,
+            ADMIN.AP_TPROFXESTABL   D
+        WHERE     
+            A.IND_ESTADO            = 'V'
+            AND D.IND_ESTADO        = 'V'
+            AND A.COD_TPROFE        = B.COD_TPROFE
+            AND B.IND_TIPOATENCION  = C.IND_TIPOATENCION
+            AND A.COD_RUTPRO        = D.COD_RUTPRO
+            AND D.COD_EMPRESA       IN (V_COD_EMPRESA)
+        ORDER BY 
+            C.IND_TIPOATENCION, 
+            A.NOM_APEPAT;
   END;
+
+
+     --INICIO DE FORMULARIO 
+    PROCEDURE FORM_START_HISPATOLOGICO(
+    
+        V_COD_EMPRESA                       IN VARCHAR2,
+        V_CALL_FASE                         IN VARCHAR2,
+        V_IND_SISTEMA                       IN VARCHAR2,
+        V_IND_GESPAB                        IN VARCHAR2,
+        V_ZONA_PAB                          IN VARCHAR2,
+        V_IND_ADMISION                      IN VARCHAR2,
+        V_PA_ID_PROCARCH                    IN VARCHAR2,
+        VAL_ID_SERDEP                       IN VARCHAR2,
+               
+        C_DATA_ROTULADO                     OUT SYS_REFCURSOR,
+        C_DATA_ROTULADO_SUB                 OUT SYS_REFCURSOR,
+        
+        C_AUTOCOMPLETE_MUESTRAS             OUT SYS_REFCURSOR,
+        C_GETDATAACTIVE                     OUT SYS_REFCURSOR,
+        C_RETURN_ESTADOS                    OUT SYS_REFCURSOR,
+                
+        P_ANATOMIA_PATOLOGICA_MAIN          OUT SYS_REFCURSOR,
+        P_ANATOMIA_PATOLOGICA_MUESTRAS      OUT SYS_REFCURSOR,
+        P_AP_MUESTRAS_CITOLOGIA             OUT SYS_REFCURSOR,
+        P_LOGS                              OUT SYS_REFCURSOR
+    ) IS 
+    
+    V_ID_SOLICITUD_HISTO            NUMBER;
+    V_SECUENCIA_PUNTO_TOMA_MUESTRA  NUMBER;
+    V_COUN_ROTULADO                 NUMBER := 0;
+    V_TXT_OBSERVACION               VARCHAR2(1000);
+    V_TXT_TOMA_NUESTRA              VARCHAR2(1000);
+            
+    BEGIN
+    
+        IF V_IND_GESPAB = '1' THEN 
+    
+            OPEN C_DATA_ROTULADO FOR 
+            SELECT 
+                P.ID_ROTULADO, 
+                P.COD_EMPRESA, 
+                P.TXT_OBSERVACION, 
+                P.IND_ESTADO, 
+                P.IND_GESPAB, 
+                P.IND_ZONA_GESPAB
+            FROM 
+                ADMIN.PB_INFOROTULADO P
+            WHERE
+                P.COD_EMPRESA IN (V_COD_EMPRESA)
+                AND 
+                P.IND_ESTADO IN (1)
+                AND
+                P.IND_GESPAB IN (1)
+                AND
+                P.IND_ZONA_GESPAB IN (V_ZONA_PAB);
+            
+        ELSE 
+            
+                IF V_PA_ID_PROCARCH IN  ('65','63')   THEN 
+                
+                       SELECT COUNT (*) INTO V_COUN_ROTULADO FROM ADMIN.PB_INFOROTULADO P WHERE  P.COD_EMPRESA IN (V_COD_EMPRESA)  AND P.IND_ESTADO IN (1) AND P.ID_SERDEP IN (VAL_ID_SERDEP);
+                
+                        IF  V_COUN_ROTULADO = 0 THEN 
+                            
+                            V_SECUENCIA_PUNTO_TOMA_MUESTRA  :=  ADMIN.SEQ_TOMAMUESTRAXESPEC.NEXTVAL;
+                            SELECT NOM_SERVIC INTO V_TXT_TOMA_NUESTRA FROM ADMIN.GG_TSERVICIO WHERE ID_SERDEP IN  (VAL_ID_SERDEP);
+                            V_TXT_TOMA_NUESTRA := 'TOMA MUESTRA '||V_TXT_TOMA_NUESTRA;
+                            INSERT INTO ADMIN.PB_INFOROTULADO (ID_ROTULADO,COD_EMPRESA,TXT_OBSERVACION,IND_ESTADO,ID_SERDEP,IND_GESPAB) VALUES (V_SECUENCIA_PUNTO_TOMA_MUESTRA,V_COD_EMPRESA,V_TXT_TOMA_NUESTRA,1,VAL_ID_SERDEP,0); 
+                            COMMIT;
+        
+                            OPEN C_DATA_ROTULADO FOR 
+                            SELECT 
+                                V_SECUENCIA_PUNTO_TOMA_MUESTRA      AS ID_ROTULADO, 
+                                V_COD_EMPRESA                       AS COD_EMPRESA, 
+                                V_TXT_TOMA_NUESTRA                  AS TXT_OBSERVACION, 
+                                1                                   AS IND_ESTADO, 
+                                ''                                  AS IND_GESPAB, 
+                                ''                                  AS IND_ZONA_GESPAB,
+                                VAL_ID_SERDEP                       AS ID_SERDEP
+                            FROM  
+                                SYS.DUAL;
+                
+                    ELSE 
+                           
+                        OPEN C_DATA_ROTULADO FOR 
+                            SELECT 
+                                P.ID_ROTULADO, 
+                                P.COD_EMPRESA, 
+                                P.TXT_OBSERVACION, 
+                                P.IND_ESTADO, 
+                                P.IND_GESPAB, 
+                                P.IND_ZONA_GESPAB,
+                                P.ID_SERDEP
+                            FROM 
+                                ADMIN.PB_INFOROTULADO P
+                            WHERE
+                                P.ID_SERDEP IN (VAL_ID_SERDEP) 
+                            AND 
+                                P.COD_EMPRESA IN (V_COD_EMPRESA);
+                            
+                          OPEN C_DATA_ROTULADO_SUB FOR 
+                            SELECT 
+                                P.ID_ROTULADO_SUB, 
+                                P.ID_ROTULADO, 
+                                P.COD_EMPRESA, 
+                                P.TXT_OBSERVACION, 
+                                P.IND_ESTADO, 
+                                P.DATE_CREA, 
+                                P.ID_UID, 
+                                P.DATE_AUDITA, 
+                                P.ID_UID_AUDITA
+                            FROM 
+                                ADMIN.PB_INFOROTULADO_SUB    P,
+                                ADMIN.PB_INFOROTULADO        S
+                            WHERE
+                                S.ID_SERDEP IN (VAL_ID_SERDEP) 
+                                AND 
+                                P.ID_ROTULADO =  S.ID_ROTULADO
+                                AND
+                                P.IND_ESTADO IN (1);
+                               
+                       END IF;
+                ELSE 
+                
+                
+                    OPEN C_DATA_ROTULADO FOR 
+                        SELECT 
+                            P.ID_ROTULADO, 
+                            P.COD_EMPRESA, 
+                            P.TXT_OBSERVACION, 
+                            P.IND_ESTADO, 
+                            P.IND_GESPAB, 
+                            P.IND_ZONA_GESPAB,
+                            P.ID_SERDEP
+                        FROM 
+                            ADMIN.PB_INFOROTULADO P
+                        WHERE
+                            P.COD_EMPRESA IN (V_COD_EMPRESA)
+                        AND 
+                            P.IND_ESTADO IN (1)
+                        AND
+                            P.IND_GESPAB IN (0);
+                        
+                END IF;
+                
+                
+                OPEN P_LOGS FOR 
+                SELECT 
+                    VAL_ID_SERDEP       AS  ID_SERDEP ,
+                    V_PA_ID_PROCARCH    AS  V_PA_ID_PROCARCH,
+                    V_COUN_ROTULADO     AS  V_COUN_ROTULADO,
+                    V_TXT_TOMA_NUESTRA  AS  V_TXT_TOMA_NUESTRA
+                FROM SYS.DUAL;
+        
+           
+                --BUSCA INFORMACION RELACIONADA CON LA SOLICITUD POR LA ADMISION
+                IF (V_IND_ADMISION = 0 OR V_IND_ADMISION = NULL OR V_IND_ADMISION = '') THEN
+                    V_ID_SOLICITUD_HISTO :=  '-1';
+                ELSE 
+                    V_ID_SOLICITUD_HISTO :=  '-1';
+                    --V_ID_SOLICITUD_HISTO :=  F_PATOLOGICOXAMISION(V_IND_ADMISION);
+                END IF;
+        
+                IF (V_ID_SOLICITUD_HISTO!='-1')  THEN 
+                --COPIA DE LOAD_ANATOMIAPATOLOGICA_PDF
+                OPEN P_ANATOMIA_PATOLOGICA_MAIN                                              FOR  
+                SELECT 
+                 ------------------------------------------------------------------------------------------------------------------------------------------------------
+                --INFORMACION DEL PACIENTE
+                TO_CHAR(SYSDATE,'DD-MM-YYYY hh24:mi')                                                                   AS FEC_EMISION,
+                L.COD_RUTPAC || '-' || L.COD_DIGVER                                                                     AS RUTPACIENTE,
+                L.IND_TISEXO                                                                                            AS IND_TISEXO,
+                L.COD_RUTPAC                                                                                            AS COD_RUTPAC,
+                TRUNC (MONTHS_BETWEEN (SYSDATE, L.FEC_NACIMI) / 12)                                                     AS NUMEDAD,
+                TO_CHAR(L.FEC_NACIMI,  'DD-MM-YYYY')                                                                    AS NACIMIENTO,
+                TRUNC(MONTHS_BETWEEN(SYSDATE,L.FEC_NACIMI)/12)                                                          AS EDAD,
+                UPPER (L.NOM_NOMBRE) || ' ' || UPPER (L.NOM_APEPAT)|| ' '|| UPPER (L.NOM_APEMAT)                        AS NOMBRE_COMPLETO,
+                SUBSTR (L.NOM_NOMBRE, 1, 1)|| '.'|| UPPER (L.NOM_APEPAT)  || ' '  || UPPER (L.NOM_APEMAT)               AS TXTNOMCIRUSMALL,
+                UPPER (L.NOM_NOMBRE)|| ' '|| UPPER (L.NOM_APEPAT)|| ' '|| UPPER (SUBSTR (L.NOM_APEMAT, 1, 1))           AS TXTPRIMERNOMBREAPELLIDO,
+                -----------------------
+                --- FICHA LOCAL ---
+                ----------------------
+                CASE
+                    WHEN P.COD_EMPRESA = 1000
+                    THEN
+                        (SELECT E.NUM_NFICHA
+                        FROM ADMIN.SO_TCPACTE E
+                        WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = 100)
+                    ELSE
+                        (SELECT E.NUM_NFICHA
+                        FROM ADMIN.SO_TCPACTE E
+                        WHERE 
+                        E.NUM_FICHAE = P.NUM_FICHAE
+                        AND 
+                        E.COD_EMPRESA = P.COD_EMPRESA)
+                END                                                                                                                 AS FICHAL,
+                    (
+                            SELECT
+                                      A.NOM_PREVIS
+                            FROM
+                                    ADMIN.GG_TDATPREV     A,
+                                    ADMIN.SO_TTITUL       B,
+                                    ADMIN.GG_TGPACTE      C,
+                                    ADMIN.GG_TINSEMP      D
+                            WHERE
+                                    A.IND_PREVIS    = B.IND_PREVIS
+                            AND
+                                    B.COD_RUTTIT    = C.COD_RUTTIT
+                            AND  
+                                    B.NUM_RUTINS    = D.COD_RUTINS
+                            AND
+                                    C.NUM_FICHAE    = P.NUM_FICHAE
+                            AND
+                                    A.IND_ESTADO    = 'V' 
+                    )                                                                         AS TXT_PREVISION,
+                    ----------------------------------------- PROFESIONAL -----------------------------------------------------------------
+                    UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT)             AS PROFESIONAL,
+                    G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE                     AS PROFESIONAL_2,
+                    G.COD_RUTPRO||'-'|| G.COD_DIGVER                                          AS RUT_PROFESIOAL,    
+                    G.COD_RUTPRO                                                              AS ID,
+                    G.COD_DIGVER                                                              AS DV,
+                    G.COD_TPROFE                                                              AS MEDI,
+                    ----------------------------------------- PROFESIONAL -----------------------------------------------------------------
+                    TO_CHAR(P.DATE_INICIOREGISTRO, 'DD-MM-YYYY hh24:mi')                      AS FECHA_SOLICITUD,
+                    P.PA_ID_PROCARCH                                                          AS PA_ID_PROCARCH,
+                   CASE
+                        WHEN P.PA_ID_PROCARCH = '31' THEN
+                            'PABELLON CENTRAL'      
+                        WHEN P.PA_ID_PROCARCH = '63' THEN
+                            'RCE ESPECIALIDADES'      
+                        WHEN P.PA_ID_PROCARCH = '65' THEN
+                            'MODULO ANATOMIA'
+                        ELSE
+                            'NO INFORMADO'
+                    END                                                                         AS TXT_PROCEDENCIA,
+                    P.PA_ID_PROCARCH                                                            AS PA_ID_PROCARCH,
+                    P.ID_SERDEP                                                                 AS ID_SERVICIO,
+                        (SELECT 
+                        S.NOM_SERVIC
+                        FROM 
+                            ADMIN.GG_TSERVICIOXEMP T, 
+                            ADMIN.GG_TSERVICIO S
+                        WHERE     
+                                    T.ID_SERDEP = P.ID_SERDEP
+                            AND T.COD_EMPRESA = P.COD_EMPRESA
+                            AND S.ID_SERDEP = T.ID_SERDEP)                                          AS NOMBRE_SERVICIO,
+                    ---------------------------- ID UNICO ANATOMIA  --------------------------------
+                        P.ID_SOLICITUD_HISTO                                                        AS ID_SOLICITUD, 
+                        P.TXT_DIAGNOSTICO                                                           AS TXT_DIAGNOSTICO,
+                        TO_CHAR(SYSDATE,'DD-MM-YYYY hh24:mi')                                       AS FEC_EMISION,
+                        TO_CHAR(P.FEC_USRCREA, 'DD-MM-YYYY hh24:mi')                                AS FECHA_SOLICITUD,
+                        TO_CHAR(P.DATE_INICIOREGISTRO,'DD-MM-YYYY hh24:mi')                         AS FECHA_TOMA_MUESTRA,
+                    ------------------------------- TIPO DE BIOPSIA -----------------------------------     
+                        DECODE(P.IND_TIPO_BIOPSIA,
+                                    '1','SI',
+                                    '2','CONTEMPORANEA',
+                                    '3','DIFERIDA',
+                                    '4','BIOPSIA + CITOLOGÍA',
+                                    '6','CITOLOGÍA PAP',
+                                    '5','SOLO CITOLOGÍA',
+                                    'NO INFORMADO'
+                        )                                                                          AS TIPO_DE_BIOPSIA, 
+                        P.IND_TIPO_BIOPSIA                                                         AS IND_TIPO_BIOPSIA,
+                        ------------------------------- TIPO DE BIOPSIA -----------------------------------     
+                        DECODE(P.IND_ESTADO,
+                                '1','SOLICITUD ACTIVA',
+                                '0','SOLICITUD DESHABILITADA',
+                                'NO INFORMADA')                                                 AS TXT_ESTADO, 
+                        ------------------------------------------------------------------------------------
+                        --MAIN DE MUESTRA --           
+                        P.DES_SITIOEXT, 
+                        P.DES_UBICACION, 
+                        P.DES_TAMANNO, 
+                        DECODE(P.ID_TIPO_LESION,
+                            '1','LIQUIDO',
+                            '2','ORGANO',
+                            '3','TEJIDO','NO INFORMADO')                                            AS TXT_TIPOSESION, 
+                        DECODE(P.ID_ASPECTO,
+                            '1','INFLAMATORIA',
+                            '2','BENIGNA',
+                            '3','NEOPLASICA','NO INFORMADO')                                        AS TXT_ASPECTO,
+                        DECODE(P.ID_ANT_PREVIOS,
+                            '1','NO', 
+                            '2','BIOPSIA ', 
+                            '3','CITOLOGIA','NO INFORMADO')                                         AS TXT_ANT_PREVIOS,
+                        P.ID_ANT_PREVIOS,
+                        P.NUM_ANTECEDENTES, 
+                        P.DES_BIPSIA,
+                        P.DES_CITOLOGIA, 
+                        P.DES_OBSERVACIONES,                               
+                        --------------------------------------------------------------------------------------
+                        P.NUM_FICHAE, 
+                        P.COD_USRCREA, 
+                        P.FEC_USRCREA, 
+                        P.COD_EMPRESA, 
+                        P.DES_SITIOEXT, 
+                        P.DES_UBICACION, 
+                        P.DES_TAMANNO, 
+                        P.ID_TIPO_LESION, 
+                        P.ID_ASPECTO, 
+                        P.ID_ANT_PREVIOS, 
+                        P.NUM_ANTECEDENTES, 
+                        P.DES_BIPSIA, 
+                        P.DES_CITOLOGIA, 
+                        P.DES_OBSERVACIONES, 
+                        P.IND_ESTADO, 
+                        P.FEC_REVISION, 
+                        P.ID_TABLA, 
+                        P.DES_TIPOMUESTRA, 
+                        P.NUM_SUBNUMERACION, 
+                        P.COD_USRCREA_TO_MUE, 
+                        P.FEC_USRCREA_TO_MUE, 
+                        P.COD_USRCREA_ENV, 
+                        P.FEC_USRCREA_ENV, 
+                        P.COD_USRCREA_RECEP, 
+                        P.FEC_USRCREA_RECEP, 
+                        P.COD_EMPRESA_RECEP, 
+                        P.COD_USRCREA_INFORMADA, 
+                        P.FEC_USRCREA_INFORMADA, 
+                        P.COD_EMPRESA_INFORMADA, 
+                        P.ID_ARCHIVO_SUBIDO, 
+                        P.COD_USRCREA_RECH,
+                        P.FEC_USRCREA_RECH, 
+                        P.COD_EMPRESA_RECH, 
+                        P.TIPO_RECHAZO, 
+                        P.OBS_RECHAZO, 
+                        P.ID_HISTO_ESTADO, 
+                        P.AD_ID_ADMISION, 
+                        P.ID_SERDEP, 
+                        P.IND_TIPO_BIOPSIA, 
+                        P.IND_TEMPLATE, 
+                        P.DATE_INICIOREGISTRO, 
+                        P.COD_RUTPRO,
+                        
+                        P.TXT_DIAGNOSTICO,
+                        P.NUM_PLANTILLA,
+                        P.IND_USOCASSETTE,
+                        P.ID_ROTULADO,
+                        R.TXT_OBSERVACION AS TXT_ROTULO,
+                        P.ID_HISTO_ESTADO,
+                        DECODE(P.ID_HISTO_ESTADO, 
+                            '1','NUEVA SOLICITUD',
+                            '2','CUSTODIA',
+                            '3','TRASPORTE',
+                            '4','RECEPCIONADA', 
+                            '5','RECHAZADA',
+                            'NO INFORMADO')                         AS TXT_HISTO_ESTADO,
+                        P.IND_ESTADO_MUESTRAS                       AS IND_ESTADO_MUESTRAS
+                    FROM  
+                        ADMIN.GG_TGPACTE                     L,
+                        ADMIN.GG_TPROFESIONAL                G,
+                        ADMIN.PB_SOLICITUD_HISTO             P,
+                        ADMIN.PB_INFOROTULADO                R
+                    WHERE
+                        P.ID_SOLICITUD_HISTO IN (V_ID_SOLICITUD_HISTO)
+                        AND
+                        P.ID_ROTULADO      =  R.ID_ROTULADO
+                        AND
+                        P.NUM_FICHAE       =  L.NUM_FICHAE
+                        AND
+                        P.COD_RUTPRO       =   G.COD_RUTPRO
+                        AND
+                        P.IND_ESTADO       IN  (1)
+                    ORDER BY 
+                        P.DATE_INICIOREGISTRO;
+                  
+                    
+                 OPEN P_ANATOMIA_PATOLOGICA_MUESTRAS FOR
+                 SELECT 
+                    '0' AS TOTAL_MUESTRAS,
+                    CASE V_COD_EMPRESA
+                        WHEN '100' THEN 'H.MAURICIO HEYERMANN T.ANGOL'
+                        WHEN '106' THEN 'SAN JOSE DE VICTORIA' 
+                        WHEN '029' THEN 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                        WHEN '1000' THEN 'HOSPITAL MILITAR'
+                        ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                    END                                                                                       AS TXT_HOSPITAL_ETI,
+                    
+                    M.IND_ESTADO_CU,
+                    M.ID_NUM_CARGA,
+                    
+                    NULL                                                                                      AS ID_TABLA,
+                    M.IND_ESTADO                                                                              AS ESTADO,
+                    M.ID_NMUESTRA                                                                             AS ID_NMUESTRA,
+                    M.N_MUESTRA                                                                               AS N_MUESTRA,
+                    UPPER(M.TXT_MUESTRA)                                                                      AS TXT_MUESTRA,
+                    M.IND_ESTADO_REG                                                                          AS IND_ESTADO_REG,
+                    M.IND_TIPOMUESTRA                                                                         AS IND_TIPOMUESTRA, 
+                    CASE
+                        WHEN M.NUM_CASSETTE IS NULL THEN  0  ELSE  M.NUM_CASSETTE
+                    END                                                                                       AS NUM_CASSETTE,
+                    M.ID_CASETE                                                                               AS ID_CASETE,
+                    CASE
+                        WHEN M.NUM_ML IS NULL THEN  0  ELSE  M.NUM_ML
+                    END                                                                                       AS NUM_ML,
+                    DECODE(M.IND_ETIQUETA,
+                                '1','PEQUEÑO',
+                                '2','MEDIANO',
+                                'NO INFORMADO')                                                               AS TXT_ETIQUETA,
+                    --M.IND_ETIQUETA                    AS IND_ETIQUETA          
+                    CASE
+                        WHEN M.IND_ETIQUETA IS NULL THEN  2  ELSE   M.IND_ETIQUETA   
+                    END                                                                                       AS IND_ETIQUETA
+                FROM 
+                    ADMIN.PB_HISTO_NMUESTRAS M
+                WHERE
+                    M.ID_SOLICITUD_HISTO IN (V_ID_SOLICITUD_HISTO)     
+                    AND 
+                    M.IND_TIPOMUESTRA = 1
+                    AND 
+                    M.IND_ESTADO = 1
+                    ORDER BY 
+                    M.N_MUESTRA;
+                
+                  --***************************************************************************
+                    OPEN P_AP_MUESTRAS_CITOLOGIA FOR 
+                        SELECT 
+                        '0' AS TOTAL_MUESTRAS,
+                        CASE V_COD_EMPRESA
+                        WHEN '100' THEN 'H.MAURICIO HEYERMANN T.ANGOL'
+                        WHEN '106' THEN 'SAN JOSE DE VICTORIA' 
+                        WHEN '029' THEN 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                        WHEN '1000' THEN 'HOSPITAL MILITAR'
+                        ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                        END                                                                                         AS TXT_HOSPITAL_ETI,
+                        
+                        M.IND_ESTADO_CU,
+                        M.ID_NUM_CARGA,
+                        
+                        NULL                                                                                        AS ID_TABLA,
+                        M.IND_ESTADO                                                                                AS ESTADO,
+                        M.ID_NMUESTRA                                                                               AS ID_NMUESTRA,
+                        M.N_MUESTRA                                                                                 AS N_MUESTRA,
+                        UPPER(M.TXT_MUESTRA)                                                                        AS TXT_MUESTRA,
+                        M.IND_ESTADO_REG                                                                            AS IND_ESTADO_REG,
+                        M.IND_TIPOMUESTRA                                                                           AS IND_TIPOMUESTRA, 
+                            CASE
+                            WHEN M.NUM_CASSETTE IS NULL THEN  0  ELSE  M.NUM_CASSETTE
+                        END                                                                                         AS NUM_CASSETTE,
+                        
+                        --M.NUM_ML                                                                                  AS NUM_ML,
+                        CASE
+                            WHEN M.NUM_ML IS NULL THEN  0  ELSE  M.NUM_ML
+                        END                                                                                         AS NUM_ML,
+                        --M.IND_ETIQUETA                    AS IND_ETIQUETA 
+                        DECODE(M.IND_ETIQUETA,
+                                    '1','PEQUEÑO',
+                                    '2','MEDIANO',
+                                    'NO INFORMADO')                                                                 AS TXT_ETIQUETA,
+                        CASE
+                            WHEN M.IND_ETIQUETA IS NULL THEN 2 ELSE M.IND_ETIQUETA   
+                        END                                                                                         AS IND_ETIQUETA
+                        FROM 
+                            ADMIN.PB_HISTO_NMUESTRAS M
+                        WHERE
+                            M.ID_SOLICITUD_HISTO IN (V_ID_SOLICITUD_HISTO)   
+                            AND
+                            M.IND_TIPOMUESTRA IN (2)
+                            AND 
+                            M.IND_ESTADO = 1
+                        ORDER BY 
+                            M.N_MUESTRA;
+                END IF;
+            END IF;
+        
+        
+        
+        OPEN C_AUTOCOMPLETE_MUESTRAS FOR 
+        SELECT 
+            P.ID_AUTOCOMPLETADO, 
+            P.TXT_CHARACTER, 
+            P.TXT_REALNAME,
+            P.IND_ESTADO 
+        FROM 
+            ADMIN.PB_NMUESTRA_AUTOCOMPLETADO P 
+        WHERE 
+            P.IND_ESTADO IN (1) 
+        ORDER BY 
+            P.ID_AUTOCOMPLETADO;
+    
+    END;
 
 END PROCE_ANATOMIA_PATOLOGIA;
 /
 
 COMMIT;
-
 /
-
-
-
-
-
-
