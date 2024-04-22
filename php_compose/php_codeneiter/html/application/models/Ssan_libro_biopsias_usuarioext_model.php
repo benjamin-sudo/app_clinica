@@ -803,6 +803,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->trans_complete();
         return array(
             'STATUS'                                =>  true,
+            'ID_SERDEP_MODEL'                       =>  $ID_SERDEP,
             'DATA_ROTULADO'                         =>  empty($result[':C_DATA_ROTULADO'])?null:$result[':C_DATA_ROTULADO'],
             'DATA_AUTOCOMPLETE'                     =>  empty($result[':C_AUTOCOMPLETE_MUESTRAS'])?null:$result[':C_AUTOCOMPLETE_MUESTRAS'],
             'C_RETURN_ESTADOS'                      =>  empty($result[':C_RETURN_ESTADOS'])?null:$result[':C_RETURN_ESTADOS'],
@@ -811,31 +812,29 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'P_AP_MUESTRAS_CITOLOGIA'               =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
             'C_DATA_ROTULADO_SUB'                   =>  empty($result[':C_DATA_ROTULADO_SUB'])?null:$result[':C_DATA_ROTULADO_SUB'], 
             'P_LOGS'                                =>	empty($result[':P_LOGS'])?null:$result[':P_LOGS'],
-            'ID_SERDEP_MODEL'                       =>  $ID_SERDEP,
             'PA_ID_PROCARCH_MODEL'                  =>  $DATA["PA_ID_PROCARCH"],
         );
     }
     
     public function get_indrotulado_forgespab($DATA){
-        return $this->db->query("
-            SELECT 
-                P.ID_ROTULADO, 
-                P.COD_EMPRESA, 
-                P.TXT_OBSERVACION, 
-                P.IND_ESTADO, 
-                P.IND_GESPAB, 
-                P.IND_ZONA_GESPAB
-            FROM 
-                PABELLON.PB_INFOROTULADO P
-            WHERE
-                    P.COD_EMPRESA IN (".$DATA['COD_EMPRESA'].")
-                AND 
-                    P.IND_ESTADO IN (1)
-                AND
-                    P.IND_GESPAB IN (1)
-                AND
-                    P.IND_ZONA_GESPAB IN ('".$DATA['IND_ZONAGESPAB']."')
-            ")->result_array();
+        return $this->db->query("SELECT 
+                                    P.ID_ROTULADO, 
+                                    P.COD_EMPRESA, 
+                                    P.TXT_OBSERVACION, 
+                                    P.IND_ESTADO, 
+                                    P.IND_GESPAB, 
+                                    P.IND_ZONA_GESPAB
+                                FROM 
+                                    PABELLON.PB_INFOROTULADO P
+                                WHERE
+                                        P.COD_EMPRESA IN (".$DATA['COD_EMPRESA'].")
+                                    AND 
+                                        P.IND_ESTADO IN (1)
+                                    AND
+                                        P.IND_GESPAB IN (1)
+                                    AND
+                                        P.IND_ZONA_GESPAB IN ('".$DATA['IND_ZONAGESPAB']."')
+                                ")->result_array();
     }
     
     public function get_indrotulado_general($DATA){

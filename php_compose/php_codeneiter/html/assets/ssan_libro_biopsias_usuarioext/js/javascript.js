@@ -303,8 +303,6 @@ function load_exel()        {
     window.location.href    =   link;
 }
 
-
-
 function js_cambio_fecha(id){
     let fecha_hora      =   $("#DATA_"+id).data('paciente').FECHA_TOMA_MUESTRA;
     //console.log("fecha_hora",fecha_hora);

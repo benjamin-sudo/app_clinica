@@ -23,7 +23,13 @@
         grid-template-columns       :   1fr 1fr;
         margin-left                 :   23px;
     }
+
+    .border-red                     {
+        border                      :   1px solid red;
+    }
+
 </style>
+
 <input type="hidden" id="PA_ID_PROCARCH" name="PA_ID_PROCARCH" value="">
 
 <div class="container">
@@ -276,14 +282,11 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;<b>TIPO DE BIOPSIA</b></h4>
+                            <h4 class="title"><i class="fa fa-circle" aria-hidden="true"></i>&nbsp;<b>TIPO DE BIOPSIA</b></h4>
                             <p style="margin-bottom: 0px;">Seleccione el tipo de biopsia</p>
                         </div>
                         <div class="card-body">
-
-
-
-                            <select class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true" name="IND_TIPO_BIOPSIA" id="IND_TIPO_BIOPSIA">
+                            <select class="selectpicker" data-selected-text-format="count" data-width="100%" data-live-search="true" name="IND_TIPO_BIOPSIA" id="IND_TIPO_BIOPSIA">
                                 <option value="">SELECIONE</option>
                                 <option value="2" data-subtext="Formulario + Lista De Muestras Anatom&iacute;a Patol&oacute;gica">CONTEMPORANEA</option>
                                 <option value="3" data-subtext="Formulario + Lista De Muestras Anatom&iacute;a Patol&oacute;gica">DIFERIDA</option>
@@ -291,44 +294,65 @@
                                 <option value="5" data-subtext="Formulario + Lista De Muestras Citolog&iacute;cas">CITOLOG&Iacute;A</option>
                                 <option value="6" data-subtext="Formulario + Lista De Muestras PAP">CITOLOG&Iacute;A PAP</option>
                             </select>
-
-
-
                         </div>
                     </div>
                     
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;<b>PROFESIONAL</b></h4>
-                            <p style="margin-bottom: 0px;">Seleccione Profesional</p>
+                            <h4 class="title"><i class="fa fa-circle" aria-hidden="true"></i>&nbsp;<b>PROFESIONAL</b></h4>
+                            <p style="margin-bottom: 0px;">Seleccione Profesional responsable de la biopsia</p>
                         </div>
-                        <div class="card-body">Content</div>
+                        <div class="card-body">
+                            <select class="selectpicker" data-selected-text-format="count" data-width="100%" data-size="8" data-live-search="true" name="LISTADO_PROFESIONALES" id="LISTADO_PROFESIONALES">
+                                <?php 
+                                    echo '<option value="">SELECIONE</option>';
+                                    if (count($C_LISTADOMEDICOS)>0){
+                                        foreach($C_LISTADOMEDICOS as $i => $row){
+                                            $JSON2  =   htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');
+                                            echo '<option data-icon="fa fa-user-md" value="'.$row["COD_RUTPRO"].'"  data-PROFESIONAL="'.$JSON2.'" >'.$row["NOM_PROFE"].'</option>'; 
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
                     </div>
                     
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;<b>ESPECIALIDAD</b></h4>
+                            <h4 class="title"><i class="fa fa-circle" aria-hidden="true"></i>&nbsp;<b>ESPECIALIDAD</b></h4>
                             <p style="margin-bottom: 0px;">Seleccione Especialidad asociada a la solicitud</p>
                         </div>
-                        <div class="card-body">Content</div>
+                        <div class="card-body">
+                            <select class="selectpicker" data-selected-text-format="count" data-width="100%" data-size="8" data-live-search="true" name="LISTADO_ESPECIALIDAD" id="LISTADO_ESPECIALIDAD">
+                                <?php 
+                                    echo '<option value="">SELECIONE</option>';
+                                    if (count($C_LISTADOSERVICIOS)>0){
+                                        foreach ($C_LISTADOSERVICIOS as $i => $row){
+                                            echo '<option data-icon="fa fa-hospital-o" value="'.$row["ID"].'">'.$row["TXT_DES"].'</option>'; 
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
                     </div>
-
-
                     <div class="grid_footer_button">
                         <div class="grid_footer_button1">&nbsp;</div>
                         <div class="grid_footer_button2"> 
-                            <button type="button" class="btn btn-default prev-step">Nueva Busqueda</button>
-                            <button type="button" class="btn btn-primary next-step"><i class="fa fa-share" aria-hidden="true"></i>&nbsp;Siguiente</button>
+                            <button type="button" class="btn btn-danger prev-step">Nueva Busqueda</button>
+                            <button type="button" class="btn btn-primary next-step"><i class="fa fa-share" aria-hidden="true"></i>&nbsp;Inicio Formulario Anatomia Patologica</button>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="step3">
-                    <h4>Paso 3</h4>
-                    <p>Aquí van los detalles del paso 3.</p>
-                    <ul class="list-inline pull-right">
-                        <li><button type="button" class="btn btn-default prev-step">Anterior</button></li>
-                        <li><button type="button" class="btn btn-default next-step">Finalizar</button></li>
-                    </ul>
+                    <div class="HTML_TEMPLATE_3_PASEQUIRUGICO"></div>
+                    <br>
+                    <div class="grid_footer_button">
+                        <div class="grid_footer_button1">&nbsp;</div>
+                        <div class="grid_footer_button2"> 
+                            <button type="button" class="btn btn-default prev-step">Anterior</button>
+                            <button type="button" class="btn btn-susses next-step">Finalizar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -343,14 +367,13 @@ $(document).ready(function () {
         'nextSelector'      :   '.next-step',
         'previousSelector'  :   '.prev-step',
         'onNext'            :   function(tab, navigation, index) {
-            /*
+            
             console.log("   ##############################      ");
             console.log("   tab         ->  ",tab);
             console.log("   navigation  ->  ",navigation);
             console.log("   index       ->  ",index);
             console.log("   ##############################      ");
-            */
-
+            
             if (index == 1){
                 let PACIENTE_SEL    =   $("input[name='SELECCIONA_PACIENTE']:checked").val();
                 if(PACIENTE_SEL === undefined) {
@@ -367,8 +390,91 @@ $(document).ready(function () {
                     $("#fonoLabel").html(DATA_PACIENTE.NUM_CELULAR);
                     $("#previsionLabel").html("<b><i>NO INFORMADO</i></b>");
                 }
+                $('#LISTADO_PROFESIONALES').selectpicker();
+                $('#LISTADO_ESPECIALIDAD').selectpicker();
+                $('#IND_TIPO_BIOPSIA').selectpicker();
             }
 
+
+            if (index == 2){
+                var msj                                     =   [];
+                $('#LISTADO_PROFESIONALES,#IND_TIPO_BIOPSIA,#LISTADO_ESPECIALIDAD').selectpicker('setStyle','border-red','remove');
+                if($("#IND_TIPO_BIOPSIA").val()=='')        {
+                    $('#IND_TIPO_BIOPSIA').selectpicker('setStyle','border-red', 'add');
+                    msj.push("<li>Indicar <b>Tipo de biopsia</b></li>");
+                }
+
+                if($("#LISTADO_PROFESIONALES").val()=='')   {
+                    $('#LISTADO_PROFESIONALES').selectpicker('setStyle','border-red', 'add');
+                    msj.push("<li>Indicar profesional a cargo</li>");
+                }
+                if($("#LISTADO_ESPECIALIDAD").val()=='')    {
+                    $('#LISTADO_ESPECIALIDAD').selectpicker('setStyle','border-red', 'add');
+                    msj.push("<li>Indicar especialidad en la solicitud</li>");
+                }
+                if (msj.length>0){
+                    jAlert("Se han detectado falta de informaci&oacute;n <br>"+msj.join(""),"Clinica Libre");
+                    return false;
+                } else {
+                    //$(".btn-finish").show();
+                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html("Cargando formulario ... ");
+                    //console.log("LISTADO_ESPECIALIDAD   ->  ",$("#LISTADO_ESPECIALIDAD").val());
+                    //return true;
+                    $.ajax({ 
+                        type                :   "POST",
+                        url                 :   "ssan_spab_gestionlistaquirurgica/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
+                        dataType            :   "json",
+                        beforeSend          :   function(xhr)   {
+                                                                    var HTML_BEFORESEND =   '<tbody id="msj_busqueda" style="display: none">'+
+                                                                                                '<tr id="msj_load_body">'+
+                                                                                                    '<td style="text-align:center" colspan="11">'+
+                                                                                                        '<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>'+
+                                                                                                        '<span class="sr-only"></span><b> CARGANDO ...</b>'+
+                                                                                                    '</td>'+
+                                                                                                '</tr>'+
+                                                                                            '</tbody>';
+                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(HTML_BEFORESEND); 
+                                                                },
+                        data                :                   {
+                                                                    NUM_FICHAE          :   $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
+                                                                    RUT_PACIENTE        :   $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
+                                                                    ID_MEDICO           :   null,
+                                                                    RUT_MEDICO          :   $("#LISTADO_PROFESIONALES").val(),
+                                                                    IND_TIPO_BIOPSIA    :   $("#IND_TIPO_BIOPSIA").val(),// 
+                                                                    IND_ESPECIALIDAD    :   $("#LISTADO_ESPECIALIDAD").val(),
+                                                                    PA_ID_PROCARCH      :   $("#PA_ID_PROCARCH").val(),
+                                                                    AD_ID_ADMISION      :   null,
+                                                                    TXT_BIOPSIA         :   $("#IND_TIPO_BIOPSIA option:selected").text(),
+                                                                    CALL_FROM           :   0,
+                                                                    IND_GESPAB          :   0
+                                                                },
+                        error		:   function(errro)     {  
+                                                                    jAlert("<b>Error General, Consulte Al Administrador</b>"); 
+                                                                    console.log(errro);
+                                                                    console.log(errro.responseText);
+                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
+                                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
+                        },
+                        success             :   function(aData) {
+                                                                    console.log("success -> ",aData);
+                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData["HTML_FINAL"]);
+                                                                    if(aData["HTML_FINAL"]){
+                                                                        $(".btn-finish").show();
+                                                                    } else {
+                                                                        $(".btn-finish").hide();
+                                                                    }
+                                                                }, 
+                    });
+                }
+
+
+
+                if (index == 3){
+
+                    jAlert("HOLA","Clinica Libre");
+                }
+
+            }
 
 
 
