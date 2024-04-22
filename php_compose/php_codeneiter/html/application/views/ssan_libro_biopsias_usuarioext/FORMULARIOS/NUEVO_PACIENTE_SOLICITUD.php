@@ -420,10 +420,8 @@ $(document).ready(function () {
                 } else {
                     //$(".btn-finish").show();
                     $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html("Cargando formulario ... ");
-                    
                     //console.log("LISTADO_ESPECIALIDAD   ->  ",$("#LISTADO_ESPECIALIDAD").val());
                     //return true;
-
                     $.ajax({ 
                         type                :   "POST",
                         url                 :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
@@ -452,7 +450,7 @@ $(document).ready(function () {
                                                                     CALL_FROM           :   0,
                                                                     IND_GESPAB          :   0
                                                                 },
-                        error		:   function(errro)     {  
+                        error		        :   function(errro)     {  
                                                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                                     console.log(errro);
                                                                     //console.log(errro.responseText);
@@ -461,14 +459,7 @@ $(document).ready(function () {
                         },
                         success             :   function(aData) {
                                                                     console.log("success -> ",aData);
-                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(,aData.HTML_FINAL);
-                                                                    /*
-                                                                    if(aData["HTML_FINAL"]){
-                                                                        $(".btn-finish").show();
-                                                                    } else {
-                                                                        $(".btn-finish").hide();
-                                                                    }
-                                                                    */
+                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
                                                                 }, 
                     });
                 }

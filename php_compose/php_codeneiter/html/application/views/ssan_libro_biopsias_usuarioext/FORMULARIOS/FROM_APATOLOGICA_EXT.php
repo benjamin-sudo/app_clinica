@@ -6,12 +6,14 @@
 
 <?php   }   ?>
     
-<div id="data_get"              data-get="<?php echo htmlspecialchars(json_encode(isset($ARRAY_GET)?$ARRAY_GET:[]),ENT_QUOTES,'UTF-8');?>"></div>
-<div id="data_bd"               data-bd="<?php echo htmlspecialchars(json_encode($ARRAY_BD),ENT_QUOTES,'UTF-8');?>"></div>
-<div id="data_autocomplete"     data-autocomplete="<?php echo htmlspecialchars(json_encode($ARRAY_AUTOCOMPLETE),ENT_QUOTES,'UTF-8');?>"></div>
+<div id="data_get" data-get="<?php echo htmlspecialchars(json_encode(isset($ARRAY_GET)?$ARRAY_GET:[]),ENT_QUOTES,'UTF-8');?>"></div>
+<div id="data_bd" data-bd="<?php echo htmlspecialchars(json_encode($ARRAY_BD),ENT_QUOTES,'UTF-8');?>"></div>
+<div id="data_autocomplete" data-autocomplete="<?php echo htmlspecialchars(json_encode($ARRAY_AUTOCOMPLETE),ENT_QUOTES,'UTF-8');?>"></div>
+
 <div id="tabla_biopsia"></div>
 <div id="HTML_ANATOMIA_PATOLOGICA"></div>
 <div id="DIV_FORMULARIO_ANATOMIAPATOLOGICA_EXT">
+
     <?php
         #**************************************************************************
         #FROM_APATOLOGICA_EXT 
@@ -76,6 +78,38 @@
     <input type="hidden"      id="IND_IFRAME"                           name="IND_IFRAME"                               value="<?php echo $IND_FRAME;?>"/>
     <input type="hidden"      id="DATE_SISTEMA"                         name="DATE_SISTEMA"                             value="<?php echo date("d-m-Y h:m")?>"/>
     
+
+    
+
+    <div class="contenedor_form" style="margin-top: 12px;">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Inicio</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Perfil</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <p class="mt-3">Este es el contenido de la pestaña de inicio. Puedes poner aquí cualquier cosa que consideres importante para el inicio.</p>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <p class="mt-3">Este es el contenido de la pestaña de perfil. Aquí podrías incluir información relevante sobre el perfil del usuario o configuraciones relacionadas.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
         <div id="TABS_ANATOMIA_PATOLOGICA" style="width:100%;min-height:<?php echo $CALL_FROM==1?'770px':'600px';?>;padding:<?php echo $CALL_FROM==2?'0px':'4px';?> 4px 4px 4px;">
             <!-- nav-justified -->
             <ul class="nav nav-tabs " role="tablist">
