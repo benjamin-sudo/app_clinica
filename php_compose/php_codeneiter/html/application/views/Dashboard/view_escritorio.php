@@ -199,61 +199,63 @@
   <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
   <!-- bootstrap-select.min.js -->
   <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
+  <!-- Wizard Plugin    -->
+  <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
 
-    <section>
-      <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" style="color:black;" id="exampleModalLabel">Cargando ...</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-              <div class="modal-body" style="text-align: center;">
-                  <div class="spinner-grow text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div class="spinner-border text-secondary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div class="spinner-grow text-success" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div class="spinner-border text-danger" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div class="spinner-grow text-info" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div class="spinner-border text-info" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <div class="spinner-grow text-dark" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-              </div>
+  <section>
+    <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" style="color:black;" id="exampleModalLabel">Cargando ...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+            <div class="modal-body" style="text-align: center;">
+                <div class="spinner-grow text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-border text-secondary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-border text-danger" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-info" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-border text-info" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-dark" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
       </div>
+    </div>
       
-      <div class="modal fade" id="modal_perfil_usuario">
-          <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h3 class="modal-title"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;<b>CONFIGURACI&Oacute;N CUENTA DE USUARIO</b></h3>
-                      <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-                  </div>
-                  <div class="modal-body" id="html_perfil_usuario"></div>
-                  <div class="modal-footer">
-                      <div class="btn-group">
-                          <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
-                              <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR VENTANA
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+    <div class="modal fade" id="modal_perfil_usuario">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;<b>CONFIGURACI&Oacute;N CUENTA DE USUARIO</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_perfil_usuario"></div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR VENTANA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    </section>
+  </section>
   </body>
 </html>

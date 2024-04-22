@@ -431,7 +431,6 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
     console.log("data_get       ->  ",data_get,"    <---------------------------");
     console.log("---------------------------------------------------------------");
     
-    
     document.getElementById("btn-back").disabled            =   true;
     if(TEMPLATE_CALL_FROM == 0) {
         document.getElementById("btn-finish").disabled      =   true;
@@ -744,38 +743,36 @@ function imprimirEtiqueta2(op){
     */
     $.ajax({ 
         type		:   "POST",
-        url		:       op===2?"ssan_libro_biopsias_listagespab/test_etiquetas_frasco"
+        url		    :       op===2?"ssan_libro_biopsias_listagespab/test_etiquetas_frasco"
                             :   op===1?"ssan_libro_biopsias_listagespab/test_etiquetas_5"
                             :   "ssan_libro_biopsias_listagespab/test_etiquetas_frasco_centrado",
         dataType	:   "json",
-	beforeSend      :   function(xhr){  console.log(xhr); },
-	data		:   { ind_funtion:true },
+        beforeSend  :   function(xhr){  console.log(xhr); },
+        data		:   { ind_funtion:true },
         error		:   function(errro)	{  
                                                     console.log(errro); 
                                                     console.log(errro.responseText); 
                                                     jError("Error Al Imprimir Etiqueta","e-SISSAN"); 
                                                 },
         success		:   function(aData)	{
-            
-                                                    console.log("------------------------------------------------");
-                                                    console.log("   aData      =>",aData['TICKET_TEST_M'],"<=    ");
-                                                    console.log("------------------------------------------------");
-                                                    
-                                                    if(aData['STATUS']){
-                                                        checkPrinterStatus(function(text){
-                                                            //console.log("TEST TEXT                      =>",text,"<-");
-                                                            //console.log("TEST SELECTED_PRINTER          =>",selected_printer);
-                                                            if(text=="Listo para imprimir"){
-                                                                //console.log("TEST   SELECTED_PRINTER    =>",selected_printer);
-                                                                //console.log("TEST   PRINTERERROR        =>",printerError);
-                                                                //selected_printer.send(aData['TICKET_1']+aData['TICKET_2'],printComplete, printerError);
-                                                                selected_printer.sendThenRead(aData['TICKET_TEST_M'],printComplete, printerError);
-                                                            } else {
-                                                                printerError(text);
-                                                            }
-                                                        });
+                                            console.log("------------------------------------------------");
+                                            console.log("   aData      =>",aData['TICKET_TEST_M'],"<=    ");
+                                            console.log("------------------------------------------------");
+                                            if(aData['STATUS']){
+                                                checkPrinterStatus(function(text){
+                                                    //console.log("TEST TEXT                      =>",text,"<-");
+                                                    //console.log("TEST SELECTED_PRINTER          =>",selected_printer);
+                                                    if(text=="Listo para imprimir"){
+                                                        //console.log("TEST   SELECTED_PRINTER    =>",selected_printer);
+                                                        //console.log("TEST   PRINTERERROR        =>",printerError);
+                                                        //selected_printer.send(aData['TICKET_1']+aData['TICKET_2'],printComplete, printerError);
+                                                        selected_printer.sendThenRead(aData['TICKET_TEST_M'],printComplete, printerError);
+                                                    } else {
+                                                        printerError(text);
                                                     }
-                                                }, 
+                                                });
+                                            }
+                                        }, 
     });
 }
 

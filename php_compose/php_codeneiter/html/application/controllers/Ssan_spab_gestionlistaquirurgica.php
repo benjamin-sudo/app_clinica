@@ -1048,10 +1048,10 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         return $zpl_zebra;
     }
     
-    #################################################
-    #SOLICITUD DE : ANATOMIA PATOLOGICA #############
-    #PACIENTE + SERVICIO + FORMULARIO + GET = PDF
-    #MODAL 50%
+    ####################################################
+    #   SOLICITUD DE : ANATOMIA PATOLOGICA #############
+    #   PACIENTE + SERVICIO + FORMULARIO + GET = PDF
+    #   MODAL 50%
     ##################################################
     public function new_nueva_solicitud_anatomia_ext(){
         if(!$this->input->is_ajax_request()){ show_404(); }
@@ -1070,12 +1070,12 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
             ));
         $html                                   =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
         $this->output->set_output(json_encode([
-            'html' => $html,
-            'DATA_INFO' => $DATA_CURSOR,
-            'SALIDA_DIRECTA' => true.
+            'SALIDA_DIRECTA'    =>  true,
+            'html'              =>  $html,
+            'DATA_INFO'         =>  $DATA_CURSOR
         ]));
     }
-
+    
     public function php_generar_zpl_to_pdf(){
         $zpl                                    =   $this->input->post('txt_zpl');
         $V_TAMANO_ETIQUETA                      =   $this->input->post('V_TAMANO_ETIQUETA'); 

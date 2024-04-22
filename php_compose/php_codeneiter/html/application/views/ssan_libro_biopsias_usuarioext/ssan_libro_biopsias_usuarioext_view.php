@@ -22,8 +22,6 @@
     </div>
 </div>
 
-<br>
-
 <div class="grid_body_panel">
     <div class="grid_body_panel1" style="padding: 10px;">
         <div class="card" id="card_fechas">
@@ -158,7 +156,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 
     <div class="modal fade" id="MODAL_BUSQUEDA_PACIENTE">
         <div class="modal-dialog modal_xl">
@@ -176,7 +174,7 @@
                             <div class="card" id="card_lista_pacientes">
                                 <div class="header">
                                     <h4 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;<b>LISTA DE PACIENTES</b></h4>
-                                    <p>Lista de pacientes para actividad grupal </p>
+                                    <p>Lista de pacientes para actividad grupal</p>
                                 </div>
                                 <div class="content">
                                     <div class="alert alert-danger" role="alert" id="alerta_sin_paciente">

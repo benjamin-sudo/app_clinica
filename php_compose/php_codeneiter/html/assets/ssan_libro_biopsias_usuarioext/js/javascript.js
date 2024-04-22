@@ -166,7 +166,6 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
                                                     },
         success             :   function(aData)     {
                                                         console.log("aData | ",aData);
-
                                                         $("#loadFade").modal('hide'); 
                                                         $("#RETURN_DATA_5").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
                                                         $("#RETURN_DATA_4").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
@@ -218,7 +217,6 @@ function local_pdf_rechazomuestra(id_anatomia){
         success		:   function(aData)         { 
                                                     console.log("-----------------------");
                                                     console.log("aData  ->",aData,"<-   ");
-                                                    
                                                     if(!aData["STATUS"]){
                                                         jError("error al cargar protocolo PDF","e-SISSAN");
                                                         return false;
