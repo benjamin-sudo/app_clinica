@@ -65,21 +65,22 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
     public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete) {
         /*
-          error_log("--------------------------------------");
-          error_log("---------->".$numFichaE);
-          error_log("---------->".$identifier);
-          error_log("---------->".$codEmpresa);
-          error_log("---------->".$isnal);
-          error_log("---------->".$pasaporte);
-          error_log("---------->".$tipoEx);
-          error_log("---------->".$nombre);
-          error_log("---------->".$apellidoP);
-          error_log("---------->".$apellidoM);
-          error_log("-------------------------------------");
-         */
+            error_log("--------------------------------------");
+            error_log("---------->".$numFichaE);
+            error_log("---------->".$identifier);
+            error_log("---------->".$codEmpresa);
+            error_log("---------->".$isnal);
+            error_log("---------->".$pasaporte);
+            error_log("---------->".$tipoEx);
+            error_log("---------->".$nombre);
+            error_log("---------->".$apellidoP);
+            error_log("---------->".$apellidoM);
+            error_log("-------------------------------------");
+        */
 
+        # A.FEC_NACIMI,
         if ($identifier == '' and $pasaporte == ''){
-          $query =  $this->db->select('G.NUM_FICHAE            FALLECIDO,
+            $query =  $this->db->select('G.NUM_FICHAE            FALLECIDO,
                                 A.COD_PAIS,
                                 A.NUM_IDENTIFICACION,
                                 A.FEC_VENCEPASPORT,
@@ -88,7 +89,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                                 A.NOM_NOMBRE,
                                 A.NOM_APEPAT,
                                 A.NOM_APEMAT,
-                                A.FEC_NACIMI,
+                                TO_CHAR(A.FEC_NACIMI,"DD-MM-YYYY") AS FEC_NACIMI,  
                                 A.IND_TISEXO,
                                 A.NUM_FICHAE,
 				                A.IND_EXTRANJERO,

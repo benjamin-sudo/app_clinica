@@ -1239,10 +1239,10 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             $this->output->set_output(json_encode($aDatos));
             return false;
         }
-        //$aDatos[]             =   array(""=>"", "opcion" => "console", "contenido"  => "TYPO -> ".$this->session->userdata("SISTYPO"));
-        $aDataPaciente          =   $this->ssan_bdu_creareditarpaciente_model->getPacientes($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, strtoupper($nombre), strtoupper($apellidoP), strtoupper($apellidoM), $LIM_INI, $templete);
-        $aDatos[]               =   array('id_html' => 'result',        'opcion' => 'hide',     'contenido' => '');
-        $aDatos[]               =   array('id_html' => 'resultados',    'opcion' => 'html',     'contenido' => '');
+        //$aDatos[]         =   array(""=>"", "opcion" => "console", "contenido"  => "TYPO -> ".$this->session->userdata("SISTYPO"));
+        $aDataPaciente      =   $this->ssan_bdu_creareditarpaciente_model->getPacientes($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, strtoupper($nombre), strtoupper($apellidoP), strtoupper($apellidoM), $LIM_INI, $templete);
+        $aDatos[]           =   array('id_html' => 'result',        'opcion' => 'hide',     'contenido' => '');
+        $aDatos[]           =   array('id_html' => 'resultados',    'opcion' => 'html',     'contenido' => '');
         if (count($aDataPaciente) > 0) {
             foreach ($aDataPaciente as $i => $row) {
                 //$aDatos[]       =   array('id_html' => 'resultados', 'opcion' => 'console', 'contenido' => $aDataPaciente);
@@ -1262,7 +1262,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     $row['NUM_IDENTIFICACION'];
                     $row['FEC_VENCEPASPORT'];     
                 */
-                
                 $IND_EXTRANJERO         =    $row['IND_EXTRANJERO'];
                 if (($row['COD_PAIS'] == 'CL') || ($row['IND_EXTRANJERO'] == '0')) {
                     $EXTRAN             =   '';
@@ -1309,28 +1308,18 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     //Nuevo 13.11.2018
                     else if ($templete == '3') {
                         $html .= '<a 
-                                            class="btn btn-info" 
-                                            href="javascript:FormModal2(' . $isNal . ',' . $row['NUM_FICHAE'] . ',\'' . $row['COD_RUTPAC'] . '\',\'' . $row['NUM_IDENTIFICACION'] . '\')"
-                                            >
-                                            <i class="fa fa-cog" aria-hidden="true"></i>
-                                        </a>';
+                                        class="btn btn-info" 
+                                        href="javascript:FormModal2(' . $isNal . ',' . $row['NUM_FICHAE'] . ',\'' . $row['COD_RUTPAC'] . '\',\'' . $row['NUM_IDENTIFICACION'] . '\')"
+                                        >
+                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                                    </a>';
                     }
 
                     // NUEVO PARA EL GESTION DE CITACION 06-08-2019 
                     // NO SUBIDO
-                    //
                     else if ($templete == '6') {
-                        $JSON2                    =   htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');
-                        $html   .='
-                                    <label class="radio" data-BLOQUE="'.$JSON2.'" onclick="selecionapaciente(this)" id="DATA_'.$row['NUM_FICHAE'].'">
-                                        <span class="icons">
-                                            <span class="first-icon fa fa-circle-o"></span>
-                                            <span class="second-icon fa fa-dot-circle-o"></span>
-                                        </span>
-                                        <input type="radio" data-toggle="radio" name="SELECCIONA_PACIENTE" id="ID_'.$row['NUM_FICHAE'].'" value="'.$row['NUM_FICHAE'].'">
-                                        <div id="TXT_PACIENTE_'.$row['NUM_FICHAE'].'" style="position: inherit;top: 2px;"></div>
-                                    </label>
-                                ';
+                        $JSON2  =   htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');
+                        $html   .=  '<input type="radio" class="form-check-input" data-BLOQUE="'.$JSON2.'" name="SELECCIONA_PACIENTE" id="DATA_'.$row['NUM_FICHAE'].'" value="'.$row['NUM_FICHAE'].'">';
                     }
                     
                     //ACTIVIDADES GRUPALES 

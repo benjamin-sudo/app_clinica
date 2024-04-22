@@ -7,12 +7,15 @@
         margin-top                  :   0px;
         margin-bottom               :   0px;
     }
+    
     .pagination                     {
         margin                      :   12px 0px;
     }
+
     .grid_footer_button             {
         display                     :   grid;
         grid-template-columns       :   1fr auto;
+        margin-top                  :   10px;
     }
 
     .grid_radio_tipopaciente        {
@@ -21,7 +24,6 @@
         margin-left                 :   23px;
     }
 </style>
-
 <input type="hidden" id="PA_ID_PROCARCH" name="PA_ID_PROCARCH" value="">
 
 <div class="container">
@@ -59,139 +61,140 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="card" style="margin-top: 10px;">
-                                <div class="card-body">
-                                    <h5 class="card-title"><b>TIPO&nbsp;PACIENTE</b><star>*</star></h5>
-                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <label class="control-label"></label>
-                                <div class="grid_radio_tipopaciente" id="tip_paciente">
-                                    <div class="grid_radio_tipopaciente1"> 
-                                        <label class="radio checked" id="label_tipPac_nac" onclick="cambiaTip(0)">
-                                            <input type="radio" class="form-check-input" data-toggle="radio" name="tipPac" id="tipPac_0" value="0" checked>
-                                            <div id="txt_nacion" style="position: inherit;top: 2px;">NACIONAL</div>
-                                        </label>
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="card" style="margin-top: 10px;">
+                                    <div class="card-header">
+                                        <h4 class="title"><i class="fa fa-search" aria-hidden="true"></i></i>&nbsp;<b>B&Uacute;SQUEDA PACIENTE</b></h4>
+                                        <p style="margin-bottom: 0px;">Paciente debe estar en lista de pacientes correspondiente a su establecimiento</p>
                                     </div>
-                                    <div class="grid_radio_tipopaciente1"> 
-                                        <label class="radio"  onclick="cambiaTip(1)" id="label_tipPac_ext">
-                                            <input type="radio" class="form-check-input" data-toggle="radio" name="tipPac" id="tipPac_1" value="1">
-                                            <div id="txt_nomexj" style="position: inherit;top: 2px;">EXTRANJERO</div>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group" id="trEx" style="margin-bottom: 0px; display: none;">
-                                    <label class="control-label">TIPO&nbsp;DOCUMENTO<star>*</star></label>
-                                    <div class="row" style="margin-left:14px;">
-                                        <div class="form-group label-floating col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                            <label class="radio checked" onclick="cambiaDoc(1)" id="label_tipoEx_dni">
-                                                <input type="radio" class="form-check-input" name="tipoEx" id="tipoEx_1" data-toggle="radio" value="1" checked>
-                                                <div id="txtdoc" style="position: inherit;top: 2px;">DNI&nbsp;/&nbsp;PASAPORTE</div> 
-                                            </label>
+                                    <div class="card-body">
+                                        <div class="grid_radio_tipopaciente" id="tip_paciente">
+                                            <div class="grid_radio_tipopaciente1"> 
+                                                <label class="radio checked" id="label_tipPac_nac" onclick="cambiaTip(0)">
+                                                    <input type="radio" class="form-check-input" data-toggle="radio" name="tipPac" id="tipPac_0" value="0" checked>
+                                                    <div id="txt_nacion" style="position: inherit;top: 2px;">NACIONAL</div>
+                                                </label>
+                                            </div>
+                                            <div class="grid_radio_tipopaciente1"> 
+                                                <label class="radio"  onclick="cambiaTip(1)" id="label_tipPac_ext">
+                                                    <input type="radio" class="form-check-input" data-toggle="radio" name="tipPac" id="tipPac_1" value="1">
+                                                    <div id="txt_nomexj" style="position: inherit;top: 2px;">EXTRANJERO</div>
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="form-group label-floating col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                            <label class="radio" onclick="cambiaDoc(2)" id="label_tipoEx_fonasa">
-                                                <input type="radio" class="form-check-input" name="tipoEx" id="tipoEx_2" data-toggle="radio" value="2">
-                                                <div id="txtidfonasa" style="position: inherit;top: 2px;">ID&nbsp;FONASA</div> 
-                                            </label>
+                                        <div class="form-group" id="trEx" style="margin-bottom: 0px; display: none;">
+                                            <label class="control-label">TIPO&nbsp;DOCUMENTO<star>*</star></label>
+                                            <div class="row" style="margin-left:14px;">
+                                                <div class="form-group label-floating col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                                    <label class="radio checked" onclick="cambiaDoc(1)" id="label_tipoEx_dni">
+                                                        <input type="radio" class="form-check-input" name="tipoEx" id="tipoEx_1" data-toggle="radio" value="1" checked>
+                                                        <div id="txtdoc" style="position: inherit;top: 2px;">DNI&nbsp;/&nbsp;PASAPORTE</div> 
+                                                    </label>
+                                                </div>
+                                                <div class="form-group label-floating col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                                    <label class="radio" onclick="cambiaDoc(2)" id="label_tipoEx_fonasa">
+                                                        <input type="radio" class="form-check-input" name="tipoEx" id="tipoEx_2" data-toggle="radio" value="2">
+                                                        <div id="txtidfonasa" style="position: inherit;top: 2px;">ID&nbsp;FONASA</div> 
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="iden_idfonasa" style="display: none">
+                                            <label class="control-label">ID&nbsp;PROVISORIO&nbsp;FONASA<star>*</star></label>
+                                            <input type="text" id="busq_rutfonasa" name="busq_rutfonasa" class="form-control input-sm" style="width:120px;">
+                                        </div>
+                                        <div class="form-group" id="iden_dni" style="display: none">
+                                            <label class="control-label">PASAPORTE/DNI&nbsp;PA&Iacute;S&nbsp;ORIGEN<star>*</star></label>
+                                            <input type="text" id="busq_dni" name="busq_dni" class="form-control input-sm">
+                                        </div>
+                                        <div class="form-group" id="iden_chileno" style="margin-bottom: 2px;margin-top: 0px;">
+                                            <label class="control-label">RUN&nbsp;<star>*</star></label>
+                                            <input type="text" id="busq_rut" name="busq_rut" class="form-control input-sm" style="width:120px;">
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="btn-group" style="">
+                                                <button type="button" class="btn btn-primary btn_buscar_paciente" onclick="buscar(0,1);" id="BTN_BUSQ_PAC_1">
+                                                    <i class="fa fa-search" aria-hidden="true"></i>&nbsp;BUSCAR&nbsp;
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn_limpiar_busq_pac" onclick="limpiar_card_busqueda(1);" id="BTN_DELETE_PAC_1">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;LIMPAR&nbsp;
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group" id="iden_idfonasa" style="display: none">
-                                    <label class="control-label">ID&nbsp;PROVISORIO&nbsp;FONASA<star>*</star></label>
-                                    <input type="text" id="busq_rutfonasa" name="busq_rutfonasa" class="form-control input-sm" style="width:101px;">
-                                </div>
-                                <div class="form-group" id="iden_dni" style="display: none">
-                                    <label class="control-label">PASAPORTE/DNI&nbsp;PA&Iacute;S&nbsp;ORIGEN<star>*</star></label>
-                                    <input type="text" id="busq_dni" name="busq_dni" class="form-control input-sm">
-                                </div>
-                                <div class="form-group" id="iden_chileno" style="margin-bottom: 2px;margin-top: 0px;">
-                                    <label class="control-label">RUN&nbsp;<star>*</star></label>
-                                    <input type="text" id="busq_rut" name="busq_rut" class="form-control input-sm" style="width:101px;">
-                                </div>
-                                <div class="text-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-primary btn-sm btn-fill btn_buscar_paciente" onclick="buscar(0,1);" id="BTN_BUSQ_PAC_1">
-                                            <i class="fa fa-search" aria-hidden="true"></i>&nbsp;BUSCAR&nbsp;
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm btn-fill btn_limpiar_busq_pac" onclick="limpiar_card_busqueda(1);" id="BTN_DELETE_PAC_1">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;LIMPAR&nbsp;
-                                        </button>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                                <div class="form-group">
-                                    <label class="control-label">NOMBRE&nbsp;<star>*</star></label>
-                                    <input class="form-control input-sm" type="text" name="busq_name" id="busq_name">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">APELLIDO&nbsp;PATERNO&nbsp;<star>*</star></label>
-                                    <input class="form-control input-sm"  type="text"  name="busq_apellidoP" id="busq_apellidoP">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">APELLIDO&nbsp;MATERNO&nbsp;<star>*</star></label>
-                                    <input class="form-control input-sm" type="text"  name="busq_apellidoM" id="busq_apellidoM">
-                                </div>
-                                <div class="text-center">
-                                    <div class="form-group">
-                                        <div class="btn-group" style="margin-top: 12px;  margin-bottom: 13px;">
-                                            <button type="button" class="btn btn-small btn-primary btn-sm btn-fill btn_buscar_paciente" onclick="buscar(0,1);" id="BTN_BUSQ_PAC_2">
-                                                <i class="fa fa-search" aria-hidden="true"></i>&nbsp;BUSCAR
-                                            </button>
-                                            <button type="button" class="btn btn-small btn-danger btn-sm btn-fill btn_limpiar_busq_pac" onclick="limpiar_card_busqueda(1);" id="BTN_DELETE_PAC_2">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;LIMPAR
-                                            </button>
+                                <div class="card" style="margin-top: 10px;">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label class="control-label">NOMBRE&nbsp;<star>*</star></label>
+                                            <input class="form-control input-sm" type="text" name="busq_name" id="busq_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">APELLIDO&nbsp;PATERNO&nbsp;<star>*</star></label>
+                                            <input class="form-control input-sm"  type="text"  name="busq_apellidoP" id="busq_apellidoP">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">APELLIDO&nbsp;MATERNO&nbsp;<star>*</star></label>
+                                            <input class="form-control input-sm" type="text"  name="busq_apellidoM" id="busq_apellidoM">
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="btn-group" style="">
+                                                <button type="button" class="btn btn-primary btn_buscar_paciente" onclick="buscar(0,1);" id="BTN_BUSQ_PAC_2">
+                                                    <i class="fa fa-search" aria-hidden="true"></i>&nbsp;BUSCAR
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn_limpiar_busq_pac" onclick="limpiar_card_busqueda(1);" id="BTN_DELETE_PAC_2">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;LIMPAR
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <hr style="margin: 0px 0px 15px 0px">
-                    <h4 class="title" style="margin-left: 25px;"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;<b>RESULTADO DE B&Uacute;SQUEDA PACIENTE</b></h4>
-                    <p style="margin-left: 25px;">B&uacute;squeda De Pacientes Registrado SSAN</p>
-                    <hr style="margin: 0px 0px 25px 0px">
-                    <table class="table table-striped" style="width: 100%; margin-top: -26px;margin-bottom: 19px;">
-                        <thead style="border: hidden;">
-                            <tr>
-                                <th style="text-align:center;height: 40px;">N&deg;</th>
-                                <th style="text-align:center;">IDENTIFICADOR</th>
-                                <th style="text-align:center;">F.LOCAL</th>
-                                <th style="text-align:center;">NOMBRE COMPLETO</th>
-                                <th style="text-align:center;">NACIMIENTO</th>
-                                <th style="text-align:center;"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody id="resultados_busquedapac">
-                            <tr style="height:50px;">
-                                <td colspan="10" style="text-align:center;"><b>SIN RESULTADO</b></td>
-                            </tr>
-                        </tbody>
-                        <tbody id="msj_busqueda" style="display: none">
-                            <tr id="msj_load_body">
-                                <td style="text-align:center" colspan="11">
-                                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-                                    <span class="sr-only"></span><b> BUSCANDO...</b>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody id="resultados"></tbody>
-                        <tbody id="mensajeSinresultados_1"></tbody>
-                    </table>
-
-
-                    <hr style="margin: 0px 0px 0px 0px">
-                    <div style="text-align:center;">  
-                        <div id="new_paginacion" style="display: none;"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="title">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;<b>RESULTADO DE B&Uacute;SQUEDA PACIENTE</b>
+                            </h4>
+                            <p style="margin-bottom: 0px;">B&uacute;squeda De Pacientes Registrado en aplicativo</p>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped" style="width:100%;margin-bottom: 0px;">
+                                <thead style="border: hidden;">
+                                    <tr>
+                                        <th style="text-align:center;height: 40px;">N&deg;</th>
+                                        <th style="text-align:center;">IDENTIFICADOR</th>
+                                        <th style="text-align:center;">F.LOCAL</th>
+                                        <th style="text-align:center;">NOMBRE COMPLETO</th>
+                                        <th style="text-align:center;">NACIMIENTO</th>
+                                        <th style=""><i class="fa fa-info-circle" aria-hidden="true"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resultados_busquedapac">
+                                    <tr style="height:50px;">
+                                        <td colspan="10" style="text-align:center;"><b>SIN RESULTADO</b></td>
+                                    </tr>
+                                </tbody>
+                                <tbody id="msj_busqueda" style="display: none">
+                                    <tr id="msj_load_body">
+                                        <td style="text-align:center" colspan="11">
+                                            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                                            <span class="sr-only"></span><b> BUSCANDO...</b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody id="resultados"></tbody>
+                                <tbody id="mensajeSinresultados_1"></tbody>
+                            </table>
+                            <hr style="margin: 0px 0px 0px 0px">
+                            <div style="text-align:center;">  
+                                <div id="new_paginacion" style="display: none;"></div>
+                            </div>
+                        </div>
                     </div>
-
-
-
                     <div class="grid_footer_button">
                         <div class="grid_footer_button1">&nbsp;</div>
                         <div class="grid_footer_button2"> 
@@ -201,13 +204,120 @@
                 </div>
                 <div class="tab-pane" role="tabpanel" id="step2">
 
-                    <h4>Paso 2</h4>
-                    <p>Aquí van los detalles del paso 2.</p>
+                    <div class="card" style="margin-top: 10px;">
+                        <div class="card-header">
+                            <h4 class="title"><i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;&nbsp;<b>PACIENTE SELECCIONADO</b></h4>
+                            <p style="margin-bottom: 0px;">Búsqueda De Pacientes Registrado en aplicativo</p>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">IDENTIFICACI&Oacute;N PACIENTE:</h6>
+                                                <small class="text-muted" id="numidentificador"></small>
+                                                <div id="DATA_PACIENTE_TEMPLATE"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">NOMBRE DEL PACIENTE:</h6>
+                                                <small class="text-muted" id="nombreLabel"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">SEXO:</h6>
+                                                <small class="text-muted" id="sexoLabel"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">DIRECCI&Oacute;N:</h6>
+                                                <small class="text-muted" id="direccionLabel"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">F. NACIMIENTO:</h6>
+                                                <small class="text-muted" id="edadLabel"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">TEL&Eacute;FONO:</h6>
+                                                <small class="text-muted" id="fonoLabel"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">PREVISI&Oacute;N:</h6>
+                                                <small class="text-muted" id="previsionLabel"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;<b>TIPO DE BIOPSIA</b></h4>
+                            <p style="margin-bottom: 0px;">Seleccione el tipo de biopsia</p>
+                        </div>
+                        <div class="card-body">
+
+
+
+                            <select class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true" name="IND_TIPO_BIOPSIA" id="IND_TIPO_BIOPSIA">
+                                <option value="">SELECIONE</option>
+                                <option value="2" data-subtext="Formulario + Lista De Muestras Anatom&iacute;a Patol&oacute;gica">CONTEMPORANEA</option>
+                                <option value="3" data-subtext="Formulario + Lista De Muestras Anatom&iacute;a Patol&oacute;gica">DIFERIDA</option>
+                                <option value="4" data-subtext="Formulario + Lista De Muestras Anatom&iacute;a Patol&oacute;gica + Lista Muestras Citolog&iacute;cas">BIOPSIA + CITOLOG&Iacute;A</option>
+                                <option value="5" data-subtext="Formulario + Lista De Muestras Citolog&iacute;cas">CITOLOG&Iacute;A</option>
+                                <option value="6" data-subtext="Formulario + Lista De Muestras PAP">CITOLOG&Iacute;A PAP</option>
+                            </select>
+
+
+
+                        </div>
+                    </div>
                     
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;<b>PROFESIONAL</b></h4>
+                            <p style="margin-bottom: 0px;">Seleccione Profesional</p>
+                        </div>
+                        <div class="card-body">Content</div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;<b>ESPECIALIDAD</b></h4>
+                            <p style="margin-bottom: 0px;">Seleccione Especialidad asociada a la solicitud</p>
+                        </div>
+                        <div class="card-body">Content</div>
+                    </div>
+
+
                     <div class="grid_footer_button">
                         <div class="grid_footer_button1">&nbsp;</div>
                         <div class="grid_footer_button2"> 
-                            <button type="button" class="btn btn-default prev-step">Anterior</button>
+                            <button type="button" class="btn btn-default prev-step">Nueva Busqueda</button>
                             <button type="button" class="btn btn-primary next-step"><i class="fa fa-share" aria-hidden="true"></i>&nbsp;Siguiente</button>
                         </div>
                     </div>
@@ -233,11 +343,34 @@ $(document).ready(function () {
         'nextSelector'      :   '.next-step',
         'previousSelector'  :   '.prev-step',
         'onNext'            :   function(tab, navigation, index) {
- 
+            /*
             console.log("   ##############################      ");
             console.log("   tab         ->  ",tab);
             console.log("   navigation  ->  ",navigation);
             console.log("   index       ->  ",index);
+            console.log("   ##############################      ");
+            */
+
+            if (index == 1){
+                let PACIENTE_SEL    =   $("input[name='SELECCIONA_PACIENTE']:checked").val();
+                if(PACIENTE_SEL === undefined) {
+                    jAlert("Seleccione Paciente","Clinica Libre");
+                    return false;
+                } else {
+                    var DATA_PACIENTE       =   $("#DATA_"+PACIENTE_SEL).data().bloque;
+                    console.log("DATA_PACIENTE ->",DATA_PACIENTE);
+                    $("#numidentificador").html(DATA_PACIENTE.COD_RUTPAC+" "+DATA_PACIENTE.COD_DIGVER);
+                    $("#nombreLabel").html(DATA_PACIENTE.NOM_NOMBRE+" "+DATA_PACIENTE.APEPATPAC+" "+DATA_PACIENTE.APEMATPAC);
+                    $("#sexoLabel").html(DATA_PACIENTE.TIPO_SEXO);
+                    $("#direccionLabel").html(DATA_PACIENTE.DIRECLOCAL+" "+DATA_PACIENTE.NCASAL);
+                    $("#edadLabel").html(DATA_PACIENTE.FECHANACTO);
+                    $("#fonoLabel").html(DATA_PACIENTE.NUM_CELULAR);
+                    $("#previsionLabel").html("<b><i>NO INFORMADO</i></b>");
+                }
+            }
+
+
+
 
             var form = $('#myWizard form');
             // Supongamos que tienes una función de validación que devuelve true si el formulario es válido
@@ -301,4 +434,161 @@ function limpiar_card_busqueda(){
     $('.main_busqueda_paciente a[href="#DIV_BUSQUEDA_PAC_NUMERO"]').tab('show');
 }
 
+function selecionapaciente(this_){
+    var DATA_PACIENTE                                   =   $("#"+this_.id).data().bloque;
+    //console.log("--------------------------------------------");
+    console.log("DATA_PACIENTE  ->",DATA_PACIENTE);
+    console.log("this_          ->",this_);
+    console.log("this_id        ->",this_.id);
+    //console.log("--------------------------------------------");
+    $("#DATA_PACIENTE_TEMPLATE").removeData();
+    $("#DATA_PACIENTE_TEMPLATE").data(DATA_PACIENTE);
+    document.getElementById("btn-next").disabled        =   false;
+}
+
+function buscar(OP,LIM_INI){
+    $("#busq_rut").css("border-color","");
+    $("#busq_rutfonasa").css("border-color","");
+    $("#busq_dni").css("border-color","");
+    $("#busq_name").css("border-color","");
+    $("#busq_apellidoP").css("border-color","");
+    $("#busq_apellidoM").css("border-color","");
+    
+    $("#resultados_busquedapac,#new_paginacion").hide();
+    $("#msj_busqueda").show();
+
+    document.getElementById("BTN_BUSQ_PAC_1").disabled          =   true;
+    document.getElementById("BTN_DELETE_PAC_1").disabled        =   true;
+    document.getElementById("BTN_BUSQ_PAC_2").disabled          =   true;
+    document.getElementById("BTN_DELETE_PAC_2").disabled        =   true;
+    
+    var tipoEx		    =   $("input[name='tipoEx']:checked").val();
+    var tipoPac		    =   $("input[name='tipPac']:checked").val();
+    var rut             =   tipoPac=='0'?$("#busq_rut").val():$("#busq_rutfonasa").val();
+    var pasaporte       =   $("#busq_dni").val();
+    var nombre		    =   $("#busq_name").val();
+    var apellidoP       =   $("#busq_apellidoP").val();
+    var apellidoM       =   $("#busq_apellidoM").val();
+    var numxpag		    =   10;
+    /*
+        console.log("-------------------------------------------------------");
+        console.log(" --------> rut         -----> ",rut);
+        console.log(" --------> nombre      -----> ",nombre);
+        console.log(" --------> apellidoP   -----> ",apellidoP);
+        console.log(" --------> apellidoM   -----> ",apellidoM);
+        console.log(" --------> tipoPac     -----> ",tipoPac);
+        console.log(" --------> tipoEx      -----> ",tipoEx);
+        console.log(" --------> pasaporte   -----> ",pasaporte);
+        console.log("-------------------------------------------------------");
+    */
+    //FORMATEO RUT PUNTOS EN INPUT
+    if(rut!=''){
+        rut                 =   rut.replace(/\./g,'');
+        rut                 =   rut.split('-');
+        rut                 =   rut[0];
+    }
+    var tabs_activado       =   localStorage.getItem("ind_tipo_busqueda_paciente"); 
+    //console.log("-----------------------------------------------------------");
+    //console.log("tabs     ->  ",tabs_activado);
+    //console.log("-----------------------------------------------------------");
+    var valida              =   0;
+    if(tabs_activado        ==  '#DIV_BUSQUEDA_PARAMETROS'){
+        if (nombre != '' || apellidoP != '' || apellidoM != '') {
+            valida          =   1;
+        } 
+        rut                 =   '';
+        pasaporte           =   '';
+    } else {
+        if (rut != '' || pasaporte != '') {
+            valida          =   1;
+        }
+        nombre              =   '';
+        apellidoP           =   '';
+        apellidoM           =   '';
+    }
+    /*
+    if ((rut!= '' || nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 0)) {
+        valida              =   1;
+    } else if ((rut != '' || pasaporte != '' || nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 1)){
+        valida              =   1;
+    }
+    */
+    if (valida === 0){
+        
+        jError("Debe Ingresar a lo menos un par&aacute;metro para la b&uacute;squeda","Restricci\u00f3n");
+        
+        $("#busq_rut").css("border-color","red");
+        $("#busq_rutfonasa").css("border-color","red");
+        $("#busq_dni").css("border-color","red");
+        $("#busq_name").css("border-color","red");
+        $("#busq_apellidoP").css("border-color","red");
+        $("#busq_apellidoM").css("border-color","red");
+        $("#resultados_bdu").html('');
+        $("#msj_load_body,#result").hide();
+        $("#msj_load").remove();
+        $("#resultados_busquedapac").show();
+        $("#resultados").html('');
+
+        document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
+        document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
+        document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
+        document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
+
+    } else {
+     
+        $.ajax({ 
+            type            :	"POST",
+            url             :	"ssan_bdu_creareditarpaciente/buscarPac_resumido",
+            dataType        :	"json",
+            data            : 
+                                                    { 
+                                                        numFichae   :   '',
+                                                        rut         :   rut,
+                                                        tipoEx      :   tipoEx,
+                                                        tipoPac     :   tipoPac,
+                                                        pasaporte   :   pasaporte,
+                                                        nombre      :   nombre,
+                                                        apellidoP   :   apellidoP,
+                                                        apellidoM   :   apellidoM,
+                                                        LIM_INI     :   LIM_INI,
+                                                        numxpag     :   numxpag,
+                                                        OP          :   OP,
+                                                        templete    :   6 //anatomia ext
+                                                    },
+            error           :	function(errro) {  
+
+                                                        $("#msj_load").remove(); 
+                                                        $("#resultados").html(''); 
+                                                        $("#msj_busqueda").hide();
+                                                        console.log(errro.responseText); 
+                                                        console.log(errro); 
+                                                        //***********************************************************
+                                                        document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
+                                                        document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
+                                                        document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
+                                                        document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
+                                                        //***********************************************************
+                                                        jAlert("Error General, Consulte Al Administrador"); 
+                                                        //("#resultados_busquedapac")
+                                                    },
+            success         :	function(aData)     {
+
+                                                        console.log("----------------------------");
+                                                        console.log("aData -> ",aData); 
+                                                        $("#msj_busqueda").hide();
+                                                        $("#msj_load").remove();
+                                                        $("#resultados").html('');
+                                                        $("#new_paginacion").show("slow");
+                                                        document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
+                                                        document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
+                                                        document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
+                                                        document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
+                                                        if(AjaxExtJsonAll(aData)){
+
+                                                        }
+                                                    }, 
+        });
+        $("#resultados").html('');
+    }
+}
 </script>

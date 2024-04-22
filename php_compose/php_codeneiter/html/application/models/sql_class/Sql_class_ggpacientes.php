@@ -72,13 +72,11 @@ class sql_class_ggpacientes extends CI_Model {
 
                     A.COD_RUTPAC,
                     A.COD_DIGVER,
-                      
                     A.NUM_IDENTIFICACION,
                     A.FEC_VENCEPASPORT,
                     A.IND_EXTRANJERO,
                     A.TIP_IDENTIFICACION,
-                    
-                    A.FEC_NACIMI,
+                    TO_CHAR(A.FEC_NACIMI,'DD-MM-YYYY') AS FEC_NACIMI,
                     A.IND_TISEXO,
                     A.NUM_FICHAE,
                     A.NUM_FICHAE,
