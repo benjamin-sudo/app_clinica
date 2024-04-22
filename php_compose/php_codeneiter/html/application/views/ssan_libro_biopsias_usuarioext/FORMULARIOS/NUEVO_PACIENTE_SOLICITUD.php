@@ -49,7 +49,7 @@
                 </li>
                 <li role="presentation" class="nav-item">
                     <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Paso 3" class="nav-link">
-                        <span class="round-tab"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;A.PATOLOGICA</span>
+                        <span class="round-tab"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;FOMULARIO&nbsp;PATOLOGICA</span>
                     </a>
                 </li>
             </ul>
@@ -344,7 +344,9 @@
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="step3">
+                    
                     <div class="HTML_TEMPLATE_3_PASEQUIRUGICO"></div>
+
                     <br>
                     <div class="grid_footer_button">
                         <div class="grid_footer_button1">&nbsp;</div>
@@ -457,12 +459,20 @@ $(document).ready(function () {
                         },
                         success             :   function(aData) {
                                                                     console.log("success -> ",aData);
-                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData["HTML_FINAL"]);
+                                                                    //console.log("HTML_FINAL -> ",aData.HTML_FINAL);
+                                                                    console.log("HTML_FINAL 2 -> ",aData["HTML_FINAL"]);
+
+
+                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html('  basta   ');
+                                                                
+
                                                                     if(aData["HTML_FINAL"]){
                                                                         $(".btn-finish").show();
                                                                     } else {
                                                                         $(".btn-finish").hide();
                                                                     }
+
+
                                                                 }, 
                     });
                 }
