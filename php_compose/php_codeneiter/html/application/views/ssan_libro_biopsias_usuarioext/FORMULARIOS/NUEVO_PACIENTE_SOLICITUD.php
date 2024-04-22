@@ -344,8 +344,8 @@
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="step3">
-                    
-                    <div class="HTML_TEMPLATE_3_PASEQUIRUGICO"></div>
+                
+                    <div id="HTML_TEMPLATE_3_PASEQUIRUGICO"></div>
 
                     <br>
                     <div class="grid_footer_button">
@@ -420,8 +420,10 @@ $(document).ready(function () {
                 } else {
                     //$(".btn-finish").show();
                     $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html("Cargando formulario ... ");
+                    
                     //console.log("LISTADO_ESPECIALIDAD   ->  ",$("#LISTADO_ESPECIALIDAD").val());
                     //return true;
+
                     $.ajax({ 
                         type                :   "POST",
                         url                 :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
@@ -459,28 +461,21 @@ $(document).ready(function () {
                         },
                         success             :   function(aData) {
                                                                     console.log("success -> ",aData);
-                                                                    //console.log("HTML_FINAL -> ",aData.HTML_FINAL);
-                                                                    console.log("HTML_FINAL 2 -> ",aData["HTML_FINAL"]);
-
-
-                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html('  basta   ');
-                                                                
-
+                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(,aData.HTML_FINAL);
+                                                                    /*
                                                                     if(aData["HTML_FINAL"]){
                                                                         $(".btn-finish").show();
                                                                     } else {
                                                                         $(".btn-finish").hide();
                                                                     }
-
-
+                                                                    */
                                                                 }, 
                     });
                 }
-
-
-
                 if (index == 3){
+
                     jAlert("Valida Formulario","Clinica Libre");
+
                 }
             }
 
