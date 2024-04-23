@@ -7,10 +7,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     var $tableSpace =   "ADMIN";
     var $own        =   "ADMIN";
     var $ownGu      =   "GUADMIN";
+    var $ownPab     =   "ADMIN";
 
     public function __construct(){
         parent::__construct();
-        $this->load->helper('security');
         $this->db = $this->load->database('oracle_conteiner',true);
     }
 
