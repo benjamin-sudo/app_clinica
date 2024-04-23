@@ -1978,19 +1978,18 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         return $img;
     }
     
-    // ******************************************
-    // FINAL DE LA SOLICITUD               
-    // HTML DE FORMULARIO DE ANATOMIA PATOLOGICA
+    # ******************************************
+    # FINAL DE LA SOLICITUD               
+    # HTML DE FORMULARIO DE ANATOMIA PATOLOGICA
     public function FORMULARIO_ANATOMIA_PATOLOGICA_V3(){
         if(!$this->input->is_ajax_request()) { show_404(); }
         $TABLA["HTML_FINAL"]                    =   $HTML;
         $this->output->set_output(json_encode($TABLA));
     }
-    // ******************************************
-    // FINAL DE LA SOLICITUD               
-    // HTML DE FORMULARIO DE ANATOMIA PATOLOGICA
-    // ******************************************
-    
+    # ******************************************
+    # FINAL DE LA SOLICITUD               
+    # HTML DE FORMULARIO DE ANATOMIA PATOLOGICA
+    # ******************************************
     
     #FUNCION QUE GRABA LA SOLICITUD 
     public function RECORD_ANATOMIA_PATOLOGICA_EXT(){

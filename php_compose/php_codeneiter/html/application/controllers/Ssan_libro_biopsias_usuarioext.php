@@ -18,6 +18,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
                                         </tr>';
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_usuarioext/js/javascript.js");
+        $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js"); #js formulario anatomia
         $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);
     }
 
@@ -167,7 +168,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
                                                 "IND_ADMISION"      =>  0,
                                                 "ID_SERDEP"         =>  $ID_SERDEP, 
                                             ));
-
         #INFO_ROTULADO
         $array_rotulado                             =   [];
         if(count($aData["DATA_ROTULADO"])>0){

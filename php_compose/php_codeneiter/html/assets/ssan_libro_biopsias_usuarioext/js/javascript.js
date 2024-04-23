@@ -249,7 +249,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
     $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal("show");
     $.ajax({ 
         type		:   "POST",
-        url 		:   "Ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
+        url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA",
         dataType    :   "json",
         beforeSend	:   function(xhr)           {   
                                                         console.log(xhr);

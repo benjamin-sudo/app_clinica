@@ -859,31 +859,28 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     
     public function sqlValidaClave_doble($arr_password){
         $clave1	    =   strtolower($arr_password[0]["pass1"]);
-        $SQL1       =   "
-            SELECT 
-                ID_UID,
-                USERNAME,
-                NAME,
-                MIDDLE_NAME,
-                LAST_NAME 
-            FROM 
-               $this->ownGu.FE_USERS 
-            WHERE 
-            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave1') ";
+        $SQL1       =   "  SELECT 
+                                ID_UID,
+                                USERNAME,
+                                NAME,
+                                MIDDLE_NAME,
+                                LAST_NAME 
+                            FROM 
+                                $this->ownGu.FE_USERS 
+                            WHERE 
+                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave1') ";
         
         $clave2	    =   strtolower($arr_password[0]["pass2"]);
-        $SQL2       =   "
-                    SELECT 
-                        ID_UID,
-                        USERNAME,
-                        NAME,
-                        MIDDLE_NAME,
-                        LAST_NAME 
-                    FROM 
-                       $this->ownGu.FE_USERS 
-                    WHERE 
-                    TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave2') ";
-        
+        $SQL2       =   "SELECT 
+                                ID_UID,
+                                USERNAME,
+                                NAME,
+                                MIDDLE_NAME,
+                                LAST_NAME 
+                            FROM 
+                                $this->ownGu.FE_USERS 
+                            WHERE 
+                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave2') ";
         return array(
             'user_1'    =>  $this->db->query($SQL1)->row(),
             'user_2'    =>  $this->db->query($SQL2)->row(),

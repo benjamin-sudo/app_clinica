@@ -1,11 +1,12 @@
 <style>
     .PANEL_BUSQUEDAPACIENTE         {
         display                     :   grid;
-        grid-template-columns       :   32.5% 35% 32.5%;
+        grid-template-columns       :   60% 40%;
         grid-column-gap             :   5px;
-        grid-row-gap                :   20px;
-        margin-top                  :   0px;
-        margin-bottom               :   0px;
+        justify-items               :   stretch;
+        align-items                 :   center;
+        margin-bottom               :   30px;
+        margin-top                  :   10px;
     }
     
     .pagination                     {
@@ -28,6 +29,9 @@
         border                      :   1px solid red;
     }
 
+    .control-label                  {
+        margin-bottom               :   2px;
+    }
 </style>
 
 <input type="hidden" id="PA_ID_PROCARCH" name="PA_ID_PROCARCH" value="">
@@ -344,15 +348,13 @@
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="step3">
-                
                     <div id="HTML_TEMPLATE_3_PASEQUIRUGICO"></div>
-
                     <br>
                     <div class="grid_footer_button">
                         <div class="grid_footer_button1">&nbsp;</div>
                         <div class="grid_footer_button2"> 
-                            <button type="button" class="btn btn-default prev-step">Anterior</button>
-                            <button type="button" class="btn btn-susses next-step">Finalizar</button>
+                            <button type="button" class="btn btn-default prev-step"><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;Volver</button>
+                            <button type="button" class="btn btn-success next-step" onclick="JS_GUARDAANATOMIA_EXTERNO()"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ENVIAR ANATOMIA PATOLOGICA</button>
                         </div>
                     </div>
                 </div>
@@ -364,7 +366,6 @@
 
 <script>
 $(document).ready(function () {
-  
     $('#myWizard').bootstrapWizard({
         'nextSelector'      :   '.next-step',
         'previousSelector'  :   '.prev-step',
@@ -464,12 +465,9 @@ $(document).ready(function () {
                     });
                 }
                 if (index == 3){
-
                     jAlert("Valida Formulario","Clinica Libre");
-
                 }
             }
-
 
 
             var form = $('#myWizard form');
