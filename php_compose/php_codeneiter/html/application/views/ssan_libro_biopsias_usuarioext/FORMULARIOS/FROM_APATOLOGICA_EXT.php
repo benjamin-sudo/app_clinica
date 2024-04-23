@@ -57,9 +57,7 @@
     </style>
     
     <!-- AUTOCOMPLETE -->
-    <link rel="stylesheet" href="assets/themes/css/autocomplete.css"/>
-    <link rel="stylesheet" href="assets/themes/css/easyAutocomplete/dist/easy-autocomplete.css"/>
-    <script type="text/javascript" src="assets/themes/js/jquery.easy-autocomplete.min.js"></script>
+    
     <!-- LEGEND -->
     <input type="hidden"      id="TEMPLATE_NUMFICHAE"                   name="TEMPLATE_NUMFICHAE"                       value="<?php echo $NUM_FICHAE;?>"/>
     <input type="hidden"      id="TEMPLATE_RUTPAC"                      name="TEMPLATE_RUTPAC"                          value="<?php echo $RUT_PACIENTE;?>"/>
@@ -79,7 +77,7 @@
     <input type="hidden"      id="IND_IFRAME"                           name="IND_IFRAME"                               value="<?php echo $IND_FRAME;?>"/>
     <input type="hidden"      id="DATE_SISTEMA"                         name="DATE_SISTEMA"                             value="<?php echo date("d-m-Y h:m")?>"/>
 
-    <div class="contenedor_form" style="margin-top: 12px; width:100%; min-height:<?php echo $CALL_FROM==1 ? '770px' : '600px'; ?>; padding:<?php echo $CALL_FROM==2 ? '0px' : '4px'; ?> 4px 4px 4px;" id="TABS_ANATOMIA_PATOLOGICA" >
+    <div class="card contenedor_form" style="margin-top: 12px; width:100%; min-height:<?php echo $CALL_FROM==1 ? '770px' : '600px'; ?>; padding:<?php echo $CALL_FROM==2 ? '0px' : '4px'; ?> 4px 4px 4px;" id="TABS_ANATOMIA_PATOLOGICA" >
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="TABS_MAIN_ANATOMIA-tab" data-bs-toggle="tab" data-bs-target="#TABS_MAIN_ANATOMIA" type="button" role="tab" aria-controls="TABS_MAIN_ANATOMIA" aria-selected="true">&nbsp;FORMULARIO</button>
@@ -138,7 +136,7 @@
                 </div>
                     
                 <form id="formulario_histo" name="formulario_histo" >
-                    <table class="table table-striped" style="width:100%;margin-bottom:-5px;margin-top:-33px;">
+                    <table class="table table-striped" style="width:100%;margin-bottom:3px;margin-top:-33px;">
                         <tbody>
                             <tr>
                                 <td colspan="2">
@@ -308,7 +306,7 @@
             <?php if($IND_TIPO_BIOPSIA == '2' || $IND_TIPO_BIOPSIA == '3'  || $IND_TIPO_BIOPSIA == '4' || $IND_TIPO_BIOPSIA == '6' ){ ?>    
                 <div class="tab-pane fade" id="TABS_ETIQUETAS_ANATOMIA" role="tabpanel" aria-labelledby="TABS_ETIQUETAS_ANATOMIA-tab">
 
-                    <table class="table table-striped" style="width:100%;margin-bottom:0px;">
+                    <table class="table table-borderless" style="width:100%;margin-bottom:0px;">
                         <thead>
                             <tr>
                                 <td style="width: 50%;height: 50px;">
@@ -342,14 +340,14 @@
                             <tr style="height:50px;<?php echo $IND_TIPO_BIOPSIA=='6'?'display:none;':'';?>">
                                 <td><b>PLANTILLA:</b></td>
                                 <td>
-                                    <select style="width: 300px;" class="form-control input-sm" name="IND_PLANTILLA_ANATOMIA" id="IND_PLANTILLA_ANATOMIA" onchange="PLANTILLA_MANATOMIA(this.id,this.value)">
-                                        <option value="0"   >DEFAULT</option>
-                                        <option value="1"   >PROTOCOLO SYDNEY</option>
-                                        <option value="2"   >ESTUDIO SERIADO COLON</option>
+                                    <select style="width:300px;" class="form-control input-sm" name="IND_PLANTILLA_ANATOMIA" id="IND_PLANTILLA_ANATOMIA" onchange="PLANTILLA_MANATOMIA(this.id,this.value)">
+                                        <option value="0">DEFAULT</option>
+                                        <option value="1">PROTOCOLO SYDNEY</option>
+                                        <option value="2">ESTUDIO SERIADO COLON</option>
                                     </select>
                                 </td> 
                             </tr>
-                            <tr style="height:50px;<?php echo $IND_TIPO_BIOPSIA=='6'?'display:none;':'';?>">
+                            <tr style="height:63px;<?php echo $IND_TIPO_BIOPSIA=='6'?'display:none;':'';?>">
                                 <td><b>CASETE</b><td>
                                     <input type="checkbox" class="form-check-input" id="AP_USO_CASSETE" style="cursor:pointer;" onchange="js_usocassete(this.id)" value="1"/>
                                     <script>$("#AP_USO_CASSETE").show();</script>
@@ -425,7 +423,7 @@
             <?php  if ($IND_TIPO_BIOPSIA == '4' || $IND_TIPO_BIOPSIA == '5'){ ?>
                 <div class="tab-pane fade" id="TABS_ETIQUETAS_CITOLOGIA" role="tabpanel" aria-labelledby="TABS_ETIQUETAS_CITOLOGIA-tab">
                  
-                    <table class="table table-striped" style="width:100%;margin-bottom:0px;">
+                    <table class="table table-borderless" style="width:100%;margin-bottom:0px;">
                         <thead>
                             <tr>
                                 <td style="width:50%"><b>N&deg; DE MUESTRAS:</b></td>
@@ -519,12 +517,13 @@
         <div id="PANEL_FINAL">
             <div class="DIV_2 text-center">
                 <?php  if ($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'] == '' || $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_HISTO_ESTADO'] == '1' || $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_HISTO_ESTADO']=='2' ){ ?>
-                    <button type        =   "button" 
-                         id          =   "btn-finish" 
-                         class       =   "btn btn-info btn-back  btn-fill btn-wd  pull-center" 
-                         onclick     =   "JS_GUARDAANATOMIA_EXTERNO(<?php echo $CALL_FROM;?>)" 
-                         style       =   "display:inline-block;"
-                         >
+                    <button 
+                        type        =   "button" 
+                        id          =   "btn-finish" 
+                        class       =   "btn btn-info btn-back  btn-fill btn-wd  pull-center" 
+                        onclick     =   "JS_GUARDAANATOMIA_EXTERNO(<?php echo $CALL_FROM;?>)" 
+                        style       =   "display:inline-block;"
+                        >
                      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
                      <?php if ($CALL_FROM     ==  1){
                          echo "ENVIAR SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA";
@@ -542,7 +541,7 @@
                         class       =   "btn btn-danger btn-back  btn-fill btn-wd  pull-center" 
                         onclick     =   "GET_PDF_ANATOMIA(<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>);hide_from();" 
                         style       =   "display:inline-block;"
-                    > PDF </button>
+                    > PDF</button>
                     
                 <?php } ?>
                 
@@ -564,21 +563,20 @@
     <?php } ?>
 </div>
 
-
-
 <div id="HTML_SOLICITUD_ANATOMIA"></div>
-
 
 <script>
     $(document).ready(function(){
-        console.log("       ->      <-     ");
+        console.log("btn_envia_form");
+        $(".btn_envia_form").prop('disabled', false);
     });
+
     function hide_from(){
         $("#DIV_FORMULARIO_ANATOMIAPATOLOGICA_EXT").hide();
     }
+    
     function star_form_anatomia(){
         var IND_TIPO_BIOPSIA        =   <?php echo $IND_TIPO_BIOPSIA;?>;
-        
         console.log("------------data_bd------------------------------------------------------------------------");
         console.log("               ->",$("#data_bd").data('bd'),"<-                                            ");
         console.log("-------------------------------------------------------------------------------------------");
@@ -587,7 +585,6 @@
         console.log("   P_ANATOMIA_PATOLOGICA_MUESTRAS  ->  ",$("#data_bd").data('bd').P_ANATOMIA_PATOLOGICA_MUESTRAS); 
         console.log("   P_AP_MUESTRAS_CITOLOGIA         ->  ",$("#data_bd").data('bd').P_AP_MUESTRAS_CITOLOGIA); 
         console.log("-------------------------------------------------------------------------------------------");
-
         js_htmlnummuestra("bio_ant_nMuestasSelect",1);
         js_htmlnummuestra("bio_ant_nCitologia",1);
     }

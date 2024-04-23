@@ -94,7 +94,6 @@
 </div>    
 
 <section>
-    
     <!-- class_modal_ancho -->
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
         <div class="modal-dialog modal-lg">

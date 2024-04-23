@@ -196,14 +196,11 @@
                                         <td colspan="10" style="text-align:center;"><b>SIN RESULTADO</b></td>
                                     </tr>
                                 </tbody>
+                                
                                 <tbody id="msj_busqueda" style="display: none">
-                                    <tr id="msj_load_body">
-                                        <td style="text-align:center" colspan="11">
-                                            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-                                            <span class="sr-only"></span><b> BUSCANDO...</b>
-                                        </td>
-                                    </tr>
+                                    
                                 </tbody>
+
                                 <tbody id="resultados"></tbody>
                                 <tbody id="mensajeSinresultados_1"></tbody>
                             </table>
@@ -227,13 +224,12 @@
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="step2">
-
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-header">
                             <h4 class="title"><i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;&nbsp;<b>PACIENTE SELECCIONADO</b></h4>
-                            <p style="margin-bottom: 0px;">Búsqueda De Pacientes Registrado en aplicativo</p>
+                            <p style="margin-bottom: 0px;">B&uacute;squeda De Pacientes Registrado en aplicativo</p>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding: 7px;">
                             <table class="table table-sm table-striped">
                                 <tbody>
                                     <tr>
@@ -297,10 +293,9 @@
                             </table>
                         </div>
                     </div>
-
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="title"><i class="fa fa-circle" aria-hidden="true"></i>&nbsp;<b>TIPO DE BIOPSIA</b></h4>
+                            <h4 class="title"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;<b>TIPO DE BIOPSIA</b></h4>
                             <p style="margin-bottom: 0px;">Seleccione el tipo de biopsia</p>
                         </div>
                         <div class="card-body">
@@ -314,10 +309,9 @@
                             </select>
                         </div>
                     </div>
-                    
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="title"><i class="fa fa-circle" aria-hidden="true"></i>&nbsp;<b>PROFESIONAL</b></h4>
+                            <h4 class="title"><i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;<b>PROFESIONAL</b></h4>
                             <p style="margin-bottom: 0px;">Seleccione Profesional responsable de la biopsia</p>
                         </div>
                         <div class="card-body">
@@ -334,10 +328,9 @@
                             </select>
                         </div>
                     </div>
-                    
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="title"><i class="fa fa-circle" aria-hidden="true"></i>&nbsp;<b>ESPECIALIDAD</b></h4>
+                            <h4 class="title"><i class="fa fa-hospital-o" aria-hidden="true"></i>&nbsp;<b>ESPECIALIDAD</b></h4>
                             <p style="margin-bottom: 0px;">Seleccione Especialidad asociada a la solicitud</p>
                         </div>
                         <div class="card-body">
@@ -356,19 +349,23 @@
                     <div class="grid_footer_button">
                         <div class="grid_footer_button1">&nbsp;</div>
                         <div class="grid_footer_button2"> 
-                            <button type="button" class="btn btn-danger prev-step">Nueva Busqueda</button>
+                            <button type="button" class="btn btn-default prev-step"><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;Nueva Busqueda</button>
                             <button type="button" class="btn btn-primary next-step"><i class="fa fa-share" aria-hidden="true"></i>&nbsp;Inicio Formulario Anatomia Patologica</button>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="step3">
                     <div id="HTML_TEMPLATE_3_PASEQUIRUGICO"></div>
-                    <br>
                     <div class="grid_footer_button">
                         <div class="grid_footer_button1">&nbsp;</div>
                         <div class="grid_footer_button2"> 
                             <button type="button" class="btn btn-default prev-step"><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;Volver</button>
-                            <button type="button" class="btn btn-success next-step btn_envia_form" onclick="JS_GUARDAANATOMIA_EXTERNO()"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ENVIAR ANATOMIA PATOLOGICA</button>
+                            <!--
+                            <button type="button" class="btn btn-success next-step btn_envia_form " onclick="JS_GUARDAANATOMIA_EXTERNO()"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ENVIAR ANATOMIA PATOLOGICA</button>
+                            -->
+                            <button type="button" id="btn-finish" class="btn btn-success btn-finish pull-right" onclick="JS_GUARDAANATOMIA_EXTERNO()" style="display: inline-block;margin-left:7px;">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ENVIAR ANATOMIA PATOLOGICA
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -422,8 +419,9 @@ $(document).ready(function () {
                     jAlert("Seleccione Paciente","Clinica Libre");
                     return false;
                 } else {
-                    var DATA_PACIENTE       =   $("#DATA_"+PACIENTE_SEL).data().bloque;
-                    console.log("DATA_PACIENTE ->",DATA_PACIENTE);
+                    let DATA_PACIENTE =   $("#DATA_"+PACIENTE_SEL).data().bloque;
+                    $("#DATA_PACIENTE_TEMPLATE").removeData();
+                    $("#DATA_PACIENTE_TEMPLATE").data(DATA_PACIENTE);
                     $("#numidentificador").html(DATA_PACIENTE.COD_RUTPAC+" "+DATA_PACIENTE.COD_DIGVER);
                     $("#nombreLabel").html(DATA_PACIENTE.NOM_NOMBRE+" "+DATA_PACIENTE.APEPATPAC+" "+DATA_PACIENTE.APEMATPAC);
                     $("#sexoLabel").html(DATA_PACIENTE.TIPO_SEXO);
@@ -458,57 +456,61 @@ $(document).ready(function () {
                     jAlert("Se han detectado falta de informaci&oacute;n <br>"+msj.join(""),"Clinica Libre");
                     return false;
                 } else {
-                    //$(".btn-finish").show();
-                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html("Cargando formulario ... ");
-                    //console.log("LISTADO_ESPECIALIDAD   ->  ",$("#LISTADO_ESPECIALIDAD").val());
-                    //return true;
+                    
+                    //
+                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html("Cargando formulario...");
+                    
                     $.ajax({ 
-                        type                :   "POST",
-                        url                 :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
-                        dataType            :   "json",
-                        beforeSend          :   function(xhr)   {
-                                                                    var HTML_BEFORESEND =   '<tbody id="msj_busqueda" style="display: none">'+
-                                                                                                '<tr id="msj_load_body">'+
-                                                                                                    '<td style="text-align:center" colspan="11">'+
-                                                                                                        '<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>'+
-                                                                                                        '<span class="sr-only"></span><b> CARGANDO ...</b>'+
-                                                                                                    '</td>'+
-                                                                                                '</tr>'+
-                                                                                            '</tbody>';
-                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(HTML_BEFORESEND); 
-                                                                },
-                        data                :                   {
-                                                                    NUM_FICHAE          :   $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
-                                                                    RUT_PACIENTE        :   $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
-                                                                    ID_MEDICO           :   null,
-                                                                    RUT_MEDICO          :   $("#LISTADO_PROFESIONALES").val(),
-                                                                    IND_TIPO_BIOPSIA    :   $("#IND_TIPO_BIOPSIA").val(),// 
-                                                                    IND_ESPECIALIDAD    :   $("#LISTADO_ESPECIALIDAD").val(),
-                                                                    PA_ID_PROCARCH      :   $("#PA_ID_PROCARCH").val(),
-                                                                    AD_ID_ADMISION      :   null,
-                                                                    TXT_BIOPSIA         :   $("#IND_TIPO_BIOPSIA option:selected").text(),
-                                                                    CALL_FROM           :   0,
-                                                                    IND_GESPAB          :   0
-                                                                },
-                        error		        :   function(errro)     {  
-                                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                                    console.log(errro);
-                                                                    //console.log(errro.responseText);
-                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
-                                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
-                        },
-                        success             :   function(aData) {
-                                                                    console.log("success -> ",aData);
-                                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
-                                                                    $(".btn_envia_form").prop('disabled', false);
-                                                                }, 
+                        type        :   "POST",
+                        url         :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
+                        dataType    :   "json",
+                        beforeSend  :   function(xhr)   {
+                                                            var HTML_BEFORESEND =   '<tbody id="msj_busqueda" style="display: none">'+
+                                                                                        '<tr id="msj_load_body">'+
+                                                                                            '<td style="text-align:center" colspan="11">'+
+                                                                                                '<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>'+
+                                                                                                '<span class="sr-only"></span><b> CARGANDO ...</b>'+
+                                                                                            '</td>'+
+                                                                                        '</tr>'+
+                                                                                    '</tbody>';
+                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(HTML_BEFORESEND); 
+                                                        },
+                        data        :           {
+                                                    NUM_FICHAE          :   $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
+                                                    RUT_PACIENTE        :   $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
+                                                    ID_MEDICO           :   null,
+                                                    RUT_MEDICO          :   $("#LISTADO_PROFESIONALES").val(),
+                                                    IND_TIPO_BIOPSIA    :   $("#IND_TIPO_BIOPSIA").val(),// 
+                                                    IND_ESPECIALIDAD    :   $("#LISTADO_ESPECIALIDAD").val(),
+                                                    PA_ID_PROCARCH      :   $("#PA_ID_PROCARCH").val(),
+                                                    AD_ID_ADMISION      :   null,
+                                                    TXT_BIOPSIA         :   $("#IND_TIPO_BIOPSIA option:selected").text(),
+                                                    CALL_FROM           :   0,
+                                                    IND_GESPAB          :   0
+                                                },
+                        error       :   function(errro) {  
+                                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                            console.log(errro);
+                                                            //console.log(errro.responseText);
+                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
+                                                            $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
+                                                        },
+                        success     :   function(aData) {
+                                                            console.log("success -> ",aData);
+                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
+                                                            setTimeout(function() {
+                                                                $(".btn_envia_form").prop('disabled', false);
+                                                                document.getElementById("btn-finish").disabled = false;
+                                                            }, 1000); // 1000 milisegundos = 1 segundo
+                                                        }, 
                     });
                 }
             }
             if (index == 3){
                 jAlert("Valida Formulario","Clinica Libre");
-            }
 
+
+            }
 
             var form = $('#myWizard form');
             console.log("   form    ->  ",form);
@@ -675,7 +677,12 @@ function buscar(OP,LIM_INI){
         document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
 
     } else {
-     
+        $("#msj_busqueda").html(`<tr id="msj_load_body">
+                                        <td style="text-align:center" colspan="11">
+                                            <i class="fa fa-cog fa-spin fa-2x fa-fw"></i>
+                                            <span class="sr-only"></span><b> BUSCANDO...</b>
+                                        </td>
+                                    </tr>`);
         $.ajax({ 
             type            :	"POST",
             url             :	"ssan_bdu_creareditarpaciente/buscarPac_resumido",
@@ -695,11 +702,9 @@ function buscar(OP,LIM_INI){
                                                         OP          :   OP,
                                                         templete    :   6 //anatomia ext
                                                     },
-            error           :	function(errro) {  
-
+            error           :	function(errro)     {  
                                                         $("#msj_load").remove(); 
-                                                        $("#resultados").html(''); 
-                                                        $("#msj_busqueda").hide();
+                                                        $("#msj_busqueda").html('');
                                                         console.log(errro.responseText); 
                                                         console.log(errro); 
                                                         //***********************************************************
@@ -712,23 +717,22 @@ function buscar(OP,LIM_INI){
                                                         //("#resultados_busquedapac")
                                                     },
             success         :	function(aData)     {
-
                                                         console.log("----------------------------");
-                                                        console.log("aData -> ",aData); 
-                                                        $("#msj_busqueda").hide();
+                                                        console.log("aData -> ",aData);
+
+                                                        $("#msj_busqueda").html('');
                                                         $("#msj_load").remove();
                                                         $("#resultados").html('');
                                                         $("#new_paginacion").show("slow");
+                                                        
                                                         document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
                                                         document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
                                                         document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
                                                         document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
 
-
                                                         if(AjaxExtJsonAll(aData)){
 
                                                         }
-
                                                     }, 
         });
         $("#resultados").html('');
