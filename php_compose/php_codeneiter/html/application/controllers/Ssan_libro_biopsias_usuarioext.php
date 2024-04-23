@@ -32,34 +32,34 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
 
     public function new_nueva_solicitud_anatomia_ext(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                            =   $this->session->userdata("COD_ESTAB");
-        $session_arr                        =   explode("-",$this->session->userdata('USERNAME'));
-        $NUM_FICHAE                         =   $this->input->post('NUM_FICHAE');
-        $ADMISION                           =   $this->input->post('ADMISION');
-        $session                            =   $session_arr[0];
-        $DATA_CURSOR                        =   $this->Ssan_libro_biopsias_usuarioext_model->data_pre_nuevasoliciud_anatomia(array(
-            "COD_EMPRESA"                   =>  $empresa,
-            "USR_SESSION"                   =>  $session,
-            "DATE_FROM"                     =>  date("d-m-Y"),
-            "DATE_TO"                       =>  date("d-m-Y"),
-            "NUM_FICHAE"                    =>  $NUM_FICHAE,
-            "ADMISION"                      =>  $ADMISION,
+        $empresa        =   $this->session->userdata("COD_ESTAB");
+        $session_arr    =   explode("-",$this->session->userdata('USERNAME'));
+        $NUM_FICHAE     =   $this->input->post('NUM_FICHAE');
+        $ADMISION       =   $this->input->post('ADMISION');
+        $session        =   $session_arr[0];
+        $DATA_CURSOR    =   $this->Ssan_libro_biopsias_usuarioext_model->data_pre_nuevasoliciud_anatomia(array(
+            "COD_EMPRESA"       =>  $empresa,
+            "USR_SESSION"       =>  $session,
+            "DATE_FROM"         =>  date("d-m-Y"),
+            "DATE_TO"           =>  date("d-m-Y"),
+            "NUM_FICHAE"        =>  $NUM_FICHAE,
+            "ADMISION"          =>  $ADMISION,
         ));
-        $html   =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
+        $html                   =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
         $this->output->set_output(json_encode([
             "GET_HTML"          =>  $html,
             "SALIDA_DIRECTA"    =>  true,
             "DATA_INFO"         =>  $DATA_CURSOR,
         ]));
     }
-    
+
     public function vista_trazabilidad_sistema(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status         =   true;
-        $html           =   '';
-        $token          =   md5($this->input->post("id_anatomia"));
-        $aData          =   $this->ssan_libro_biopsias_usuarioext_model->load_info_ap(array('token'=>$token));
-        $html           =   $this->load->view("ssan_libro_biopsias_usuarioext/html_informacion_biospia_v2",array('cursor'=>$aData["return_bd"]),true);
+        $status     =   true;
+        $html       =   '';
+        $token      =   md5($this->input->post("id_anatomia"));
+        $aData      =   $this->ssan_libro_biopsias_usuarioext_model->load_info_ap(array('token'=>$token));
+        $html       =   $this->load->view("ssan_libro_biopsias_usuarioext/html_informacion_biospia_v2",array('cursor'=>$aData["return_bd"]),true);
         $this->output->set_output(json_encode(array(
             'status'    =>  $status,
             'html'      =>  $html,

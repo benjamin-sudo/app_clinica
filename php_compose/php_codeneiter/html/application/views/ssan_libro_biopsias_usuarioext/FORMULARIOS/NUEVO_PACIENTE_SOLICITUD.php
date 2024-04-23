@@ -8,7 +8,15 @@
         margin-bottom               :   30px;
         margin-top                  :   10px;
     }
-    
+
+    .grid_center_paginacion         {
+        display                     :   grid;
+        grid-template-columns       :   1fr auto 1fr;
+        gap                         :   8px;
+        justify-items               :   center;
+        align-items                 :   center;
+    }
+
     .pagination                     {
         margin                      :   12px 0px;
     }
@@ -200,8 +208,14 @@
                                 <tbody id="mensajeSinresultados_1"></tbody>
                             </table>
                             <hr style="margin: 0px 0px 0px 0px">
-                            <div style="text-align:center;">  
-                                <div id="new_paginacion" style="display: none;"></div>
+                            <div class="grid_center_paginacion">
+                                <div class="grid_center_paginacion1">&nbsp;</div>
+                                <div class="grid_center_paginacion2">
+                                    <div style="text-align:center;">  
+                                        <div id="new_paginacion" style="display: none;"></div>
+                                    </div>
+                                </div>
+                                <div class="grid_center_paginacion3">&nbsp;</div>
                             </div>
                         </div>
                     </div>
@@ -354,7 +368,7 @@
                         <div class="grid_footer_button1">&nbsp;</div>
                         <div class="grid_footer_button2"> 
                             <button type="button" class="btn btn-default prev-step"><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;Volver</button>
-                            <button type="button" class="btn btn-success next-step" onclick="JS_GUARDAANATOMIA_EXTERNO()"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ENVIAR ANATOMIA PATOLOGICA</button>
+                            <button type="button" class="btn btn-success next-step btn_envia_form" onclick="JS_GUARDAANATOMIA_EXTERNO()"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ENVIAR ANATOMIA PATOLOGICA</button>
                         </div>
                     </div>
                 </div>
@@ -366,6 +380,31 @@
 
 <script>
 $(document).ready(function () {
+    $('#busq_rut').Rut({
+        format_on   :   'keyup',
+        on_error    :   function()  {   
+                                        jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
+                                        console.log(this);
+                                        $("#busq_rut").val('');
+                                    },
+        on_success  :   function()  { 
+                                        console.log("  this -> ",this);
+                                        console.log(this.id);
+                                    },
+    });
+    $('#busq_rutfonasa').Rut({
+        format_on   :   'keyup',
+        on_error    :   function()  {   
+                                        jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
+                                        console.log(this);
+                                        $("#busq_rutfonasa").val('');
+                                    },
+        on_success  :   function()  { 
+                                        console.log("  this -> ",this);
+                                        console.log(this.id);
+                                    },
+    });
+
     $('#myWizard').bootstrapWizard({
         'nextSelector'      :   '.next-step',
         'previousSelector'  :   '.prev-step',
@@ -461,16 +500,18 @@ $(document).ready(function () {
                         success             :   function(aData) {
                                                                     console.log("success -> ",aData);
                                                                     $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
+                                                                    $(".btn_envia_form").prop('disabled', false);
                                                                 }, 
                     });
                 }
-                if (index == 3){
-                    jAlert("Valida Formulario","Clinica Libre");
-                }
+            }
+            if (index == 3){
+                jAlert("Valida Formulario","Clinica Libre");
             }
 
 
             var form = $('#myWizard form');
+            console.log("   form    ->  ",form);
             // Supongamos que tienes una función de validación que devuelve true si el formulario es válido
             if (!validarPasoActual(index)) {
                 return false; // detiene la navegación al siguiente paso si la validación falla
@@ -611,10 +652,11 @@ function buscar(OP,LIM_INI){
         valida              =   1;
     }
     */
-    if (valida === 0){
-        
+
+    if (valida === 0)   {
+   
         jError("Debe Ingresar a lo menos un par&aacute;metro para la b&uacute;squeda","Restricci\u00f3n");
-        
+   
         $("#busq_rut").css("border-color","red");
         $("#busq_rutfonasa").css("border-color","red");
         $("#busq_dni").css("border-color","red");
@@ -681,9 +723,12 @@ function buscar(OP,LIM_INI){
                                                         document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
                                                         document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
                                                         document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
+
+
                                                         if(AjaxExtJsonAll(aData)){
 
                                                         }
+
                                                     }, 
         });
         $("#resultados").html('');

@@ -2449,6 +2449,7 @@ function js_load_autocomple_data(value){
     var data_autocomplete           =   $("#data_autocomplete").data().autocomplete;
     var TXT_ETIQUETAS               =   new Array();
     for(var z=1;z<=value;z++)       {   TXT_ETIQUETAS.push("#n_muestra_"+z);    }
+    
     /*
         console.log("-------------------------------------------------------------------");
         console.log("data_autocomplete              -> ",data_autocomplete,"        <-  ");
@@ -2457,6 +2458,8 @@ function js_load_autocomple_data(value){
         console.log("TXT_ETIQUETAS.join()           -> ",TXT_ETIQUETAS.join(","),"  <-  ");
         console.log("-------------------------------------------------------------------");
     */
+    
+    /*    
     $(TXT_ETIQUETAS.join(",")).easyAutocomplete({
         data            :   data_autocomplete,
         categories      :   [{
@@ -2471,27 +2474,17 @@ function js_load_autocomple_data(value){
                                 sort                        :   {   enabled :   true    },
                                 onClickEvent                :   function(this_1){
                                     
-                                                                    /*
-                                                                        console.log("-----------------------------------");                            
-                                                                        console.log("-- THIS VALUE -->",this,"<---------");
-                                                                        console.log("-----------------------------------"); 
-                                                                        console.log("---------------->",this_1,"--------"); 
-                                                                        console.log("-----------------------------------"); 
-                                                                    */
-                                                                   
                                                                 }
                             },
     });
-    
     $(".easy-autocomplete").width('100%');
+    */
 }
 
 function js_load_easyAutocomplete(value){
     var TXT_ETIQUETAS               =    new Array();
     for(var z=1;z<=value;z++){   TXT_ETIQUETAS.push("#n_muestra_"+z);  }
-    
     console.log("TXT_ETIQUETAS      ->  ",TXT_ETIQUETAS);
-    
     $.ajax({ 
         type            :   "POST",
         url             :   "ssan_libro_biopsias_listagespab/get_data_easyautocomplete",
