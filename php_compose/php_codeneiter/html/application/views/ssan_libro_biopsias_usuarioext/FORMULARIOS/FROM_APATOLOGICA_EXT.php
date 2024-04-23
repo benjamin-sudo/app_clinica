@@ -536,7 +536,8 @@
                 <?php }  ?>
  
                 <?php  if ($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'] != ''){ ?>
-                    <button type       =   "button" 
+                    <button 
+                        type       =   "button" 
                         id          =   "btn-finish" 
                         class       =   "btn btn-danger btn-back  btn-fill btn-wd  pull-center" 
                         onclick     =   "GET_PDF_ANATOMIA(<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>);hide_from();" 

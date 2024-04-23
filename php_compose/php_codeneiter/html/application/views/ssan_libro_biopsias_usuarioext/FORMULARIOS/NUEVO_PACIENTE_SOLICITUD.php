@@ -508,8 +508,6 @@ $(document).ready(function () {
             }
             if (index == 3){
                 jAlert("Valida Formulario","Clinica Libre");
-
-
             }
 
             var form = $('#myWizard form');

@@ -11,14 +11,12 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     
     public function index(){
         $this->output->set_template('blank');
-        $empresa        =   $this->session->userdata("COD_ESTAB");
-        $data           =   [];
+        $empresa                    =   $this->session->userdata("COD_ESTAB");
+        $data                       =   [];
 
-        
-        $data['HTML_SOLICITUDEAP'] =   '<tr style="text-align: center;">
+        $data['HTML_SOLICITUDEAP']  =   '<tr style="text-align: center;">
                                             <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
                                         </tr>';
-
 
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_usuarioext/js/javascript.js");
@@ -26,11 +24,29 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);
     }
 
+
+    #FUNCION QUE GRABA LA SOLICITUD 
+    public function RECORD_ANATOMIA_PATOLOGICA_EXT(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $empresa                        =   $this->session->userdata("COD_ESTAB");
+        $contrasena                     =   $this->input->post('contrasena');
+        $accesdata                      =   $this->input->post('accesdata');
+        $session_arr                    =   explode("-",$this->session->userdata('USERNAME'));
+	    $session                        =   $session_arr[0];
+        $return                         =   $this->Ssan_libro_biopsias_usuarioext_model->MODEL_RECORD_ANATOMIA_PATOLOGICA_EXT($session,$accesdata);
+        $TABLA["MODEL_RETURN"]          =   $return;
+        $TABLA["STATUS"]                =   $return["STATUS"];
+        $TABLA["ID_ANATOMIA"]           =   $return["ID_ANATOMIA"];
+        $TABLA["GET_FRAME"]             =   false;
+        $TABLA["VIEWS_PDF"]             =   false;
+        $this->output->set_output(json_encode($TABLA));
+    }
+   
     public function index_(){
         $this->output->set_template("Theme_blank");
         $empresa        =   $this->session->userdata("COD_ESTAB");
         $id_tabla       =   823;
-        $DATA           =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
+        $DATA           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
         $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS",array('DATA'=>$DATA));
     }
 

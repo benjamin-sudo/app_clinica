@@ -572,6 +572,7 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
             arr_citologia               :   array_ncitologia,
         });
         var PIDE_FIRMA                  =   false;
+
         /*
         console.log("------------------DATA_HISPATOLOGICO-----------------------");
         console.log("   ->",CreacionProtocolo,"<-                               ");
@@ -579,12 +580,11 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
         */
         //return false;
 
-
         $.ajax({ 
             type            :   "POST",
-            url             :   "ssan_spab_gestionlistaquirurgica/RECORD_ANATOMIA_PATOLOGICA_EXT",
+            url             :   "ssan_libro_biopsias_usuarioext/RECORD_ANATOMIA_PATOLOGICA_EXT",
             dataType        :   "json",
-            beforeSend      :   function(xhr)       {       console.log(xhr);   },
+            beforeSend      :   function(xhr)       {   console.log(xhr);   },
             data            :                       { 
                                                         contrasena      :   PIDE_FIRMA,
                                                         accesdata       :   CreacionProtocolo,

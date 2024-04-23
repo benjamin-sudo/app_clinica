@@ -10,6 +10,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
+        $this->load->helper('security');
         $this->db = $this->load->database('oracle_conteiner',true);
     }
 
@@ -691,8 +692,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->trans_start();
         $CALL_FASE      =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;
         $ID_SERDEP      =   isset($DATA['ID_SERDEP'])?$DATA['ID_SERDEP']:-1;
-        #var_dump($DATA);
-        #return false;
+        //var_dump($DATA);
+        //return false;
         $param          =   array(
                                 array( 
                                     'name'      =>  ':V_COD_EMPRESA',
@@ -2240,8 +2241,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 //********** $ID_CASETE = $this->db->sequence($this->ownPab,'SEQ_NUM_AP_CASETE'); ***
                                 //***********************************************************************************
                                 if($V_BOOLEANO_CASSETTE     ==  1){
-                                    $id_casete                      =   $this->db->query("
-                                                                                            SELECT 
+                                    $id_casete                      =   $this->db->query("SELECT 
                                                                                                 AP.ID_CASETE AS ID_CASETE
                                                                                             FROM 
                                                                                                 PABELLON.PB_HISTO_NMUESTRAS AP 
@@ -2324,9 +2324,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         }
         $this->db->trans_complete();
         return array(
-            'STATUS'                        =>  true,
-            'ID_ANATOMIA'                   =>  $ID_BIOPSIA,
-            'GET_PLZ'                       =>  $PLZ_ETIQUETA_MEDIANA,
+            'STATUS'        =>  true,
+            'ID_ANATOMIA'   =>  $ID_BIOPSIA,
+            'GET_PLZ'       =>  $PLZ_ETIQUETA_MEDIANA,
         );
     }
     

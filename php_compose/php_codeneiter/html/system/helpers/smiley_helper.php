@@ -254,3 +254,11 @@ if ( ! function_exists('_get_smiley_array'))
 		return $_smileys;
 	}
 }
+
+if ( ! function_exists('quotes_to_entities'))
+{
+    function quotes_to_entities($str)
+    {
+        return str_replace(array("'", '"'), array("&#39;", "&quot;"), $str);
+    }
+}
