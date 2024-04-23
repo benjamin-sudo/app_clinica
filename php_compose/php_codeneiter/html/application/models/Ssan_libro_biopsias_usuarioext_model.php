@@ -957,9 +957,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                         'type'      =>  OCI_B_CURSOR
                                     ),
                                 );
-        
         #RESULTADOS_ANATOMIA -> RECEPCION DE MUESTRAS
-        
         $result                                     =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','GET_LISTA_ANOTOMIAPATOLOGICA',$param);
         $this->db->trans_complete();
         return array(

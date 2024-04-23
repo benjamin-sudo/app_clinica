@@ -141,11 +141,15 @@ function ver_calendario(val){
 function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
     var fecha               =   fecha_cale("fecha_out");
     var idtabs              =   1; //falta definir en que tabs estoy llamado al calendario 
+    
+    
     $("#loadFade").modal('show');
     console.log("Value      ->   ",value);
+
+
     $.ajax({ 
         type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/recarga_html_listaanatomiapatologica",
+        url                 :   "ssan_libro_biopsias_usuarioext/recarga_html_listaanatomiapatologica",
         dataType            :   "json",
         beforeSend          :   function(xhr)       {   
                                                         //console.log(xhr);

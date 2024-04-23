@@ -23,6 +23,32 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);
     }
 
+    public function recarga_html_listaanatomiapatologica(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $empresa                        =   $this->session->userdata("COD_ESTAB");
+        $date_from                      =   $this->input->post("fecha_from");
+        $date_to                        =   $this->input->post("fecha_to");
+        $idtabs                         =   $this->input->post('idtabs');
+        $value                          =   $this->input->post('value');
+        #SOLICITUDES DEL CLIENTE 
+        #GET_LISTA_ANOTOMIAPATOLOGICA
+        $session_arr                    =   explode("-",$this->session->userdata('USERNAME'));
+	    $session                        =   $session_arr[0];
+        $responde                       =   $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA(
+            array(
+                "COD_EMPRESA"           =>  $empresa,
+                "USR_SESSION"           =>  $session,
+                "DATE_FROM"             =>  $date_from,
+                "DATE_TO"               =>  $date_to,
+                "LODA_X_SISTEMAS"       =>  2, //SOLO USUARIO EXTERNO
+            )
+        );
+        #OUT TO VIWES
+        $TABLA["DATE_FROM"]             =   $date_from;
+        $TABLA["DATE_TO"]               =   $date_to;
+        $TABLA["HTML_LISTAS"]           =   $responde;
+        $this->output->set_output(json_encode($TABLA));
+    }
 
 
     #FUNCION QUE GRABA LA SOLICITUD 

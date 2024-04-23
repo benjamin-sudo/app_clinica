@@ -705,34 +705,35 @@ COMMIT;
 
 CREATE OR REPLACE PACKAGE ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
     PROCEDURE GET_INFOPRESOLICITUD(
-        V_COD_EMPRESA           IN VARCHAR2,
-        V_USR_SESSION           IN VARCHAR2,
-        C_LISTADOSERVICIOS      OUT SYS_REFCURSOR,
-        C_LISTADOMEDICOS        OUT SYS_REFCURSOR,
-        C_ESPECIALIDADES        OUT SYS_REFCURSOR
+      V_COD_EMPRESA           IN VARCHAR2,
+      V_USR_SESSION           IN VARCHAR2,
+      C_LISTADOSERVICIOS      OUT SYS_REFCURSOR,
+      C_LISTADOMEDICOS        OUT SYS_REFCURSOR,
+      C_ESPECIALIDADES        OUT SYS_REFCURSOR
     );
     -----------------------------------------------------
     --DATOS PARA FORMULARIO UNICO DE ANATOMIA PATOLOGICA
     -----------------------------------------------------
     PROCEDURE FORM_START_HISPATOLOGICO(
-        V_COD_EMPRESA                           IN VARCHAR2,
-        V_CALL_FASE                             IN VARCHAR2,
-        V_IND_SISTEMA                           IN VARCHAR2,
-        V_IND_GESPAB                            IN VARCHAR2,
-        V_ZONA_PAB                              IN VARCHAR2,
-        V_IND_ADMISION                          IN VARCHAR2,
-        V_PA_ID_PROCARCH                        IN VARCHAR2,
-        VAL_ID_SERDEP                           IN VARCHAR2,
-        C_DATA_ROTULADO                         OUT SYS_REFCURSOR,
-        C_DATA_ROTULADO_SUB                     OUT SYS_REFCURSOR,
-        C_AUTOCOMPLETE_MUESTRAS                 OUT SYS_REFCURSOR,
-        C_GETDATAACTIVE                         OUT SYS_REFCURSOR,
-        C_RETURN_ESTADOS                        OUT SYS_REFCURSOR,
-        P_ANATOMIA_PATOLOGICA_MAIN              OUT SYS_REFCURSOR,
-        P_ANATOMIA_PATOLOGICA_MUESTRAS          OUT SYS_REFCURSOR,
-        P_AP_MUESTRAS_CITOLOGIA                 OUT SYS_REFCURSOR,
-        P_LOGS                                  OUT SYS_REFCURSOR
+      V_COD_EMPRESA                           IN VARCHAR2,
+      V_CALL_FASE                             IN VARCHAR2,
+      V_IND_SISTEMA                           IN VARCHAR2,
+      V_IND_GESPAB                            IN VARCHAR2,
+      V_ZONA_PAB                              IN VARCHAR2,
+      V_IND_ADMISION                          IN VARCHAR2,
+      V_PA_ID_PROCARCH                        IN VARCHAR2,
+      VAL_ID_SERDEP                           IN VARCHAR2,
+      C_DATA_ROTULADO                         OUT SYS_REFCURSOR,
+      C_DATA_ROTULADO_SUB                     OUT SYS_REFCURSOR,
+      C_AUTOCOMPLETE_MUESTRAS                 OUT SYS_REFCURSOR,
+      C_GETDATAACTIVE                         OUT SYS_REFCURSOR,
+      C_RETURN_ESTADOS                        OUT SYS_REFCURSOR,
+      P_ANATOMIA_PATOLOGICA_MAIN              OUT SYS_REFCURSOR,
+      P_ANATOMIA_PATOLOGICA_MUESTRAS          OUT SYS_REFCURSOR,
+      P_AP_MUESTRAS_CITOLOGIA                 OUT SYS_REFCURSOR,
+      P_LOGS                                  OUT SYS_REFCURSOR
     );
+
 
 END PROCE_ANATOMIA_PATOLOGIA;
 
