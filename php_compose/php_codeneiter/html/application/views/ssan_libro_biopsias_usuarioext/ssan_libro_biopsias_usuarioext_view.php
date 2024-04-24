@@ -206,7 +206,6 @@
             </div>
         </div>
     </div>
-
    
     <div class="modal fade" id="modal_edita_fecha">
         <div class="modal-dialog">
@@ -224,7 +223,7 @@
                             <input type="date" class="form-control input-sm" id="date" name="date" style="width: 122px;" value=""/>
                         </div>
                         <div class="grid_edita_fecha1">
-                            <button type="button" id="btn_confirmar_fecha" class="btn btn-info btn-xs  btn-fill" style="display: inline-block;">
+                            <button type="button" id="btn_confirmar_fecha" class="btn btn-success" style="display: inline-block;margin-top: 30px;">
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             </button>
                         </div>

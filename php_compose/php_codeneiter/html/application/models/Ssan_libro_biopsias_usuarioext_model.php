@@ -2936,7 +2936,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         );
     }
 
-
     public function record_newsubpunto_tomamuestra($aData){
         $this->db->trans_start();
         $id_unico = $this->db->sequence($this->own,'SEQ_INFOROTULADO_SUB');

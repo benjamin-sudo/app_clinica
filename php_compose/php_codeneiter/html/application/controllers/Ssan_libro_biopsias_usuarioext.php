@@ -176,7 +176,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $id                             =   $this->input->post('id'); 
         $pass                           =   $this->input->post('pass'); 
         $fecha                          =   $this->input->post('fecha'); 
-        $return_data                    =   $this->ssan_libro_biopsias_usuarioext_model->get_cambio_fecha(array(
+        $return_data                    =   $this->Ssan_libro_biopsias_usuarioext_model->get_cambio_fecha(array(
             'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
             'id'                        =>  $id,
             'pass'                      =>  $pass,

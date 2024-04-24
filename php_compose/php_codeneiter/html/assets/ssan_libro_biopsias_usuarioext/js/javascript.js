@@ -335,15 +335,21 @@ function restarDiasAFecha(fechaStr, diasARestar) {
 }
 
 function js_confirma_new_fecha(id){
+    
+    console.log("--------------");
     console.log($("#date").val());
+    
     if ($("#date").val() == ''){
-        jError("Indique fecha valida","e-SISSAN");
+        jError("Indique fecha valida","Clinica Libre");
         return false;
     }
-    let fecha_hora  = $("#DATA_"+id).data('paciente').FECHA_TOMA_MUESTRA;
-    let arr_fecha  = $("#date").val().split("-");
-    let new_arr_fecha_hora = arr_fecha[2]+"-"+arr_fecha[1]+"-"+arr_fecha[0]+" "+fecha_hora.split(" ")[1];
+
+    let fecha_hora          =   $("#DATA_"+id).data('paciente').FECHA_TOMA_MUESTRA;
+    let arr_fecha           =   $("#date").val().split("-");
+    let new_arr_fecha_hora  =   arr_fecha[2]+"-"+arr_fecha[1]+"-"+arr_fecha[0]+" "+fecha_hora.split(" ")[1];
+    
     console.log("new_arr_fecha  >",new_arr_fecha_hora);
+
     jPrompt('Con esta acci&oacute;n se proceder&aacute; editar fecha de biopsia.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
         if(r){
             $('#loadFade').modal('show');

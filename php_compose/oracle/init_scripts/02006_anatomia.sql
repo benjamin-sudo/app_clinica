@@ -744,7 +744,16 @@ CREATE OR REPLACE PACKAGE ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
     C_RESULT_LISTA                        OUT SYS_REFCURSOR,
     C_HISTORIAL_M                         OUT SYS_REFCURSOR     
   );
-
+  -- ACTUALIZACION DE FECHA TOMA DE MUESTRA
+  PROCEDURE UPDATE_FECHA_TOMADA               (
+      V_COD_EMPRESA                           IN VARCHAR,
+      V_PASS                                  IN VARCHAR2, 
+      V_ID                                    IN VARCHAR2, 
+      V_NEWFECHA                              IN VARCHAR2,  
+      V_SESSION                               IN VARCHAR2, 
+      C_HISTO_LOGS                            OUT SYS_REFCURSOR,
+      C_STATUS                                OUT SYS_REFCURSOR
+  );
 END PROCE_ANATOMIA_PATOLOGIA;
 
 /
@@ -1402,22 +1411,7 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
             P.PA_ID_PROCARCH                                                                                AS PA_ID_PROCARCH,
            CASE
                 WHEN P.PA_ID_PROCARCH = '31' THEN
-                   -- 'PABELLÓN '
-                    (   
-                    SELECT 
-                        DECODE (SALA.IND_ZONA_PABELLON,
-                        '1','PABELLÓN CENTRAL',
-                        '2','PABELLÓN CIRUGIA MENOR',
-                        '3','MATERNIDAD',
-                        '4','SALA LASER',
-                        'NO DETERMINADO')  AS NAME
-                    FROM 
-                        PABELLON.PB_TABLAOPERATORIA PA ,  
-                        PABELLON.PB_SALA_PABELLON SALA 
-                    WHERE 
-                        PA.ID_TABLA IN (P.ID_TABLA) AND 
-                        PA.COD_PABELLON = SALA.COD_PABELLON  
-                     )
+                    'PABELLÓN '
                 WHEN P.PA_ID_PROCARCH = '63' THEN
                     'RCE ESPECIALIDADES'      
                 WHEN P.PA_ID_PROCARCH = '65' THEN
@@ -1426,6 +1420,7 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
                     'NO INFORMADO'
             END                                                                                       AS TXT_PROCEDENCIA,
             P.ID_SERDEP                                                                               AS ID_SERVICIO,
+            
             (SELECT 
             S.NOM_SERVIC
             FROM 
@@ -1435,6 +1430,7 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
             T.ID_SERDEP = P.ID_SERDEP
             AND T.COD_EMPRESA = P.COD_EMPRESA
             AND S.ID_SERDEP = T.ID_SERDEP)                                                            AS  NOMBRE_SERVICIO,
+
             ---------------------------- DATOS ANATOMIA PATOLOGICA  -------------------
             P.ID_SOLICITUD_HISTO                                                                      AS ID_SOLICITUD, 
             UPPER(P.TXT_DIAGNOSTICO)                                                                  AS TXT_DIAGNOSTICO,
@@ -1558,7 +1554,9 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
             P.IND_ESTADO        IN  (1)
             ORDER BY 
             P.DATE_INICIOREGISTRO,P.FEC_USRCREA;
+
     END;
+
 
 END PROCE_ANATOMIA_PATOLOGIA;
 /
