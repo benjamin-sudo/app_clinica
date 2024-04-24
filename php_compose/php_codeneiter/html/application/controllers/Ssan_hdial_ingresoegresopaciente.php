@@ -1,9 +1,7 @@
 <?php
 
 defined("BASEPATH") OR exit("No direct script access allowed");
-
 //require_once APPPATH . '/third_party/mpdf/mpdf.php';
-
 class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
     function __construct(){
@@ -17,10 +15,8 @@ class Ssan_hdial_ingresoegresopaciente extends CI_Controller {
 
     public function index(){
         $this->output->set_template('blank');
-        
         $this->load->css("assets/Ssan_hdial_ingresoegresopaciente/css/styles.css");
         $this->load->js("assets/Ssan_hdial_ingresoegresopaciente/js/javascript.js");
-        
         $empresa = $this->session->userdata("COD_ESTAB");
         $data_ini = [];
         $data_ini = $this->Ssan_hdial_ingresoegresopaciente_model->load_busqueda_rrhhdialisis(['empresa' => $empresa, 'ind_opcion' => 1 ]);

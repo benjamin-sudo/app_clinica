@@ -1,7 +1,1 @@
-
-
-
-hola
-
-
-
+<h4 class="title" style="color:#e34f49;margin-left:20px;"><b>RECEPCI&Oacute;N DE MUESTRAS</b></h4>
