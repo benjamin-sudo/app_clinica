@@ -204,15 +204,13 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         #GET_LISTA_ANOTOMIAPATOLOGICA
         $session_arr                    =   explode("-",$this->session->userdata('USERNAME'));
 	    $session                        =   $session_arr[0];
-        $responde                       =   $this->ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA(
-            array(
-                "COD_EMPRESA"           =>  $empresa,
-                "USR_SESSION"           =>  $session,
-                "DATE_FROM"             =>  $date_from,
-                "DATE_TO"               =>  $date_to,
-                "LODA_X_SISTEMAS"       =>  2, //SOLO USUARIO EXTERNO
-            )
-        );
+        $responde                       =   $this->ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA([
+            "COD_EMPRESA"               =>  $empresa,
+            "USR_SESSION"               =>  $session,
+            "DATE_FROM"                 =>  $date_from,
+            "DATE_TO"                   =>  $date_to,
+            "LODA_X_SISTEMAS"           =>  2, //SOLO USUARIO EXTERNO
+        ]);
         #OUT TO VIWES
         $TABLA["DATE_FROM"]             =   $date_from;
         $TABLA["DATE_TO"]               =   $date_to;

@@ -500,7 +500,6 @@
             <?php } ?>
         </div>
     </div>
-
     <?php if ($CALL_FROM == 1 || $CALL_FROM == 2){ ?>   
         <style>
             #PANEL_FINAL                     {

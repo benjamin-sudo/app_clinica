@@ -33,20 +33,19 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         #GET_LISTA_ANOTOMIAPATOLOGICA
         $session_arr                    =   explode("-",$this->session->userdata('USERNAME'));
 	    $session                        =   $session_arr[0];
-        $responde                       =   $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA(
-            array(
-                "COD_EMPRESA"           =>  $empresa,
-                "USR_SESSION"           =>  $session,
-                "DATE_FROM"             =>  $date_from,
-                "DATE_TO"               =>  $date_to,
-                "LODA_X_SISTEMAS"       =>  2, //SOLO USUARIO EXTERNO
-            )
-        );
+        $responde                       =   $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA([
+            "COD_EMPRESA"               =>  $empresa,
+            "USR_SESSION"               =>  $session,
+            "DATE_FROM"                 =>  $date_from,
+            "DATE_TO"                   =>  $date_to,
+            "LODA_X_SISTEMAS"           =>  2, //SOLO USUARIO EXTERNO
+        ]);
         #OUT TO VIWES
-        $TABLA["DATE_FROM"]             =   $date_from;
-        $TABLA["DATE_TO"]               =   $date_to;
-        $TABLA["HTML_LISTAS"]           =   $responde;
-        $this->output->set_output(json_encode($TABLA));
+        $this->output->set_output(json_encode([
+            "DATE_FROM"                 =>  $date_from,
+            "DATE_TO"                   =>  $date_to,
+            "HTML_LISTAS"               =>  $responde,
+        ]));
     }
 
 

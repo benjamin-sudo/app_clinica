@@ -509,7 +509,6 @@ $(document).ready(function () {
             if (index == 3){
                 jAlert("Valida Formulario","Clinica Libre");
             }
-
             var form = $('#myWizard form');
             console.log("   form    ->  ",form);
             // Supongamos que tienes una función de validación que devuelve true si el formulario es válido

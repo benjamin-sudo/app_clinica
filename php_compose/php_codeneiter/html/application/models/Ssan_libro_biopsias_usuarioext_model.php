@@ -890,25 +890,23 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     
     public function sqlValidaClave($clave){
         $clave	    =   strtolower($clave);
-        $SQL        =   "
-            SELECT 
-                ID_UID,
-                USERNAME,
-                NAME,
-                MIDDLE_NAME,
-                LAST_NAME 
-            FROM 
-               $this->ownGu.FE_USERS 
-            WHERE 
-            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave')";
+        $SQL        =   "SELECT 
+                            ID_UID,
+                            USERNAME,
+                            NAME,
+                            MIDDLE_NAME,
+                            LAST_NAME 
+                        FROM 
+                            $this->ownGu.FE_USERS 
+                        WHERE 
+                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave')";
         return $this->db->query($SQL)->row();
     }
     
-    
-    ###################################
-    #MAIN ANATOMIA PATOLOGICA PRINCIPAL 
-    #LISTA POR CLIENTES
-    ###################
+    ####################################
+    #MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
+    #LISTA POR CLIENTES################# 
+    ####################################
     public function CARGA_LISTA_MISSOLICITUDES_ANATOMIA($DATA){
         $this->db->trans_start();
         $CALL_FASE          =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;

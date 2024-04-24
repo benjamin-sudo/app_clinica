@@ -141,15 +141,15 @@ function ver_calendario(val){
 //funcion que actualiza listado de mis solicitudes anatomia patologica
 function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
     var fecha               =   fecha_cale("fecha_out");
-    var idtabs              =   1; //falta definir en que tabs estoy llamado al calendario 
-    $("#loadFade").modal('show');
-    console.log("Value      ->   ",value);
+    console.log("   ------------------------------------    ");
+    console.log("   fecha de busquedan     ->  ",fecha);
+    var idtabs              =   1; 
     $.ajax({ 
         type                :   "POST",
         url                 :   "ssan_libro_biopsias_usuarioext/recarga_html_listaanatomiapatologica",
         dataType            :   "json",
         beforeSend          :   function(xhr)       {   
-                                                        //console.log(xhr);
+                                                        $("#loadFade").modal('show');
                                                     },
         data                :                       {
                                                         fecha           :   fecha,
@@ -163,11 +163,12 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
                                                         console.log("----------------------------------------------------");
                                                         console.log("errro          -> ",errro,"                         ");  
                                                         $("#loadFade").modal('hide'); 
-                                                        jAlert("<b>Error General, Consulte Al Administrador</b>","e-SISSAN"); 
+                                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     },
         success             :   function(aData)     {
-                                                        console.log("aData | ",aData);
                                                         $("#loadFade").modal('hide'); 
+                                                        console.log("------------------");
+                                                        console.log("aData  ->  ",aData);
                                                         $("#RETURN_DATA_5").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
                                                         $("#RETURN_DATA_4").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
                                                     }, 

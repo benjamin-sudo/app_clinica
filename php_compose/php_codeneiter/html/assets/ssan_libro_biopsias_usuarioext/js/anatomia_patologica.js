@@ -601,6 +601,7 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
             success         :   function(aData)     {
                                                         console.log('%c retutn RECORD_ANATOMIA_PATOLOGICA_EXT','background:#222;color:#bada55');
 
+                                                        
                                                         if(aData['STATUS']){
                                                             if(TEMPLATE_CALL_FROM==0){
                                                                 jAlert("Se realiz&oacute; solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre");
