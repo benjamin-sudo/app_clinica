@@ -25,17 +25,12 @@
   <!--  bootstrap-select.min.css -->
   <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
   <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
   <!--
   <link type="text/css" rel="stylesheet" href="https://www.esissan.cl/assets/themes/css/easyAutocomplete/dist/easy-autocomplete.min.css"  />
   -->
-
   <link href="https://www.esissan.cl/assets/themes/css/autocomplete.css" rel="stylesheet" />
   <link href="https://www.esissan.cl/assets/themes/css/easyAutocomplete/dist/easy-autocomplete.css" rel="stylesheet" />
   <link href="https://www.esissan.cl/assets/themes/css/easyAutocomplete/dist/easy-autocomplete.min.css" rel="stylesheet" />
-
-
-
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
   <style>
@@ -213,8 +208,6 @@
   <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
   <!--paginacion bootpage-->
   <script type="text/javascript" src="https://www.esissan.cl/assets/themes/js/jquery.bootpag.min.js"></script>
-
-
   <!-- easy-autocomplete -->
   <script type="text/javascript" src="https://www.esissan.cl/assets/themes/js/jquery.easy-autocomplete.min.js"></script>
 

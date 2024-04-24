@@ -11,6 +11,9 @@ $(document).ready(function(){
 });
 
 function star_ajax_extension(url){
+    
+    console.log("url -> ",url);
+    
     $.ajax({
         url : url,  // Ruta al metodo del controlador
         type : 'POST',  // Método HTTP deseado, POST es común para envío de datos
@@ -1145,7 +1148,7 @@ $.datepicker.regional['es'] = {
     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
     dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Juv', 'Vie', 'Sab'],
-    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'SÃ¡'],
+    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
     weekHeader: 'Sm',
     dateFormat: 'dd/mm/yy',
     firstDay: 1,

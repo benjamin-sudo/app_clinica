@@ -3029,13 +3029,14 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         ));
         #FOR MUESTRAS
         $this->db->where('ID_SOLICITUD_HISTO',$idanatomia); 
-        $this->db->update($this->GESPAB.'.PB_HISTO_NMUESTRAS_',array("IND_ESTADO"=>0));
+        $this->db->update($this->GESPAB.'.PB_HISTO_NMUESTRAS',array("IND_ESTADO"=>0));
         $this->db->trans_complete();
         return array(
-            'STATUS'                                =>  $out_borreano,
-            'ID_ANATOMIA'                           =>  $empresa,
-            'TXT_OUT'                               =>  $txt_out,
+            'STATUS'                    =>  $out_borreano,
+            'ID_ANATOMIA'               =>  $empresa,
+            'TXT_OUT'                   =>  $txt_out,
         );
     }
+
 
 }

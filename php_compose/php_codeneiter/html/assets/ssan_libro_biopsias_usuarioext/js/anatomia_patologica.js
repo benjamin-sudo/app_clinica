@@ -695,15 +695,13 @@ function btn_delete_ap_externo(idanatomia){
     //firma simple 
     jPrompt('Con esta acci&oacute;n se proceder&aacute; eliminar solicitud de anatom&iacute;a patol&oacute;gica <br/>&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
         if(r){
-
-
-
             $.ajax({ 
                 type                :   "POST",
                 url                 :   "ssan_libro_biopsias_usuarioext/desabilita_solicitud_simple_ext",
                 dataType            :   "json",
                 beforeSend          :   function(xhr)   {   
                                                             console.log("xhr->",xhr);
+                                                            $('#loadFade').modal('show');
                                                         },
                 data                :                   {
                                                             contrasena      :   r,
@@ -713,9 +711,11 @@ function btn_delete_ap_externo(idanatomia){
                                                             console.log(errro);  
                                                             console.log(errro.responseText);    
                                                             jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                            $('#loadFade').modal('hide');
                                                         },
                 success             :   function(aData) { 
                                                             console.log("out desabilita_solicitud_simple_ext  -> ",aData);
+                                                            $('#loadFade').modal('hide');
                                                             if(aData.STATUS_PASS){
                                                                 if(aData['STATUS_OUT'].STATUS){
                                                                     jAlert("Se ha eliminado solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre"); 
@@ -728,9 +728,6 @@ function btn_delete_ap_externo(idanatomia){
                                                             }
                                                         }, 
             });
-
-
-
         } else {
             jError("Firma simple vac&iacute;a","Clinica Libre"); 
         }
@@ -739,15 +736,15 @@ function btn_delete_ap_externo(idanatomia){
 
 function imprimirEtiqueta2(op){
     /*
-        console.log("--------------------imprimirEtiqueta2--------------");
-        console.log("imprimirEtiqueta2      ->",op,"<-                  ");
-        console.log("---------------------------------------------------");
+    console.log("--------------------imprimirEtiqueta2--------------");
+    console.log("imprimirEtiqueta2      ->",op,"<-                  ");
+    console.log("---------------------------------------------------");
     */
     $.ajax({ 
         type		:   "POST",
-        url		    :       op===2?"ssan_libro_biopsias_listagespab/test_etiquetas_frasco"
-                            :   op===1?"ssan_libro_biopsias_listagespab/test_etiquetas_5"
-                            :   "ssan_libro_biopsias_listagespab/test_etiquetas_frasco_centrado",
+        url		    :   op===2?"ssan_libro_biopsias_listagespab/test_etiquetas_frasco"
+                        :   op===1?"ssan_libro_biopsias_listagespab/test_etiquetas_5"
+                        :   "ssan_libro_biopsias_listagespab/test_etiquetas_frasco_centrado",
         dataType	:   "json",
         beforeSend  :   function(xhr){  console.log(xhr); },
         data		:   { ind_funtion:true },
@@ -779,7 +776,7 @@ function imprimirEtiqueta2(op){
 }
 
 function hashtag_small(id){
-    var zpl                                           =   $("#"+id).data().zpl.BODY_ZPL;
+    var zpl = $("#"+id).data().zpl.BODY_ZPL;
     console.log("---------------------------------------------------------------");
     console.log("id                     ",id,"                                  ");
     console.log("data                   ",zpl,"                                 ");
