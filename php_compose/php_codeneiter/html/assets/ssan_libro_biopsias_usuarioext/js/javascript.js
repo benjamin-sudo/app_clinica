@@ -21,11 +21,7 @@ $(document).ready(function(){
                                         close       :   'fa fa-remove',
                                     }
     }).on('dp.change',function(e){ 
-        //console.log("e---------->",JSON.stringify(e));
-	    //console.log("date------->",JSON.stringify(e.date));
-        //var fecha               =   fecha_cale("fecha_out");
-        //$("#txt_fecha_panel_1,#txt_fecha_panel_2,#txt_fecha_panel_3,#txt_fecha_panel_4,#txt_fecha_panel_5").html('<b><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;'+fecha+'</b>');
-        //ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
+        ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
     });
 
     $(".timepicker").remove();
@@ -141,8 +137,6 @@ function ver_calendario(val){
 //funcion que actualiza listado de mis solicitudes anatomia patologica
 function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
     var fecha               =   fecha_cale("fecha_out");
-    console.log("   ------------------------------------    ");
-    console.log("   fecha de busquedan     ->  ",fecha);
     var idtabs              =   1; 
     $.ajax({ 
         type                :   "POST",
@@ -167,8 +161,11 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
                                                     },
         success             :   function(aData)     {
                                                         $("#loadFade").modal('hide'); 
-                                                        console.log("------------------");
-                                                        console.log("aData  ->  ",aData);
+                                                        
+                                                        console.log("   -----------------------------------------------------------------------------   ");
+                                                        console.log("   aData               ->  ",aData);
+                                                        //console.log("   NUEVAS_SOLICITUDES  ->  ",aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
+                                                        //console.log("   VISTA_SOLICITUDES   ->  ",aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
                                                         $("#RETURN_DATA_5").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
                                                         $("#RETURN_DATA_4").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
                                                     }, 
@@ -319,6 +316,7 @@ function js_cambio_fecha(id){
     document.getElementById("date").value   =   solo_fecha[2]+"-"+solo_fecha[1]+"-"+solo_fecha[0];
     document.getElementById("date").min     =   _fecha_rest;
     document.getElementById("date").max     =   currentDate;
+    
     $("#btn_confirmar_fecha").attr('onclick','js_confirma_new_fecha('+id+')');
     $("#modal_edita_fecha").modal({backdrop:'static',keyboard:false}).modal("show"); 
 }

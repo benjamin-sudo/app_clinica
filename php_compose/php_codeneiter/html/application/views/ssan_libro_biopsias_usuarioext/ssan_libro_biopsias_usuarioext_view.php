@@ -207,15 +207,17 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal_edita_fecha" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
+   
+    <div class="modal fade" id="modal_edita_fecha">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3 class="modal-title"><b style="color : #e34f49;">EDITA FECHA SOLICITUD</b></h3>
+                    <h3 class="modal-title"><b style="color:#e34f49">
+                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;NUEVA FECHA DE SOLICITUD</b>
+                    </h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_edita_fecha">
-                    <!-- Date input field -->
                     <div class="grid_edita_fecha">
                         <div class="grid_edita_fecha1">
                             <label for="date">NUEVA FECHA DE SOLICITUD</label>
@@ -229,10 +231,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-fill btn-sm btn-danger "  data-dismiss="modal">CIERRA VENTANA</button>
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </section>

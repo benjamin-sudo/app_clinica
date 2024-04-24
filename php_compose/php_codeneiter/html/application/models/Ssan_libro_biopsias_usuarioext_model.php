@@ -958,14 +958,16 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         #RESULTADOS_ANATOMIA -> RECEPCION DE MUESTRAS
         $result                                     =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','GET_LISTA_ANOTOMIAPATOLOGICA',$param);
         $this->db->trans_complete();
-        return array(
+        return [
             'STATUS'                                =>  true,
+            'RESULT'                                =>  $result,
             'ARRAY_RESULT'                          =>  empty($result[':C_RESULT_LISTA'])?null:$result[':C_RESULT_LISTA'],
             'HTML_SOLICITUDEAP'                     =>  $this->RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"]),//table 
             'HTML_LI'                               =>  $this->LI_RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"],$CALL_FASE),//en li
             'DATE_FROM'                             =>  $DATA["DATE_FROM"],
             'DATE_TO'                               =>  $DATA["DATE_TO"],
-        );
+            'EMPRESA'                               =>  $DATA["COD_EMPRESA"],
+        ];
     }
 
     ########################################
@@ -1201,7 +1203,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                         $HTML   .='  
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-fill btn-xs" id="pdf_anatomia_patologica" onclick="GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')">
+                                            <button type="button" class="btn btn-info btn-fill" id="pdf_anatomia_patologica" onclick="GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')">
                                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                             </button>
                                         </td>
@@ -1209,18 +1211,18 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
                 #EN TRASPORTE - #CUSTODIA
                 if( $row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
-                     $HTML       .=         '<button type="button" class="btn btn-danger btn-fill btn-xs" id="pdf_anatomia_patologica" onclick="btn_delete_ap_externo('.$row['ID_SOLICITUD'].')">
+                     $HTML       .=         '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="btn_delete_ap_externo('.$row['ID_SOLICITUD'].')">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>';
 
                 #RECHAZADA     
                 } else if($row['ID_HISTO_ESTADO'] == 5){     
-                    $HTML       .=          '<button type="button" class="btn btn-danger btn-fill btn-xs" id="pdf_anatomia_patologica" onclick="local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')">
+                    $HTML       .=          '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')">
                                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                             </button>';
                 #YA RECEPCIONADA    
                 } else if($row['ID_HISTO_ESTADO'] == 4){   
-                    $HTML       .=          '<button type="button" class="btn btn-success btn-fill btn-xs" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
+                    $HTML       .=          '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
                                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                             </button>';
                 } else {

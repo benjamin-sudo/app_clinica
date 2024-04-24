@@ -48,7 +48,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         ]));
     }
 
-
     #FUNCION QUE GRABA LA SOLICITUD 
     public function RECORD_ANATOMIA_PATOLOGICA_EXT(){
         if(!$this->input->is_ajax_request()){ show_404(); }
