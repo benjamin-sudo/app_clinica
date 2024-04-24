@@ -969,12 +969,13 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'DATE_TO'                               =>  $DATA["DATE_TO"],
         );
     }
-    
-    ############################
-    #ssan_libro_biopsias_ii_fase
-    #MAIN ANATOMIA PATOLOGICA PRINCIPAL
-    #MAIN MODULO SIN CITA
-    ############################
+
+    ########################################
+    #   ssan_libro_biopsias_ii_fase ########
+    #   MAIN ANATOMIA PATOLOGICA PRINCIPAL #
+    #   MAIN MODULO SIN CITA ###############
+    ########################################
+
     public function LI_RESULTADOS_ANATOMIA($ARRAY,$CALL_FASE){
         $HTML                   =   '';
         if(count($ARRAY)>0){

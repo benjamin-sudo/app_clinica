@@ -138,15 +138,12 @@ function ver_calendario(val){
     */
 }
 
+//funcion que actualiza listado de mis solicitudes anatomia patologica
 function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
     var fecha               =   fecha_cale("fecha_out");
     var idtabs              =   1; //falta definir en que tabs estoy llamado al calendario 
-    
-    
     $("#loadFade").modal('show');
     console.log("Value      ->   ",value);
-
-
     $.ajax({ 
         type                :   "POST",
         url                 :   "ssan_libro_biopsias_usuarioext/recarga_html_listaanatomiapatologica",

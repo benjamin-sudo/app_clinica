@@ -628,7 +628,6 @@ CREATE SEQUENCE ADMIN.SEQ_NUM_AP_CASETE
   NOCACHE
   NOORDER;
 
-
 CREATE SEQUENCE ADMIN.SEQ_TOMA_MUESTRA_X_USUARIO
   START WITH 1
   MAXVALUE 999999999999999999999999999
@@ -645,7 +644,6 @@ CREATE SEQUENCE ADMIN.SEQ_INFOROTULADO_SUB
   NOCACHE
   NOORDER;
 
-
 CREATE SEQUENCE ADMIN.SEQ_NUM_CARGA_AP
   START WITH 1
   MAXVALUE 999999999999999999999999999
@@ -653,7 +651,6 @@ CREATE SEQUENCE ADMIN.SEQ_NUM_CARGA_AP
   NOCYCLE
   NOCACHE
   NOORDER;
-
 
 CREATE SEQUENCE ADMIN.SEQ_NUM_LINETIME_HISTO
   START WITH 1
@@ -663,7 +660,6 @@ CREATE SEQUENCE ADMIN.SEQ_NUM_LINETIME_HISTO
   NOCACHE
   NOORDER;
 
-
 CREATE SEQUENCE ADMIN.SEQ_NUM_ANTECEDENTE_HISTO
   START WITH 1
   MAXVALUE 999999999999999999999999999
@@ -671,9 +667,6 @@ CREATE SEQUENCE ADMIN.SEQ_NUM_ANTECEDENTE_HISTO
   NOCYCLE
   NOCACHE
   NOORDER;
-
-
-
 
 CREATE TABLE ADMIN.PB_HISTO_NMUESTRAS (
     ID_NMUESTRA            NUMBER,
@@ -703,37 +696,54 @@ CREATE TABLE ADMIN.PB_HISTO_NMUESTRAS (
 COMMIT;
 /
 
-CREATE OR REPLACE PACKAGE ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
-    PROCEDURE GET_INFOPRESOLICITUD(
-      V_COD_EMPRESA           IN VARCHAR2,
-      V_USR_SESSION           IN VARCHAR2,
-      C_LISTADOSERVICIOS      OUT SYS_REFCURSOR,
-      C_LISTADOMEDICOS        OUT SYS_REFCURSOR,
-      C_ESPECIALIDADES        OUT SYS_REFCURSOR
-    );
-    -----------------------------------------------------
-    --DATOS PARA FORMULARIO UNICO DE ANATOMIA PATOLOGICA
-    -----------------------------------------------------
-    PROCEDURE FORM_START_HISPATOLOGICO(
-      V_COD_EMPRESA                           IN VARCHAR2,
-      V_CALL_FASE                             IN VARCHAR2,
-      V_IND_SISTEMA                           IN VARCHAR2,
-      V_IND_GESPAB                            IN VARCHAR2,
-      V_ZONA_PAB                              IN VARCHAR2,
-      V_IND_ADMISION                          IN VARCHAR2,
-      V_PA_ID_PROCARCH                        IN VARCHAR2,
-      VAL_ID_SERDEP                           IN VARCHAR2,
-      C_DATA_ROTULADO                         OUT SYS_REFCURSOR,
-      C_DATA_ROTULADO_SUB                     OUT SYS_REFCURSOR,
-      C_AUTOCOMPLETE_MUESTRAS                 OUT SYS_REFCURSOR,
-      C_GETDATAACTIVE                         OUT SYS_REFCURSOR,
-      C_RETURN_ESTADOS                        OUT SYS_REFCURSOR,
-      P_ANATOMIA_PATOLOGICA_MAIN              OUT SYS_REFCURSOR,
-      P_ANATOMIA_PATOLOGICA_MUESTRAS          OUT SYS_REFCURSOR,
-      P_AP_MUESTRAS_CITOLOGIA                 OUT SYS_REFCURSOR,
-      P_LOGS                                  OUT SYS_REFCURSOR
-    );
 
+
+
+
+
+
+-------------------------------------
+-- ZONA PROCEDIMIENTOS ALMACENADOS --
+-------------------------------------
+CREATE OR REPLACE PACKAGE ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
+  PROCEDURE GET_INFOPRESOLICITUD            (
+    V_COD_EMPRESA                           IN VARCHAR2,
+    V_USR_SESSION                           IN VARCHAR2,
+    C_LISTADOSERVICIOS                      OUT SYS_REFCURSOR,
+    C_LISTADOMEDICOS                        OUT SYS_REFCURSOR,
+    C_ESPECIALIDADES                        OUT SYS_REFCURSOR
+  );
+  --  DATOS PARA FORMULARIO UNICO DE ANATOMIA PATOLOGICA
+  PROCEDURE FORM_START_HISPATOLOGICO(
+    V_COD_EMPRESA                           IN VARCHAR2,
+    V_CALL_FASE                             IN VARCHAR2,
+    V_IND_SISTEMA                           IN VARCHAR2,
+    V_IND_GESPAB                            IN VARCHAR2,
+    V_ZONA_PAB                              IN VARCHAR2,
+    V_IND_ADMISION                          IN VARCHAR2,
+    V_PA_ID_PROCARCH                        IN VARCHAR2,
+    VAL_ID_SERDEP                           IN VARCHAR2,
+    C_DATA_ROTULADO                         OUT SYS_REFCURSOR,
+    C_DATA_ROTULADO_SUB                     OUT SYS_REFCURSOR,
+    C_AUTOCOMPLETE_MUESTRAS                 OUT SYS_REFCURSOR,
+    C_GETDATAACTIVE                         OUT SYS_REFCURSOR,
+    C_RETURN_ESTADOS                        OUT SYS_REFCURSOR,
+    P_ANATOMIA_PATOLOGICA_MAIN              OUT SYS_REFCURSOR,
+    P_ANATOMIA_PATOLOGICA_MUESTRAS          OUT SYS_REFCURSOR,
+    P_AP_MUESTRAS_CITOLOGIA                 OUT SYS_REFCURSOR,
+    P_LOGS                                  OUT SYS_REFCURSOR
+  );
+
+  --  BUSQUEDA DE SOLICITUDES DESDE EL USUARIO
+  PROCEDURE GET_LISTA_ANOTOMIAPATOLOGICA (
+    V_COD_EMPRESA                         IN VARCHAR2,
+    V_USR_SESSION                         IN VARCHAR2,
+    V_LOADXZONA                           IN VARCHAR2,
+    VAL_FECHA_INICIO                      IN VARCHAR2, 
+    VAL_FECHA_FINAL                       IN VARCHAR2, 
+    C_RESULT_LISTA                        OUT SYS_REFCURSOR,
+    C_HISTORIAL_M                         OUT SYS_REFCURSOR     
+  );
 
 END PROCE_ANATOMIA_PATOLOGIA;
 
@@ -821,7 +831,6 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
 
      --INICIO DE FORMULARIO 
     PROCEDURE FORM_START_HISPATOLOGICO(
-    
         V_COD_EMPRESA                       IN VARCHAR2,
         V_CALL_FASE                         IN VARCHAR2,
         V_IND_SISTEMA                       IN VARCHAR2,
@@ -830,14 +839,11 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
         V_IND_ADMISION                      IN VARCHAR2,
         V_PA_ID_PROCARCH                    IN VARCHAR2,
         VAL_ID_SERDEP                       IN VARCHAR2,
-               
         C_DATA_ROTULADO                     OUT SYS_REFCURSOR,
         C_DATA_ROTULADO_SUB                 OUT SYS_REFCURSOR,
-        
         C_AUTOCOMPLETE_MUESTRAS             OUT SYS_REFCURSOR,
         C_GETDATAACTIVE                     OUT SYS_REFCURSOR,
         C_RETURN_ESTADOS                    OUT SYS_REFCURSOR,
-                
         P_ANATOMIA_PATOLOGICA_MAIN          OUT SYS_REFCURSOR,
         P_ANATOMIA_PATOLOGICA_MUESTRAS      OUT SYS_REFCURSOR,
         P_AP_MUESTRAS_CITOLOGIA             OUT SYS_REFCURSOR,
@@ -1296,7 +1302,262 @@ CREATE OR REPLACE PACKAGE BODY ADMIN.PROCE_ANATOMIA_PATOLOGIA AS
             P.IND_ESTADO IN (1) 
         ORDER BY 
             P.ID_AUTOCOMPLETADO;
-    
+  END;
+
+
+  -- ssan_libro_biopsias_usuarioext
+  -- ssan_libro_biopsias_i_fase
+  -- LISTA DE SOLICITUD HISTOPATOLÓGICO EXTERNA -- (COD_RUTPRO)
+  PROCEDURE GET_LISTA_ANOTOMIAPATOLOGICA(
+      V_COD_EMPRESA                     IN VARCHAR2,
+      V_USR_SESSION                     IN VARCHAR2,
+      V_LOADXZONA                       IN VARCHAR2, --0 : DEFAULT : 1 : GESPAB
+      VAL_FECHA_INICIO                  IN VARCHAR2, 
+      VAL_FECHA_FINAL                   IN VARCHAR2, 
+      C_RESULT_LISTA                    OUT SYS_REFCURSOR,
+      C_HISTORIAL_M                     OUT SYS_REFCURSOR
+    ) IS
+    -- DECLARACION DE VARIABLES DE TIEMPO ---
+    V_FECHA_INICIO                  DATE := TO_DATE(VAL_FECHA_INICIO||' 00:00:00','DD-MM-YYYY hh24:mi:ss');
+    V_FECHA_FINAL                   DATE := TO_DATE(VAL_FECHA_FINAL||' 23:59:59','DD-MM-YYYY hh24:mi:ss');
+    VAR_LISTA_TIPOZONA              LIST_OF_NAMES_T :=  LIST_OF_NAMES_T(); 
+
+  BEGIN
+    IF (V_LOADXZONA = 0) THEN 
+      VAR_LISTA_TIPOZONA.EXTEND(3);  
+      VAR_LISTA_TIPOZONA (1) := '65';  
+      VAR_LISTA_TIPOZONA (2) := '63';  
+      VAR_LISTA_TIPOZONA (3) := '31';  
+    ELSIF (V_LOADXZONA = 1) THEN 
+      VAR_LISTA_TIPOZONA.EXTEND(1);  
+      VAR_LISTA_TIPOZONA (1) := '31';  
+    ELSIF (V_LOADXZONA = 2) THEN 
+      VAR_LISTA_TIPOZONA.EXTEND(1);  
+      VAR_LISTA_TIPOZONA (1) := '65';  
+    END IF;
+
+    OPEN C_RESULT_LISTA FOR
+      SELECT 
+        CASE WHEN P.COD_ESTABLREF = V_COD_EMPRESA THEN 'SI' ELSE 'NO' END                                     AS TXT_EMPRESA_DERIVADO,
+        P.COD_ESTABLREF                                                                                       AS COD_ESTABLREF,
+        P.ID_SIC,
+        P.IND_DERIVACION_IC,
+        P.ID_SIC,
+        ------------------------------------------------------------------------------------------------------------------------------------------------------
+        --INFORMACION DEL PACIENTE
+        L.COD_RUTPAC || '-' || L.COD_DIGVER                                                                   AS RUTPACIENTE,
+        L.IND_TISEXO                                                                                          AS IND_TISEXO,
+        L.COD_RUTPAC                                                                                          AS COD_RUTPAC,
+        TRUNC (MONTHS_BETWEEN (SYSDATE, L.FEC_NACIMI) / 12)                                                   AS NUMEDAD,
+        TO_CHAR(L.FEC_NACIMI,  'DD-MM-YYYY')                                                                  AS NACIMIENTO,
+        TRUNC(MONTHS_BETWEEN(SYSDATE,L.FEC_NACIMI)/12)                                                        AS EDAD,
+        UPPER (L.NOM_NOMBRE) || ' ' || UPPER (L.NOM_APEPAT)|| ' '|| UPPER (L.NOM_APEMAT)                      AS NOMBRE_COMPLETO,
+        SUBSTR (L.NOM_NOMBRE, 1, 1)|| '.'|| UPPER (L.NOM_APEPAT)  || ' '  || UPPER (L.NOM_APEMAT)             AS TXTNOMCIRUSMALL,
+        UPPER (L.NOM_NOMBRE)|| ' '|| UPPER (L.NOM_APEPAT)|| ' '|| UPPER (SUBSTR (L.NOM_APEMAT, 1, 1))         AS TXTPRIMERNOMBREAPELLIDO,
+        L.NUM_FICHAE                                                                                          AS NUM_FICHAE,
+        --------------------------------------------------------------------------------------------------------------------------------------------------------
+        --- FICHA LOCAL ---
+        --------------------------------------------------------------------------------------------------------------------------------------------------------
+        CASE
+            WHEN P.COD_EMPRESA = 1000
+            THEN
+                (SELECT E.NUM_NFICHA
+                FROM ADMIN.SO_TCPACTE E
+                WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = 100)
+            ELSE
+                (SELECT E.NUM_NFICHA
+                FROM ADMIN.SO_TCPACTE E
+                WHERE 
+                E.NUM_FICHAE = P.NUM_FICHAE
+                AND 
+                E.COD_EMPRESA = P.COD_EMPRESA)
+        END                                                                                                                                                            AS FICHAL,
+        (
+            SELECT
+                A.NOM_PREVIS
+            FROM
+                ADMIN.GG_TDATPREV     A,
+                ADMIN.SO_TTITUL       B,
+                ADMIN.GG_TGPACTE      C,
+                ADMIN.GG_TINSEMP      D
+            WHERE
+                A.IND_PREVIS    = B.IND_PREVIS
+            AND
+                B.COD_RUTTIT    = C.COD_RUTTIT
+            AND  
+                B.NUM_RUTINS    = D.COD_RUTINS
+            AND
+                C.NUM_FICHAE    = P.NUM_FICHAE
+            AND
+                A.IND_ESTADO    IN ('V') 
+            )                                                                                               AS TXT_PREVISION,
+            ----------------------------------------- PROFESIONAL -----------------------------------------------------------------
+            UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT)                                   AS PROFESIONAL,
+            G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE                                           AS PROFESIONAL_2,
+            G.COD_RUTPRO||'-'|| G.COD_DIGVER                                                                AS RUT_PROFESIOAL,    
+            G.COD_RUTPRO                                                                                    AS ID,
+            G.COD_DIGVER                                                                                    AS DV,
+            G.COD_TPROFE                                                                                    AS MEDI,
+            ----------------------------------------- PROFESIONAL -----------------------------------------------------------------
+            P.PA_ID_PROCARCH                                                                                AS PA_ID_PROCARCH,
+           CASE
+                WHEN P.PA_ID_PROCARCH = '31' THEN
+                   -- 'PABELLÓN '
+                    (   
+                    SELECT 
+                        DECODE (SALA.IND_ZONA_PABELLON,
+                        '1','PABELLÓN CENTRAL',
+                        '2','PABELLÓN CIRUGIA MENOR',
+                        '3','MATERNIDAD',
+                        '4','SALA LASER',
+                        'NO DETERMINADO')  AS NAME
+                    FROM 
+                        PABELLON.PB_TABLAOPERATORIA PA ,  
+                        PABELLON.PB_SALA_PABELLON SALA 
+                    WHERE 
+                        PA.ID_TABLA IN (P.ID_TABLA) AND 
+                        PA.COD_PABELLON = SALA.COD_PABELLON  
+                     )
+                WHEN P.PA_ID_PROCARCH = '63' THEN
+                    'RCE ESPECIALIDADES'      
+                WHEN P.PA_ID_PROCARCH = '65' THEN
+                    'MODULO ANATOMIA'
+                ELSE
+                    'NO INFORMADO'
+            END                                                                                       AS TXT_PROCEDENCIA,
+            P.ID_SERDEP                                                                               AS ID_SERVICIO,
+            (SELECT 
+            S.NOM_SERVIC
+            FROM 
+            ADMIN.GG_TSERVICIOXEMP T, 
+            ADMIN.GG_TSERVICIO S
+            WHERE     
+            T.ID_SERDEP = P.ID_SERDEP
+            AND T.COD_EMPRESA = P.COD_EMPRESA
+            AND S.ID_SERDEP = T.ID_SERDEP)                                                            AS  NOMBRE_SERVICIO,
+            ---------------------------- DATOS ANATOMIA PATOLOGICA  -------------------
+            P.ID_SOLICITUD_HISTO                                                                      AS ID_SOLICITUD, 
+            UPPER(P.TXT_DIAGNOSTICO)                                                                  AS TXT_DIAGNOSTICO,
+            TO_CHAR(SYSDATE,'DD-MM-YYYY hh24:mi')                                                     AS FEC_EMISION,
+            TO_CHAR(P.FEC_USRCREA, 'DD-MM-YYYY hh24:mi')                                              AS FECHA_SOLICITUD,
+            TO_CHAR(P.DATE_INICIOREGISTRO,'DD-MM-YYYY hh24:mi')                                       AS FECHA_TOMA_MUESTRA,
+            ------------------------------- TIPO DE BIOPSIA -----------------------------------     
+            DECODE(P.IND_TIPO_BIOPSIA,
+                        '1','SI',
+                        '2','CONTEMPORANEA',
+                        '3','DIFERIDA',
+                        '4','BIOPSIA + CITOLOGÍA',
+                        '6','CITOLOGÍA PAP',
+                        '5','SOLO CITOLOGÍA','NO INFORMADO'
+             )                                                                                        AS TIPO_DE_BIOPSIA, 
+             P.IND_TIPO_BIOPSIA                                                                       AS IND_TIPO_BIOPSIA,
+             ------------------------------- TIPO DE BIOPSIA -----------------------------------     
+            DECODE(P.IND_ESTADO,
+                        '1','SOLICITUD ACTIVA',
+                        '2','ESTADO 1',
+                        '3','ESTADO 2')                                                               AS TXT_ESTADO, 
+            ------------------------------------------------------------------------------------
+            --MAIN DE MUESTRA --           
+            P.DES_SITIOEXT, 
+            P.DES_UBICACION, 
+            P.DES_TAMANNO, 
+            DECODE(P.ID_TIPO_LESION,
+            '1','LIQUIDO',
+            '2','ORGANO',
+            '3','TEJIDO','NO INFORMADO')                                                              AS TXT_TIPOSESION, 
+            DECODE(P.ID_ASPECTO,
+            '1','INFLAMATORIA',
+            '2','BENIGNA',
+            '3','NEOPLASICA','NO INFORMADO')                                                          AS TXT_ASPECTO,
+            DECODE(P.ID_ANT_PREVIOS,
+            '1','NO', 
+            '2','BIOPSIA ', 
+            '3','CITOLOGIA','NO INFORMADO')                                                           AS TXT_ANT_PREVIOS,
+            P.ID_ANT_PREVIOS,
+            P.NUM_ANTECEDENTES, 
+            P.DES_BIPSIA,
+            P.DES_CITOLOGIA, 
+            P.DES_OBSERVACIONES,                               
+            --------------------------------------------------------------------------------------
+            P.NUM_FICHAE, 
+            P.COD_USRCREA, 
+            P.FEC_USRCREA, 
+            P.COD_EMPRESA, 
+            P.DES_SITIOEXT, 
+            P.DES_UBICACION, 
+            P.DES_TAMANNO, 
+            P.ID_TIPO_LESION, 
+            P.ID_ASPECTO, 
+            P.ID_ANT_PREVIOS, 
+            P.NUM_ANTECEDENTES, 
+            P.DES_BIPSIA, 
+            P.DES_CITOLOGIA, 
+            P.DES_OBSERVACIONES, 
+            P.IND_ESTADO, 
+            P.FEC_REVISION, 
+            P.ID_TABLA, 
+            P.DES_TIPOMUESTRA, 
+            P.NUM_SUBNUMERACION, 
+            P.COD_USRCREA_TO_MUE, 
+            P.FEC_USRCREA_TO_MUE, 
+            P.COD_USRCREA_ENV, 
+            P.FEC_USRCREA_ENV, 
+            P.COD_USRCREA_RECEP, 
+            P.FEC_USRCREA_RECEP, 
+            P.COD_EMPRESA_RECEP, 
+            P.COD_USRCREA_INFORMADA, 
+            P.FEC_USRCREA_INFORMADA, 
+            P.COD_EMPRESA_INFORMADA, 
+            P.ID_ARCHIVO_SUBIDO, 
+            P.COD_USRCREA_RECH,
+            P.FEC_USRCREA_RECH, 
+            P.COD_EMPRESA_RECH, 
+            P.TIPO_RECHAZO, 
+            P.OBS_RECHAZO, 
+            P.ID_HISTO_ESTADO, 
+            DECODE(P.ID_HISTO_ESTADO,
+            '1','NUEVA SOLICITUD',
+            '2','CUSTODIA',
+            '3','TRASPORTE',
+            '4','RECEPCIONADA',
+            '5','RECHAZADA',
+            'NO INFORMADA')                                                                                     AS TXT_HISTO_ESTADO,
+            P.AD_ID_ADMISION, 
+            P.ID_SERDEP, 
+            P.IND_TIPO_BIOPSIA, 
+            P.IND_TEMPLATE, 
+            P.DATE_INICIOREGISTRO, 
+            P.COD_RUTPRO,
+            DECODE(P.ID_HISTO_ESTADO, 
+            '1','NUEVA SOLICITUD',
+            '2','EN CUSTODIA',
+            '3','EN TRASPORTE',
+            '4','RECEPCIONADA',
+            '5','RECHAZADA',
+            'NO INFORMADO')                                                                                     AS TXT_HISTO_ESTADO,
+            P.IND_ESTADO_MUESTRAS                                                                               AS IND_ESTADO_MUESTRAS,
+            P.ID_NUM_CARGA,
+            P.ID_UID,  
+            P.LAST_USR_AUDITA, 
+            TO_CHAR(P.LAST_DATE_AUDITA,'DD-MM-YYYY hh24:mi')                                                    AS  LAST_DATE_AUDITA,
+            P.TXT_NAMEAUDITA
+        FROM 
+            ADMIN.GG_TGPACTE                     L,
+            ADMIN.GG_TPROFESIONAL                G,
+            PABELLON.PB_SOLICITUD_HISTO          P
+        WHERE
+            P.DATE_INICIOREGISTRO BETWEEN V_FECHA_INICIO AND V_FECHA_FINAL AND
+            P.COD_EMPRESA IN (V_COD_EMPRESA) AND 
+            (
+                P.COD_RUTPRO    = V_USR_SESSION OR 
+                P.COD_USRCREA   = V_USR_SESSION
+            ) AND
+            P.PA_ID_PROCARCH    IN  (SELECT * FROM TABLE(VAR_LISTA_TIPOZONA)) AND  
+            P.NUM_FICHAE        =   L.NUM_FICHAE    AND
+            P.COD_RUTPRO        =   G.COD_RUTPRO  AND
+            P.IND_ESTADO        IN  (1)
+            ORDER BY 
+            P.DATE_INICIOREGISTRO,P.FEC_USRCREA;
     END;
 
 END PROCE_ANATOMIA_PATOLOGIA;

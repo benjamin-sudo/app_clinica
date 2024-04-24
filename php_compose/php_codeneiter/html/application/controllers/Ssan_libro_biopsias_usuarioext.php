@@ -5,8 +5,8 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->model("Ssan_libro_biopsias_usuarioext_model");
         #$this->load->model("ssan_spab_gestionlistaquirurgica_model");
+        $this->load->model("Ssan_libro_biopsias_usuarioext_model");
     }
     
     public function index(){
@@ -16,7 +16,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $data['HTML_SOLICITUDEAP']  =   '<tr style="text-align: center;">
                                             <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
                                         </tr>';
-
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_usuarioext/js/javascript.js");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js"); #js formulario anatomia
