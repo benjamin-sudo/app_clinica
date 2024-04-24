@@ -4,10 +4,11 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 
 class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
+    var $ownGu      =   "GUADMIN";
     var $tableSpace =   "ADMIN";
     var $own        =   "ADMIN";
-    var $ownGu      =   "GUADMIN";
     var $ownPab     =   "ADMIN";
+    var $GESPAB     =   "ADMIN";
 
     public function __construct(){
         parent::__construct();
@@ -1174,7 +1175,11 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                         >
                                         <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
                                         <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br> <i>Ficha:'.$row['FICHAL'].' | '.$row['RUTPACIENTE'].'</i></td>
-                                        <td style="vertical-align: initial;">'.$row['PROFESIONAL'].'<br>'.$row['RUT_PROFESIOAL'].'</td>
+                                        <td style="vertical-align: initial;">
+                                            '.$row['PROFESIONAL'].'
+                                            <br>
+                                            <i>'.$row['RUT_PROFESIOAL'].'</i>
+                                        </td>
                                         <td>
                                             <div class="grid_vista_resumen">
                                                 <div class="grid_vista_resumen1"> '.$row['TIPO_DE_BIOPSIA'].'</div>
@@ -3008,4 +3013,29 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'status' => $this->db->trans_status(),
         );
     }
+
+    public function get_elimina_solicitud_anatomia_ext($empresa,$session,$idanatomia,$valida){
+        $this->db->trans_start();
+        $out_borreano                   =   true;
+        $txt_out                        =   '';
+        #FORM MAIN
+        $this->db->where('ID_SOLICITUD_HISTO',$idanatomia); 
+        $this->db->update($this->GESPAB.'.PB_SOLICITUD_HISTO',array(
+            "IND_ESTADO"                =>  0,
+            "ID_UID_CANCELA"            =>  $valida->ID_UID,
+            "FEC_CANCELA"               =>  "SYSDATE",
+            "LAST_USR_AUDITA"           =>  $session[0],
+            "LAST_DATE_AUDITA"          =>  "SYSDATE",
+        ));
+        #FOR MUESTRAS
+        $this->db->where('ID_SOLICITUD_HISTO',$idanatomia); 
+        $this->db->update($this->GESPAB.'.PB_HISTO_NMUESTRAS_',array("IND_ESTADO"=>0));
+        $this->db->trans_complete();
+        return array(
+            'STATUS'                                =>  $out_borreano,
+            'ID_ANATOMIA'                           =>  $empresa,
+            'TXT_OUT'                               =>  $txt_out,
+        );
+    }
+
 }

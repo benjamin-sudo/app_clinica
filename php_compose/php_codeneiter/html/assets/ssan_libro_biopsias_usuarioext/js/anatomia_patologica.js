@@ -600,8 +600,6 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
                                                     },
             success         :   function(aData)     {
                                                         console.log('%c retutn RECORD_ANATOMIA_PATOLOGICA_EXT','background:#222;color:#bada55');
-
-                                                        
                                                         if(aData['STATUS']){
                                                             if(TEMPLATE_CALL_FROM==0){
                                                                 jAlert("Se realiz&oacute; solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre");
@@ -636,68 +634,73 @@ function GET_PDF_ANATOMIA_ETIQUETAS(id){
         type		:   "POST",
         //url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA",
         url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA_ETIQUETAS",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)       {   
-                                                        //console.log(xhr);
-                                                        console.log("generando PDF");
-                                                        $('#HTML_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
-                                                    },
+        dataType    :   "json",
+        beforeSend  :   function(xhr)       {   
+                                                //console.log(xhr);
+                                                console.log("generando PDF");
+                                                $('#HTML_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
+                                            },
         data 		:                       { 
-                                                        id  :   id,
-                                                    },
-        error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#HTML_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
-                                                    },
+                                                id  :   id,
+                                            },
+        error		:   function(errro)     { 
+                                                console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                $("#protocoloPabellon").css("z-index","1500"); 
+                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                $('#HTML_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+                                            },
         success		:   function(aData)     { 
-                                                        /*
-                                                            console.log("---------------------------------------------");
-                                                            console.log(aData);
-                                                            console.log("---------------------------------------------");
-                                                        */
-                                                       
-                                                        if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","Clinica Libre");
-                                                            return false;
-                                                        } else {
-                                                            var base64str           =   aData["PDF_MODEL"];
-                                                            //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                            var binary              =   atob(base64str.replace(/\s/g,''));
-                                                            var len                 =   binary.length;
-                                                            var buffer              =   new ArrayBuffer(len);
-                                                            var view                =   new Uint8Array(buffer);
-                                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                            //console.log("view->",view);
-                                                            //create the blob object with content-type "application/pdf"  
-                                                            var blob                =   new Blob([view],{type:"application/pdf"});
-                                                            var blobURL             =   URL.createObjectURL(blob);
-                                                            /*
-                                                            console.log("-------------------------------------");
-                                                            console.log("BlobURL        =>",blobURL);
-                                                            console.log("-------------------------------------");
-                                                            */
-                                                            Objpdf                  =   document.createElement('object');
-                                                            Objpdf.setAttribute('data',blobURL);
-                                                            Objpdf.setAttribute('width','100%');
-                                                            Objpdf.setAttribute('style','height:700px;');
-                                                            Objpdf.setAttribute('title','PDF');
-                                                            $('#HTML_ANATOMIA_PATOLOGICA').html(Objpdf);
-                                                            return true;
-                                                        }
-                                                    }, 
+                                                /*
+                                                    console.log("---------------------------------------------");
+                                                    console.log(aData);
+                                                    console.log("---------------------------------------------");
+                                                */
+
+                                                if(!aData["STATUS"]){
+                                                    jError("error al cargar protocolo PDF","Clinica Libre");
+                                                    return false;
+                                                } else {
+                                                    var base64str           =   aData["PDF_MODEL"];
+                                                    //decode base64 string, Eliminar espacio para compatibilidad con IE
+                                                    var binary              =   atob(base64str.replace(/\s/g,''));
+                                                    var len                 =   binary.length;
+                                                    var buffer              =   new ArrayBuffer(len);
+                                                    var view                =   new Uint8Array(buffer);
+                                                    for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                                    //console.log("view->",view);
+                                                    //create the blob object with content-type "application/pdf"  
+                                                    var blob                =   new Blob([view],{type:"application/pdf"});
+                                                    var blobURL             =   URL.createObjectURL(blob);
+                                                    /*
+                                                    console.log("-------------------------------------");
+                                                    console.log("BlobURL        =>",blobURL);
+                                                    console.log("-------------------------------------");
+                                                    */
+                                                    Objpdf                  =   document.createElement('object');
+                                                    Objpdf.setAttribute('data',blobURL);
+                                                    Objpdf.setAttribute('width','100%');
+                                                    Objpdf.setAttribute('style','height:700px;');
+                                                    Objpdf.setAttribute('title','PDF');
+                                                    $('#HTML_ANATOMIA_PATOLOGICA').html(Objpdf);
+                                                    return true;
+                                                }
+
+                                            }, 
     });
 }
 
-//FROM PANEL EXTERNO 
+//  FROM PANEL EXTERNO 
+//  ssan_libro_biopsias_listagespab
 function btn_delete_ap_externo(idanatomia){
     //firma simple 
     jPrompt('Con esta acci&oacute;n se proceder&aacute; eliminar solicitud de anatom&iacute;a patol&oacute;gica <br/>&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
         if(r){
+
+
+
             $.ajax({ 
                 type                :   "POST",
-                url                 :   "ssan_libro_biopsias_listagespab/desabilita_solicitud_simple_ext",
+                url                 :   "ssan_libro_biopsias_usuarioext/desabilita_solicitud_simple_ext",
                 dataType            :   "json",
                 beforeSend          :   function(xhr)   {   
                                                             console.log("xhr->",xhr);
@@ -721,12 +724,15 @@ function btn_delete_ap_externo(idanatomia){
                                                                     jError(aData['STATUS_OUT'].TXT_OUT,"Clinica Libre"); 
                                                                 }
                                                             } else {
-                                                                jError("Error en firma simple","Error - ESSISAN"); 
+                                                                jError("Error en firma simple","Clinica Libre"); 
                                                             }
                                                         }, 
             });
+
+
+
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Clinica Libre"); 
         }
     });
 }
@@ -2180,7 +2186,7 @@ function js_confirma_rechazo_recepcion(id_anatomia){
                                                                 }, 
                 });
             } else {
-                jError("Firma simple vac&Iacute;a","Error - ESSISAN"); 
+                jError("Firma simple vac&Iacute;a","Clinica Libre"); 
             }
         });
     } else {
@@ -3693,12 +3699,12 @@ function grabarUsu() {
                                                                 if (aData.status_firma){
                                                                     showNotification('top','center','Se ha modificado perfil :<b>'+user+'</b>',1,'fa fa-info');
                                                                 } else {
-                                                                    jError("Error en la firma simple","Error - ESSISAN"); 
+                                                                    jError("Error en la firma simple","Clinica Libre"); 
                                                                 }
                                                             }, 
                 });
             } else {
-                jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+                jError("Firma simple vac&iacute;a","Clinica Libre"); 
             }
         });
     }   

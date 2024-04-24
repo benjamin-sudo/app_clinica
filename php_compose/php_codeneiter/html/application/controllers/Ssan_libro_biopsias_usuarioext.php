@@ -6,6 +6,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         #$this->load->model("ssan_spab_gestionlistaquirurgica_model");
+        $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
     }
     
@@ -13,14 +14,17 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $this->output->set_template('blank');
         $empresa                    =   $this->session->userdata("COD_ESTAB");
         $data                       =   [];
+
         $data['HTML_SOLICITUDEAP']  =   '<tr style="text-align: center;">
                                             <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
                                         </tr>';
+
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_usuarioext/js/javascript.js");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js"); #js formulario anatomia
         $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);
     }
+
 
     public function recarga_html_listaanatomiapatologica(){
         if(!$this->input->is_ajax_request()){ show_404(); }
@@ -46,6 +50,28 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             "DATE_TO"                   =>  $date_to,
             "HTML_LISTAS"               =>  $responde,
         ]));
+    }
+
+    #elimina el usuario
+    public function desabilita_solicitud_simple_ext(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $empresa                            =   $this->session->userdata("COD_ESTAB");
+        $session                            =   explode("-",$this->session->userdata("USERNAME"));
+        $idanatomia                         =   $this->input->post('idanatomia');
+        $contrasena                         =   $this->input->post('contrasena');
+        $status                             =   true;
+        $aData                              =   '';
+        $valida                             =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
+        if(count($valida)>0){
+            $aData                          =   $this->Ssan_libro_biopsias_usuarioext_model->get_elimina_solicitud_anatomia_ext($empresa,$session,$idanatomia,$valida);
+        } else {
+            $status                         =   false;
+        }
+        $this->output->set_output(json_encode(array(
+            'STATUS_OUT'                    =>  $aData,
+            'STATUS_PASS'                   =>  $status,
+            'valida'                        =>  $valida,
+        )));
     }
 
     #FUNCION QUE GRABA LA SOLICITUD 

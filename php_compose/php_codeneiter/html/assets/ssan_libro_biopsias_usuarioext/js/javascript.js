@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    //console.log("   ->  ");
     var todayDate = new Date().getDate();
     $('#fecha_out').datetimepicker({
         useCurrent		        :   false,
@@ -60,7 +59,9 @@ $(document).ready(function(){
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
-    //$("#li_panel_rectificacion").show();
+    console.log("   ------------    ");
+    console.log("   Pendientes      ");
+    //ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(3);
 });
 
 function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
@@ -210,14 +211,14 @@ function local_pdf_rechazomuestra(id_anatomia){
         error		:   function(errro)         { 
                                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                                     $("#protocoloPabellon").css("z-index","1500"); 
-                                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                 },
         success		:   function(aData)         { 
                                                     console.log("-----------------------");
                                                     console.log("aData  ->",aData,"<-   ");
                                                     if(!aData["STATUS"]){
-                                                        jError("error al cargar protocolo PDF","e-SISSAN");
+                                                        jError("error al cargar protocolo PDF","Clinica Libre");
                                                         return false;
                                                     } else {
                                                         var base64str           =   aData["PDF_MODEL"];
@@ -259,7 +260,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                     },
         success		:   function(aData)         { 
@@ -269,7 +270,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                         console.log("---------------------------------------------");
                                                         //$('#HTML_PDF_ANATOMIA_PATOLOGICA').html(aData.HTML_BIOPSIAS);
                                                         if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","e-SISSAN");
+                                                            jError("error al cargar protocolo PDF","Clinica Libre");
                                                             return false;
                                                         } else {
                                                             var base64str           =   aData["PDF_MODEL"];
@@ -352,35 +353,35 @@ function js_confirma_new_fecha(id){
 
     jPrompt('Con esta acci&oacute;n se proceder&aacute; editar fecha de biopsia.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
         if(r){
-            $('#loadFade').modal('show');
+            
             //console.log("datasend ->  ",datasend);
             $.ajax({ 
-                type                :   "POST",
-                url                 :   "ssan_libro_biopsias_usuarioext/get_cambio_fecha",
-                dataType            :   "json",
-                beforeSend          :   function(xhr)   {   console.log("xhr->",xhr);   },
-                data                :   { 
-                                            id : id,
-                                            pass : r,
-                                            fecha : new_arr_fecha_hora
-                                        },
+                type            :   "POST",
+                url             :   "ssan_libro_biopsias_usuarioext/get_cambio_fecha",
+                dataType        :   "json",
+                beforeSend      :   function(xhr) { $('#loadFade').modal('show'); },
+                data            :   { 
+                                        id : id,
+                                        pass : r,
+                                        fecha : new_arr_fecha_hora
+                                    },
                 error		    :   function(errro) { 
-                                                            console.log(errro);  
-                                                            console.log(errro.responseText);
-                                                            jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                            $('#loadFade').modal('hide');
-                                                        },
-                success             :   function(aData) { 
-                                                            $('#loadFade').modal('hide');
-                                                            console.log("retun  -> ",aData);
-                                                            if (aData.status){
-                                                                showNotification('top','center','El cambio de fecha de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
-                                                                $("#modal_edita_fecha").modal('hide');
-                                                                ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
-                                                            } else {
-                                                                jError(aData.txt_error ,"e-SISSAN");
-                                                            }
-                                                        }, 
+                                                        console.log(errro);  
+                                                        console.log(errro.responseText);
+                                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                        $('#loadFade').modal('hide');
+                                                    },
+                success         :   function(aData) { 
+                                                        $('#loadFade').modal('hide');
+                                                        console.log("retun  -> ",aData);
+                                                        if (aData.status){
+                                                            showNotification('top','center','El cambio de fecha de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
+                                                            $("#modal_edita_fecha").modal('hide');
+                                                            ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
+                                                        } else {
+                                                            jError(aData.txt_error ,"Clinica Libre");
+                                                        }
+                                                    }, 
             });
         } else {
             jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
