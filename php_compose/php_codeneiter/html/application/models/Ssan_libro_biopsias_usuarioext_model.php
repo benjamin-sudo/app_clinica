@@ -499,6 +499,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'date_final'                        =>  $data_controller["data_final"],
         );
     }
+
     
     #llamada de externo 
     public function html_externo_rce($data){
