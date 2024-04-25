@@ -117,7 +117,6 @@ function update_main(value){
                                             ind_template    :   "ssan_libro_biopsias_listaexterno1",
                                         },
         error		:   function(errro)	{  
-                                            
                                             $('#loadFade').modal('hide');
                                             jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre");
                                             console.log("   errro          ->  ",errro); 
@@ -142,4 +141,5 @@ function update_main(value){
                                             }
                                         }, 
     });
+
 }
