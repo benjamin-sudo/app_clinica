@@ -43,7 +43,45 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $this->load->view('Ssan_libro_biopsias_listaexterno1/Ssan_libro_biopsias_listaexterno1_view',$return_data);
     }
 
+    public function update_main(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $session                    =   explode("-",$this->session->userdata("USERNAME"));
+        $date_inicio                =   $this->input->post('fecha_inicio');
+        $date_final                 =   $this->input->post('fecha_final');
+        #DATE INICIO TIEMPO
+        $this->input->set_cookie(array(
+            'name'                  =>  'date_inicio',
+            'value'                 =>  $date_inicio,
+            'expire'                =>  86500,
+            'secure'                =>  false
+        ));
+        #DATE INICIO TIEMPO
+        $this->input->set_cookie(array(
+            'name'                  =>  'date_final',
+            'value'                 =>  $date_final,
+            'expire'                =>  86500,
+            'secure'                =>  false
+        ));
+        #SALIDA ARREGLO
+        $aData                      =   $this->Ssan_libro_biopsias_usuarioext_model->carga_lista_rce_externo_ap(array(
+            "data_inicio"           =>  $date_inicio,
+            "data_final"            =>  $date_final,
+            "usr_session"           =>  $session[0],
+            "ind_opcion"            =>  $this->input->post('OPTION'),
+            "ind_first"             =>  0,
+            "origen_sol"            =>  $this->input->post('origen_sol'),
+            "pto_entrega"           =>  $this->input->post('pto_entrega'),
+            "COD_EMPRESA"           =>  $this->session->userdata("COD_ESTAB"),
+            "num_fase"              =>  $this->input->post('NUM_FASE'),
+            "ind_template"          =>  $this->input->post('ind_template'),
+        ));
+        #OUT
+        $this->output->set_output(json_encode(array(
+            'STATUS'                =>  true,
+            'adata'                 =>  $aData,
+            'STATUS_OUT'            =>  $aData['html_externo'],
+        )));
+    }
 
-    
 }
 ?>

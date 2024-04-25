@@ -62,7 +62,6 @@ function consulta_(value){
         console.log("value      ->",value,"             ");
         console.log("-----------------------------------");
     */
-
     $.ajax({ 
         type		:   "POST",
         url		    :   "ssan_spab_gestionlistaquirurgica/consulta_hoja_faph",
@@ -76,7 +75,7 @@ function consulta_(value){
         error		:   function(errro)	{  
                                             console.log(errro); 
                                             console.log(errro.responseText);
-                                            jError("Error del aplicativo","e-SISSAN"); 
+                                            jError("Error del aplicativo","CLinica Libre"); 
                                         },
         success		:   function(aData)	{   
                                             console.log("---------our update_main ------");
@@ -102,6 +101,7 @@ function update_main(value){
         console.log("   11.07.2023 -> revision para acreditacion    ");
         console.log("-----------------------------------------------");
     */
+   
     $('#loadFade').modal('show');
     $.ajax({ 
         type		:   "POST",
@@ -122,7 +122,7 @@ function update_main(value){
                                             console.log("errro          ->  ",errro); 
                                             console.log("responseText   ->  ",errro.responseText);
                                             $('#loadFade').modal('hide');
-                                            jError("Error en el listado de anatom&iacute;a patol&oacute;gica","e-SISSAN"); 
+                                            jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre"); 
                                         },
         success		:   function(aData)	{   
                                             console.log("   |   ",ind_ruta);
