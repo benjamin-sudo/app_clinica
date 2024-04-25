@@ -856,8 +856,6 @@ function GET_PDF_ANATOMIA(id){
     });
 }
 
-
-
 function opt_imprime(valor){
     setTimeout(function(){
         console.log("esperando el segundo");

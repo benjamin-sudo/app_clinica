@@ -210,7 +210,6 @@
   <script type="text/javascript" src="https://www.esissan.cl/assets/themes/js/jquery.bootpag.min.js"></script>
   <!-- easy-autocomplete -->
   <script type="text/javascript" src="https://www.esissan.cl/assets/themes/js/jquery.easy-autocomplete.min.js"></script>
-
   <section>
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -245,7 +244,6 @@
         </div>
       </div>
     </div>
-      
     <div class="modal fade" id="modal_perfil_usuario">
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
@@ -264,7 +262,6 @@
             </div>
         </div>
     </div>
-
   </section>
   </body>
 </html>

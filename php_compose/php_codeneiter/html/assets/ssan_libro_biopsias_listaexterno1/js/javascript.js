@@ -17,9 +17,10 @@ $(document).ready(function(){
         }
     */
     var todayDate           =   new Date().getDate();
+    
     $("#date_tabla").datetimepicker({
         format              :   'DD-MM-YYYY',
-        //minDate             :   new Date(new Date().setDate((todayDate)-(30))),
+        //minDate           :   new Date(new Date().setDate((todayDate)-(30))),
         maxDate             :   new Date(),
         locale              :   'es-us',
         icons               :   {
@@ -34,7 +35,6 @@ $(document).ready(function(){
                                     close       :   "fa fa-remove"          ,
                                 }
     }).on('dp.change',function(e){  update_main(0);  });
-
     $("#viwes_punto_entrega").selectpicker();
     $("#viwes_origen_solicitud").selectpicker();
     //falta configurar frasco en loalstronge

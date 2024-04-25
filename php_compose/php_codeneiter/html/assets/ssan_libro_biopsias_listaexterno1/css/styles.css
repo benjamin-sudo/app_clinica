@@ -94,7 +94,6 @@
     margin-bottom               :   0px;
 }
 
-
 .btn-flotante {
     font-size                   :   16px; /* Cambiar el tamaÃ±o de la tipografia */
     text-transform              :   uppercase; /* Texto en mayusculas */
@@ -130,10 +129,10 @@
 
 
 /*es como asignar id a la class en html */
-.item-a {  grid-area  : header;   text-align: center; border  :   1px solid silver; }
-.item-b {  grid-area  : main;     text-align: center; border-right   :   1px solid silver;}
-.item-c {  grid-area  : sidebar;  text-align: center; border-left:    1px solid silver;}
-.item-d {  grid-area  : footer;   text-align: center; border  :   1px solid silver; }
+.item-a {  grid-area  : header;   text-align: center; border        :   1px solid silver;   }
+.item-b {  grid-area  : main;     text-align: center; border-right  :   1px solid silver;   }
+.item-c {  grid-area  : sidebar;  text-align: center; border-left   :   1px solid silver;   }
+.item-d {  grid-area  : footer;   text-align: center; border        :   1px solid silver;   }
   
 /* la class container esta pre defininida en el templete  */
 .container_2 {
@@ -359,21 +358,21 @@
 }
 
 @-moz-keyframes parpadeo                {  
-  0%                                    { opacity: 1.0; }
-  50%                                   { opacity: 0.0; }
-  100%                                  { opacity: 1.0; }
+  0%                                    {   opacity: 1.0; }
+  50%                                   {   opacity: 0.0; }
+  100%                                  {   opacity: 1.0; }
 }
 
 @-webkit-keyframes parpadeo             {  
-  0%                                    { opacity: 1.0; }
-  50%                                   { opacity: 0.0; }
-  100%                                  { opacity: 1.0; }
+  0%                                    {   opacity: 1.0; }
+  50%                                   {   opacity: 0.0; }
+  100%                                  {   opacity: 1.0; }
 }
 
 @keyframes parpadeo {  
-    0%                                  { opacity: 1.0; }
-    50%                                 { opacity: 0.0; }
-    100%                                { opacity: 1.0; }
+    0%                                  {   opacity: 1.0; }
+    50%                                 {   opacity: 0.0; }
+    100%                                {   opacity: 1.0; }
 }
     
 .GRID_CONF_EQUIQUETA                    {

@@ -11,9 +11,7 @@ $(document).ready(function(){
 });
 
 function star_ajax_extension(url){
-    
     console.log("url -> ",url);
-    
     $.ajax({
         url : url,  // Ruta al metodo del controlador
         type : 'POST',  // Método HTTP deseado, POST es común para envío de datos
