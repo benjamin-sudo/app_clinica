@@ -88,50 +88,50 @@ function consulta_(value){
 function update_main(value){
     $('.popover').popover('hide');
     var IND_TEMPLETE    =   $("#IND_TEMPLETE").val();
-    var ind_ruta        =   IND_TEMPLETE    ===     "ssan_libro_biopsias_listaxusuarios"
-                                            ?       "ssan_libro_biopsias_listaxusuarios/update_main_ususarios"
-                                            :       "ssan_libro_biopsias_listaexterno1/update_main";
+    var ind_ruta        =   IND_TEMPLETE === "ssan_libro_biopsias_listaxusuarios"
+                                ?   "ssan_libro_biopsias_listaxusuarios/update_main_ususarios"
+                                :   "ssan_libro_biopsias_listaexterno1/update_main";
     /*
-        console.log("------------------------------------------------");
-        console.log("ind_ruta                   ->  ",ind_ruta);
-        console.log("numFecha                   ->  ",$("#numFecha").val());
-        console.log("viwes_punto_entrega        ->  ",$("#viwes_punto_entrega").val() );
-        console.log("viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
-        console.log("-----------------------------------------------");
-        console.log("   11.07.2023 -> revision para acreditacion    ");
-        console.log("-----------------------------------------------");
+        console.log("   ---------------------------------------------------------------------------     ");
+        console.log("   ind_ruta                   ->  ",ind_ruta);
+        console.log("   numFecha                   ->  ",$("#numFecha").val());
+        console.log("   viwes_punto_entrega        ->  ",$("#viwes_punto_entrega").val() );
+        console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
+        console.log("   ---------------------------------------------------------------------------     ");
     */
-   
-    $('#loadFade').modal('show');
+
     $.ajax({ 
         type		:   "POST",
         url		    :   ind_ruta,
         dataType	:   "json",
 	    beforeSend  :   function(xhr)   { 
-                                            //console.log(xhr);
+                                            console.log(" xhr ",xhr);
+                                            $('#loadFade').modal('show');
                                         },
 	    data		:                   { 
-                                            fecha_inicio        :   $("#numFecha").val(),
-                                            fecha_final         :   $("#numFecha").val(),
-                                            OPTION              :   1,
-                                            pto_entrega         :   0,
-                                            origen_sol          :   0,
-                                            ind_template        :   "ssan_libro_biopsias_listaexterno1",
+                                            fecha_inicio    :   $("#numFecha").val(),
+                                            fecha_final     :   $("#numFecha").val(),
+                                            OPTION          :   1,
+                                            pto_entrega     :   0,
+                                            origen_sol      :   0,
+                                            ind_template    :   "ssan_libro_biopsias_listaexterno1",
                                         },
         error		:   function(errro)	{  
-                                            console.log("errro          ->  ",errro); 
-                                            console.log("responseText   ->  ",errro.responseText);
+                                            
                                             $('#loadFade').modal('hide');
-                                            jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre"); 
+                                            jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre");
+                                            console.log("   errro          ->  ",errro); 
                                         },
         success		:   function(aData)	{   
-                                            console.log("   |   ",ind_ruta);
-                                            console.log("   |   ",aData);
+                                            console.log("   ************************************    ");
+                                            console.log("   aData           ->   ",aData,"          ");
+                                            console.log("   ind_ruta        ->   ",ind_ruta,"       ");
+                                            console.log("   IND_TEMPLETE    ->   ",IND_TEMPLETE,"   ");
+                                            console.log("   ************************************    ");
                                             $('#loadFade').modal('hide');
                                             $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
                                             $("#LI_LISTA_MAIN").append(aData.STATUS_OUT.html_exteno);
-                                            $("[data-toggle='tooltip']").tooltip();
-                                            console.log("IND_TEMPLETE           ->      ",IND_TEMPLETE);
+                                            //$("[data-toggle='tooltip']").tooltip();
                                             if(IND_TEMPLETE == "ssan_libro_biopsias_listaexterno1"){
                                                 let viwes_punto_entrega = $("#viwes_punto_entrega").val();
                                                 if (viwes_punto_entrega != '0'){
@@ -140,7 +140,6 @@ function update_main(value){
                                                     $(".rotulo_"+viwes_punto_entrega).show();
                                                 }
                                             }
-
                                         }, 
     });
 }

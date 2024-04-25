@@ -82,6 +82,5 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             'STATUS_OUT'            =>  $aData['html_externo'],
         )));
     }
-
 }
 ?>

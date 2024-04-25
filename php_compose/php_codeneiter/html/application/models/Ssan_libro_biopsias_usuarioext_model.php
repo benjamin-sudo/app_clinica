@@ -388,7 +388,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         );
     }
     
+    #######
     #update
+    #######
     public function carga_lista_rce_externo_ap($data_controller) {
         $this->db->trans_start();
         $param          =   array(
@@ -485,19 +487,19 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             );
         #lista filtrada por | punto de entrega | origen solicitud
         #llamada desde
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','DATA_LISTA_AP_EXTERNO_RCE',$param);
+        $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','DATA_LISTA_AP_EXTERNO_RCE',$param);
         $this->db->trans_complete();
-        return array(
-            'html_externo'                      =>  $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1'  ||  $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
-                                                        ?   $this->html_externo_rce(array("data_controller"=>$data_controller,"data"=>$result))
-                                                        :   $this->LI_RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"],$data_controller["num_fase"]),
-            'return_bd'                         =>  $result,
-            'userdata'                          =>  $this->session->userdata,
-            'ind_opcion'                        =>  $data_controller["ind_opcion"], 
-            'ind_template'                      =>  $data_controller["ind_template"],
-            'date_inicio'                       =>  $data_controller["data_inicio"],
-            'date_final'                        =>  $data_controller["data_final"],
-        );
+        return [
+            'html_externo'  =>  $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
+                ?   $this->html_externo_rce(array("data_controller"=>$data_controller,"data"=>$result))
+                :   $this->LI_RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"],$data_controller["num_fase"]),
+            'return_bd'     =>  $result,
+            'userdata'      =>  $this->session->userdata,
+            'ind_opcion'    =>  $data_controller["ind_opcion"], 
+            'ind_template'  =>  $data_controller["ind_template"],
+            'date_inicio'   =>  $data_controller["data_inicio"],
+            'date_final'    =>  $data_controller["data_final"],
+        ];
     }
 
     
