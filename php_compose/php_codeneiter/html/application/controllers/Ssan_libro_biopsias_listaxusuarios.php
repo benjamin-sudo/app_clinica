@@ -16,9 +16,7 @@ class Ssan_libro_biopsias_listaxusuarios extends CI_Controller {
         $this->load->css("assets/Ssan_libro_biopsias_listaxusuarios/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_listaxusuarios/js/javascript.js");
         */
-
         $this->load->view('Ssan_libro_biopsias_listaxusuarios/Ssan_libro_biopsias_listaxusuarios_view',$v_out);
-
     }
 }
 ?>
