@@ -90,8 +90,8 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         if (!$this->input->is_ajax_request()){  show_404(); }
         $empresa                            =   $this->session->userdata('COD_ESTAB');
         $html                               =   '';
-        //$from                             =   $this->input->post('from');
-        //$opcion                           =   $this->input->post('opcion');
+        #$from                              =   $this->input->post('from');
+        #$opcion                            =   $this->input->post('opcion');
         $ARR_CASETE_ORD                     =   [];
         $data_main                          =   [];
         $get_etiqueta                       =   $this->input->post('get_etiqueta');
@@ -147,7 +147,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             #falta los log 
             foreach($DATA["P_ANATOMIA_PATOLOGICA_MAIN"] as $i => $row){
                 $id_anatomia                =   $row["ID_SOLICITUD"];
-                $html                       =   $this->load->view("ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
+                $html                       =   $this->load->view("Ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
                                                     "VIEWS"                             =>  $vista,
                                                     "DATA"                              =>  $row,
                                                     "FIRST"                             =>  $get_etiqueta,
@@ -155,7 +155,8 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                                                     "P_ANATOMIA_PATOLOGICA_MUESTRAS"    =>  empty($arr_muestra_muestras[$id_anatomia])?[]:$arr_muestra_muestras[$id_anatomia],
                                                     "P_AP_MUESTRAS_CITOLOGIA"           =>  empty($arr_muestras_citologia[$id_anatomia])?[]:$arr_muestras_citologia[$id_anatomia],
                                                     //"P_AP_INFORMACION_ADICIONAL"      =>  empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia],
-                                                    "HTML_LOGS"                         =>  $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
+                                                    #"HTML_LOGS"                         =>  $this->load->view("Ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
+                                                    "HTML_LOGS" => '',
                                                 ),true);
                 
                 $ARR_GENTIONMSJ[]           =   array(
@@ -171,6 +172,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $NUM_ANATOMIA                       =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
         if($IND_MODAL){
             $TXT_GO_BACODE                  =   $NUM_FASE==1?'TRASPORTE | CUSTODIA':$NUM_FASE==2?'PARA RECEPCI&Oacute;N':'VISUALIZACI&Oacute;N';
+            
             $TABS_HTML                      =   '
                 <script>
                     $(document).ready(function(){

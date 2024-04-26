@@ -2906,6 +2906,7 @@ function busqueda_etiquera(from,solicitud,array){
         url                 :   "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",
         dataType            :   "json",
         beforeSend          :   function(xhr)   {   
+                                                    $('#loadFade').modal('show');
                                                     console.log("load informacion_x_muestra_grupal ->",xhr);   
                                                 },
         data                :                   {
@@ -2919,7 +2920,7 @@ function busqueda_etiquera(from,solicitud,array){
                                                 },
         error		    :   function(errro) { 
                                                     console.log(errro);  
-                                                    console.log(errro.responseText);    
+                                                    $('#loadFade').modal('hide'); 
                                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                 },
         success             :   function(aData) { 
@@ -2931,6 +2932,8 @@ function busqueda_etiquera(from,solicitud,array){
                                                     console.log(" P_AP_INFORMACION_ADICIONAL    ->",aData.P_AP_INFORMACION_ADICIONAL,"          ");
                                                     console.log(" ARR_CASETE_ORD                ->",aData.ARR_CASETE_ORD,"                      ");
                                                     console.log("-------------------------------------------------------------------------------");
+                                                    
+                                                    $('#loadFade').modal('hide'); 
                                                     if(aData.STATUS){
                                                         if ($('#UL_TABS_MUESTRA li').size()==0){
                                                             $('#get_etiqueta,#get_etiqueta_modal').val('');

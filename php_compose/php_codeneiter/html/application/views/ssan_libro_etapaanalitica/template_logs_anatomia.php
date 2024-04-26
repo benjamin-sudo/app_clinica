@@ -153,4 +153,3 @@
         <b>SIN INFORMACI&Oacute;N</b>    
     </div>
 <?php } ?>
-

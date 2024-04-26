@@ -308,13 +308,15 @@
         <?php }  ?>
     <?php   }   ?>
    
+    <br>
+   
     <!-- GESTION DE MUESTRAS ANATOMIA -->
     <?php if(count($P_ANATOMIA_PATOLOGICA_MUESTRAS)>0){  ?>    
-            <div class="card" style="margin-bottom: 5px;">
+            <div class="card" style="margin-bottom: 5px;padding: 16px;">
                 <div class="header">
                     <div class="GRID_HEARD_CHECK_MUESTRA">
                         <div class="GRID_HEARD_CHECK_MUESTRA1">
-                            <h4 class="title" style="margin-bottom:15px;margin-left:10px;">
+                            <h4 class="title" style="margin-bottom:30px;margin-left:10px;">
                                 <?php
                                     if($DATA['IND_USOCASSETTE'] == 1){
                                         foreach($P_ANATOMIA_PATOLOGICA_MUESTRAS as $i => $row){ 
@@ -327,7 +329,7 @@
                             </h4>
                         </div>
                         <div class="GRID_HEARD_CHECK_MUESTRA2">
-                            <button type="button" data-toggle="false" class="btn btn-xs btn-info btn-fill BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" id="BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" onclick="BTN_MARCA_ALL(<?php echo $DATA["ID_SOLICITUD"];?>)">
+                            <button type="button" data-toggle="false" class="btn btn-info btn-fill BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" id="BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" onclick="BTN_MARCA_ALL(<?php echo $DATA["ID_SOLICITUD"];?>)">
                                 <i class="fa fa-check-square" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -336,7 +338,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="content" style="margin-top:-20px;">
+
+
+
+                <div class="content" style="margin-top:-10px;">
                     <ul class="list-group" id="UL_RESULTADOS_<?php echo $DATA["ID_SOLICITUD"];?>" style="margin-bottom:0px;">
                     <?php    
                         $IND_USOCASSETTE        =   $DATA['IND_USOCASSETTE'];
@@ -473,7 +478,7 @@
                             </h4>
                         </div>
                         <div class="GRID_HEARD_CHECK_MUESTRA2">
-                            <button type="button" data-toggle="false" class="btn btn-xs btn-info btn-fill BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" id="BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" onclick="BTN_MARCA_ALL(<?php echo $DATA["ID_SOLICITUD"];?>)">
+                            <button type="button" data-toggle="false" class="btn btn-info btn-fill BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" id="BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" onclick="BTN_MARCA_ALL(<?php echo $DATA["ID_SOLICITUD"];?>)">
                                 <i class="fa fa-check-square" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -537,22 +542,25 @@
                 </div>
             </div>
         <?php } ?>   
+    
     <hr style="margin: 4px 0px 0px 0px">
+
     <?php 
     switch($FASE){
         case 0:
             echo "SOLO VISUALIZACI&Oacute;N |".$FASE."|";
             break;
         case 1:
+            $V_ID_SOLICITUD = $DATA["ID_SOLICITUD"];
             ?>
                 <?php if($DATA["ID_HISTO_ESTADO"] == 1 || $DATA["ID_HISTO_ESTADO"] == 2){ ?>
                     <div class="_CENTER_1">
                         <div class="_CENTER_11">
                             <div class="btn-group btn_change">
-                                <button class="btn btn-xs btn-fill btn-warning" onclick="confirma_custodia(<?php echo $DATA["ID_SOLICITUD"];?>)" style="width:auto;height:35px;" id="<?php echo $DATA["ID_SOLICITUD"];?>">
+                                <button class="btn btn-fill btn-warning" onclick="confirma_custodia(<?php echo $V_ID_SOLICITUD;?>)" style="width:auto; color: white;" id="<?php echo $DATA['ID_SOLICITUD'];?>">
                                     <i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA SOLO DE N&deg;<?php echo $DATA["ID_SOLICITUD"];?>
                                 </button>
-                                <button class="btn btn-xs btn-fill btn-info all_solicitudes_trasporte" onclick="confirma_trasporte(<?php echo $DATA["ID_SOLICITUD"];?>)" style="width:auto;height:35px;" id="<?php echo $DATA["ID_SOLICITUD"];?>">
+                                <button class="btn btn-fill btn-info all_solicitudes_trasporte" onclick="confirma_trasporte(<?php echo $V_ID_SOLICITUD;?>)" style="width:auto;" id="<?php echo $DATA["ID_SOLICITUD"];?>">
                                     <i class="fa fa-truck" aria-hidden="true"></i>&nbsp;TRASPORTE SOLO DE N&deg;<?php echo $DATA["ID_SOLICITUD"];?>
                                 </button>
                             </div>

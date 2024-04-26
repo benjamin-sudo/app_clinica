@@ -40,6 +40,7 @@
         </div>
     </div>
     <div class="css_rotulado_externo3 _CENTER">
+        <input type="hidden" class="form-control input-sm" id="get_etiqueta" name="get_etiqueta" value="">
         <!--
         <b style="color:#888888;">C&Oacute;DIGO DE BARRAS</b>
         <div id="date_tabla2" class="input-group center-block" style="width:200px;">
@@ -107,80 +108,40 @@
     </li>
     <?php echo $html_externo["html_exteno"];?>
 </ul>
+
+
+
+<section>
+
 <div class="modal fade" id="MODAL_TEST_ETIQUETA">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="title" style="color:#e34f49">
-                    <b>PRUEBA ETIQUETAS | ZEBRA ZD420</b>
-                </h4>
-            </div>
-            <div class="modal-body" id="HTML_TEST_ETIQUETA">
-                <div class="GRID_CONF_EQUIQUETA">
-                    <div class="GRID_CONF_EQUIQUETA1">
-                        <div class="card" style="margin: 0px 0px 0px 0px;">
-                            <div class="header">
-                                <h4 class="title"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>MEDIANA</b></h4>
-                                <p></p>
-                            </div>
-                            <div class="content" style="display: flex;justify-content: center;">
-                                <div style="overflow:hidden;">
-                                    <div class="form-group d-flex justify-content-center">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="">
-                                                    <a href="javascript:imprimirEtiqueta2(1)" style="opacity:0.5;color:#000;">
-                                                        <i class="fa fa-barcode fa-4x" aria-hidden="true"></i>
-                                                    </a>
-                                                    <div class="_CENTER3">
-                                                        <b>MEDIANA&nbsp;(1)</b>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="title" style="color:#e34f49">
+                        <b>PRUEBA ETIQUETAS | ZEBRA ZD420</b>
+                    </h4>
+                </div>
+                <div class="modal-body" id="HTML_TEST_ETIQUETA">
+                    <div class="GRID_CONF_EQUIQUETA">
+                        <div class="GRID_CONF_EQUIQUETA1">
+                            <div class="card" style="margin: 0px 0px 0px 0px;">
+                                <div class="header">
+                                    <h4 class="title"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>MEDIANA</b></h4>
+                                    <p></p>
                                 </div>
-                            </div>
-                        </div>
-                    </div> 
-                    <div class="GRID_CONF_EQUIQUETA2">
-                        <div class="card" style="margin: 0px 0px 0px 0px;">
-                            <div class="header">
-                                <h4 class="title"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>PEQUE&Ntilde;A</b></h4>
-                                <p></p>
-                            </div>
-                            <div class="content">
-                                <div style="overflow:hidden;">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="">
-                                                    <!--
-                                                        <a href="javascript:imprimirEtiqueta2(2)" style="opacity:0.5;color:#000;">
-                                                            <i class="fa fa-barcode fa-4x" aria-hidden="true"></i>
-                                                        </a> 
-                                                    -->
-                                                    <button type="button" class="btn btn-default btn-fill" id="test_equiqueta_left" style="height: 60px;width: 96px;" onclick="imprimirEtiqueta2(2)">
-                                                        <i class="fa fa-barcode fa-4x" style="margin-left:-65px;" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="">
-                                                    <b>PEQUE&Ntilde;A&nbsp;(LEFT)</b>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="">
-                                                    <!--
-                                                        <a href="javascript:imprimirEtiqueta2(3)" style="opacity:0.5;color:#000;">
+                                <div class="content" style="display: flex;justify-content: center;">
+                                    <div style="overflow:hidden;">
+                                        <div class="form-group d-flex justify-content-center">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="">
+                                                        <a href="javascript:imprimirEtiqueta2(1)" style="opacity:0.5;color:#000;">
                                                             <i class="fa fa-barcode fa-4x" aria-hidden="true"></i>
                                                         </a>
-                                                    -->
-                                                    <button type="button" class="btn btn-default btn-fill" id="test_equiqueta_left" style="height:60px;width:96px;" onclick="imprimirEtiqueta2(3)">
-                                                        <i class="fa fa-barcode fa-4x"  style="margin-left:-30px;" aria-hidden="true"></i>
-                                                    </button>
-                                                    <div class="">
-                                                        <b>PEQUE&Ntilde;A&nbsp;(CENTER)</b> 
+                                                        <div class="_CENTER3">
+                                                            <b>MEDIANA&nbsp;(1)</b>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,156 +149,200 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div> 
+                        </div> 
+                        <div class="GRID_CONF_EQUIQUETA2">
+                            <div class="card" style="margin: 0px 0px 0px 0px;">
+                                <div class="header">
+                                    <h4 class="title"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;<b>PEQUE&Ntilde;A</b></h4>
+                                    <p></p>
+                                </div>
+                                <div class="content">
+                                    <div style="overflow:hidden;">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="">
+                                                        <!--
+                                                            <a href="javascript:imprimirEtiqueta2(2)" style="opacity:0.5;color:#000;">
+                                                                <i class="fa fa-barcode fa-4x" aria-hidden="true"></i>
+                                                            </a> 
+                                                        -->
+                                                        <button type="button" class="btn btn-default btn-fill" id="test_equiqueta_left" style="height: 60px;width: 96px;" onclick="imprimirEtiqueta2(2)">
+                                                            <i class="fa fa-barcode fa-4x" style="margin-left:-65px;" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="">
+                                                        <b>PEQUE&Ntilde;A&nbsp;(LEFT)</b>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="">
+                                                        <!--
+                                                            <a href="javascript:imprimirEtiqueta2(3)" style="opacity:0.5;color:#000;">
+                                                                <i class="fa fa-barcode fa-4x" aria-hidden="true"></i>
+                                                            </a>
+                                                        -->
+                                                        <button type="button" class="btn btn-default btn-fill" id="test_equiqueta_left" style="height:60px;width:96px;" onclick="imprimirEtiqueta2(3)">
+                                                            <i class="fa fa-barcode fa-4x"  style="margin-left:-30px;" aria-hidden="true"></i>
+                                                        </button>
+                                                        <div class="">
+                                                            <b>PEQUE&Ntilde;A&nbsp;(CENTER)</b> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:end;">
+                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
-            <div class="modal-footer" style="text-align:end;">
-                <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                    <i class="fa fa-window-close" aria-hidden="true"></i>
-                </button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="MODAL_INFO_APLICATIVO">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="title" style="color:#e34f49">
+                        <b>CONFIGURACI&Oacute;N DE ETIQUETA</b>
+                    </h4>
+                </div>
+                <div class="modal-body" id="HTML_INFO_APLICATIVO">
+                    <?php echo $this->load->view("ssan_libro_biopsias_listaexterno1/html_configuracion_frasco",[],true);?>
+                </div>
+                <div class="modal-footer" style="text-align:end;">
+                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="MODAL_INFO_APLICATIVO">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="title" style="color:#e34f49">
-                    <b>CONFIGURACI&Oacute;N DE ETIQUETA</b>
-                </h4>
-            </div>
-            <div class="modal-body" id="HTML_INFO_APLICATIVO">
-                <?php echo $this->load->view("ssan_libro_biopsias_listaexterno1/html_configuracion_frasco",[],true);?>
-            </div>
-            <div class="modal-footer" style="text-align:end;">
-                <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                    <i class="fa fa-window-close" aria-hidden="true"></i>
-                </button>
+    <div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="title" style="color:#e34f49">
+                        <b>FORMULARIO ANATOM&Iacute;A PATOL&Oacute;GICA</b>
+                    </h4>
+                </div>
+                <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA"></div>
+                <div class="modal-footer" style="text-align:end;">
+                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="title" style="color:#e34f49">
-                    <b>FORMULARIO ANATOM&Iacute;A PATOL&Oacute;GICA</b>
-                </h4>
-            </div>
-            <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA"></div>
-            <div class="modal-footer" style="text-align:end;">
-                <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                    <i class="fa fa-window-close" aria-hidden="true"></i>
-                </button>
+    <div class="modal fade" id="MODAL_INFORME_EVENTOS_ADVERSOS">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="title" style="color:#e34f49">
+                        <b>INFORMACI&Oacute;N DE ANTECEDENTES ADVERSOS</b>
+                    </h4>
+                </div>
+                <div class="modal-body" id="HTML_INFORME_EVENTOS_ADVERSOS"></div>
+                <div class="modal-footer" style="text-align:end;">
+                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="title" style="color:#e34f49">
-                    <b>INFORMACI&Oacute;N DE ETIQUETA</b>
-                </h4>
-            </div>
-            <div class="modal-body" id="HTML_INFORMACION_ETIQUETA"></div>
-            <div class="modal-footer" style="text-align:end;">
-                <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                    <i class="fa fa-window-close" aria-hidden="true"></i>
-                </button>
+
+    <div class="container_2" style="display:none" >
+        <div class="item-a">HEADER</div>
+        <div class="item-b">MAIN</div>
+        <div class="item-c">SIDEBAR</div>
+        <div class="item-d">FOOTER</div>
+    </div>
+
+    <div class="modal fade" id="modal_vista_zpl_to_pdf">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="title" style="color:#e34f49">
+                        <b>ETIQUETA EN PDF</b>
+                    </h4>
+                </div>
+                <div class="modal-body" id="html_vista_zpl_to_pdf">
+                    <ul class="nav nav-tabs" role="tablist" id="ul_nav_tabs"></ul>
+                    <div class="tab-content" id="tabs_tab_panel"></div>
+                </div>
+                <div class="modal-footer" style="text-align:end;">
+                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="MODAL_INFORME_EVENTOS_ADVERSOS">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="title" style="color:#e34f49">
-                    <b>INFORMACI&Oacute;N DE ANTECEDENTES ADVERSOS</b>
-                </h4>
-            </div>
-            <div class="modal-body" id="HTML_INFORME_EVENTOS_ADVERSOS"></div>
-            <div class="modal-footer" style="text-align:end;">
-                <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                    <i class="fa fa-window-close" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="container_2" style="display:none" >
-    <div class="item-a">HEADER</div>
-    <div class="item-b">MAIN</div>
-    <div class="item-c">SIDEBAR</div>
-    <div class="item-d">FOOTER</div>
-</div>
+    <button type="button" class="btn btn-success btn-fill" id="BTN_DELETE_AP_GESPAB" onclick="consulta_(1927)" style="display:none">HOJA FAPH</button>
+    <a href="#" class="btn-flotante" style="display:none">CONEXI&Oacute;N WEBSOCKET</a>
+    <div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
+    <form id="load_confirma_envio_recepcion" method="post" action="#"></form>
+    <button type="button" class="btn btn-success btn-fill" id="btn_" onclick="test_envio()" style="display:none">TEST ENVIO</button>
 
-<div class="modal fade" id="modal_vista_zpl_to_pdf">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="title" style="color:#e34f49">
-                    <b>ETIQUETA EN PDF</b>
-                </h4>
-            </div>
-            <div class="modal-body" id="html_vista_zpl_to_pdf">
-                <ul class="nav nav-tabs" role="tablist" id="ul_nav_tabs"></ul>
-                <div class="tab-content" id="tabs_tab_panel"></div>
-            </div>
-            <div class="modal-footer" style="text-align:end;">
-                <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                    <i class="fa fa-window-close" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<button type="button" class="btn btn-success btn-fill" id="BTN_DELETE_AP_GESPAB" onclick="consulta_(1927)" style="display:none">HOJA FAPH</button>
-<a href="#" class="btn-flotante" style="display:none">CONEXI&Oacute;N WEBSOCKET</a>
-<div class= "info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
-<form id="load_confirma_envio_recepcion" method="post" action="#"></form>
-<button type="button" class="btn btn-success btn-fill" id="btn_" onclick="test_envio()" style="display:none">TEST ENVIO</button>
-
-<style>
-    @media(min-width    :   900px){
-        .modal_xl_traza   {
-            width       :   98%;
-            height      :   85%;
-            max-width   :   90%;
+    <style>
+        @media(min-width    :   900px){
+            .modal_xl_traza   {
+                width       :   98%;
+                height      :   85%;
+                max-width   :   90%;
+            }
         }
-    }
-</style>
+    </style>
 
-<div class="modal fade" id="modal_trazabilidad_biopsias">
-    <div class="modal-dialog modal_xl_traza">
-	    <div class="modal-content">
-	        <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	            <h4 class="title" style="color:#e34f49"><i class="fa fa-database" aria-hidden="true"></i>&nbsp;<b>TRAZABILIDAD DE BIOPSIAS</b></h4>
-            </div>
-            <div class="modal-body" id="html_trazabilidad_biopsias"></div>
-            <div class="modal-footer" style="text-align:end;">
-                <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                    <i class="fa fa-window-close" aria-hidden="true"></i>
-                </button>
+    <div class="modal fade" id="modal_trazabilidad_biopsias">
+        <div class="modal-dialog modal_xl_traza">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="title" style="color:#e34f49"><i class="fa fa-database" aria-hidden="true"></i>&nbsp;<b>TRAZABILIDAD DE BIOPSIAS</b></h4>
+                </div>
+                <div class="modal-body" id="html_trazabilidad_biopsias"></div>
+                <div class="modal-footer" style="text-align:end;">
+                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
+
+    <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">GESTI&Oacute;N DE MUESTRAS ANATOM&Iacute;A</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_INFORMACION_ETIQUETA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
