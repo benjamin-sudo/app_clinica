@@ -2890,17 +2890,20 @@ function busqueda_etiquera(from,solicitud,array){
     } else if(from                  === 3){
         get_etiqueta                =   'S'+solicitud;
     }
-    console.log("----------------busqueda_etiquera------------------"); 
-    console.log("from               =>  ",from,"                    ");
-    console.log("solicitud          =>  ",solicitud,"               ");
-    console.log("get_etiqueta       =>  ",get_etiqueta,"            ");
-    console.log("array              =>  ",array,"                   ");
-    console.log("NUM_FASE           =>  ",$("#NUM_FASE").val(),"    ");
-    console.log("txt_busq_muestra   =>  ",txt_busq_muestra,"        ");
-    console.log("---------------------------------------------------"); 
+    
+    console.log("   ----------------------------------------------------    ");
+    console.log("   ----------------    busqueda_etiquera   ------------    "); 
+    console.log("   from               =>  ",from,"                         ");
+    console.log("   solicitud          =>  ",solicitud,"                    ");
+    console.log("   get_etiqueta       =>  ",get_etiqueta,"                 ");
+    console.log("   array              =>  ",array,"                        ");
+    console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
+    console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
+    console.log("   ----------------------------------------------------    ");
+    
     $.ajax({ 
         type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/informacion_x_muestra_grupal",
+        url                 :   "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",
         dataType            :   "json",
         beforeSend          :   function(xhr)   {   
                                                     console.log("load informacion_x_muestra_grupal ->",xhr);   
