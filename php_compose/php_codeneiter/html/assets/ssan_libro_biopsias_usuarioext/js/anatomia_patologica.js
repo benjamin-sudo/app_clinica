@@ -2242,7 +2242,6 @@ function pdf_rechazomuestra(id_anatomia){
                                                         }
                                                    }, 
    });
-   //actualiza panel
    return true;
 }
 
@@ -2251,50 +2250,50 @@ function pdf_recepcion_ok(id_anatomia){
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_spab_gestionlistaquirurgica/pdf_recepcion_anatomia_pat_ok",
-        dataType        :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        console.log("generando PDF recepcion ok");
-                                                        $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
-                                                    },
-        data 		:       
-                                                    { 
-                                                        id : id_anatomia,
-                                                    },
-        error		:   function(errro)         { 
-							$('#loadFade').modal('hide');
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
-                                                    },
-        success		:   function(aData)         { 
-							$('#loadFade').modal('hide');
-                                                        if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","Clinica Libre");
-                                                            return false;
-                                                        } else {
-                                                            $("#Dv_verdocumentos").modal("show");
-                                                            var base64str           =   aData["PDF_MODEL"];
-                                                            //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                            var binary              =   atob(base64str.replace(/\s/g,''));
-                                                            var len                 =   binary.length;
-                                                            var buffer              =   new ArrayBuffer(len);
-                                                            var view                =   new Uint8Array(buffer);
-                                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                            //console.log("view->",view);
-                                                            //create the blob object with content-type "application/pdf"  
-                                                            var blob                =   new Blob([view],{type:"application/pdf"});
-                                                            var blobURL             =   URL.createObjectURL(blob);
-                                                            //console.log("BlobURL->",blobURL);
-                                                            Objpdf                  =   document.createElement('object');
-                                                            Objpdf.setAttribute('data',blobURL);
-                                                            Objpdf.setAttribute('width','100%');
-                                                            Objpdf.setAttribute('style','height:700px;');
-                                                            Objpdf.setAttribute('title','PDF');
-                                                            $('#PDF_VERDOC').html(Objpdf);
-                                                        }
-                                                   }, 
+        dataType    :   "json",
+        beforeSend	:   function(xhr)   {   
+                                            console.log(xhr);
+                                            console.log("generando PDF recepcion ok");
+                                            $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
+                                        },
+        data 		:                   { 
+                                            id : id_anatomia,
+                                        },
+        error		:   function(errro) { 
+                                            $('#loadFade').modal('hide');
+                                            console.log("quisas->",errro,"-error->",errro.responseText); 
+                                            $("#protocoloPabellon").css("z-index","1500"); 
+                                            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                            $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+                                        },
+
+        success		:   function(aData) { 
+                                            $('#loadFade').modal('hide');
+                                            if(!aData["STATUS"]){
+                                                jError("error al cargar protocolo PDF","Clinica Libre");
+                                                return false;
+                                            } else {
+                                                $("#Dv_verdocumentos").modal("show");
+                                                var base64str           =   aData["PDF_MODEL"];
+                                                //decode base64 string, Eliminar espacio para compatibilidad con IE
+                                                var binary              =   atob(base64str.replace(/\s/g,''));
+                                                var len                 =   binary.length;
+                                                var buffer              =   new ArrayBuffer(len);
+                                                var view                =   new Uint8Array(buffer);
+                                                for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                                //console.log("view->",view);
+                                                //create the blob object with content-type "application/pdf"  
+                                                var blob                =   new Blob([view],{type:"application/pdf"});
+                                                var blobURL             =   URL.createObjectURL(blob);
+                                                //console.log("BlobURL->",blobURL);
+                                                Objpdf                  =   document.createElement('object');
+                                                Objpdf.setAttribute('data',blobURL);
+                                                Objpdf.setAttribute('width','100%');
+                                                Objpdf.setAttribute('style','height:700px;');
+                                                Objpdf.setAttribute('title','PDF');
+                                                $('#PDF_VERDOC').html(Objpdf);
+                                            }
+                                        }, 
    });
 }
 

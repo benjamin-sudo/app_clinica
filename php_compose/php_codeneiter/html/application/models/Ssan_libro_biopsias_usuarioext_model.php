@@ -516,46 +516,48 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 $html_tooltip2          =   '';
                 if($row['ID_HISTO_ESTADO']!=1){
                     //error
-                    $html_tooltip2      =   '<div class="grid_tooltip">
+                    $html_tooltip2      =   '
+                                            <div class="grid_tooltip">
                                                 <div class="grid_11">'.$row['TXT_HISTO_ESTADO'].'</div>
                                                 <div class="grid_12">'.$row['TXT_NAMEAUDITA'].'</div>
                                                 <div class="grid_13">RUT</div>
                                                 <div class="grid_14">'.$row['LAST_USR_AUDITA'].'</div>
                                                 <div class="grid_15">FECHA/HORA</div>
                                                 <div class="grid_16">'.$row['LAST_DATE_AUDITA'].'</div>
-                                             </div>';
+                                            </div>
+                                        ';
                 }
                 $INFORMACION        =   '';
                         if($row['ID_HISTO_ESTADO'] == 1){
                             #('.$row['ID_HISTO_ESTADO'].')
                     $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';       
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-default parpadea"       style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
+                    $INFORMACION    .=   '<button class="btn btn-fill cssmain btn-default parpadea"       style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
                     $INFORMACION    .=   '</div>';
                 } else  if($row['ID_HISTO_ESTADO'] == 2){
                     $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-warning"               style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
+                    $INFORMACION    .=   '<button class="btn btn-fill cssmain btn-warning"               style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
                     $color_estado       =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
                     $txt_estado         =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"              aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION    .=   '<button class="btn btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
                     $INFORMACION    .=   '</div>';
                 } else  if($row['ID_HISTO_ESTADO'] == 3){
                     $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-info parpadea"         style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;EN TRASPORTE</button>';
+                    $INFORMACION    .=   '<button class="btn btn-fill cssmain btn-info parpadea"         style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;EN TRASPORTE</button>';
                     $color_estado       =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
                     $txt_estado         =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"              aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION    .=   '<button class="btn btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
                     $INFORMACION    .=   '</div>';
                 } else if($row['ID_HISTO_ESTADO'] == 4){
                     $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-success"               style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCIONADA</button>';
+                    $INFORMACION    .=   '<button class="btn btn-fill cssmain btn-success"               style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCIONADA</button>';
                     $color_estado       =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
                     $txt_estado         =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"              aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION    .=   '<button class="btn btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
                     $INFORMACION    .=   '</div>';
                 } else if($row['ID_HISTO_ESTADO'] == 5){
-                    $INFORMACION    =   '<button class="btn btn-xs btn-fill cssmain btn-danger"                 style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger"                 style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
                 } else {
-                    $INFORMACION    =   '<button class="btn btn-xs btn-fill cssmain btn-danger"                 style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger"                 style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
                 }
                 
                 $disabled           =   '';
@@ -569,7 +571,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                             type                =   "button" 
                                             data-toggle         =   "popover"
                                             data-placement      =   "left"
-                                            class               =   "'.$disabled.' btn btn-xs btn-fill btn-danger class_htrazabilidad '.$ID_MAIN_AP.'"
+                                            class               =   "'.$disabled.' btn btn-small btn-fill btn-danger class_htrazabilidad '.$ID_MAIN_AP.'"
                                             id                  =   "btn_trabilidad_'.$ID_MAIN_AP.'"';
                     $btn_trazabilidad       .=  $ID_MAIN_AP!=''?'onclick    =   "js_htraxabilidad('.$ID_MAIN_AP.')"':'';
                     $btn_trazabilidad       .=      '>
@@ -587,10 +589,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                         <div class="text-center">'.$row['RUTPACIENTE'].'</div>
                                                         <div class="">'.$row['NOMBRE_COMPLETO'].'</div>
                                                         <div class="">'.$row['TXT_DIAGNOSTICO'].'</div>
-                                                        <div class="">'.$row['NOM_PROFE_CORTO'].'</div>';
-                                    $html      .=       '<div class="">'.$row['TIPO_DE_BIOPSIA'].'</div>';
-                                    $html      .=       '<div class="text-center">'.$INFORMACION.'</div>';
-
+                                                        <div class="">'.$row['NOM_PROFE_CORTO'].'</div>
+                                                        <div class="">'.$row['TIPO_DE_BIOPSIA'].'</div>
+                                                        <div class="text-center">'.$INFORMACION.'</div>';
 
                                     #BOTON SOLICITUD DE ANATOMIA PATOLOGICA
                                     $html       .=      '<div class="text-center">';
@@ -603,7 +604,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                                 type                    =   "button" 
                                                                 data-toggle             =   "popover"
                                                                 data-placement          =   "left"
-                                                                class                   =   "'.$disabled.' btn btn-xs btn-success btn-fill BTN_IMPRIME_ETIQUETA_ANATOMIA_'.$ID_MAIN_AP.'"
+                                                                class                   =   "'.$disabled.' btn btn-small btn-success btn-fill BTN_IMPRIME_ETIQUETA_ANATOMIA_'.$ID_MAIN_AP.'"
                                                                 id                      =   "BTN_IMPRIME_ETIQUETA_ANATOMIA_'.$ID_MAIN_AP.'"';
                                         $html       .=  $ID_MAIN_AP!=''?'onclick        =   "popover_etiquetas(this.id,'.$ID_MAIN_AP.')"':'';
                                         $html       .=      '';
@@ -617,7 +618,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     #$html       .=      '-';
                                         $html       .=      '<button 
                                                                 type                    =   "button" 
-                                                                class                   =   "'.$disabled.' btn btn-xs btn-info btn-fill"
+                                                                class                   =   "'.$disabled.' btn btn-small btn-info btn-fill"
                                                                 id                      =   "BTN_IMPRIME_ETIQUETA_ANATOMIA"';
                                         $html   .=  $ID_MAIN_AP!=''?'onclick            =   "IMPRIME_ETIQUETA_ANATOMIA('.$ID_MAIN_AP.')"':'';
                                         $html       .=          ' 
@@ -634,7 +635,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     $html       .=      '<div class="text-center">
                                                             <button 
                                                                 type                    =   "button" 
-                                                                class                   =   "btn btn-xs btn-warning btn-fill '.$disabled.'" 
+                                                                class                   =   "btn btn-small btn-warning btn-fill '.$disabled.'" 
                                                                 id                      =   "PRE_GET_PDF_ANATOMIA_PRE"';
                                     #if($disabled!='disabled'){
                                     $html       .=             'onclick                 =   "PRE_GET_PDF_ANATOMIA('.$ID_MAIN_AP.')"';
@@ -645,8 +646,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                                 title                   =   "PDF anatom&iacute;a patol&oacute;gica" 
                                                                 data-html               =   "true"
                                                                 ';
-                                    
-                                    
                                     $html       .=         '><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                                             </button>
                                                         </div>
@@ -657,19 +656,17 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2){
                                         //if($row['IND_DERIVACION_IC'] == 0){
                                             $html   .=      '<input 
-                                                                type        ="checkbox" 
-                                                                class       ="form-check-input marcado_custoria_trasporte checkbox_'.$ID_MAIN_AP.'" 
-                                                                id          ="CHEK_'.$ID_MAIN_AP.'" 
-                                                                style       ="display:block;cursor:pointer;margin-left:16px;margin-bottom: 3px;" 
-                                                                onchange    ="js_muestra_indivual('.$ID_MAIN_AP.');" value="'.$ID_MAIN_AP.'">';
+                                                                type        =   "checkbox" 
+                                                                class       =   "form-check-input marcado_custoria_trasporte checkbox_'.$ID_MAIN_AP.'" 
+                                                                id          =   "CHEK_'.$ID_MAIN_AP.'" 
+                                                                style       =   "display:block;cursor:pointer;margin-left:10px;margin-top:-7px;" 
+                                                                onchange    =   "js_muestra_indivual('.$ID_MAIN_AP.');" value="'.$ID_MAIN_AP.'">';
                                         //} else {
                                            //$html       .=  'IC';
                                         //}
                                     } else {
-                                      
-
+                                        #INFORMACION
                                     }
-
                                     #$html       .=      $row['ID_HISTO_ZONA'];
                                     #ID_HISTO_ZONA
                                     #if($row['ID_HISTO_ZONA'] == 8){ }
@@ -1078,6 +1075,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 $v_txt_derivado         =   $row['TXT_EMPRESA_DERIVADO']==''?'':'<span class="label label-warning">'.$row['TXT_EMPRESA_DERIVADO'].'</span> | ';
                 #html li
                 $HTML                   .=      '
+                
                                         <li class="gespab_group list-group-item LISTA_BODY_'.$CALL_FASE.'" >
                                             <div class="CSS_GRID_CIRUGIA_FASE_1" 
                                                 id                      =   "DATA_'.$row['ID_SOLICITUD'].'"

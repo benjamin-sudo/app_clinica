@@ -71,8 +71,10 @@
         </div>
     </div>
 </div>
+
 <hr style="margin: 10px 0px 0px 0px;">
-<ul id="LI_LISTA_MAIN" class="list-group list-group-flush" style="margin-bottom:0px;padding:9px;">
+
+<ul id="LI_LISTA_MAIN" class="list-group" style="margin-bottom:0px;padding:9px;">
     <div class="CSS_GRID_EXTERNO_HEAD">
         <div class="div_1">
             <li class="gespab_group list-group-item list-group-item-primary active text-center" style="border-bottom-right-radius:0px;border-bottom-left-radius:0px;">

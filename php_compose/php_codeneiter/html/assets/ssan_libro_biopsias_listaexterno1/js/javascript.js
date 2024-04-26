@@ -118,8 +118,8 @@ function update_main(value){
                                         },
         error		:   function(errro)	{  
                                             $('#loadFade').modal('hide');
+                                            console.log("errro   ->  ",errro); 
                                             jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre");
-                                            console.log("   errro          ->  ",errro); 
                                         },
         success		:   function(aData)	{   
                                             console.log("   ************************************    ");
@@ -127,6 +127,7 @@ function update_main(value){
                                             console.log("   ind_ruta        ->   ",ind_ruta,"       ");
                                             console.log("   IND_TEMPLETE    ->   ",IND_TEMPLETE,"   ");
                                             console.log("   ************************************    ");
+
                                             $('#loadFade').modal('hide');
                                             $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
                                             $("#LI_LISTA_MAIN").append(aData.STATUS_OUT.html_exteno);
@@ -141,5 +142,4 @@ function update_main(value){
                                             }
                                         }, 
     });
-
 }

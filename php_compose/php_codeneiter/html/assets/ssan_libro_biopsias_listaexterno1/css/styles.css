@@ -19,8 +19,9 @@
 
 .CSS_GRID_PUNTO_ENTREGA_EXT     {
     display                     :   grid;
-    grid-template-columns       :   3% 4% 6% 16% 16% 12% 10% 18% 3% 3% 3% 3% 3%;
+    grid-template-columns       :   3% 4% 6% 16% 16% 12% 10% 15% 3% 3% 3% 3% 3%;
     align-items                 :   center;
+    gap                         :   3px
 }
 
 .grid_tooltip                   {
