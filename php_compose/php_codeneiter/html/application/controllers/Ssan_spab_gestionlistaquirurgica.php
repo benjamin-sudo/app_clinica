@@ -3129,47 +3129,7 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         )));
     }
     
-    ########################################################################
-    #LEYENDA
-    ########################################################################
-    #CONTEMPOREANA          :   2
-    #DIFERIDA               :   3
-    #BIOPSIA + CITOLOGIA    :   4   =   V_LAST_NUMERO     
-    ########################################################################
-    #BIOPSIA + CITOLIGIA    :   4                 
-    #CITOLOGIA              :   5   =   NUM_CO_CITOLOGIA  
-    ########################################################################
-    #PAP                    :   6   =   NUM_CO_PAP 
-    ########################################################################
-    public function ultimo_numero_disponible(){
-        if(!$this->input->is_ajax_request()){   show_404(); }
-        $status                         =   true;
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
-        $data_number                    =   $this->ssan_libro_biopsias_usuarioext_model->model_ultimo_numero_disponible(array(
-            "val_empresa"               =>  $empresa,
-            "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
-        ));
-        $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'data_numero'               =>  $data_number,
-        )));
-    }
-    
-    public function ultimo_numero_disponible_citologia(){
-        if(!$this->input->is_ajax_request()){   show_404(); }
-        $status                         =   true;
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
-        $data_number                    =   $this->ssan_libro_biopsias_usuarioext_model->model_ultimo_numero_disponible_citologia(array(
-            "val_empresa"               =>  $empresa,
-            "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
-        ));
-        $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'data_numero'               =>  $data_number,
-        )));
-    }
+  
     
     public function fn_gestion_tomamuestraxuser(){
         if(!$this->input->is_ajax_request()){   show_404(); }

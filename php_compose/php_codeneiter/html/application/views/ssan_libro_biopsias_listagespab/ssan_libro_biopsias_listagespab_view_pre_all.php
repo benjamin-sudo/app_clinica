@@ -136,10 +136,20 @@
         justify-items                   :   start;
         align-items                     :   center;
     }
+
+    .grid_numero_interno                {
+        display                         :   grid;
+        grid-template-columns           :   auto 30px 1fr 10px;
+        align-items                     :   center;
+        justify-items                   :   flex-start;
+        margin-top: 25px;
+    }
+
 </style>
+
     <div class="CSS_GRID_HEAD_MUESTRA">
         <div class="card_local CSS_GRID_HEAD_MUESTRA1">
-            <div class="grid_table_anatomia">
+            <div class="card grid_table_anatomia">
                 <div class="grid_cell nombre">
                     <div class="cell_content"><b style="color:#888888;"><?php echo $DATA['TXTNOMCIRUSMALL'];?></b></div>
                 </div>
@@ -154,6 +164,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card_local CSS_GRID_HEAD_MUESTRA2">
             
             <div class="grid_item_center">
@@ -229,24 +240,15 @@
             
         </div>
     </div>
-    <style>
-        .grid_numero_interno        {
-            display                 :   grid;
-            grid-template-columns   :   1fr 10px 1fr 10px;
-            align-items             :   center;
-            justify-items           :   flex-start;
-            margin-bottom           :   8px;
-            margin-top              :   8px;
-        }
-    </style>
+
+    <br>
+
     <?php if($FASE == 2) {  ?>
-    
         <input type="hidden" id="V_IND_TIPO_BIOPSIA" name="V_IND_TIPO_BIOPSIA"  value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
-    
         <div class="grid_numero_interno">
             <div class="grid_numero_interno1">
-                <fieldset class="fieldset_local">
-                    <legend class="legend"><i class="fa fa-search" aria-hidden="true"></i>
+                <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
+                    <h5 style="color:#888888;">
                         <?php if ($DATA['IND_TIPO_BIOPSIA'] == 2 || $DATA['IND_TIPO_BIOPSIA'] == 3 || $DATA['IND_TIPO_BIOPSIA'] == 4){ ?>
                             &nbsp;N&deg; DE BIOPSIA
                         <?php } else if ($DATA['IND_TIPO_BIOPSIA'] == 5 ){?>
@@ -254,10 +256,10 @@
                         <?php } else if ($DATA['IND_TIPO_BIOPSIA'] == 6 ){?>
                             &nbsp;N&deg; PAP
                         <?php } ?>
-                    </legend>
-                    <div id="date_tabla2" class="input-group" style="width:200px;padding:8px;">
-                        <span class="input-group-addon"><span class="fa fa-info-circle"></span></span>
-                        <input type="number" class="form-control input-sm" id="num_interno" name="num_interno"  value=""/>
+                    </h5>
+                    <div class="input-group mb-3"  id="date_tabla2">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno" name="num_interno"  value="">
                     </div>
                 </fieldset>
             </div>
@@ -265,7 +267,7 @@
                 <input type="hidden" id="ind_tipo_biopsia" name="ind_tipo_biopsia" value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
             </div>
             <div class="grid_numero_interno3">
-                <button type="button" class="btn btn-info btn-xs btn-fill" id="btn_last_number_diponible" onclick="busqueda_numero_disponible(<?php echo $DATA['IND_TIPO_BIOPSIA'];?>)">
+                <button type="button" class="btn btn-info btn-fill" id="btn_last_number_diponible" onclick="busqueda_numero_disponible(<?php echo $DATA['IND_TIPO_BIOPSIA'];?>)">
                     <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;ULTIMO N&deg; 
                     <?php if ($DATA['IND_TIPO_BIOPSIA'] == 2 || $DATA['IND_TIPO_BIOPSIA'] == 3 || $DATA['IND_TIPO_BIOPSIA'] == 4){ ?>
                         &nbsp;BIOPSIA
@@ -280,14 +282,15 @@
                 &nbsp;
             </div>
         </div>
+
         <?php if ($DATA['IND_TIPO_BIOPSIA'] == 4) { ?>
             <div class="grid_numero_interno">
                 <div class="grid_numero_interno1">
-                    <fieldset class="fieldset_local">
-                        <legend class="legend"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;N&deg; CITOLOG&Iacute;A</legend>
-                        <div id="date_tabla2" class="input-group" style="width:200px;padding:8px;">
-                            <span class="input-group-addon"><span class="fa fa-info-circle"></span></span>
-                            <input type="number" class="form-control input-sm" id="num_interno_cito" name="num_interno_cito"  value=""/>
+                    <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
+                        <h5 style="color:#888888;">&nbsp;N&deg; CITOLOG&Iacute;A</h5>
+                        <div class="input-group mb-3"  id="date_tabla2">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                            <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno_cito" name="num_interno_cito"  value="">
                         </div>
                     </fieldset>
                 </div>
@@ -295,7 +298,7 @@
                     <input type="hidden" id="ind_tipo_biopsia" name="ind_tipo_biopsia" value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
                 </div>
                 <div class="grid_numero_interno3">
-                    <button type="button" class="btn btn-info btn-xs btn-fill" id="btn_last_number_diponible" onclick="busqueda_numero_disponible_citologia(<?php echo $DATA['IND_TIPO_BIOPSIA'];?>)">
+                    <button type="button" class="btn btn-info btn-fill" id="btn_last_number_diponible" onclick="busqueda_numero_disponible_citologia(<?php echo $DATA['IND_TIPO_BIOPSIA'];?>)">
                         <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;ULTIMO N&deg; CITOLOGICO 
                     </button>
                 </div>
@@ -309,7 +312,6 @@
     <?php   }   ?>
    
     <br>
-   
     <!-- GESTION DE MUESTRAS ANATOMIA -->
     <?php if(count($P_ANATOMIA_PATOLOGICA_MUESTRAS)>0){  ?>    
             <div class="card" style="margin-bottom: 5px;padding: 16px;">
@@ -617,14 +619,13 @@
                                 <input type="radio" name="fav_language" id="ind_rechazo" style="display:block;cursor:pointer;margin: 0px 0px 5px 0px;" onclick="js_vista_opcion(this.id)" value="1">
                             </div>
                         </div>
-                        
                         <div class="css_grid_password_recepcion">
                             <div class="css_grid_password_recepcion1">
-                                <fieldset class="fieldset_local">
-                                    <legend class="legend" style="margin-left:8px;">FIRMA SIMPLE TRASPORTE</legend>
-                                    <div id="date_tabla2" class="input-group center-block" style="width:210px;padding:6px;">
-                                        <span class="input-group-addon"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
-                                        <input type="password" class="form-control input-sm" id="firma_simple_trasporte" name="firma_simple_trasporte"  value=""/>
+                                <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
+                                    <h5 style="color:#888888;">FIRMA UNICA TRASPORTE</h5>
+                                    <div class="input-group mb-3"  id="date_tabla2">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                                        <input type="password" class="form-control" placeholder="Firma Quien Trasporta" aria-label="Username" aria-describedby="basic-addon1" id="firma_simple_trasporte" name="firma_simple_trasporte"  value="">
                                     </div>
                                 </fieldset>
                             </div>
@@ -636,17 +637,17 @@
                                 </a>
                             </div>
                             <div class="css_grid_password_recepcion2">
-                                <fieldset class="fieldset_local">
-                                    <legend class="legend" style="margin-left:8px;">FIRMA SIMPLE RECEPCI&Oacute;N</legend>
-                                    <div id="date_tabla2" class="input-group center-block" style="width:210px;padding:6px;">
-                                        <span class="input-group-addon"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
-                                        <input type="password" class="form-control input-sm" id="firma_simple_recepcion" name="firma_simple_recepcion"  value=""/>
+                                <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
+                                    <h5 style="color:#888888;">FIRMA UNICA RECEPCI&Oacute;N</h5>
+                                    <div class="input-group mb-3"  id="date_tabla2">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                                        <input type="password" class="form-control" placeholder="Firma quien recepciona" aria-label="Username" aria-describedby="basic-addon1" id="firma_simple_recepcion" name="firma_simple_recepcion"  value="">
                                     </div>
                                 </fieldset>
                             </div>
                             <div class="css_grid_password_recepcion3">
                                 <div class="btn-group">
-                                    <button class="btn btn-xs btn-fill btn-success all_solicitudes_recepcion toolpit_local" onclick="confirma_recepcion(<?php echo $DATA["ID_SOLICITUD"];?>)">
+                                    <button class="btn btn-fill btn-success all_solicitudes_recepcion toolpit_local" onclick="confirma_recepcion(<?php echo $DATA["ID_SOLICITUD"];?>)">
                                         <i class="fa fa-check" aria-hidden="true"></i><span class="toolpit_local_txt"><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Confirma recepci&oacute;n de muestras</span>
                                     </button>
                                 </div>

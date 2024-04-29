@@ -751,8 +751,17 @@ CREATE TABLE ADMIN.PB_LINETIME_HISTO (
 
 
 
+
+
+
+
+
+
+
+
 COMMIT;
 /
+
 
 -------------------------------------
 -- ZONA PROCEDIMIENTOS ALMACENADOS --

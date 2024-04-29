@@ -11,14 +11,14 @@ $(document).ready(function(){
         var _height = $(window).height()*0.8;
         $('.modal .modal-body').css('max-height',_height);
         $('.modal .modal-body').css('min-height',_height);
-        document.getElementById("get_etiqueta").disabled    =   true;
+        //document.getElementById("get_etiqueta").disabled    =   true;
         //$('#get_etiqueta_modal').focus();
         //document.getElementById("get_etiqueta_modal").focus();
     });
 
     $('#MODAL_INFORMACION_ETIQUETA').on('hidden.bs.modal',function(e){ 
         console.log("e  ->  ",e);
-        document.getElementById("get_etiqueta").disabled    =   false;
+        //document.getElementById("get_etiqueta").disabled    =   false;
         $('.popover').popover('hide');
         $("#HTML_INFORMACION_ETIQUETA").html(''); 
     });
@@ -189,13 +189,13 @@ function busqueda_numero_disponible(tipo_biopsia){
     console.log("tipo_biopsia   ->  ",tipo_biopsia);
     $.ajax({ 
         type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/ultimo_numero_disponible",
+        url                 :   "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible",
         dataType            :   "json",
         beforeSend          :   function(xhr)   {   
                                                     console.log("xhr->",xhr);
                                                 },
         data                :                   {   tipo_biopsia : tipo_biopsia },
-        error		    :   function(errro) { 
+        error		        :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
                                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
@@ -215,7 +215,7 @@ function busqueda_numero_disponible_citologia(tipo_biopsia){
     console.log("tipo_biopsia   ->  ",tipo_biopsia);
     $.ajax({ 
         type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/ultimo_numero_disponible_citologia",
+        url                 :   "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
         dataType            :   "json",
         beforeSend          :   function(xhr)   {   
                                                     console.log("xhr->",xhr);
@@ -2875,10 +2875,12 @@ function pre_busqueda(from,solicitud){
 
 //busqueda principal = individual
 function busqueda_etiquera(from,solicitud,array){
+    
     console.log("-------------------busqueda_etiquera----------------------");
     console.log("from               ->  ",from);
     console.log("solicitud          ->  ",solicitud);
     console.log("array              ->  ",array);
+
     var get_etiqueta                =   '';
     var txt_busq_muestra            =   false;
     if(from                         === 0){
@@ -2891,6 +2893,7 @@ function busqueda_etiquera(from,solicitud,array){
         get_etiqueta                =   'S'+solicitud;
     }
     
+    /*
     console.log("   ----------------------------------------------------    ");
     console.log("   ----------------    busqueda_etiquera   ------------    "); 
     console.log("   from               =>  ",from,"                         ");
@@ -2900,7 +2903,8 @@ function busqueda_etiquera(from,solicitud,array){
     console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
     console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
     console.log("   ----------------------------------------------------    ");
-    
+    */
+   
     $.ajax({ 
         type                :   "POST",
         url                 :   "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",

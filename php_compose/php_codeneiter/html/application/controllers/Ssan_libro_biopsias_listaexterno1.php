@@ -2,7 +2,7 @@
 
 class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
 
-    function __construct() {
+    function __construct(){
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_libro_biopsias_listaexterno1_model");
@@ -196,7 +196,8 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                 -->
                 
                 <div class="CSS_GRID_ETIQUETA_HEARD" style=" margin-bottom:15px;">
-                    <div class="CSS_GRID_ETIQUETA_HEARD1 FLEX_CENTER">
+                    <div class="CSS_GRID_ETIQUETA_HEARD1 FLEX_CENTER" style="display:none">
+
                         <fieldset class="fieldset_local">
                             <legend class="legend"><i class="fa fa-search" aria-hidden="true"></i> ETIQUETAS</legend>
                             <div id="date_tabla2" class="input-group" style="width:200px;padding:8px;">
@@ -210,6 +211,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                              </div>
                              <script>document.getElementById("get_etiqueta_modal").focus();</script>
                         </fieldset>
+
                     </div>
                     <div class="CSS_GRID_ETIQUETA_HEARD2 FLEX_CENTER" style="text-align:end">';  
                     #
@@ -284,6 +286,52 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
 
 
 
+    ########################################################################
+    #LEYENDA
+    ########################################################################
+    #CONTEMPOREANA          :   2
+    #DIFERIDA               :   3
+    #BIOPSIA + CITOLOGIA    :   4   =   V_LAST_NUMERO     
+    ########################################################################
+    #BIOPSIA + CITOLIGIA    :   4                 
+    #CITOLOGIA              :   5   =   NUM_CO_CITOLOGIA  
+    ########################################################################
+    #PAP                    :   6   =   NUM_CO_PAP 
+    ########################################################################
+    public function ultimo_numero_disponible(){
+        if(!$this->input->is_ajax_request()){   show_404(); }
+        $status                         =   true;
+        $empresa                        =   $this->session->userdata("COD_ESTAB");
+        $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
+        $data_number                    =   $this->Ssan_libro_biopsias_usuarioext_model->model_ultimo_numero_disponible(array(
+            "val_empresa"               =>  $empresa,
+            "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
+        ));
+        $this->output->set_output(json_encode(array(
+            'status'                    =>  $status,
+            'data_numero'               =>  $data_number,
+        )));
+    }
+    
+    public function ultimo_numero_disponible_citologia(){
+        if(!$this->input->is_ajax_request()){   show_404(); }
+        $status                         =   true;
+        $empresa                        =   $this->session->userdata("COD_ESTAB");
+        $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
+        $data_number                    =   $this->Ssan_libro_biopsias_usuarioext_model->model_ultimo_numero_disponible_citologia(array(
+            "val_empresa"               =>  $empresa,
+            "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
+        ));
+        $this->output->set_output(json_encode(array(
+            'status'                    =>  $status,
+            'data_numero'               =>  $data_number,
+        )));
+    }
 
+
+
+
+
+    
 }
 ?>

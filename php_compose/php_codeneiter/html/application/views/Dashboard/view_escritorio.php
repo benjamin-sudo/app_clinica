@@ -27,9 +27,6 @@
   <!--
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min2.css">
   -->
-  <!--
-  <link type="text/css" rel="stylesheet" href="https://www.esissan.cl/assets/themes/css/easyAutocomplete/dist/easy-autocomplete.min.css"  />
-  -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/autocomplete.css"  />
   <link type="text/css" rel="stylesheet" href="assets/recursos/css//easy-autocomplete.css"  />
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.min.css"  />
