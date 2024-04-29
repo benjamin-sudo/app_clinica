@@ -2108,7 +2108,7 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
 
 function js_vista_opcion(ind_id){
     $("#firma_simple_trasporte,#firma_simple_recepcion,#firma_simple_rechaza,#txt_observacion_rechazo").val('');
-    $("#firma_simple_trasporte,#firma_simple_recepcion,#firma_simple_rechaza,#txt_observacion_rechazo").css("border-color","");  
+    $("#firma_simple_trasporte,#firma_simple_recepcion,#firma_simple_rechaza,#txt_observacion_rechazo").css("border-color","");
     if(ind_id === 'ind_rechazo'){
         $(".css_grid_password_recepcion").hide();
         $(".css_panel_rechazo").show();
