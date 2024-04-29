@@ -328,9 +328,17 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         )));
     }
 
-
-
-
+    public function ver_valida_firma_simple(){
+        if(!$this->input->is_ajax_request()){   show_404(); }
+        $status                         =   true;
+        $contrasena                     =   $this->input->post('contrasena');
+        $valida                         =   $this->Ssan_libro_biopsias_usuarioext_model->validaClave($contrasena);
+        $this->output->set_output(json_encode(array(
+            'contrasena'                =>  $contrasena,
+            'status'                    =>  $status,
+            'valida'                    =>  $valida,
+        )));
+    }
 
     
 }

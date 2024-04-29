@@ -3177,35 +3177,37 @@ function js_limpia_panel(){
 
 function js_validafirma(txt_firma_simple){
     var txt_valida_firma = $("#"+txt_firma_simple).val();
+    
     console.log("----------------------------------------");
     console.log("txt_valida_firma   ->  ",txt_valida_firma);
     console.log("txt_firma_simple   ->  ",txt_firma_simple);
+
     if(txt_valida_firma == ''){
         showNotification('top','center','Firma simple vacia',4,'fa fa-info');
         return false;
     }
     $.ajax({ 
         type		:   "POST",
-        url 		:   "ssan_spab_gestionlistaquirurgica/ver_valida_firma_simple",
-        dataType        :   "json",
+        url 		:   "ssan_libro_biopsias_listaexterno1/ver_valida_firma_simple",
+        dataType    :   "json",
         beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        $('#loadFade').modal('show');
-                                                    },
+                                                    console.log(xhr);
+                                                    $('#loadFade').modal('show');
+                                                },
         data 		:                           {  
-                                                        contrasena      :   txt_valida_firma,
-                                                    },
+                                                    contrasena      :   txt_valida_firma,
+                                                },
         error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
-                                                    },
+                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                    $("#protocoloPabellon").css("z-index","1500"); 
+                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                    $('#loadFade').modal('hide');
+                                                },
         success		:   function(aData)         {   
-                                                        $('#loadFade').modal('hide');
-                                                        console.log("aData -> ",aData);
-                                                        showNotification('top','center','Firma simple ->'+aData.valida.NAME+' '+aData.valida.USERNAME,1,'fa fa-info');
-                                                    }, 
+                                                    $('#loadFade').modal('hide');
+                                                    console.log("aData -> ",aData);
+                                                    showNotification('top','center','Firma simple ->'+aData.valida.NAME+' '+aData.valida.USERNAME,1,'fa fa-info');
+                                                }, 
     });
 }
 

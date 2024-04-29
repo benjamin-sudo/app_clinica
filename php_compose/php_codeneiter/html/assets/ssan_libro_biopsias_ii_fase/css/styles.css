@@ -552,7 +552,7 @@ min-height                      :   60vh;
 
 .css_grid_password_recepcion            {
     display                             :  grid;
-    grid-template-columns               :  1fr 55px 1fr 70px;
+    grid-template-columns               :  1fr auto 1fr auto;
     justify-items                       :  center;
     align-items                         :  center;
 }

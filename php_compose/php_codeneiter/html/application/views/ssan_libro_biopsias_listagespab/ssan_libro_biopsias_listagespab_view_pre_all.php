@@ -259,7 +259,7 @@
                     </h5>
                     <div class="input-group mb-3"  id="date_tabla2">
                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno" name="num_interno"  value="">
+                        <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno" name="num_interno"  value="">
                     </div>
                 </fieldset>
             </div>
@@ -290,7 +290,7 @@
                         <h5 style="color:#888888;">&nbsp;N&deg; CITOLOG&Iacute;A</h5>
                         <div class="input-group mb-3"  id="date_tabla2">
                             <span class="input-group-text" id="basic-addon1"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno_cito" name="num_interno_cito"  value="">
+                            <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno_cito" name="num_interno_cito"  value="">
                         </div>
                     </fieldset>
                 </div>
@@ -591,7 +591,8 @@
                         column-gap                  :   6px;
                         padding                     :   8px;
                     }
-                    .css_panel_rechazo           {
+
+                    .css_panel_rechazo              {
                         display                     :   grid;
                         grid-template-columns       :   4fr 1fr;
                         align-items                 :   center;
@@ -630,11 +631,16 @@
                                 </fieldset>
                             </div>
                             <div class="css_grid_password_recepcion4">
-                                <a href="javascript:js_validafirma('firma_simple_trasporte')">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-id-card-o" aria-hidden="true"></i>
-                                    </span>
-                                </a>
+                                
+                            
+                            
+                                <button class="btn BTN-XS btn-success" onclick="js_validafirma('firma_simple_trasporte')">
+                                    <i class="fa fa-id-card-o" aria-hidden="true"></i> VERIFICACION
+                                </button>
+
+
+
+
                             </div>
                             <div class="css_grid_password_recepcion2">
                                 <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
