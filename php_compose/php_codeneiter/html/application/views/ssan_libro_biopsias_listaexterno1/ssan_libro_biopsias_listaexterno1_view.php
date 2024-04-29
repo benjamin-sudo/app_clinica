@@ -78,13 +78,13 @@
 <ul id="LI_LISTA_MAIN" class="list-group" style="margin-bottom:0px;padding:9px;">
     <div class="CSS_GRID_EXTERNO_HEAD">
         <div class="div_1">
-            <li class="gespab_group list-group-item list-group-item-primary active text-center" style="border-bottom-right-radius:0px;border-bottom-left-radius:0px;">
+            <li class="gespab_group list-group-item list-group-item-primary active text-center" style="border-radius: 7px 7px 0px 0px;">
                 <b class="text-center">RCE - EXTERNO</b> 
             </li>
         </div>
         <div class="div_2 text-center">&nbsp;</div>
         <div class="div_3">
-            <li class="gespab_group list-group-item list-group-item-primary active text-center" style="border-bottom-right-radius:0px;border-bottom-left-radius:0px;">
+            <li class="gespab_group list-group-item list-group-item-primary active text-center" style="border-radius: 7px 7px 0px 0px;">
                 <b class="text-center">HERRAMIENTAS</b>
             </li>
         </div>
@@ -92,9 +92,7 @@
     <li class="gespab_group list-group-item list-group-item-default active">
         <div class="CSS_GRID_PUNTO_ENTREGA_EXT">
             <div class="text-center"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
-            <div class="cirugia_row text-center"><b>N&deg;</b></div>
-            <div class="text-center"><b>RUN</b></div>
-            <div class=""><b>PACIENTE</b></div>
+            <div class=""><b>INFO PACIENTE</b></div>
             <div class=""><b>DIAG/CX PROP</b></div>
             <div class=""><b>MEDICO</b></div>
             <div class=""><b>ANATOMIA</b></div>

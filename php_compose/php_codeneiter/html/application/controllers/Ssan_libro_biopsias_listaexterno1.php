@@ -42,8 +42,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $this->load->js("assets/Ssan_libro_biopsias_listaexterno1/js/javascript.js");
         $this->load->view('Ssan_libro_biopsias_listaexterno1/Ssan_libro_biopsias_listaexterno1_view',$return_data);
     }
-
-
     
     public function update_main(){
         if(!$this->input->is_ajax_request()){ show_404(); }

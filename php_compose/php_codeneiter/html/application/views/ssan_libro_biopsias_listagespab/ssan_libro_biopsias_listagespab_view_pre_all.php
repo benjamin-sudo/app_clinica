@@ -598,6 +598,7 @@
                         padding                     :   8px;
                    }
                 </style>
+                
                 <?php if ($DATA["ID_HISTO_ESTADO"] == 4 && $DATA['IND_ESTADO_MUESTRAS']==1) { ?>
                         <p><label for="size_2">SOLICITUD YA RECEPCIONADA | <?php echo $DATA["IND_ESTADO_MUESTRAS"];?> </label></p>
                         <script>$(".checkbox_<?php echo $DATA["ID_SOLICITUD"];?>").hide();</script>

@@ -39,6 +39,7 @@
     #loadFade         { z-index: 10500 !important; }
     .nav-link.activo  { }
     .text-center      { text-align: center;  }
+    .btn-warning      { color: white !important; }
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">

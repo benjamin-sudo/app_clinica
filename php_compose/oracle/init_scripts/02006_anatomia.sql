@@ -730,26 +730,30 @@ Insert into ADMIN.MOTIVOS_DESACTIVAR_M
  Values
    (3, '0', 'MUESTRA RECHAZADA', 1);
 COMMIT;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /
+
+CREATE TABLE ADMIN.PB_LINETIME_HISTO (
+  ID_LINETIMEHISTO    NUMBER                    NOT NULL,
+  ID_NUM_CARGA        NUMBER,
+  ID_SOLICITUD_HISTO  NUMBER,
+  TXT_BACODE          VARCHAR2(1000 BYTE),
+  NUM_FASE            NUMBER,
+  IND_CHECKED         NUMBER,
+  USR_CREA            VARCHAR2(50 BYTE),
+  FEC_CREA            DATE,
+  IND_ESTADO          NUMBER,
+  ID_NMUESTRA         NUMBER,
+  ID_UID              NUMBER,
+  TXT_MUESTRA         VARCHAR2(50 BYTE),
+  ID_CASETE           NUMBER,
+  PRIMARY KEY       (ID_LINETIMEHISTO)
+);
+
+
+
+COMMIT;
+/
+
 -------------------------------------
 -- ZONA PROCEDIMIENTOS ALMACENADOS --
 -------------------------------------
