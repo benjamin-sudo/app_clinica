@@ -2068,7 +2068,7 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                                                     password        :   r,
                                                                     pass            :   pass,
                                                                 },
-                        error		:   function(errro)     { 
+                        error		        :   function(errro)     { 
                                                                     console.log(errro);  
                                                                     console.log(errro.responseText);    
                                                                     jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 

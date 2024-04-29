@@ -13,16 +13,16 @@ $(document).ready(function(){
 function star_ajax_extension(url){
     console.log("url -> ",url);
     $.ajax({
-        url : url,  // Ruta al metodo del controlador
-        type : 'POST',  // Método HTTP deseado, POST es común para envío de datos
-        data : {},
-        error : function(xhr,status,error)  {
-                                                console.error(error); // Manejo de errores
-                                            },
-        success : function(response)        {
-                                                //console.log("response  ->",response);
-                                                $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
-                                            },
+        url     :   url,  // Ruta al metodo del controlador
+        type    :   'POST',  // Método HTTP deseado, POST es común para envío de datos
+        data    :   {},
+        error   :   function(xhr,status,error)  {
+                                                    console.error(error); // Manejo de errores
+                                                },
+        success :   function(response)  {
+                                            //console.log("response  ->",response);
+                                            $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
+                                        },
     });
 }
 

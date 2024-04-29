@@ -21,16 +21,18 @@
   <!-- select min  -->
   <!-- ui | 1.12.1 --> 
   <!-- autocomplete -->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="assets/recursos/css/jquery-ui.css">
   <!--  bootstrap-select.min.css -->
-  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
-  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min.css">
+  <!--
+  <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min2.css">
+  -->
   <!--
   <link type="text/css" rel="stylesheet" href="https://www.esissan.cl/assets/themes/css/easyAutocomplete/dist/easy-autocomplete.min.css"  />
   -->
-  <link href="https://www.esissan.cl/assets/themes/css/autocomplete.css" rel="stylesheet" />
-  <link href="https://www.esissan.cl/assets/themes/css/easyAutocomplete/dist/easy-autocomplete.css" rel="stylesheet" />
-  <link href="https://www.esissan.cl/assets/themes/css/easyAutocomplete/dist/easy-autocomplete.min.css" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="assets/recursos/css/autocomplete.css"  />
+  <link type="text/css" rel="stylesheet" href="assets/recursos/css//easy-autocomplete.css"  />
+  <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.min.css"  />
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
   <style>
@@ -206,10 +208,12 @@
   <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
   <!-- Wizard Plugin    -->
   <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
+  
   <!--paginacion bootpage-->
-  <script type="text/javascript" src="https://www.esissan.cl/assets/themes/js/jquery.bootpag.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/js/jquery.bootpag.min.js"></script>
   <!-- easy-autocomplete -->
-  <script type="text/javascript" src="https://www.esissan.cl/assets/themes/js/jquery.easy-autocomplete.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/js/jquery.easy-autocomplete.min.js"></script>
+
   <section>
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
