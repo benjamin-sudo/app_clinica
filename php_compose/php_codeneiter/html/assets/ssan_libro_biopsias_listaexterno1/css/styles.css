@@ -21,7 +21,8 @@
     display                     :   grid;
     grid-template-columns       :   3% 4% 6% 16% 16% 12% 10% 15% 3% 3% 3% 3% 3%;
     align-items                 :   center;
-    gap                         :   3px
+    gap                         :   3px;
+    margin-left                 :   5px;
 }
 
 .grid_tooltip                   {

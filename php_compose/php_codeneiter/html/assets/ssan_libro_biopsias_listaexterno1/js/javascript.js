@@ -99,7 +99,6 @@ function update_main(value){
         console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
         console.log("   ---------------------------------------------------------------------------     ");
     */
-
     $.ajax({ 
         type		:   "POST",
         url		    :   ind_ruta,
@@ -117,7 +116,7 @@ function update_main(value){
                                             ind_template    :   "ssan_libro_biopsias_listaexterno1",
                                         },
         error		:   function(errro)	{  
-                                            $('#loadFade').modal('hide');
+                                           $('#loadFade').modal('hide');
                                             console.log("errro   ->  ",errro); 
                                             jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre");
                                         },
@@ -127,7 +126,6 @@ function update_main(value){
                                             console.log("   ind_ruta        ->   ",ind_ruta,"       ");
                                             console.log("   IND_TEMPLETE    ->   ",IND_TEMPLETE,"   ");
                                             console.log("   ************************************    ");
-
                                             $('#loadFade').modal('hide');
                                             $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
                                             $("#LI_LISTA_MAIN").append(aData.STATUS_OUT.html_exteno);

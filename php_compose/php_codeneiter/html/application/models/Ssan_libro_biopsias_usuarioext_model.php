@@ -871,7 +871,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 $this->ownGu.FE_USERS 
                             WHERE 
                             TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave1') ";
-        
         $clave2	    =   strtolower($arr_password[0]["pass2"]);
         $SQL2       =   "SELECT 
                                 ID_UID,
@@ -889,25 +888,44 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         );
     }
     
-    public function sqlValidaClave($clave){
-        $clave	    =   strtolower($clave);
-        $SQL        =   "SELECT 
-                            ID_UID,
-                            USERNAME,
-                            NAME,
-                            MIDDLE_NAME,
-                            LAST_NAME 
-                        FROM 
-                            $this->ownGu.FE_USERS 
-                        WHERE 
-                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave')";
+    public function sqlValidaClave_old($clave){
+        $clave	        =   strtolower($clave);
+        $SQL            =   "SELECT 
+                                ID_UID,
+                                USERNAME,
+                                NAME,
+                                MIDDLE_NAME,
+                                LAST_NAME 
+                            FROM 
+                                $this->ownGu.FE_USERS 
+                            WHERE 
+                                TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave')";
         return $this->db->query($SQL)->row();
     }
-    
-    ####################################
-    #MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
-    #LISTA POR CLIENTES################# 
-    ####################################
+
+    public function validaClave($clave){
+        $this->dbSession = $this->load->database('session', true); 
+        $sql = "SELECT
+                    ID_UID,
+                    USERNAME,
+                    NAME,
+                    MIDDLE_NAME,
+                    LAST_NAME,
+                    TELEPHONE,
+                    EMAIL
+                FROM 
+                    ADMIN.FE_USERS
+                WHERE 
+                    TX_INTRANETSSAN_CLAVEUNICA = ? AND DISABLE = 0";
+        $query = $this->dbSession->query($sql,array($clave));
+        return $query->result_array();
+    }
+
+    ########################################
+    #### MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
+    #### LISTA POR CLIENTES################# 
+    ########################################
+
     public function CARGA_LISTA_MISSOLICITUDES_ANATOMIA($DATA){
         $this->db->trans_start();
         $CALL_FASE          =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;

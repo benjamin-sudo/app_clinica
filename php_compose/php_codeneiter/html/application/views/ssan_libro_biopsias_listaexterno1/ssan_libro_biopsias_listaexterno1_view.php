@@ -109,11 +109,8 @@
     <?php echo $html_externo["html_exteno"];?>
 </ul>
 
-
-
 <section>
-
-<div class="modal fade" id="MODAL_TEST_ETIQUETA">
+    <div class="modal fade" id="MODAL_TEST_ETIQUETA">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

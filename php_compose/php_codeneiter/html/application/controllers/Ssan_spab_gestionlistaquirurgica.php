@@ -7,10 +7,10 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
    function __construct(){
         parent::__construct();
         $this->load->helper('cookie');
-        $this->load->model("ssan_spab_gestionlistaquirurgica_model");
-        $this->load->model("ssan_libro_biopsias_usuarioext_model");
-        $this->load->model("ssan_libro_biopsias_listagespab_model");
-        $this->load->library('validaciones');
+        $this->load->model("Ssan_spab_gestionlistaquirurgica_model");
+        $this->load->model("Ssan_libro_biopsias_usuarioext_model");
+        $this->load->model("Ssan_libro_biopsias_listagespab_model");
+        #$this->load->library('validaciones');
     }
     
     public function index(){
@@ -151,7 +151,7 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         #$this->output->set_template("theme_principal/lightboot");
         #$this->load->js("assets/ssan_pre_gestionarprestador/js/javascript.js");
         #$this->load->css("assets/ssan_pre_gestionarprestador/css/styles.css");
-        //$html                   .=  '<script src="assets/ssan_pre_gestionarprestador/js/javascript.js" type="text/javascript"></script>';
+        //$html                 .=  '<script src="assets/ssan_pre_gestionarprestador/js/javascript.js" type="text/javascript"></script>';
         $data['em_presa']       =   $this->session->userdata("COD_ESTAB");
         $data['tok_G']          =   null;
         $data['usu_ario']       =   $this->session->userdata("USERNAME");
@@ -331,41 +331,7 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         )));
     }
     
-    #EN TRASPORTE + GPS
-    public function confirma_trasporte(){
-        if(!$this->input->is_ajax_request()){  show_404(); }
-        $empresa                            =   $this->session->userdata('COD_ESTAB');
-        $id_anatomia                        =   $this->input->post('id_anatomia');
-        $array_muestras                     =   $this->input->post('array_muestras');
-        $usuarioh                           =   explode("-",$this->session->userdata("USERNAME"));
-        $TXT_ERROR                          =   '';
-        $DATA                               =   '';
-        $STATUS                             =   true;
-        $password                           =   $this->input->post('password');
-        $valida                             =	$this->ssan_libro_biopsias_usuarioext_model->sqlValidaClave($password);
-        if(count($valida)>0){
-            $DATA                           =   $this->ssan_libro_biopsias_usuarioext_model->get_confirma_trasporte(
-                                                array(
-                                                    "COD_EMPRESA"   =>  $empresa,
-                                                    "SESSION"       =>  $usuarioh[0], 
-                                                    "ID_ANATOMIA"   =>  $id_anatomia,
-                                                    "ARRAY"         =>  $array_muestras,
-                                                    "DATA_FIRMA"    =>  $valida,
-                                                ));
-        } else {
-            $TXT_ERROR                      =   'Error en firma simple';
-            $STATUS                         =   false;
-        }
-        $this->output->set_output(json_encode(array(
-            'PASS'                          =>  $password,
-            'GET_BD'                        =>  $DATA,
-            'DATA_FIRMA'                    =>  $valida,
-            'RETURN'                        =>  $STATUS,
-            'TXT_ERROR'                     =>  $TXT_ERROR,
-            'STATUS'                        =>  $STATUS,
-        )));
-    }
-    
+   
     #EN RECEPCION
     public function confirma_recepcion(){
         if(!$this->input->is_ajax_request()){  show_404(); }
@@ -467,6 +433,202 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         $this->output->set_output(json_encode($TABLA));
     }
     
+    #editando para multriplice solicitudes sean procesadas
+    public function informacion_x_muestra_grupal(){
+        if (!$this->input->is_ajax_request()){  show_404(); }
+        $empresa                            =   $this->session->userdata('COD_ESTAB');
+        $html                               =   '';
+        //$from                             =   $this->input->post('from');
+        //$opcion                           =   $this->input->post('opcion');
+        $ARR_CASETE_ORD                     =   [];
+        $data_main                          =   [];
+        $get_etiqueta                       =   $this->input->post('get_etiqueta');
+        $vista                              =   $this->input->post('vista');
+        $NUM_FASE                           =   $this->input->post('NUM_FASE');
+        $IND_MODAL                          =   $this->input->post('MODAL');
+        $array_data                         =   $this->input->post('array_data');
+        #LEYENDA
+        $data_return                        =   '';
+        $DATA                               =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_INFOXMUESTRAANATOMIACA(
+                                                array(
+                                                    "COD_EMPRESA"               =>  $empresa,
+                                                    "TXTMUESTRA"                =>  $get_etiqueta,
+                                                    "NUM_FASE"                  =>  $NUM_FASE,
+                                                    "ARR_DATA"                  =>  count($array_data["array_anatomia"])>0?implode(",",$array_data["array_anatomia"]):'null', 
+                                                ));
+        ###
+        $ARR_GENTIONMSJ                                                         =   [];
+        if (count($DATA["P_ANATOMIA_PATOLOGICA_MAIN"])>0){
+            $arr_muestra_muestras                                               =   [];
+            $arr_muestras_citologia                                             =   [];
+            $arr_info_linea_tiempo                                              =   [];
+            if (count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){
+                foreach ($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $arr_muestras_anatomica_row)  {
+                    $arr_muestra_muestras[$arr_muestras_anatomica_row['ID_SOLICITUD_HISTO']][]          =   $arr_muestras_anatomica_row;
+                }
+            }
+            if (count($DATA["P_AP_MUESTRAS_CITOLOGIA"])>0){
+                foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $arr_muestras_citologica_row)        {
+                    $arr_muestras_citologia[$arr_muestras_citologica_row['ID_SOLICITUD_HISTO']][]       =   $arr_muestras_citologica_row;
+                } 
+            }
+            #ordena data para templetate template_logs_anatomia
+            $log_adverso                                                                                =   [];
+            if (count($DATA['P_INFO_LOG_ADVERSOS'])>0){
+                foreach($DATA['P_INFO_LOG_ADVERSOS'] as $i => $log_adv){ 
+                    $log_adverso[$log_adv['ID_NUM_CARGA'].'_'.$log_adv['ID_NMUESTRA']]                  =   $log_adv;
+                }
+            }
+            if(count($DATA["P_AP_INFORMACION_ADICIONAL"])>0){
+                foreach ($DATA["P_AP_INFORMACION_ADICIONAL"] as $i => $arr_linea_tiempo_logs_row)       {
+                    $ID_SOLICITUD_HISTO                                                                 =   $arr_linea_tiempo_logs_row['ID_SOLICITUD_HISTO'];
+                    $ID_NUM_CARGA                                                                       =   $arr_linea_tiempo_logs_row['ID_NUM_CARGA'];
+                    $ID_NMUESTRA                                                                        =   $arr_linea_tiempo_logs_row['ID_CASETE']==''?$arr_linea_tiempo_logs_row['TXT_BACODE']:$arr_linea_tiempo_logs_row['ID_CASETE'];
+                    $id_compuesta                                                                       =   $ID_NUM_CARGA.'_'.$ID_NMUESTRA;
+                    $data_main[]                                                                        =   $arr_linea_tiempo_logs_row;
+                    $arr_info_linea_tiempo[$ID_SOLICITUD_HISTO][$ID_NUM_CARGA][$ID_NMUESTRA][]          =   array(
+                                                                                                                    'MAIN'          =>  $arr_linea_tiempo_logs_row ,
+                                                                                                                    'ERROR_LOG'     =>  array_key_exists($id_compuesta,$log_adverso)?$log_adverso[$id_compuesta]:[]
+                                                                                                                );
+                }
+            }
+            #falta los log 
+            foreach($DATA["P_ANATOMIA_PATOLOGICA_MAIN"] as $i => $row){
+                $id_anatomia                =   $row["ID_SOLICITUD"];
+                $html                       =   $this->load->view("ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
+                                                    "VIEWS"                             =>  $vista,
+                                                    "DATA"                              =>  $row,
+                                                    "FIRST"                             =>  $get_etiqueta,
+                                                    "FASE"                              =>  $NUM_FASE,
+                                                    "P_ANATOMIA_PATOLOGICA_MUESTRAS"    =>  empty($arr_muestra_muestras[$id_anatomia])?[]:$arr_muestra_muestras[$id_anatomia],
+                                                    "P_AP_MUESTRAS_CITOLOGIA"           =>  empty($arr_muestras_citologia[$id_anatomia])?[]:$arr_muestras_citologia[$id_anatomia],
+                                                    //"P_AP_INFORMACION_ADICIONAL"      =>  empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia],
+                                                    "HTML_LOGS"                         =>  $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
+                                                ),true);
+                
+                $ARR_GENTIONMSJ[]           =   array(
+                    'ID_AP'                 =>  $id_anatomia,
+                    'ID_TABS'               =>  'TABS_'.$id_anatomia,
+                    'TXT_TITULO'            =>  'N&deg;&nbsp;<b>'.$id_anatomia.'</b>',
+                    'HTML'                  =>  $html,
+                );
+            }
+        }
+        
+        #ID_SOLICITUD
+        $NUM_ANATOMIA                       =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
+        if($IND_MODAL){
+            $TXT_GO_BACODE                  =   $NUM_FASE==1?'TRASPORTE | CUSTODIA':$NUM_FASE==2?'PARA RECEPCI&Oacute;N':'VISUALIZACI&Oacute;N';
+            $TABS_HTML                      =   '
+                <script>
+                    $(document).ready(function(){
+                        $("#get_etiqueta_modal").keypress(function(e){if(e.which==13){ 
+                            busqueda_etiquera_modal(0); 
+                        }});
+                        $("#UL_TABS_MUESTRA").on("shown.bs.tab",function(e){
+                            //console.log("target -> ",e.target);
+                            //console.log("target -> ",e.relatedTarget);
+                            $(".popover").popover("hide");
+                        });
+                        document.getElementById("get_etiqueta_modal").focus();
+                        $("#UL_TABS_MUESTRA li:first-child a").tab("show");
+                        console.log("------------------------------------------------");
+                        console.log("la arrogancia          ->  '.$TXT_GO_BACODE.'   ");
+                        console.log("buscar la etiqueta     ->                       ");
+                        console.log("------------------------------------------------");
+                    });
+                </script>
+                
+                <!--
+                    '.$TXT_GO_BACODE.' | F:'.$NUM_FASE.'
+                -->
+                
+                <div class="CSS_GRID_ETIQUETA_HEARD" style=" margin-bottom:15px;">
+                    <div class="CSS_GRID_ETIQUETA_HEARD1 FLEX_CENTER">
+                        <fieldset class="fieldset_local">
+                            <legend class="legend"><i class="fa fa-search" aria-hidden="true"></i> ETIQUETAS</legend>
+                            <div id="date_tabla2" class="input-group" style="width:200px;padding:8px;">
+                                <span class="input-group-addon"><span class="fa fa-barcode"></span></span>
+                                <input type="text" class="form-control input-sm" id="get_etiqueta_modal" name="get_etiqueta_modal"  value=""/>
+                                <span class="input-group-addon" >
+                                    <a href="javascript:busqueda_etiquera_modal(2)" style="opacity:0.5;color:#000;">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </a>
+                                </span>
+                             </div>
+                             <script>document.getElementById("get_etiqueta_modal").focus();</script>
+                        </fieldset>
+                    </div>
+                    <div class="CSS_GRID_ETIQUETA_HEARD2 FLEX_CENTER" style="text-align:end">';  
+                    #
+                    switch($NUM_FASE){
+                        case 0:
+                            $TABS_HTML  .=  '   <i class="fa fa-eye" aria-hidden="true"></i>    ';
+                            break;
+                        case 1:
+                            #<!--&nbsp;TRASPORTE MASIVO-->
+                            #<!--&nbsp;CUSTODIA MASIVO-->  
+                            $TABS_HTML  .=  '
+                                                <div class="btn-group-vertical" id="btn_masivo" style="display:none">
+                                                    <a class="btn btn-fill btn-primary" style="text-align:end;" href="javascript:confirma_custodia_all(1)">
+                                                        TODO - CUSTODIA MASIVO&nbsp;<i class="fa fa-inbox" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="btn btn-fill btn-success" style="text-align:end;" href="javascript:confirma_trasporte_all(1)">
+                                                        TODO - TRASPORTE MASIVO&nbsp;<i class="fa fa-truck" aria-hidden="true"></i>
+                                                    </a> 
+                                                </div>
+                                            ';
+                           break;
+                        case 2:
+                           $TABS_HTML   .=  '   
+                                                <div class="btn-group" id="btn_masivo" style="display:none">
+                                                    <button class="btn btn-xs btn-fill btn-success" onclick="confirma_recepcion_all(1)" style="width:auto;height:35px;">
+                                                        <i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;RECEPCI&Oacute;N MASIVA
+                                                    </button>
+                                                </div>     
+                                            ';
+                            break;
+                    }
+            $TABS_HTML .=   '</div>
+                </div>';
+            #GESTOR DE TABS
+            $TABS_HTML                  .=   ' <div id="MAIN_TABS_MUESTRA">';
+            if(count($ARR_GENTIONMSJ)>0){
+                $HTML_MENSAJE_LU        =   '';
+                $HTML_MENSAJE_DIV       =   '';
+                foreach($ARR_GENTIONMSJ as $i => $row){
+                    $ID_INICO           =   $row['ID_TABS'];
+                    $class_active       =   $i==0?'active':'';
+                    $HTML_MENSAJE_LU    .=  '<li class="nav-item '.$class_active.' all_solicitudes_custodia all_solicitudes_trasporte all_solicitudes_recepcion li_histo_'.$row['ID_AP'].' " id="'.$row['ID_AP'].'">
+                                                <a class="nav-link" data-toggle="tab" href="#'.$ID_INICO.'" role="tab">'.$row['TXT_TITULO'].'</b></a>
+                                            </li>';
+                    $HTML_MENSAJE_DIV  .=  '<div class="tab-pane '.$class_active.' tab_histo_'.$row['ID_AP'].'"  id="'.$ID_INICO.'" role="tabpanel">'.$row['HTML'].'</div>';
+                }
+                $TABS_HTML              .=  '<ul class="nav nav-tabs" role="tablist" id="UL_TABS_MUESTRA">'.$HTML_MENSAJE_LU.'</ul>';
+                $TABS_HTML              .=  '<div class="tab-content" id="TABS_TAB_PANEL">'.$HTML_MENSAJE_DIV.'</div>';
+            } 
+            $TABS_HTML                  .=   '</div>';
+        } else {
+            $TABS_HTML                  =   $html;
+        }
+        
+        #out json 
+        $this->output->set_output(json_encode(array(
+            'STATUS'                        =>  count($DATA['P_ERROR'])>0?false:true,
+            'NUM_ANAT'                      =>  $NUM_ANATOMIA,
+            'IND_MODAL'                     =>  $IND_MODAL,
+            'RETURN'                        =>  $data_return,
+            'BUSQ'                          =>  $get_etiqueta,
+            'EMPRESA'                       =>  $empresa,
+            'DATA'                          =>  $DATA,
+            'HTML_VIWE'                     =>  $html,
+            'HTML_OUT'                      =>  $TABS_HTML,
+            'DATA_GET'                      =>  $array_data,
+            'data_main'                     =>  $data_main,
+            'ARR_CASETE_ORD'                =>  $ARR_CASETE_ORD,
+            'P_AP_INFORMACION_ADICIONAL'    =>  $DATA["P_AP_INFORMACION_ADICIONAL"],
+        )));
+    }
     
     public function informacion_x_muestra(){
         if (!$this->input->is_ajax_request()){  show_404(); }

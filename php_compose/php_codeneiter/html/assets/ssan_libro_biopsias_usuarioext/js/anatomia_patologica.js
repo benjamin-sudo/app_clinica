@@ -1954,9 +1954,11 @@ function confirma_recepcion_all(fase){
 }
 //******************************************************************************
 function _envios(id_anatomia,post,LISTA_ANATOMIA){
+    
     console.table([{"id_anatomia":id_anatomia,"_post":post}]);
     console.table(LISTA_ANATOMIA.RESUL);
     console.table(LISTA_ANATOMIA.RESUL.ARRAY_NMUESTRAS);
+
     var txt_accion  =    post==0?'CUSTODIA':post==1?'TRASPORTE':'RECEPCI&Oacute;N';
     console.log("txt_accion->",txt_accion);
     if (post === 3 ){
@@ -2019,13 +2021,11 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                                                             }
                                                                             
                                                                             UPDATE_PANEL();
-                                                                            
                                                                             localStorage.setItem("ind_tipo_mensaje",1);
                                                                             localStorage.setItem("ind_estapa_analitica",0);
                                                                             localStorage.setItem("num_fichae",null);
                                                                             localStorage.setItem("id_anatomia",id_anatomia);
                                                                             $("#load_anuncios_anatomia_patologica").submit();
-                                                                           
                                                                             jConfirm("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha sido recepcionada con &eacute;xito &iquest;Desea ver pdf de recepcion?",'Clinica Libre',function(r) {
                                                                                 if(r){ 
                                                                                     pdf_recepcion_ok(id_anatomia);
@@ -2048,15 +2048,15 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
         
     } else {
         
-        jPrompt('Con esta acci&oacute;n se proceder&aacute; a editar las solicitud de anatom&iacute;a patol&oacute;gica.<b>'+txt_accion+'</b><br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
+        jPrompt('... Con esta acci&oacute;n se proceder&aacute; a editar las solicitud de anatom&iacute;a patol&oacute;gica.<b>'+txt_accion+'</b><br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if((r == '') || (r == null)){
                 jError("Firma simple Vacia","Clinica Libre");
             } else {
                 var pass                    =   new Array({"pass1":r});
                 $.ajax({ 
                         type                :   "POST",
-                        url                 :   post==0 ?   "ssan_spab_gestionlistaquirurgica/fn_confirma_custodia":
-                                                post==1 ?   "ssan_spab_gestionlistaquirurgica/confirma_trasporte":"",
+                        url                 :   post==0 ?   "ssan_libro_biopsias_usuarioext/fn_confirma_custodia":
+                                                post==1 ?   "ssan_libro_biopsias_usuarioext/confirma_trasporte":"",
                                                             //"ssan_spab_gestionlistaquirurgica/confirma_recepcion",
                         dataType            :   "json",
                         beforeSend          :   function(xhr)   {   

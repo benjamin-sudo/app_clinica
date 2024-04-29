@@ -339,8 +339,6 @@
                     </div>
                 </div>
 
-
-
                 <div class="content" style="margin-top:-10px;">
                     <ul class="list-group" id="UL_RESULTADOS_<?php echo $DATA["ID_SOLICITUD"];?>" style="margin-bottom:0px;">
                     <?php    
@@ -469,12 +467,13 @@
     <?php   }   ?>
     
     <?php   if(count($P_AP_MUESTRAS_CITOLOGIA)>0){  ?>
-            <div class="card" style="margin-bottom:5px;">
+
+            <div class="card" style="margin-bottom:5px;padding: 16px;">
                 <div class="header">
                     <div class="GRID_HEARD_CHECK_MUESTRA">
                         <div class="GRID_HEARD_CHECK_MUESTRA1">
                             <h4 class="title" style="margin-bottom:15px">
-                                <b style="color:#888888;">MUESTRA CITOL&Oacute;GICA&nbsp;|&nbsp;<?php echo count($P_AP_MUESTRAS_CITOLOGIA);?></b>
+                                <b style="color:#888888;">MUESTRA CITOL&Oacute;GICA&nbsp;:&nbsp;<?php echo count($P_AP_MUESTRAS_CITOLOGIA);?></b>
                             </h4>
                         </div>
                         <div class="GRID_HEARD_CHECK_MUESTRA2">
@@ -488,7 +487,7 @@
                     </div>
                 </div>
                 
-                <div class="content" style="margin-top:-20px;">
+                <div class="content">
                     <ul class="list-group " id="UL_RESULTADOS_<?php echo $DATA["ID_SOLICITUD"];?>" style="margin-bottom:0px;">
                     <?php foreach($P_AP_MUESTRAS_CITOLOGIA as $i => $row){ ?>     
                         <li class="list-group-item sin_padding lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-CASETE="0" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $DATA["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
