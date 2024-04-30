@@ -883,7 +883,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
     public function sqlValidaClave_doble($arr_password){
         $this->dbSession = $this->load->database('session', true); 
-        
         $clave1	        =   strtolower($arr_password[0]["pass1"]);
         $SQL1           =   "  SELECT 
                                 ID_UID,
@@ -894,9 +893,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             FROM 
                                 $this->own.FE_USERS 
                             WHERE 
-                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave1') ";
-        $clave2	    =   strtolower($arr_password[0]["pass2"]);
+                            TX_INTRANETSSAN_CLAVEUNICA IN ('$clave1') ";
 
+
+        $clave2	    =   strtolower($arr_password[0]["pass2"]);
         $SQL2       =   "SELECT 
                                 ID_UID,
                                 USERNAME,
@@ -906,7 +906,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             FROM 
                                 $this->own.FE_USERS 
                             WHERE 
-                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave2') ";
+                            TX_INTRANETSSAN_CLAVEUNICA IN ('$clave2') ";
         return array(
             'user_1'    =>  $this->dbSession->query($SQL1)->row(),
             'user_2'    =>  $this->dbSession->query($SQL2)->row(),
@@ -930,6 +930,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $query = $this->dbSession->query($sql,array($clave));
         return $query->result_array();
     }
+
     ########################################
     #### MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
     #### LISTA POR CLIENTES################# 
@@ -1641,12 +1642,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     array_push($arr_histo_ok,$row["NUM_HISTO"]);
                     $this->db->where('ID_SOLICITUD_HISTO',$row["NUM_HISTO"]);
                     $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
-                        
                         "ID_HISTO_ESTADO"           =>  3,
-                        
                         "DATE_TRASLADO"             =>  'SYSDATE',
                         "ID_UID_TRASLADO"           =>  $DATA["DATA_FIRMA"]->ID_UID,
-                        
                         "ID_USER_TRASLADO"          =>  $DATA["SESSION"],
                         "IND_ESTADO_MUESTRAS"       =>  $row["NUM_OK_SAMPLES"],
                         "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
@@ -1682,8 +1680,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         #LOAD
         #BIOPSIA - CITOLOGIA
         if ($IND_TIPO_BIOPSIA == 4){
-            $data_num_interno                       =   $this->db->query(" SELECT P.NUM_INTERNO_AP FROM PABELLON.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
-            $data_num_citologia                     =   $this->db->query(" SELECT P.NUM_CO_CITOLOGIA FROM PABELLON.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($n_interno_2)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (4,5)")->result_array();
+            $data_num_interno                       =   $this->db->query(" SELECT P.NUM_INTERNO_AP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
+            $data_num_citologia                     =   $this->db->query(" SELECT P.NUM_CO_CITOLOGIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($n_interno_2)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (4,5)")->result_array();
             if(count($data_num_interno)>0 || count($data_num_citologia)>0){
                 return array(
                     'STATUS'                        =>  false,
@@ -1698,11 +1696,11 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             }
         } else {
             if( $IND_TIPO_BIOPSIA == 2 || $IND_TIPO_BIOPSIA == 3 ){  #CONTEMPORANEA Y DIFERIDA
-                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_INTERNO_AP FROM PABELLON.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
+                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_INTERNO_AP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
             } else if ($IND_TIPO_BIOPSIA == 5)      {   #SOLO CITOLOGIA
-                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_CO_CITOLOGIA FROM PABELLON.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (5)")->result_array();
+                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_CO_CITOLOGIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (5)")->result_array();
             } else if ($IND_TIPO_BIOPSIA == 6)      {   #PAP
-                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_CO_PAP FROM PABELLON.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_PAP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (6)")->result_array();
+                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_CO_PAP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_PAP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (6)")->result_array();
             }
             if(count($data_num_interno)>0){
                 return array(
@@ -1718,7 +1716,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             }
         }
         #######################################################################
-        $data_identifica_estado                     =   $this->db->query("SELECT P.ID_HISTO_ESTADO FROM PABELLON.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN ($ID_ANATOMIA) AND P.IND_ESTADO IN (1) AND P.ID_HISTO_ESTADO IN (3)")->result_array();
+        $data_identifica_estado                     =   $this->db->query("SELECT P.ID_HISTO_ESTADO FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN ($ID_ANATOMIA) AND P.IND_ESTADO IN (1) AND P.ID_HISTO_ESTADO IN (3)")->result_array();
         if (count($data_identifica_estado)>0){
             if(count($DATA['ARRAY'])>0){
                 foreach($DATA['ARRAY'] as $i => $fila){
@@ -1777,7 +1775,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
                         #CONSULTA SI ESTA EN PABELLON
                         #CITOLOGIA Y CITOLOGIA PAP -> GO TO 
-                        $result                         =   $this->db->query("SELECT P.IND_TIPO_BIOPSIA FROM PABELLON.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN (".$row['NUM_HISTO'].")")->result_array();
+                        $result                         =   $this->db->query("SELECT P.IND_TIPO_BIOPSIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN (".$row['NUM_HISTO'].")")->result_array();
                         $ind_zona                       =   $result[0]['IND_TIPO_BIOPSIA']=='6'||$result[0]['IND_TIPO_BIOPSIA']=='5'?'4':'0';
                         #NUMEROS DE ANATOMIA RESUELTOS
                         array_push($arr_histo_ok,$row["NUM_HISTO"]);
@@ -1820,21 +1818,21 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     }
                 }
             }
-            return array(
+            return [
                 'STATUS'                        =>  $status,
                 'TXT_ERROR'                     =>  '',
                 'HISTO_OK'                      =>  $arr_histo_ok,
                 'STATUS_BD'                     =>  $this->db->trans_complete(),  
-            );
+            ];
         } else {
-            return array(
+            return [
                 'STATUS'                        =>  false,
                 'TXT_ERROR'                     =>  'La solicitud ha cambiado de estado',
                 'HISTO_OK'                      =>  null,
                 'STATUS_BD'                     =>  false,
                 'error_memo'                    =>  1,
                 'close_modal'                   =>  1,
-            );
+            ];
         }
     }
     
@@ -1941,31 +1939,31 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             }
         }
         return array(
-            'STATUS'        =>  $mivariable,
-            'HISTO_OK'      =>  $arr_histo_ok,
-            'STATUS_BD'     =>  $this->db->trans_complete(),  
+            'STATUS'    =>  $mivariable,
+            'HISTO_OK'  =>  $arr_histo_ok,
+            'STATUS_BD' =>  $this->db->trans_complete(),  
         );
     }
     
     public function busqueda_historial($DATA){
         return $this->db->query("SELECT 
-            P.ID_LINETIMEHISTO, 
-            P.ID_NUM_CARGA, 
-            P.ID_SOLICITUD_HISTO, 
-            P.TXT_BACODE, 
-            P.NUM_FASE, 
-            P.IND_CHECKED, 
-            P.USR_CREA, 
-            P.FEC_CREA, 
-            P.IND_ESTADO, 
-            P.ID_NMUESTRA, 
-            P.ID_UID
-        FROM 
-            PABELLON.PB_LINETIME_HISTO P
-        WHERE
-            P.ID_SOLICITUD_HISTO = ".$DATA["ID_ANATOMIA"]."
-        ORDER BY 
-            P.FEC_CREA")->result_array();
+                                    P.ID_LINETIMEHISTO, 
+                                    P.ID_NUM_CARGA, 
+                                    P.ID_SOLICITUD_HISTO, 
+                                    P.TXT_BACODE, 
+                                    P.NUM_FASE, 
+                                    P.IND_CHECKED, 
+                                    P.USR_CREA, 
+                                    P.FEC_CREA, 
+                                    P.IND_ESTADO, 
+                                    P.ID_NMUESTRA, 
+                                    P.ID_UID
+                                FROM 
+                                    ADMIN.PB_LINETIME_HISTO P
+                                WHERE
+                                    P.ID_SOLICITUD_HISTO = ".$DATA["ID_ANATOMIA"]."
+                                ORDER BY 
+                                    P.FEC_CREA")->result_array();
     }
     
     public function LOAD_BUSQUEDA_INFO($DATA){
@@ -2019,7 +2017,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 P.IND_USOCASSETTE, 
                 P.IND_INFOPOST
             FROM 
-                PABELLON.PB_SOLICITUD_HISTO P
+                ADMIN.PB_SOLICITUD_HISTO P
             WHERE
                 P.ID_SOLICITUD_HISTO IN (".$DATA['NUM_HISTO'].") ")->result_array();
     }

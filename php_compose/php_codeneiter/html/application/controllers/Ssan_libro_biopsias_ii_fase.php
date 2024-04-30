@@ -74,10 +74,9 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
 
     public function index(){
         $this->output->set_template('blank');
-        $return_data = [];
-
-        $origen_sol                         =   0;//LISTADO DE ORIGEN DE SOLICITUDES                                            -   DEFAULT 0   - ALL 
-        $pto_entrega                        =   0;//LISTADO DE ORIGEN PUNTOS DE ENTREGA DESCRITA EN LA SOLICITUD DE ANATOMIA    -   DEFAULT 0   - ALL
+        $return_data                        =   [];
+        $origen_sol                         =   0;  //LISTADO DE ORIGEN DE SOLICITUDES                                            -   DEFAULT 0   - ALL 
+        $pto_entrega                        =   0;  //LISTADO DE ORIGEN PUNTOS DE ENTREGA DESCRITA EN LA SOLICITUD DE ANATOMIA    -   DEFAULT 0   - ALL
         #COOKIE TIEMPO BUSQUEDA
         if(!isset($_COOKIE['date_inicio']) && !isset($_COOKIE['date_final'])){
             #DATE DEFAULT

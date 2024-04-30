@@ -284,8 +284,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         )));
     }
 
-
-
     ########################################################################
     #LEYENDA
     ########################################################################
@@ -298,6 +296,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     ########################################################################
     #PAP                    :   6   =   NUM_CO_PAP 
     ########################################################################
+
     public function ultimo_numero_disponible(){
         if(!$this->input->is_ajax_request()){   show_404(); }
         $status                         =   true;
@@ -388,4 +387,5 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     }
 
 }
+
 ?>

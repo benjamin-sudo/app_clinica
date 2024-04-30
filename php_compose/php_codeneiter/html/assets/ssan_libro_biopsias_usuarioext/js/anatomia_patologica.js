@@ -1973,7 +1973,8 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                         url                 :   "ssan_libro_biopsias_listaexterno1/confirma_recepcion",
                         dataType            :   "json",
                         beforeSend          :   function(xhr)   {   
-                                                                    console.log("xhr    ->  ",xhr);   
+                                                                    console.log("xhr    ->  ",xhr); 
+                                                                    $('#loadFade').modal('show');  
                                                                 },
                         data                :                   {
                                                                     id_anatomia         :   id_anatomia,
@@ -1986,19 +1987,21 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                         error		:   function(errro)     { 
                                                                     console.log(errro);  
                                                                     console.log(errro.responseText);    
+                                                                    $('#loadFade').modal('hide');
                                                                     jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                                 },
                         success             :   function(aData) { 
                             
-                                                                    console.log("   -----------------------------------------------------    ");
-                                                                    console.log("   return aData        ->  ",aData,"    <-                  ");
-                                                                    console.log("   FIRMAS aData        ->  ",aData.STATUS,"<-               ");
-                                                                    console.log("   GET_BD STATUS       ->  ",aData["GET_BD"].STATUS,"<-     ");
-                                                                    console.log("   GET_BD STATUS_BD    ->  ",aData["GET_BD"].STATUS_BD,"<-  ");
-                                                                    console.log("   TXT_ERROR           ->  ",aData["GET_BD"].TXT_ERROR,"<-  ");
-                                                                    console.log("   close_modal         ->  ",aData["GET_BD"].close_modal,"<-  ");
-                                                                    console.log("   -------------------------------------------------------- ");
-                                                                    
+                                                                    console.log("   -----------------------------------------------------       ");
+                                                                    console.log("   return aData        ->  ",aData,"    <-                     ");
+                                                                    console.log("   FIRMAS aData        ->  ",aData.STATUS,"<-                  ");
+                                                                    console.log("   GET_BD STATUS       ->  ",aData["GET_BD"].STATUS,"<-        ");
+                                                                    console.log("   GET_BD STATUS_BD    ->  ",aData["GET_BD"].STATUS_BD,"<-     ");
+                                                                    console.log("   TXT_ERROR           ->  ",aData["GET_BD"].TXT_ERROR,"<-     ");
+                                                                    console.log("   close_modal         ->  ",aData["GET_BD"].close_modal,"<-   ");
+                                                                    console.log("   --------------------------------------------------------    ");
+
+                                                                    $('#loadFade').modal('hide');
                                                                     if(aData.STATUS){
                                                                         var var_status_bd               =   aData["GET_BD"].STATUS;
                                                                         if(var_status_bd === false){
@@ -2021,11 +2024,13 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                                                             }
                                                                             
                                                                             UPDATE_PANEL();
+                                                                            /*
                                                                             localStorage.setItem("ind_tipo_mensaje",1);
                                                                             localStorage.setItem("ind_estapa_analitica",0);
                                                                             localStorage.setItem("num_fichae",null);
                                                                             localStorage.setItem("id_anatomia",id_anatomia);
                                                                             $("#load_anuncios_anatomia_patologica").submit();
+                                                                            */
                                                                             jConfirm("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha sido recepcionada con &eacute;xito &iquest;Desea ver pdf de recepcion?",'Clinica Libre',function(r) {
                                                                                 if(r){ 
                                                                                     pdf_recepcion_ok(id_anatomia);

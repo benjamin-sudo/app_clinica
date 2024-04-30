@@ -11,7 +11,11 @@
   <!-- Bootstrap 5.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap.min.css" >
   <!-- Bootstrap Icons v1.11.2 -->
+  <!--
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
+  -->
+  <!-- Bootstrap Icons v1.11.2 -->
+  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/icon/bootstrap-icons.css">
   <!-- FontAwesome Icons -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/font-awesome.min.css">
   <!-- Theme style -->
@@ -32,6 +36,7 @@
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.min.css"  />
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
+
   <style>
     #loadFade         { z-index: 10500 !important; }
     .nav-link.activo  { }

@@ -3,260 +3,260 @@
     ssan_libro_biopsias_ii_fase     :   css
 */
 
-@media(min-width                 :   900px){
-    .modal_xl_900                {
-        width                    :   98%;
-        height                   :   85%;
-        max-width                :   90%;
+@media(min-width                        :   900px){
+    .modal_xl_900                       {
+        width                           :   98%;
+        height                          :   85%;
+        max-width                       :   90%;
     }
 }
 
-.GRID_LIBRO_MAIN_SOLICITUD      {
-    display                     :   grid;
-    grid-template-columns       :   1fr 4fr;
-    grid-column-gap             :   5px;
-    grid-row-gap                :   5px;
-    justify-items               :   stretch;
+.GRID_LIBRO_MAIN_SOLICITUD              {
+    display                             :   grid;
+    grid-template-columns               :   1fr 4fr;
+    grid-column-gap                     :   5px;
+    grid-row-gap                        :   5px;
+    justify-items                       :   stretch;
 }
 
-@media screen and (max-width    :   1366px){
-    .GRID_LIBRO_MAIN_SOLICITUD  {
-        grid-template-columns   :   1fr 5fr;
+@media screen and (max-width            :   1366px){
+    .GRID_LIBRO_MAIN_SOLICITUD          {
+        grid-template-columns           :   1fr 5fr;
     }
 }
 
-.GRID_LIBRO_BIOPSIAS_II_MAIN    {
-    display                     :   grid;
-    grid-template-columns       :   auto 1fr auto;
-    grid-column-gap             :   5px;
-    grid-row-gap                :   5px;
-    align-items                 :   center;
-    margin-bottom               :   8px;
+.GRID_LIBRO_BIOPSIAS_II_MAIN            {
+    display                             :   grid;
+    grid-template-columns               :   auto 1fr auto;
+    grid-column-gap                     :   5px;
+    grid-row-gap                        :   5px;
+    align-items                         :   center;
+    margin-bottom                       :   8px;
 }
 
-@media screen and (max-width    :   650px){
-    .GRID_LIBRO_BIOPSIAS_II_MAIN    {
-        grid-template-columns   :   1fr;
+@media screen and (max-width            :   650px){
+    .GRID_LIBRO_BIOPSIAS_II_MAIN        {
+        grid-template-columns           :   1fr;
     }
 }
 
-.punto_toma_muestra             {
-    padding                     :   0px;
+.punto_toma_muestra                     {
+    padding                             :   0px;
 }
 
-.grid_li_rotuloxsuario          {
-    display                     :   grid;
-    grid-template-columns       :   13px 3fr 1fr;
-    gap                         :   5px;
-    padding                     :   8px;
+.grid_li_rotuloxsuario                  {
+    display                             :   grid;
+    grid-template-columns               :   13px 3fr 1fr;
+    gap                                 :   5px;
+    padding                             :   8px;
 }
 
-.grid_li_rotuloxsuario1         {
-    text-align                  :   center;
+.grid_li_rotuloxsuario1                 {
+    text-align                          :   center;
 }
 
-.grid_li_rotuloxsuario3         {
-    text-align                  :   end;
+.grid_li_rotuloxsuario3                 {
+    text-align                          :   end;
 }
 
-.grid_informacion_paciente      {
-    display                     :   grid;
-    grid-template-columns       :   1.4fr 2fr;
-    gap                         :   5px;
-    margin-top                  :   7px;
+.grid_informacion_paciente              {
+    display                             :   grid;
+    grid-template-columns               :   1.4fr 2fr;
+    gap                                 :   5px;
+    margin-top                          :   7px;
 }
 
-.grid_new_user_x_servicio       {
-    display                     :   grid;
-    grid-template-columns       :   1fr 0.4fr 2fr;
-    gap                         :   5px;
+.grid_new_user_x_servicio               {
+    display                             :   grid;
+    grid-template-columns               :   1fr 0.4fr 2fr;
+    gap                                 :   5px;
 }
 
-.grid_opt_new_user              {
-    display                     :   grid;
-    grid-template-columns       :   1fr 1fr;
+.grid_opt_new_user                      {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
 }
 
-.CSS_GRID_CIRUGIA_FASE_1        {
-    display                     :   grid;
-    grid-template-columns       :   30px 2fr 2fr 2fr 1fr 80px;
-    align-items                 :   normal;
-    justify-items               :   stretch;
-    grid-column-gap             :   5px;
-    grid-row-gap                :   5px;
-    margin-left                 :   0px;
+.CSS_GRID_CIRUGIA_FASE_1                {
+    display                             :   grid;
+    grid-template-columns               :   30px 1fr 1fr 1fr 220px 60px;
+    align-items                         :   normal;
+    justify-items                       :   stretch;
+    grid-column-gap                     :   5px;
+    grid-row-gap                        :   5px;
+    margin-left                         :   0px;
 }
 
-.grid_lista_gestion_masivo_li   {
-    display                     :   grid;
-    grid-template-columns       :   1fr;
-    grid-template-rows          :   1fr 7px 1fr;
-    align-items                 :   baseline;
-    justify-items               :   center;
+.grid_lista_gestion_masivo_li           {
+    display                             :   grid;
+    grid-template-columns               :   1fr;
+    grid-template-rows                  :   1fr 7px 1fr;
+    align-items                         :   baseline;
+    justify-items                       :   center;
 }
 
-.CSS_GRID_HISTORIAL             {
-    display                     :   grid;
-    grid-template-columns       :   33% 33% 33%;
-    align-items                 :   center;
-    grid-row-gap                :   5px;
-    column-gap                  :   5px;
+.CSS_GRID_HISTORIAL                     {
+    display                             :   grid;
+    grid-template-columns               :   33% 33% 33%;
+    align-items                         :   center;
+    grid-row-gap                        :   5px;
+    column-gap                          :   5px;
 }
 
-.grid_tooltip                   {
-    display                     :   grid;
-    grid-template-columns       :   1fr 1fr;
-    grid-row-gap                :   5px;
+.grid_tooltip                           {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+    grid-row-gap                        :   5px;
 }
 
-.tooltip-inner                  {
-    max-width                   :   350px;
-    width                       :   350px; 
+.tooltip-inner                          {
+    max-width                           :   350px;
+    width                               :   350px; 
 }
 
-.FLEX_CENTER                    {
-    display                     :   flex;
-    justify-content             :   center;
+.FLEX_CENTER                            {
+    display                             :   flex;
+    justify-content                     :   center;
 }
 
-.panel_a_log                    {
-    display                     :   grid;
-    grid-template-columns       :   repeat(2,1fr);
-    align-items                 :   center;
-    padding                     :   6px;
+.panel_a_log                            {
+    display                             :   grid;
+    grid-template-columns               :   repeat(2,1fr);
+    align-items                         :   center;
+    padding                             :   6px;
 }
 
-.CSS_GRID_ETIQUETA_HEARD        {
-    display                     :   grid;
-    grid-template-columns       :   40% 60%;
-    align-items                 :   center;
-    grid-row-gap                :   5px;
+.CSS_GRID_ETIQUETA_HEARD                {
+    display                             :   grid;
+    grid-template-columns               :   40% 60%;
+    align-items                         :   center;
+    grid-row-gap                        :   5px;
 }
 
-.CSS_GRID_ETIQUETA_FO0TER       {
-    display                     :   grid;
-    grid-template-columns       :   1fr 1fr;
-    align-items                 :   center;
-    grid-row-gap                :   5px;
+.CSS_GRID_ETIQUETA_FO0TER               {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+    align-items                         :   center;
+    grid-row-gap                        :   5px;
 }
 
-.dropdown-menu:before           {
-    border-bottom               :   11px solid rgba(0,0,0,0.2);
-    border-left                 :   11px solid transparent;
-    border-right                :   11px solid transparent;
-    content                     :   "";
-    display                     :   inline-block;
-    position                    :   absolute;
-    left                        :   205px;
-    top                         :   -11px;
+.dropdown-menu:before                   {
+    border-bottom                       :   11px solid rgba(0,0,0,0.2);
+    border-left                         :   11px solid transparent;
+    border-right                        :   11px solid transparent;
+    content                             :   "";
+    display                             :   inline-block;
+    position                            :   absolute;
+    left                                :   205px;
+    top                                 :   -11px;
 }
 
-.dropdown-menu:after            {
-    border-bottom               :   11px solid #FFFFFF;
-    border-left                 :   11px solid transparent;
-    border-right                :   11px solid transparent;
-    content                     :   "";
-    display                     :   inline-block;
-    position                    :   absolute;
-    left                        :   205px;
-    top                         :   -10px;
+.dropdown-menu:after                    {
+    border-bottom                       :   11px solid #FFFFFF;
+    border-left                         :   11px solid transparent;
+    border-right                        :   11px solid transparent;
+    content                             :   "";
+    display                             :   inline-block;
+    position                            :   absolute;
+    left                                :   205px;
+    top                                 :   -10px;
 }
 
-.FLEX_CONTAINER                 {
-  display                       :   flex;
-  flex-wrap                     :   nowrap;
+.FLEX_CONTAINER                         {
+  display                               :   flex;
+  flex-wrap                             :   nowrap;
 }
 
 /*
-    background-color            :   DodgerBlue;
+    background-color                    :   DodgerBlue;
 */
 
-.FLEX_CONTAINER > div           {
-    background-color            :   #f1f1f1;
-    width                       :   100%;
-    margin                      :   10px;
-    text-align                  :   center;
-    font-size                   :   30px;
+.FLEX_CONTAINER > div                   {
+    background-color                    :   #f1f1f1;
+    width                               :   100%;
+    margin                              :   10px;
+    text-align                          :   center;
+    font-size                           :   30px;
 }
 
 /*
-    line-height                 :   75px;
-    width                       :   100px;
+    line-height                         :   75px;
+    width                               :   100px;
 */
 
-.CSS_GRID_NAV                   {
-    display                     :   grid;
-    grid-template-columns       :   5% 90% 5%;
+.CSS_GRID_NAV                           {
+    display                             :   grid;
+    grid-template-columns               :   5% 90% 5%;
 }
 
-.CSS_GRID_CALENDARIO_OPEN       {
-    display                     :   grid;
-    grid-template-columns       :   1% 98% 1%;
-    align-items                 :   center;
-    grid-row-gap                :   5px;
+.CSS_GRID_CALENDARIO_OPEN               {
+    display                             :   grid;
+    grid-template-columns               :   1% 98% 1%;
+    align-items                         :   center;
+    grid-row-gap                        :   5px;
 }
 
-.CSS_GRID_PUNTO_ENTREGA_EXT     {
-    display                     :   grid;
-    grid-template-columns       :   3% 4% 6% 16% 16% 12% 10% 18% 3% 3% 3% 3% 3%;
-    align-items                 :   center;
+.CSS_GRID_PUNTO_ENTREGA_EXT             {
+    display                             :   grid;
+    grid-template-columns               :   3% 4% 6% 16% 16% 12% 10% 18% 3% 3% 3% 3% 3%;
+    align-items                         :   center;
 }
 
 .grid_left{
-    display                     :   grid;
-    justify-content             :   flex-end;
-    align-items                 :   center;
-    margin-right                :   10px;
+    display                             :   grid;
+    justify-content                     :   flex-end;
+    align-items                         :   center;
+    margin-right                        :   10px;
 }
 
-.CSS_GRID_CIRUGIA               {
-    display                     :   grid;
-    grid-template-columns       :   2% 20% 8% 6% 20% 6% 16% 16% 3% 3%;
-    justify-items               :   flex-start;
-    align-items                 :   center;
+.CSS_GRID_CIRUGIA                       {
+    display                             :   grid;
+    grid-template-columns               :   2% 20% 8% 6% 20% 6% 16% 16% 3% 3%;
+    justify-items                       :   flex-start;
+    align-items                         :   center;
 }
 
-.CSS_GRID_CIRUGIA_HEAD_FASE1    {
-    display                     :   grid;
-    grid-template-columns       :   30% 55% 15%;
-    align-items                 :   center;
-    margin-left                 :   9px;
-    margin-right                :   9px;
+.CSS_GRID_CIRUGIA_HEAD_FASE1            {
+    display                             :   grid;
+    grid-template-columns               :   30% 55% 15%;
+    align-items                         :   center;
+    margin-left                         :   9px;
+    margin-right                        :   9px;
 }  
 
-.CSS_GRID_CIRUGIA_HEAD_FASE2    {
-    display                     :   grid;
-    grid-template-columns       :   auto 1fr 1fr;
-    align-items                 :   center;
-    margin-left                 :   9px;
-    margin-right                :   9px;
+.CSS_GRID_CIRUGIA_HEAD_FASE2            {
+    display                             :   grid;
+    grid-template-columns               :   auto 1fr 1fr;
+    align-items                         :   center;
+    margin-left                         :   9px;
+    margin-right                        :   9px;
 }  
 
-#tableid tr td                  { 
-    font-size                   :   10px; 
-    border-spacing              :   0;
-    border-collapse             :   collapse;
-    border                      :   1px solid #000;
+#tableid tr td                          { 
+    font-size                           :   10px; 
+    border-spacing                      :   0;
+    border-collapse                     :   collapse;
+    border                              :   1px solid #000;
 }
 
-.fieldset_local                 {
-    min-width                   :   0;
-    padding                     :   0;
-    margin                      :   0;
-    border                      :   1;
-    border-radius               :   4px;
-    border                      :   1px solid silver;
-    width                       :   fit-content;
-    margin-bottom               :   0px;
+.fieldset_local                         {
+    min-width                           :   0;
+    padding                             :   0;
+    margin                              :   0;
+    border                              :   1;
+    border-radius                       :   4px;
+    border                              :   1px solid silver;
+    width                               :   fit-content;
+    margin-bottom                       :   0px;
 }
 
-.CCS_GRID_ENCUSTODIA            {
-    display                     :   grid;
-    grid-template-columns       :   1fr 1fr 1fr;
-    grid-column-gap             :   5px;
-    grid-row-gap                :   5px;
-    justify-items               :   center;
-    align-items                 :   center;
+.CCS_GRID_ENCUSTODIA                    {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr 1fr;
+    grid-column-gap                     :   5px;
+    grid-row-gap                        :   5px;
+    justify-items                       :   center;
+    align-items                         :   center;
 }
 
 .CCS_GRID_ENCUSTODIA4                   {
