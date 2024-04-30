@@ -330,9 +330,9 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
 
     public function ver_valida_firma_simple(){
         if(!$this->input->is_ajax_request()){   show_404(); }
-        $status                         =   true;
         $contrasena                     =   $this->input->post('contrasena');
         $valida                         =   $this->Ssan_libro_biopsias_usuarioext_model->validaClave($contrasena);
+        $status                         =   count($valida)>0?true:false;
         $this->output->set_output(json_encode(array(
             'contrasena'                =>  $contrasena,
             'status'                    =>  $status,
@@ -340,6 +340,52 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         )));
     }
 
-    
+    public function confirma_recepcion(){
+        if(!$this->input->is_ajax_request()){  show_404(); }
+        $empresa                            =   $this->session->userdata('COD_ESTAB');
+        $id_anatomia                        =   $this->input->post('id_anatomia');
+        $array_muestras                     =   $this->input->post('array_muestras');
+        $n_interno                          =   $this->input->post('n_interno');
+        $n_interno_2                        =   $this->input->post('n_interno_2');
+        $ind_tipo_biopsia                   =   $this->input->post('ind_tipo_biopsia'); 
+        $usuarioh                           =   explode("-",$this->session->userdata("USERNAME"));
+        #$num_memo_notificacion             =   true;
+        $TXT_ERROR                          =   '';
+        $DATA                               =   '';
+        #$valida                            =   '';
+        $STATUS                             =   true;
+        $arr_errores                        =   array();
+        $arr_password                       =   $this->input->post('pass');
+        $valida                             =	$this->Ssan_libro_biopsias_usuarioext_model->sqlValidaClave_doble($arr_password);
+
+        count($valida['user_1'])>0?'':array_push($arr_errores,"Error en la firma del usuario de trasporte");
+        count($valida['user_2'])>0?'':array_push($arr_errores,"Error en la firma del usuario de recepci&oacute;n");
+        if(count($arr_errores)>0){
+            $TXT_ERROR                      =   implode("<br>",$arr_errores);
+            $STATUS                         =   false;
+        } else {
+            $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_recepcion(array(
+                                                    "COD_EMPRESA"       =>  $empresa,
+                                                    "SESSION"           =>  $usuarioh[0], 
+                                                    "ID_ANATOMIA"       =>  $id_anatomia,
+                                                    "ARRAY"             =>  $array_muestras,
+                                                    "DATA_FIRMA"        =>  $valida,
+                                                    "n_interno"         =>  $n_interno,
+                                                    "n_interno_2"       =>  $n_interno_2,
+                                                    "ind_tipo_biopsia"  =>  $ind_tipo_biopsia,
+                                                ));
+        }
+
+        $this->output->set_output(json_encode(array(
+            'ERRORES'       =>  $arr_errores,
+            'PASS'          =>  $arr_password,
+            'GET_BD'        =>  $DATA,
+            'DATA_FIRMA'    =>  $valida,
+            'RETURN'        =>  $STATUS,
+            'TXT_ERROR'     =>  $TXT_ERROR,
+            'STATUS'        =>  $STATUS,
+        )));
+    }
+
 }
 ?>

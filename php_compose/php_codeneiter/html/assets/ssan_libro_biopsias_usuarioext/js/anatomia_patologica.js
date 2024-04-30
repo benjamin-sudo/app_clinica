@@ -1954,20 +1954,18 @@ function confirma_recepcion_all(fase){
 }
 //******************************************************************************
 function _envios(id_anatomia,post,LISTA_ANATOMIA){
-    
-    console.table([{"id_anatomia":id_anatomia,"_post":post}]);
-    console.table(LISTA_ANATOMIA.RESUL);
-    console.table(LISTA_ANATOMIA.RESUL.ARRAY_NMUESTRAS);
-
-    var txt_accion  =    post==0?'CUSTODIA':post==1?'TRASPORTE':'RECEPCI&Oacute;N';
+    //console.table([{"id_anatomia":id_anatomia,"_post":post}]);
+    //console.table(LISTA_ANATOMIA.RESUL);
+    //console.table(LISTA_ANATOMIA.RESUL.ARRAY_NMUESTRAS);
+    var txt_accion = post==0?'CUSTODIA':post==1?'TRASPORTE':'RECEPCI&Oacute;N';
     console.log("txt_accion->",txt_accion);
     if (post === 3 ){
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar las solicitud de anatom&iacute;a patol&oacute;gica <b>RECEPCI&Oacute;N</b>&nbsp;&nbsp;&nbsp;<br />&iquest;Est&aacute; seguro de continuar?','Clinica Libre',function(r){
             if(r){
-                var pass                    =   new Array({
-                                                    "pass1"     :   $("#firma_simple_trasporte").val(),
-                                                    "pass2"     :   $("#firma_simple_recepcion").val()
-                                                });
+                var pass    =   new Array({
+                                    "pass1" : $("#firma_simple_trasporte").val(),
+                                    "pass2" : $("#firma_simple_recepcion").val()
+                                });
                 $.ajax({ 
                         type                :   "POST",
                         url                 :   "ssan_spab_gestionlistaquirurgica/confirma_recepcion",
@@ -3206,7 +3204,12 @@ function js_validafirma(txt_firma_simple){
         success		:   function(aData)         {   
                                                     $('#loadFade').modal('hide');
                                                     console.log("aData -> ",aData);
-                                                    showNotification('top','center','Firma simple ->'+aData.valida.NAME+' '+aData.valida.USERNAME,1,'fa fa-info');
+                                                    if (aData.status){
+                                                        let data_user = aData.valida[0];
+                                                        showNotification('top','center','<i class="fa fa-info"></i>&nbsp;Firma simple ->'+data_user.NAME+' - '+data_user.USERNAME,1,'');
+                                                    } else {
+                                                        jError("Firma &uacute;nica. no tiene usuario asignado","Clinica Libre");
+                                                    }
                                                 }, 
     });
 }

@@ -3221,8 +3221,9 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
             'valida'                    =>  $valida,
         )));
     }
+
     ###################################################
-    #clave rapida esissan
+    #clave rapida
     #12.01.2023
     ###################################################
     public function fn_gestion_clave_esissan(){

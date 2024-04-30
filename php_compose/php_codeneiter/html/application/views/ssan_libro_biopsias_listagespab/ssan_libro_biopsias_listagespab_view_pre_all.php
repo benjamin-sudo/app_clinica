@@ -480,12 +480,10 @@
                         </div>
                         <div class="GRID_HEARD_CHECK_MUESTRA2">
                             <button type="button" data-toggle="false" class="btn btn-info btn-fill BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" id="BTN_CHECKED_ALL_<?php echo $DATA["ID_SOLICITUD"];?>" onclick="BTN_MARCA_ALL(<?php echo $DATA["ID_SOLICITUD"];?>)">
-                                <i class="fa fa-check-square" aria-hidden="true"></i>
+                                <i class="fa fa-check-square" aria-hidden="true"></i> 
                             </button>
                         </div>
-                        <div class="GRID_HEARD_CHECK_MUESTRA3">
-                            &nbsp;  
-                        </div>
+                        <div class="GRID_HEARD_CHECK_MUESTRA3">&nbsp;</div>
                     </div>
                 </div>
                 
@@ -497,7 +495,7 @@
                                 <div class="CSS_GRID_MUESTRA_1"><?php echo $i+1; ?> </div>
                                 <div class="CSS_GRID_MUESTRA_2">
                                     <a role="button" style="padding: 0px" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="li_acordion_mtuestras">
-                                        <?php echo $row['TXT_MUESTRA'];?>&nbsp;|&nbsp;<?php echo $row['NUM_ML'];?>&nbsp;mL
+                                        <i><?php echo $row['TXT_MUESTRA'];?>&nbsp;|&nbsp;<?php echo $row['NUM_ML'];?>&nbsp;mL</i>
                                     </a>
                                 </div>
                                 <div class="CSS_GRID_MUESTRA_4" style="text-align: end;">
@@ -626,21 +624,14 @@
                                     <h5 style="color:#888888;">FIRMA UNICA TRASPORTE</h5>
                                     <div class="input-group mb-3"  id="date_tabla2">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
-                                        <input type="password" class="form-control" placeholder="Firma Quien Trasporta" aria-label="Username" aria-describedby="basic-addon1" id="firma_simple_trasporte" name="firma_simple_trasporte"  value="">
+                                        <input type="password" class="form-control" placeholder="Firma quien trasporta" aria-label="Username" aria-describedby="basic-addon1" id="firma_simple_trasporte" name="firma_simple_trasporte"  value="">
                                     </div>
                                 </fieldset>
                             </div>
                             <div class="css_grid_password_recepcion4">
-                                
-                            
-                            
-                                <button class="btn BTN-XS btn-success" onclick="js_validafirma('firma_simple_trasporte')">
-                                    <i class="fa fa-id-card-o" aria-hidden="true"></i> VERIFICACION
+                                <button class="btn btn-xs btn-info" onclick="js_validafirma('firma_simple_trasporte')">
+                                    <i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp;VERIFICACI&Oacute;N<br>&nbsp;FIRMA UNICA
                                 </button>
-
-
-
-
                             </div>
                             <div class="css_grid_password_recepcion2">
                                 <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
@@ -659,24 +650,20 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- OTRA OPT -->
+                        <!-- OTRA OPCIONES -->
                         <div class="css_panel_rechazo" style="display:none">
                             <div class="css_panel_rechazo1">
-                                <fieldset class="fieldset_local">
-                                    <legend class="legend" style="margin-left:8px;">OBSERVACI&Oacute;N GENERAL</legend>
-                                    <div id="date_tabla2" class="input-group center-block" style="width:410px;padding:6px;">
-                                        <span class="input-group-addon"><span class="fa fa-comment-o"></span></span>
-                                        <input type="text" class="form-control input-sm" id="txt_observacion_rechazo" name="txt_observacion_rechazo" value="">
-                                    </div>
-                                </fieldset> 
+                                <h5 style="color:#888888;">OBSERVACI&Oacute;N GENERAL DE RECHAZO</h5>
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" id="txt_observacion_rechazo" name="txt_observacion_rechazo"></textarea>
+                                </div>
                             </div>
                             <div class="css_panel_rechazo3" style="text-align:center;">
-                                <button class="btn btn-xs btn-fill btn-danger all_solicitudes_recepcion toolpit_local" onclick="js_confirma_rechazo_recepcion(<?php echo $DATA["ID_SOLICITUD"];?>)">
+                                <button class="btn btn-fill btn-danger all_solicitudes_recepcion toolpit_local" onclick="js_confirma_rechazo_recepcion(<?php echo $DATA["ID_SOLICITUD"];?>)">
                                     <i class="fa fa-times" aria-hidden="true"></i><span class="toolpit_local_txt"><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Confirma rechazo de muestras</span>
                                 </button>
                             </div>
                         </div>
-                        
                     <?php if ($DATA["ID_HISTO_ESTADO"] == 4) {?>
                         <script>marcadas_recepcionadas_resagadas(<?php echo $DATA["ID_SOLICITUD"];?>);</script> 
                     <?php } else { ?>
@@ -686,7 +673,7 @@
             <?php
             break;
         case 3:
-            echo    "<b>EN TRASPORTE A 1)RECEPCI&Oacute;N</b>";
+            echo    "<b>EN TRASPORTE A 1) RECEPCI&Oacute;N</b>";
             break;
         default:
             echo    "<b>NO SE HA IDENTIFICADO</b>";

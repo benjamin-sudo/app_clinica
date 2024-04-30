@@ -862,34 +862,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             ")->result_array();
     }
     
-    public function sqlValidaClave_doble($arr_password){
-        $clave1	    =   strtolower($arr_password[0]["pass1"]);
-        $SQL1       =   "  SELECT 
-                                ID_UID,
-                                USERNAME,
-                                NAME,
-                                MIDDLE_NAME,
-                                LAST_NAME 
-                            FROM 
-                                $this->ownGu.FE_USERS 
-                            WHERE 
-                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave1') ";
-        $clave2	    =   strtolower($arr_password[0]["pass2"]);
-        $SQL2       =   "SELECT 
-                                ID_UID,
-                                USERNAME,
-                                NAME,
-                                MIDDLE_NAME,
-                                LAST_NAME 
-                            FROM 
-                                $this->ownGu.FE_USERS 
-                            WHERE 
-                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave2') ";
-        return array(
-            'user_1'    =>  $this->db->query($SQL1)->row(),
-            'user_2'    =>  $this->db->query($SQL2)->row(),
-        );
-    }
+    
     
     public function sqlValidaClave_old($clave){
         $clave	        =   strtolower($clave);
@@ -904,6 +877,40 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             WHERE 
                                 TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave')";
         return $this->db->query($SQL)->row();
+    }
+
+
+
+    public function sqlValidaClave_doble($arr_password){
+        $this->dbSession = $this->load->database('session', true); 
+        
+        $clave1	        =   strtolower($arr_password[0]["pass1"]);
+        $SQL1           =   "  SELECT 
+                                ID_UID,
+                                USERNAME,
+                                NAME,
+                                MIDDLE_NAME,
+                                LAST_NAME 
+                            FROM 
+                                $this->own.FE_USERS 
+                            WHERE 
+                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave1') ";
+        $clave2	    =   strtolower($arr_password[0]["pass2"]);
+
+        $SQL2       =   "SELECT 
+                                ID_UID,
+                                USERNAME,
+                                NAME,
+                                MIDDLE_NAME,
+                                LAST_NAME 
+                            FROM 
+                                $this->own.FE_USERS 
+                            WHERE 
+                            TO_CHAR(TX_INTRANETSSAN_CLAVEUNICA) IN ('$clave2') ";
+        return array(
+            'user_1'    =>  $this->dbSession->query($SQL1)->row(),
+            'user_2'    =>  $this->dbSession->query($SQL2)->row(),
+        );
     }
 
     public function validaClave($clave){
@@ -923,12 +930,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $query = $this->dbSession->query($sql,array($clave));
         return $query->result_array();
     }
-
     ########################################
     #### MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
     #### LISTA POR CLIENTES################# 
     ########################################
-
     public function CARGA_LISTA_MISSOLICITUDES_ANATOMIA($DATA){
         $this->db->trans_start();
         $CALL_FASE          =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;
@@ -1216,7 +1221,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                         <div class="grid_lista_gestion_masivo_li2"></div>
                                                         <div class="grid_lista_gestion_masivo_li2">';
                                                         if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
-                                                            $style_display_none         =   $CALL_FASE==2&&$row['ID_HISTO_ESTADO']==3?'':'display:none;';
+                                                            $style_display_none         =   $CALL_FASE==2&&$row['ID_HISTO_ESTADO']==3?'display:none;':'display:none;';
+                                                            
+                                                            
                                                             $HTML       .=      '
                                                                                     <input 
                                                                                     type        =   "checkbox" 

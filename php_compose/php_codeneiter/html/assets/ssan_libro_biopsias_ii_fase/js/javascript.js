@@ -169,12 +169,12 @@ function UPDATE_PANEL(){
     console.log("NUM_FASE   ->  ",$("#NUM_FASE").val());
     $('#loadFade').modal('show');
     /*
-    console.log("-------------------------------------------------------");
-    console.log("   NUM_FASE        ->",$("#NUM_FASE").val(),"<-        ");
-    console.log("   IND_TEMPLETE    ->",$("#IND_TEMPLETE").val(),"<-    ");
-    console.log("   fecha_form      ->",fecha_form,"<-                  ");
-    console.log("   fecha_to        ->",fecha_to,"<-                    ");
-    console.log("-------------------------------------------------------");
+        console.log("-------------------------------------------------------");
+        console.log("   NUM_FASE        ->",$("#NUM_FASE").val(),"<-        ");
+        console.log("   IND_TEMPLETE    ->",$("#IND_TEMPLETE").val(),"<-    ");
+        console.log("   fecha_form      ->",fecha_form,"<-                  ");
+        console.log("   fecha_to        ->",fecha_to,"<-                    ");
+        console.log("-------------------------------------------------------");
     */
     if($("#IND_TEMPLETE").val() == 'ssan_libro_biopsias_i_fase'){
         console.log("ssan_libro_biopsias_i_fase");

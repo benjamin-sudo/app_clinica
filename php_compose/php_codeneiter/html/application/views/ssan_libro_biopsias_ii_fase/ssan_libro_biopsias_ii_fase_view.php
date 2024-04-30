@@ -615,13 +615,13 @@
         </div>
     </div>
 
-    <!-- REEDITADOS -->
-    <div class="modal fade bd-example-modal-lg" id="MODAL_INFORMACION_ETIQUETA">
+    <!-- RE-EDITADOS -->
+    <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">
-                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;GESTI&Oacute;N DE MUESTRAS 2 </b>
+                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;GESTI&Oacute;N DE MUESTRAS</b>
                     </h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
