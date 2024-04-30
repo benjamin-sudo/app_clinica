@@ -649,7 +649,6 @@
 </div>
 
 <input type="button" id="test_pdf" value="test pdf" onclick="test_pdf(768)" style="display: none"> 
-
 <div id="get_html_pdf"></div>
 <div id="respuesta_familia"></div>
 <div id="get_html_macroscopica"></div>
