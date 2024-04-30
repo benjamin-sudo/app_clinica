@@ -28,9 +28,6 @@
   <link rel="stylesheet" href="assets/recursos/css/jquery-ui.css">
   <!--  bootstrap-select.min.css -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min.css">
-  <!--
-  <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min2.css">
-  -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/autocomplete.css"  />
   <link type="text/css" rel="stylesheet" href="assets/recursos/css//easy-autocomplete.css"  />
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.min.css"  />
@@ -43,6 +40,7 @@
     .text-center      { text-align: center;  }
     .btn-warning      { color: white !important; }
   </style>
+
 </head>
 <body data-scrollbar-auto-hide="n">
 <!-- Site wrapper -->
