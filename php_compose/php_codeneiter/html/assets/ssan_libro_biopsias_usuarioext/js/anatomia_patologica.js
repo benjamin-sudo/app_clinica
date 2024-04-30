@@ -1952,11 +1952,13 @@ function confirma_recepcion_all(fase){
     //return false;
     _envios('',2,LISTA_ANATOMIA);
 }
+
 //******************************************************************************
 function _envios(id_anatomia,post,LISTA_ANATOMIA){
     //console.table([{"id_anatomia":id_anatomia,"_post":post}]);
     //console.table(LISTA_ANATOMIA.RESUL);
     //console.table(LISTA_ANATOMIA.RESUL.ARRAY_NMUESTRAS);
+
     var txt_accion = post==0?'CUSTODIA':post==1?'TRASPORTE':'RECEPCI&Oacute;N';
     console.log("txt_accion->",txt_accion);
     if (post === 3 ){
@@ -1968,7 +1970,7 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                 });
                 $.ajax({ 
                         type                :   "POST",
-                        url                 :   "ssan_spab_gestionlistaquirurgica/confirma_recepcion",
+                        url                 :   "ssan_libro_biopsias_listaexterno1/confirma_recepcion",
                         dataType            :   "json",
                         beforeSend          :   function(xhr)   {   
                                                                     console.log("xhr    ->  ",xhr);   
