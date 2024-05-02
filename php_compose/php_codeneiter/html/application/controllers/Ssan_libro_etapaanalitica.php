@@ -108,7 +108,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         
         $this->input->set_cookie($cookie_target);
         if($tipo_busqueda                   === '#_panel_por_fecha')            {   #_panel_por_fecha   
-            
             #BUSCAR REPETIDOS
             #cookie para los estados
             $cookie_filtros                 =   array(
@@ -135,7 +134,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
                                                 );
             $this->input->set_cookie($cookie_time);
         } else if($tipo_busqueda            === '#_panel_por_gestion')          {   #_panel_por_gestion
-            
             /*
             $arrs_anatomia                  =   [];
             if(isset($_COOKIE['id_anatomia'])){
@@ -159,9 +157,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
                                                 );
             $this->input->set_cookie($cookie_ids_ap);
             */
-            
             $arr_ids_anatomia               =   $txt_ids_anatomia;
-            
         } else  if($tipo_busqueda           === '#_busqueda_xpersona'){
             $arr_ids_anatomia               =   'null';
         } else  if($tipo_busqueda           === '#_busqueda_bacode'){

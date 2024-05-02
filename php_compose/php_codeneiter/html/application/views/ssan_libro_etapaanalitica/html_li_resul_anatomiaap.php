@@ -7,8 +7,12 @@
     }
     #$n_image_views                 =   $row["N_IMAGE_VIEWS"]==0||$row["N_IMAGE_VIEWS_X_MUESTRA"]?'disabled':'onclick="ver_imagenes('.$row["ID_SOLICITUD"].')"';
     $txt_day                        =   $row["LAST_DATE_AUDITA_MOMENT"]===date("Ymd")?'hours':'day';
+
+    $ID_SOLICITUD                   =   $row["ID_SOLICITUD"];
+    
 ?>
-<?php $v_border_star               =   $aux=== 1 ?'border-radius:4px 4px 0px 0px;':''; ?>
+
+<?php $v_border_star = $aux===1?'border-radius:4px 4px 0px 0px;':''; ?>
 
 <a href="#" class="css_lista_ordenada <?php echo $row["STYLE_HISTO_ZONA"];?> list-group-item list-group-item-action  solicitud_<?php echo $row["ID_SOLICITUD"];?>" style="padding:0px;">
     <div class="grid_a_rce_anatomiapatologica css<?php echo substr($ind_opcion,1);?>" id="anatomia_<?php echo $row["ID_SOLICITUD"];?>" data-id_anatomia_pantalla='<?php echo $row["ID_SOLICITUD"];?>'>
@@ -17,22 +21,24 @@
                 <div class="grid_elimina_registro_busqueda1"><b><?php echo $aux;?></b></div>
                 <div class="grid_elimina_registro_busqueda2">&nbsp;</div>
                 <div class="grid_elimina_registro_busqueda3">&nbsp;</div>
-            <?php   if($ind_opcion == '#_panel_por_gestion'){?>
+            <?php if ($ind_opcion == '#_panel_por_gestion'){ ?>
                 <div class="grid_elimina_registro_busqueda4">
                     <i class="fa fa-eraser"  style="text-align:start;color:#888888;" id="delete_list_panel_por_gestion" onclick="js_delete_list_gestion(<?php echo $row["ID_SOLICITUD"];?>)" aria-hidden="true"></i>
                 </div>
-            <?php   }   ?>
+            <?php } ?>
             </div>
         </div>
         <div class="grid_a_rce_anatomiapatologica2">
-            <i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<b><?php echo $row["RUTPACIENTE"];?></b>&nbsp;<br>
-            <i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;<b><?php echo $row["NOMBRE_COMPLETO"];?></b>&nbsp;<br>
+            <i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<b><?php echo $row["RUTPACIENTE"];?></b>
+            <br>
+            <i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;<b><?php echo $row["NOMBRE_COMPLETO"];?></b>
+            <br>
             <i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;<b><?php echo $row["NACIMIENTO"];?></b> 
         </div>
         <div class="grid_a_rce_anatomiapatologica3">
-            <i class="fa fa-address-card" aria-hidden="true"></i><b><?php echo $row["COD_RUTPRO"];?>-<?php echo $row["DV"];?></b>
+            <i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;<b><?php echo $row["COD_RUTPRO"];?>-<?php echo $row["DV"];?></b>
             <br>
-            <i class="fa fa-user-md" aria-hidden="true"></i><b><?php echo $row["NOM_PROFE_CORTO"];?></b>
+            <i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;<b><?php echo $row["NOM_PROFE_CORTO"];?></b>
         </div>
         <div class="grid_a_rce_anatomiapatologica5">
             <i class="fa fa-map-marker" aria-hidden="true"></i><b><?php echo $row["TXT_HISTO_ZONA"];?></b>
@@ -52,7 +58,7 @@
             <?php echo $row['TXT_EMPRESA_DERIVADO'] ==  '' ? '' : '<br><span class="label label-info"><i class="fa fa-hospital-o" aria-hidden="true"></i>&nbsp;'.$row['TXT_EMPRESA_DERIVADO'].'</span>';?>
             <br>
             <i  style="text-align:CENTER;color:#888888;" id="<?php echo $row["ID_SOLICITUD"];?>" onclick="GET_PDF_ANATOMIA_PANEL(this.id)" aria-hidden="true">
-                <i class="fa fa-file-pdf-o" aria-hidden="true"></i><b>SOLICITUD</b>
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> <b>SOLICITUD</b>
             </i>
         </div>
         <div class="grid_a_rce_anatomiapatologica7">
@@ -67,14 +73,11 @@
                                 id      =   "btn_pdf_macro" 
                                 name    =   "btn_pdf_macro"
                                 <?php if ($row["ID_HISTO_ZONA"]==0){
-                                   echo     'disabled';
+                                    echo    'disabled';
                                 } else {
                                     echo    'onclick="js_pdf_microscopica('.$row["ID_SOLICITUD"].')";';
                                 } ?>
                                 >
-                                <!--
-                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                -->
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -90,26 +93,26 @@
             <b><?php echo $row["DATE_FECHA_REALIZACION"];?></b>
         </div>
         <div class="grid_a_rce_anatomiapatologica6" style="text-align: end;">
+            
             <div class="btn-group">
-                <?php if($get_sala=='analitica'){
-                    ?>
+                <?php if($get_sala=='analitica'){ ?>
                     <?php   if ($row["ID_HISTO_ZONA"]==7){  ?>
-                        <button type="button" class="btn btn-info btn-fill btn_analitica_<?php echo $row["ID_SOLICITUD"];?>" id="btn_gestion_analitica" onclick="star_analitica(<?php echo $row["ID_SOLICITUD"];?>)" data-rce_finaliza="true" >
+                        <button type="button" class="btn btn-info btn-fill btn_analitica_<?php echo $row["ID_SOLICITUD"];?>" id="btn_gestion_analitica" onclick="star_analitica(<?php echo $ID_SOLICITUD;?>)" data-rce_finaliza="true" >
                             <i class="fa fa-stethoscope" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-warning btn-fill ver_imagenes_central" id="vista_<?php echo $row["ID_SOLICITUD"];?>" <?php echo $n_image_views;?> data-visualizaimg="false">
                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
                         </button>
                     <?php   }   else    if($row["ID_HISTO_ZONA"]==8){   ?>
-                        <button type="button" class="btn btn-success btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_microscopica(<?php echo $row["ID_SOLICITUD"];?>)" >
+                        <button type="button" class="btn btn-success btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_microscopica(<?php echo $ID_SOLICITUD;?>)" >
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="btn btn-success btn-fill btn_analitica_<?php echo $row["ID_SOLICITUD"];?>" onclick="star_analitica(<?php echo $row["ID_SOLICITUD"];?>)" id="btn_gestion_analitica" data-rce_finaliza="true" >
+                        <button type="button" class="btn btn-success btn-fill btn_analitica_<?php echo $row["ID_SOLICITUD"];?>" onclick="star_analitica(<?php echo $ID_SOLICITUD;?>)" id="btn_gestion_analitica" data-rce_finaliza="true" >
                             <i class="fa fa-check" aria-hidden="true"></i>
                         </button>
                     <?php   }   else    {   ?> 
                         <?php if($row["ID_HISTO_ZONA"]!=0){ ?>
-                            <button type="button" class="btn btn-info btn-fill btn_analitica_<?php echo $row["ID_SOLICITUD"];?>" onclick="star_analitica(<?php echo $row["ID_SOLICITUD"];?>)" id="btn_gestion_analitica" data-rce_finaliza="false" >
+                            <button type="button" class="btn btn-info btn-fill btn_analitica_<?php echo $row["ID_SOLICITUD"];?>" onclick="star_analitica(<?php echo $ID_SOLICITUD;?>)" id="btn_gestion_analitica" data-rce_finaliza="false" >
                                 <i class="fa fa-database" aria-hidden="true"></i>
                             </button>
                         <?php } ?>
@@ -126,14 +129,14 @@
                 <?php } else if($get_sala=='sala_proceso'){ ?>
                     <?php   #PREPARADO PARA LA SALA DE PROCESO; ?>
                     <?php   if($row["ID_HISTO_ZONA"]==1){ ?>
-                        <button type="button" class="btn btn-warning btn-fill " id="btn_play_sala_proceso" onclick="js_star_sala_proceso(<?php echo $row["ID_SOLICITUD"];?>)">
+                        <button type="button" class="btn btn-warning btn-fill " id="btn_play_sala_proceso" onclick="js_star_sala_proceso(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-defaulf btn-fill ">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                         </button>
                     <?php   } else if($row["ID_HISTO_ZONA"]==5){ ?>
-                        <button type="button" class="btn btn-warning  btn-fill " id="btn_play_sala_proceso"   onclick="js_star_sala_proceso(<?php echo $row["ID_SOLICITUD"];?>)">
+                        <button type="button" class="btn btn-warning  btn-fill " id="btn_play_sala_proceso"   onclick="js_star_sala_proceso(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-stop" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-info btn-fill ">
@@ -151,12 +154,14 @@
                 <?php } else if($get_sala=='salamacroscopia'){ ?>
                     <?php   #SALA MACROSCOPIA;  ?>
                     <?php   if($row["ID_HISTO_ZONA"]==0){?>
-                        <button type="button" class="btn btn-warning btn-fill" id="btn_gestion_descripcion_muestras" onclick="star_descrpcion_muestras(<?php echo $row["ID_SOLICITUD"];?>)">
+                        
+                        <button type="button" class="btn btn-warning btn-fill" id="btn_gestion_descripcion_muestras" onclick="star_descrpcion_muestras(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="btn btn-defaulf btn-fill" disabled>
+                        <button type="button" class="btn btn-light" disabled>
                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                         </button>
+
                     <?php   }   else    {  ?>
                         <?php   if ($row["IND_TIPO_BIOPSIA"]==6 || $row["IND_TIPO_BIOPSIA"]==5){  ?>
                         <button type="button" class="btn btn-success btn-fill tooltip2" style="cursor:pointer;">
@@ -164,7 +169,7 @@
                             <span class="tooltiptext2">EN SALA INCLUSI&Oacute;N</span>
                         </button>
                         <?php   }  else  {   ?>
-                        <button type="button" class="btn btn-info btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_macroscopia(0,<?php echo $row["ID_SOLICITUD"];?>)" >
+                        <button type="button" class="btn btn-info btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_macroscopia(0,<?php echo $ID_SOLICITUD;?>)" >
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-success btn-fill " >
@@ -175,7 +180,7 @@
                 <?php } else if($get_sala=='sala_tecnologo')    {   ?>
                     <?php #SALA TECNOLOGO; ?>
                     <?php if($row["ID_HISTO_ZONA"]==6 || $row["ID_HISTO_ZONA"]==4){?>
-                        <button type="button" class="btn btn-danger btn-fill" id="star_sala_tecnicas" onclick="js_sala_tecnicas(<?php echo $row["ID_SOLICITUD"];?>)">
+                        <button type="button" class="btn btn-danger btn-fill" id="star_sala_tecnicas" onclick="js_sala_tecnicas(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-defaulf btn-fill">
@@ -190,7 +195,7 @@
                             <i class="fa fa-check" aria-hidden="true"></i>
                         </button>
                     <?php } else if($row["ID_HISTO_ZONA"]==8)   {   ?> 
-                        <button type="button" class="btn btn-success btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_microscopica(<?php echo $row["ID_SOLICITUD"];?>)" >
+                        <button type="button" class="btn btn-success btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_microscopica(<?php echo $ID_SOLICITUD;?>)" >
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-success btn-fill tooltip2" >
@@ -205,14 +210,14 @@
                     <?php } ?>
                 <?php } else if($get_sala=='administrativo') { ?>
                     <?php if ($row["ID_HISTO_ZONA"] == 8)       {   ?>
-                        <button type="button" class="btn btn-success btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_microscopica(<?php echo $row["ID_SOLICITUD"];?>)" >
+                        <button type="button" class="btn btn-success btn-fill " id="btn_pdf_informe_macroscopica" onclick="js_pdf_microscopica(<?php echo $ID_SOLICITUD;?>)" >
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-success btn-fill " >
                             <i class="fa fa-check" aria-hidden="true"></i>
                         </button>
                     <?php  } else { ?> 
-                        <button type="button" class="btn btn-info btn-fill" id="star_sala_tecnicas" onclick="js_informacion_administrativo(<?php echo $row["ID_SOLICITUD"];?>)">
+                        <button type="button" class="btn btn-info btn-fill" id="star_sala_tecnicas" onclick="js_informacion_administrativo(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-defaulf btn-fill">
@@ -229,15 +234,19 @@
             <hr style="margin: 4px 0px 0px 10px;">
             <div class="grid_time_li">
                 <div class="grid_time_li1" style="text-align:center;">
+                    <!--
                     <small><i class="fa fa-refresh" aria-hidden="true"></i></small>
-                    <small id="txt_moment_<?php echo $row["ID_SOLICITUD"];?>"></small> 
+                    -->
+                    <small id="txt_moment_<?php echo $row["ID_SOLICITUD"];?>"></small>
                     <script>
+                        /*
                         setTimeout(function(){ 
                             $("#txt_moment_<?php echo $row["ID_SOLICITUD"];?>")
                                 .html(moment("<?php echo $row["LAST_DATE_AUDITA"];?>","DD-MM-YYYY HH:mm")
                                 .startOf("<?php echo $txt_day;?>")
                                 .fromNow());
                         },1000);
+                        */
                     </script>
                 </div>
             </div>
