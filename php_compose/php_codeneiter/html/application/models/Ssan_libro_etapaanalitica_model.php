@@ -395,22 +395,16 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         if (isset($result[":C_LISTA_ANATOMIA"])){
             if(count($result[":C_LISTA_ANATOMIA"])>0){
                 foreach($result[":C_LISTA_ANATOMIA"] as $i => $row){
-
-                    $html   .=  '<li class="list-group-item">An item</li>';
-
-                    /*
+                    //$html   .=  '<li class="list-group-item">An item</li>';
                     $html   .=   $this->load->view("ssan_libro_etapaanalitica/html_li_resul_anatomiaap",array(
                                 'aux'               =>  ($i+1),
                                 'row'               =>  $row,
                                 'ind_opcion'        =>  $ind_opcion,
                                 'ind_first'         =>  $ind_first,
                                 'get_sala'          =>  $get_sala),true);
-                    */
-
-                        
                 }
             } else {
-                $html                              .=   $this->sin_resultados(substr($ind_opcion,1));
+                $html   .=  $this->sin_resultados(substr($ind_opcion,1));
             }
             if($ind_first == 1){
                 return array(
