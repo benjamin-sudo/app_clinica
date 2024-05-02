@@ -385,7 +385,9 @@
 <script>
 $(document).ready(function(){
     star_collapse();
-    star_mictrofono();
+    
+    //star_mictrofono();
+
     <?php   if(count($data_bd[":C_CHAT_ANATOMIA"])>0){  ?>
         update_mensajes_chat();
     <?php   }   ?> 
