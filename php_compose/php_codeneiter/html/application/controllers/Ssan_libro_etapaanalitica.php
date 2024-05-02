@@ -201,7 +201,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $status                             =   true;
         //$aData                            =   [];
         $empresa                            =   $this->session->userdata("COD_ESTAB");
-        $aData                              =   $this->ssan_libro_etapaanalitica_model->load_firma_doctores_informe(array(
+        $aData                              =   $this->Ssan_libro_etapaanalitica_model->load_firma_doctores_informe(array(
             'empresa'                       =>  $empresa,
             'session'                       =>  explode("-",$this->session->userdata("USERNAME"))[0],
         ));
@@ -218,7 +218,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $empresa                            =   $this->session->userdata("COD_ESTAB");
         $status                             =   true;
         //$return_data                      =   [];
-        $return_data                        =   $this->ssan_libro_etapaanalitica_model->gestion_imagenes_firma(array(
+        $return_data                        =   $this->Ssan_libro_etapaanalitica_model->gestion_imagenes_firma(array(
             'empresa'                       =>  $empresa,
             'session'                       =>  explode("-",$this->session->userdata("USERNAME"))[0],
         ));
@@ -246,7 +246,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $txt_busqueda                       =   $this->input->post('phrase');
         $arr_data_out                       =   [];
 
-        $return_data                        =   $this->ssan_libro_etapaanalitica_model->busqueda_solicitudes_ap(array(
+        $return_data                        =   $this->Ssan_libro_etapaanalitica_model->busqueda_solicitudes_ap(array(
                                                     'arr_ids_anatomia'  =>  '',
                                                     'txt_bus'           =>  $txt_busqueda,
                                                     'busq'              =>  $busq,
@@ -889,7 +889,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     public function get_update_img_etapas(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $id_anatomia                    =   $this->input->post('id_anatomia');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
         $html                           =   $this->load->view("ssan_libro_etapaanalitica/html_views_imagenes_carrusel",$return_data,true);
         $this->output->set_output(json_encode(array(
             'return_data'               =>  $return_data,
@@ -901,7 +901,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); }
         $html                           =   '';
         $id_anatomia                    =   $this->input->post('id_anatomia');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
         $v_count_img_main               =   count($return_data['data_bd'][':C_IMAGENES_BLOB']);
         $v_count_img_muestra            =   count($return_data['data_bd'][':C_IMAGENES_BLOB_MUESTRAS']);
         $v_img_total                    =   ($v_count_img_main+$v_count_img_muestra);
@@ -961,7 +961,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         /*
         $ID_ANATOMIA                    =   $this->input->post('ID_ANATOMIA');
         $get_sala                       =   $this->input->post('get_sala');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->ap_subir_imagenprotoclo_ap($empresa,$ID_ANATOMIA,$get_sala);
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->ap_subir_imagenprotoclo_ap($empresa,$ID_ANATOMIA,$get_sala);
         */
         $html                           =    $this->load->view("ssan_libro_etapaanalitica/html_new_plantilla",[],true);
         $this->output->set_output(json_encode(array(
@@ -978,7 +978,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $num_muestras                   =   $this->input->post('num_muestras');
         $txt_muestra                    =   $this->input->post('txt_muestra');
         
-        $DATA                           =   $this->ssan_libro_etapaanalitica_model->load_data_plantillas_anatomia(array(
+        $DATA                           =   $this->Ssan_libro_etapaanalitica_model->load_data_plantillas_anatomia(array(
                                                 "cod_empresa"       =>  $empresa,
                                                 "num_muestras"      =>  $num_muestras,
                                                 "session"           =>  $this->session->userdata("USERNAME"),
@@ -1003,9 +1003,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $contrasena                     =   $this->input->post('contrasena');     
         $status_firma                   =   true;
         $return                         =   '';
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0){
-            $return                     =   $this->ssan_libro_etapaanalitica_model->get_elimina_plantilla(array( 
+            $return                     =   $this->Ssan_libro_etapaanalitica_model->get_elimina_plantilla(array( 
                 'empresa'               =>  $empresa,
                 'num_plantilla'         =>  $num_plantilla,
                 'data_firma'            =>  $arr_user,
@@ -1029,9 +1029,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $txt_titulo                     =   $this->input->post('txt_titulo'); 
         $txt_cuerpo                     =   $this->input->post('txt_cuerpo');  
         $contrasena                     =   $this->input->post('contrasena');  
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0){
-            $return                     =   $this->ssan_libro_etapaanalitica_model->graba_nueva_plantilla(array( 
+            $return                     =   $this->Ssan_libro_etapaanalitica_model->graba_nueva_plantilla(array( 
                 'empresa'               =>  $empresa,
                 'get_sala'              =>  $get_sala,
                 'txt_titulo'            =>  $txt_titulo,
@@ -1056,7 +1056,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         //$html                         =   '';
         $ID_ANATOMIA                    =   $this->input->post('ID_ANATOMIA');
         $get_sala                       =   $this->input->post('get_sala');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->ap_subir_imagenprotoclo_ap($empresa,$ID_ANATOMIA,$get_sala);
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->ap_subir_imagenprotoclo_ap($empresa,$ID_ANATOMIA,$get_sala);
         $this->output->set_output(json_encode(array(
             "ID_IMAGEN"                 =>  $return_data,
             "FILES"                     =>  $_FILES,
@@ -1068,7 +1068,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     public function gestor_imagenes_x_muestras(){
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $ID_ANATOMIA                    =   $this->input->post('ID_ANATOMIA');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->subir_imagenprotoclo_ap_x_muestra([
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->subir_imagenprotoclo_ap_x_muestra([
             'empresa'                   =>  $empresa,
             'id_anatomia'               =>  $ID_ANATOMIA,
             'id_muestra'                =>  $this->input->post('id_muestra'),  
@@ -1087,7 +1087,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $option                         =   $this->input->post('option'); 
         $id_anatomia                    =   $this->input->post('id_anatomia');
         $txt_mensaje                    =   $this->input->post('txt_mensaje');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->graba_chat_anatomia(
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->graba_chat_anatomia(
         array(
             "id_anatomia"               =>  $id_anatomia,
             "txt_mensaje"               =>  $txt_mensaje,
@@ -1108,7 +1108,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $status                         =   true;
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
-        $data_number                    =   $this->ssan_libro_etapaanalitica_model->ultimo_numero_disponible_cancer(array(
+        $data_number                    =   $this->Ssan_libro_etapaanalitica_model->ultimo_numero_disponible_cancer(array(
             "val_empresa"               =>  $empresa,
             "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
         ));
@@ -1127,7 +1127,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if($cod_empresa                 ==  ''){
             $_issesion                  =   false;
         } else {
-            $DATA_CURSOR                =   $this->ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
+            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
             array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "usr_session"           =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1156,7 +1156,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if ($cod_empresa                ==  ''){
             $_issesion                  =   false;
         } else {
-            $DATA_CURSOR                =   $this->ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
+            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
             array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "usr_session"           =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1185,7 +1185,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $_issesion                  =   false;
         } else {
             #PROCE                      ->  LOAD_RCE_ANATOMIA_PATOLOGICA
-            $DATA_CURSOR                =   $this->ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
+            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
             array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "usr_session"           =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1210,7 +1210,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); }  
         $status                         =   true;
         $id_anatomia                    =   $this->input->post('id_anatomia');
-        $return                         =   $this->ssan_libro_etapaanalitica_model->update_li_chat(array('id_anatomia'=>$id_anatomia));
+        $return                         =   $this->Ssan_libro_etapaanalitica_model->update_li_chat(array('id_anatomia'=>$id_anatomia));
         $this->output->set_output(json_encode(array(
             'status'                    =>  $status,
             'return'                    =>  $return,
@@ -1221,7 +1221,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); }  
         $status                         =   true;
         $ID_IMG                         =   $this->input->post('ID_IMG');
-        $return                         =   $this->ssan_libro_etapaanalitica_model->delete_img(array( 
+        $return                         =   $this->Ssan_libro_etapaanalitica_model->delete_img(array( 
             'ID_IMG'                    =>  $ID_IMG,
             'session'                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
         ));
@@ -1237,7 +1237,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $ID_IMG                         =   $this->input->post('ID_IMG');
         $ID_MUESTRA                     =   $this->input->post('ID_MUESTRA');
         $ID_SOLICITUD                   =   $this->input->post('ID_SOLICITUD');
-        $return                         =   $this->ssan_libro_etapaanalitica_model->delete_img_x_muestra(
+        $return                         =   $this->Ssan_libro_etapaanalitica_model->delete_img_x_muestra(
                                             array( 
                                                 'ID_IMG'                        =>  $ID_IMG,
                                                 'session'                       =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1285,7 +1285,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $accesdata                      =   $this->input->post('accesdata');
         $id_anatomia                    =   $this->input->post('id_anatomia');
         $id_salida                      =   $this->input->post('id_salida');
-        $return                         =   $this->ssan_libro_etapaanalitica_model->guardado_anatomia_patologica(array( 
+        $return                         =   $this->Ssan_libro_etapaanalitica_model->guardado_anatomia_patologica(array( 
             'accesdata'                 =>  $accesdata,
             'id_anatomia'               =>  $id_anatomia,
             'session'                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1307,9 +1307,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $id_anatomia            =   $this->input->post('id_anatomia');
         $id_salida              =   $this->input->post('id_salida');
         $contrasena             =   $this->input->post('contrasena'); 
-        $arr_user               =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user               =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0)  {
-            $return             =   $this->ssan_libro_etapaanalitica_model->guardado_anatomia_patologica(array( 
+            $return             =   $this->Ssan_libro_etapaanalitica_model->guardado_anatomia_patologica(array( 
                 'accesdata'     =>  $accesdata,
                 'id_anatomia'   =>  $id_anatomia,
                 'session'       =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1333,9 +1333,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $contrasena                     =   $this->input->post('contrasena'); 
         $accesdata                      =   $this->input->post('accesdata');
         $id_anatomia                    =   $this->input->post('id_anatomia');
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0){
-            $return                     =   $this->ssan_libro_etapaanalitica_model->guarda_informacion_perfil_administrativo(array( 
+            $return                     =   $this->Ssan_libro_etapaanalitica_model->guarda_informacion_perfil_administrativo(array( 
                 'accesdata'             =>  $accesdata,
                 'id_anatomia'           =>  $id_anatomia,
                 'session'               =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1360,9 +1360,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $accesdata                      =   $this->input->post('accesdata');
         $array_main                     =   $this->input->post('array_main');
         $id_anatomia                    =   $this->input->post('id_anatomia');
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0)          {
-            $return                     =   $this->ssan_libro_etapaanalitica_model->get_informe_macroscopica(array( 
+            $return                     =   $this->Ssan_libro_etapaanalitica_model->get_informe_macroscopica(array( 
                 'array_main'            =>  $array_main,
                 'accesdata'             =>  $accesdata,
                 'id_anatomia'           =>  $id_anatomia,
@@ -1381,7 +1381,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); }  
         $status                         =   true;
         $img                            =   $this->input->post('img'); 
-        $return                         =   $this->ssan_libro_etapaanalitica_model->get_elimina_imagen(array( 
+        $return                         =   $this->Ssan_libro_etapaanalitica_model->get_elimina_imagen(array( 
                                                 'img'       =>  $img,
                                                 'session'   =>  explode("-",$this->session->userdata("USERNAME"))[0],
                                             ));
@@ -1676,7 +1676,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         }
         
         #GET CONSULTA
-        $data_produccion                =   $this->ssan_libro_etapaanalitica_model->load_info_excel_produccion(array(
+        $data_produccion                =   $this->Ssan_libro_etapaanalitica_model->load_info_excel_produccion(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
             "date_fecha_inicio"         =>  $date_fecha_inicio,
             "date_fecha_final"          =>  $date_fecha_final,
@@ -1859,10 +1859,10 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $opcion                         =   $this->input->post('opcion');
         #$html                          =   '';
         #VALIDAR QUE ESTE EN ESE ESTADO 
-        #$return_data                   =   $this->ssan_libro_etapaanalitica_model->load_sala_proceso(array("id_anatomia"=>$id_anatomia,"empresa"=>$empresa,"opcion"=>$opcion));
+        #$return_data                   =   $this->Ssan_libro_etapaanalitica_model->load_sala_proceso(array("id_anatomia"=>$id_anatomia,"empresa"=>$empresa,"opcion"=>$opcion));
         #$html                          =   $this->load->view("ssan_libro_biopsias_listagespab/html_star_sala_proceso",$return_data,true);
         #PROCE                          ->  LOAD_RCE_ANATOMIA_PATOLOGICA
-        $DATA_CURSOR                    =   $this->ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
+        $DATA_CURSOR                    =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
             "cod_empresa"               =>  $empresa,
             "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "ind_opcion"                =>  0,
@@ -1892,9 +1892,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $accesdata                      =   $this->input->post('accesdata');
         $opcion                         =   $this->input->post('opcion');
         $status                         =   true;
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if (count($arr_user)>0){
-            $return                     =   $this->ssan_libro_etapaanalitica_model->get_star_sala_proceso(array( 
+            $return                     =   $this->Ssan_libro_etapaanalitica_model->get_star_sala_proceso(array( 
                                                 'empresa'                       =>  $empresa,
                                                 'opcion'                        =>  $opcion,
                                                 'accesdata'                     =>  $accesdata,
@@ -1907,7 +1907,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         }
         
         //validar que este en ese estado
-        //$return_data                  =   $this->ssan_libro_etapaanalitica_model->load_sala_proceso(array("empresa"=>$empresa,"opcion"=>$opcion));
+        //$return_data                  =   $this->Ssan_libro_etapaanalitica_model->load_sala_proceso(array("empresa"=>$empresa,"opcion"=>$opcion));
         $this->output->set_output(json_encode(array(
             'return_bd'                 => isset($return)?$return:null,
             'contrasena'                =>  $contrasena,
@@ -1928,10 +1928,10 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $status_fecha                   =   true;
         $v_txt_error                    =   '';
         $status                         =   true;
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if (count($arr_user)>0){
             
-            $return                     =   $this->ssan_libro_etapaanalitica_model->get_final_sala_proceso(array( 
+            $return                     =   $this->Ssan_libro_etapaanalitica_model->get_final_sala_proceso(array( 
                                                 'empresa'                       =>  $empresa,
                                                 'opcion'                        =>  $opcion,
                                                 'accesdata'                     =>  $accesdata,
@@ -1958,7 +1958,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     public function consulta(){
         $date_fecha_inicio              =   $this->input->post('fecha_1');
         $date_fecha_final               =   $this->input->post('fecha_2');
-        $data_produccion                =   $this->ssan_libro_etapaanalitica_model->load_info_excel_produccion(
+        $data_produccion                =   $this->Ssan_libro_etapaanalitica_model->load_info_excel_produccion(
             array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "date_fecha_inicio"     =>  $date_fecha_inicio,
@@ -1977,7 +1977,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     
     public function consulta2(){
         //$empresa                      =   $this->session->userdata("COD_ESTAB");
-        $data_produccion                =   $this->ssan_libro_etapaanalitica_model->load_familia_evolucion(
+        $data_produccion                =   $this->Ssan_libro_etapaanalitica_model->load_familia_evolucion(
             array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "rut"                   =>  '12527143',
@@ -1996,7 +1996,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $id_anatomia                    =   $this->input->post('id_anatomia');
         $opcion                         =   $this->input->post('opcion');
-        $DATA_CURSOR                    =   $this->ssan_libro_etapaanalitica_model->load_gestion_cancer(array( 
+        $DATA_CURSOR                    =   $this->Ssan_libro_etapaanalitica_model->load_gestion_cancer(array( 
                                                 'empresa'       =>  $empresa,
                                                 'opcion'        =>  $opcion,
                                                 'id_anatomia'   =>  $id_anatomia,
@@ -2016,7 +2016,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $status                         =   true;
         $get_sala                       =   $this->input->post('get_sala');
         //$opcion                       =   1;
-        $DATA_CURSOR                    =   $this->ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
+        $DATA_CURSOR                    =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
             "cod_empresa"               =>  $empresa,
             "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "ind_opcion"                =>  0,
@@ -2047,9 +2047,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $accesdata                      =   $this->input->post('accesdata');
         $contrasena                     =   $this->input->post('contrasena');
         $op                             =   $this->input->post('op'); 
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0)          {
-            $data_produccion            =   $this->ssan_libro_etapaanalitica_model->get_record_tec_tecnologo(array(
+            $data_produccion            =   $this->Ssan_libro_etapaanalitica_model->get_record_tec_tecnologo(array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
                 "id_anatomia"           =>  $id_anatomia,
@@ -2082,7 +2082,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $accesdata                      =   $this->input->post('accesdata');
         $op                             =   $this->input->post('op'); 
         //volvimos el 27-04-2022
-        $data_produccion                =   $this->ssan_libro_etapaanalitica_model->get_record_tec_tecnologo(array(
+        $data_produccion                =   $this->Ssan_libro_etapaanalitica_model->get_record_tec_tecnologo(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
             "session"                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "id_anatomia"               =>  $id_anatomia,
@@ -2115,7 +2115,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $html                           =   'HOLA';
         $transaccion                    =   '';
         $numFichaE                      =   $this->input->post('numfichae');
-        $return                         =   $this->ssan_libro_etapaanalitica_model->new_get_busquedatoken(17,$numFichaE);
+        $return                         =   $this->Ssan_libro_etapaanalitica_model->new_get_busquedatoken(17,$numFichaE);
         #https://10.5.183.210/ssan_his_historialclinico_new?m=135&token=6009b73b97b1967523bdcd6eb7860cda5bafdaa3&acc=1
         #https://www.esissan.cl/ssan_his_historialclinico_new?m=135&token=ea94a681f1224094b8dd9b0eddfcb139fda848d8&acc=1
         #$i_frame                       =   'https://10.5.183.210/ssan_his_historialclinico_new?m=135&'.$return['TOKEN_SESSION'].'&acc=1';
@@ -2130,7 +2130,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $status                         =   true;
         $num_muestra                    =   $this->input->post('num_muestra');
         $txt_update                     =   $this->input->post('txt_update'); 
-        $data_produccion                =   $this->ssan_libro_etapaanalitica_model->get_update_txt_macroscopica(array(
+        $data_produccion                =   $this->Ssan_libro_etapaanalitica_model->get_update_txt_macroscopica(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
             "session"                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "num_muestra"               =>  $num_muestra,

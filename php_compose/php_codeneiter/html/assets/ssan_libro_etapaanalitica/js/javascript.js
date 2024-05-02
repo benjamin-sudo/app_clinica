@@ -307,20 +307,11 @@ $(document).ready(function(){
 function js_gestion(){
     //console.error("js_gestion     ->  localStorage   ->  ",localStorage.getItem("storange_tabs_main"));
     var tabs_active             =   localStorage.getItem("storange_tabs_main");
-    
     var data_tabs               =   $("."+tabs_active.slice(1)).data();
     js_visualizacion_menu_principal(tabs_active);
-
-    console.error("*********************************************");
-    console.log("tabs_active      ->  ",tabs_active);
-    console.log("data_tabs        ->  ",data_tabs);
-
-
     $("#txt_busqueda_titulo").html(data_tabs.titulo);
     li_busqueda_ver_oculta(data_tabs.zona_li);
-    
     $('.tabs_main_analitica a[href="'+tabs_active+'"]').tab('show');
-
     return true;
 }
 
@@ -962,33 +953,32 @@ function star_descrpcion_muestras(id_anatomia){
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_libro_etapaanalitica/star_descripcion_anatomia",
-        dataType        :   "json",
+        dataType    :   "json",
         beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        console.log("load ssan_libro_etapaanalitica/star_descripcion_anatomia");
-                                                        $('#html_descipcion_muestras').html('');
-                                                    },
+                                                    $('#loadFade').modal('show');
+                                                    $('#html_descipcion_muestras').html('');
+                                                },
         data 		:                           { 
-                                                        id_anatomia     :   id_anatomia,
-                                                        get_sala        :   $("#get_sala").val(),
-                                                    },
+                                                    id_anatomia     :   id_anatomia,
+                                                    get_sala        :   $("#get_sala").val(),
+                                                },
         error		:   function(errro)         { 
-                                                        //console.log("---------------------------------------------");
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        //console.log("---------------------------------------------");
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                        $('#html_descipcion_muestras').html('');
-                                                    },
+                                                    console.log("quisas->",errro); 
+                                                    $('#loadFade').modal('hide');
+                                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                    $('#html_descipcion_muestras').html('');
+                                                },
         success		:   function(aData)         { 
-                                                        console.log("aData->",aData);
-                                                        if(aData.status_session){
-                                                            $("#btn_graba_descipcion_muestras").attr('onclick','js_guarda_descripcion_muestras('+id_anatomia+')');
-                                                            $("#html_descipcion_muestras").html(aData.out_html);
-                                                            $("#modal_descipcion_muestras").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                        } else {
-                                                            jError("Sesi&oacute;n ha caducado","e-SISSAN");
-                                                        } 
-                                                    }, 
+                                                    console.log("aData->",aData);
+                                                    $('#loadFade').modal('hide');
+                                                    if(aData.status_session){
+                                                        $("#btn_graba_descipcion_muestras").attr('onclick','js_guarda_descripcion_muestras('+id_anatomia+')');
+                                                        $("#html_descipcion_muestras").html(aData.out_html);
+                                                        $("#modal_descipcion_muestras").modal({backdrop:'static',keyboard:false}).modal("show");
+                                                    } else {
+                                                        jError("Sesi&oacute;n ha caducado","e-SISSAN");
+                                                    }
+                                                }, 
     });
 }
 
