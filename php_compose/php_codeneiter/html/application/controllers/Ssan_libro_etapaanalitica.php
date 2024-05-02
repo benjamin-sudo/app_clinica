@@ -55,7 +55,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $var_fecha_final            =   date("d-m-Y");
         }
         #LOAD_ETAPA_ANALITICA
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
             "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "ind_opcion"                =>  $tipo_busqueda,
@@ -71,52 +71,19 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "ind_order_by"              =>  "0",
         ));
         #API VOZ
-        $this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
+        #$this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES
         $this->load->css("assets/ssan_libro_etapaanalitica/css/styles.css");
         $this->load->js("assets/ssan_libro_etapaanalitica/js/javascript.js");
         #WEB SOCKET
-        $this->load->js("assets/themes/wsocket_io/2_3_0/socket.io.dev.js");
+        #$this->load->js("assets/themes/wsocket_io/2_3_0/socket.io.dev.js");
         $this->load->js("assets/ssan_libro_biopsias_listaexterno1/js/ws_anatomiap_envio_a_recepcion.js");
         #AUTOSIZE BETA
-        $this->load->js("assets/ssan_libro_etapaanalitica/js/autosize.js");
+        #$this->load->js("assets/ssan_libro_etapaanalitica/js/autosize.js");
         #HTML OUT
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
 
-    public function gestion_firma_patologo(){
-        if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                             =   true;
-        //$aData                            =   [];
-        $empresa                            =   $this->session->userdata("COD_ESTAB");
-        $aData                              =   $this->ssan_libro_etapaanalitica_model->load_firma_doctores_informe(array(
-            'empresa'                       =>  $empresa,
-            'session'                       =>  explode("-",$this->session->userdata("USERNAME"))[0],
-        ));
-        $html                               =   $this->load->view("ssan_libro_etapaanalitica/template_gestionfirmaxpatologo",$aData,true);
-        $this->output->set_output(json_encode(array(
-            'status'                        =>  $status,
-            'html'                          =>  $html
-        )));
-    }
-    
-    //gestion_de subida 
-    public function return_ima_firma_patologo(){
-        //if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                            =   $this->session->userdata("COD_ESTAB");
-        $status                             =   true;
-        //$return_data                      =   [];
-        $return_data                        =   $this->ssan_libro_etapaanalitica_model->gestion_imagenes_firma(array(
-            'empresa'                       =>  $empresa,
-            'session'                       =>  explode("-",$this->session->userdata("USERNAME"))[0],
-        ));
-        $this->output->set_output(json_encode(array(
-            "status"                        =>  $status,
-            "return_bd"                     =>  $return_data,
-            "FILES"                         =>  $_FILES,
-        )));
-    }
-   
     public function update_lista_etapaanalitica(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $tipo_busqueda                      =   $this->input->post('tabs');
@@ -204,7 +171,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         ########### LOAD ALL ETAPA ANALITICA ############
         ########### GO_TO -> LOAD_ETAPA_ANALITICA #######
         #################################################
-        $return_data                        =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
+        $return_data                        =   $this->Ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
             "cod_empresa"                   =>  $this->session->userdata("COD_ESTAB"),
             "usr_session"                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "ind_opcion"                    =>  $tipo_busqueda,
@@ -230,6 +197,43 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             'return'                        =>  $return_data,
         )));
     }
+
+
+
+    public function gestion_firma_patologo(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $status                             =   true;
+        //$aData                            =   [];
+        $empresa                            =   $this->session->userdata("COD_ESTAB");
+        $aData                              =   $this->ssan_libro_etapaanalitica_model->load_firma_doctores_informe(array(
+            'empresa'                       =>  $empresa,
+            'session'                       =>  explode("-",$this->session->userdata("USERNAME"))[0],
+        ));
+        $html                               =   $this->load->view("ssan_libro_etapaanalitica/template_gestionfirmaxpatologo",$aData,true);
+        $this->output->set_output(json_encode(array(
+            'status'                        =>  $status,
+            'html'                          =>  $html
+        )));
+    }
+    
+    //gestion_de subida 
+    public function return_ima_firma_patologo(){
+        //if(!$this->input->is_ajax_request()){ show_404(); }
+        $empresa                            =   $this->session->userdata("COD_ESTAB");
+        $status                             =   true;
+        //$return_data                      =   [];
+        $return_data                        =   $this->ssan_libro_etapaanalitica_model->gestion_imagenes_firma(array(
+            'empresa'                       =>  $empresa,
+            'session'                       =>  explode("-",$this->session->userdata("USERNAME"))[0],
+        ));
+        $this->output->set_output(json_encode(array(
+            "status"                        =>  $status,
+            "return_bd"                     =>  $return_data,
+            "FILES"                         =>  $_FILES,
+        )));
+    }
+   
+    
     
     public function get_elimina_cookie_paciente(){
         if(!$this->input->is_ajax_request()){  show_404(); }

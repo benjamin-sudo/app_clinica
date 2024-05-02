@@ -140,8 +140,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'ind_opcion'                        =>  $DATA["ind_opcion"],
             'date_inicio'                       =>  strtotime($DATA["data_inicio"]),
             'date_final'                        =>  strtotime($DATA["data_final"]),
-            'cookie'                            =>  isset($_COOKIE['target'])?'<span class="label label-success">CON COOKIE</span>':'<span class="label label-warning">SIN COOKIE</span>',
-            'ind_busqueda'                      =>  isset($_COOKIE['target'])?'<span class="label label-warning" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+            'cookie'                            =>  isset($_COOKIE['target'])?'<span class="badge bg-success">CON COOKIE</span>':'<span class="badge bg-warning">SIN COOKIE</span>',
+            'ind_busqueda'                      =>  isset($_COOKIE['target'])?'<span class="badge bg-primary" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="badge bg-primary" id="span_tipo_busqueda">#_panel_por_fecha</span>',
             'fechas'                            =>  isset($_COOKIE['data'])?$_COOKIE['data']:'null',
             'ids_anatomia'                      =>  isset($_COOKIE['id_anatomia'])?json_decode($_COOKIE['id_anatomia']):'null',
             'txt_sala'                          =>  $DATA["get_sala"],
@@ -391,16 +391,23 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
      
     public function li_lista_estapaanalitica($result,$ind_opcion,$ind_first,$get_sala){
-        $html                                       =   '';
+        $html   =   '';
         if (isset($result[":C_LISTA_ANATOMIA"])){
             if(count($result[":C_LISTA_ANATOMIA"])>0){
                 foreach($result[":C_LISTA_ANATOMIA"] as $i => $row){
+
+                    $html   .=  '<li class="list-group-item">An item</li>';
+
+                    /*
                     $html   .=   $this->load->view("ssan_libro_etapaanalitica/html_li_resul_anatomiaap",array(
                                 'aux'               =>  ($i+1),
                                 'row'               =>  $row,
                                 'ind_opcion'        =>  $ind_opcion,
                                 'ind_first'         =>  $ind_first,
                                 'get_sala'          =>  $get_sala),true);
+                    */
+
+                        
                 }
             } else {
                 $html                              .=   $this->sin_resultados(substr($ind_opcion,1));

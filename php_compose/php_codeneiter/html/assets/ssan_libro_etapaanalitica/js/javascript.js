@@ -165,48 +165,53 @@ $(document).ready(function(){
     $('#modal_gestion_firma_patologo').on('hidden.bs.modal',function(e){ 
         $("#html_gestion_firma_patologo").html(''); 
     });
-    
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
 
-
-    return false;
-
     //tabs busqueda principal
+    //console.log("   ***********************************************************************  ");
+    //console.log("   storange_tabs_main  ->  ",localStorage.getItem("storange_tabs_main"));
+
     localStorage.getItem("storange_tabs_main")===null?null_tabs():js_gestion();
-    $('.tabs_main_analitica').on('shown.bs.tab',function(e){
-        var target              =   $(e.target).attr("href"); // activated tab
-        $("#span_tipo_busqueda").html(target);
-        $(".n_resultados_panel").html('0'); 
-        $.ajax({ 
-            type                :   "POST",
-            url                 :   "ssan_libro_etapaanalitica/gestion_cookie",
-            dataType            :   "json",
-            beforeSend          :   function(xhr)   {   
-                                                        console.log("ssan_libro_etapaanalitica/gestion_cookie   ->    ",xhr);   
-                                                    },
-            data                :                   { 
-                                                        target          :   target,
-                                                        date_inicio     :   $('#fecha_out').data().date,
-                                                        date_final      :   $('#fecha_out2').data().date,
-                                                    },
-            error               :   function(errro) { 
-                                                        console.log(errro);  
-                                                        console.log(errro.responseText);    
-                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
-                                                    },
-            success             :   function(aData) { 
-                                                        //console.log("return aData->",aData);
-                                                        $("#txt_busqueda_titulo").html($("."+target.slice(1)).data().titulo);
-                                                        li_busqueda_ver_oculta($("."+target.slice(1)).data().zona_li);
-                                                        localStorage.setItem("storange_tabs_main",target);
-                                                        js_visualizacion_menu_principal(target);
-                                                        update_etapaanalitica();
-                                                    }, 
+
+    var tabElements = document.querySelectorAll('.tabs_main_analitica .nav-link');
+    tabElements.forEach(function(tab) {
+        tab.addEventListener('shown.bs.tab', function(event) {
+            var target = event.target.getAttribute('data-bs-target') || event.target.getAttribute('href');
+            $("#span_tipo_busqueda").html(target);
+            $(".n_resultados_panel").html('0'); 
+            $.ajax({ 
+                type                :   "POST",
+                url                 :   "ssan_libro_etapaanalitica/gestion_cookie",
+                dataType            :   "json",
+                beforeSend          :   function(xhr)   {   
+                                                            console.log("ssan_libro_etapaanalitica/gestion_cookie   ->    ",xhr);   
+                                                        },
+                data                :                   { 
+                                                            target          :   target,
+                                                            date_inicio     :   $('#fecha_out').data().date,
+                                                            date_final      :   $('#fecha_out2').data().date,
+                                                        },
+                error               :   function(errro) { 
+                                                            console.log(errro);  
+                                                            console.log(errro.responseText);    
+                                                            jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                        },
+                success             :   function(aData) { 
+                                                            //console.log("return aData->",aData);
+                                                            let txt_titulo = $("."+target.slice(1)).data().titulo;
+                                                            //console.log("txt_titulo ->  ",txt_titulo);
+                                                            $("#txt_busqueda_titulo").html('null');
+                                                            li_busqueda_ver_oculta($("."+target.slice(1)).data().zona_li);
+                                                            localStorage.setItem("storange_tabs_main",target);
+                                                            js_visualizacion_menu_principal(target);
+                                                            update_etapaanalitica();
+                                                        }, 
+            });
         });
     });
-    
+
     $("#panel_bacode_1").click(function(){setTimeout(function(){$(".focus_etiqueta").focus();},500);});
     $(".focus_etiqueta").keypress(function(e){ if(e.which==13){ busqueda_etiquera_analitica(0,'',{}); } });
     SetFocus();
@@ -246,6 +251,7 @@ $(document).ready(function(){
     localStorage.getItem("html_busqueda_bacode")?$(".ul_lista_cod_encontrados").html('').append(localStorage.getItem("html_busqueda_bacode")):'';
     //boton de filtro // cambios
     $('#ind_filtro_busqueda_xfechas').on('changed.bs.select',function(e,clickedIndex,isSelected,previousValue){
+        /*
         var ind_filtro                      =   $('#ind_filtro_busqueda_xfechas').val();
         var count_filtro                    =   $('#ind_filtro_busqueda_xfechas').val() == null ? 0 : $('#ind_filtro_busqueda_xfechas').val().length;
         console.log("ind_filtro     ->",ind_filtro);
@@ -259,6 +265,7 @@ $(document).ready(function(){
             }
             localStorage.setItem("strorage_filtro_categorias",$('#ind_filtro_busqueda_xfechas').val().toString());
         }
+        */
     }).selectpicker();
     //console.log("-----------------------");
     //console.log("localStorage.getIte    ->  " , localStorage.getItem("strorage_filtro_categorias") );
@@ -295,6 +302,27 @@ $(document).ready(function(){
     //desabilitado
     //ws_etapa_analitica();
 });
+
+
+function js_gestion(){
+    //console.error("js_gestion     ->  localStorage   ->  ",localStorage.getItem("storange_tabs_main"));
+    var tabs_active             =   localStorage.getItem("storange_tabs_main");
+    
+    var data_tabs               =   $("."+tabs_active.slice(1)).data();
+    js_visualizacion_menu_principal(tabs_active);
+
+    console.error("*********************************************");
+    console.log("tabs_active      ->  ",tabs_active);
+    console.log("data_tabs        ->  ",data_tabs);
+
+
+    $("#txt_busqueda_titulo").html(data_tabs.titulo);
+    li_busqueda_ver_oculta(data_tabs.zona_li);
+    
+    $('.tabs_main_analitica a[href="'+tabs_active+'"]').tab('show');
+
+    return true;
+}
 
 function js_gestion_firma(){
     $('#loadFade').modal('show'); 
@@ -504,9 +532,6 @@ function star_automplete(_value){
                                     console.error(" busqueda de arrs  ->  ",localStorage.getItem("storange_ids_anatomia"),"  <-      ");
                                     //console.error("-----------------------------------------------------------------------------");
                                     update_etapaanalitica();
-                                    
-                                    
-                                    
                                 }
             //http://easyautocomplete.com/guide
         },
@@ -528,6 +553,7 @@ function update_etapaanalitica(){
     var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     
+    /*
     console.log("---------------------------------------------------------------------------------------------------");
     console.log("------------------------fata update_etapaanalitica ------------------------------------------------");
     console.log("storange_tabs_main                 ->  ",localStorage.getItem("storange_tabs_main"),"          <-  ");
@@ -542,6 +568,8 @@ function update_etapaanalitica(){
     console.log("v_filtro_fechas                    ->  ",v_filtro_fechas);
     console.log("v_ids_anatomia                     ->  ",v_ids_anatomia);
     console.log("---------------------------------------------------------------------------------------------------");
+    */
+
     $('#loadFade').modal('show');
     $.ajax({ 
         type        :   "POST",
@@ -1107,17 +1135,6 @@ function null_tabs(){
     var data_tabs               =   $("._panel_por_fecha").data();
     $("#txt_busqueda_titulo").html(data_tabs.titulo);
     li_busqueda_ver_oculta(data_tabs.zona_li);
-    return true;
-}
-
-function js_gestion(){
-    //console.error("js_gestion     ->  localStorage   ->  ",localStorage.getItem("storange_tabs_main"));
-    var tabs_active             =   localStorage.getItem("storange_tabs_main");
-    var data_tabs               =   $("."+tabs_active.slice(1)).data();
-    js_visualizacion_menu_principal(tabs_active);
-    $("#txt_busqueda_titulo").html(data_tabs.titulo);
-    li_busqueda_ver_oculta(data_tabs.zona_li);
-    $('.tabs_main_analitica a[href="'+tabs_active+'"]').tab('show');
     return true;
 }
 

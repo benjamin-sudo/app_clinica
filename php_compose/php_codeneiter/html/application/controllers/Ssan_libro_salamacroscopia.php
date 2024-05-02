@@ -54,7 +54,6 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
         #var_dump($arr_ids_anatomia);
         #LOAD_ETAPA_ANALITICA
         $return_data                    =   [];
-        /*
         $return_data                    =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
             "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -70,7 +69,6 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
             "ind_filtros_ap"            =>  $arr_estados_filtro,
             "ind_order_by"              =>  "0",
         ));
-        */
         #API VOZ
         #$this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES
@@ -84,7 +82,6 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
         #HTML OUT
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
-
 
     public function index_old(){
         $this->output->set_template('blank');
