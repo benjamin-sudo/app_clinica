@@ -92,7 +92,6 @@ textarea#note                           {
     font                                :   13px Tahoma, cursive;
     transition                          :   box-shadow 0.5s ease;
     box-shadow                          :   0 4px 6px rgba(0,0,0,0.1);
-    font-smoothing                      :   subpixel-antialiased;
     background                          :   linear-gradient(#F9EFAF,#F7E98D);
     background                          :   -o-linear-gradient(#F9EFAF,#F7E98D);
     background                          :   -ms-linear-gradient(#F9EFAF,#F7E98D);
@@ -444,10 +443,6 @@ input[type="checkbox"]                  {
     border-top-right-radius             :   0;
     margin-left                         :   80px;
     margin-top                          :   -61px;
-}
-
-.color_select                           {
-    
 }
 
 .card_for_acordion                      {

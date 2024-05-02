@@ -170,6 +170,9 @@ $(document).ready(function(){
         $("#PDF_VERDOC").html(''); 
     });
 
+
+    return false;
+
     //tabs busqueda principal
     localStorage.getItem("storange_tabs_main")===null?null_tabs():js_gestion();
     $('.tabs_main_analitica').on('shown.bs.tab',function(e){
@@ -289,7 +292,8 @@ $(document).ready(function(){
     //star buscador 
     star_automplete(ind_star_busq);
     //ws etapa analitica
-    ws_etapa_analitica();
+    //desabilitado
+    //ws_etapa_analitica();
 });
 
 function js_gestion_firma(){
@@ -3440,7 +3444,4 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                         }
                                                     }, 
     });
- }
-
-
-  
+}

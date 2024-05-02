@@ -751,17 +751,184 @@ CREATE TABLE ADMIN.PB_LINETIME_HISTO (
 
 
 
+CREATE TABLE ADMIN.PB_MAIN_BLG_ANATOMIA (
+  ID_MAIN             NUMBER                    NOT NULL,
+  ID_SOLICITUD_HISTO  NUMBER,
+  COD_EMPRESA         VARCHAR2(50 BYTE),
+  SIZE_BLG            NUMBER,
+  CONTEXT_TYPE        VARCHAR2(100 BYTE),
+  MAIN_BLOB           BLOB                      DEFAULT EMPTY_BLOB(),
+  IND_ESTADO          NUMBER,
+  IMG_DATA            CLOB,
+  NAME_IMG            VARCHAR2(100 BYTE),
+  TXT_OBSERVACIONES   VARCHAR2(1000 BYTE),
+  BFILE               BFILE,
+  NCLOB               NCLOB,
+  ID_UID              NUMBER,
+  USR_CREA            VARCHAR2(50 BYTE),
+  DATE_CREA           DATE,
+  USR_AUDITA          VARCHAR2(50 BYTE),
+  DATE_AUDITA         DATE,
+  ID_HISTO_ZONA       NUMBER
+);
 
 
-
-
-
-
+CREATE TABLE ADMIN.PB_IMG_APMUESTRAS (
+  ID_MAIN             NUMBER                    NOT NULL,
+  ID_SOLICITUD_HISTO  NUMBER,
+  ID_HISTO_ZONA       NUMBER,
+  ID_NMUESTRA         NUMBER,
+  ID_CASETE           NUMBER,
+  COD_EMPRESA         VARCHAR2(50 BYTE),
+  SIZE_BLG            NUMBER,
+  CONTEXT_TYPE        VARCHAR2(100 BYTE),
+  MAIN_BLOB           BLOB                      DEFAULT EMPTY_BLOB(),
+  IND_ESTADO          NUMBER,
+  IMG_DATA            CLOB,
+  NAME_IMG            VARCHAR2(100 BYTE),
+  TXT_OBSERVACIONES   VARCHAR2(1000 BYTE),
+  BFILE               BFILE,
+  NCLOB               NCLOB,
+  ID_UID              NUMBER,
+  USR_CREA            VARCHAR2(50 BYTE),
+  DATE_CREA           DATE,
+  USR_AUDITA          VARCHAR2(50 BYTE),
+  DATE_AUDITA         DATE
+);
 
 
 COMMIT;
 /
 
+-------------------
+-- ZONA DE TYPES --
+-- OBJCT_TYPES ----
+-------------------
+CREATE OR REPLACE TYPE  ADMIN.OBJ_LIS_ANATOMIAP AS OBJECT (
+  ID_SOLICITUD_HISTO            NUMBER,
+  NUM_FICHAE                    NUMBER,
+  COD_USRCREA                   NUMBER,
+  FEC_USRCREA                   DATE,
+  COD_EMPRESA                   VARCHAR2(25 BYTE),
+  DES_SITIOEXT                  VARCHAR2(255 BYTE),
+  DES_UBICACION                 VARCHAR2(255 BYTE),
+  DES_TAMANNO                   VARCHAR2(255 BYTE),
+  ID_TIPO_LESION                NUMBER,
+  ID_ASPECTO                    NUMBER,
+  ID_ANT_PREVIOS                NUMBER,
+  NUM_ANTECEDENTES              VARCHAR2(10 BYTE),
+  DES_BIPSIA                    VARCHAR2(255 BYTE),
+  DES_CITOLOGIA                 VARCHAR2(255 BYTE),
+  DES_OBSERVACIONES             VARCHAR2(255 BYTE),
+  IND_ESTADO                    NUMBER,
+  FEC_REVISION                  DATE,
+  ID_TABLA                      NUMBER,
+  DES_TIPOMUESTRA               VARCHAR2(255 BYTE),
+  NUM_SUBNUMERACION             NUMBER,
+  COD_USRCREA_TO_MUE            NUMBER,
+  FEC_USRCREA_TO_MUE            DATE,
+  COD_USRCREA_ENV               NUMBER,
+  FEC_USRCREA_ENV               DATE,
+  COD_USRCREA_RECEP             NUMBER,
+  FEC_USRCREA_RECEP             DATE,
+  COD_EMPRESA_RECEP             VARCHAR2(5 BYTE),
+  COD_USRCREA_INFORMADA         NUMBER,
+  FEC_USRCREA_INFORMADA         DATE,
+  COD_EMPRESA_INFORMADA         VARCHAR2(5 BYTE),
+  ID_ARCHIVO_SUBIDO             NUMBER,
+  COD_USRCREA_RECH              NUMBER,
+  FEC_USRCREA_RECH              DATE,
+  COD_EMPRESA_RECH              VARCHAR2(5 BYTE),
+  TIPO_RECHAZO                  NUMBER,
+  OBS_RECHAZO                   VARCHAR2(3000 BYTE),
+  ID_HISTO_ESTADO               NUMBER,
+  AD_ID_ADMISION                NUMBER,
+  ID_SERDEP                     NUMBER(10),
+  PA_ID_PROCARCH                NUMBER(10),
+  IND_TIPO_BIOPSIA              NUMBER(3),
+  IND_TEMPLATE                  NUMBER,
+  DATE_INICIOREGISTRO           DATE,
+  COD_RUTPRO                    NUMBER,
+  TXT_DIAGNOSTICO               VARCHAR2(500 BYTE),
+  NUM_PLANTILLA                 NUMBER,
+  IND_USOCASSETTE               NUMBER,
+  IND_INFOPOST                  NUMBER,
+  IND_ESTADO_MUESTRAS           NUMBER,
+  LAST_USR_AUDITA               VARCHAR2(50 BYTE),
+  LAST_DATE_AUDITA              DATE,
+  ID_NUM_CARGA                  NUMBER,
+  ID_UID                        NUMBER,
+  TXT_NAMEAUDITA                VARCHAR2(255 BYTE),
+  ID_ROTULADO                   NUMBER,
+  IND_NOTIF_CANCER              NUMBER,
+  FEC_AUDITA                    DATE,
+  USR_AUDITA                    VARCHAR2(50 BYTE),
+  NUM_NOTIFICACION              NUMBER,
+  ID_PROFESIONAL                NUMBER,
+  DATE_CHEQUEO_SOME             DATE,
+  DATE_REVISION_BD              DATE,
+  DATE_REVISION_INFORME         DATE,
+  DATE_ARCHIVADA_EN_FICHA       DATE,
+  NUM_BENEFICIARIOS             NUMBER,
+  IND_MES_CRITICO               NUMBER,
+  DATE_IMPRESION_INFORME        DATE,
+  DATE_ENTREGA_INFORME          DATE,
+  ID_PROFESIONAL_RECIBE_INFO    NUMBER,
+  ID_PROFESIONAL_ENTREGA_INFO   NUMBER,
+  NUM_PLAZO_BIOPSIA             NUMBER,
+  NUM_DIAS_ENTCANCER            NUMBER,
+  NUM_ASIGNACION96HRS           NUMBER,
+  DATE_INICIO_CANCER            DATE,
+  DATE_FINAL_CANCER             DATE,
+  IND_ESTADIO_OLGA              NUMBER,
+  TXT_DIADNOSTICO_AP            VARCHAR2(1000 BYTE),
+  DATE_FECHA_MACRO              DATE,
+  DATE_FECHA_CORTE              DATE,
+  IND_COLOR_TACO                NUMBER,
+  IND_ESTADO_OLGA               NUMBER,
+  DATE_INTERCONSULTA            DATE,
+  NUM_CP_INTERCONSULTA          NUMBER,
+  NUM_FRAGMENTOS                NUMBER,
+  NUM_AZUK_ALCIAN_S             NUMBER,
+  NUM_PAS_SERIADA               NUMBER,
+  NUM_DIFF_SERIADA              NUMBER,
+  NUM_HE_SERIADA                NUMBER,
+  NUM_LAMINAS_SERIADAS          NUMBER,
+  NUM_HE_RAPIDA                 NUMBER,
+  NUM_TACOS_CORTADOS            NUMBER,
+  NUM_EXTENDIDOS                NUMBER,
+  DATE_TRASLADO                 DATE,
+  ID_UID_TRASLADO               NUMBER,
+  ID_USER_TRASLADO              VARCHAR2(50 BYTE),
+  ID_UID_TRASPORTE_OK           NUMBER,
+  ID_UID_RECEPCIONA_OK          NUMBER,
+  COD_SESSION_RECEPCIONA        VARCHAR2(50 BYTE),
+  ID_HISTO_ZONA                 NUMBER,
+  TXT_DESC_MACROSCOPICA         VARCHAR2(1000 BYTE),
+  DATE_STAR_SALA_PROCESO        DATE,
+  DATE_END_SALA_PROCESO         DATE,
+  ID_UID_INICIO_SPROCESO        NUMBER,
+  IND_SALA_PROCESO              NUMBER,
+  ID_UID_FINAL_SPROCESO         NUMBER,
+  IND_TEC_INCLUCION             NUMBER,
+  IND_TEC_CORTE                 NUMBER,
+  IND_TEC_TINCION               NUMBER,
+  IND_ALL_TECNICAS              NUMBER,
+  DATE_AUDITA_ADMINISTRATIVO    DATE,
+  IND_GEST_ADMINISTRATIVO       NUMBER,
+  ID_UID_ADMINISTRATIVO         NUMBER
+);
+
+COMMIT;
+/
+
+------------------------
+-- COLLECTION_TYPES ----
+------------------------
+CREATE OR REPLACE TYPE  ADMIN.COL_LIS_ANATOMIAP AS TABLE OF ADMIN.OBJ_LIS_ANATOMIAP;
+
+COMMIT;
+/
 
 -------------------------------------
 -- ZONA PROCEDIMIENTOS ALMACENADOS --

@@ -25,11 +25,16 @@
 
 <input type="hidden"    id="get_sala"           name="get_sala"     value="<?php echo $txt_sala;?>"/>
 <input type="hidden"    id="SERVER_NAME"        name="SERVER_NAME"  value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
-
 <form id="load_ingreso_etapa_analitica"         method="post"       action="#"></form>
 <form id="load_anuncios_anatomia_patologica"    method="post"       action="#"></form>
 <form id="get_termino_sala_macroscopia"         method="post"       action="#"></form>
 <form id="update_chat_x_hoja"                   method="post"       action="#"></form>
+
+
+
+
+
+
 
 <div class="grid_head_body">
     <div class="grid_head_body1">
@@ -358,295 +363,299 @@
     </div>
 </div>
 
-<div class="modal fade" id="MODAL_FORMULARIO_ANALITICA">
-    <div class="modal-dialog modal_xl_900">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">ETAPA&nbsp;ANAL&Iacute;TICA</b></h4>
-            </div>
-            <div class="modal-body" id="HTML_FORMULARIO_ANALITICA"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">
-                        <button type="button" class="btn btn-warning btn-fill" id="btn_exel_final" onclick="get_excel()">
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn2">
-                        <button type="button" class="btn btn-info btn-fill" id="btn_guardado_previo">
-                            <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;GUARDADO&nbsp;PREVIO&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn3">
-                        <button type="button" class="btn btn-success btn-fill" id="btn_finaliza_rce_anatomia" disabled>
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;FINALIZA&nbsp;REPORTE&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" id="modal_descipcion_muestras">
-    <div class="modal-dialog modal_xl_900">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;">
-                    <b style="color:#e34f49">SALA MACROSC&Oacute;PICA</b>
-                </h4>
-            </div>
-            <div class="modal-body" id="html_descipcion_muestras"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3">
-                        <button type="button" class="btn btn-success btn-fill" id="btn_graba_descipcion_muestras">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<section>
 
-<div class="modal fade" id="modal_sala_tecnicas">
-    <div class="modal-dialog modal_xl_900">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">SALA T&Eacute;CNICAS</b></h4>
-            </div>
-            <div class="modal-body" id="html_sala_tecnicas"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">
-                        <button type="button" class="btn btn-info btn-fill" id="btn_previo_sala_tecnicas">
-                            <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;GUARDADO&nbsp;PREVIO&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn3">
-                        <button type="button" class="btn btn-success btn-fill" id="btn_graba_tecnicas">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;TERMINO&nbsp;INFORME
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade" id="MODAL_FORMULARIO_ANALITICA">
+        <div class="modal-dialog modal_xl_900">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">ETAPA&nbsp;ANAL&Iacute;TICA</b></h4>
+                </div>
+                <div class="modal-body" id="HTML_FORMULARIO_ANALITICA"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">
+                            <button type="button" class="btn btn-warning btn-fill" id="btn_exel_final" onclick="get_excel()">
+                                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn2">
+                            <button type="button" class="btn btn-info btn-fill" id="btn_guardado_previo">
+                                <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;GUARDADO&nbsp;PREVIO&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn3">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_finaliza_rce_anatomia" disabled>
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;FINALIZA&nbsp;REPORTE&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modal_informacion_adminisrativo">
-    <div class="modal-dialog modal_xl_900">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">INFORMACI&Oacute;N COMPLEMENTARIA</b></h4>
-            </div>
-            <div class="modal-body" id="html_informacion_adminisrativo"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3">
-                        <button type="button" class="btn btn-success btn-fill" id="btn_informacion_adminisrativo">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade" id="modal_descipcion_muestras">
+        <div class="modal-dialog modal_xl_900">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;">
+                        <b style="color:#e34f49">SALA MACROSC&Oacute;PICA</b>
+                    </h4>
+                </div>
+                <div class="modal-body" id="html_descipcion_muestras"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_graba_descipcion_muestras">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modal_pdf_fullscreen">
-    <div class="modal-dialog modal_xl_pdf">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">PDF</b></h4>
-            </div>
-            <div class="modal-body" id="html_pdf_fullscreen"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3">&nbsp;</div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade" id="modal_sala_tecnicas">
+        <div class="modal-dialog modal_xl_900">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">SALA T&Eacute;CNICAS</b></h4>
+                </div>
+                <div class="modal-body" id="html_sala_tecnicas"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">
+                            <button type="button" class="btn btn-info btn-fill" id="btn_previo_sala_tecnicas">
+                                <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;GUARDADO&nbsp;PREVIO&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn3">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_graba_tecnicas">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;TERMINO&nbsp;INFORME
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modal_perfil_administrativo">
-    <div class="modal-dialog modal_xl_900">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">PERFIL ADMINISTRATIVO</b></h4>
-            </div>
-            <div class="modal-body" id="html_perfil_administrativo"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3">
-                        <button type="button" class="btn btn-success btn-fill" id="btn_perfil_administrativo">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade" id="modal_informacion_adminisrativo">
+        <div class="modal-dialog modal_xl_900">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">INFORMACI&Oacute;N COMPLEMENTARIA</b></h4>
+                </div>
+                <div class="modal-body" id="html_informacion_adminisrativo"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_informacion_adminisrativo">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modal_star_sala_proceso">
-    <div class="modal-dialog modal_xl_900">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">SALA DE PROCESO</b></h4>
-            </div>
-            <div class="modal-body" id="html_star_sala_proceso"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3">
-                        <button type="button" class="btn btn-success btn-fill" id="btn_star_sala_proceso">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade" id="modal_pdf_fullscreen">
+        <div class="modal-dialog modal_xl_pdf">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">PDF</b></h4>
+                </div>
+                <div class="modal-body" id="html_pdf_fullscreen"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3">&nbsp;</div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade bd-example-modal-lg" id="modal_plantillas_macro_micro">
-    <div class="modal-dialog modal_plantillas">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">DESCRIPCI&Oacute;N DE MUESTRAS + PLANTILLAS</b></h4>
-            </div>
-            <div class="modal-body" id="html_plantillas_macro_micro"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1" style="text-align: initial;">
-                        <button type="button" class="btn btn-warning btn-fill" id="btn_nueva_plantilla">
-                            <i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;NUEVA&nbsp;PLANTILLA
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3">&nbsp;
-                        <button type="button" class="btn btn-success btn-fill" id="btn_guarda_descripcion">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade" id="modal_perfil_administrativo">
+        <div class="modal-dialog modal_xl_900">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">PERFIL ADMINISTRATIVO</b></h4>
+                </div>
+                <div class="modal-body" id="html_perfil_administrativo"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_perfil_administrativo">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modal_nueva_plantilla">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">NUEVA PLANTILLA</b></h4>
-            </div>
-            <div class="modal-body" id="html_nueva_plantilla"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3">
-                        <button type="button" class="btn btn-success btn-fill" id="btn_new_plantilla_individual">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                        </button>
-                    </div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade" id="modal_star_sala_proceso">
+        <div class="modal-dialog modal_xl_900">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">SALA DE PROCESO</b></h4>
+                </div>
+                <div class="modal-body" id="html_star_sala_proceso"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_star_sala_proceso">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modal_gestion_firma_patologo">
-    <div class="modal-dialog">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">FIRMA DEL PAT&Oacute;LOGO</b></h4>
-            </div>
-            <div class="modal-body" id="html_gestion_firma_patologo"></div>
-            <div class="modal-footer">
-                <div class="grid_modal_footer_btn">
-                    <div class="grid_modal_footer_btn1">&nbsp;</div>
-                    <div class="grid_modal_footer_btn2">&nbsp;</div>
-                    <div class="grid_modal_footer_btn3"></div>
-                    <div class="grid_modal_footer_btn4">
-                        <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                        </button>
+    <div class="modal fade bd-example-modal-lg" id="modal_plantillas_macro_micro">
+        <div class="modal-dialog modal_plantillas">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">DESCRIPCI&Oacute;N DE MUESTRAS + PLANTILLAS</b></h4>
+                </div>
+                <div class="modal-body" id="html_plantillas_macro_micro"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1" style="text-align: initial;">
+                            <button type="button" class="btn btn-warning btn-fill" id="btn_nueva_plantilla">
+                                <i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;NUEVA&nbsp;PLANTILLA
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3">&nbsp;
+                            <button type="button" class="btn btn-success btn-fill" id="btn_guarda_descripcion">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="modal fade" id="modal_nueva_plantilla">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">NUEVA PLANTILLA</b></h4>
+                </div>
+                <div class="modal-body" id="html_nueva_plantilla"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3">
+                            <button type="button" class="btn btn-success btn-fill" id="btn_new_plantilla_individual">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+                            </button>
+                        </div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_gestion_firma_patologo">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">FIRMA DEL PAT&Oacute;LOGO</b></h4>
+                </div>
+                <div class="modal-body" id="html_gestion_firma_patologo"></div>
+                <div class="modal-footer">
+                    <div class="grid_modal_footer_btn">
+                        <div class="grid_modal_footer_btn1">&nbsp;</div>
+                        <div class="grid_modal_footer_btn2">&nbsp;</div>
+                        <div class="grid_modal_footer_btn3"></div>
+                        <div class="grid_modal_footer_btn4">
+                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <input type="button" id="test_pdf" value="test pdf" onclick="test_pdf(768)" style="display: none"> 
 <div id="get_html_pdf"></div>
@@ -654,22 +663,21 @@
 <div id="get_html_macroscopica"></div>
 <span id="nombre_nomina"></span>
 
-<!-- PDF 2 
-    ;
--->
-<div class="modal fade" id="Dv_verdocumentos" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
-    <div class="modal-dialog modal-xl3" style="width:80%;">
-        <div class="modal-content">
-            <div class="modal-header"><button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
-                <h3 class="modal-title"><b>PDF DOCUMENTOS</b></h3>
-            </div>
-            <div class="modal-body" id="PDF_VERDOC"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">CIERRA VENTANA</button>
+<section>
+    <div class="modal fade" id="Dv_verdocumentos" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
+        <div class="modal-dialog modal-xl3" style="width:80%;">
+            <div class="modal-content">
+                <div class="modal-header"><button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
+                    <h3 class="modal-title"><b>PDF DOCUMENTOS</b></h3>
+                </div>
+                <div class="modal-body" id="PDF_VERDOC"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">CIERRA VENTANA</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <!--
 <hr>

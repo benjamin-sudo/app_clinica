@@ -12,13 +12,6 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
         #$this->load->model("Ssan_libro_salamacroscopia_model");
     }
     
-    public function index_old(){
-        $this->output->set_template('blank');
-        $data  = [];
-        #$this->load->css("assets/Ssan_libro_salamacroscopia/css/styles.css");
-        #$this->load->js("assets/Ssan_libro_salamacroscopia/js/javascript.js");
-        $this->load->view('Ssan_libro_salamacroscopia/Ssan_libro_salamacroscopia_view',$data);
-    }
 
     public function index(){
         $this->output->set_template("blank");
@@ -58,11 +51,9 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
             $var_fecha_inicio           =   date("d-m-Y");
             $var_fecha_final            =   date("d-m-Y");
         }
-        
         #var_dump($arr_ids_anatomia);
         #LOAD_ETAPA_ANALITICA
-
-        $return_data = [];
+        $return_data                    =   [];
         /*
         $return_data                    =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
@@ -95,6 +86,13 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
     }
 
 
+    public function index_old(){
+        $this->output->set_template('blank');
+        $data  = [];
+        #$this->load->css("assets/Ssan_libro_salamacroscopia/css/styles.css");
+        #$this->load->js("assets/Ssan_libro_salamacroscopia/js/javascript.js");
+        $this->load->view('Ssan_libro_salamacroscopia/Ssan_libro_salamacroscopia_view',$data);
+    }
 
 }
 ?>
