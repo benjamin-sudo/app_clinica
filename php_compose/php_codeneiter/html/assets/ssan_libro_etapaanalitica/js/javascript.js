@@ -196,7 +196,7 @@ $(document).ready(function(){
                 error               :   function(errro) { 
                                                             console.log(errro);  
                                                             console.log(errro.responseText);    
-                                                            jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                         },
                 success             :   function(aData) { 
                                                             //console.log("return aData->",aData);
@@ -328,7 +328,7 @@ function js_gestion_firma(){
         error               :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                     $('#loadFade').modal('hide'); 
                                                 },
         success             :   function(aData) { 
@@ -374,7 +374,7 @@ function js_test_ap(){
         error               :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                     $('#loadFade').modal('hide'); 
                                                 },
         success             :   function(aData) { 
@@ -417,10 +417,10 @@ function js_adjunto_firma(archivos){
                 console.log("data_return    ->  ",data_return);
                 console.log("---------------------------------");
                 js_img_data(navegador.createObjectURL(archivos[0]))
-                jAlert("Subida con &eacute;xito","e-SISSAN");
+                jAlert("Subida con &eacute;xito","Clinica Libre");
             }).catch(function(err){  
                 console.log('Error:  ', err);  
-                jError("Error al subir imagen","e-SISSAN");
+                jError("Error al subir imagen","Clinica Libre");
             });
         };
         reader.readAsDataURL(archivos[0]);//base_64
@@ -458,7 +458,7 @@ function star_automplete(_value){
                                     method      :   "POST",
                                     error       :   function(errro) { 
                                                         //console.log(errro.responseText);    
-                                                        jError("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                     },
                                     data        :   {
                                                         dataType        :   "json",
@@ -582,7 +582,7 @@ function update_etapaanalitica(){
         error       :   function(errro) { 
                                             console.log(errro);  
                                             console.log(errro.responseText);
-                                            jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                             $('#loadFade').modal('hide'); 
                                         },
         success     :   function(aData) { 
@@ -647,7 +647,7 @@ function js_delete_list_gestion(new_id_anatomia){
             error               :   function(errro) { 
                                                         console.log(errro);  
                                                         console.log(errro.responseText);    
-                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                     },
             success             :   function(aData) { 
                                                         console.log("return aData   ->  ",aData);
@@ -669,7 +669,7 @@ function ver_cookie(){
         error               :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                 },
         success             :   function(aData) { 
                                                     console.log("return aData   ->  ",aData);
@@ -704,7 +704,7 @@ function conf_cookie_filtro_estados(_filtro_estados){
         error               :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                 },
         success             :   function(aData) { 
                                                     console.log("aData  ->  ",aData);
@@ -756,7 +756,7 @@ function js_views_historial_clinico_(numfichae){
         error           :   function(errro){  
                                 console.log(errro);
                                 console.log(errro.responseText);
-                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                             },              
         success         :   function(aData){
                                 console.log("IFRAME ->",aData['IFRAME']);
@@ -784,7 +784,7 @@ function js_star_plantillas(opcion,num_muestras){
         error		:   function(errro)         { 
                                                         console.log("errro  -> ",errro," | ","error.responseText -> ",errro.responseText); 
                                                         $("#modal_plantillas_macro_micro").modal('hide');
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     },
         success		:   function(aData)         { 
                                                         console.log("aData -> ",aData);
@@ -804,7 +804,7 @@ function js_star_plantillas(opcion,num_muestras){
                                                                 $("#ul_resultado_plantillas").append(aData.html);
                                                             }
                                                         } else {
-                                                            jError("Sesi&oacute;n ha caducado","e-SISSAN");
+                                                            jError("Sesi&oacute;n ha caducado","Clinica Libre");
                                                         } 
                                                     }, 
     });
@@ -844,14 +844,14 @@ function js_elimina_plantilla(num_plantilla){
                                                             },
                 error           :   function(errro)         { 
                                                                 console.log("errro  -> ",errro," | ","error.responseText -> ",errro.responseText); 
-                                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                             },
                 success         :   function(aData)         { 
                                                                 if(aData.status_contrasena){
                                                                     showNotification('top','center','Se ha eliminado plantilla N&deg;:'+num_plantilla,4,'fa fa-ban');
                                                                     js_star_plantillas(2,num_muestras);
                                                                 } else {
-                                                                    jError("Error en firma simple","e-SISSAN");
+                                                                    jError("Error en firma simple","Clinica Libre");
                                                                 }
                                                             }, 
             }); 
@@ -876,7 +876,7 @@ function js_new_plantilla(num_muestras){
                                                     },
         error		:   function(errro)         { 
                                                         console.log("errro  -> ",errro," | ","error.responseText -> ",errro.responseText); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#html_nueva_plantilla').html('');
                                                     },
         success		:   function(aData)         { 
@@ -889,7 +889,7 @@ function js_new_plantilla(num_muestras){
                                                             $("#btn_new_plantilla_individual").attr('onclick','js_crea_nueva_plantilla('+v_num_muestras+')');
                                                             $("#modal_nueva_plantilla").modal({backdrop:'static',keyboard:false}).modal("show");
                                                         } else {
-                                                            jError("Sesi&oacute;n ha caducado","e-SISSAN");
+                                                            jError("Sesi&oacute;n ha caducado","Clinica Libre");
                                                         } 
                                                     }, 
     });
@@ -922,7 +922,7 @@ function js_crea_nueva_plantilla(num_muestras){
                                                                 },
                     error           :   function(errro)         { 
                                                                     console.log("errro  -> ",errro," | ","error.responseText -> ",errro.responseText); 
-                                                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                                     //$('#html_nueva_plantilla').html('');
                                                                 },
                     success         :   function(aData)         { 
@@ -932,7 +932,7 @@ function js_crea_nueva_plantilla(num_muestras){
                                                                         $("#modal_nueva_plantilla").modal('hide');
                                                                         js_star_plantillas(2,num_muestras);
                                                                     } else {
-                                                                        jError("Error en firma simple","e-SISSAN");
+                                                                        jError("Error en firma simple","Clinica Libre");
                                                                     }
                                                                 }, 
                 }); 
@@ -954,33 +954,40 @@ function star_descrpcion_muestras(id_anatomia){
         type		:   "POST",
         url 		:   "ssan_libro_etapaanalitica/star_descripcion_anatomia",
         dataType    :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                    $('#loadFade').modal('show');
-                                                    $('#html_descipcion_muestras').html('');
-                                                },
-        data 		:                           { 
-                                                    id_anatomia     :   id_anatomia,
-                                                    get_sala        :   $("#get_sala").val(),
-                                                },
-        error		:   function(errro)         { 
-                                                    console.log("quisas->",errro); 
-                                                    $('#loadFade').modal('hide');
-                                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                    $('#html_descipcion_muestras').html('');
-                                                },
-        success		:   function(aData)         { 
-                                                    console.log("aData->",aData);
-                                                    $('#loadFade').modal('hide');
-                                                    if(aData.status_session){
-                                                        $("#btn_graba_descipcion_muestras").attr('onclick','js_guarda_descripcion_muestras('+id_anatomia+')');
-                                                        $("#html_descipcion_muestras").html(aData.out_html);
-                                                        $("#modal_descipcion_muestras").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                    } else {
-                                                        jError("Sesi&oacute;n ha caducado","e-SISSAN");
-                                                    }
-                                                }, 
+        beforeSend	:   function(xhr)       {   
+                                                $('#loadFade').modal('show');
+                                                $('#html_descipcion_muestras').html('');
+                                            },
+        data 		:                       { 
+                                                id_anatomia :   id_anatomia,
+                                                get_sala    :   $("#get_sala").val(),
+                                            },
+        error		:   function(errro)     { 
+                                                console.log("quisas->",errro); 
+                                                $('#loadFade').modal('hide');
+                                                $('#html_descipcion_muestras').html('');
+                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                            },
+        success		:   function(aData)     { 
+                                                console.log("aData->",aData);
+                                                $('#loadFade').modal('hide');
+                                                if(aData.status_session){
+                                                    $("#btn_graba_descipcion_muestras").attr('onclick','js_guarda_descripcion_muestras('+id_anatomia+')');
+                                                    $("#html_descipcion_muestras").html(aData.out_html);
+                                                    $("#modal_descipcion_muestras").modal({backdrop:'static',keyboard:false}).modal("show");
+                                                } else {
+                                                    jError("Sesi&oacute;n ha caducado","Clinica Libre");
+                                                }
+                                            }, 
     });
 }
+
+
+
+
+
+
+
 
 function js_deshabilitar_txt(){
     $('#txt_descipcion_general').removeClass("error_macroscopica");
@@ -1058,7 +1065,7 @@ function busqueda_etiquera_analitica(from,solicitud,array){
         error		    :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                 },
         success             :   function(aData) { 
                                                     console.log("aData      ->  ",aData);
@@ -1142,7 +1149,7 @@ function delete_cookie(){
         error               :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                 },
         success             :   function(aData) { 
                                                     $("#fecha_out").datetimepicker().data('DateTimePicker').date(aData.date);
@@ -1174,7 +1181,7 @@ function actualiza_chat(){
             error               :   function(errro) { 
                                                         console.log(errro);  
                                                         console.log(errro.responseText);    
-                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                     },
             success             :   function(aData) { 
                                                         $("#lista_chat").html("");
@@ -1255,7 +1262,7 @@ function js_envia_chat(option){
             error               :   function(errro) { 
                                                         console.log(errro);  
                                                         console.log(errro.responseText);    
-                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                         $("#txt_enviar_mensaje").val('');
                                                     },
             success             :   function(aData) { 
@@ -1342,7 +1349,7 @@ function star_analitica(id_anatomia){
                                                     },
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#HTML_FORMULARIO_ANALITICA').html('');
                                                         $('#loadFade').modal('hide'); 
                                                     },
@@ -1359,7 +1366,7 @@ function star_analitica(id_anatomia){
                                                             $("#HTML_FORMULARIO_ANALITICA").html(aData.out_html);
                                                             $("#MODAL_FORMULARIO_ANALITICA").modal({backdrop:'static',keyboard:false}).modal("show");
                                                         } else {
-                                                            jError("Session ha caducado","e-SISSAN");
+                                                            jError("Session ha caducado","Clinica Libre");
                                                         } 
                                                     }, 
    });
@@ -1388,7 +1395,7 @@ function js_informacion_administrativo(id_anatomia){
                                                         $('#loadFade').modal('hide'); 
                                                         console.log("errro              ->",errro);
                                                         console.log("errro.responseText ->",errro.responseText);
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     },
         success		:   function(aData)         { 
                                                         
@@ -1399,7 +1406,7 @@ function js_informacion_administrativo(id_anatomia){
                                                             $("#html_perfil_administrativo").html(aData.out_html);
                                                             $("#modal_perfil_administrativo").modal({backdrop:'static',keyboard:false}).modal("show");
                                                         } else {
-                                                            jError("Session ha caducado","e-SISSAN");
+                                                            jError("Session ha caducado","Clinica Libre");
                                                         }
                                                     }, 
    });
@@ -1450,12 +1457,12 @@ function js_data_administrativo(id_anatomia){
                     error                               :   function(errro) { 
                                                                                 console.error("errro                  ->",errro); 
                                                                                 console.error("error.responseText     ->",errro.responseText); 
-                                                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                                             },
                     success                             :   function(aData) { 
                                                                                 console.table("out      ->  ",aData);
                                                                                 if(aData.status_firma){
-                                                                                    jAlert("Se grab&oacute; informaci&oacute;n con &eacute;xito","e-SISSAN");
+                                                                                    jAlert("Se grab&oacute; informaci&oacute;n con &eacute;xito","Clinica Libre");
                                                                                     
                                                                                     
                                                                                     localStorage.setItem("ind_tipo_mensaje",7);
@@ -1470,7 +1477,7 @@ function js_data_administrativo(id_anatomia){
                                                                                     update_etapaanalitica();
                                                                                     
                                                                                 } else {
-                                                                                    jError("Error en la firma simple","e-SISSAN");
+                                                                                    jError("Error en la firma simple","Clinica Libre");
                                                                                 }
                                                                             }, 
                 });
@@ -1548,7 +1555,7 @@ function js_gestion_cancer(id_anatomia){
                                                     },
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#HTML_FORMULARIO_ANALITICA').html('');
                                                         $('#loadFade').modal('hide'); 
                                                     },
@@ -1570,7 +1577,7 @@ function js_gestion_cancer(id_anatomia){
                                                                 document.getElementById('hrs_termino_cancer').disabled          =   true;
                                                                 $(".btn_cancer_habilita").hide();
                                                                 $(".btn_cancer_desahabilita").show();
-                                                                jAlert("Se ha <b>deshabilitado</b> registro de c&aacute;ncer","e-SISSAN");
+                                                                jAlert("Se ha <b>deshabilitado</b> registro de c&aacute;ncer","Clinica Libre");
                                                             } else {
                                                                 //input
                                                                 console.log("   ->  desabilitado    <-  ");
@@ -1585,10 +1592,10 @@ function js_gestion_cancer(id_anatomia){
                                                                 document.getElementById('hrs_termino_cancer').disabled          =   false;
                                                                 $(".btn_cancer_habilita").show();
                                                                 $(".btn_cancer_desahabilita").hide();
-                                                                jAlert("Se ha <b>habilitado</b> registro de c&aacute;ncer","e-SISSAN");
+                                                                jAlert("Se ha <b>habilitado</b> registro de c&aacute;ncer","Clinica Libre");
                                                             }
                                                         } else {
-                                                            jError("Sesion ha caducado","e-SISSAN");
+                                                            jError("Sesion ha caducado","Clinica Libre");
                                                         } 
                                                     }, 
    });
@@ -1737,7 +1744,7 @@ function js_gestion_patologo(id_salida,id_anatomia){
         //$("#seg_horas_cancer,#seg_minutos_cancer,#seg_segundos_cancer").addClass('input_error');
     }
     
-    if(errores.length>0)                    {   jError(errores.join('<br>'),'e-SISSAN');    return  false;      }
+    if(errores.length>0)                    {   jError(errores.join('<br>'),'Clinica Libre');    return  false;      }
     data_form_registro.push({
         /* CAMBIO DE DISTRIBUCION DE PANELES */
         /*
@@ -1877,13 +1884,13 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                 },
             error       :   function(errro)     { 
                                                     console.log(" quisas->",errro," error->",errro.responseText); 
-                                                    jError("Error General, Consulte Al Administrador","e-SISSAN");
+                                                    jError("Error General, Consulte Al Administrador","Clinica Libre");
                                                     $('#loadFade').modal('hide'); 
                                                 },
             success                             :   function(aData)     { 
                                                         console.log("guardado_previo_anatomiapatologica ->  ",aData);
                                                         $('#loadFade').modal('hide'); 
-                                                        jAlert(id_salida==1?"Guardado previo grabado con &eacute;xito":"Se ha finalizado reporte","e-SISSAN");
+                                                        jAlert(id_salida==1?"Guardado previo grabado con &eacute;xito":"Se ha finalizado reporte","Clinica Libre");
                                                         console.log("id_salida  ->  ",id_salida);
                                                         if(id_salida==2){
                                                             update_etapaanalitica();
@@ -1907,14 +1914,14 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                             },
                     error                               :   function(errro) { 
                                                                                 console.log(" quisas->",errro," error->",errro.responseText); 
-                                                                                jError("Error General, Consulte Al Administrador","e-SISSAN");
+                                                                                jError("Error General, Consulte Al Administrador","Clinica Libre");
                                                                                 $('#loadFade').modal('hide'); 
                                                                             },
                     success                             :   function(aData) {   
                                                                                 $('#loadFade').modal('hide'); 
                                                                                 if(aData.status_pass){
                                                                                     console.log("guardado_previo_anatomiapatologica ->  ",aData);
-                                                                                    //jAlert(id_salida==1?"Guardado previo grabado con &eacute;xito":"Se ha finalizado reporte 2 ","e-SISSAN");
+                                                                                    //jAlert(id_salida==1?"Guardado previo grabado con &eacute;xito":"Se ha finalizado reporte 2 ","Clinica Libre");
                                                                                     if(id_salida==2){
                                                                                         console.log("----------------------------------");
                                                                                         console.log("ws final");
@@ -1928,7 +1935,7 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                                                         update_etapaanalitica();
                                                                                         $("#MODAL_FORMULARIO_ANALITICA").modal("hide");
                                                                                     } 
-                                                                                    jConfirm('Se ha finalizado reporte - &iquest;desea Impimir informe?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+                                                                                    jConfirm('Se ha finalizado reporte - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                                                                         if(r){
                                                                                             js_pdf_microscopica(id_anatomia);
                                                                                         } else {
@@ -1936,7 +1943,7 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                                                         }
                                                                                     });
                                                                                 } else {
-                                                                                    jError("Error Firma simple","e-SISSAN");
+                                                                                    jError("Error Firma simple","Clinica Libre");
                                                                                 }
                                                                             }, 
                 });
@@ -1960,9 +1967,11 @@ function js_viwes_popover(id,name){
 }
 
 function star_collapse(){
+    /*
     console.log("---------------------------------------");
     console.log("           star_collapse               ");
     console.log("---------------------------------------");
+    */
     $('#collapse_main_rce').collapse({toggle:false});
     $('.no_collapsable').on('click', function (e) {
         e.stopPropagation();
@@ -2024,7 +2033,7 @@ function consulta(){
                                                     },
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#HTML_FORMULARIO_ANALITICA').html('');
                                                     },
         success		:   function(aData)         { 
@@ -2260,7 +2269,7 @@ function get_carrusel_img(id_anatomia){
                                                     },
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#html_imagenes').html('');
                                                     },
         success		:   function(aData)         { 
@@ -2289,7 +2298,7 @@ function js_update_img(id_anatomia){
                                                     },
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('.update_img_microscopia').html('');
                                                     },
         success		:   function(aData)         { 
@@ -2379,8 +2388,9 @@ function js_adjunto_ap_multiple(id,archivos){
     }
 }
 
+
 function delete_img_x_muestra(ID_IMG,ID_MUESTRA,ID_SOLICITUD){
-    jConfirm('Con esta acci&oacute;n eliminara la imagen desde el registro de anatom&Iacute;a patol&oacute;gica &iquest;desea continuar?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+    jConfirm('Con esta acci&oacute;n eliminara la imagen desde el registro de anatom&Iacute;a patol&oacute;gica &iquest;desea continuar?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
         if(r){ 
             $.ajax({ 
                 type		:   "POST",
@@ -2398,10 +2408,10 @@ function delete_img_x_muestra(ID_IMG,ID_MUESTRA,ID_SOLICITUD){
                 error		:   function(errro)         { 
                                                                 console.log("quisas     -> ",errro);
                                                                 console.log("error      -> ",errro.responseText);
-                                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                             },
                 success		:   function(aData)         {
-                                                                jAlert("Se ha eliminado la imagen","e-SISSAN");
+                                                                jAlert("Se ha eliminado la imagen","Clinica Libre");
                                                                 $("#vista_x_muestra_"+ID_MUESTRA).html(aData.html);
                                                             }, 
            });
@@ -2413,86 +2423,90 @@ function delete_img_x_muestra(ID_IMG,ID_MUESTRA,ID_SOLICITUD){
     });
 }
 
-//gestor de imagenes a para main de solicitud de anatomia dependiendo de donde se suba la imagen 
-function main_js_adjunto_ap(id_anatomia,archivos){
-    $('#loadFade').modal('show'); 
-    var navegador                   =   window.URL || window.webkitURL;
-    var size                        =   archivos[0].size;
-    var type                        =   archivos[0].type;
-    var name                        =   archivos[0].name;
-    //var get_sala                  =   $("#imagen_macroscopia_"+id_anatomia).data('get_sala');
-    var get_sala                    =   $("#get_sala").val();  
-    //console.log("img -> get_sala  ->  ",get_sala);
-    var num_zona_img                =   $("#get_sala").val()=='salamacroscopia'?2:5;
-    //console.log("num_zona_img     ->  ",num_zona_img);
-    if(size>(1024*1024)){
-        jError("El archivo "+name+" supera el m&aacute;ximo permitido 1MB","e-SISSAN - Error");
-        $('#loadFade').modal('hide'); 
+
+function main_js_adjunto_ap(id_anatomia, archivos) {
+    toggleModal(true); // Abstrae la lógica del modal en una función
+    if (!validarArchivo(archivos[0])) return;
+    const formData = new FormData();
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        procesarImagen(reader, formData, archivos[0], id_anatomia);
+    };
+    reader.readAsArrayBuffer(archivos[0]);
+}
+
+function validarArchivo(archivo) {
+    if (archivo.size > 1024 * 1024) {
+        jError("El archivo " + archivo.name + " supera el máximo permitido de 1MB", "Clinica Libre - Error");
+        toggleModal(false);
         return false;
-    } else if(type != 'image/jpeg' && type != 'image/jpg' && type != 'image/png' && type != 'image/gif'){
-        jError("El archivo "+name+" no es del tipo de imagen permitida.","e-SISSAN - Error");
-        $('#loadFade').modal('hide');
+    } else if (!['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(archivo.type)) {
+        jError("El archivo " + archivo.name + " no es del tipo de imagen permitida.", "Clinica Libre - Error");
+        toggleModal(false);
         return false;
+    }
+    return true;
+}
+
+function procesarImagen(reader, formData, archivo, id_anatomia) {
+    // Crear un FileReader para leer el contenido del archivo como base64
+    var base64Reader = new FileReader();
+    base64Reader.onload = function(event) {
+        const base64String = event.target.result;  // Base64 string
+        //console.log("Imagen en formato base64:", base64String);
+        // Agregar datos al formData
+        formData.append("IMG_PROTOCOLO_BASE64", base64String);
+        formData.append("ID_ANATOMIA", id_anatomia);
+        formData.append("get_sala", $("#get_sala").val() === 'salamacroscopia' ? 2 : 5);
+        // Enviar la solicitud al servidor
+        fetch('ssan_libro_etapaanalitica/new_gestiondeimagenes_fetch_json', {
+            method: "POST",
+            body: formData,
+        }).then(response => response.json())
+          .then(return_bd => actualizarUI(return_bd, archivo))
+          .catch(err => manejarError(err));
+    };
+    // Leer el contenido del archivo como base64
+    base64Reader.readAsDataURL(archivo);
+}
+
+function toggleModal(show) {
+    $('#loadFade').modal(show ? 'show' : 'hide');
+}
+
+function manejarError(err) {
+    console.error('Error:->', err);
+    jError("Error al subir imagen", "Clinica Libre");
+    toggleModal(false);
+}
+
+function actualizarUI(return_bd, archivo) {
+    toggleModal(false); // Oculta el modal independientemente del resultado
+    const navegador = window.URL || window.webkitURL; // Definir 'navegador' usando la API estándar o la API de WebKit
+    // Asegúrate de que todos los datos necesarios estén presentes
+    if (return_bd && return_bd["ID_IMAGEN"] && return_bd["ID_IMAGEN"]["RETURN_CURSOR"] && return_bd["ID_IMAGEN"]["RETURN_CURSOR"].length > 0) {
+        const ID_IMG = return_bd["ID_IMAGEN"]["RETURN_CURSOR"][0].ID_IMAGE;
+        const objeto_url = navegador.createObjectURL(archivo); // Asegúrate de que 'navegador' esté definido en este contexto
+        const html = `<div class="card img_sala_macroscopia img_${ID_IMG}" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">
+                        <img alt="64x64" class="img-thumbnail" data-src="64x64" src="${objeto_url}" data-holder-rendered="true" style="width:64px;height:64px;">
+                        <hr style="margin:2px">
+                        <a href="javascript:delete_img_x_main({img:${ID_IMG}, id:${id_anatomia}})" id="img_${ID_IMG}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:down_img_x_muestra(${ID_IMG})">
+                            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                        </a>
+                    </div>`;
+        $("#imagen_main").append(html);
+        $("#imagen_sala_macroscopia").hide();
     } else {
-        var formData                =   new FormData();
-        var reader                  =   new FileReader();
-        reader.onloadend            =   function(){
-            const blob              =   new Blob([reader.result],{type:"image/jpeg"});
-            formData.append("IMG_PROTOCOLO",blob,name);
-            formData.append("ID_ANATOMIA",id_anatomia);
-            formData.append("get_sala",num_zona_img);
-            //formData.append("num_zona_img",num_zona_img);
-            //console.log("formData   ->",num_zona_img);
-            //return false;
-            fetch('ssan_libro_etapaanalitica/new_gestiondeimagenes_fetch_json',{
-                method              :   "POST",
-                body                :   formData,
-            }).then(function(response){
-                console.log("response -> ",response);
-                return response.json();
-            }).then(function(return_bd){
-                console.log("return_bd  ->  ",return_bd);
-                $('#loadFade').modal('hide'); 
-                $(".main-panel").perfectScrollbar("destroy");
-                document.getElementById("html_descipcion_muestras").style.overflowY = 'auto';
-                if($("#get_sala").val() == 'salamacroscopia'){
-                    $("#imagen_main").html('');
-                    var ID_IMG      =   return_bd["ID_IMAGEN"]["RETURN_CURSOR"][0].ID_IMAGE;
-                    var objeto_url  =   navegador.createObjectURL(archivos[0]);
-                    var html        =   '<div class="card img_sala_macroscopia img_'+ID_IMG+'" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">'+
-                                            '<img '+
-                                                'alt                     =  "64x64" '+
-                                                'class                   =  "img-thumbnail" '+
-                                                'data-src                =  "64x64" '+
-                                                'src                     =  "'+objeto_url+'" '+ 
-                                                'data-holder-rendered    =  "true" '+
-                                                'style                   =  "width:64px;height:64px;" '+
-                                            '>'+
-                                            '<hr style="margin:2px">'+
-                                            '<a href="javascript:delete_img_x_main({img:'+ID_IMG+',id:'+id_anatomia+'})" id="img_'+ID_IMG+'">'+
-                                                '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
-                                            '</a>'+
-                                            '<a href="javascript:down_img_x_muestra('+ID_IMG+')">'+
-                                                '<i class="fa fa-cloud-download" aria-hidden="true"></i>'+
-                                            '</a>'+
-                                        '</div>';
-                    $("#imagen_main").append(html);
-                }
-                if($("#get_sala").val() == 'analitica'){
-                    js_update_img(id_anatomia);
-                }
-            }).catch(function(err){ 
-                $('#loadFade').modal('hide'); 
-                console.log('Error:->',err);  
-                jError("Error al subir imagen","e-SISSAN");
-            });
-        };
-        reader.readAsDataURL(archivos[0]);//base_64
+        console.error('No se pudo obtener el ID de la imagen o la estructura de datos es incorrecta:', return_bd);
+        jError("No se pudo cargar la imagen correctamente.", "Error de carga");
     }
 }
 
 function delete_img(ID_IMG){
-    jConfirm('Con esta acci&oacute;n eliminara la imagen desde el registro de anatom&Iacute;a patol&oacute;gica &iquest;desea continuar?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+    jConfirm('Con esta acci&oacute;n eliminara la imagen desde el registro de anatom&Iacute;a patol&oacute;gica &iquest;desea continuar?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
         if(r){ 
             $.ajax({ 
                 type		:   "POST",
@@ -2508,11 +2522,11 @@ function delete_img(ID_IMG){
                 error		:   function(errro)         { 
                                                                 console.log("quisas     -> ",errro);
                                                                 console.log("error      -> ",errro.responseText);
-                                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                             },
                 success		:   function(aData)         {
                                                                 console.log("consulta   -> ",aData.html);
-                                                                jAlert("Se ha eliminado la imagen","e-SISSAN");
+                                                                jAlert("Se ha eliminado la imagen","Clinica Libre");
                                                                 $(".imagen_"+ID_IMG).remove();
                                                                 
                                                                 //update delete
@@ -2538,7 +2552,7 @@ function descarga_img(ID_IMG){
 }
 
 function star_microfono_1(){
-    jError("Micr&oacute;fono no iniciado","e-SISSAN");
+    jError("Micr&oacute;fono no iniciado","Clinica Libre");
 }
 
 function js_guarda_descripcion_muestras(id_anatomia){
@@ -2603,7 +2617,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
                         error		:   function(errro)     {  
                                                                     console.log(error);
                                                                     console.log(errro.responseText); 
-                                                                    jError("Error en el aplicativo","e-SISSAN"); 
+                                                                    jError("Error en el aplicativo","Clinica Libre"); 
                                                                 },
                         success        :   function(aData)     { 
                                                                     console.log("->",aData,"<-");
@@ -2619,7 +2633,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
                                                                         $("#load_anuncios_anatomia_patologica").submit();
                                                                         
                                                                         update_etapaanalitica();
-                                                                        jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+                                                                        jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                                                             if(r){
                                                                                 js_pdf_macroscopia(0,id_anatomia);
                                                                             } else {
@@ -2627,7 +2641,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
                                                                             }
                                                                         });
                                                                     } else {
-                                                                        jError("Error en la firma simple","e-SISSAN");
+                                                                        jError("Error en la firma simple","Clinica Libre");
                                                                     }
                                                                 }, 
                      });
@@ -2656,7 +2670,7 @@ function delete_img_x_main(data){
         error		:   function(errro)     {  
                                                     console.log(error);
                                                     console.log(errro.responseText); 
-                                                    jError("Error en el aplicativo","e-SISSAN"); 
+                                                    jError("Error en el aplicativo","Clinica Libre"); 
                                                 },
         success        :   function(aData)     { 
                                                     if(aData.status){
@@ -2701,7 +2715,7 @@ function js_pdf_microscopica(id_anatomia){
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         //$('#html_pdf_fullscreen').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                         $("#modal_pdf_fullscreen").modal("hide");
                                                     },
@@ -2711,7 +2725,7 @@ function js_pdf_microscopica(id_anatomia){
                                                       
                                                         //$('#html_pdf_fullscreen').html(aData["GET_HTML2"]);
                                                         if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","e-SISSAN");
+                                                            jError("error al cargar protocolo PDF","Clinica Libre");
                                                             return false;
                                                         } else {
                                                             var base64str           =   aData["PDF_MODEL"];
@@ -2768,14 +2782,14 @@ function js_pdf_macroscopia(option,id_anatomia){
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         //$('#html_pdf_fullscreen').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                         $('#'+html_body).modal("hide");
                                                     },
         success		:   function(aData)         { 
                                                         console.log("success aData      ->      ",aData);
                                                         if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","e-SISSAN");
+                                                            jError("error al cargar protocolo PDF","Clinica Libre");
                                                             return false;
                                                         } else {
                                                             var base64str           =   aData["PDF_MODEL"];
@@ -2820,7 +2834,7 @@ function js_star_sala_proceso(id_anatomia){
                                                     console.log(errro.responseText); 
                                                     $("#modal_star_sala_proceso").modal("hide");
                                                     $('#loadFade').modal('hide'); 
-                                                    jError("Error en el aplicativo","e-SISSAN"); 
+                                                    jError("Error en el aplicativo","Clinica Libre"); 
                                                 },
         success		:   function(aData)     { 
                                                     console.log("---------------------------------------------------------");
@@ -2878,7 +2892,7 @@ function js_inicia_sala_procesos(id_anatomia){
                                             },
                          error		:   function(errro){  
                                                                 console.log(errro.responseText); 
-                                                                jError("Error en el aplicativo","e-SISSAN");
+                                                                jError("Error en el aplicativo","Clinica Libre");
                                                             },
                          success        :   function(aData) { 
                                                                 console.log("-------------------------------------------");
@@ -2886,7 +2900,7 @@ function js_inicia_sala_procesos(id_anatomia){
                                                                 console.log("   ->",aData,"<-                           ");
                                                                 console.log("-------------------------------------------");
                                                                 if(aData.status){
-                                                                    jAlert("Se inici&oacute; tiempo en sala de proceso","e-SISSAN");
+                                                                    jAlert("Se inici&oacute; tiempo en sala de proceso","Clinica Libre");
                                                                     $("#modal_star_sala_proceso").modal('hide');
                                                                     
                                                                     localStorage.setItem("ind_tipo_mensaje",3);
@@ -2899,7 +2913,7 @@ function js_inicia_sala_procesos(id_anatomia){
                                                                     
                                                                     update_etapaanalitica();
                                                                 } else {
-                                                                    jError("Error Firma simple","e-SISSAN");
+                                                                    jError("Error Firma simple","Clinica Libre");
                                                                 }
                                                             }, 
                     });
@@ -2963,7 +2977,7 @@ function js_inicia_final_procesos(id_anatomia){
                                         },
                      error		:   function(errro){  
                                                             console.log(errro.responseText); 
-                                                            jError("Error en el aplicativo","e-SISSAN");
+                                                            jError("Error en el aplicativo","Clinica Libre");
                                                         },
                      success        :   function(aData) { 
                          
@@ -2972,7 +2986,7 @@ function js_inicia_final_procesos(id_anatomia){
                                                             if(aData.status_fecha){
                                                                 if(aData.status){
                                                                     
-                                                                    jAlert("Se finalizo en sala de proceso","e-SISSAN");
+                                                                    jAlert("Se finalizo en sala de proceso","Clinica Libre");
                                                                     $("#modal_star_sala_proceso").modal('hide');
                                                                     
                                                                     localStorage.setItem("ind_tipo_mensaje",4);
@@ -2985,7 +2999,7 @@ function js_inicia_final_procesos(id_anatomia){
                                                                     
                                                                     update_etapaanalitica();
                                                                 } else {
-                                                                    jError("Error Firma simple","e-SISSAN");
+                                                                    jError("Error Firma simple","Clinica Libre");
                                                                 }
                                                             } else {
                                                                 showNotification('bottom','right',aData.v_txt_error,4,'fa fa-ban');  
@@ -3024,7 +3038,7 @@ function js_sala_tecnicas(id_anatomia){
                         },
          error      :   function(errro) {  
                                             console.log(errro.responseText); 
-                                            jError("Error en el aplicativo","e-SISSAN");
+                                            jError("Error en el aplicativo","Clinica Libre");
                                             $('#loadFade').modal('hide'); 
                                         },
          success    :   function(aData) { 
@@ -3119,14 +3133,14 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
                             },
             error       :    function(errro)    {  
                                                     console.log(errro.responseText);
-                                                    jError("Error en el aplicativo","e-SISSAN");
+                                                    jError("Error en el aplicativo","Clinica Libre");
                                                 },
             success     :    function(aData)     { 
                                                     console.table("aData->",aData);
                                                     if(aData.status){
-                                                         jAlert("Se ha realizado el guardado previo.","e-SISSAN");
+                                                         jAlert("Se ha realizado el guardado previo.","Clinica Libre");
                                                     } else {
-                                                        jError("Error en la firma simple","e-SISSAN");  
+                                                        jError("Error en la firma simple","Clinica Libre");  
                                                     }
                                                 }, 
         });
@@ -3157,7 +3171,7 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
                                         },
                         error       :    function(errro)    {  
                                                                 console.log(errro.responseText);
-                                                                jError("Error en el aplicativo","e-SISSAN");
+                                                                jError("Error en el aplicativo","Clinica Libre");
                                                             },
                         success     :    function(aData)     { 
                                                                 console.table("aData->",aData);
@@ -3172,12 +3186,12 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
                                                                         localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
                                                                         $("#load_anuncios_anatomia_patologica").submit();
                                                                         
-                                                                        jAlert("T&eacute;cnicas agregadas a la solicitud","e-SISSAN");
+                                                                        jAlert("T&eacute;cnicas agregadas a la solicitud","Clinica Libre");
                                                                         update_etapaanalitica();
                                                                         $("#modal_sala_tecnicas").modal('hide');
                                                                     }
                                                                 } else {
-                                                                    jError("Error en la firma simple","e-SISSAN");  
+                                                                    jError("Error en la firma simple","Clinica Libre");  
                                                                 }
                                                             }, 
                     });
@@ -3278,12 +3292,12 @@ function edita_txt_macroscopica(num_muestra){
                         },
         error       :    function(errro)    {  
                                                 console.log(errro.responseText);
-                                                jError("Error en el aplicativo","e-SISSAN");
+                                                jError("Error en el aplicativo","Clinica Libre");
                                             },
         success     :    function(aData)     { 
                                                 console.table("aData->",aData);
                                                 if(aData.status){
-                                                    jAlert("Se actualizo informacion macroscopica","e-SISSAN");
+                                                    jAlert("Se actualizo informacion macroscopica","Clinica Libre");
                                                 }
                                             }, 
     });
@@ -3305,7 +3319,7 @@ function js_busqueda_num_cancer(ind_nof_cancer){
             error		    :   function(errro) { 
                                                         console.log(errro);  
                                                         console.log(errro.responseText);    
-                                                        jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     },
             success             :   function(aData) { 
                                                         console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
@@ -3342,7 +3356,7 @@ function test_pdf(id_anatomia){
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         //$('#html_pdf_fullscreen').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                         $('#'+html_body).modal("hide");
                                                     },
@@ -3351,7 +3365,7 @@ function test_pdf(id_anatomia){
                                                         
                                                         
                                                         if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","e-SISSAN");
+                                                            jError("error al cargar protocolo PDF","Clinica Libre");
                                                             return false;
                                                         } else {
                                                             var base64str           =   aData["PDF_MODEL"];
@@ -3419,7 +3433,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#PDF_VERDOC').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                     },
         success		:   function(aData)         { 
@@ -3427,7 +3441,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                         console.log(aData);
                                                         console.log("---------------------------------------------");
                                                         if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","e-SISSAN");
+                                                            jError("error al cargar protocolo PDF","Clinica Libre");
                                                             return false;
                                                         } else {
                                                             var base64str           =   aData["PDF_MODEL"];

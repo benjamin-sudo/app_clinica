@@ -1,16 +1,17 @@
 <div class="grid_head_descripcion_muestras" style="">
     <div class="grid_head_descripcion_muestras1">
         <div class="card" id="card_descripcion_general_mactoscopia" style="margin-bottom:5px;padding:8px;">
-            <div class="grid_opcion_descripcion_muestra" style="margin-bottom:4px;margin-top:4px;">
-                <div class="grid_opcion_descripcion_muestra4" style="text-align:left;">
-                    <h5  style="margin: 0px 0px 0px 0px;"><b style="color:#888888;">&#8226;&nbsp;DESCRIPCI&Oacute;N MACROSC&Oacute;PICA</b></h5>
-                </div>
-                <div class="grid_opcion_descripcion_muestra5">&nbsp;</div>
-                <div class="grid_opcion_descripcion_muestra6" style="text-align: end">
+
+            <div class="grid_opcion_descri_titulo">
+                <div class="grid_opcion_descri_titulo1"> <h5  style="margin: 0px 0px 0px 0px;"><b style="color:#888888;">&#8226;&nbsp;DESCRIPCI&Oacute;N MACROSC&Oacute;PICA</b></h5>  </div>
+                <div class="grid_opcion_descri_titulo1"> 
                     <label for="ind_deshabilitar_macro" class="pointer" style="color:#888888;">&nbsp;NO APLICA&nbsp;</label>
+                </div>
+                <div class="grid_opcion_descri_titulo1"> 
                     <input class="form-check-input pointer pointer" type="checkbox" style="display:initial" id="ind_deshabilitar_macro" onclick="js_deshabilitar_txt()" value="1"/>
                 </div>
             </div>
+
             <div class="grid_opcion_descripcion_muestra">
                 <div class="grid_opcion_descripcion_muestra1">
                     <textarea 
@@ -32,7 +33,7 @@
                     </div>
                 </div>
                 <div class="grid_opcion_descripcion_muestra2" style="text-align: center">
-                    <div class="btn-group-vertical">
+                    <div class="btn-group-vertical" style="display:none">
                         <button type            =   "button"
                             class           =   "btn btn-success btn-xs btn-fill grupo_descipcion_general" 
                             id              =   "microfono_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>"
@@ -40,25 +41,22 @@
                             data-ind_tipo   =   "global_main"
                             data-icongrab   =   "icon_grabando_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>"
                             data-proce      =   "proce_descipcion_general_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>"
-                            onclick         =   "star_microfono_general(this.id)" 
-                            >
-                        <i class="fa fa-microphone" aria-hidden="true"></i>
+                            onclick         =   "star_microfono_general(this.id)">
+                            <i class="fa fa-microphone" aria-hidden="true"></i>
                         </button>
-                        <!-- disabled -->
                         <button 
                             type            =   "button" 
                             class           =   "btn btn-danger btn-xs btn-fill grupo_descipcion_general" 
                             id              =   "btn_termina_mic_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>" 
-                            onclick         =   "mic_terminar(this.id)"
-                           >
-                        <i class="fa fa-microphone-slash" aria-hidden="true"></i>
+                            onclick         =   "mic_terminar(this.id)">
+                            <i class="fa fa-microphone-slash" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
                 <div class="grid_opcion_descripcion_muestra3" id="imagen_main">
+
                     <?php if(count($data_bd[':C_IMAGENES_BLOB_MUESTRAS'])>0){ ?>
                         <?php foreach($data_bd[':C_IMAGENES_BLOB_MUESTRAS'] as $i => $row){ ?>
-                    
                             <div class="card img_sala_macroscopia img_<?php echo $row['ID_IMAGEN'];?>" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">
                                 <img 
                                     class                   =   "img-thumbnail"
@@ -67,56 +65,61 @@
                                     alt                     =   "64x64" 
                                     src                     =   "<?php echo $row["IMG_DATA"];?>" 
                                     data-holder-rendered    =   "true" 
-                                    style                   =   "width:64px;height:64px;"
-                                />
+                                    style                   =   "width:64px;height:64px;"/>
                                 <hr style="margin:4px">
-                                <a href="javascript:delete_img_x_main({img:<?php echo $row['ID_IMAGEN'];?>,id:<?php echo $row['ID_IMAGEN'];?>})" id="img_<?php echo $row['ID_IMAGEN'];?>">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:down_img_x_main(<?php echo $row['ID_IMAGEN'];?>)">
-                                    <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                                </a>
+
+                                <div class="grid_btn_image">
+                                    <div class="grid_btn_image1">
+                                        <a href="javascript:delete_img_x_main({img:'<?php echo $row['ID_IMAGEN'];?>',id:'<?php echo $row['ID_IMAGEN'];?>'})" id="img_<?php echo $row['ID_IMAGEN'];?>">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div class="grid_btn_image1">
+                                        <a href="javascript:down_img_x_main(<?php echo $row['ID_IMAGEN'];?>)">
+                                            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
-                    
                         <?php } ?>
-                    <?php   }   else    {  ?>
-                    
-                        <div class="card" style="margin-bottom:0px;padding:8px;" id="imagen_sala_macroscopia">
-                            <div style="background-color:transparent !important; text-align:center"><div class="font_15"><b class="class_txt_macroscopia">SUBIR</b></div></div>
-                            <hr style="margin-top:10px;margin-bottom:10px">
-                            <div class="flex_box_center">
-                                <label class="custom-file-label pointer" for="imagen_macroscopia_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>">
-                                    <i class="fa fa-cloud-upload fa-4x class_txt_macroscopia" aria-hidden="true"></i>
+                    <?php } else { ?>
+                        <div class="card" style="margin-bottom:0px; padding:8px;" id="imagen_sala_macroscopia">
+                            <div class="mb-3 d-flex justify-content-center align-items-center">
+                                <label for="imagen_macroscopia_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>" style="margin-top:20px;" class="form-label d-flex flex-column justify-content-center align-items-center">
+                                    <i class="fa fa-cloud-upload fa-4x" aria-hidden="true" style="margin-top: -19px;"></i> 
+                                    <i>Subir</i>
                                 </label>
-                                <input 
-                                    type            =   "file" 
-                                    class           =   "grupo_descipcion_general" 
-                                    data-get_sala   =   "salamacroscopia" 
-                                    id              =   "imagen_macroscopia_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>" 
-                                    onchange        =   "main_js_adjunto_ap(<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>,this.files)"/>
+                                <input
+                                    type        =   "file"
+                                    id          =   "imagen_macroscopia_<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>"
+                                    class       =   "form-control"
+                                    onchange    =   "main_js_adjunto_ap(<?php echo $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>, this.files)"
+                                    style       =   "display: none;">
                             </div>
                         </div>
+                    <?php } ?>
                     
-                    <?php   }   ?>
                 </div>
             </div>
         </div>
     </div>
     <div class="grid_head_descripcion_muestras2">&nbsp;</div>
 </div>
+
 <div id="id_tabs_muestras_macroscopia">
-    <ul role="tablist" class="nav nav-tabs tabs_muestras_macroscopia" role="menu">
-        <li role="presentation" style="cursor:pointer;">
-            <a data-toggle="tab" href="#_anatomia_macroscopia"><i class="fa fa-th-list" aria-hidden="true"></i>&nbsp;MUESTRAS ANATOMIA</a>
+    <ul class="nav nav-tabs" style="cursor:pointer;">
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#_anatomia_macroscopia"><i class="fa fa-th-list" aria-hidden="true"></i>&nbsp;MUESTRAS ANATOMIA</button>
         </li>
-        <li role="presentation" style="cursor:pointer;<?php echo count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0?'':'display:none;'?>">
-            <a data-toggle="tab" href="#_anatomia_citologia"><i class="fa fa-th-list" aria-hidden="true"></i>&nbsp;MUESTRAS CITOLOG&Iacute;A</a>
+        <li class="nav-item" style="<?php echo count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0?'':'display:none;'?>">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#_anatomia_citologia"><i class="fa fa-th-list" aria-hidden="true"></i>&nbsp;MUESTRAS CITOLOG&Iacute;A</button>
         </li>
     </ul>
-    <div class="tab-content" style="margin-top:-12px;">
+    <div class="tab-content" style="">
         <div id="_anatomia_macroscopia" class="tab-pane fade">
             <div class="card2" id="card_muestra_anatomicas" style="margin-bottom:5px;padding:8px;">
-                <h6 class="title" style="margin: 8px 0px 12px 0px;">
+                <h6 class="title" style="margin: 15px 0px 12px 0px;">
                     <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;
                     <b style="color:#888888;">MUESTRAS ANATOMIA <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]['IND_USOCASSETTE']==1?'(CASETE)':'';?> | DESCRIPCI&Oacute;N MACROSC&Oacute;PIA</b>
                 </h6>

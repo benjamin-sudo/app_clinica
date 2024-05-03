@@ -1049,11 +1049,11 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "return"                    =>  $return,
         )));
     }
+    
     #up 
     public function new_gestiondeimagenes_fetch_json(){
         $empresa                        =   $this->session->userdata("COD_ESTAB");
-        //$return_data                  =   [];
-        //$html                         =   '';
+        $return_data                    =   [];
         $ID_ANATOMIA                    =   $this->input->post('ID_ANATOMIA');
         $get_sala                       =   $this->input->post('get_sala');
         $return_data                    =   $this->Ssan_libro_etapaanalitica_model->ap_subir_imagenprotoclo_ap($empresa,$ID_ANATOMIA,$get_sala);
@@ -1064,7 +1064,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "txt_sala"                  =>  $get_sala,
         )));
     }
-    
+
     public function gestor_imagenes_x_muestras(){
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $ID_ANATOMIA                    =   $this->input->post('ID_ANATOMIA');
@@ -1181,12 +1181,12 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $get_sala                       =   $this->input->post('get_sala');
         $html                           =   '';
         $_issesion                      =   true;
+        $DATA_CURSOR = [];
         if ($cod_empresa                ==  ''){
             $_issesion                  =   false;
         } else {
-            #PROCE                      ->  LOAD_RCE_ANATOMIA_PATOLOGICA
-            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
-            array(
+            #PROCE                      =  LOAD_RCE_ANATOMIA_PATOLOGICA
+            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "usr_session"           =>  explode("-",$this->session->userdata("USERNAME"))[0],
                 "ind_opcion"            =>  0,
@@ -1196,7 +1196,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
                 "ind_template"          =>  "ssan_libro_etapaanalitica",
                 "get_sala"              =>  $get_sala,
             ));
-            //$html                     =   $this->load->view("ssan_libro_etapaanalitica/html_salamacro_descmuestra",$DATA_CURSOR,true);
             $html                       =   $this->load->view("ssan_libro_etapaanalitica/template_default_analitica",$DATA_CURSOR,true);
         }
         $this->output->set_output(json_encode(array(

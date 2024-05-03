@@ -34,11 +34,13 @@
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
 
+  
   <style>
-    #loadFade         { z-index: 10500 !important; }
-    .nav-link.activo  { }
-    .text-center      { text-align: center;  }
-    .btn-warning      { color: white !important; }
+    #loadFade .modal-content  { background-color: #fff;     }
+    #loadFade .modal-body     { text-align: center;  min-height: 100px;  }
+    .nav-link.activo          { }
+    .text-center              { text-align: center;  }
+    .btn-warning              { color: white !important; }
   </style>
 
 </head>
@@ -209,11 +211,12 @@
   <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
   <!-- Wizard Plugin    -->
   <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
-  
   <!--paginacion bootpage-->
   <script type="text/javascript" src="assets/recursos/js/jquery.bootpag.min.js"></script>
   <!-- easy-autocomplete -->
   <script type="text/javascript" src="assets/recursos/js/jquery.easy-autocomplete.min.js"></script>
+  <!-- PerfectScrollbar  -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
 
   <section>
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -249,6 +252,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="modal_perfil_usuario">
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
@@ -267,6 +271,8 @@
             </div>
         </div>
     </div>
+
+
   </section>
   </body>
 </html>

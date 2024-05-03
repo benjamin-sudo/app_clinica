@@ -1282,11 +1282,16 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
     
     public function ap_subir_imagenprotoclo_ap($cod_empresa,$ID_ANATOMIA,$GET_SALA){
-        //$context                  =   stream_context_create(array('http'=>array('ignore_errors'=>true,'header'=>"User-Agent:MyAgent/1.0\r\n")));
+        #$context                   =   stream_context_create(array('http'=>array('ignore_errors'=>true,'header'=>"User-Agent:MyAgent/1.0\r\n")));
         $result                     =   [];
-        $blob                       =   oci_new_descriptor($this->db->conn_id,OCI_D_LOB);
-        $blob->writeTemporary(file_get_contents($_FILES["IMG_PROTOCOLO"]["tmp_name"]));
-        //var_dump("GET_SALA  ->  ",$GET_SALA);
+        #$blob                       =   oci_new_descriptor($this->db->conn_id,OCI_D_LOB);
+        #$blob->writeTemporary(file_get_contents($_FILES["IMG_PROTOCOLO"]["tmp_name"]));
+        $base64_string = $_POST['IMG_PROTOCOLO_BASE64'];  // Recuperar la cadena base64
+        #$image_data = explode(',', $base64_string)[1];  // Separar la información de encabezado
+        #$blob_data = base64_decode($image_data);  // Decodificar la cadena base64
+        $blob = oci_new_descriptor($this->db->conn_id, OCI_D_LOB);
+        $blob->writeTemporary($base64_string);  // Escribir los datos decodificados en un descriptor LOB
+        #var_dump("GET_SALA  ->  ",$GET_SALA);
         $ID_IMAGEN                  =   '';
         $param                      =   array(
                                             array( 
@@ -1455,6 +1460,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'RETURN_CURSOR' =>  empty($result[':RETURN_CURSOR'])?null:$result[':RETURN_CURSOR'],
         );
     }
+
     
     public function graba_chat_anatomia($DATA){
         $this->db->trans_start();

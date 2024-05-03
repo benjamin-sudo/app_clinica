@@ -9,9 +9,11 @@
 <div class="grid_body_form_analitica">
     <div class="grid_body_form_analitica1">
         <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
-            <div class="header" style="margin-bottom: 18px;">
+            
+            <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
                 <h5 class="title"><i class="fa fa-user-o" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">PACIENTE</b></h5>
             </div>
+
             <div class="content card-body">
                 <div class="table-responsive" style="margin-bottom:-5px;margin-top:-20px;">
                     <table class="table table-striped">
@@ -57,7 +59,7 @@
         </div>
         
         <div class="card" id="card_tiempos_anatomia_patologica" style="margin-bottom:5px">
-            <div class="header" style="margin-bottom: 18px;">
+            <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
                 <h5 class="title"><i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">SOLICITUD</b></h5>
             </div>
             <div class="content card-body">
@@ -102,13 +104,11 @@
             </div>
         </div>
         <div class="card" id="card_logs_muestras" style="margin-bottom: 5px">
-            <div class="header" style="margin-bottom: 9px;">
-                <h5 class="title">
-                    <i class="fa fa-database" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">EVENTOS</b>
-                </h5>
+            <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
+                <h5 class="title"><i class="fa fa-database" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">EVENTOS</b></h5>
             </div>
             <hr style="margin: 0px">
-            <div class="" style="padding: 4px;">
+            <div class="" style="padding:4px;">
                 <?php echo $html_log;?>
             </div>
         </div>
@@ -218,11 +218,8 @@
     <!-- display:none -->
     <div class="grid_body_form_analitica3">
         <div class="card" id="card_informacion_main_anatomia" style="margin-bottom:5px;">
-            <div class="header" style="margin-bottom:18px;">
-                <h5 class="title">
-                    <i class="fa fa-file-o" aria-hidden="true" style="color:#888888;"></i>&nbsp;
-                    <b style="color:#888888;">FOMULARIO</b>
-                </h5>
+            <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
+                <h5 class="title"><i class="fa fa-file-o" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">FOMULARIO</b></h5>
             </div>
             <div class="content card-body">
                 <table width="100%" class="table table-striped table-sm" style="margin-bottom:-5px;margin-top:-20px;"> 
@@ -317,11 +314,8 @@
         </div>
         
         <div class="card" id="card_logs_chat" style="margin-bottom: 5px">
-            <div class="header" style="margin-bottom: 9px;">
-                <h5 class="title">
-                    <i class="fa fa-weixin" aria-hidden="true" style="color:#888888;"></i>
-                    &nbsp;<b style="color:#888888;">&nbsp;MENSAJES</b>
-                </h5>
+            <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
+                <h5 class="title"><i class="fa fa-weixin" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">MENSAJES</b></h5>
             </div>
             <hr style="margin: 0px">
             <div id="body_chat" class="body_chat my_custom_scrollbar" style="padding:4px;">
@@ -385,11 +379,9 @@
 <script>
 $(document).ready(function(){
     star_collapse();
-    
     //star_mictrofono();
-
     <?php   if(count($data_bd[":C_CHAT_ANATOMIA"])>0){  ?>
-        update_mensajes_chat();
+        //update_mensajes_chat();
     <?php   }   ?> 
     <?php   if ($get_sala == 'analitica'){              ?>
         //console.error("etapa analitica ->   ",500);
@@ -432,11 +424,10 @@ $(document).ready(function(){
         }
     <?php   }   ?>
     <?php   if ($get_sala == 'sala_proceso'){ ?>
-        
         $("#calendar_inicio_sala_proceso,#calendar_final_sala_proceso").datetimepicker({
             format              :   'DD-MM-YYYY',
             //minDate           :   new Date(new Date().setDate((new Date().getDate())-(30))),
-            maxDate           :   new Date(),
+            maxDate             :   new Date(),
             locale              :   'es-us',
             icons               :   {
                                         time        :   "fa fa-clock-o"         ,
@@ -455,7 +446,7 @@ $(document).ready(function(){
         $(".selectpicker").selectpicker();
     <?php   }   ?>
     <?php   if ($get_sala == 'administrativo'){ ?>
-        console.log("load js administrativo");
+        //console.log("load js administrativo");
         $(".selectpicker").selectpicker();
         $(".row_calendar").datetimepicker({
             format              :   'DD-MM-YYYY',
@@ -483,9 +474,9 @@ $(document).ready(function(){
 
 <?php 
     function conversorSegundosHoras($tiempo_en_segundos) {
-        $horas              =   floor($tiempo_en_segundos/3600);
-        $minutos            =   floor(($tiempo_en_segundos-($horas*3600))/60);
-        $segundos           =   $tiempo_en_segundos-($horas * 3600)-($minutos*60);
+        $horas      =   floor($tiempo_en_segundos/3600);
+        $minutos    =   floor(($tiempo_en_segundos-($horas*3600))/60);
+        $segundos   =   $tiempo_en_segundos-($horas * 3600)-($minutos*60);
         return array("horas"=>$horas, "minutos"=> $minutos,"segundos"=>$segundos);
     }
 ?>

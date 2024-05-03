@@ -263,6 +263,28 @@
 </div>
 
 <section>
+
+    <div class="modal fade" id="modal_descipcion_muestras" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 95%; width: 95%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">SALA MACROSC&Oacute;PICA</b></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="html_descipcion_muestras"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-fill" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;CIERRA VENTANA (NO GRABA)
+                    </button>
+                    <button type="button" class="btn btn-success btn-fill" id="btn_graba_descipcion_muestras">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;TERMINO SALA DE MUESTRAS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="MODAL_FORMULARIO_ANALITICA">
         <div class="modal-dialog modal_xl_900">
         <div class="modal-content">
@@ -286,36 +308,6 @@
                         <div class="grid_modal_footer_btn3">
                             <button type="button" class="btn btn-success btn-fill" id="btn_finaliza_rce_anatomia" disabled>
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;FINALIZA&nbsp;REPORTE&nbsp;
-                            </button>
-                        </div>
-                        <div class="grid_modal_footer_btn4">
-                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                                <i class="fa fa-window-close" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal_descipcion_muestras">
-        <div class="modal-dialog modal_xl_900">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 style="margin: 0px 0px 0px 0px;">
-                        <b style="color:#e34f49">SALA MACROSC&Oacute;PICA</b>
-                    </h4>
-                </div>
-                <div class="modal-body" id="html_descipcion_muestras"></div>
-                <div class="modal-footer">
-                    <div class="grid_modal_footer_btn">
-                        <div class="grid_modal_footer_btn1">&nbsp;&nbsp;</div>
-                        <div class="grid_modal_footer_btn2">&nbsp;</div>
-                        <div class="grid_modal_footer_btn3">
-                            <button type="button" class="btn btn-success btn-fill" id="btn_graba_descipcion_muestras">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
                             </button>
                         </div>
                         <div class="grid_modal_footer_btn4">
