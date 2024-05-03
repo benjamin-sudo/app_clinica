@@ -1,22 +1,31 @@
+<?php $ID_SOLICITUD = $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"]; ?>
+
 <div class="lista_gestion_tecnologo">
-    <ul role="tablist" class="nav nav-tabs">
+    <ul class="nav nav-tabs" id="myTab">
         <?php if (count($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){ ?>
-            <li role="presentation">
-                <a href='#tabs_lista_muestras'                  data-toggle='tab'>&nbsp;<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] == 6 ?'LAMINAS 1 ':'MUESTRAS';?></a>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs_lista_muestras">
+                    &nbsp;<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] == 6 ? 'LAMINAS' : 'MUESTRAS'; ?>
+                </button>
             </li>
         <?php } ?>
         <?php if (count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0){ ?>
-            <li role="presentation">
-                <a href='#tabs_lista_citologia'                 data-toggle='tab'>&nbsp;CITOLOG&Iacute;A</a>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs_lista_citologia">&nbsp;CITOLOG&Iacute;A</button>
             </li>
-        <?php   } ?>
-        <li role="presentation"><a href='#tabs_informacion'     data-toggle='tab'>&nbsp;INFORMACI&Oacute;N</a></li>
-        <li role="presentation"><a href='#tabs_tecnicas'        data-toggle='tab'>&nbsp;TECNICAS</a></li>
-        <?php   if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] == 6  || $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] == 5){?>
-        <?php   }  else {  ?>
-        <li role="presentation" class="class_tabs_template" onclick="js_load_line_pdf(0,<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>)">
-            <a href="#tabs_pdf" data-toggle="tab"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+        <?php } ?>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs_informacion">&nbsp;INFORMACI&Oacute;N</button>
         </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs_tecnicas">&nbsp;T&Eacute;CNICAS</button>
+        </li>
+        <?php if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] != 6 && $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] != 5){ ?>
+            <li class="nav-item" onclick="js_load_line_pdf(0,<?php echo $ID_SOLICITUD;?>)">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs_pdf">
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                </button>
+            </li>
         <?php } ?>
     </ul>
     <div class="tab-content">
@@ -31,9 +40,11 @@
         </div>
         <div id="tabs_lista_citologia" class="tab-pane margin_panel_tabs">
             <?php   if(count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0)   {   ?>
-                <h5 style="margin-bottom:4px;">
+                
+                <h5 style="margin-bottom: 9px;margin-top: 16px;">
                     <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">CITOL&Oacute;GICAS</b>
                 </h5>
+
                 <?php   foreach($data_bd[":P_AP_MUESTRAS_CITOLOGIA"] as $i => $row){ ?>
                     <li style="padding: 0px"  data-toggle="collapse" data-parent="#accordion"  href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>"  class="list-group-item poiter lista_anatomia grupo_<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>"    data-NUM_TABS="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
                         <div class="grid_muestras_anatomia">
@@ -77,12 +88,9 @@
         <div id='tabs_lista_muestras' class='tab-pane margin_panel_tabs'>
             <div id="tecnicas_realizadas" data-prestacion="<?php echo htmlspecialchars(json_encode($data_bd[":P_TECNICAS_APLICADASXMUESTRA"]),ENT_QUOTES,'UTF-8');?>">
                 <?php if(count($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){ ?>
-                    <!--
-                    <h5 style="margin-bottom:4px;">
-                        <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">ANAT&Oacute;MICA</b>
+                    <h5 style="margin-bottom: 9px;margin-top: 16px;">
+                        <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">LISTADO DE MUESTRAS</b>
                     </h5>
-                    <hr style="margin:4px">
-                    -->
                 <?php
                     if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]['IND_USOCASSETTE'] == 1){?>
                         <?php 
@@ -193,7 +201,7 @@
         <div id="tabs_informacion" class="tab-pane margin_panel_tabs">
             <div class="panel_info_geneal_up">
                     <div class="panel_info_geneal_tec1">
-                        <div class="card" id="card_registro_medico4" style="margin-bottom:5px;padding:8px;">
+                        <div class="card" id="card_registro_medico4" style="margin-bottom:5px;padding:8px;margin-top: 15px;">
                             <h6 class="title" style="margin: 8px 0px 12px 0px;">
                                 <i style="color:#888888;" class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
                                 <b style="color:#888888;">INFORMACI&Oacute;N COMPLEMENTARIA</b>
@@ -449,8 +457,9 @@
     </div>
 </div>
 
-
-
-
-
+<script>
+    var myTab = document.getElementById('myTab');
+    var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
+    firstTab.show(); // Activar el primer tab al cargar la página
+</script>
 

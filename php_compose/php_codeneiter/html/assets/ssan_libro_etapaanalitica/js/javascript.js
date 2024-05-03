@@ -2851,8 +2851,8 @@ function js_inicia_sala_procesos(id_anatomia){
             date_fecha_star_salaproceso             :   $("#date_fecha_inicio_sala_proceso").val()+" "+$("#hrs_star_sala_proceso").val(),
             ind_proceso_sala                        :   $("#ind_tipo_proceso").val(),
         });
-        console.log("---------------------------------------------------------------------------");
-        console.log("obj_rce_anatomia           -> ",obj_rce_anatomia,"<-                       ");
+        //console.log("---------------------------------------------------------------------------");
+        //console.log("obj_rce_anatomia           -> ",obj_rce_anatomia,"<-                       ");
         //console.log("---------------------------------------------------------------------------");
         jPrompt('Con esta acci&oacute;n se proceder&aacute; a marcar el tiempo inicio en sala de proceso<br/><br/>&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if (r){
@@ -2877,7 +2877,6 @@ function js_inicia_sala_procesos(id_anatomia){
                                                             console.log("   return get_guardar_info_sala_proceso    ");
                                                             console.log("   ->",aData,"<-                           ");
                                                             console.log("-------------------------------------------");
-                                                            
                                                             $('#loadFade').modal('hide'); 
                                                             if(aData.status){
                                                                 jAlert("Se inici&oacute; tiempo en sala de proceso","Clinica Libre");
@@ -2906,16 +2905,12 @@ function js_inicia_sala_procesos(id_anatomia){
 
 function js_inicia_final_procesos(id_anatomia){
     var errores                                 =   [];
-    
     if ($("#date_fecha_final_sala_proceso").val()  ==='')  {   errores.push("&#8226;&nbsp;Fecha de final vacia");   }
     if ($("#hrs_end_sala_proceso").val()           ==='')  {   errores.push("&#8226;&nbsp;Hora final vacia");       }
-    
     if(errores.length === 0 )                   {
-        
         var obj_rce_anatomia                    =   { 
             form_star_sala_proceso              :   [],
         };
-    
         //TIME UNIX
         var date_inicio                         =   $("#date_fecha_inicio_sala_proceso").val()+" "+$("#hrs_star_sala_proceso").val();
         var date_final                          =   $("#date_fecha_final_sala_proceso").val()+" "+$("#hrs_end_sala_proceso").val();
@@ -2942,6 +2937,7 @@ function js_inicia_final_procesos(id_anatomia){
         //console.tabla("obj_rce_anatomia     ->  ",obj_rce_anatomia);
         jPrompt('Con esta acci&oacute;n se proceder&aacute; a marcar el tiempo <b>Final</b> en sala de proceso<br/><br/>&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if (r){
+                $('#loadFade').modal('show');
                 $.ajax({ 
                      type           :   "POST",
                      url            :   "ssan_libro_etapaanalitica/get_guardar_final_sala_proceso",
@@ -2953,12 +2949,13 @@ function js_inicia_final_procesos(id_anatomia){
                                             accesdata           :   obj_rce_anatomia,
                                             opcion              :   1,
                                         },
-                     error		:   function(errro){  
-                                                            console.log(errro.responseText); 
-                                                            jError("Error en el aplicativo","Clinica Libre");
-                                                        },
+                     error		:   function(errro) {  
+                                                        console.log(errro.responseText); 
+                                                        jError("Error en el aplicativo","Clinica Libre");
+                                                        $('#loadFade').modal('hide'); 
+                                                    },
                      success        :   function(aData) { 
-                         
+                                                            $('#loadFade').modal('hide'); 
                                                             console.log("---------------------------");
                                                             console.log("aData  ->  ",aData);
                                                             if(aData.status_fecha){
@@ -2971,9 +2968,9 @@ function js_inicia_final_procesos(id_anatomia){
                                                                     localStorage.setItem("ind_estapa_analitica",0);
                                                                     localStorage.setItem("num_fichae",null);
                                                                     localStorage.setItem("id_anatomia",id_anatomia);
-                                                                    localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                    //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                     localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                    $("#load_anuncios_anatomia_patologica").submit();
+                                                                    //$("#load_anuncios_anatomia_patologica").submit();
                                                                     
                                                                     update_etapaanalitica();
                                                                 } else {

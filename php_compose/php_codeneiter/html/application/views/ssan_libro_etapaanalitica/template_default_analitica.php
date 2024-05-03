@@ -138,7 +138,7 @@
                                     <br>
                                     <div id="calendar_inicio_sala_proceso" class="input-group row_calendar" style="width:140px;margin-right:10px;">
                                         <input id="date_fecha_inicio_sala_proceso" name="date_fecha_inicio_sala_proceso" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_DIA"];?>">
-                                        <span class="input-group-addon" style="cursor:pointer;cursor: pointer;margin-top: 6px;margin-left: 15px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                        <span class="input-group-addon" style="cursor:pointer;cursor:pointer;margin-top:6px;margin-left:15px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                     </div>
                                 </td>
                                 <td>
@@ -169,12 +169,12 @@
                                         <br>
                                         <div id="calendar_final_sala_proceso" class="input-group row_calendar" style="width:140px;margin-right:10px;">
                                             <input id="date_fecha_final_sala_proceso" name="date_fecha_final_sala_proceso" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_DIA_FINAL"];?>">
-                                            <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                            <span class="input-group-addon" style="cursor:pointer;margin-top: 6px;margin-left:15px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                         </div>
                                     </td>
                                     <td>
                                         <small><b style="color:#888888;">HORA</b></small><br>
-                                        <input style="width: 90px;" type="time" class="form-control input-sm" id="hrs_end_sala_proceso" name="hrs_end_sala_proceso" maxlength="5" size="5"  value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_HORA_FINAL"];?>">
+                                        <input style="width:100px;" type="time" class="form-control input-sm" id="hrs_end_sala_proceso" name="hrs_end_sala_proceso" maxlength="5" size="5" value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_HORA_FINAL"];?>">
                                     </td>
                                 </tr>
                             </table>

@@ -9,22 +9,13 @@ class Ssan_libro_salatecnologo extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->model("Ssan_libro_salatecnologo_model");
+        $this->load->model("Ssan_libro_etapaanalitica_model");
         $this->get_sala                 =   'sala_tecnologo';
         $this->txt_titulo               =   'SALA DE TECNICAS';
     }
     
     public function index(){
         $this->output->set_template('blank');
-        $data       =   [];
-        $this->load->css("assets/Ssan_libro_salatecnologo/css/styles.css");
-        $this->load->js("assets/Ssan_libro_salatecnologo/js/javascript.js");
-        $this->load->view('Ssan_libro_salatecnologo/Ssan_libro_salatecnologo_view',$data);
-    }
-
-
-    public function index(){
-        $this->output->set_template("theme_principal/lightboot");
         $arr_ids_anatomia               =   '';
         $arr_estados_filtro             =   '0';
         $var_fecha_inicio               =   date("d-m-Y");
@@ -63,7 +54,7 @@ class Ssan_libro_salatecnologo extends CI_Controller {
         }
         #var_dump($arr_ids_anatomia);
         #LOAD_ETAPA_ANALITICA
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
             "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "ind_opcion"                =>  $tipo_busqueda,
