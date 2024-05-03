@@ -67,19 +67,21 @@
                                     data-holder-rendered    =   "true" 
                                     style                   =   "width:64px;height:64px;"/>
                                 <hr style="margin:4px">
-
-                                <div class="grid_btn_image">
-                                    <div class="grid_btn_image1">
-                                        <a href="javascript:delete_img_x_main({img:'<?php echo $row['ID_IMAGEN'];?>',id:'<?php echo $row['ID_IMAGEN'];?>'})" id="img_<?php echo $row['ID_IMAGEN'];?>">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div class="grid_btn_image1">
+                                    <div class="grid_btn_image">
+                                        <div class="grid_btn_image1">
+                                            <a href="javascript:delete_img_x_main({img:'<?php echo $row['ID_IMAGEN'];?>',id:'<?php echo $row['ID_IMAGEN'];?>'})" id="img_<?php echo $row['ID_IMAGEN'];?>">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                        <div class="grid_btn_image1">
                                         <a href="javascript:down_img_x_main(<?php echo $row['ID_IMAGEN'];?>)">
                                             <i class="fa fa-cloud-download" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </div>
+
+                               
+
 
                             </div>
                         <?php } ?>
@@ -108,7 +110,7 @@
 </div>
 
 <div id="id_tabs_muestras_macroscopia">
-    <ul class="nav nav-tabs" style="cursor:pointer;">
+    <ul class="nav nav-tabs" style="cursor:pointer;" id="tabs_muestras_macroscopica">
         <li class="nav-item">
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#_anatomia_macroscopia"><i class="fa fa-th-list" aria-hidden="true"></i>&nbsp;MUESTRAS ANATOMIA</button>
         </li>
@@ -117,7 +119,7 @@
         </li>
     </ul>
     <div class="tab-content" style="">
-        <div id="_anatomia_macroscopia" class="tab-pane fade">
+        <div id="_anatomia_macroscopia" class="tab-pane fade ">
             <div class="card2" id="card_muestra_anatomicas" style="margin-bottom:5px;padding:8px;">
                 <h6 class="title" style="margin: 15px 0px 12px 0px;">
                     <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;
@@ -177,7 +179,7 @@
                                                                             </div>
                                                                     </div>
                                                                     <div class="grid_opcion_descripcion_muestra2" style="text-align: center;">
-                                                                        <div class="btn-group-vertical">
+                                                                        <div class="btn-group-vertical" style="display:none;">
                                                                             <button 
                                                                                 type            =   "button" 
                                                                                 class           =   "btn btn-success btn-xs btn-fill" 
@@ -231,12 +233,13 @@
                                                                         <label for="img_macro_a_'.$row_casete['ID_NMUESTRA'].'">
                                                                             <i class="fa fa-file-image-o fa-4x" aria-hidden="true" style=" width:100px;"></i>
                                                                         </label>
-                                                                        <input type      =   "file"
-                                                                            data-config  =   "'.$json.'"
-                                                                            id           =   "img_macro_a_'.$row_casete['ID_NMUESTRA'].'" 
-                                                                            name         =   "img_macro_a_'.$row_casete['ID_NMUESTRA'].'" 
-                                                                            onchange     =   "js_adjunto_ap_multiple(this.id,this.files);"
-                                                                            accept       =   "image/png,image/jpeg">
+                                                                        <input 
+                                                                            type        =   "file"
+                                                                            data-config =   "'.$json.'"
+                                                                            id          =   "img_macro_a_'.$row_casete['ID_NMUESTRA'].'" 
+                                                                            name        =   "img_macro_a_'.$row_casete['ID_NMUESTRA'].'" 
+                                                                            onchange    =   "js_adjunto_ap_multiple(this.id,this.files);"
+                                                                            accept      =   "image/png,image/jpeg">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -301,19 +304,18 @@
                                                 cols        =   "65" 
                                                 rows        =   "5" 
                                                 style       =   "width:100%;" 
-                                                maxlength   =   "4000"
-                                                ><?php echo $row['TXT_DESC_MACROSCOPICA'];?></textarea>
+                                                maxlength   =   "4000"><?php echo $row['TXT_DESC_MACROSCOPICA'];?></textarea>
                                             <div class="grid_texto_main_macroscopia">
                                                 <div class="grid_texto_main_macroscopia1">&nbsp;</div>
-                                                <div class="grid_texto_main_macroscopia2"></div>
-                                                <div class="grid_texto_main_macroscopia3"></div>
+                                                <div class="grid_texto_main_macroscopia2">&nbsp;</div>
+                                                <div class="grid_texto_main_macroscopia3">&nbsp;</div>
                                                 <div class="grid_texto_main_macroscopia4">
                                                     <i class="fa fa-stop-circle-o parpadea icon_grabando_<?php echo $row['ID_NMUESTRA'];?>" style="color:#FB404B;display:none" aria-hidden="true"></i>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="grid_opcion_descripcion_muestra2" style="text-align:center">
-                                            <div class="btn-group-vertical">
+                                            <div class="btn-group-vertical" style="display:none">
                                                 <button 
                                                     type            =   "button" 
                                                     class           =   "btn btn-success btn-xs btn-fill" 
@@ -387,12 +389,19 @@
                                                         style                   =   "width:64px;height:64px;"
                                                     >
                                                     <hr style="margin:2px">
-                                                    <a href="javascript:delete_img_x_muestra(<?php echo $row['ID_IMAGEN'];?>,<?php echo $row['ID_NMUESTRA'];?>,<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>)">
-                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="javascript:down_img_x_muestra(<?php echo $row['ID_IMAGEN'];?>)">
-                                                        <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                                                    </a>
+
+                                                    <div class="grid_btn_image">
+                                                        <div class="grid_btn_image1">
+                                                            <a href="javascript:delete_img_x_muestra(<?php echo $row['ID_IMAGEN'];?>,<?php echo $row['ID_NMUESTRA'];?>,<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>)">
+                                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="grid_btn_image1">
+                                                            <a href="javascript:down_img_x_muestra(<?php echo $row['ID_IMAGEN'];?>)">
+                                                                <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             <?php   }   ?>
                                         </div>
@@ -409,18 +418,20 @@
         </div>
         <div id="_anatomia_citologia" class="tab-pane fade">
             <div class="card2" id="card_muestra_citologica" style="margin-bottom:5px;padding:8px;">
-                <div class="grid_opcion_descripcion_muestra" style="margin-bottom:4px;margin-left:5px;">
-                    <div class="grid_opcion_descripcion_muestra4" style="text-align:left;">
-                        <h6  style="margin: 7px 0px 0px 0px;">
+                <div class="grid_opcion_descri_titulo">
+                    <div class="grid_opcion_descri_titulo1">
+                        <h6  style="margin: 7px 0px 10px 0px;">
                             <b style="color:#888888;">&#8226;&nbsp;DESCRIPCI&Oacute;N CITOLOG&Iacute;CA</b>
                         </h6>
                     </div>
-                    <div class="grid_opcion_descripcion_muestra5">&nbsp;</div>
-                    <div class="grid_opcion_descripcion_muestra6" style="text-align: end">
+                    <div class="grid_opcion_descri_titulo1">
                         <label for="ind_deshabilitar_macro_cito" class="pointer" style="color:#888888;">&nbsp;NO APLICA</label>
+                    </div>
+                    <div class="grid_opcion_descri_titulo1">
                         <input class="form-check-input pointer pointer" type="checkbox" style="display:initial" id="ind_deshabilitar_macro_cito" onclick="js_deshabilitar_txt_cito()" value="1"/>
                     </div>
                 </div>
+
                 <div style="text-align:center">
                     <?php if(count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0){ ?>
                         <ul class="list-group" id="ul_muestras" style="margin-bottom:0px;">
@@ -434,7 +445,7 @@
                                     <div class="grid_opcion_descripcion_muestra6">&nbsp;</div>
                                 </div>
                                 <hr style="margin:4px">
-                                <div class="grid_opcion_descripcion_muestra">
+                                <div class="grid_opcion_descripcion_muestra" style="">
                                     <div class="grid_opcion_descripcion_muestra1">
                                         <textarea 
                                             class       =   "form-control input-sm grupo_macro_textarea_citologia" 
@@ -455,7 +466,7 @@
                                         </div>
                                     </div>
                                     <div class="grid_opcion_descripcion_muestra2" style="text-align: center">
-                                        <div class="btn-group-vertical">
+                                        <div class="btn-group-vertical" style="display:none">
                                             <button 
                                                 type            =   "button" 
                                                 class           =   "btn btn-success btn-xs btn-fill grupo_macro_microfono_citologia" 

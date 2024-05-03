@@ -7,14 +7,13 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     var $tableSpace     =   "ADMIN";
     var $own            =   "ADMIN";
     var $ownGu          =   "ADMIN";
+    var $ownPab         =   "ADMIN";
 
     public function __construct(){
         parent::__construct();
         $this->db = $this->load->database('oracle_conteiner',true);
     }
-    ##############
-    #CONSULTA_MAIN
-    ##############
+
     public function load_etapa_analiticaap($DATA){
         $this->db->trans_start();
         $_boreano_out                           =   true;
@@ -1367,8 +1366,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
     
     public function subir_imagenprotoclo_ap_x_muestra($aData){
-        $blob                       =   oci_new_descriptor($this->db->conn_id,OCI_D_LOB);
-        $blob->writeTemporary(file_get_contents($_FILES["IMG_PROTOCOLO"]["tmp_name"]));
+        $base64_string = $_POST['IMG_PROTOCOLO_BASE64'];    // Recuperar la cadena base64
+        $blob = oci_new_descriptor($this->db->conn_id, OCI_D_LOB);
+        $blob->writeTemporary($base64_string);              // Escribir los datos decodificados en un descriptor LOB
         $ID_IMAGEN                  =   '';
         $param                      =   array(
                                             array( 
@@ -1564,12 +1564,28 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             "DATE_AUDITA"               =>  'SYSDATE',
         ));
         $this->db->trans_complete();
-        return array('status'           =>  true);
+        return array('status' => true);
     }
     
+    
     public function sqlvalidaclave($clave){
-        return $this->db->query("SELECT U.ID_UID, U.USERNAME, U.NAME, U.MIDDLE_NAME, U.LAST_NAME FROM $this->ownGu.FE_USERS U WHERE TO_CHAR(U.TX_INTRANETSSAN_CLAVEUNICA) = '".strtolower($clave)."'")->result_array();
+        $this->dbSession = $this->load->database('session', true); 
+        $sql = "SELECT
+                    ID_UID,
+                    USERNAME,
+                    NAME,
+                    MIDDLE_NAME,
+                    LAST_NAME,
+                    TELEPHONE,
+                    EMAIL
+                FROM 
+                    ADMIN.FE_USERS
+                WHERE 
+                    TX_INTRANETSSAN_CLAVEUNICA = ? AND DISABLE = 0";
+        $query = $this->dbSession->query($sql,array($clave));
+        return $query->result_array();
     }
+
     
     public function load_sala_proceso($data){
         $this->db->trans_start();

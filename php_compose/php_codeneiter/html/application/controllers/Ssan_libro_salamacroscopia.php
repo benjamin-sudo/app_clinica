@@ -76,20 +76,11 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
         $this->load->js("assets/ssan_libro_etapaanalitica/js/javascript.js");
         #WEB SOCKET
         #$this->load->js("assets/themes/wsocket_io/2_3_0/socket.io.dev.js");
-        #$this->load->js("assets/ssan_libro_biopsias_listaexterno1/js/ws_anatomiap_envio_a_recepcion.js");
+        $this->load->js("assets/ssan_libro_etapaanalitica/js/ws_anatomiap_envio_a_recepcion.js");
         #AUTOSIZE BETA
         #$this->load->js("assets/ssan_libro_etapaanalitica/js/autosize.js");
         #HTML OUT
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
-
-    public function index_old(){
-        $this->output->set_template('blank');
-        $data  = [];
-        #$this->load->css("assets/Ssan_libro_salamacroscopia/css/styles.css");
-        #$this->load->js("assets/Ssan_libro_salamacroscopia/js/javascript.js");
-        $this->load->view('Ssan_libro_salamacroscopia/Ssan_libro_salamacroscopia_view',$data);
-    }
-
 }
 ?>

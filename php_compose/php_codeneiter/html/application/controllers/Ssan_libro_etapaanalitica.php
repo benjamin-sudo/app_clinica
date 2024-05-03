@@ -6,9 +6,11 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_libro_etapaanalitica_model");
+        $this->get_sala                 =   'analitica';
+        $this->txt_titulo               =   'ETAPA ANALITICA';
     }
     
-    public function index(){
+    public function index_old(){
         $this->output->set_template('blank');
         $data = [];
         $this->load->css("assets/Ssan_libro_etapaanalitica/css/styles.css");
@@ -16,8 +18,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $this->load->view('Ssan_libro_etapaanalitica/Ssan_libro_etapaanalitica_view',$data);
     }
 
-    public function index_old(){
-        $this->output->set_template("theme_principal/lightboot");
+    public function index(){
+         $this->output->set_template('blank');
         $arr_ids_anatomia               =   '';
         $arr_estados_filtro             =   '0';
         $var_fecha_inicio               =   date("d-m-Y");
@@ -77,7 +79,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $this->load->js("assets/ssan_libro_etapaanalitica/js/javascript.js");
         #WEB SOCKET
         #$this->load->js("assets/themes/wsocket_io/2_3_0/socket.io.dev.js");
-        $this->load->js("assets/ssan_libro_biopsias_listaexterno1/js/ws_anatomiap_envio_a_recepcion.js");
+        $this->load->js("assets/ssan_libro_etapaanalitica/js/ws_anatomiap_envio_a_recepcion.js");
         #AUTOSIZE BETA
         #$this->load->js("assets/ssan_libro_etapaanalitica/js/autosize.js");
         #HTML OUT
@@ -1299,14 +1301,14 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     #finalizacion de rce
     public function finaliza_reporte_anatomia_patologica(){
         if(!$this->input->is_ajax_request()){ show_404(); }  
-        $status_contrasena      =   true;
-        $status                 =   true;
-        $return                 =   [];
-        $accesdata              =   $this->input->post('accesdata');
-        $id_anatomia            =   $this->input->post('id_anatomia');
-        $id_salida              =   $this->input->post('id_salida');
-        $contrasena             =   $this->input->post('contrasena'); 
-        $arr_user               =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $status_contrasena              =   true;
+        $status                         =   true;
+        $return                         =   [];
+        $accesdata                      =   $this->input->post('accesdata');
+        $id_anatomia                    =   $this->input->post('id_anatomia');
+        $id_salida                      =   $this->input->post('id_salida');
+        $contrasena                     =   $this->input->post('contrasena'); 
+        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0)  {
             $return             =   $this->Ssan_libro_etapaanalitica_model->guardado_anatomia_patologica(array( 
                 'accesdata'     =>  $accesdata,
@@ -1318,9 +1320,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $status_contrasena  =   false;
         }
         $this->output->set_output(json_encode(array(
-            'status_pass'       =>  $status_contrasena,
-            'status'            =>  $status,
-            'return'            =>  $return,
+            'status_pass'               =>  $status_contrasena,
+            'status'                    =>  $status,
+            'return'                    =>  $return,
         )));
     }
     
@@ -1360,7 +1362,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $array_main                     =   $this->input->post('array_main');
         $id_anatomia                    =   $this->input->post('id_anatomia');
         $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
-        if(count($arr_user)>0)          {
+        if(count($arr_user)>0){
             $return                     =   $this->Ssan_libro_etapaanalitica_model->get_informe_macroscopica(array( 
                 'array_main'            =>  $array_main,
                 'accesdata'             =>  $accesdata,

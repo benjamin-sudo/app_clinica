@@ -856,7 +856,7 @@ function js_elimina_plantilla(num_plantilla){
                                                             }, 
             }); 
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
         }
     });
 }
@@ -937,7 +937,7 @@ function js_crea_nueva_plantilla(num_muestras){
                                                                 }, 
                 }); 
             } else {
-                jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+                jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
     }
@@ -1948,7 +1948,7 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                                             }, 
                 });
             } else {
-                jError("Firma simple vac&iacute;a","Error - ESSISAN");
+                jError("Firma simple vac&iacute;a","Error - Clinica Libre");
                 return false;
             }
         });
@@ -2309,84 +2309,59 @@ function js_update_img(id_anatomia){
    });
 }
 
-//administrador de imagenes a la muestras o casete individual
-function js_adjunto_ap_multiple(id,archivos){
-    var ind_zona                    =   $("#"+id).data('config').ind_zona;
-    var return_div                  =   $("#"+id).data('config').return_div2;
-    var tipo_muestra                =   $("#"+id).data('config').tipo_muestra; 
-    var id_anatomia                 =   $("#"+id).data('config').id_anatomia; 
-    var id_muestra                  =   $("#"+id).data('config').id_muestra; 
-    var id_casete                   =   $("#"+id).data('config').id_casete; 
-    /*
-    console.log("---------------------------------------------------------------");
-    console.log("id                 ->",id,"<-                                  ");
-    console.log("archivos           ->",archivos,"<-                            ");
-    console.log("ind_zona           ->",ind_zona,"<-                            ");
-    console.log("return_div         ->",return_div,"<-                          ");
-    console.log("id_anatomia        ->",id_anatomia,"<-                         ");
-    console.log("id_muestra         ->",id_muestra,"<-                          ");
-    console.log("id_casete          ->",id_casete,"<-                           ");
-    console.log("tipo_muestra       ->",tipo_muestra,"<-                        ");
-    console.log("---------------------------------------------------------------");
-    */
-    var navegador                   =   window.URL||window.webkitURL;
-    var size                        =   archivos[0].size; //MEGABYTE
-    var type                        =   archivos[0].type;
-    var name                        =   archivos[0].name;
-    var mg_1                        =   (1024*1024);
-    if(size>mg_1){
-        jError("El archivo "+name+" supera el m&aacute;ximo permitido "+mg_1+". Kb -> "+size+" Kb. " ,"e-SISSAN - ANATOM&Iacute;A PATOL&Oacute;GICA");
+function js_adjunto_ap_multiple(id, archivos) {
+    var config = $("#" + id).data('config');
+    var navegador = window.URL || window.webkitURL;
+    var archivo = archivos[0];
+
+    if (archivo.size > 1024 * 1024) { // 1MB
+        jError("El archivo " + archivo.name + " supera el máximo permitido de 1MB", "e-SISSAN - ANATOMÍA PATOLÓGICA");
         return false;
-    } else if(type!='image/jpeg' && type != 'image/jpg' && type != 'image/png' && type != 'image/gif'){
-        jAlert("El archivo "+name+" no es del tipo de imagen permitida.","LISTA DE ERRORES");
+    } else if (!['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(archivo.type)) {
+        jAlert("El archivo " + archivo.name + " no es del tipo de imagen permitida.", "LISTA DE ERRORES");
         return false;
-    } else {
-            var formData            =   new FormData();
-            var reader              =   new FileReader();
-            reader.onloadend        =   function(){
-                const blob          =   new Blob([reader.result],{type:"image/jpeg"});
-                formData.append("IMG_PROTOCOLO",blob,name);
-                formData.append("ID_ANATOMIA",id_anatomia);
-                formData.append("id_muestra",id_muestra);
-                formData.append("id_casete",id_casete);
-                formData.append("ind_zona",ind_zona);
-                formData.append("tipo_muestra",tipo_muestra);
-                //console.log("formData->",formData);
-                fetch('ssan_libro_etapaanalitica/gestor_imagenes_x_muestras',{
-                    method          :   "POST",
-                    body            :   formData,
-                }).then(function(response){
-                    console.log("response           ->",response);
-                    return response.json();
-                }).then(function(return_bd){
-                    var ID_IMG      =   return_bd["ID_IMAGEN"]["RETURN_CURSOR"][0].ID_IMAGE;
-                    var objeto_url  =   navegador.createObjectURL(archivos[0]);
-                    var txt         =   '<div class="card" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">'+
-                                            '<img '+
-                                                'alt                     =  "64x64" '+
-                                                'class                   =  "img-thumbnail" '+
-                                                'data-src                =  "64x64" '+
-                                                'src                     =  "'+objeto_url+'" '+ 
-                                                'data-holder-rendered    =  "true" '+
-                                                'style                   =  "width:64px;height:64px;" '+
-                                            '>'+
-                                            '<hr style="margin:2px">'+
-                                            '<a href="javascript:delete_img_x_muestra('+ID_IMG+','+id_muestra+','+id_anatomia+')">'+
-                                                '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
-                                            '</a>'+
-                                            '<a href="javascript:down_img_x_muestra('+ID_IMG+')">'+
-                                                '<i class="fa fa-cloud-download" aria-hidden="true"></i>'+
-                                            '</a>'+
-                                        '</div>';
-                    $("#"+return_div).html('').html(txt);
-                }).catch(function(err){  
-                    console.log('Error:', err);  
-                    jError("error al subir imagen","e-SISSAN");
-                });
-            };
-            reader.readAsDataURL(archivos[0]);//base_64
     }
+    var formData = new FormData();
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        const base64String = reader.result;
+        formData.append("IMG_PROTOCOLO_BASE64", base64String);
+        formData.append("ID_ANATOMIA", config.id_anatomia);
+        formData.append("id_muestra", config.id_muestra);
+        formData.append("id_casete", config.id_casete);
+        formData.append("ind_zona", config.ind_zona);
+        formData.append("tipo_muestra", config.tipo_muestra);
+        fetch('ssan_libro_etapaanalitica/gestor_imagenes_x_muestras', {
+            method : "POST",
+            body : formData,
+        }).then(response => response.json())
+        .then(return_bd => {
+            const ID_IMG = return_bd["ID_IMAGEN"]["RETURN_CURSOR"][0].ID_IMAGE;
+            const objeto_url = navegador.createObjectURL(archivo);
+            var html = `
+                <div class="card" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">
+                    <img alt="64x64" class="img-thumbnail" src="${objeto_url}" style="width:64px;height:64px;">
+                    <hr style="margin:2px">
+                    
+                    <a href="javascript:delete_img_x_muestra(${ID_IMG}, ${config.id_muestra}, ${config.id_anatomia})">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                    
+                    <a href="javascript:down_img_x_muestra(${ID_IMG})">
+                        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                    </a>
+
+
+                </div>`;
+            $("#" + config.return_div).html(html);
+        }).catch(err => {
+            console.error('Error:', err);
+            jError("error al subir imagen", "e-SISSAN");
+        });
+    };
+    reader.readAsDataURL(archivo); // base64
 }
+
 
 
 function delete_img_x_muestra(ID_IMG,ID_MUESTRA,ID_SOLICITUD){
@@ -2568,7 +2543,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
     }
     //**************************************************************************
     $(".lista_anatomia").each(function(index,value){
-        console.log(index,value);
+        //console.log(index,value);
         $("#txt_descipcion_"+value.id).val() == '' ? error.push({ txt : "Descripci&oacute;n Macroscopia N&deg; "+ value.id +" vacia" , value : "#txt_descipcion_"+value.id }) : '';
         array_nmuestras.push({
             "tipo"  :   "muestra",
@@ -2584,7 +2559,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
             "txt"   :   $("#txt_descipcion_"+value.id).val(),
         });
     });
-    console.log("array_nmuestras                ->  ",array_nmuestras,"<-       ");
+    //console.log("array_nmuestras                ->  ",array_nmuestras,"<-       ");
     //descripcion macro de citologia
     var booreane        =   document.getElementById("ind_deshabilitar_macro_cito").checked;
     console.log("booreane   ->  no aplica para citologia o talvez si    <-  " , booreane);
@@ -2604,49 +2579,50 @@ function js_guarda_descripcion_muestras(id_anatomia){
     if(error.length === 0 ){
         jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r) {
+                    $('#loadFade').modal('hide'); 
                     $.ajax({ 
                         type		:   "POST",
                         url 		:   "ssan_libro_etapaanalitica/get_informr_macroscopica",
-                        dataType        :   "json",
-                        data            :   {
-                                                id_anatomia     :   id_anatomia,
-                                                contrasena      :   r,
-                                                array_main      :   array_main,
-                                                accesdata       :   array_nmuestras,
-                                            },
+                        dataType    :   "json",
+                        data        :   {
+                                            id_anatomia     :   id_anatomia,
+                                            contrasena      :   r,
+                                            array_main      :   array_main,
+                                            accesdata       :   array_nmuestras,
+                                        },
                         error		:   function(errro)     {  
-                                                                    console.log(error);
-                                                                    console.log(errro.responseText); 
-                                                                    jError("Error en el aplicativo","Clinica Libre"); 
-                                                                },
-                        success        :   function(aData)     { 
-                                                                    console.log("->",aData,"<-");
-                                                                    if(aData.status){
-                                                                        $("#modal_descipcion_muestras").modal("hide");
-                                                                        
-                                                                        localStorage.setItem("ind_tipo_mensaje",2);
-                                                                        localStorage.setItem("ind_estapa_analitica",0);
-                                                                        localStorage.setItem("num_fichae",null);
-                                                                        localStorage.setItem("id_anatomia",id_anatomia);
-                                                                        localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
-                                                                        localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                        $("#load_anuncios_anatomia_patologica").submit();
-                                                                        
-                                                                        update_etapaanalitica();
-                                                                        jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
-                                                                            if(r){
-                                                                                js_pdf_macroscopia(0,id_anatomia);
-                                                                            } else {
-                                                                                //console.log("-> DIJO NO PDF <-");
-                                                                            }
-                                                                        });
-                                                                    } else {
-                                                                        jError("Error en la firma simple","Clinica Libre");
-                                                                    }
-                                                                }, 
+                                                                console.log(error);
+                                                                console.log(errro.responseText); 
+                                                                $('#loadFade').modal('hide'); 
+                                                                jError("Error en el aplicativo","Clinica Libre"); 
+                                                            },
+                        success     :   function(aData)     { 
+                                                                console.log("   aData   ->  ",aData);
+                                                                $('#loadFade').modal('hide');     
+                                                                if(aData.status){
+                                                                    $("#modal_descipcion_muestras").modal("hide");
+                                                                    localStorage.setItem("ind_tipo_mensaje",2);
+                                                                    localStorage.setItem("ind_estapa_analitica",0);
+                                                                    localStorage.setItem("num_fichae",null);
+                                                                    localStorage.setItem("id_anatomia",id_anatomia);
+                                                                    localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                    localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
+                                                                    //$("#load_anuncios_anatomia_patologica").submit();
+                                                                    update_etapaanalitica();
+                                                                    jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+                                                                        if(r){
+                                                                            //js_pdf_macroscopia(0,id_anatomia);
+                                                                        } else {
+                                                                            //console.log("-> DIJO NO PDF <-");
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    jError("Error en la firma simple","Clinica Libre");
+                                                                }
+                                                            }, 
                      });
             } else {
-                jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+                jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
     } else {
@@ -2880,45 +2856,47 @@ function js_inicia_sala_procesos(id_anatomia){
         //console.log("---------------------------------------------------------------------------");
         jPrompt('Con esta acci&oacute;n se proceder&aacute; a marcar el tiempo inicio en sala de proceso<br/><br/>&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if (r){
+                    $('#loadFade').modal('show'); 
                     $.ajax({ 
                          type		:   "POST",
                          url 		:   "ssan_libro_etapaanalitica/get_guardar_info_sala_proceso",
-                         dataType       :   "json",
-                         data           :   {
-                                                contrasena          :   r,
-                                                id_anatomia         :   id_anatomia,
-                                                accesdata           :   obj_rce_anatomia,
-                                                opcion              :   1,
-                                            },
+                         dataType   :   "json",
+                         data       :   {
+                                            contrasena          :   r,
+                                            id_anatomia         :   id_anatomia,
+                                            accesdata           :   obj_rce_anatomia,
+                                            opcion              :   1,
+                                        },
                          error		:   function(errro){  
-                                                                console.log(errro.responseText); 
-                                                                jError("Error en el aplicativo","Clinica Libre");
-                                                            },
-                         success        :   function(aData) { 
-                                                                console.log("-------------------------------------------");
-                                                                console.log("   return get_guardar_info_sala_proceso    ");
-                                                                console.log("   ->",aData,"<-                           ");
-                                                                console.log("-------------------------------------------");
-                                                                if(aData.status){
-                                                                    jAlert("Se inici&oacute; tiempo en sala de proceso","Clinica Libre");
-                                                                    $("#modal_star_sala_proceso").modal('hide');
-                                                                    
-                                                                    localStorage.setItem("ind_tipo_mensaje",3);
-                                                                    localStorage.setItem("ind_estapa_analitica",0);
-                                                                    localStorage.setItem("num_fichae",null);
-                                                                    localStorage.setItem("id_anatomia",id_anatomia);
-                                                                    localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
-                                                                    localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                    $("#load_anuncios_anatomia_patologica").submit();
-                                                                    
-                                                                    update_etapaanalitica();
-                                                                } else {
-                                                                    jError("Error Firma simple","Clinica Libre");
-                                                                }
-                                                            }, 
+                                                            console.log(errro.responseText); 
+                                                            jError("Error en el aplicativo","Clinica Libre");
+                                                            $('#loadFade').modal('hide'); 
+                                                        },
+                         success    :   function(aData) { 
+                                                            console.log("-------------------------------------------");
+                                                            console.log("   return get_guardar_info_sala_proceso    ");
+                                                            console.log("   ->",aData,"<-                           ");
+                                                            console.log("-------------------------------------------");
+                                                            
+                                                            $('#loadFade').modal('hide'); 
+                                                            if(aData.status){
+                                                                jAlert("Se inici&oacute; tiempo en sala de proceso","Clinica Libre");
+                                                                $("#modal_star_sala_proceso").modal('hide');
+                                                                localStorage.setItem("ind_tipo_mensaje",3);
+                                                                localStorage.setItem("ind_estapa_analitica",0);
+                                                                localStorage.setItem("num_fichae",null);
+                                                                localStorage.setItem("id_anatomia",id_anatomia);
+                                                                //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
+                                                                //$("#load_anuncios_anatomia_patologica").submit();
+                                                                update_etapaanalitica();
+                                                            } else {
+                                                                jError("Error Firma simple","Clinica Libre");
+                                                            }
+                                                        }, 
                     });
             } else {
-                jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+                jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
     } else {
@@ -3007,7 +2985,7 @@ function js_inicia_final_procesos(id_anatomia){
                                                         }, 
                 });
             } else {
-                jError("firma simple vac&iacute;a","Error - ESSISAN"); 
+                jError("firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
     } else {
