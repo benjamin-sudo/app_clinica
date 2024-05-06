@@ -2093,6 +2093,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "empresa"                   =>  $empresa,
             "op"                        =>  $op,
         ));
+
         $this->output->set_output(json_encode(array(
             'status'                    =>  $status,
             'return_bd'                 =>  $data_produccion,

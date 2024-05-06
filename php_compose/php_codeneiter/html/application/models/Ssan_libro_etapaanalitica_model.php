@@ -25,7 +25,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $_boreano_out                   =   false;
             } else {
                 $DATA["arr_ids_anatomia"]       =   implode(",", array_unique(explode(",",$DATA["arr_ids_anatomia"]))) ;
-              //  var_dump(    );
+                #var_dump();
             }
         }
         #_panel_por_gestion
@@ -1140,7 +1140,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->update($this->ownPab.'.PB_TPRESTAXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
         if(isset($hispatologico["arr_prestaciones"])){
             foreach($hispatologico["arr_prestaciones"][0] as $i => $row_prestaciones){
-                $arr_return      =   $this->db->query("SELECT A.ID_TPRESTAXANATOMIA FROM PABELLON.PB_TPRESTAXANATOMIA A WHERE A.COD_PRESTA IN('".$row_prestaciones."') AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return      =   $this->db->query("SELECT A.ID_TPRESTAXANATOMIA FROM $this->ownPab.PB_TPRESTAXANATOMIA A WHERE A.COD_PRESTA IN('".$row_prestaciones."') AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TPRESTAXANATOMIA',$arr_return[0]["ID_TPRESTAXANATOMIA"]); 
                     $this->db->update($this->ownPab.'.PB_TPRESTAXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
@@ -1163,7 +1163,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->update($this->ownPab.'.PB_TORGANOXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
         if(isset($hispatologico["arr_organos"])){
             foreach($hispatologico["arr_organos"][0] as $i => $arr_organos){
-                $arr_return                         =   $this->db->query("SELECT A.ID_TORGANOXANATOMIA FROM PABELLON.PB_TORGANOXANATOMIA A WHERE A.ID_ORGANO_AP IN($arr_organos) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return                         =   $this->db->query("SELECT A.ID_TORGANOXANATOMIA FROM $this->ownPab.PB_TORGANOXANATOMIA A WHERE A.ID_ORGANO_AP IN($arr_organos) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TORGANOXANATOMIA',$arr_return[0]["ID_TORGANOXANATOMIA"]); 
                     $this->db->update($this->ownPab.'.PB_TORGANOXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
@@ -1185,7 +1185,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->update($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
         if(isset($hispatologico["arr_patologias"])){
             foreach($hispatologico["arr_patologias"][0] as $i => $arr_patologia){
-                $arr_return                         =   $this->db->query("SELECT A.ID_TPATOLOGIAXANATOMIA FROM PABELLON.PB_TPATOLOGIAXANATOMIA A WHERE A.ID_PATOLOGIA_AP IN ($arr_patologia) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return                         =   $this->db->query("SELECT A.ID_TPATOLOGIAXANATOMIA FROM $this->ownPab.PB_TPATOLOGIAXANATOMIA A WHERE A.ID_PATOLOGIA_AP IN ($arr_patologia) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TPATOLOGIAXANATOMIA',$arr_return[0]["ID_TPATOLOGIAXANATOMIA"]); 
                     $this->db->update($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
@@ -1208,7 +1208,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->update($this->ownPab.'.PB_TPRESTACIONXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
         if(isset($hispatologico["arr_fonasa"])){
             foreach($hispatologico["arr_fonasa"][0] as $i => $arr_fonasa){
-                $arr_return     =   $this->db->query("SELECT A.ID_TPRESTACIONXANATOMIA FROM PABELLON.PB_TPRESTACIONXANATOMIA A WHERE A.COD_PRESTACION IN ($arr_fonasa) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return     =   $this->db->query("SELECT A.ID_TPRESTACIONXANATOMIA FROM $this->ownPab.PB_TPRESTACIONXANATOMIA A WHERE A.COD_PRESTACION IN ($arr_fonasa) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TPRESTACIONXANATOMIA',$arr_return[0]["ID_TPRESTACIONXANATOMIA"]); 
                     $this->db->update($this->ownPab.'.PB_TPRESTACIONXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
@@ -1261,7 +1261,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 P.ID_SOLICITUD_HISTO, 
                 P.ID_UID
             FROM 
-                PABELLON.PB_TCHATANATOMIA       P,
+                $this->ownPab.PB_TCHATANATOMIA       P,
                 GUADMIN.FE_USERS                G
             WHERE 
                 P.ID_SOLICITUD_HISTO IN (".$aData["id_anatomia"].") 
@@ -1766,7 +1766,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $id_anatomia                        =   $row["ap"];
                 $id_muestra                         =   $row["id"];
                 foreach($row["txt"] as $x => $id_tecnica){
-                    $arr_return                     =   $this->db->query("SELECT A.ID_TECNICAXMUES FROM PABELLON.PB_MUESTRAXTECNICA A WHERE A.ID_NMUESTRA IN($id_muestra) AND A.ID_TECNICA_AP IN ($id_tecnica)")->result_array();
+                    $arr_return                     =   $this->db->query("SELECT A.ID_TECNICAXMUES FROM $this->ownPab.PB_MUESTRAXTECNICA A WHERE A.ID_NMUESTRA IN($id_muestra) AND A.ID_TECNICA_AP IN ($id_tecnica)")->result_array();
                     if(count($arr_return)>0){
                         $this->db->where('ID_TECNICAXMUES',$arr_return[0]['ID_TECNICAXMUES']); 
                         $this->db->update($this->ownPab.'.PB_MUESTRAXTECNICA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$data["session"],"DATE_AUDITA"=>"SYSDATE"));

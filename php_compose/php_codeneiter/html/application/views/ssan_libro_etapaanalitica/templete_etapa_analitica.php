@@ -1,22 +1,32 @@
+<?php 
+    $ID_SOLICITUD   =   $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
+    $NUM_FICHAE     =   $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_FICHAE"];
+?>
 
-<ul role="tablist" class="nav nav-tabs tabs_main_rce_patologo">
-    <li role="presentation"><a href="#pabel_principal"                  data-toggle="tab"><i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;RCE</a></li>
-    <li role="presentation"><a href="#panel_prestaciones"               data-toggle="tab"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;PRESTACIONES</a></li>
-    <li role="presentation"><a href="#panel_muestras"                   data-toggle="tab"><i class="fa fa-columns" aria-hidden="true"></i>&nbsp;MICROSC&Oacute;PICA</a></li>
-    <li role="presentation"><a href="#registro_administrativo"          data-toggle="tab"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;ADMINISTRATIVO</a></li>
-    <!--
-    &nbsp;MODULO ANATOMIA
-    <li role="presentation"><a href="#registro_tecnologo"               data-toggle="tab"><i class="fa fa-hospital-o" aria-hidden="true"></i>&nbsp;TECN. MEDICO</a></li>
-    -->
-    <li role="presentation" class="class_tabs_template" onclick="js_load_line_pdf(0,<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>)"><a href="#tabs_pdf" data-toggle="tab"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></li>
-    <!--&nbsp;HISTORIA CLINICA-->
-    <li role="presentation" id="li_histo_clinico"       onclick="js_views_historial_clinico_(<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_FICHAE"];?>)">
-        <a href="#historial_clinico" data-toggle="tab" >
+<ul class="nav nav-tabs" id="tabs_rce_analitica" role="tablist">
+    <li class="nav-item" role="tab">
+        <a class="nav-link active" id="rce-tab" data-bs-toggle="tab" href="#pabel_principal" role="tab" aria-controls="pabel_principal" aria-selected="true"><i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;RCE</a>
+    </li>
+    <li class="nav-item" role="tab">
+        <a class="nav-link" id="prestaciones-tab" data-bs-toggle="tab" href="#panel_prestaciones" role="tab" aria-controls="panel_prestaciones" aria-selected="false"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;PRESTACIONES</a>
+    </li>
+    <li class="nav-item" role="tab">
+        <a class="nav-link" id="microscopica-tab" data-bs-toggle="tab" href="#panel_muestras" role="tab" aria-controls="panel_muestras" aria-selected="false"><i class="fa fa-columns" aria-hidden="true"></i>&nbsp;MICROSC&Oacute;PICA</a>
+    </li>
+    <li class="nav-item" role="tab">
+        <a class="nav-link" id="administrativo-tab" data-bs-toggle="tab" href="#registro_administrativo" role="tab" aria-controls="registro_administrativo" aria-selected="false"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;ADMINISTRATIVO</a>
+    </li>
+    <li class="nav-item" onclick="js_load_line_pdf(0,<?php echo $ID_SOLICITUD;?>)" role="tab">
+        <a class="nav-link" id="pdf-tab" data-bs-toggle="tab" href="#tabs_pdf" role="tab" aria-controls="tabs_pdf" aria-selected="false"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+    </li>
+    <li class="nav-item" id="li_histo_clinico" onclick="js_views_historial_clinico_(<?php echo $NUM_FICHAE;?>)" role="tab">
+        <a class="nav-link" href="#historial_clinico" data-bs-toggle="tab" role="tab" aria-controls="historial_clinico" aria-selected="false">
             <i class="fa fa-heartbeat" aria-hidden="true"></i>
         </a>
     </li>
-    <!--&nbsp;HISTORIA CLINICA-->
-    <li role="presentation"><a href="#add_archivos_ap"                  data-toggle="tab"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a></li>
+    <li class="nav-item" role="tab">
+        <a class="nav-link" id="archivos-ap-tab" data-bs-toggle="tab" href="#add_archivos_ap" role="tab" aria-controls="add_archivos_ap" aria-selected="false"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+    </li>
 </ul>
 
 <div class="tab-content">
@@ -26,18 +36,15 @@
             <div class="panel_vistas_pdf2">&nbsp;</div>
             <div class="panel_vistas_pdf3">&nbsp;</div>
         </div>
+        <br>
         <hr style="margin: 0px">
+        
         <div id="line_pdf_microscopia"></div>
+
     </div>
-    <div id="pabel_principal" class="tab-pane margin_panel_tabs">
-        <!--
-        <div class="panel_microscopia_head">
-            <div class="panel_microscopia_head1"><h4 style="margin: 4px;"><b style="color:#e34f49;">&raquo;&nbsp;INFORMACI&Oacute;N PATOLOGO</b></h4></div>
-            <div class="panel_microscopia_head2"></div>
-            <div class="panel_microscopia_head3" style="text-align: end" id="viwes_estado_microscopia">&nbsp;</div>
-        </div>
-        <hr style="margin: 0px 0px 5px 0px">
-        -->
+    
+    <div id="pabel_principal" class="tab-pane margin_panel_tabs active">
+      
         <div class="panel_info_geneal">
             <div class="panel_info_geneal1_left">
                 
@@ -526,6 +533,7 @@
     </div>
     
     <div id="add_archivos_ap" class="tab-pane margin_panel_tabs"> 
+        <br>
         <?php echo $this->load->view("ssan_libro_etapaanalitica/html_views_imagenes_micro",[],true);  ?>
     </div>
     
@@ -1292,6 +1300,7 @@
             grid-template-columns               :   repeat(2,1fr);
             grid-column-gap                     :   5px;
             grid-row-gap                        :   5px;
+            margin-top                          :   14px;
         }
     <?php } else { ?>
         <?php echo $conf_panel_muestras         == 0 ? '.panel_body_muestras1   {   display:none;  }':''; ?>
@@ -1392,7 +1401,6 @@ $(document).ready(function(){
     $('#select_lista_patologia').on('changed.bs.select',function(e,clickedIndex,isSelected,previousValue){  js_select_patologias();  });
     js_select_patologias();
     
-    
     //**************************************************************************
     $('.tabs_main_rce_patologo a[href="#pabel_principal"]').tab('show');
     //$('.tabs_main_rce_patologo a[href="#panel_prestaciones"]').tab('show');
@@ -1403,6 +1411,9 @@ $(document).ready(function(){
     js_sin_descripcion();
     //js_collapse_muestras();
 
+    var myTab = document.getElementById('tabs_rce_analitica');
+    var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
+    firstTab.show();
 
     setTimeout(function(){ 
         autosize($('#txt_diagnostico_ap'));

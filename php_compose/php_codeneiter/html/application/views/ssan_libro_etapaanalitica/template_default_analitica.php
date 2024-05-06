@@ -121,7 +121,6 @@
         <?php   } else if ($get_sala == 'analitica'){           ?> 
             <?php echo $this->load->view("ssan_libro_etapaanalitica/templete_etapa_analitica",[],true); ?>
         <?php   } else if ($get_sala == 'sala_proceso'){        ?>
-        
             <div class="grid_sala_de_procesos_tiempo">
                 <div class="grid_sala_de_procesos_tiempo1">
                     <div class="card" id="card_registro_medico4" style="margin-bottom:5px;padding:8px;">

@@ -549,6 +549,8 @@ input[type="checkbox"]                  {
     grid-template-columns               :   50% 50%;
     grid-column-gap                     :   10px;
     grid-row-gap                        :   5px;
+    margin-top                          :   15px;
+    margin-right                        :   10px;
 }
 
 .panel_a_log                            {
@@ -573,6 +575,7 @@ input[type="checkbox"]                  {
     display                             :   grid;
     grid-template-columns               :   repeat(2,1fr);
     grid-column-gap                     :   5px;
+    margin-top                          :   15px;
 }
 
 .panel_clinico_patologico               {
@@ -959,7 +962,6 @@ input[type="file"]                      {
    max-width                            :   100%!important;
 }
 
-
 .grid_btn_image                         {
     display                             :   grid;
     grid-template-columns               :   1fr 1fr;
@@ -972,6 +974,6 @@ input[type="file"]                      {
     margin-right                        :   auto;
 }
 
-
-
-
+.padding-personalizado                  {
+    padding                             :   10px;
+}

@@ -147,15 +147,15 @@
                                 $aux++;
                             }
                         ?>
-                    
                         <div class="lista_ordenada_casete">
-                            
-                        
-                        <ul role="tablist" class="nav nav-tabs"><?php echo implode(" ",$arr_li_casete);?></ul>
+                            <ul role="tablist" class="nav nav-tabs"><?php echo implode(" ",$arr_li_casete);?></ul>
                             <div class="tab-content"><?php echo implode(" ",$arr_div_content);?></div>
-
-
                         </div>
+                        
+                        <!--
+                           raspberry pi 4 8gb, raspberry pi 3 b+, Esp32 Wifi Bluetooth 30 Pines, Raspberry pi pico w 2022
+                        -->
+
                     <?php } else { ?>
                         <ul class="list-group" id="ul_muestras" style="margin-bottom:0px;">
                             <?php foreach($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row){ ?>
@@ -173,7 +173,7 @@
                                         </div>
                                     </div>
                                     <div class="collapse" id="muestrabiopsia<?php echo $row['ID_NMUESTRA'];?>"  style="margin: 0px 5px 5px 5px;">
-                                        <div class="card" id="card_informacio_paciente" style="margin-bottom:5px">
+                                        <div class="card" id="card_informacio_paciente" style="margin-bottom:5px;padding:10px;">
                                             <div class="header">
                                                 <h5 class="title">
                                                     <i class="fa fa-cog" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">T&Eacute;CNICAS APLICADAS - N&deg; <?php echo $row['ID_NMUESTRA'];?></b>
@@ -215,7 +215,7 @@
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
-                                        <td style="width: 50%">
+                                        <td style="width: 50%" class="padding-personalizado">
                                             <small><b style="color:#888888;">FECHA DE MACRO</b></small>
                                             <br>
                                             <div id="calendar_fecha_macro" class="input-group row_calendar star_calendar" style="width:140px;">
@@ -223,7 +223,7 @@
                                                 <span class="input-group-addon" style="cursor:pointer;margin-left: 9px;margin-top: 6px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                             </div>
                                         </td>
-                                        <td style="width: 50%">
+                                        <td style="width: 50%" class="padding-personalizado">
                                             <small><b style="color:#888888;">FECHA DE CORTE</b></small>
                                             <br>
                                             <div id="calendar_fecha_corte" class="input-group row_calendar star_calendar" style="width:140px;">
@@ -466,5 +466,5 @@
 <script>
     var myTab = document.getElementById('myTab');
     var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
-    firstTab.show(); // Activar el primer tab al cargar la página
+    firstTab.show();
 </script>

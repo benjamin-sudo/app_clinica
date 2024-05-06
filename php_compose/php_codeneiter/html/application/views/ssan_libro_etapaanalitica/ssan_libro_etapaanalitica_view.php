@@ -333,43 +333,56 @@
         </div>
     </div>
    
-    <div class="modal fade" id="MODAL_FORMULARIO_ANALITICA">
-        <div class="modal-dialog modal_xl_900">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">ETAPA&nbsp;ANAL&Iacute;TICA</b></h4>
+
+    <div class="modal fade" id="modal_sala_tecnicas">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 95%; width: 95%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">
+                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;SALA T&Eacute;CNICAS</b>
+                    </h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body" id="HTML_FORMULARIO_ANALITICA"></div>
+                <div class="modal-body" id="html_sala_tecnicas"></div>
                 <div class="modal-footer">
-                    <div class="grid_modal_footer_btn">
-                        <div class="grid_modal_footer_btn1">
-                            <button type="button" class="btn btn-warning btn-fill" id="btn_exel_final" onclick="get_excel()">
-                                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="grid_modal_footer_btn2">
-                            <button type="button" class="btn btn-info btn-fill" id="btn_guardado_previo">
-                                <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;GUARDADO&nbsp;PREVIO&nbsp;
-                            </button>
-                        </div>
-                        <div class="grid_modal_footer_btn3">
-                            <button type="button" class="btn btn-success btn-fill" id="btn_finaliza_rce_anatomia" disabled>
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;FINALIZA&nbsp;REPORTE&nbsp;
-                            </button>
-                        </div>
-                        <div class="grid_modal_footer_btn4">
-                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                                <i class="fa fa-window-close" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-danger btn-fill" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;CIERRA VENTANA (NO GRABA)
+                    </button>
+                    <button type="button" class="btn btn-info btn-fill" id="btn_previo_sala_tecnicas">
+                        <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;GUARDADO&nbsp;PREVIO&nbsp;
+                    </button>
+                    <button type="button" class="btn btn-success btn-fill" id="btn_graba_tecnicas">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;TERMINO SALA T&Eacute;CNICAS
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    
+    <div class="modal fade" id="MODAL_FORMULARIO_ANALITICA">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 95%; width: 95%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">
+                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;ETAPA&nbsp;ANAL&Iacute;TICA</b>
+                    </h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_FORMULARIO_ANALITICA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-fill" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;CIERRA VENTANA (NO GRABA)
+                    </button>
+                    <button type="button" class="btn btn-info btn-fill" id="btn_guardado_previo">
+                        <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;GUARDADO&nbsp;PREVIO&nbsp;
+                    </button>
+                    <button type="button" class="btn btn-success btn-fill" id="btn_finaliza_rce_anatomia" disabled>
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;FINALIZA&nbsp;REPORTE&nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modal_informacion_adminisrativo">
         <div class="modal-dialog modal_xl_900">
