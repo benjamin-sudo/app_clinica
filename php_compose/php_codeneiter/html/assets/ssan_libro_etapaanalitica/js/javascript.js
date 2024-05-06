@@ -2939,47 +2939,46 @@ function js_inicia_final_procesos(id_anatomia){
             if (r){
                 $('#loadFade').modal('show');
                 $.ajax({ 
-                     type           :   "POST",
-                     url            :   "ssan_libro_etapaanalitica/get_guardar_final_sala_proceso",
-                     dataType       :   "json",
-                     data           :   {
-                                            
-                                            contrasena          :   r,
-                                            id_anatomia         :   id_anatomia,
-                                            accesdata           :   obj_rce_anatomia,
-                                            opcion              :   1,
-                                        },
+                     type       :   "POST",
+                     url        :   "ssan_libro_etapaanalitica/get_guardar_final_sala_proceso",
+                     dataType   :   "json",
+                     data       :   {
+                                        contrasena          :   r,
+                                        id_anatomia         :   id_anatomia,
+                                        accesdata           :   obj_rce_anatomia,
+                                        opcion              :   1,
+                                    },
                      error		:   function(errro) {  
                                                         console.log(errro.responseText); 
                                                         jError("Error en el aplicativo","Clinica Libre");
                                                         $('#loadFade').modal('hide'); 
                                                     },
-                     success        :   function(aData) { 
-                                                            $('#loadFade').modal('hide'); 
-                                                            console.log("---------------------------");
-                                                            console.log("aData  ->  ",aData);
-                                                            if(aData.status_fecha){
-                                                                if(aData.status){
-                                                                    
-                                                                    jAlert("Se finalizo en sala de proceso","Clinica Libre");
-                                                                    $("#modal_star_sala_proceso").modal('hide');
-                                                                    
-                                                                    localStorage.setItem("ind_tipo_mensaje",4);
-                                                                    localStorage.setItem("ind_estapa_analitica",0);
-                                                                    localStorage.setItem("num_fichae",null);
-                                                                    localStorage.setItem("id_anatomia",id_anatomia);
-                                                                    //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
-                                                                    localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                    //$("#load_anuncios_anatomia_patologica").submit();
-                                                                    
-                                                                    update_etapaanalitica();
-                                                                } else {
-                                                                    jError("Error Firma simple","Clinica Libre");
-                                                                }
+                     success    :   function(aData) { 
+                                                        $('#loadFade').modal('hide'); 
+                                                        console.log("---------------------------");
+                                                        console.log("aData  ->  ",aData);
+                                                        if(aData.status_fecha){
+                                                            if(aData.status){
+                                                                
+                                                                jAlert("Se finalizo en sala de proceso","Clinica Libre");
+                                                                $("#modal_star_sala_proceso").modal('hide');
+                                                                
+                                                                localStorage.setItem("ind_tipo_mensaje",4);
+                                                                localStorage.setItem("ind_estapa_analitica",0);
+                                                                localStorage.setItem("num_fichae",null);
+                                                                localStorage.setItem("id_anatomia",id_anatomia);
+                                                                //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
+                                                                //$("#load_anuncios_anatomia_patologica").submit();
+                                                                
+                                                                update_etapaanalitica();
                                                             } else {
-                                                                showNotification('bottom','right',aData.v_txt_error,4,'fa fa-ban');  
+                                                                jError("Error Firma simple","Clinica Libre");
                                                             }
-                                                        }, 
+                                                        } else {
+                                                            showNotification('bottom','right',aData.v_txt_error,4,'fa fa-ban');  
+                                                        }
+                                                    }, 
                 });
             } else {
                 jError("firma simple vac&iacute;a","Error - Clinica Libre"); 

@@ -1906,9 +1906,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         } else {
             $status                     =   false;
         }
-        
-        //validar que este en ese estado
-        //$return_data                  =   $this->Ssan_libro_etapaanalitica_model->load_sala_proceso(array("empresa"=>$empresa,"opcion"=>$opcion));
+        #validar que este en ese estado
+        #$return_data                  =   $this->Ssan_libro_etapaanalitica_model->load_sala_proceso(array("empresa"=>$empresa,"opcion"=>$opcion));
         $this->output->set_output(json_encode(array(
             'return_bd'                 => isset($return)?$return:null,
             'contrasena'                =>  $contrasena,

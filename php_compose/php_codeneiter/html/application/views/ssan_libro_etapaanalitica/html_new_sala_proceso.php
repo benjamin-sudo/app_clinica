@@ -462,4 +462,3 @@
     var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
     firstTab.show(); // Activar el primer tab al cargar la página
 </script>
-

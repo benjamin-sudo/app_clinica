@@ -333,7 +333,6 @@
         </div>
     </div>
    
-
     <div class="modal fade" id="MODAL_FORMULARIO_ANALITICA">
         <div class="modal-dialog modal_xl_900">
         <div class="modal-content">

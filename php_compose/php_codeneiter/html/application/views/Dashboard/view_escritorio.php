@@ -216,8 +216,9 @@
   <!-- easy-autocomplete -->
   <script type="text/javascript" src="assets/recursos/js/jquery.easy-autocomplete.min.js"></script>
   <!-- PerfectScrollbar  -->
+  <!--
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
-
+  -->
   <section>
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -271,7 +272,6 @@
             </div>
         </div>
     </div>
-
 
   </section>
   </body>

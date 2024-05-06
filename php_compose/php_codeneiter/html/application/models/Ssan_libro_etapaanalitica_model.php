@@ -150,7 +150,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         );
     }
 
-
     public function load_firma_doctores_informe($aData){
         $this->db->trans_start();
         $param          =   array(
@@ -177,11 +176,11 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                             );
         $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_FIRMA_DOCTOR',$param);
         $this->db->trans_complete();
-        return array(
+        return [
             'status'                            =>  true,
             'data_bd'                           =>  $result,
-            'C_DATA_FIRMA'                      =>  $result[":C_DATA_FIRMA"],
-        );
+            'C_DATA_FIRMA'                      =>  $result[":C_DATA_FIRMA"]
+        ];
     }
     
     public function gestion_imagenes_firma($aData){
