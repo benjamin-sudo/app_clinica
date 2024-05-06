@@ -2009,13 +2009,14 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
     
+    #tecnologo
     public function gestion_sala_tecnicas(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $id_anatomia                    =   $this->input->post('id_anatomia');
         $status                         =   true;
         $get_sala                       =   $this->input->post('get_sala');
-        //$opcion                       =   1;
+        #$opcion                        =   1;
         $DATA_CURSOR                    =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
             "cod_empresa"               =>  $empresa,
             "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],

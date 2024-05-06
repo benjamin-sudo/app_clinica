@@ -521,7 +521,7 @@ input[type="checkbox"]                  {
 
 .grid_muestras_anatomia                 {
     display                             :   grid;
-    grid-template-columns               :   20px 2fr 2fr 1fr 50px;
+    grid-template-columns               :   20px 2fr 2fr 1fr auto;
     grid-column-gap                     :   5px;
     grid-row-gap                        :   20px;
     justify-items                       :   stretch;

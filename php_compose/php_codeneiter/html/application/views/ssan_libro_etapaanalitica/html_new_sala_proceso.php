@@ -39,51 +39,50 @@
             <div id="line_pdf_microscopia"></div>
         </div>
         <div id="tabs_lista_citologia" class="tab-pane margin_panel_tabs">
-            <?php   if(count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0)   {   ?>
-                
+            <?php if(count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0){  ?>
                 <h5 style="margin-bottom: 9px;margin-top: 16px;">
-                    <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">CITOL&Oacute;GICAS</b>
+                    <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">LISTADO DE MUESTRAS CITOL&Oacute;GICAS</b>
                 </h5>
-
-                <?php   foreach($data_bd[":P_AP_MUESTRAS_CITOLOGIA"] as $i => $row){ ?>
-                    <li style="padding: 0px"  data-toggle="collapse" data-parent="#accordion"  href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>"  class="list-group-item poiter lista_anatomia grupo_<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>"    data-NUM_TABS="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
-                        <div class="grid_muestras_anatomia">
-                            <div class="grid_muestras_anatomia1"><?php echo $i+1;?></div>
-                            <div class="grid_muestras_anatomia2 panel-heading"><i><?php echo $row['TXT_MUESTRA']?></i></div>
-                            <div class="grid_muestras_anatomia3"><?php echo $row['TXT_ETIQUETA'];?>&nbsp;|&nbsp;<?php echo $row['NUM_ML']?>&nbsp;mL</div>
-                            <div class="grid_muestras_anatomia4"><b><?php echo "A".$row['ID_NMUESTRA'];?></b></div>
-                            <div class="grid_muestras_anatomia5" id="btn_<?php echo "A".$row['ID_NMUESTRA'];?>">
-                                <!--
-                                    <button type="button" class="btn btn-defaulf btn-fill" data-toggle="collapse" data-parent="#accordion"  href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="li_acordion_mtuestras">
-                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                <ul class="list-group">
+                    <?php foreach($data_bd[":P_AP_MUESTRAS_CITOLOGIA"] as $i => $row){ ?>
+                        <li style="padding:0px" data-bs-toggle="collapse" data-bs-parent="#accordion" aria-expanded="true"  class="list-group-item poiter lista_anatomia grupo_<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-NUM_TABS="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
+                            <div class="grid_muestras_anatomia">
+                                <div class="grid_muestras_anatomia1"><?php echo $i+1;?></div>
+                                <div class="grid_muestras_anatomia2"><i><?php echo $row['TXT_MUESTRA']?></i></div>
+                                <div class="grid_muestras_anatomia3"><?php echo $row['TXT_ETIQUETA'];?>&nbsp;|&nbsp;<?php echo $row['NUM_ML'];?>&nbsp;mL</div>
+                                <div class="grid_muestras_anatomia4"><b><?php echo "A".$row['ID_NMUESTRA'];?></b></div>
+                                <div class="grid_muestras_anatomia5" id="btn_<?php echo "A".$row['ID_NMUESTRA'];?>">
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#muestracitolgica<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="false" aria-controls="muestracitolgica">
+                                        Mostrar/Ocultar Contenido
                                     </button>
-                                -->
-                            </div>
-                        </div>
-                        <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>" style="margin: 0px 5px 5px 5px;">
-                            <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
-                                <div class="header">
-                                    <h5 class="title">
-                                        <i class="fa fa-cog" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">T&Eacute;CNICAS APLICADAS</b>
-                                    </h5>
                                 </div>
-                                <div class="content card-body">
-                                    <div style="overflow:hidden;">
-                                        <select data-width="100%" data-actions-box="true" data-container="body" class="selectpicker arr_muestras" data-selected-text-format="count" data-live-search="true" data-id_ap="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" multiple name="prestaciones_<?php echo $row['ID_NMUESTRA'];?>" id="prestaciones_<?php echo $row['ID_NMUESTRA'];?>" title="Seleccione Prestaciones...">
-                                        <?php
-                                            if(count($data_bd[":P_TECNICAS_APLICADAS"])>0){
-                                                foreach($data_bd[":P_TECNICAS_APLICADAS"] as $i => $row){ ?>
-                                                    <option value="<?php echo $row["ID_TECNICA_AP"];?>"  data-prestacion="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"><?php echo $row["TXT_TECNICA_AP"];?></option>
-                                        <?php   } 
-                                            } ?>
-                                        </select> 
+                            </div>
+                            <div id="muestracitolgica<?php echo $row['ID_NMUESTRA'];?>" class="collapse" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>" style="margin: 0px 5px 5px 5px;">
+                                <div class="card" id="card_informacio_paciente" style="margin-bottom:5px;padding:10px;">
+                                    <div class="header">
+                                        <h5 class="title">
+                                            <i class="fa fa-cog" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">T&Eacute;CNICAS APLICADAS</b>
+                                        </h5>
+                                    </div>
+                                    <div class="content card-body">
+                                        <div style="overflow:hidden;">
+                                            <select data-width="100%" data-actions-box="true" data-container="body" class="selectpicker arr_muestras" data-selected-text-format="count" data-live-search="true" data-id_ap="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" multiple name="prestaciones_<?php echo $row['ID_NMUESTRA'];?>" id="prestaciones_<?php echo $row['ID_NMUESTRA'];?>" title="Seleccione Prestaciones...">
+                                            <?php
+                                                if(count($data_bd[":P_TECNICAS_APLICADAS"])>0){
+                                                    foreach($data_bd[":P_TECNICAS_APLICADAS"] as $i => $row){ ?>
+                                                        <option value="<?php echo $row["ID_TECNICA_AP"];?>"  data-prestacion="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"><?php echo $row["TXT_TECNICA_AP"];?></option>
+                                            <?php   } 
+                                                } ?>
+                                            </select> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                <?php   }   ?>
-            <?php   }   ?>
+                        </li>
+                        <?php   }   ?>
+                    <?php   }   ?>
+                </ul>
+
         </div>
         <div id='tabs_lista_muestras' class='tab-pane margin_panel_tabs'>
             <div id="tecnicas_realizadas" data-prestacion="<?php echo htmlspecialchars(json_encode($data_bd[":P_TECNICAS_APLICADASXMUESTRA"]),ENT_QUOTES,'UTF-8');?>">
@@ -91,6 +90,7 @@
                     <h5 style="margin-bottom: 9px;margin-top: 16px;">
                         <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">LISTADO DE MUESTRAS</b>
                     </h5>
+                    
                 <?php
                     if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]['IND_USOCASSETTE'] == 1){?>
                         <?php 
@@ -104,41 +104,42 @@
                                 $active                     =   $aux == 0 ? 'active':'';
                                 foreach($row_all as $x => $row_muestras){
                                     $numero                     =   $x + 1 ;
-                                    $html_muestra_casete       .=   '
-                                    <li style="padding: 0px" data-toggle="collapse" data-parent="#accordion"  href="#nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" aria-expanded="true" aria-controls="nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" class="list-group-item lista_casete poiter"> 
-                                        <div class="grid_muestras_anatomia">
-                                            <div class="grid_muestras_anatomia1">'.$numero.'</div>
-                                            <div class="grid_muestras_anatomia2 panel-heading"><i>'.$row_muestras['TXT_MUESTRA'].'</i></div>
-                                            <div class="grid_muestras_anatomia3">'.$row_muestras['TXT_ETIQUETA'].'</div>
-                                            <div class="grid_muestras_anatomia4"><b>'.$row_muestras['ID_NMUESTRA'].'</b></div>
-                                            <div class="grid_muestras_anatomia5" id="btn_'.$row_muestras['ID_NMUESTRA'].'">
-                                                <!--
-                                                <button type="button" class="btn btn-defaulf btn-fill" data-toggle="collapse" data-parent="#accordion" href="#nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" aria-expanded="true" aria-controls="nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" class="li_acordion_muestras_x_casete">
-                                                    <i class="fa fa-cog" aria-hidden="true"></i>
-                                                </button>
-                                                -->
-                                            </div>
-                                        </div>
-                                        <div id="nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne'.$row_muestras['ID_NMUESTRA'].'" style="margin: 0px 10px 25px 10px;">
-                                            <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
-                                                <div class="header">
-                                                    <h5 class="title"><i class="fa fa-cog" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">T&Eacute;CNICAS APLICADAS</b></h5>
+                                    $html_muestra_casete .= '
+                                        <li style="padding: 0px" data-bs-toggle="collapse" data-bs-parent="#accordion" aria-expanded="true" aria-controls="nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" class="list-group-item lista_casete poiter"> 
+                                            <div class="grid_muestras_anatomia">
+                                                <div class="grid_muestras_anatomia1">'.$numero.'</div>
+                                                <div class="grid_muestras_anatomia2"><i>'.$row_muestras['TXT_MUESTRA'].'</i></div>
+                                                <div class="grid_muestras_anatomia3">'.$row_muestras['TXT_ETIQUETA'].'</div>
+                                                <div class="grid_muestras_anatomia4"><b>'.$row_muestras['ID_NMUESTRA'].'</b></div>
+                                                <div class="grid_muestras_anatomia5" id="btn_'.$row_muestras['ID_NMUESTRA'].'">
+                                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" aria-expanded="false" aria-controls="muestracitolgica">
+                                                        Mostrar/Ocultar Contenido
+                                                    </button>
                                                 </div>
-                                                <div class="content card-body">
-                                                    <div style="overflow:hidden;">
-                                                        <select data-width="100%" data-actions-box="true" data-container="body" class="selectpicker arr_muestras" data-actions-box="true" data-selected-text-format="count" data-live-search="true" data-id_ap="'.$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"].'" data-id_muestra="'.$row_muestras['ID_NMUESTRA'].'" multiple name="prestaciones_'.$row_muestras['ID_NMUESTRA'].'" id="prestaciones_'.$row_muestras['ID_NMUESTRA'].'" title="Seleccione Tecnicas...">';
-                                                        if(count($data_bd[":P_TECNICAS_APLICADAS"])>0){
-                                                            foreach($data_bd[":P_TECNICAS_APLICADAS"] as $i => $row){
-                                                                $html_muestra_casete       .=   '<option value="'.$row["ID_TECNICA_AP"].'" data-prestacion="'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">'.$row["TXT_TECNICA_AP"].'</option>';
-                                                            }
-                                                        }
-                                $html_muestra_casete.=  '</select> 
+                                            </div>
+                                            <div id="nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" class="collapse" style="margin: 0px 10px 25px 10px;">
+                                                <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
+                                                    <div class="header">
+                                                        <h5 class="title"><i class="fa fa-cog" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">T&Eacute;CNICAS APLICADAS</b></h5>
+                                                    </div>
+                                                    <div class="content card-body">
+                                                        <div style="overflow:hidden;">
+                                                            <select data-width="100%" data-actions-box="true" data-container="body" class="selectpicker arr_muestras" data-actions-box="true" data-selected-text-format="count" data-live-search="true" data-id_ap="'.$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"].'" data-id_muestra="'.$row_muestras['ID_NMUESTRA'].'" multiple name="prestaciones_'.$row_muestras['ID_NMUESTRA'].'" id="prestaciones_'.$row_muestras['ID_NMUESTRA'].'" title="Seleccione Tecnicas...">
+                                    ';
+                                    if(count($data_bd[":P_TECNICAS_APLICADAS"]) > 0) {
+                                        foreach($data_bd[":P_TECNICAS_APLICADAS"] as $i => $row) {
+                                            $html_muestra_casete .= '<option value="'.$row["ID_TECNICA_AP"].'" data-prestacion="'.htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8').'">'.$row["TXT_TECNICA_AP"].'</option>';
+                                        }
+                                    }
+                                    $html_muestra_casete .= '
+                                                            </select> 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
+                                        </li>
                                     ';
+
                                 }
                                 $html_muestra_casete.='</ul>';
                                 array_push($arr_li_casete,"<li role='presentation' class='$active'><a href='#casete_$_num' data-toggle='tab'><i class='fa fa-file' aria-hidden='true'></i>&nbsp;CASETE $_num </a></li>");
@@ -148,27 +149,30 @@
                         ?>
                     
                         <div class="lista_ordenada_casete">
-                            <ul role="tablist" class="nav nav-tabs"><?php echo implode(" ",$arr_li_casete);?></ul>
+                            
+                        
+                        <ul role="tablist" class="nav nav-tabs"><?php echo implode(" ",$arr_li_casete);?></ul>
                             <div class="tab-content"><?php echo implode(" ",$arr_div_content);?></div>
+
+
                         </div>
                     <?php } else { ?>
                         <ul class="list-group" id="ul_muestras" style="margin-bottom:0px;">
                             <?php foreach($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row){ ?>
-                                <li style="padding:0px"  data-toggle="collapse" data-parent="#accordion"  href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>"   class="list-group-item poiter lista_anatomia grupo_<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-NUM_TABS="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
+
+                                <li style="padding:0px"  data-bs-toggle="collapse" data-bs-parent="#accordion"  data-bs-target="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>"   class="list-group-item poiter lista_anatomia grupo_<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-NUM_TABS="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
                                     <div class="grid_muestras_anatomia">
                                         <div class="grid_muestras_anatomia1"><?php echo $i+1;?></div>
-                                        <div class="grid_muestras_anatomia2 panel-heading"><i><?php echo $row['TXT_MUESTRA']?></i></div>
+                                        <div class="grid_muestras_anatomia2"><i><?php echo $row['TXT_MUESTRA']?></i></div>
                                         <div class="grid_muestras_anatomia3"><?php echo $row['TXT_ETIQUETA'];?></div>
                                         <div class="grid_muestras_anatomia4"><b><?php echo "A".$row['ID_NMUESTRA'];?></b></div>
                                         <div class="grid_muestras_anatomia5" id="btn_<?php echo "A".$row['ID_NMUESTRA']; ?>">
-                                            <!--
-                                            <button type="button" class="btn btn-defaulf btn-fill" data-toggle="collapse" data-parent="#accordion"  href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="li_acordion_mtuestras">
-                                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#muestrabiopsia<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="false" aria-controls="muestrabiopsia">
+                                                Mostrar/Ocultar Contenido
                                             </button>
-                                            -->
                                         </div>
                                     </div>
-                                    <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>" style="margin: 0px 5px 5px 5px;">
+                                    <div class="collapse" id="muestrabiopsia<?php echo $row['ID_NMUESTRA'];?>"  style="margin: 0px 5px 5px 5px;">
                                         <div class="card" id="card_informacio_paciente" style="margin-bottom:5px">
                                             <div class="header">
                                                 <h5 class="title">
@@ -190,6 +194,8 @@
                                         </div>
                                     </div>
                                 </li>
+
+
                             <?php } ?>
                         </ul>
                     <?php } ?>
@@ -214,7 +220,7 @@
                                             <br>
                                             <div id="calendar_fecha_macro" class="input-group row_calendar star_calendar" style="width:140px;">
                                                 <input id="date_fecha_macro" name="date_fecha_macro" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["FECHA_FECHA_MACRO"]==''?date('d-m-Y'):$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["FECHA_FECHA_MACRO"];?>">
-                                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                                <span class="input-group-addon" style="cursor:pointer;margin-left: 9px;margin-top: 6px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                             </div>
                                         </td>
                                         <td style="width: 50%">
@@ -222,7 +228,7 @@
                                             <br>
                                             <div id="calendar_fecha_corte" class="input-group row_calendar star_calendar" style="width:140px;">
                                                 <input id="date_fecha_corte" name="date_fecha_corte" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["FECHA_FECHA_CORTE"]==''?date('d-m-Y'):$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["FECHA_FECHA_CORTE"];?>">
-                                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                                <span class="input-group-addon" style="cursor:pointer;margin-left: 9px;margin-top: 6px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                             </div>
                                         </td>
                                     </tr>
@@ -252,7 +258,7 @@
                                             <br>
                                             <div id="calendar_interconsulta_ap" class="input-group row_calendar star_calendar" style="width:140px;">
                                                 <input id="date_interconsulta_ap" name="date_interconsulta_ap" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_INTERCONSULTA"]==''?date('d-m-Y'):$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_INTERCONSULTA"];?>">
-                                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                                <span class="input-group-addon" style="cursor:pointer;margin-left: 9px;margin-top: 6px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                             </div>
                                         </td>
                                         <td>
@@ -291,7 +297,7 @@
                                             </select>
                                         </td>
                                     </tr>
-                                     <tr>
+                                    <tr>
                                         <td>
                                             <small><b style="color:#888888;">N&deg; EXTENDIDOS</b></small>
                                             <br>

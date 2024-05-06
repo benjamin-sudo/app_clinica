@@ -114,13 +114,13 @@
         </div>
     </div>
     <div class="grid_body_form_analitica2">
-        <?php          if ($get_sala == 'salamacroscopia'){ ?>
+        <?php          if ($get_sala == 'salamacroscopia'){     ?>
             <?php echo $this->load->view("ssan_libro_etapaanalitica/html_salamacro_descmuestra",[],true); ?>
-        <?php   } else if ($get_sala == 'sala_tecnologo'){ ?> 
+        <?php   } else if ($get_sala == 'sala_tecnologo'){      ?> 
             <?php echo $this->load->view("ssan_libro_etapaanalitica/html_new_sala_proceso",[],true); ?>
-        <?php   } else if ($get_sala == 'analitica'){ ?> 
+        <?php   } else if ($get_sala == 'analitica'){           ?> 
             <?php echo $this->load->view("ssan_libro_etapaanalitica/templete_etapa_analitica",[],true); ?>
-        <?php   } else if ($get_sala == 'sala_proceso'){ ?>
+        <?php   } else if ($get_sala == 'sala_proceso'){        ?>
         
             <div class="grid_sala_de_procesos_tiempo">
                 <div class="grid_sala_de_procesos_tiempo1">

@@ -83,7 +83,5 @@ class Ssan_libro_salatecnologo extends CI_Controller {
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
 
-
-    
 }
 ?>

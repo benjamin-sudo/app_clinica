@@ -270,7 +270,7 @@ $(document).ready(function(){
     //console.log("-----------------------");
     //console.log("localStorage.getIte    ->  " , localStorage.getItem("strorage_filtro_categorias") );
     if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='0'){
-        console.log("SI");
+        //console.log("SI");
         js_opt_todas_las_categorias(false);
     }  else {
         console.log("NO");
@@ -567,7 +567,7 @@ function update_etapaanalitica(){
         url         :   "ssan_libro_etapaanalitica/update_lista_etapaanalitica",
         dataType    :   "json",
         beforeSend  :   function(xhr)   {   
-                                            console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
+                                            //console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
                                             //setTimeout($('#loadFade').modal('show'),1000);
                                         },
         data        :                   { 
@@ -586,9 +586,8 @@ function update_etapaanalitica(){
                                             $('#loadFade').modal('hide'); 
                                         },
         success     :   function(aData) { 
-                                            console.log("   ------------------------------------    ");
-                                            console.log("   update_etapaanalitica   ->  ",aData);
-                                            
+                                            //console.log("   ------------------------------------    ");
+                                            //console.log("   update_etapaanalitica   ->  ",aData);
                                             $('#loadFade').modal('hide');
                                             //console.log(aData.arr_ids_anatomia);
                                             //console.log("id_html_out              ->",    aData.id_html_out);
@@ -3002,13 +3001,16 @@ function time_unix(TXTFECHA,TXTHORA){
 
 function js_sala_tecnicas(id_anatomia){
     $('#loadFade').modal('show'); 
+    let v_get_sala = $("#get_sala").val();
+
+    
     $.ajax({ 
          type       :   "POST",
          url        :   "ssan_libro_etapaanalitica/gestion_sala_tecnicas",
          dataType   :   "json",
          data       :   {   
                             id_anatomia     :   id_anatomia,
-                            get_sala        :   $("#get_sala").val(),
+                            get_sala        :   v_get_sala,
                         },
          error      :   function(errro) {  
                                             console.log(errro.responseText); 
@@ -3016,7 +3018,12 @@ function js_sala_tecnicas(id_anatomia){
                                             $('#loadFade').modal('hide'); 
                                         },
          success    :   function(aData) { 
-                                            console.log("aData->",aData,"<-");
+                                            console.log("-----------------------------------------------");
+                                            console.log("v_get_sala                 ->  ",v_get_sala);
+                                            console.log("id_anatomia                ->  ",id_anatomia);
+                                            console.log("out gestion_sala_tecnicas  ->  ",aData);
+                                            console.log("-----------------------------------------------");
+
                                             $('#loadFade').modal('hide'); 
                                             if(aData.status){
                                                 $("#btn_previo_sala_tecnicas").attr('onclick','js_guarda_sala_tecnicas(1,'+id_anatomia+')');
