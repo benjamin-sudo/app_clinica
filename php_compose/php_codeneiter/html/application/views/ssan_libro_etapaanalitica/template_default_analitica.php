@@ -9,14 +9,12 @@
 <div class="grid_body_form_analitica">
     <div class="grid_body_form_analitica1">
         <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
-            
-            <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
+            <div class="header" style="margin-left: 14px;margin-top: 12px;margin-bottom:-7px;">
                 <h5 class="title"><i class="fa fa-user-o" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">PACIENTE</b></h5>
             </div>
-
-            <div class="content card-body">
-                <div class="table-responsive" style="margin-bottom:-5px;margin-top:-20px;">
-                    <table class="table table-striped">
+            <div class="content card-body" style="padding: 10px">
+                <div class="table-responsive" style="margin-bottom:-5px;margin-top:0px;">
+                    <table class="table table-striped table-sm" style="margin-bottom: 0px;">
                         <tbody>
                             <tr>
                                 <td colspan="2">
@@ -62,8 +60,8 @@
             <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
                 <h5 class="title"><i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">SOLICITUD</b></h5>
             </div>
-            <div class="content card-body">
-                <table width="100%" class="table table-striped table-sm" style="margin-bottom:-5px;margin-top:-20px;"> 
+            <div class="content card-body" style="padding: 10px;">
+                <table width="100%" class="table table-striped table-sm" style="margin-bottom: -2px;margin-top: -18px;"> 
                     <tbody id="tabla_biopsia">
                          <tr>
                             <td width="100%">
@@ -219,7 +217,7 @@
             <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
                 <h5 class="title"><i class="fa fa-file-o" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">FOMULARIO</b></h5>
             </div>
-            <div class="content card-body">
+            <div class="content card-body" style="padding: 10px;">
                 <table width="100%" class="table table-striped table-sm" style="margin-bottom:-5px;margin-top:-20px;"> 
                     <tbody id="tabla_biopsia">
                         <?php  if ($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_INTERNO_AP"] != '0')    { ?>

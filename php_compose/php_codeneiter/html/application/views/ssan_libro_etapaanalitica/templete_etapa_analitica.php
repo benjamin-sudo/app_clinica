@@ -57,31 +57,16 @@
                                 <b style="color:#888888;">REGISTRO DE C&Aacute;NCER</b>
                             </h6>
                         </div>
-                        
                         <div class="panel_header_cancer2"  style="text-align:end;">
                             <label for="ind_gestion_panel_cancer" class="pointer" style="color:#888888;margin-bottom:0px;">HABILITADO&nbsp;</label>
-                            <input <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_NOTIF_CANCER"]==1?'checked':'';?> type="checkbox" style="display:initial;margin-top:0px;" class="form-check-input pointer"  id="ind_gestion_panel_cancer" onclick="js_gestion_cancer(<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>)" value="1">
-                            <!--
-                            <a 
-                                href="javascript:js_gestion_cancer(1,<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>)" 
-                                class="label btn_cancer_habilita label-success cssmain"
-                                style="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_NOTIF_CANCER"]==1?'':'display: none';?>"
-                                >
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </a>
-                            <a 
-                                href="javascript:js_gestion_cancer(2,<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>)" 
-                                class="label btn_cancer_desahabilita label-danger cssmain"
-                                style="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_NOTIF_CANCER"]==1?'display: none':'';?>"
-                                >
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </a>
-                            -->
+                        </div>
+                        <div class="panel_header_cancer2"  style="text-align:end;">
+                            <input <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_NOTIF_CANCER"]==1?'checked':'';?> type="checkbox" style="display:initial;margin-top:0px;" class="form-check-input pointer"  id="ind_gestion_panel_cancer" onclick="js_gestion_cancer(<?php echo $ID_SOLICITUD;?>)" value="1">
                         </div>
                     </div>
                     
                     <form id="form_cancer_input" name="form_cancer_input">
-                        <table class="table table-striped table_cancer" id="table_cancer">
+                        <table class="table table-striped table_cancer table-sm" id="table_cancer" style="margin-bottom: 0px;">
                             <tbody>
                                 <tr>
                                     <td style="width: 50%">
@@ -134,7 +119,9 @@
                                         <br>
                                         <div id="calendar_inicio_cancer" class="input-group row_calendar" style="width:140px;">
                                             <input id="date_inicio_cancer" name="date_inicio_cancer" type="text" class="form-control input-sm group_input_cancer" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION2"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION2"];?>">
-                                            <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                            <span class="input-group-addon" style="cursor:pointer;padding:6px;margin-left:6px;">
+                                                <span class="fa fa-calendar" aria-hidden="true"></span>
+                                            </span>
                                         </div>
                                     </td>
                                     <td>
@@ -149,7 +136,9 @@
                                         <br>
                                         <div id="calendar_termino_cancer" class="input-group row_calendar" style="width:140px;">
                                             <input id="date_termino_cancer" name="date_termino_cancer" type="text" class="form-control input-sm group_input_cancer" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION3"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION3"];?>">
-                                            <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                            <span class="input-group-addon" style="cursor:pointer;padding:6px;margin-left:6px;">
+                                                <span class="fa fa-calendar" aria-hidden="true"></span>
+                                            </span>
                                         </div>
                                     </td>
                                     <td>
@@ -161,7 +150,6 @@
                             </tbody>    
                         </table>
                     </form>
-                
                 </div>
                 
                 <div class="card" id="card_registro_medico3" style="margin-bottom:5px;padding:8px;">
@@ -169,14 +157,14 @@
                         <i style="color:#888888;" class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
                         <b style="color:#888888;">NOTIFICACI&Oacute;N DE C&Aacute;NCER</b>
                     </h6>
-                    <table class="table table-striped table_cancer" id="table_cancer">
+                    <table class="table table-striped table_cancer table-sm" id="table_informe_final" style="margin-bottom: 0px;">
                         <tbody>
                             <tr>
                                 <td style="width: 50%">
                                     <small><b style="color:#888888;">INDICACI&Oacute;N DE CANCER</b></small>
                                 </td>
                                 <td style="width: 50%">
-                                    <select onchange="js_busqueda_num_cancer(this.value)" class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true" name="ind_confirma_cancer" id="ind_confirma_cancer" data-width="98%" tabindex="-98">
+                                    <select class="selectpicker" data-title="Elige una opción" onchange="js_busqueda_num_cancer(this.value)"  name="ind_confirma_cancer" id="ind_confirma_cancer" data-width="98%" tabindex="-98" >
                                         <option value="0">NO</option>
                                         <option value="1">SI</option>
                                     </select>
@@ -232,18 +220,18 @@
             <div class="panel_info_geneal2_right">
                 
                 <div class="card" id="card_registro_medico3" style="margin-bottom:5px;padding:8px;">
-                    <h6 class="title" style="margin: 8px 0px 12px 0px;">
+                    <h6 class="title" style="margin: 2px 0px 12px 0px;">
                         <i style="color:#888888;" class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
                         <b style="color:#888888;">CONFIGURACI&Oacute;N INFORME FINAL</b>
                     </h6>
-                    <table class="table table-striped table_cancer" id="table_cancer">
+                    <table class="table table-striped table_cancer table-sm" id="table_informe_final" style="margin-bottom: 0px;">
                         <tbody>
                             <tr>
                                 <td style="width: 50%">
                                     <small><b style="color:#888888;">TIPO CONFIGURACI&Oacute;N PDF</b></small>
                                 </td>
                                 <td style="width: 50%">
-                                    <select class="selectpicker" data-selected-text-format="count" data-size="2" data-live-search="true" name="ind_conf_informepdf" id="ind_conf_informepdf" data-width="98%" tabindex="-98">
+                                    <select class="selectpicker" data-size="2" name="ind_conf_informepdf" id="ind_conf_informepdf" data-width="98%" tabindex="-98">
                                         <option value="1">CONF. 1 HOJAS</option>
                                         <option value="0">CONF. 2 HOJAS</option>
                                     </select>
@@ -261,7 +249,7 @@
                         </h6>
                         <textarea class="form-control input-sm" name="txt_diagnostico_ap" id="txt_diagnostico_ap" cols="65" rows="5" style="width:100%;" maxlength="4000" oninput="js_auto_grow(this)" ><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_DIADNOSTICO_AP"];?></textarea>
                         <hr style="margin: 0px">
-                        <div class="panel_microscopia_voces">
+                        <div class="panel_microscopia_voces"  style="display:none">
                             <div class="panel_microscopia_voces1">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-fill btn-primary btn-xs btn-success" data-sufijo="btn_microfono" onclick="empezar_a_escuchar()">
@@ -297,18 +285,18 @@
                             $data_bd[':P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_TIPO_BIOPSIA']  ==  6 
                         ){ ?>
                     <div class="card" id="card_registro_medico3" style="margin-bottom:5px;padding:8px;">
-                    <h6 class="title" style="margin: 8px 0px 12px 0px;">
-                        <i style="color:#888888;" class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
-                        <b style="color:#888888;">DESCRIPCI&Oacute;N MACROSCOPICA</b>
-                    </h6>
-                    <textarea class="form-control input-sm" 
-                        name        =   "txt_macroscopia" 
-                        id          =   "txt_macroscopia"
-                        oninput     =   "js_auto_grow(this)"
-                        cols        =   "65" 
-                        rows        =   "5" 
-                        style       =   "width:100%;" 
-                        maxlength   =   "4000"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_DESC_MACROSCOPICA"];?></textarea>
+                        <h6 class="title" style="margin: 8px 0px 12px 0px;">
+                            <i style="color:#888888;" class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
+                            <b style="color:#888888;">DESCRIPCI&Oacute;N MACROSCOPICA</b>
+                        </h6>
+                        <textarea class="form-control input-sm" 
+                            name        =   "txt_macroscopia" 
+                            id          =   "txt_macroscopia"
+                            oninput     =   "js_auto_grow(this)"
+                            cols        =   "65" 
+                            rows        =   "5" 
+                            style       =   "width:100%;" 
+                            maxlength   =   "4000"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_DESC_MACROSCOPICA"];?></textarea>
                     </div>
                 <?php } else {  ?>
                     <input type="hidden" id="txt_macroscopia" name="txt_macroscopia" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_DESC_MACROSCOPICA"];?>"/>
@@ -575,7 +563,7 @@
                         <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;
                         <b style="color:#888888;">LISTADO CODIFICACI&Oacute;N FONASA</b>
                     </h6>
-                    <div class="card-body">
+                    <div class="card-body" style="padding:1px;">
                         <ul class="list-group" id="ul_sin_resultados_codigo_fonasa" style="margin-bottom:0px;">
                             <li class="list-group-item lista_sin_cod_fonasa" style="padding: 0px;">
                                 <div class="grid_sin_informacion">
@@ -597,7 +585,7 @@
                         <b style="color:#888888;">B&Uacute;SQUEDA DE PRESTACI&Oacute;NES</b>
                     </h6>
                     <div>
-                        <select width="fit" data-container="body"  data-dropup-auto="false" class="selectpicker" data-selected-text-format="count" data-live-search="true" multiple name="select_lista_prestaciones" id="select_lista_prestaciones" title="Seleccione Prestaciones...">
+                        <select width="100%" data-container="body"  data-dropup-auto="false" class="selectpicker" data-selected-text-format="count" data-live-search="true" multiple name="select_lista_prestaciones" id="select_lista_prestaciones" title="Seleccione Prestaciones...">
                             <?php
                                 if(count($data_bd[":P_LISTA_PRESTACIONES"])>0){
                                     foreach($data_bd[":P_LISTA_PRESTACIONES"] as $i => $row){ ?>
@@ -616,7 +604,7 @@
                     <h6 class="title" style="margin: 8px 0px 12px 0px;">
                         <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;<b style="color:#888888;">LISTADO DE PRESTACI&Oacute;NES</b>
                     </h6>
-                    <div class="card-body">
+                    <div class="card-body" style="padding: 1px;">
                         <ul class="list-group" id="ul_sin_resultados" style="margin-bottom:0px;">
                             <li class="list-group-item lista_sinprestaciones" style="padding:0px;">
                                 <div class="grid_sin_informacion">
@@ -656,7 +644,7 @@
                     <h6 class="title" style="margin: 8px 0px 12px 0px;">
                         <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;<b style="color:#888888;">LISTADO C&Oacute;DIGOS TIPO DE MUESTRA</b>
                     </h6>
-                    <div class="card-body">
+                    <div class="card-body" style="padding: 1px;">
                         <ul class="list-group" id="ul_sin_resultados_organos" style="margin-bottom:0px;">
                             <li class="list-group-item lista_sin_organos_cargados" style="padding:0px;">
                                 <div class="grid_sin_informacion">
@@ -690,12 +678,13 @@
                     </div>
                 </div>
             </div>
+
             <div class="panel_main_prestaciones6">
                 <div class="card" id="card_prestaciones" style="margin-bottom:5px;padding:8px;">
                     <h6 class="title" style="margin: 8px 0px 12px 0px;">
                         <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;<b style="color:#888888;">LISTADO PATOLOG&Iacute;AS</b>
                     </h6>
-                    <div class="card-body">
+                    <div class="card-body" style="padding: 1px;">
                         <ul class="list-group" id="ul_sin_resultados_patologia" style="margin-bottom:0px;">
                             <li class="list-group-item lista_sin_patologicas" style="padding: 0px;">
                                 <div class="grid_sin_informacion">
@@ -709,7 +698,6 @@
                     </div>
                 </div>
             </div>
-            
             <!--
             <div class="panel_main_prestaciones9">
                 <div class="card" id="card_fonasa" style="margin-bottom:5px;padding:8px;">
@@ -760,10 +748,12 @@
         <div class="panel_body_muestras">
             <div class="panel_body_muestras1 muestras_iquierda">
                 <div class="card" id="card_muestra_anatomicas" style="margin-bottom:5px;padding:8px;">
+                    
                     <h6 class="title" style="margin: 8px 0px 12px 0px;">
                         <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;
                         <b style="color:#888888;">LISTADO MUESTRAS <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]['IND_USOCASSETTE']==1?'(CASETE)':'';?></b>
                     </h6>
+
                     <?php if(count($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){
                         $conf_panel_muestras        =   1;
                         if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]['IND_USOCASSETTE'] == 1){?>
@@ -972,7 +962,7 @@
                                             <div class="grid_muestras_anatomia2"><b class="color_muestra"><?php echo $row['TXT_MUESTRA']?></b></div>
                                             <div class="grid_muestras_anatomia3">
                                                 <div class="grid_sin_descripcion">
-                                                    <div class="grid_sin_descripcion1"><b class="color_muestra">SIN DESCRIPCI&Oacute;N</b></div>
+                                                    <div class="grid_sin_descripcion1"><b class="color_muestra" style="font-size: 12px;">SIN DESCRIPCI&Oacute;N</b></div>
                                                     <div class="grid_sin_descripcion2">
                                                         <input 
                                                             type    =   "checkbox" 
@@ -990,14 +980,11 @@
                                                 <b class="color_muestra"><?php echo "A".$row['ID_NMUESTRA'];?></b>
                                             </div>
                                             <div class="grid_muestras_anatomia5" id="btn_<?php echo "A".$row['ID_NMUESTRA'];?>" style="text-align:center;">
-                                                <button type="button" class="btn btn-info btn-xs btn-fill" data-toggle="collapse" data-parent="#accordion"  href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="li_acordion_mtuestras">
-                                                    <!--
-                                                    <i class="fa fa-cog" aria-hidden="true"></i>
-                                                    -->
-                                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
-                                                </button>
+                                                
                                             </div>
                                         </div>
+
+
                                         <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>" style="margin: 0px 10px 25px 10px;">
                                             <div class="grid_body_heard_microcospica">
                                                 <div class="grid_body_heard_microcospica1">
@@ -1149,7 +1136,7 @@
                                         <div class="grid_muestras_anatomia2 panel-heading"><b class="color_muestra"><?php echo $row['TXT_MUESTRA']?> | <?php echo $row['NUM_ML']?> mL</b></div>
                                         <div class="grid_muestras_anatomia3">
                                             <div class="grid_sin_descripcion">
-                                                <div class="grid_sin_descripcion1"><b class="color_muestra">SIN DESCRIPCI&Oacute;N</b></div>
+                                                <div class="grid_sin_descripcion1"><b class="color_muestra" style="font-size:12px;">SIN DESCRIPCI&Oacute;N</b></div>
                                                 <div class="grid_sin_descripcion2">
                                                     <input 
                                                         type    =   "checkbox" 
@@ -1162,9 +1149,7 @@
                                         </div>
                                         <div class="grid_muestras_anatomia4" style="text-align:end;"><b class="color_muestra"><?php echo "A".$row['ID_NMUESTRA'];?></b></div>
                                         <div class="grid_muestras_anatomia5" id="btn_<?php echo "A".$row['ID_NMUESTRA'];?>" style="text-align:center;">
-                                            <button type="button" class="btn btn-info btn-xs btn-fill" data-toggle="collapse" data-parent="#accordion"  href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="li_acordion_mtuestras">
-                                                <i class="fa fa-cog" aria-hidden="true"></i>
-                                            </button>
+                                           
                                         </div>
                                     </div>
                                     <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>" style="margin: 0px 10px 25px 10px;text-align: initial;">
@@ -1329,11 +1314,13 @@ $(document).ready(function(){
             $(".class_descripcion_macro_"+arr_muestra[2]).hide();
             $(".class_descripcion_img_"+arr_muestra[2]).hide();
         }
+
         if  (panel_select == 2){
             $(".class_descripcion_micro_"+arr_muestra[2]).hide();
             $(".class_descripcion_macro_"+arr_muestra[2]).show();
             $(".class_descripcion_img_"+arr_muestra[2]).hide();
         }
+
         if  (panel_select == 3){
             $(".class_descripcion_micro_"+arr_muestra[2]).hide();
             $(".class_descripcion_macro_"+arr_muestra[2]).hide();
@@ -1379,11 +1366,13 @@ $(document).ready(function(){
     $("#ind_estado_olga").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_ESTADIO_OLGA_TEC"];?>');
     $("#ind_color_taco").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_COLOR_TACO"];?>');
     
-    $('#ind_confirma_cancer,#num_tacos_cortados,#num_extendidos,#num_pas_seriada,#num_he_rapida,#num_all_laminas_seriadas,#num_he_seriada,#num_diff_seriada,#pas_seriada,#num_azul_alcian_seriada,#num_fragmentos,#num_copia_inerconsulta,#ind_profesional_acargo,#ind_mes_critico,#ind_profesional_entrega_informe,#ind_profesional_entrega_informe,#ind_profesional_recibe_informe,#num_plazo_biopsias,#ind_asignadas96horas,#ind_estado_olga,#ind_color_taco').selectpicker();
+    $('#ind_confirma_cancer,#num_tacos_cortados,#num_extendidos,#num_pas_seriada,#num_he_rapida,#num_all_laminas_seriadas,#num_he_seriada,#num_diff_seriada,#pas_seriada,#num_azul_alcian_seriada,#num_fragmentos,#num_copia_inerconsulta,#ind_profesional_acargo,#ind_mes_critico,#ind_profesional_entrega_informe,#ind_profesional_entrega_informe,#ind_profesional_recibe_informe,#num_plazo_biopsias,#ind_asignadas96horas,#ind_estado_olga,#ind_color_taco').selectpicker({title:'--'});
+
+    
     
     //------------
     //selectpicker
-    $("#ind_conf_informepdf,#select_lista_organos,#select_lista_patologia,#select_lista_prestaciones,#select_lista_cod_main").selectpicker();
+    $("#ind_conf_informepdf,#select_lista_organos,#select_lista_patologia,#select_lista_prestaciones,#select_lista_cod_main").selectpicker({title:'--'});
     
     //BUSQUEDA CODIFICACION FONASA
     $('#select_lista_cod_main').on('changed.bs.select',function(e,clickedIndex,isSelected,previousValue){  js_select_lista_cod_main();  });

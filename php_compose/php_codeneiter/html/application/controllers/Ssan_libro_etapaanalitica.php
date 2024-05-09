@@ -81,7 +81,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         #$this->load->js("assets/themes/wsocket_io/2_3_0/socket.io.dev.js");
         $this->load->js("assets/ssan_libro_etapaanalitica/js/ws_anatomiap_envio_a_recepcion.js");
         #AUTOSIZE BETA
-        #$this->load->js("assets/ssan_libro_etapaanalitica/js/autosize.js");
+        $this->load->js("assets/ssan_libro_etapaanalitica/js/autosize.js");
         #HTML OUT
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }

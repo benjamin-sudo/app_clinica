@@ -462,9 +462,10 @@
         </div>
     </div>
 </div>
-
 <script>
-    var myTab = document.getElementById('myTab');
-    var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
-    firstTab.show();
+    $(document).ready(function() {
+        var myTab = document.getElementById('myTab');
+        var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
+        firstTab.show();
+    });
 </script>
