@@ -2,7 +2,6 @@
     $ID_SOLICITUD   =   $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
     $NUM_FICHAE     =   $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_FICHAE"];
 ?>
-
 <ul class="nav nav-tabs" id="tabs_rce_analitica" role="tablist">
     <li class="nav-item" role="tab">
         <a class="nav-link active" id="rce-tab" data-bs-toggle="tab" href="#pabel_principal" role="tab" aria-controls="pabel_principal" aria-selected="true"><i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;RCE</a>
@@ -16,10 +15,10 @@
     <li class="nav-item" role="tab">
         <a class="nav-link" id="administrativo-tab" data-bs-toggle="tab" href="#registro_administrativo" role="tab" aria-controls="registro_administrativo" aria-selected="false"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;ADMINISTRATIVO</a>
     </li>
-    <li class="nav-item" onclick="js_load_line_pdf(0,<?php echo $ID_SOLICITUD;?>)" role="tab">
+    <li class="nav-item" onclick="js_load_line_pdf(0,<?php echo $ID_SOLICITUD;?>)" role="tab" style="display:none">
         <a class="nav-link" id="pdf-tab" data-bs-toggle="tab" href="#tabs_pdf" role="tab" aria-controls="tabs_pdf" aria-selected="false"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
     </li>
-    <li class="nav-item" id="li_histo_clinico" onclick="js_views_historial_clinico_(<?php echo $NUM_FICHAE;?>)" role="tab">
+    <li class="nav-item" id="li_histo_clinico" onclick="js_views_historial_clinico_(<?php echo $NUM_FICHAE;?>)" role="tab" style="display:none">
         <a class="nav-link" href="#historial_clinico" data-bs-toggle="tab" role="tab" aria-controls="historial_clinico" aria-selected="false">
             <i class="fa fa-heartbeat" aria-hidden="true"></i>
         </a>
@@ -28,7 +27,6 @@
         <a class="nav-link" id="archivos-ap-tab" data-bs-toggle="tab" href="#add_archivos_ap" role="tab" aria-controls="add_archivos_ap" aria-selected="false"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
     </li>
 </ul>
-
 <div class="tab-content">
     <div id='tabs_pdf' class='tab-pane margin_panel_tabs'>
         <div class="panel_vistas_pdf" style="display: none">
@@ -38,13 +36,9 @@
         </div>
         <br>
         <hr style="margin: 0px">
-        
         <div id="line_pdf_microscopia"></div>
-
     </div>
-    
     <div id="pabel_principal" class="tab-pane margin_panel_tabs active">
-      
         <div class="panel_info_geneal">
             <div class="panel_info_geneal1_left">
                 
@@ -515,16 +509,13 @@
             </div>
         </div>
     </div>
-    
     <div id="registro_administrativo" class="tab-pane margin_panel_tabs"> 
         <?php echo $this->load->view("ssan_libro_etapaanalitica/html_panel_administrativo",[],true); ?>
     </div>
-    
     <div id="add_archivos_ap" class="tab-pane margin_panel_tabs"> 
         <br>
         <?php echo $this->load->view("ssan_libro_etapaanalitica/html_views_imagenes_micro",[],true);  ?>
     </div>
-    
     <div id="panel_prestaciones" class="tab-pane margin_panel_tabs">
         <div class="panel_main_prestaciones">
             <div class="panel_main_prestaciones7">
@@ -1148,9 +1139,7 @@
                                             </div>
                                         </div>
                                         <div class="grid_muestras_anatomia4" style="text-align:end;"><b class="color_muestra"><?php echo "A".$row['ID_NMUESTRA'];?></b></div>
-                                        <div class="grid_muestras_anatomia5" id="btn_<?php echo "A".$row['ID_NMUESTRA'];?>" style="text-align:center;">
-                                           
-                                        </div>
+                                        <div class="grid_muestras_anatomia5" id="btn_<?php echo "A".$row['ID_NMUESTRA'];?>" style="text-align:center;"></div>
                                     </div>
                                     <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>" style="margin: 0px 10px 25px 10px;text-align: initial;">
                                         <div class="grid_body_heard_microcospica">
@@ -1347,10 +1336,8 @@ $(document).ready(function(){
     }).on('dp.change',function(e){  
         console.log("e  -> ",e);  
     });
-    
     $("#ind_confirma_cancer").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_CANCER"];?>');
     $("#ind_conf_informepdf").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_PAG"];?>');
-    
     <?php if ( $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_CANCER"] == 1) { ?>
         <?php if ($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_NOF_CANCER"] == '' ){ ?>
             js_busqueda_num_cancer('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_CANCER"];?>');
@@ -1368,8 +1355,6 @@ $(document).ready(function(){
     
     $('#ind_confirma_cancer,#num_tacos_cortados,#num_extendidos,#num_pas_seriada,#num_he_rapida,#num_all_laminas_seriadas,#num_he_seriada,#num_diff_seriada,#pas_seriada,#num_azul_alcian_seriada,#num_fragmentos,#num_copia_inerconsulta,#ind_profesional_acargo,#ind_mes_critico,#ind_profesional_entrega_informe,#ind_profesional_entrega_informe,#ind_profesional_recibe_informe,#num_plazo_biopsias,#ind_asignadas96horas,#ind_estado_olga,#ind_color_taco').selectpicker({title:'--'});
 
-    
-    
     //------------
     //selectpicker
     $("#ind_conf_informepdf,#select_lista_organos,#select_lista_patologia,#select_lista_prestaciones,#select_lista_cod_main").selectpicker({title:'--'});
