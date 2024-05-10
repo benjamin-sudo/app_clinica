@@ -1129,8 +1129,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if($cod_empresa                 ==  ''){
             $_issesion                  =   false;
         } else {
-            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
-            array(
+            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "usr_session"           =>  explode("-",$this->session->userdata("USERNAME"))[0],
                 "ind_opcion"            =>  0,

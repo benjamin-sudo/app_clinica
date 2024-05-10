@@ -1330,7 +1330,6 @@ function ver_imagenes_min(){
     $(".grid_etapaanalitica").css('grid-template-columns','1fr 4fr 0fr');
 }
 
-
 function star_analitica(id_anatomia){
     $('#loadFade').modal('show');
     $.ajax({ 
@@ -1371,7 +1370,6 @@ function star_analitica(id_anatomia){
    });
    return true;
 }
-
 
 function js_informacion_administrativo(id_anatomia){
     $('#loadFade').modal('show'); 

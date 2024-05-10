@@ -3,9 +3,7 @@
     grid-template-columns               :   1fr 1fr;
     gap                                 :   8px;
 }
-/*
-    grid-auto-rows                      :   1fr 2fr 1fr;
-*/
+
 .grid_elimina_registro_busqueda3,
 .grid_elimina_registro_busqueda4        {
     grid-area                           :   "one";
