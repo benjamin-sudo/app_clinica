@@ -61,7 +61,7 @@
                             <br>
                             <div id="calendar_impresion_informe" class="input-group row_calendar" style="width:140px;">
                                 <input id="date_impresion_informe" name="date_impresion_informe" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_IMPRESION_INFORME"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_IMPRESION_INFORME"];?>">
-                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" style="padding: 11px;" aria-hidden="true"></span></span>
                             </div>
                         </td>
                         <td>
@@ -80,12 +80,12 @@
                             <br>
                             <div id="calendar_fecha_entrga_informe" class="input-group row_calendar" style="width:140px;">
                                 <input id="date_fecha_entrga_informe" name="date_fecha_entrga_informe" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_ENTREGA_INFORME"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_ENTREGA_INFORME"];?>">
-                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true" style="padding: 11px;" ></span></span>
                             </div>
                         </td>
                         <td>
                             <small><b style="color:#888888;">HORA ENTREGA INFORME</b></small><br>
-                            <input style="width: 90px;" type="time" class="form-control input-sm" id="hrs_entrega_informe" name="hrs_entrega_informe" style="couse" maxlength="5" size="5"  value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_HORA_ENTREGA_INFORME"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_HORA_ENTREGA_INFORME"];?>">
+                            <input style="width:120px;" type="time" class="form-control input-sm" id="hrs_entrega_informe" name="hrs_entrega_informe" style="couse" maxlength="5" size="5"  value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_HORA_ENTREGA_INFORME"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_HORA_ENTREGA_INFORME"];?>">
                         </td>
                     </tr>
                     <tr>
@@ -139,7 +139,7 @@
                             <small><b style="color:#888888;">REVISI&Oacute;N INFORME</b></small><br>
                             <div id="calendar_revision_informe" class="input-group row_calendar" style="width:140px;">
                                 <input id="date_revision_informe" name="date_revision_informe" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_REVISION_INFORME"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_REVISION_INFORME"];?>">
-                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true" style="padding: 11px"></span></span>
                             </div>
                         </td>
                     </tr>
@@ -148,14 +148,14 @@
                             <small><b style="color:#888888;">REVISI&Oacute;N BASE DATOS</b></small><br>
                             <div id="calendar_revision_bd" class="input-group row_calendar" style="width:140px;">
                                 <input id="date_revision_bd" name="date_revision_bd" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_REVISION_BD"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_REVISION_BD"];?>" >
-                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true" style="padding: 11px"></span></span>
                             </div>
                         </td>
                         <td>
                             <small><b style="color:#888888;">CHEQUEO SISTEMA SOME</b></small><br>
                             <div id="calendar_chequeo_some" class="input-group row_calendar" style="width:140px;">
                                 <input id="date_chequeo_some" name="date_chequeo_some" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_CHEQUEO_SOME"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_CHEQUEO_SOME"];?>" >
-                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true" style="padding: 11px"></span></span>
                             </div>
                         </td>
                     </tr>
@@ -164,7 +164,7 @@
                             <small><b style="color:#888888;">ARCHIVADA EN FICHA</b></small><br>
                             <div id="calendar_archivada_en_ficha" class="input-group row_calendar" style="width:140px;">
                                 <input id="date_archivada_en_ficha" name="date_archivada_en_ficha" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_ARCHIVADA_EN_FICHA"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_ARCHIVADA_EN_FICHA"];?>" >
-                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true" style="padding: 11px"></span></span>
                             </div>
                         </td>
                         <td>&nbsp;</td>

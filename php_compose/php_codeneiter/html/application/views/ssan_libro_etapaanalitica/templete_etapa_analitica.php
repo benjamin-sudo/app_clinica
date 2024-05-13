@@ -576,7 +576,7 @@
                         <b style="color:#888888;">B&Uacute;SQUEDA DE PRESTACI&Oacute;NES</b>
                     </h6>
                     <div>
-                        <select width="100%" data-container="body"  data-dropup-auto="false" class="selectpicker" data-selected-text-format="count" data-live-search="true" multiple name="select_lista_prestaciones" id="select_lista_prestaciones" title="Seleccione Prestaciones...">
+                        <select data-width="100%" data-container="body"  data-dropup-auto="false" class="selectpicker" data-selected-text-format="count" data-live-search="true" multiple name="select_lista_prestaciones" id="select_lista_prestaciones" title="Seleccione Prestaciones...">
                             <?php
                                 if(count($data_bd[":P_LISTA_PRESTACIONES"])>0){
                                     foreach($data_bd[":P_LISTA_PRESTACIONES"] as $i => $row){ ?>
