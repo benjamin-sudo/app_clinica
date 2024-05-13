@@ -693,7 +693,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         );
     }
     
+    ####################
     #BUSQUEDA DE FAMILIA
+    ####################
     public function load_familia_evolucion($DATA){
         $this->db->trans_start();
         $param          =   array(
@@ -731,7 +733,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'data_main'                         =>  $result,
         );
     }
-    
     
     public function load_info_excel_produccion($DATA){
         $this->db->trans_start();
@@ -857,20 +858,20 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
     
     public function new_get_busquedatoken($origen_,$numfichae){
-	$this->load->library("autentificacion");
-	$COD_ESTABL_G               =   $this->session->userdata("COD_ESTAB");
-	$USARNAME_G                 =   explode("-",$this->session->userdata("USERNAME"));
-	$origen                     =   $origen_;//NUM
-        $return                     =   $this->autentificacion->getToken($COD_ESTABL_G,$USARNAME_G[0],$origen,'',$numfichae);
-	$TOKEN_SESSION              =   '';
-	$TOKEN_ONE                  =   '';
-	if($return->status){
-	    $TOKEN_SESSION          =   '&token='.''.$return->access_token;
-	    $TOKEN_ONE              =   $return->access_token; 
-	} 
-	return array(
-            'TOKEN_SESSION'         =>  $TOKEN_SESSION,
-            'TOKEN_ONE'             =>  $TOKEN_ONE
+	    $this->load->library("autentificacion");
+        $COD_ESTABL_G           =   $this->session->userdata("COD_ESTAB");
+        $USARNAME_G             =   explode("-",$this->session->userdata("USERNAME"));
+        $origen                 =   $origen_;//NUM
+        $return                 =   $this->autentificacion->getToken($COD_ESTABL_G,$USARNAME_G[0],$origen,'',$numfichae);
+        $TOKEN_SESSION          =   '';
+        $TOKEN_ONE              =   '';
+        if($return->status){
+            $TOKEN_SESSION      =   '&token='.''.$return->access_token;
+            $TOKEN_ONE          =   $return->access_token; 
+        } 
+	    return array(
+            'TOKEN_SESSION'     =>  $TOKEN_SESSION,
+            'TOKEN_ONE'         =>  $TOKEN_ONE
         );
     }
     
