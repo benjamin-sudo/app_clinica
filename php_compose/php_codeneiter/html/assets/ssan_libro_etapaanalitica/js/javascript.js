@@ -1353,6 +1353,7 @@ function star_analitica(id_anatomia){
                                                 },
         success		:   function(aData)         { 
                                                     console.error("   salida star_analitica   ->  ",aData);
+                                                    
                                                     $('#loadFade').modal('hide');
                                                     if(aData.status_session){
                                                         $("#btn_guardado_previo").attr('onclick','js_guardado_previo('+id_anatomia+')');
@@ -3234,10 +3235,12 @@ function js_sin_descripcion(){
    $('.value_microscopia').each(function(){ 
         var txt                 =   $("#"+this.id).val();
         var num                 =   $("#"+this.id).data('muestra');
+        /*
         console.log("-------------------------------------");
         console.log("this.id    ->  ",this.id);
         console.log("txt        ->  ",txt);
         console.log("num        ->  ",num);
+        */
         $("#collapseOne"+num).collapse('show');
         $("#nuestra_x_casete_"+num).collapse('show');
         if(txt  ==  ''){
@@ -3292,6 +3295,7 @@ function js_busqueda_num_cancer(ind_nof_cancer){
     console.log("ind_nof_cancer -> ",ind_nof_cancer);
     if (ind_nof_cancer == 1){
         $("#tr_num_cancer").show();
+        $('#loadFade').modal('show');
         $.ajax({ 
             type                :   "POST",
             url                 :   "ssan_libro_etapaanalitica/ultimo_numero_disponible_cancer",
@@ -3303,10 +3307,12 @@ function js_busqueda_num_cancer(ind_nof_cancer){
             error		    :   function(errro) { 
                                                         console.log(errro);  
                                                         console.log(errro.responseText);    
+                                                        $('#loadFade').modal('hide');
                                                         jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     },
             success             :   function(aData) { 
-                                                        console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
+                                                        
+                                                        $('#loadFade').modal('hide');
                                                         $("#num_interno").val('');
                                                         var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
                                                         showNotification('top','center','Ultimo N&deg; disponible notificaci&oacute;n cancer <b>'+num_last+'</b>',1,'fa fa-info');

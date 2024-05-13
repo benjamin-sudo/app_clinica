@@ -1105,21 +1105,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
     
-    public function ultimo_numero_disponible_cancer(){
-        if(!$this->input->is_ajax_request()){   show_404(); }
-        $status                         =   true;
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
-        $data_number                    =   $this->Ssan_libro_etapaanalitica_model->ultimo_numero_disponible_cancer(array(
-            "val_empresa"               =>  $empresa,
-            "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
-        ));
-        $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'data_numero'               =>  $data_number,
-        )));
-    }
-    
     public function formulario_main_analitico(){
         if(!$this->input->is_ajax_request()){ show_404(); }  
         $cod_empresa                    =   $this->session->userdata("COD_ESTAB");
@@ -1145,6 +1130,21 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             'status_session'            =>  $_issesion,
             'info_bd'                   =>  $DATA_CURSOR,
             'out_html'                  =>  $html
+        )));
+    }
+
+    public function ultimo_numero_disponible_cancer(){
+        if(!$this->input->is_ajax_request()){   show_404(); }
+        $status                         =   true;
+        $empresa                        =   $this->session->userdata("COD_ESTAB");
+        $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
+        $data_number                    =   $this->Ssan_libro_etapaanalitica_model->ultimo_numero_disponible_cancer(array(
+            "val_empresa"               =>  $empresa,
+            "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
+        ));
+        $this->output->set_output(json_encode(array(
+            'status'                    =>  $status,
+            'data_numero'               =>  $data_number,
         )));
     }
     
