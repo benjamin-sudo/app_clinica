@@ -1352,11 +1352,11 @@ function star_analitica(id_anatomia){
                                                     $('#loadFade').modal('hide'); 
                                                 },
         success		:   function(aData)         { 
+                                                    console.error("   salida star_analitica   ->  ",aData);
                                                     $('#loadFade').modal('hide');
-                                                    console.log("   aData   ->  ",aData);
                                                     if(aData.status_session){
                                                         $("#btn_guardado_previo").attr('onclick','js_guardado_previo('+id_anatomia+')');
-                                                        console.log("BTN -> ",$(".btn_analitica_"+id_anatomia).data('rce_finaliza'));
+                                                        //console.log("BTN -> ",$(".btn_analitica_"+id_anatomia).data('rce_finaliza'));
                                                         if ($(".btn_analitica_"+id_anatomia).data('rce_finaliza')){
                                                             $("#btn_finaliza_rce_anatomia").attr('onclick','js_finaliza_rce('+id_anatomia+')');
                                                             document.getElementById('btn_finaliza_rce_anatomia').disabled      =   false;
