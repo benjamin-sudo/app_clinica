@@ -1,4 +1,5 @@
-<?php $ID_SOLICITUD = $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"]; ?>
+<?php $ID_SOLICITUD = $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>
+
 <div class="lista_gestion_tecnologo">
     <ul class="nav nav-tabs" id="myTab">
         <?php if (count($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){ ?>
@@ -146,12 +147,10 @@
                                 $aux++;
                             }
                         ?>
-                        
                         <div class="lista_ordenada_casete">
                             <ul role="tablist" class="nav nav-tabs"><?php echo implode(" ",$arr_li_casete);?></ul>
                             <div class="tab-content"><?php echo implode("",$arr_div_content);?></div>
                         </div>
-                       
                     <?php } else { ?>
                         <ul class="list-group" id="ul_muestras" style="margin-bottom:0px;">
                             <?php foreach($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row){ ?>

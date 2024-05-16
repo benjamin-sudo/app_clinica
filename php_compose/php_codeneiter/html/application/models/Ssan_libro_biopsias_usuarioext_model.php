@@ -2021,72 +2021,72 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             WHERE
                 P.ID_SOLICITUD_HISTO IN (".$DATA['NUM_HISTO'].") ")->result_array();
     }
-    
+
     #PDF_GLOBAL
     public function LOAD_ANATOMIAPATOLOGICA_PDF($DATA){
         $this->db->trans_start();
-        //$this->db->trans_begin();
-        $param                  =       array(
-                                            #IN
-                                            array( 
-                                                'name'      =>  ':V_COD_EMPRESA',
-                                                'value'     =>  $DATA["COD_EMPRESA"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':V_ID_HISTO',
-                                                'value'     =>  $DATA["ID_HISTO"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            #OUT
-                                            array( 
-                                                'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            #BLOB
-                                            array( 
-                                                'name'      =>  ':C_IMAGENES_BLOB',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':C_IMAGENES_BLOB_MUESTRAS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                        );
-        $result                                             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_ANATOMIAPATOLOGICA_PDF',$param);
+        $param  =   array(
+                        #IN
+                        array( 
+                            'name'          =>  ':V_COD_EMPRESA',
+                            'value'         =>  $DATA["COD_EMPRESA"],
+                            'length'        =>  20,
+                            'type'          =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name'          =>  ':V_ID_HISTO',
+                            'value'         =>  $DATA["ID_HISTO"],
+                            'length'        =>  20,
+                            'type'          =>  SQLT_CHR 
+                        ),
+                        #OUT
+                        array( 
+                            'name'          =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
+                            'value'         =>  $this->db->get_cursor(),
+                            'length'        =>  -1,
+                            'type'          =>  OCI_B_CURSOR
+                            ),
+                            array( 
+                                'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
+                                'value'     =>  $this->db->get_cursor(),
+                                'length'    =>  -1,
+                                'type'      =>  OCI_B_CURSOR
+                            ),
+                            array( 
+                                'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
+                                'value'     =>  $this->db->get_cursor(),
+                                'length'    =>  -1,
+                                'type'      =>  OCI_B_CURSOR
+                            ),
+                            #BLOB
+                            array( 
+                                'name'      =>  ':C_IMAGENES_BLOB',
+                                'value'     =>  $this->db->get_cursor(),
+                                'length'    =>  -1,
+                                'type'      =>  OCI_B_CURSOR
+                            ),
+                            array( 
+                                'name'      =>  ':C_IMAGENES_BLOB_MUESTRAS',
+                                'value'     =>  $this->db->get_cursor(),
+                                'length'    =>  -1,
+                                'type'      =>  OCI_B_CURSOR
+                            ),
+                        );
+        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_ANATOMIAPATOLOGICA_PDF',$param);
         $this->db->trans_complete();
         return array(
-            'STATUS'                                        =>	$this->db->trans_status(),
-            'ID_HISTO'                                      =>	$DATA["ID_HISTO"],
-            'COD_EMPRESA'                                   =>	$DATA["COD_EMPRESA"],
-            'HTML_QR'                                       =>  $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/html_gr_infoanatomia",array('id_histo'=>$DATA["ID_HISTO"]),true),
-            'P_ANATOMIA_PATOLOGICA_MAIN'                    =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
-            'P_ANATOMIA_PATOLOGICA_MUESTRAS'                =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
-            'P_AP_MUESTRAS_CITOLOGIA'                       =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
-            'C_IMAGENES_BLOB'                               =>	empty($result[':C_IMAGENES_BLOB'])?null:$result[':C_IMAGENES_BLOB'],
-            'C_IMAGENES_BLOB_MUESTRAS'                      =>	empty($result[':C_IMAGENES_BLOB_MUESTRAS'])?null:$result[':C_IMAGENES_BLOB_MUESTRAS'],
+            'STATUS'                            =>	$this->db->trans_status(),
+            'ID_HISTO'                          =>	$DATA["ID_HISTO"],
+            'COD_EMPRESA'                       =>	$DATA["COD_EMPRESA"],
+            'HTML_QR'                           =>  $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/html_gr_infoanatomia",array('id_histo'=>$DATA["ID_HISTO"]),true),
+            'P_ANATOMIA_PATOLOGICA_MAIN'        =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
+            'P_ANATOMIA_PATOLOGICA_MUESTRAS'    =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
+            'P_AP_MUESTRAS_CITOLOGIA'           =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
+            'C_IMAGENES_BLOB'                   =>	empty($result[':C_IMAGENES_BLOB'])?null:$result[':C_IMAGENES_BLOB'],
+            'C_IMAGENES_BLOB_MUESTRAS'          =>	empty($result[':C_IMAGENES_BLOB_MUESTRAS'])?null:$result[':C_IMAGENES_BLOB_MUESTRAS'],
         );  
     }
+    
     #PDF RECHAZO
     public function load_info_rechazo($DATA){
         $this->db->trans_start();

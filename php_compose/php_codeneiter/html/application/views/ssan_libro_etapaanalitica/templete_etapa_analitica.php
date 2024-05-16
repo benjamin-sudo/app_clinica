@@ -296,7 +296,6 @@
                     <input type="hidden" id="txt_macroscopia" name="txt_macroscopia" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_DESC_MACROSCOPICA"];?>"/>
                 <?php } ?>
                 
-                
             </div>
         </div>
         <hr style="margin: 0px 0px 5px 0px;display: none">

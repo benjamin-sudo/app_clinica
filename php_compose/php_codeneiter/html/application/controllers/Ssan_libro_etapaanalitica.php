@@ -5,9 +5,10 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->model("Ssan_libro_etapaanalitica_model");
         $this->get_sala                 =   'analitica';
         $this->txt_titulo               =   'ETAPA ANALITICA';
+    $this->load->model("Ssan_libro_etapaanalitica_model");
+        $this->load->model("Ssan_libro_biopsias_usuarioext_model");
     }
     
     public function index_old(){
@@ -2142,5 +2143,79 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             '$data_produccion'          =>  $data_produccion,
         )));
     }
+
+    
+    #BLOB PDF DE ANATOMIA PATOLOGICA EXTERNO
+    public function BLOB_PDF_ANATOMIA_PATOLOGICA(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $empresa                        =   $this->session->userdata("COD_ESTAB");
+        $id_tabla                       =   $this->input->post('id');
+        $HTML_BIOPSIAS                  =   '';
+        $HTML_CITOLOGIA                 =   '';
+        $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array(
+                                                "ID_HISTO"      =>  $id_tabla,
+                                                "COD_EMPRESA"   =>  $empresa,
+                                            ));
+        $DATA_FIRST                     =   false;
+        
+        /*
+        require_once APPPATH            .   '/third_party/mpdf/mpdf.php';
+        $txt_name_pdf                   =   'SOLICITUD DE ANATOMIA.pdf';
+        $dompdf                         =   new mPDF('','',0,'',15,15,16,16,9,9,'L');
+        #firma digital
+        $rutUsuario                     =   explode("-",$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL']);
+        $codeContents                   =   'https://www.esissan.cl/validador?p=' . $this->validaciones->encodeNumber($rutUsuario[0] . '&' . $empresa);
+        #firma digital
+        $rutUsuario                     =   explode("-",$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL']);
+        $rutProfesional                 =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL'];
+        $profesional                    =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['PROFESIONAL'];
+        $profesion                      =   '-';
+        $html_firma                     =   '<table>
+                                                <tr>
+                                                    <td valign="top">
+                                                        <barcode class="barcode" code="'.$codeContents.'" type="QR" height="0" text="1" size="1"/>
+                                                    </td>
+                                                    <td valign="top">
+                                                        <br>
+                                                        <b>FIRMADO DIGITALMENTE</b>
+                                                        <p style="margin-top:20px;display: inline-block;">' . strtoupper($rutProfesional) . '</p>
+                                                        <p style="margin-bottom:0px;display: inline-block;">' . strtoupper($profesional) . '</p>
+                                                        <p style="margin-bottom:0px;display: inline-block;">' . strtoupper($profesion) . '</p>
+                                                    </td>
+                                                </tr>
+                                            </table>';
+
+        if(count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"][0])>0){
+            $DATA_FIRST                 =   true;
+            $HTML_BIOPSIAS              =   $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
+            $dompdf->WriteHTML($HTML_BIOPSIAS);
+            $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.ANATOMICA');
+        }
+
+        if(count($DATA["P_AP_MUESTRAS_CITOLOGIA"][0])>0){
+            $dompdf->AddPage();
+            $HTML_CITOLOGIA             =   $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS_CITO",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
+            $dompdf->WriteHTML($HTML_CITOLOGIA);
+            $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.CITOLOGIA');
+        }
+
+
+        */
+
+        $base64_pdf                     =   base64_encode($dompdf->Output('SOLICITUD DE ANATOMIA.pdf','S'));
+        #$TABLA["codeContents"]          =   $html_firma;
+        $TABLA["IND_TEMPLATE"]          =   1;
+        $TABLA["PDF_MODEL"]             =   $base64_pdf;
+        $TABLA["PDF_MODEL_DATA"]        =   $base64_pdf;
+        $TABLA["STATUS"]                =   true;
+        $TABLA["DATA_RETURN"]           =   $DATA;
+        $TABLA["ID_RETURN"]             =   $id_tabla;
+        $TABLA["HTML_BIOPSIAS"]         =   $HTML_BIOPSIAS;
+        $this->output->set_output(json_encode($TABLA));
+    }
+
+
+
+
 }
 ?>

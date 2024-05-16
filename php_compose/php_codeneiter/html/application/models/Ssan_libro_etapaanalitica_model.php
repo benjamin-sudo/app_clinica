@@ -1951,6 +1951,5 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         );
     }
 
-
     
 }
