@@ -7,7 +7,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $this->load->library('session');
         $this->get_sala                 =   'analitica';
         $this->txt_titulo               =   'ETAPA ANALITICA';
-    $this->load->model("Ssan_libro_etapaanalitica_model");
+        $this->load->model("Ssan_libro_etapaanalitica_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
     }
     
