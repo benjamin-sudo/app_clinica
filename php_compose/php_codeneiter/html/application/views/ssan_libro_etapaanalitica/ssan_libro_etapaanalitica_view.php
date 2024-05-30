@@ -5,29 +5,13 @@
     data-getdata        =   "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
     data-userdata       =   "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
 ></div>
-<?php
-    #echo isset($_cookie['id_anatomia'])?$_cookie['id_anatomia']:'';
-    #echo "<br>";
-    #echo date("d-m-Y H:i:s",time()-3600);
-    #var_dump($_cookie); 
-    #echo "<hr>";
-    #var_dump($V_DATA);
-    #echo "<hr>";
-    #echo $status_bd;
-    #echo "<hr>";
-    #echo $val_estado;
-    #echo "<hr>";
-    #echo $ind_opcion;
-    #echo "<hr>";
-    #var_dump($BD); 
-?>
+
 <input type="hidden"    id="get_sala"           name="get_sala"     value="<?php echo $txt_sala;?>"/>
 <input type="hidden"    id="SERVER_NAME"        name="SERVER_NAME"  value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
 <form id="load_ingreso_etapa_analitica"         method="post"       action="#"></form>
 <form id="load_anuncios_anatomia_patologica"    method="post"       action="#"></form>
 <form id="get_termino_sala_macroscopia"         method="post"       action="#"></form>
 <form id="update_chat_x_hoja"                   method="post"       action="#"></form>
-
 <div class="grid_head_body">
     <div class="grid_head_body1">
         <div class="GRID_LIBRO_BIOPSIAS_II_MAIN1">
