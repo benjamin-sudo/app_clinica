@@ -101,12 +101,12 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
 
     public function new_nueva_solicitud_anatomia_ext(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa        =   $this->session->userdata("COD_ESTAB");
-        $session_arr    =   explode("-",$this->session->userdata('USERNAME'));
-        $NUM_FICHAE     =   $this->input->post('NUM_FICHAE');
-        $ADMISION       =   $this->input->post('ADMISION');
-        $session        =   $session_arr[0];
-        $DATA_CURSOR    =   $this->Ssan_libro_biopsias_usuarioext_model->data_pre_nuevasoliciud_anatomia(array(
+        $empresa                =   $this->session->userdata("COD_ESTAB");
+        $session_arr            =   explode("-",$this->session->userdata('USERNAME'));
+        $NUM_FICHAE             =   $this->input->post('NUM_FICHAE');
+        $ADMISION               =   $this->input->post('ADMISION');
+        $session                =   $session_arr[0];
+        $DATA_CURSOR            =   $this->Ssan_libro_biopsias_usuarioext_model->data_pre_nuevasoliciud_anatomia(array(
             "COD_EMPRESA"       =>  $empresa,
             "USR_SESSION"       =>  $session,
             "DATE_FROM"         =>  date("d-m-Y"),

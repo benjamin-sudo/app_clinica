@@ -82,13 +82,11 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
                                                     jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
                                                 },
         success             :   function(aData) { 
-                                                    console.log("   ----------------------     ");
-                                                    console.log("   aData   ->  ",aData);
-                                                    console.log("   ----------------------     ");
+                                                    console.log("aData , ",aData);
                                                     $("#loadFade").modal('hide'); 
                                                     $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
-                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show"); 
                                                     $("#PA_ID_PROCARCH").val('65');
+                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show");
                                                 }, 
     });
 }

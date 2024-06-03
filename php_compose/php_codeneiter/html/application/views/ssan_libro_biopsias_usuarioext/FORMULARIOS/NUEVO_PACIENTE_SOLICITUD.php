@@ -456,25 +456,13 @@ $(document).ready(function () {
                     jAlert("Se han detectado falta de informaci&oacute;n <br>"+msj.join(""),"Clinica Libre");
                     return false;
                 } else {
-                    
-                    //
-                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html("Cargando formulario...");
-                    
+
+                    $('#loadFade').modal('show'); 
                     $.ajax({ 
                         type        :   "POST",
                         url         :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
                         dataType    :   "json",
-                        beforeSend  :   function(xhr)   {
-                                                            var HTML_BEFORESEND =   '<tbody id="msj_busqueda" style="display: none">'+
-                                                                                        '<tr id="msj_load_body">'+
-                                                                                            '<td style="text-align:center" colspan="11">'+
-                                                                                                '<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>'+
-                                                                                                '<span class="sr-only"></span><b> CARGANDO ...</b>'+
-                                                                                            '</td>'+
-                                                                                        '</tr>'+
-                                                                                    '</tbody>';
-                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(HTML_BEFORESEND); 
-                                                        },
+                        beforeSend  :   function(xhr)   {  },
                         data        :           {
                                                     NUM_FICHAE          :   $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
                                                     RUT_PACIENTE        :   $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
@@ -489,15 +477,16 @@ $(document).ready(function () {
                                                     IND_GESPAB          :   0
                                                 },
                         error       :   function(errro) {  
-                                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                             console.log(errro);
-                                                            //console.log(errro.responseText);
+                                                            $('#loadFade').modal('hide'); 
                                                             $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
                                                             $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
+                                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         },
                         success     :   function(aData) {
-                                                            console.log("success -> ",aData);
-                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
+                                                            console.log("aData  ->  ",aData);
+                                                            $('#loadFade').modal('hide'); 
+                                                            //$("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
                                                             setTimeout(function() {
                                                                 $(".btn_envia_form").prop('disabled', false);
                                                                 document.getElementById("btn-finish").disabled = false;
