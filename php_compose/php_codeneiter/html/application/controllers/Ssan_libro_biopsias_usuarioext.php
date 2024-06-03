@@ -349,12 +349,12 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             $STATUS                         =   false;
         }
         $this->output->set_output(json_encode([
-            'PASS'                          =>  $password,
-            'GET_BD'                        =>  $DATA,
-            'DATA_FIRMA'                    =>  $valida,
-            'RETURN'                        =>  $STATUS,
-            'TXT_ERROR'                     =>  $TXT_ERROR,
-            'STATUS'                        =>  $STATUS,
+            'PASS'          =>  $password,
+            'GET_BD'        =>  $DATA,
+            'DATA_FIRMA'    =>  $valida,
+            'RETURN'        =>  $STATUS,
+            'TXT_ERROR'     =>  $TXT_ERROR,
+            'STATUS'        =>  $STATUS,
         ]));
     }
 
@@ -364,18 +364,44 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $STATUS                         =   true;
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $id_tabla                       =   $this->input->post('id');
-        $DATA                           =   [];
-
+        #$DATA                          =   [];
         $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array(
                                                 "COD_EMPRESA"   =>  $empresa,
                                                 "ID_HISTO"      =>  $id_tabla
                                             ));
+        $txt_name_pdf                   =   'SOLICITUD DE ANATOMIA.pdf';
+        $dompdf                         =   new mPDF('','',0,'',15,15,16,16,9,9,'L');
 
+
+        $HTML_BIOPSIAS                  =   'test';
+        $dompdf->WriteHTML($HTML_BIOPSIAS);
+        $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.ANATOMICA');
+
+        /*
+        if(count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"][0])>0){
+            $DATA_FIRST                 =   true;
+            $HTML_BIOPSIAS              =   $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
+            $dompdf->WriteHTML($HTML_BIOPSIAS);
+            $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.ANATOMICA');
+        }
+        if(count($DATA["P_AP_MUESTRAS_CITOLOGIA"][0])>0){
+            $dompdf->AddPage();
+            $HTML_CITOLOGIA             =   $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS_CITO",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
+            $dompdf->WriteHTML($HTML_CITOLOGIA);
+            $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.CITOLOGIA');
+        }
+        */
+
+        $base64_pdf                     =   base64_encode($dompdf->Output($txt_name_pdf,'S'));
         $this->output->set_output(json_encode([
             'STATUS'                    =>  $STATUS,
-            'DATA'                      =>  $DATA,
+            'DATA_RETURN'               =>  $DATA,
             'empresa'                   =>  $empresa,
-            'id_tabla'                  =>  $id_tabla
+            'ID_RETURN'                 =>  $id_tabla,
+            'IND_TEMPLATE'              =>  1,
+            'HTML_BIOPSIAS'             =>  $HTML_BIOPSIAS,
+            'PDF_MODEL'                 =>  $base64_pdf,
+            'PDF_MODEL_DATA'            =>  $base64_pdf,
         ]));
     }
 }

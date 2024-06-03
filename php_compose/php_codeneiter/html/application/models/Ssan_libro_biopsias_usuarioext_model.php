@@ -2078,7 +2078,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'STATUS'                            =>	$this->db->trans_status(),
             'ID_HISTO'                          =>	$DATA["ID_HISTO"],
             'COD_EMPRESA'                       =>	$DATA["COD_EMPRESA"],
-            'HTML_QR'                           =>  $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/html_gr_infoanatomia",array('id_histo'=>$DATA["ID_HISTO"]),true),
+            'HTML_QR'                           =>  '',
             'P_ANATOMIA_PATOLOGICA_MAIN'        =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
             'P_ANATOMIA_PATOLOGICA_MUESTRAS'    =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
             'P_AP_MUESTRAS_CITOLOGIA'           =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
