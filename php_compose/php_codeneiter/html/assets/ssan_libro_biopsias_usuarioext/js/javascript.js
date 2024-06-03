@@ -58,7 +58,7 @@ $(document).ready(function(){
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
-    ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
+    //ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
 });
 
 function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
