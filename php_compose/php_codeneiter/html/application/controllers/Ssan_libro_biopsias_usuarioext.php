@@ -364,12 +364,18 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $STATUS                         =   true;
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $id_tabla                       =   $this->input->post('id');
-        $DATA                           =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(["COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla]);
+        $DATA                           =   [];
 
-
+        $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array(
+                                                "COD_EMPRESA"   =>  $empresa,
+                                                "ID_HISTO"      =>  $id_tabla
+                                            ));
 
         $this->output->set_output(json_encode([
             'STATUS'                    =>  $STATUS,
+            'DATA'                      =>  $DATA,
+            'empresa'                   =>  $empresa,
+            'id_tabla'                  =>  $id_tabla
         ]));
     }
 }
