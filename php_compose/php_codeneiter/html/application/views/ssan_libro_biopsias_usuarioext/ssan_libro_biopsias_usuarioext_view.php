@@ -238,8 +238,11 @@
         </div>
     </div>
 
+
+    
+
     <div class="modal fade" id="MODAL_PDF_ANATOMIA_PATOLOGICA">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">
