@@ -62,14 +62,14 @@ $(document).ready(function(){
         document.getElementById("get_etiqueta").focus();
     });
     p1.then(function(value) {
-        console.log(value); // "Success!"
+        //console.log(value); // "Success!"
         throw 'oh, no!';
     }).catch(function(e) {
-        console.log("->",e); // "oh, no!"
+        //console.log("->",e); // "oh, no!"
     }).then(function(){
-        console.log('despues de una captura, la cadena se restaura');
+        //console.log('despues de una captura, la cadena se restaura');
     },function(){
-        console.log('No disparada debido a la captura');
+        //console.log('No disparada debido a la captura');
     });
     $('#ind_servicios').on('changed.bs.select',function(e,clickedIndex,isSelected,previousValue){ 
         js_cambio_punto_entrega();  

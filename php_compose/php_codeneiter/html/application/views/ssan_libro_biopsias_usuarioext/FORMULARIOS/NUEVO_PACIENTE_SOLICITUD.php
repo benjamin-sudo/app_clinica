@@ -456,8 +456,8 @@ $(document).ready(function () {
                     jAlert("Se han detectado falta de informaci&oacute;n <br>"+msj.join(""),"Clinica Libre");
                     return false;
                 } else {
-
                     $('#loadFade').modal('show'); 
+                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html('<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>');
                     $.ajax({ 
                         type        :   "POST",
                         url         :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
@@ -484,9 +484,9 @@ $(document).ready(function () {
                                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         },
                         success     :   function(aData) {
-                                                            console.log("aData  ->  ",aData);
+                                                            //console.log("aData  ->  ",aData);
                                                             $('#loadFade').modal('hide'); 
-                                                            //$("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
+                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
                                                             setTimeout(function() {
                                                                 $(".btn_envia_form").prop('disabled', false);
                                                                 document.getElementById("btn-finish").disabled = false;

@@ -22,7 +22,6 @@ $(document).ready(function(){
     }).on('dp.change',function(e){ 
         ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
     });
-
     $(".timepicker").remove();
 
     $("#MODAL_INICIO_SOLICITUD_ANATOMIA").on("show.bs.modal",function(e){ 
@@ -59,8 +58,8 @@ $(document).ready(function(){
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
-    console.log("   ------------    ");
-    console.log("   Pendientes      ");
+    //console.log("   ------------    ");
+    //console.log("   Pendientes      ");
     //ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(3);
 });
 
