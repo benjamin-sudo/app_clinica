@@ -58,9 +58,7 @@ $(document).ready(function(){
     $('#Dv_verdocumentos').on('hidden.bs.modal',function(e){ 
         $("#PDF_VERDOC").html(''); 
     });
-    //console.log("   ------------    ");
-    //console.log("   Pendientes      ");
-    //ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(3);
+    ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
 });
 
 function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
@@ -245,9 +243,12 @@ function local_pdf_rechazomuestra(id_anatomia){
 function GET_PDF_ANATOMIA_PANEL(id){
     $('#loadFade').modal('show'); 
     //ssan_spab_gestionlistaquirurgica
+    //ssan_libro_biopsias_usuarioext
+    console.log("   ------------------------------      ");
+    console.log("   ssan_libro_biopsias_usuarioext      ");
     $.ajax({ 
         type		:   "POST",
-        url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA",
+        url 		:   "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
         dataType    :   "json",
         beforeSend	:   function(xhr)           {   
                                                         console.log(xhr);
@@ -293,7 +294,6 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                             $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal("show");
                                                         }
                                                         */
-
                                                         $("#HTML_PDF_ANATOMIA_PATOLOGICA").html('RIN RIN EL ANGELITO');
                                                         $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 
 

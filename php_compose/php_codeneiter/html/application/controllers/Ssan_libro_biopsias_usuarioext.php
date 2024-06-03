@@ -364,14 +364,10 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         if(!$this->input->is_ajax_request()){  show_404(); }
         $STATUS     =   true;
 
-        
+
 
         $this->output->set_output(json_encode([
             'STATUS'                        =>  $STATUS,
         ]));
     }
-
-
-    
-
 }
