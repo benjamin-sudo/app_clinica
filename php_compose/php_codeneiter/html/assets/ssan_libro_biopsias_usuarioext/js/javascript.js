@@ -349,13 +349,9 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                     },
         success		:   function(aData)         { 
                                                         console.log(aData);
-                                                        $('#loadFade').modal('hide'); 
-                                                        
                                                         if(!aData["STATUS"]){
                                                             jError("error al cargar protocolo PDF","Clinica Libre");
-                                                            return false;
                                                         } else {
-                                                            /*
                                                             var base64str           =   aData["PDF_MODEL"];
                                                             //decode base64 string, Eliminar espacio para compatibilidad con IE
                                                             var binary              =   atob(base64str.replace(/\s/g,''));
@@ -363,20 +359,17 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                             var buffer              =   new ArrayBuffer(len);
                                                             var view                =   new Uint8Array(buffer);
                                                             for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                            //console.log("view->",view);
-                                                            //create the blob object with content-type : "application/pdf"  
                                                             var blob                =   new Blob([view],{type:"application/pdf"});
                                                             var blobURL             =   URL.createObjectURL(blob);
-                                                            //console.log("BlobURL->",blobURL);
                                                             Objpdf                  =   document.createElement('object');
                                                             Objpdf.setAttribute('data',blobURL);
                                                             Objpdf.setAttribute('width','100%');
                                                             Objpdf.setAttribute('style','height:700px;');
                                                             Objpdf.setAttribute('title','PDF');
-                                                            */
-                                                            $("#HTML_PDF_ANATOMIA_PATOLOGICA").html('RIN RIN EL ANGELITO');
+                                                            $("#HTML_PDF_ANATOMIA_PATOLOGICA").html(Objpdf);
                                                             $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 
                                                         }
+                                                        $('#loadFade').modal('hide'); 
                                                     }, 
     });
 }
