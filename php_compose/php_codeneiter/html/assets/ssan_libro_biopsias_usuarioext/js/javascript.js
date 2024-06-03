@@ -243,7 +243,8 @@ function local_pdf_rechazomuestra(id_anatomia){
 }
 
 function GET_PDF_ANATOMIA_PANEL(id){
-    $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal("show");
+    $('#loadFade').modal('show'); 
+    //ssan_spab_gestionlistaquirurgica
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA",
@@ -257,15 +258,15 @@ function GET_PDF_ANATOMIA_PANEL(id){
         error		:   function(errro)         { 
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
+                                                        $('#loadFade').modal('hide'); 
                                                         jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                         $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                     },
         success		:   function(aData)         { 
-                                                        console.log("---------------------------------------------");
                                                         console.log(aData);
-                                                        console.log(aData.DATA_RETURN.HTML_QR);
-                                                        console.log("---------------------------------------------");
-                                                        //$('#HTML_PDF_ANATOMIA_PATOLOGICA').html(aData.HTML_BIOPSIAS);
+                                                        $('#loadFade').modal('hide'); 
+                                                        
+                                                        /*
                                                         if(!aData["STATUS"]){
                                                             jError("error al cargar protocolo PDF","Clinica Libre");
                                                             return false;
@@ -289,7 +290,13 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                             Objpdf.setAttribute('title','PDF');
                                                             //$('#HTML_PDF_ANATOMIA_PATOLOGICA').html(aData.DATA_RETURN.HTML_QR);
                                                             $('#HTML_PDF_ANATOMIA_PATOLOGICA').html(Objpdf);
+                                                            $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal("show");
                                                         }
+                                                        */
+
+                                                        $("#HTML_PDF_ANATOMIA_PATOLOGICA").html('RIN RIN EL ANGELITO');
+                                                        $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 
+
                                                     }, 
     });
 }

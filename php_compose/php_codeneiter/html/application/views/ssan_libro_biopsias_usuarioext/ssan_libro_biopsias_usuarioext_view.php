@@ -237,4 +237,24 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="MODAL_PDF_ANATOMIA_PATOLOGICA">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">
+                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;PDF&nbsp;</b>
+                    </h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_PDF_ANATOMIA_PATOLOGICA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>

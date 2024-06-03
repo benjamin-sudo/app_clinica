@@ -23,7 +23,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);
     }
 
-
     public function recarga_html_listaanatomiapatologica(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");
@@ -359,10 +358,20 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         ]));
     }
 
+    #GESTOR UNICO DE PDF DE ANATOMIA
+
+    public function BLOB_PDF_ANATOMIA_PATOLOGICA(){
+        if(!$this->input->is_ajax_request()){  show_404(); }
+        $STATUS     =   true;
+
+        
+
+        $this->output->set_output(json_encode([
+            'STATUS'                        =>  $STATUS,
+        ]));
+    }
 
 
-
-
-
+    
 
 }
