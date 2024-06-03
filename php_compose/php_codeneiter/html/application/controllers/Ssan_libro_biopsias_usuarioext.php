@@ -289,8 +289,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         )));
     }
 
-
-    
     #EN TRASPORTE + GPS
     public function confirma_trasporte(){
         if(!$this->input->is_ajax_request()){  show_404(); }
@@ -315,6 +313,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             $TXT_ERROR                      =   'Error en firma simple';
             $STATUS                         =   false;
         }
+
         $this->output->set_output(json_encode([
             'PASS'                          =>  $password,
             'GET_BD'                        =>  $DATA,
@@ -369,10 +368,8 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
 
 
 
-
-
         $this->output->set_output(json_encode([
-            'STATUS'                        =>  $STATUS,
+            'STATUS'                    =>  $STATUS,
         ]));
     }
 }
