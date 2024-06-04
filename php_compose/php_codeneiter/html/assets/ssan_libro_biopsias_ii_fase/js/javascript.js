@@ -708,6 +708,7 @@ function Carga_listado_pabellon(){
 
 function GET_PDF_ANATOMIA_PANEL(id){
     $('#loadFade').modal('show'); 
+    //alert("-------------->  <------------")
     $.ajax({ 
        type		    :   "POST",
        url 		    :   "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
@@ -742,7 +743,17 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                     Objpdf                  =   document.createElement('object');
                                                     Objpdf.setAttribute('data',blobURL);
                                                     Objpdf.setAttribute('width','100%');
-                                                    Objpdf.setAttribute('style','height:700px;');
+                                                    //Objpdf.setAttribute('style','height:700px;');
+
+
+                                                    // Obtener la altura de la ventana y calcular la altura del PDF
+                                                    var windowHeight = window.innerHeight;
+                                                    var modalHeaderHeight = $('#MODAL_PDF_ANATOMIA_PATOLOGICA .modal-header').outerHeight() || 0;
+                                                    var modalFooterHeight = $('#MODAL_PDF_ANATOMIA_PATOLOGICA .modal-footer').outerHeight() || 0;
+                                                    var availableHeight = windowHeight - modalHeaderHeight - modalFooterHeight - 60; // 60 es para márgenes y padding
+                                                    Objpdf.setAttribute('style', 'height:' + availableHeight + 'px;');
+
+
                                                     Objpdf.setAttribute('title','PDF');
                                                     $('#PDF_VERDOC').html(Objpdf);
                                                 }

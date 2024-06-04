@@ -1,8 +1,10 @@
 <input type="hidden" id="NUM_FASE" name="NUM_FASE" value="1"/>
 <input type="hidden" id="IND_TEMPLETE" name="IND_TEMPLETE" value="ssan_libro_biopsias_listaexterno1"/>
+
 <div class="header" style="padding-top:0;">
     <h4 class="title" style="color:#e34f49;margin-bottom:10px;"><b>TOMA DE MUESTRA | ROTULADO | CUSTODIA O TRASPORTE | ADMINISTRADOR</b></h4>
 </div>
+
 <hr style="margin:0px 0px 0px 0px">
 <div class="css_rotulado_externo">
     <div class="css_rotulado_externo1"> 
@@ -305,21 +307,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">GESTI&Oacute;N DE MUESTRAS ANATOM&Iacute;A</b></h3>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body" id="HTML_INFORMACION_ETIQUETA"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -336,5 +323,21 @@
             </div>
         </div>
     </div>
+</section>
 
+<section>
+    <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">GESTI&Oacute;N DE MUESTRAS ANATOM&Iacute;A</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_INFORMACION_ETIQUETA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

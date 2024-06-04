@@ -2849,7 +2849,6 @@ function recepcion_custodia_masiva(){
             document.getElementById(obj.id).checked = false;
         } 
     });
-    
     if (arr_solicitudes.length != 1){
         jError("Debe marcar solo una solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre");
         return false;
@@ -2909,6 +2908,7 @@ function busqueda_etiquera(from,solicitud,array){
     */
 
     $('#loadFade').modal('show');
+    
     $.ajax({ 
         type                :   "POST",
         url                 :   "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",
@@ -2933,17 +2933,16 @@ function busqueda_etiquera(from,solicitud,array){
                                                 },
         success             :   function(aData) { 
                                                     $('#loadFade').modal('hide'); 
-
                                                     /*
-                                                    console.log("------------informacion_x_muestra_grupal---------------------------------------");
-                                                    console.log("                               ->",aData,"                                     ");
-                                                    console.log(" data_main                     ->",aData.data_main,"                           ");
-                                                    console.log(" logs                          ->",aData.logs,"                                ");
-                                                    console.log(" P_AP_INFORMACION_ADICIONAL    ->",aData.P_AP_INFORMACION_ADICIONAL,"          ");
-                                                    console.log(" ARR_CASETE_ORD                ->",aData.ARR_CASETE_ORD,"                      ");
-                                                    console.log("-------------------------------------------------------------------------------");
+                                                    console.log("------------   informacion_x_muestra_grupal    ----------------------------------");
+                                                    console.log("                               ->  ",aData,"                                     ");
+                                                    console.log(" data_main                     ->  ",aData.data_main,"                           ");
+                                                    console.log(" logs                          ->  ",aData.logs,"                                ");
+                                                    console.log(" P_AP_INFORMACION_ADICIONAL    ->  ",aData.P_AP_INFORMACION_ADICIONAL,"          ");
+                                                    console.log(" ARR_CASETE_ORD                ->  ",aData.ARR_CASETE_ORD,"                      ");
+                                                    console.log("---------------------------------------------------------------------------------");
                                                     */ 
-                                                   
+                                                    //MODAL_INFORMACION_ETIQUETA
                                                     if(aData.STATUS){
                                                         if ($('#UL_TABS_MUESTRA li').size()==0){
                                                             $('#get_etiqueta,#get_etiqueta_modal').val('');
