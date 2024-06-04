@@ -7,10 +7,10 @@ $(document).ready(function(){
 
     //MODAL GLOBAL DE ETIQUETAS
     $("#MODAL_INFORMACION_ETIQUETA").on('show.bs.modal',function(e){ 
-	    $('.modal .modal-body').css('overflow-y','auto'); 
-        var _height = $(window).height()*0.8;
-        $('.modal .modal-body').css('max-height',_height);
-        $('.modal .modal-body').css('min-height',_height);
+	    //$('.modal .modal-body').css('overflow-y','auto'); 
+        //var _height = $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        //$('.modal .modal-body').css('min-height',_height);
         //document.getElementById("get_etiqueta").disabled    =   true;
         //$('#get_etiqueta_modal').focus();
         //document.getElementById("get_etiqueta_modal").focus();
@@ -19,7 +19,7 @@ $(document).ready(function(){
     $('#MODAL_INFORMACION_ETIQUETA').on('hidden.bs.modal',function(e){ 
         console.log("e  ->  ",e);
         //document.getElementById("get_etiqueta").disabled    =   false;
-        $('.popover').popover('hide');
+        //$('.popover').popover('hide');
         $("#HTML_INFORMACION_ETIQUETA").html(''); 
     });
 
@@ -2863,7 +2863,7 @@ function recepcion_custodia_masiva(){
         var return_val               =   busqueda_etiquera(3,num_fist,{array_anatomia:arr_solicitudes.length===0?{}:arr_solicitudes});
         console.log("return_val      ->  ",return_val);
         if (return_val){ 
-            UPDATE_PANEL();  
+            //UPDATE_PANEL();  
         }
     } else {    
         jError("S&oacute;lo se puede recepcionar una muestra a la vez","Clinica Libre");
@@ -2896,19 +2896,18 @@ function busqueda_etiquera(from,solicitud,array){
     }
     
     /*
-    console.log("   ----------------------------------------------------    ");
-    console.log("   ----------------    busqueda_etiquera   ------------    "); 
-    console.log("   from               =>  ",from,"                         ");
-    console.log("   solicitud          =>  ",solicitud,"                    ");
-    console.log("   get_etiqueta       =>  ",get_etiqueta,"                 ");
-    console.log("   array              =>  ",array,"                        ");
-    console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
-    console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
-    console.log("   ----------------------------------------------------    ");
+        console.log("   ----------------------------------------------------    ");
+        console.log("   ----------------    busqueda_etiquera   ------------    "); 
+        console.log("   from               =>  ",from,"                         ");
+        console.log("   solicitud          =>  ",solicitud,"                    ");
+        console.log("   get_etiqueta       =>  ",get_etiqueta,"                 ");
+        console.log("   array              =>  ",array,"                        ");
+        console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
+        console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
+        console.log("   ----------------------------------------------------    ");
     */
 
     $('#loadFade').modal('show');
-    
     $.ajax({ 
         type                :   "POST",
         url                 :   "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",
@@ -2942,21 +2941,20 @@ function busqueda_etiquera(from,solicitud,array){
                                                     console.log(" ARR_CASETE_ORD                ->  ",aData.ARR_CASETE_ORD,"                      ");
                                                     console.log("---------------------------------------------------------------------------------");
                                                     */ 
-                                                    //MODAL_INFORMACION_ETIQUETA
+                                                    
                                                     if(aData.STATUS){
                                                         if ($('#UL_TABS_MUESTRA li').size()==0){
                                                             $('#get_etiqueta,#get_etiqueta_modal').val('');
                                                             $('#HTML_INFORMACION_ETIQUETA').html(aData.HTML_OUT);
                                                             $('#MODAL_INFORMACION_ETIQUETA').modal({backdrop:'static',keyboard:false}).modal("show");
-
                                                         } else {
                                                             $('#UL_TABS_MUESTRA').append('<li role="presentation" id="LI_TABS_'+aData.NUM_ANAT+'" ><a href="#TABS_'+aData.NUM_ANAT+'"  data-toggle="tab" role="tab" aria-controls="TABS_'+aData.NUM_ANAT+'" aria-selected="false">N&deg;&nbsp;'+aData.NUM_ANAT+'</a></li>');
                                                             $('#TABS_TAB_PANEL').append('<div role="tabpanel" class="tab-pane" id="TABS_'+aData.NUM_ANAT+'" aria-labelledby="TABS_'+aData.NUM_ANAT+'_1">'+aData.HTML_VIWE+'</div>');
                                                             $('#UL_TABS_MUESTRA').tab();
                                                             $('#UL_TABS_MUESTRA li:last-child a').tab('show');
                                                         }
-                                                        txt_busq_muestra?busqueda_etiquera_modal(get_etiqueta):'';
-                                                        js_viwes_btn_masivo();
+                                                        //txt_busq_muestra?busqueda_etiquera_modal(get_etiqueta):'';
+                                                        //js_viwes_btn_masivo();
                                                     } else {
                                                         jError(aData['DATA']['P_ERROR'][0].TXT_ERROR,"Clinica Libre");
                                                     }
