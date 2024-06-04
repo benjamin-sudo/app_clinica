@@ -37,7 +37,7 @@
   
   <style>
     #loadFade .modal-content  { background-color: #fff;     }
-    #loadFade .modal-body     { text-align: center;  min-height: 100px;  }
+    #loadFade .modal-body     { text-align: center;  min-height: 100px;  max-height:200px }
     .nav-link.activo          { }
     .text-center              { text-align: center;  }
     .btn-warning              { color: white !important; }
@@ -220,6 +220,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
   -->
   <section>
+    
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">

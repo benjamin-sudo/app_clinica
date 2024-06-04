@@ -1028,7 +1028,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 }
                                 //******************************************************
                             }  else if ($CALL_FASE == 2){
-                                        
+                                
                                 if($row['ID_HISTO_ESTADO'] == 3){
                                     $BTN                .=      '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>RECEPCI&Oacute;N</a></li>';
                                     $BTN                .=      '<li class="divider"></li>';
@@ -1055,12 +1055,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             }
 
                             $BTN                        .=  '<li><a class="dropdown-item" href="javascript:GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>';
-
                             $BTN .=   '
                             </ul>
                         </div>
                         ';
-               
                 #ID_HISTO_ESTADO
                 $html_tooltip2          =   '';
                 if($row['ID_HISTO_ESTADO']!=1){
@@ -1149,7 +1147,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                     -->
                                                     </div> 
                                                 </div>
-                                                
                                                 <div>
                                                     <div class="grid_lista_gestion_masivo_li">
                                                         <div class="grid_lista_gestion_masivo_li1">'.$BTN.'</div>
@@ -1157,8 +1154,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                         <div class="grid_lista_gestion_masivo_li2">';
                                                         if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
                                                             $style_display_none         =   $CALL_FASE==2&&$row['ID_HISTO_ESTADO']==3?'display:none;':'display:none;';
-                                                            
-                                                            
                                                             $HTML       .=      '
                                                                                     <input 
                                                                                     type        =   "checkbox" 
@@ -1171,8 +1166,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                         } else {
                                                             $HTML       .=      '';
                                                         }
-                
-                    $HTML           .=                  '</div>
+                                            $HTML .= '</div>
                                                     </div>
                                                 </div>
                                             </div>

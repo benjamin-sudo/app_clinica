@@ -1,6 +1,6 @@
 $(document).ready(function(){
-    //ejemplo tiempo en milisegundos 
     var todayDate           =   new Date().getDate();
+    
     $("#date_tabla").datetimepicker({
         format              :   'DD-MM-YYYY',
         //minDate           :   new Date(new Date().setDate((todayDate)-(30))),
@@ -17,13 +17,9 @@ $(document).ready(function(){
                                     clear       :   "fa fa-trash"           ,
                                     close       :   "fa fa-remove"          ,
                                 }
-    }).on('dp.change',function(e){  update_main(0);  });
+    }).on('dp.change',function(e){ update_main(0); });
     $("#viwes_punto_entrega").selectpicker();
     $("#viwes_origen_solicitud").selectpicker();
-    //falta configurar frasco en loalstronge
-    //setup_web_print();
-    //ws load envio - recepcion
-    //load_envio_a_recepcion_ws(0);
 });
 
 function test_envio(){
