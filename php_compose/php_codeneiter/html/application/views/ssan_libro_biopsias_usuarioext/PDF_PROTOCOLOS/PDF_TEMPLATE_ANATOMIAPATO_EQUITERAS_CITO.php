@@ -199,8 +199,8 @@
                     <td colspan="2" class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>DATOS PACIENTE:</b></td>
                 </tr>
                 <tr>
-                    <td width="50%" class="subtitulo_formulario2"   >NOMBRE DEL PACIENTE:</td>
-                    <td width="50%" class="subtitulo_formulario2"   ><?php echo $VAR_NOMBRE_PACIENTE;?></td>
+                    <td width="50%" class="subtitulo_formulario2">NOMBRE DEL PACIENTE:</td>
+                    <td width="50%" class="subtitulo_formulario2"><?php echo $VAR_NOMBRE_PACIENTE;?></td>
                 </tr>
                 <tr class="subtitulo_formulario2">
                     <td class="subtitulo_formulario2"> RUN:</td>
@@ -313,10 +313,10 @@
                     </td>
                 </tr>
                 <tr class="subtitulo_formulario2" >
-                    <td class="subtitulo_formulario2"   bgcolor="#ECF1F1"><b>N&deg;</b></td>
-                    <td class="subtitulo_formulario2"   bgcolor="#ECF1F1"><b># UNICA</b></td>
-                    <td class="subtitulo_formulario2"   bgcolor="#ECF1F1"><b>ML</b></td>
-                    <td class="subtitulo_formulario2"   bgcolor="#ECF1F1"><b>OBSERVACI&Oacute;N</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>N&deg;</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b># UNICA</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>ML</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>OBSERVACI&Oacute;N</b></td>
                 </tr>
             </thead>   
             <tbody>
