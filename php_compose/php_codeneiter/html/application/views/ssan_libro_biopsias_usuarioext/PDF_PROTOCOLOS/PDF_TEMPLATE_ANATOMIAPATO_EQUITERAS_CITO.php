@@ -45,9 +45,7 @@
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>REPORTE DE SOLICITUD ANATOM&Iacute;A PATOLOG&Iacute;A</title>
-        
         <link href="<?php echo base_url();?>/assets/themes/inicio/css/boobtstrap.css" rel="stylesheet"></link>
-        
         <style>
             .barcode                        {
                 padding                     :   1.5mm;

@@ -40,16 +40,13 @@
     $GET_MAIN                           =   $VAR_ANATOMIA_PATALOGICA.'&nbsp;1';
     $get                                =   'text='.$GET_MAIN;
     $PROFESION                          =   '';
-   
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>REPORTE DE SOLICITUD ANATOM&Iacute;A PATOLOG&Iacute;A</title>
-        
         <link href="<?php echo base_url();?>/assets/themes/inicio/css/boobtstrap.css" rel="stylesheet"></link>
-        
         <style>
             div.container               {
                 width                   :   100%;
