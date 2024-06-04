@@ -5,6 +5,7 @@
     data-getdata        =   "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
     data-userdata       =   "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
 ></div>
+
 <input type="hidden"    id="get_sala"           name="get_sala"     value="<?php echo $txt_sala;?>"/>
 <input type="hidden"    id="SERVER_NAME"        name="SERVER_NAME"  value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
 <form id="load_ingreso_etapa_analitica"         method="post"       action="#"></form>
@@ -540,6 +541,9 @@
 <span id="nombre_nomina"></span>
 
 <section>
+
+
+                
     <div class="modal fade" id="Dv_verdocumentos" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
         <div class="modal-dialog modal-xl3" style="width:80%;">
             <div class="modal-content">
@@ -553,6 +557,8 @@
             </div>
         </div>
     </div>
+
+
 </section>
 
 <!--

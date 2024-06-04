@@ -707,11 +707,14 @@ function Carga_listado_pabellon(){
 }
 
 function GET_PDF_ANATOMIA_PANEL(id){
-   $("#Dv_verdocumentos").modal("show");
-   $.ajax({ 
-       type		:   "POST",
-       url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA",
-       dataType        :   "json",
+
+    alert(" HOLA    ");
+
+    $("#Dv_verdocumentos").modal("show");
+    $.ajax({ 
+       type		    :   "POST",
+       url 		    :   "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
+       dataType     :   "json",
        beforeSend	:   function(xhr)           {   
                                                        console.log(xhr);
                                                        console.log("generando PDF");
