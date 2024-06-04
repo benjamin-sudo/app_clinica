@@ -1048,79 +1048,19 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     //$BTN              .=      '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
                                 } else if($row['ID_HISTO_ESTADO'] == 5){
                                     $BTN                .=      '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF RECHAZADA</a></li>';
+                                    $BTN                .=  '<li><hr class="dropdown-divider"></li>';
                                 }
                             } else {
                                 $BTN                    .=  '';
                             }
 
-                            $BTN                        .=  '<li><hr class="dropdown-divider"></li>';
-
                             $BTN                        .=  '<li><a class="dropdown-item" href="javascript:GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>';
 
-                $BTN            .=   '
-                                
+                            $BTN .=   '
                             </ul>
                         </div>
                         ';
-                
-                /*
-
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                <li><a class="dropdown-item" href="#">Separated link</a></li>
-
-                                
-                $BTN           .=   ' <div class="btn-group">
-                                        <a class="btn btn-fill btn-info dropdown-toggle dropdown-menu-right" data-toggle="dropdown" href="#">
-                                            <i class="fa fa-cog" aria-hidden="true"></i>
-                                            <span class="fa fa-caret-down" title="Men&uacute; de anatom&iacute;a patol&oacute;gica"></span>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-right" style="margin-top:0px;min-width:240px;">';
-                    if ($CALL_FASE == 1){
-                        //******************************************************
-                        if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2){
-                            $BTN                .=      '<li><a href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>EN CUSTODIA / TRASPORTE</a></li>';
-                            $BTN                .=      '<li class="divider"></li>';
-                        }
-                        if ($row['ID_HISTO_ESTADO'] == 2){
-                            //historial
-                            //$BTN              .=      '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
-                            //$BTN              .=      '<li class="divider"></li>';
-                        }
-                        //******************************************************
-                    }   else if ($CALL_FASE == 2){
-                        if($row['ID_HISTO_ESTADO'] == 3){
-                            $BTN                .=      '<li><a href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>RECEPCI&Oacute;N</a></li>';
-                            $BTN                .=      '<li class="divider"></li>';
-                        } else if($row['ID_HISTO_ESTADO'] == 4){
-                            //IND_ESTADO_MUESTRAS
-                            if ($row['IND_ESTADO_MUESTRAS']!=1){
-                                $BTN            .=      '<li><a href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>RECEPCI&Oacute;N REZAGADAS</a></li>';
-                                //$BTN          .=      '<li class="divider"></li>';
-                                $BTN            .=      '<li><a href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>INFORME DE RECHAZO</a></li>';
-                                //$BTN          .=      '<li class="divider"></li>';
-                            } else {
-                                $BTN            .=      '<li><a href="javascript:pdf_recepcion_ok('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF RECEPCI&Oacute;N</a></li>';
-                                $BTN            .=      '<li><a href="javascript:informar_x_correo('.$row['ID_SOLICITUD'].')"><i class="fa fa-envelope-open" aria-hidden="true"></i>INFORMAR POR CORREO</a></li>';
-                                //$BTN          .=      '<li class="divider"></li>';
-                            }
-                            //historial
-                            //$BTN              .=      '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
-                        } else if($row['ID_HISTO_ESTADO'] == 5){
-                            $BTN                .=      '<li><a href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF RECHAZADA</a></li>';
-                        }
-                    } else {
-                        $BTN                    .=  '';
-                    }
-                    $BTN                        .=  '<li><a href="javascript:GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o"></i>PDF ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>
-                    
-                                    </ul>
-                                </div>
-                                    ';
-                    */
-
-
+               
                 #ID_HISTO_ESTADO
                 $html_tooltip2          =   '';
                 if($row['ID_HISTO_ESTADO']!=1){
