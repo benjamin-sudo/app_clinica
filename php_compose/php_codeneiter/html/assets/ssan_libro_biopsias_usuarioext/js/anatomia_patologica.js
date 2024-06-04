@@ -800,12 +800,12 @@ function PRE_GET_PDF_ANATOMIA(id){
     $("#MODAL_FORM_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show");
     GET_PDF_ANATOMIA(id);
 }
+
 function GET_PDF_ANATOMIA(id){
     $("#HTML_ANATOMIA_PATOLOGICA").html('');
     $.ajax({ 
         type		:   "POST",
-        url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA",
-        //url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA_ETIQUETAS",
+        url 		:   "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
         dataType    :   "json",
         beforeSend  :   function(xhr)   {   
                                             console.log(xhr);
@@ -823,28 +823,20 @@ function GET_PDF_ANATOMIA(id){
                                         },
 
         success		:   function(aData) { 
-                                            console.log("---------------------------------------------");
                                             console.log(aData);
-                                            console.log("---------------------------------------------");
                                             
                                             if(!aData["STATUS"]){
                                                 jError("error al cargar protocolo PDF","Clinica Libre");
                                                 return false;
                                             } else {
                                                 var base64str           =   aData["PDF_MODEL"];
-                                                //decode base64 string, Eliminar espacio para compatibilidad con IE
                                                 var binary              =   atob(base64str.replace(/\s/g,''));
                                                 var len                 =   binary.length;
                                                 var buffer              =   new ArrayBuffer(len);
                                                 var view                =   new Uint8Array(buffer);
                                                 for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                //console.log("view->",view);
-                                                //create the blob object with content-type "application/pdf"  
                                                 var blob                =   new Blob([view],{type:"application/pdf"});
                                                 var blobURL             =   URL.createObjectURL(blob);
-                                                //console.log("-------------------------------------");
-                                                //console.log("BlobURL        =>",blobURL);
-                                                //console.log("-------------------------------------");
                                                 Objpdf                  =   document.createElement('object');
                                                 Objpdf.setAttribute('data',blobURL);
                                                 Objpdf.setAttribute('width','100%');

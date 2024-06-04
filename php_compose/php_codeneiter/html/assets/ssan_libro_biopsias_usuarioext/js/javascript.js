@@ -151,17 +151,14 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
         error		        :   function(errro)     {  
                                                         $("#GESTION_PASEAPENDIENTE").modal("hide"); 
                                                         console.log("----------------------------------------------------");
-                                                        console.log("errro          -> ",errro,"                         ");  
+                                                        console.log("errro -> ",errro); 
                                                         $("#loadFade").modal('hide'); 
                                                         jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     },
         success             :   function(aData)     {
                                                         $("#loadFade").modal('hide'); 
-                                                        
-                                                        console.log("   -----------------------------------------------------------------------------   ");
-                                                        console.log("   aData               ->  ",aData);
-                                                        //console.log("   NUEVAS_SOLICITUDES  ->  ",aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
-                                                        //console.log("   VISTA_SOLICITUDES   ->  ",aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
+                                                        //console.log("   -----------------------------------------------------------------------------   ");
+                                                        //console.log("   aData               ->  ",aData);
                                                         $("#RETURN_DATA_5").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
                                                         $("#RETURN_DATA_4").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
                                                     }, 

@@ -998,25 +998,22 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         ];
     }
 
-    ########################################
-    #   ssan_libro_biopsias_ii_fase ########
-    #   MAIN ANATOMIA PATOLOGICA PRINCIPAL #
-    #   MAIN MODULO SIN CITA ###############
-    ########################################
-
+    #########################################
+    #   ssan_libro_biopsias_ii_fase         #
+    #   MAIN ANATOMIA PATOLOGICA PRINCIPAL  #
+    #   MAIN MODULO SIN CITA                #
+    #########################################
     public function LI_RESULTADOS_ANATOMIA($ARRAY,$CALL_FASE){
         $HTML                   =   '';
         if(count($ARRAY)>0){
             foreach($ARRAY as $i => $row){
                 $num            =   ($i+1);
                 $BTN            =   '
-                
                         <div class="btn-group">
                             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-cog" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">';
-
 
                             if ($CALL_FASE == 1){
                                 //******************************************************
@@ -1059,8 +1056,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             $BTN                        .=  '<li><hr class="dropdown-divider"></li>';
 
                             $BTN                        .=  '<li><a class="dropdown-item" href="javascript:GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>';
-                                            
-
 
                 $BTN            .=   '
                                 
@@ -1119,7 +1114,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                         $BTN                    .=  '';
                     }
                     $BTN                        .=  '<li><a href="javascript:GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o"></i>PDF ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>
-                                    
                     
                                     </ul>
                                 </div>

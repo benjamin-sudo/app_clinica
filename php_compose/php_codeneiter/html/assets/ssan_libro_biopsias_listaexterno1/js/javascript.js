@@ -1,23 +1,6 @@
 $(document).ready(function(){
     //ejemplo tiempo en milisegundos 
-    /*
-        var inicio          =   Date.now();
-        console.log("inicio ->  ",inicio);
-        var dias            =   (2*86400000);
-        var transcurso      =   inicio + dias; 
-        console.log("tiempo en milisegundos ->",transcurso);
-        let date            =   new Date(transcurso);
-        let day             =   date.getDate();
-        let month           =   date.getMonth()+1;
-        let year            =   date.getFullYear();
-        if(month < 10){
-            console.log(`${day}-0${month}-${year}`);
-        } else {
-            console.log(`${day}-${month}-${year}`);
-        }
-    */
     var todayDate           =   new Date().getDate();
-    
     $("#date_tabla").datetimepicker({
         format              :   'DD-MM-YYYY',
         //minDate           :   new Date(new Date().setDate((todayDate)-(30))),

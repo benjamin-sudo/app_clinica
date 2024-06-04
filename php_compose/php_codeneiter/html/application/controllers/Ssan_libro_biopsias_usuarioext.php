@@ -14,14 +14,22 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     public function index(){
         $this->output->set_template('blank');
         $empresa                    =   $this->session->userdata("COD_ESTAB");
-        $data                       =   [];
-        $data['HTML_SOLICITUDEAP']  =   '<tr style="text-align: center;">
-                                            <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
-                                        </tr>';
+        $responde                   =   [];
+        $date_from                  =   date("d-m-Y");
+        $date_to                    =   date("d-m-Y");
+        $session                    =   explode("-",$this->session->userdata('USERNAME'))[0];
+        $responde                   =   $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA([
+            "COD_EMPRESA"           =>  $empresa,
+            "USR_SESSION"           =>  $session,
+            "DATE_FROM"             =>  $date_from,
+            "DATE_TO"               =>  $date_to,
+            "LODA_X_SISTEMAS"       =>  2, //SOLO USUARIO EXTERNO
+        ]);
+        $responde['HTML_SOLICITUDEAP']  =  $responde['HTML_SOLICITUDEAP']['NUEVAS_SOLICITUDES'];
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/Ssan_libro_biopsias_usuarioext/js/javascript.js");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js"); #js formulario anatomia
-        $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$data);
+        $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$responde);
     }
 
     public function recarga_html_listaanatomiapatologica(){

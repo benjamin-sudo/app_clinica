@@ -223,25 +223,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="title" style="color:#e34f49">
-                        <b>FORMULARIO ANATOM&Iacute;A PATOL&Oacute;GICA</b>
-                    </h4>
-                </div>
-                <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA"></div>
-                <div class="modal-footer" style="text-align:end;">
-                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                        <i class="fa fa-window-close" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="modal fade" id="MODAL_INFORME_EVENTOS_ADVERSOS">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -323,9 +305,6 @@
         </div>
     </div>
 
-
-
-
     <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -340,4 +319,22 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>

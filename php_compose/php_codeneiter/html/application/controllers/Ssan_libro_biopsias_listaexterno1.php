@@ -356,7 +356,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $arr_errores                        =   array();
         $arr_password                       =   $this->input->post('pass');
         $valida                             =	$this->Ssan_libro_biopsias_usuarioext_model->sqlValidaClave_doble($arr_password);
-
         count($valida['user_1'])>0?'':array_push($arr_errores,"Error en la firma del usuario de trasporte");
         count($valida['user_2'])>0?'':array_push($arr_errores,"Error en la firma del usuario de recepci&oacute;n");
         if(count($arr_errores)>0){
