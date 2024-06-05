@@ -78,7 +78,7 @@ function update_main(value){
         console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
         console.log("   ---------------------------------------------------------------------------     ");
     */
-    
+        
     $.ajax({ 
         type		:   "POST",
         url		    :   ind_ruta,
