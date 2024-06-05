@@ -186,27 +186,29 @@ function remove_lista_usuario(id){
 
 //BUSQUEDA DEL CORRELATIVO SEGUN LA BIOPSIA
 function busqueda_numero_disponible(tipo_biopsia){
-    console.log("tipo_biopsia   ->  ",tipo_biopsia);
+    $('#loadFade').modal('show'); 
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("xhr->",xhr);
-                                                },
-        data                :                   {   tipo_biopsia : tipo_biopsia },
-        error		        :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                },
-        success             :   function(aData) { 
-                                                    console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
-                                                    $("#num_interno").val('');
-                                                    var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
-                                                    showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
-                                                    $("#num_interno").val(num_last);
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible",
+        dataType : "json",
+        beforeSend : function(xhr) {   
+                                        console.log("xhr->",xhr);
+                                    },
+        data : {   tipo_biopsia : tipo_biopsia },
+        error :   function(errro) { 
+                                        console.log(errro);  
+                                        console.log(errro.responseText); 
+                                        $('#loadFade').modal('hide');    
+                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    },
+        success :   function(aData) { 
+                                        console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
+                                        $('#loadFade').modal('hide'); 
+                                        $("#num_interno").val('');
+                                        var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
+                                        showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
+                                        $("#num_interno").val(num_last);
+                                    }, 
     });
 }
 
@@ -2248,10 +2250,10 @@ function pdf_rechazomuestra(id_anatomia){
 }
 
 function pdf_recepcion_ok(id_anatomia){
-	 $('#loadFade').modal('show');
+	$('#loadFade').modal('show');
     $.ajax({ 
         type		:   "POST",
-        url 		:   "ssan_spab_gestionlistaquirurgica/pdf_recepcion_anatomia_pat_ok",
+        url 		:   "ssan_libro_biopsias_usuarioext/pdf_recepcion_anatomia_pat_ok",
         dataType    :   "json",
         beforeSend	:   function(xhr)   {   
                                             console.log(xhr);
@@ -2275,29 +2277,73 @@ function pdf_recepcion_ok(id_anatomia){
                                                 jError("error al cargar protocolo PDF","Clinica Libre");
                                                 return false;
                                             } else {
-                                                $("#Dv_verdocumentos").modal("show");
-                                                var base64str           =   aData["PDF_MODEL"];
-                                                //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                var binary              =   atob(base64str.replace(/\s/g,''));
-                                                var len                 =   binary.length;
-                                                var buffer              =   new ArrayBuffer(len);
-                                                var view                =   new Uint8Array(buffer);
+                                                var base64str = aData["PDF_MODEL"];
+                                                var binary = atob(base64str.replace(/\s/g,''));
+                                                var len = binary.length;
+                                                var buffer = new ArrayBuffer(len);
+                                                var view = new Uint8Array(buffer);
                                                 for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                //console.log("view->",view);
-                                                //create the blob object with content-type "application/pdf"  
-                                                var blob                =   new Blob([view],{type:"application/pdf"});
-                                                var blobURL             =   URL.createObjectURL(blob);
-                                                //console.log("BlobURL->",blobURL);
-                                                Objpdf                  =   document.createElement('object');
+                                                var blob = new Blob([view],{type:"application/pdf"});
+                                                var blobURL = URL.createObjectURL(blob);
+                                                Objpdf = document.createElement('object');
                                                 Objpdf.setAttribute('data',blobURL);
                                                 Objpdf.setAttribute('width','100%');
                                                 Objpdf.setAttribute('style','height:700px;');
                                                 Objpdf.setAttribute('title','PDF');
                                                 $('#PDF_VERDOC').html(Objpdf);
+                                                $("#Dv_verdocumentos").modal("show");
                                             }
                                         }, 
    });
 }
+
+function GET_PDF_ANATOMIA_PANEL(id){
+    $('#loadFade').modal('show'); 
+    $.ajax({ 
+       type		    :   "POST",
+       url 		    :   "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
+       dataType     :   "json",
+       beforeSend	:   function(xhr)       {   
+                                                console.log(xhr);
+                                                console.log("generando PDF");
+                                                $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
+                                            },
+       data 		:                       { 
+                                                id  :   id,
+                                            },
+       error		:   function(errro)     { 
+                                                console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                $('#loadFade').modal('hide'); 
+                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                            },
+       success		:   function(aData)     { 
+                                                console.log(aData);
+                                                if(!aData["STATUS"]){
+                                                    jError("error al cargar protocolo PDF","e-SISSAN");
+                                                    return false;
+                                                } else {
+                                                    var base64str           =   aData["PDF_MODEL"];
+                                                    var binary              =   atob(base64str.replace(/\s/g,''));
+                                                    var len                 =   binary.length;
+                                                    var buffer              =   new ArrayBuffer(len);
+                                                    var view                =   new Uint8Array(buffer);
+                                                    for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                                    var blob                =   new Blob([view],{type:"application/pdf"});
+                                                    var blobURL             =   URL.createObjectURL(blob);
+                                                    Objpdf                  =   document.createElement('object');
+                                                    Objpdf.setAttribute('data',blobURL);
+                                                    Objpdf.setAttribute('width','100%');
+                                                    Objpdf.setAttribute('style','height:700px;');
+                                                    Objpdf.setAttribute('title','PDF');
+                                                    $('#PDF_VERDOC').html(Objpdf);
+                                                }
+                                                $('#loadFade').modal('hide'); 
+                                                $("#Dv_verdocumentos").modal("show");
+                                            }, 
+   });
+}
+
+
 
 function valida_cambio_estado_muestras(){
     
@@ -2933,15 +2979,14 @@ function busqueda_etiquera(from,solicitud,array){
         success             :   function(aData) { 
                                                     $('#loadFade').modal('hide'); 
                                                     /*
-                                                    console.log("------------   informacion_x_muestra_grupal    ----------------------------------");
-                                                    console.log("                               ->  ",aData,"                                     ");
-                                                    console.log(" data_main                     ->  ",aData.data_main,"                           ");
-                                                    console.log(" logs                          ->  ",aData.logs,"                                ");
-                                                    console.log(" P_AP_INFORMACION_ADICIONAL    ->  ",aData.P_AP_INFORMACION_ADICIONAL,"          ");
-                                                    console.log(" ARR_CASETE_ORD                ->  ",aData.ARR_CASETE_ORD,"                      ");
-                                                    console.log("---------------------------------------------------------------------------------");
+                                                        console.log("------------   informacion_x_muestra_grupal    ----------------------------------");
+                                                        console.log("                               ->  ",aData,"                                     ");
+                                                        console.log(" data_main                     ->  ",aData.data_main,"                           ");
+                                                        console.log(" logs                          ->  ",aData.logs,"                                ");
+                                                        console.log(" P_AP_INFORMACION_ADICIONAL    ->  ",aData.P_AP_INFORMACION_ADICIONAL,"          ");
+                                                        console.log(" ARR_CASETE_ORD                ->  ",aData.ARR_CASETE_ORD,"                      ");
+                                                        console.log("---------------------------------------------------------------------------------");
                                                     */ 
-                                                    
                                                     if(aData.STATUS){
                                                         if ($('#UL_TABS_MUESTRA li').size()==0){
                                                             $('#get_etiqueta,#get_etiqueta_modal').val('');
@@ -3954,8 +3999,6 @@ function js_editanombre(id){
 
 function js_confirma_cambio(id){
     let nombre = $("#new_nombre_"+id).val().toUpperCase();
-    //console.log("-----------------------------");
-    //console.log("   nombre  ->  ",nombre);
     jPrompt('Con esta acci&oacute;n proceder&aacute; a editar nombre de punto de toma de muestra','','Confirmaci\u00f3n Clinica Libre',function(r){
         if(r){      
            $('#loadFade').modal('show');
@@ -3979,7 +4022,7 @@ function js_confirma_cambio(id){
                                                       console.error("aData -> ",aData);
                                                       $('#loadFade').modal('hide');
                                                       if (aData.esissan){
-                                                        showNotification('top','left',"Se editÃ³ nombre de toma de muestra ",4,'fa fa-check-square');
+                                                        showNotification('top','left',"Se edito nombre de toma de muestra ",4,'fa fa-check-square');
                                                         $("#modal_gestion_tomamuestraxuser").modal('hide');
                                                         setTimeout(function() {
                                                             // CÃ³digo que se ejecutarÃ¡ despuÃ©s de 3 segundos

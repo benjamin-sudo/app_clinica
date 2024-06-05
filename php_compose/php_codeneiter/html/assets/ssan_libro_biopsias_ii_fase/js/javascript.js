@@ -706,62 +706,7 @@ function Carga_listado_pabellon(){
     //AjaxExt(variables,id,funcion); //Funcion que Ejecuta la llamada del ajax
 }
 
-function GET_PDF_ANATOMIA_PANEL(id){
-    $('#loadFade').modal('show'); 
-    //alert("-------------->  <------------")
-    $.ajax({ 
-       type		    :   "POST",
-       url 		    :   "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
-       dataType     :   "json",
-       beforeSend	:   function(xhr)       {   
-                                                console.log(xhr);
-                                                console.log("generando PDF");
-                                                $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
-                                            },
-       data 		:                       { 
-                                                id  :   id,
-                                            },
-       error		:   function(errro)     { 
-                                                console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                $('#loadFade').modal('hide'); 
-                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                            },
-       success		:   function(aData)     { 
-                                                console.log(aData);
-                                                if(!aData["STATUS"]){
-                                                    jError("error al cargar protocolo PDF","e-SISSAN");
-                                                    return false;
-                                                } else {
-                                                    var base64str           =   aData["PDF_MODEL"];
-                                                    var binary              =   atob(base64str.replace(/\s/g,''));
-                                                    var len                 =   binary.length;
-                                                    var buffer              =   new ArrayBuffer(len);
-                                                    var view                =   new Uint8Array(buffer);
-                                                    for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                    var blob                =   new Blob([view],{type:"application/pdf"});
-                                                    var blobURL             =   URL.createObjectURL(blob);
-                                                    Objpdf                  =   document.createElement('object');
-                                                    Objpdf.setAttribute('data',blobURL);
-                                                    Objpdf.setAttribute('width','100%');
-                                                    //Objpdf.setAttribute('style','height:700px;');
 
-
-                                                    // Obtener la altura de la ventana y calcular la altura del PDF
-                                                    var windowHeight = window.innerHeight;
-                                                    var modalHeaderHeight = $('#MODAL_PDF_ANATOMIA_PATOLOGICA .modal-header').outerHeight() || 0;
-                                                    var modalFooterHeight = $('#MODAL_PDF_ANATOMIA_PATOLOGICA .modal-footer').outerHeight() || 0;
-                                                    var availableHeight = windowHeight - modalHeaderHeight - modalFooterHeight - 60; // 60 es para márgenes y padding
-                                                    Objpdf.setAttribute('style', 'height:' + availableHeight + 'px;');
-
-
-                                                    Objpdf.setAttribute('title','PDF');
-                                                    $('#PDF_VERDOC').html(Objpdf);
-                                                }
-                                                $('#loadFade').modal('hide'); 
-                                                $("#Dv_verdocumentos").modal("show");
-                                            }, 
-   });
-}
 
 function PDF_NORECEP(correl){
    var rnadd    =   Math.floor((Math.random() * 900) + 1);

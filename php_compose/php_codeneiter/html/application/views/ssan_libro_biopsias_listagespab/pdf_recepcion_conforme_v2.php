@@ -138,7 +138,9 @@
                     <table style="width:100%">
                         <tr>
                             <td style="width:20%;">
+                                <!--
                                 <barcode type="QR" class="barcode" code="https://www.esissan.cl/validador?p=<?php echo $cod_functionario_entrega?>"  size="1" text="1" />
+                                -->
                             </td>
                             <td style="width:80%;vertical-align:top;text-align:left;margin-left:15px;">
                                 <b style="font-size:13px;">FIRMA DIGITAL DE:</b>
@@ -154,7 +156,9 @@
                     <table style="width:100%">
                         <tr>
                             <td style="width:20%;">
+                                <!--
                                 <barcode type="QR" class="barcode" code="https://www.esissan.cl/validador?p=<?php echo $cod_functionario_recibe?>"  size="1" text="1" />
+                                -->
                             </td>
                             <td style="width:80%;vertical-align:top;text-align:left;margin-left:15px;">
                                 <b style="font-size:13px;">FIRMA DIGITAL DE:</b>

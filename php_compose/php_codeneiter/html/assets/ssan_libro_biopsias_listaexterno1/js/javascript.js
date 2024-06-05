@@ -37,9 +37,9 @@ function changeviwes_punto_entrega(_this){
 
 function consulta_(value){
     /*
-        console.log("-----------------------------------");
-        console.log("value      ->",value,"             ");
-        console.log("-----------------------------------");
+    console.log("-----------------------------------");
+    console.log("value      ->",value,"             ");
+    console.log("-----------------------------------");
     */
     $.ajax({ 
         type		:   "POST",
@@ -78,6 +78,7 @@ function update_main(value){
         console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
         console.log("   ---------------------------------------------------------------------------     ");
     */
+    
     $.ajax({ 
         type		:   "POST",
         url		    :   ind_ruta,

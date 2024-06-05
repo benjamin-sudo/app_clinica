@@ -542,7 +542,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     $INFORMACION    .=   '</div>';
                 } else  if($row['ID_HISTO_ESTADO'] == 3){
                     $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
-                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-info parpadea"         style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>TRASPORTE</button>';
+                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-info parpadea"         style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;TRASPORTE</button>';
                     $color_estado       =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
                     $txt_estado         =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"              aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
                     $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
@@ -560,7 +560,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger"                 style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
                 }
                 
-                $disabled           =   '';
+                $disabled           =   'disabled';
+
                 $ID_MAIN_AP         =   $row['ID_SOLICITUD'];
                 ################################################
                 $btn_trazabilidad   =   '';
@@ -573,8 +574,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                             data-placement      =   "left"
                                             class               =   "'.$disabled.' btn btn-small btn-fill btn-danger class_htrazabilidad '.$ID_MAIN_AP.'"
                                             id                  =   "btn_trabilidad_'.$ID_MAIN_AP.'"';
-                    $btn_trazabilidad       .=  $ID_MAIN_AP!=''?'onclick    =   "js_htraxabilidad('.$ID_MAIN_AP.')"':'';
-                    $btn_trazabilidad       .=      '>
+                    $btn_trazabilidad       .=  $ID_MAIN_AP!=''?'onclick = "js_htraxabilidad('.$ID_MAIN_AP.')"':'';
+                    $btn_trazabilidad       .= '>
                                         <i class="fa fa-database" aria-hidden="true"></i>
                                     </button>';
                 }
@@ -634,10 +635,11 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                                             </button>';
                                     $html       .=      '</div>';
                                     #PDF SOLO ANATOMICO
+                                    #'.$disabled.'
                                     $html       .=      '<div class="text-center">
                                                             <button 
                                                                 type                    =   "button" 
-                                                                class                   =   "btn btn-small btn-warning btn-fill '.$disabled.'" 
+                                                                class                   =   "btn btn-small btn-warning btn-fill " 
                                                                 id                      =   "PRE_GET_PDF_ANATOMIA_PRE"';
                                     #if($disabled!='disabled'){
                                     $html       .=             'onclick                 =   "PRE_GET_PDF_ANATOMIA('.$ID_MAIN_AP.')"';
@@ -696,7 +698,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->trans_start();
         $CALL_FASE      =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;
         $ID_SERDEP      =   isset($DATA['ID_SERDEP'])?$DATA['ID_SERDEP']:-1;
-        //var_dump($DATA);
         //return false;
         $param          =   array(
                                 array( 

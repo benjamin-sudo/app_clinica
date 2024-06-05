@@ -326,7 +326,6 @@
 </section>
 
 <section>
-    
     <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

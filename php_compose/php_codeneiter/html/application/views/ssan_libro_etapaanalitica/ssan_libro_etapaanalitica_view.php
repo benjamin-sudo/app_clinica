@@ -541,9 +541,6 @@
 <span id="nombre_nomina"></span>
 
 <section>
-
-
-                
     <div class="modal fade" id="Dv_verdocumentos" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
         <div class="modal-dialog modal-xl3" style="width:80%;">
             <div class="modal-content">
