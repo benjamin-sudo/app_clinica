@@ -407,12 +407,11 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         ]));
     }
 
-
     public function pdf_recepcion_anatomia_pat_ok(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $id_tabla                       =   $this->input->post('id');
-        $DATA                           =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
+        $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
         $txt_name_pdf                   =   'RECEPCI&Oacute;N DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
         $cod_functionario_entrega       =   '';
         $cod_functionario_recibe        =   '';        
@@ -437,6 +436,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $dompdf->SetHTMLFooter('RECEPCI&Oacute;N DE ANATOM&Iacute;A PATOL&Oacute;GICA');
         $out                            =   $dompdf->Output($txt_name_pdf,'S');
         $base64_pdf                     =   base64_encode($out);
+        $TABLA                          =   [];
         $TABLA["HTML"]                  =   $html;
         $TABLA["IND_TEMPLATE"]          =   1;
         $TABLA["PDF_MODEL"]             =   $base64_pdf;
