@@ -413,11 +413,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $id_tabla                       =   $this->input->post('id');
         $DATA                           =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
-        //$DATA                         =   null;
-        require_once APPPATH            .   '/third_party/mpdf/mpdf.php';
         $txt_name_pdf                   =   'RECEPCI&Oacute;N DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
-        //$dompdf                       =   new mPDF('','',0,'',15,15,16,16,9,9,'L');
-        #verical 
         $cod_functionario_entrega       =   '';
         $cod_functionario_recibe        =   '';        
         /*
@@ -431,7 +427,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         #horizontal
         $dompdf                         =   new mPDF("en-GB-x","Letter-L","","",10,10,10,10,6,3);
         $dompdf->AddPage();
-        #$dompdf->WriteHTML($this->load->view("ssan_libro_biopsias_listagespab/pdf_recepcion_conforme",array('DATA'=>$DATA,"empresa"=>$empresa),true));
         $html                           =   $this->load->view("ssan_libro_biopsias_listagespab/pdf_recepcion_conforme_v2",array(
             "DATA"                      =>  $DATA,
             "empresa"                   =>  $empresa,
