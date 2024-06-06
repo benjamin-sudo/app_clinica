@@ -4003,39 +4003,37 @@ function js_confirma_cambio(id){
         if(r){      
            $('#loadFade').modal('show');
            $.ajax({ 
-                type           :  "POST",
-                url            :  "ssan_spab_gestionlistaquirurgica/update_nombre_pto",
-                dataType       :  "json",
-                beforeSend     :  function(xhr)     {     },
+                type           :    "POST",
+                url            :    "ssan_spab_gestionlistaquirurgica/update_nombre_pto",
+                dataType       :    "json",
+                beforeSend     :    function(xhr)     {     },
                 data		   :    { 
                                         clave   :   r,
                                         id      :   id,
                                         nombre  :   nombre,
                                     },
-              error		      :  function(errro)  {  
+              error		        :  function(errro)  {  
                                                      console.log(errro);
                                                      console.log(errro.responseText);  
                                                      jAlert("Error General, Consulte Al Administrador"); 
                                                      $('#loadFade').modal('hide');
                                                   },
               success		   :   function(aData)  {  
-                                                      console.error("aData -> ",aData);
-                                                      $('#loadFade').modal('hide');
-                                                      if (aData.esissan){
-                                                        showNotification('top','left',"Se edito nombre de toma de muestra ",4,'fa fa-check-square');
-                                                        $("#modal_gestion_tomamuestraxuser").modal('hide');
-                                                        setTimeout(function() {
-                                                            // CÃ³digo que se ejecutarÃ¡ despuÃ©s de 3 segundos
-                                                            console.log("Han pasado 3 segundos!");
-                                                            js_gestion_tomademuestraxuser();
-                                                        }, 2000);
-                                                    } else {
-                                                        jError("Error en la firma simple","Clinica Libre");
-                                                    }
-                                                  }, 
+                                                        console.error("aData -> ",aData);
+                                                        $('#loadFade').modal('hide');
+                                                        if (aData.esissan){
+                                                            showNotification('top','left',"Se edit&oacute; nombre de toma de muestra",4,'fa fa-check-square');
+                                                            $("#modal_gestion_tomamuestraxuser").modal('hide');
+                                                            setTimeout(function() {
+                                                                // CÃ³digo que se ejecutarÃ¡ despuÃ©s de 3 segundos
+                                                                console.log("Han pasado 3 segundos!");
+                                                                js_gestion_tomademuestraxuser();
+                                                            }, 2000);
+                                                        } else {
+                                                            jError("Error en la firma simple","Clinica Libre");
+                                                        }
+                                                    }, 
            });
-        } else {  
-           //console.log("No Confirmado");   
-        }  
-     });
+        } 
+    });
 }

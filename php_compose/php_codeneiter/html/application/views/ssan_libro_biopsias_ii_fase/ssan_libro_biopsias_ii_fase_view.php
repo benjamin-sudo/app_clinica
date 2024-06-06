@@ -601,17 +601,14 @@
         </div>
     </div>
 
-    <!-- RE-EDITADOS -->
-    <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="Dv_verdocumentos">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">
-                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;GESTI&Oacute;N DE MUESTRAS</b>
-                    </h3>
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body" id="HTML_INFORMACION_ETIQUETA"></div>
+                <div class="modal-body" id="PDF_VERDOC"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
                         <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
@@ -621,14 +618,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="Dv_verdocumentos">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
+                    <h3 class="modal-title"><b style="color:#e34f49"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;GESTI&Oacute;N DE MUESTRAS</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body" id="PDF_VERDOC"></div>
+                <div class="modal-body" id="HTML_INFORMACION_ETIQUETA"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
                         <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
