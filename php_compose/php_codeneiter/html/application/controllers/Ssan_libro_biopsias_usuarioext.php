@@ -446,4 +446,5 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $TABLA["ID_RETURN"]             =   $id_tabla;
         $this->output->set_output(json_encode($TABLA));
     }
+
 }
