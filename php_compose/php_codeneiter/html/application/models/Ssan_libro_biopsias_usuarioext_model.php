@@ -1031,24 +1031,24 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             }  else if ($CALL_FASE == 2){
                                 
                                 if($row['ID_HISTO_ESTADO'] == 3){
-                                    $BTN                .=      '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>RECEPCI&Oacute;N</a></li>';
+                                    $BTN                .=      '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N</a></li>';
                                     $BTN                .=      '<li class="divider"></li>';
                                 } else if($row['ID_HISTO_ESTADO'] == 4){
                                     //IND_ESTADO_MUESTRAS
                                     if ($row['IND_ESTADO_MUESTRAS']!=1){
-                                        $BTN            .=      '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>RECEPCI&Oacute;N REZAGADAS</a></li>';
+                                        $BTN            .=      '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N REZAGADAS</a></li>';
                                         //$BTN          .=      '<li class="divider"></li>';
-                                        $BTN            .=      '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>INFORME DE RECHAZO</a></li>';
+                                        $BTN            .=      '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;INFORME DE RECHAZO</a></li>';
                                         //$BTN          .=      '<li class="divider"></li>';
                                     } else {
-                                        $BTN            .=      '<li><a class="dropdown-item" href="javascript:pdf_recepcion_ok('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF RECEPCI&Oacute;N</a></li>';
-                                        $BTN            .=      '<li><a class="dropdown-item" href="javascript:informar_x_correo('.$row['ID_SOLICITUD'].')"><i class="fa fa-envelope-open" aria-hidden="true"></i>INFORMAR POR CORREO</a></li>';
+                                        $BTN            .=      '<li><a class="dropdown-item" href="javascript:pdf_recepcion_ok('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF RECEPCI&Oacute;N</a></li>';
+                                        //$BTN            .=      '<li><a class="dropdown-item" href="javascript:informar_x_correo('.$row['ID_SOLICITUD'].')"><i class="fa fa-envelope-open" aria-hidden="true"></i>INFORMAR POR CORREO</a></li>';
                                         //$BTN          .=      '<li class="divider"></li>';
                                     }
                                     //historial
                                     //$BTN              .=      '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
                                 } else if($row['ID_HISTO_ESTADO'] == 5){
-                                    $BTN                .=      '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF RECHAZADA</a></li>';
+                                    $BTN                .=      '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF RECHAZADA</a></li>';
                                     $BTN                .=  '<li><hr class="dropdown-divider"></li>';
                                 }
                             } else {
