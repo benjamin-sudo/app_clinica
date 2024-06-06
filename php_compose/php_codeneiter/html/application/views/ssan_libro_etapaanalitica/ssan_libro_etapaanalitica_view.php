@@ -254,21 +254,19 @@
 <section>
 
     <div class="modal fade" id="modal_descipcion_muestras">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 95%; width: 95%;">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">
-                        <i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</b>
-                    </h3>
+                    <h3 class="modal-title"><b style="color:#e34f49"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;MACROSC&Oacute;PIA</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_descipcion_muestras"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-fill" data-bs-dismiss="modal">
-                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;CIERRA VENTANA (NO GRABA)
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;CIERRA&nbsp;VENTANA&nbsp;(NO&nbsp;GRABA)
                     </button>
                     <button type="button" class="btn btn-success btn-fill" id="btn_graba_descipcion_muestras">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;TERMINO SALA DE MUESTRAS
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;TERMINO SALA MACROSC&Oacute;PIA
                     </button>
                 </div>
             </div>

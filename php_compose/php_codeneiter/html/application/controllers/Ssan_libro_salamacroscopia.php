@@ -50,11 +50,14 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
         }
         */
 
+        
         #target por defecto
         $tipo_busqueda                  =   '#_panel_por_fecha';
         $arr_ids_anatomia               =   [];
         $var_fecha_inicio               =   date("d-m-Y");
         $var_fecha_final                =   date("d-m-Y");
+
+
         #LOAD_ETAPA_ANALITICA
         $return_data                    =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),

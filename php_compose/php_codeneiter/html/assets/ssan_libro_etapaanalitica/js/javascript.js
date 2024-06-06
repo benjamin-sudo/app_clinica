@@ -1,24 +1,24 @@
 $(document).ready(function(){
     var today			=   new Date();
-    var dd                      =   today.getDate();
-    var mm                      =   today.getMonth()+1; 
+    var dd              =   today.getDate();
+    var mm              =   today.getMonth()+1; 
     var yyyy			=   today.getFullYear();
     if (dd<10)			{   dd='0'+dd; } 
     if (mm<10)			{   mm='0'+mm; } 
     var today			=   dd+'-'+mm+'-'+yyyy;
-    var todayDate               =   new Date().getDate();
+    var todayDate       =   new Date().getDate();
     
     $('#fecha_out').datetimepicker({
         useCurrent              :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
-        inline			:   true,
+        inline			        :   true,
         sideBySide              :   true,
-        format			:   'DD-MM-YYYY',
-        locale			:   'es-us',
+        format			        :   'DD-MM-YYYY',
+        locale			        :   'es-us',
         //daysOfWeekDisabled	:   [0,6],
         maxDate                 :   moment($(".info_userdata").data("fecha_final"))._d, 
-        //minDate		:   new Date(new Date().setDate((todayDate)-(5))), 
+        //minDate		        :   new Date(new Date().setDate((todayDate)-(5))), 
         defaultDate             :   moment($(".info_userdata").data("fecha_inicio"))._d,
-        icons			:   {
+        icons			        :   {
                                         time        :   "fa fa-clock-o"         ,
                                         date        :   "fa fa-calendar"        ,
                                         up          :   "fa fa-chevron-up"      ,
@@ -31,22 +31,24 @@ $(document).ready(function(){
                                     }
     });
     $(".timepicker").remove();
+    
     $("#fecha_out").on("dp.change",function(e){ 
         $('#fecha_out2').data("DateTimePicker").minDate($('#fecha_out').data().date);
-        update_etapaanalitica();
+        update_etapaanalitica(1);
     });
+
     $('#fecha_out2').datetimepicker({
         useCurrent              :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
-        inline			:   true,
+        inline			        :   true,
         sideBySide              :   true,
-        format			:   'DD-MM-YYYY',
-        locale			:   'es-us',
+        format			        :   'DD-MM-YYYY',
+        locale			        :   'es-us',
         //daysOfWeekDisabled	:   [0,6],
         //minDate               :   new Date(new Date().setDate((todayDate)-(5))), 
         minDate                 :   moment($(".info_userdata").data("fecha_inicio"))._d,
         maxDate                 :   new Date(),
         defaultDate             :   moment($(".info_userdata").data("fecha_final"))._d, 
-        icons			:   {
+        icons			        :   {
                                         time        :   "fa fa-clock-o"         ,
                                         date        :   "fa fa-calendar"        ,
                                         up          :   "fa fa-chevron-up"      ,
@@ -58,10 +60,12 @@ $(document).ready(function(){
                                         close       :   'fa fa-remove'          ,
                                     }
     });
+    
     $('#fecha_out2').on('dp.change',function(e){
         $('#fecha_out').data("DateTimePicker").maxDate($('#fecha_out2').data().date);
-        update_etapaanalitica();
+        update_etapaanalitica(1);
     });
+
     $(".timepicker").remove();
     $(".LOAD_CALENDARIO").hide();
     $('.lista_etapa_analitica li').on('click',function(e){
@@ -70,33 +74,33 @@ $(document).ready(function(){
     });
     $('#MODAL_FORMULARIO_ANALITICA').on('show.bs.modal',function(e){ 
         $('.modal .modal-body').css('overflow-y','auto'); 
-        var _height = $(window).height()*0.8;
-        $('.modal .modal-body').css('max-height',_height);
-        $('.modal .modal-body').css('min-height',_height);
+        //var _height = $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        //$('.modal .modal-body').css('min-height',_height);
     });
     
     $('#MODAL_FORMULARIO_ANALITICA').on('hidden.bs.modal',function(e){ 
         $("#HTML_FORMULARIO_ANALITICA").html(''); 
         $("#btn_finaliza_rce_anatomia").attr('onclick','');
-        document.getElementById('btn_finaliza_rce_anatomia').disabled      =   true;
+        //document.getElementById('btn_finaliza_rce_anatomia').disabled      =   true;
     });
     
     $('#modal_descipcion_muestras').on('show.bs.modal',function(e){ 
         $("#html_pdf_fullscreen").html(''); 
-        $('.modal .modal-body').css('overflow-y','auto'); 
-        var _height = $(window).height()*0.8;
-        $('.modal .modal-body').css('max-height',_height);
-        $('.modal .modal-body').css('min-height',_height);
+        //$('.modal .modal-body').css('overflow-y','auto'); 
+        //var _height = $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        //$('.modal .modal-body').css('min-height',_height);
     });
     $('#modal_descipcion_muestras').on('hidden.bs.modal',function(e){ 
         $("#html_descipcion_muestras").html(''); 
     });
     $('#modal_pdf_fullscreen').on('show.bs.modal',function(e){ 
         $("#html_pdf_fullscreen").html(''); 
-        $('.modal .modal-body').css('overflow-y','auto'); 
-        var _height = $(window).height()*0.8;
-        $('.modal .modal-body').css('max-height',_height);
-        $('.modal .modal-body').css('min-height',_height);
+        //$('.modal .modal-body').css('overflow-y','auto'); 
+        //var _height = $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        //$('.modal .modal-body').css('min-height',_height);
     });
     $('#modal_pdf_fullscreen').on('hidden.bs.modal',function(e){ 
         $("#html_pdf_fullscreen").html(''); 
@@ -104,20 +108,20 @@ $(document).ready(function(){
     $('#modal_star_sala_proceso').on('show.bs.modal',function(e){ 
         $("#html_sala_tecnicas").html('');
         $("#btn_star_sala_proceso").attr('onclick','');
-        $('.modal .modal-body').css('overflow-y','auto'); 
-        var _height = $(window).height()*0.8;
-        $('.modal .modal-body').css('max-height',_height);
-        $('.modal .modal-body').css('min-height',_height);
+        //$('.modal .modal-body').css('overflow-y','auto'); 
+        //var _height = $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        //$('.modal .modal-body').css('min-height',_height);
     });
     $('#modal_star_sala_proceso').on('hidden.bs.modal',function(e){ 
         $("#html_sala_tecnicas").html(''); 
         $("#btn_star_sala_proceso").attr('onclick','');
     });
     $('#modal_sala_tecnicas').on('show.bs.modal',function(e){ 
-        $('.modal .modal-body').css('overflow-y','auto'); 
-        var _height = $(window).height()*0.8;
-        $('.modal .modal-body').css('max-height',_height);
-        $('.modal .modal-body').css('min-height',_height);
+        //$('.modal .modal-body').css('overflow-y','auto'); 
+        //var _height = $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        //$('.modal .modal-body').css('min-height',_height);
     });
     $('#modal_sala_tecnicas').on('hidden.bs.modal',function(e){ 
         $("#html_sala_tecnicas").html(''); 
@@ -125,10 +129,10 @@ $(document).ready(function(){
         $("#btn_previo_sala_tecnicas").attr('onclick','');
     });
     $('#modal_perfil_administrativo').on('show.bs.modal',function(e){ 
-        $('.modal .modal-body').css('overflow-y','auto'); 
-        var _height = $(window).height()*0.8;
-        $('.modal .modal-body').css('max-height',_height);
-        $('.modal .modal-body').css('min-height',_height);
+        //$('.modal .modal-body').css('overflow-y','auto'); 
+        //var _height = $(window).height()*0.8;
+        //$('.modal .modal-body').css('max-height',_height);
+        //$('.modal .modal-body').css('min-height',_height);
     });
     $('#modal_perfil_administrativo').on('hidden.bs.modal',function(e){ 
         $("#html_perfil_administrativo").html(''); 
@@ -138,12 +142,12 @@ $(document).ready(function(){
         $("#html_plantillas_macro_micro").html('');
         $("#btn_nueva_plantilla").attr('onclick','');
         $("#btn_guarda_descripcion").attr('onclick','');
-        $(".main-panel").perfectScrollbar("destroy");
-        document.getElementById("modal_plantillas_macro_micro").style.overflowY = 'auto';
+        //$(".main-panel").perfectScrollbar("destroy");
+        //document.getElementById("modal_plantillas_macro_micro").style.overflowY = 'auto';
     });
     $('#modal_nueva_plantilla').on('hidden.bs.modal',function(e){ 
         $(".main-panel").perfectScrollbar("destroy");
-        document.getElementById("modal_nueva_plantilla").style.overflowY = 'auto';
+        //document.getElementById("modal_nueva_plantilla").style.overflowY = 'auto';
     });
     $('#modal_gestion_firma_patologo').on('hidden.bs.modal',function(e){ 
         $("#html_gestion_firma_patologo").html(''); 
@@ -152,22 +156,19 @@ $(document).ready(function(){
         $("#PDF_VERDOC").html(''); 
     });
 
-    
-    console.log("   *******************************************************************     ");
-    console.log("   *********** tabs busqueda principal *******************************     ");
-    console.log("   storange_tabs_main  ->  ",localStorage.getItem("storange_tabs_main"),"  ");
-    console.log("   *******************************************************************     ");
+    //console.log("   *******************************************************************     ");
+    //console.log("   *********** tabs busqueda principal *******************************     ");
+    //console.log("   storange_tabs_main  ->  ",localStorage.getItem("storange_tabs_main"),"  ");
+    //console.log("   *******************************************************************     ");
 
     //localStorage.getItem("storange_tabs_main")===null?null_tabs():js_gestion();
     null_tabs();
-
     var tabElements = document.querySelectorAll('.tabs_main_analitica .nav-link');
     tabElements.forEach(function(tab) {
         tab.addEventListener('shown.bs.tab', function(event) {
             var target = event.target.getAttribute('data-bs-target') || event.target.getAttribute('href');
-            
             //console.log("   **************************  ");
-            console.log(" -> ",target);
+            //console.log(" -> ",target);
             $("#span_tipo_busqueda").html(target);
 
             /*
@@ -553,14 +554,7 @@ function update_etapaanalitica(v_num_page){
     var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     let ind_orden               =   $("#ind_order_by").val();
-
-
-    //console.log("   --------------------------------------  ");
-    //console.log("   v_storange_tabs_main  : ",v_storange_tabs_main);
-    
-    console.log("   ------------------------------  ");
-    console.log("   v_num_page ->  ",v_num_page);
-
+    let v_num_page2             =   typeof v_num_page === 'undefined' ? 1 : v_num_page;
     $('#loadFade').modal('show');
     $.ajax({ 
         type        :   "POST",
@@ -568,15 +562,15 @@ function update_etapaanalitica(v_num_page){
         dataType    :   "json",
         beforeSend  :   function(xhr)   { },
         data        :                   { 
-                                            tabs                            :   v_storange_tabs_main,
-                                            date_inicio                     :   date_inicio,
-                                            date_final                      :   date_final,
-                                            txt_sala                        :   v_get_sala,             //to_string
-                                            ind_filtro_busqueda_xfechas     :   v_filtro_fechas,        //to_string
-                                            txt_ids_anatomia                :   v_ids_anatomia,         //to string
-                                            ind_order_by                    :   ind_orden,
-                                            v_page_num                      :   v_num_page,
-                                            v_page_size                     :   10
+                                            tabs : v_storange_tabs_main,
+                                            date_inicio : date_inicio,
+                                            date_final : date_final,
+                                            txt_sala : v_get_sala, //to_string
+                                            ind_filtro_busqueda_xfechas : v_filtro_fechas, //to_string
+                                            txt_ids_anatomia : v_ids_anatomia, //string
+                                            ind_order_by : ind_orden,
+                                            v_page_num : v_num_page2, //int 
+                                            v_page_size : 10  //int 
                                         },
         error       :   function(errro) { 
                                             console.log(errro);  
@@ -585,12 +579,10 @@ function update_etapaanalitica(v_num_page){
                                             $('#loadFade').modal('hide'); 
                                         },
         success     :   function(aData) { 
-                                            console.log("   -------------------    ");
-                                            console.log("   aData   ->  ",aData);
+                                            console.log(aData);
                                             let html_li = $("."+aData.id_html_out).data().zona_li;
                                             let html_out = aData.out_html.return_html;
-                                            console.log("html_out   ->  ",html_out);
-                                            if (v_storange_tabs_main == '#_panel_por_fecha'){
+                                            if(v_storange_tabs_main == '#_panel_por_fecha'){
                                                 $("#V_ULTIMA_PAGE").val(v_num_page);
                                                 if (aData.return.n_resultado == '0'){
                                                     $("#anatomia_pagination").hide();
@@ -609,9 +601,7 @@ function update_etapaanalitica(v_num_page){
 }
 
 function js_vista_opcion_busqueda(_value){
-    console.log("-----------------------------------------------");
-    console.log("_value     ->      ",_value,"  <-              ");
-    console.log("-----------------------------------------------");
+    console.log("_value -> ",_value);
     localStorage.setItem("storage_busqueda_por_n_biosia",_value);
     $("#slc_automplete_biopsia").val('');
     //console.log("storage_busqueda_por_n_biosia          ->  ",localStorage.getItem("storage_busqueda_por_n_biosia"));
@@ -949,17 +939,17 @@ function js_auto_grow(element) {
 //1.- LOAD_SALA_PROCESO
 function star_descrpcion_muestras(id_anatomia){
     $.ajax({ 
-        type		:   "POST",
-        url 		:   "ssan_libro_etapaanalitica/star_descripcion_anatomia",
-        dataType    :   "json",
-        beforeSend	:   function(xhr)       {   
-                                                $('#loadFade').modal('show');
-                                                $('#html_descipcion_muestras').html('');
-                                            },
-        data 		:                       { 
-                                                id_anatomia :   id_anatomia,
-                                                get_sala    :   $("#get_sala").val(),
-                                            },
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/star_descripcion_anatomia",
+        dataType : "json",
+        beforeSend : function(xhr) {   
+                                        $('#loadFade').modal('show');
+                                        $('#html_descipcion_muestras').html('');
+                                    },
+        data 		:   { 
+                            id_anatomia : id_anatomia,
+                            get_sala : $("#get_sala").val(),
+                        },
         error		:   function(errro)     { 
                                                 console.log("quisas->",errro); 
                                                 $('#loadFade').modal('hide');
@@ -967,7 +957,7 @@ function star_descrpcion_muestras(id_anatomia){
                                                 jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                             },
         success		:   function(aData)     { 
-                                                console.log("aData->",aData);
+                                                console.log("aData  ->  ",aData);
                                                 $('#loadFade').modal('hide');
                                                 if(aData.status_session){
                                                     $("#btn_graba_descipcion_muestras").attr('onclick','js_guarda_descripcion_muestras('+id_anatomia+')');
@@ -979,13 +969,6 @@ function star_descrpcion_muestras(id_anatomia){
                                             }, 
     });
 }
-
-
-
-
-
-
-
 
 function js_deshabilitar_txt(){
     $('#txt_descipcion_general').removeClass("error_macroscopica");
@@ -1460,16 +1443,13 @@ function js_data_administrativo(id_anatomia){
                                                                                 console.table("out      ->  ",aData);
                                                                                 if(aData.status_firma){
                                                                                     jAlert("Se grab&oacute; informaci&oacute;n con &eacute;xito","Clinica Libre");
-                                                                                    
-                                                                                    
                                                                                     localStorage.setItem("ind_tipo_mensaje",7);
                                                                                     localStorage.setItem("ind_estapa_analitica",0);
                                                                                     localStorage.setItem("num_fichae",null);
                                                                                     localStorage.setItem("id_anatomia",id_anatomia);
-                                                                                    localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                                    //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                                     localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
                                                                                     $("#load_anuncios_anatomia_patologica").submit();
-                                                                                    
                                                                                     $("#modal_perfil_administrativo").modal("hide");
                                                                                     update_etapaanalitica();
                                                                                     
@@ -1926,7 +1906,7 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                                                         localStorage.setItem("ind_estapa_analitica",0);
                                                                                         localStorage.setItem("num_fichae",null);
                                                                                         localStorage.setItem("id_anatomia",id_anatomia);
-                                                                                        localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                                        //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                                         localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
                                                                                         $("#load_anuncios_anatomia_patologica").submit();
                                                                                         update_etapaanalitica();
@@ -2559,7 +2539,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
     //console.log("array_nmuestras                ->  ",array_nmuestras,"<-       ");
     //descripcion macro de citologia
     var booreane        =   document.getElementById("ind_deshabilitar_macro_cito").checked;
-    console.log("booreane   ->  no aplica para citologia o talvez si    <-  " , booreane);
+    //console.log("booreane   ->  no aplica para citologia o talvez si    <-  " , booreane);
     if(!booreane){
         $(".lista_citologia").each(function(index,value){
             $("#txt_descipcion_"+value.id).val() == '' ? error.push({ txt : "(Citologia) Descripci&oacute;n Macroscopia N&deg; "+ value.id +" vacia" , value : "#txt_descipcion_"+value.id }) : '';
@@ -2571,12 +2551,13 @@ function js_guarda_descripcion_muestras(id_anatomia){
         }); 
     }
     
-    console.log("---------------------------------");
-    console.log("array_nmuestras->",array_nmuestras);
+    //console.log("---------------------------------");
+    //console.log("array_nmuestras->",array_nmuestras);
+
     if(error.length === 0 ){
         jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r) {
-                    $('#loadFade').modal('hide'); 
+                    $('#loadFade').modal('show'); 
                     $.ajax({ 
                         type		:   "POST",
                         url 		:   "ssan_libro_etapaanalitica/get_informr_macroscopica",
@@ -2594,18 +2575,20 @@ function js_guarda_descripcion_muestras(id_anatomia){
                                                                 jError("Error en el aplicativo","Clinica Libre"); 
                                                             },
                         success     :   function(aData)     { 
+                                                                
+                                                                $('#loadFade').modal('hide');
                                                                 console.log("   aData   ->  ",aData);
-                                                                $('#loadFade').modal('hide');     
                                                                 if(aData.status){
                                                                     $("#modal_descipcion_muestras").modal("hide");
                                                                     localStorage.setItem("ind_tipo_mensaje",2);
                                                                     localStorage.setItem("ind_estapa_analitica",0);
                                                                     localStorage.setItem("num_fichae",null);
                                                                     localStorage.setItem("id_anatomia",id_anatomia);
-                                                                    localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                    //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                     localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
                                                                     //$("#load_anuncios_anatomia_patologica").submit();
-                                                                    update_etapaanalitica();
+                                                                    let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
+                                                                    update_etapaanalitica(V_ULTIMA_PAGE);
                                                                     jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                                                         if(r){
                                                                             //js_pdf_macroscopia(0,id_anatomia);
@@ -3166,7 +3149,7 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
                                                                         localStorage.setItem("ind_estapa_analitica",0);
                                                                         localStorage.setItem("num_fichae",null);
                                                                         localStorage.setItem("id_anatomia",id_anatomia);
-                                                                        localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                        //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                         localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
                                                                         $("#load_anuncios_anatomia_patologica").submit();
                                                                         
