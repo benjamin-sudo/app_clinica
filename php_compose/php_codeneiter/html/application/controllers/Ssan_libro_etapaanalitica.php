@@ -87,6 +87,94 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
 
+
+    public function update_lista_etapaanalitica_pagina(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $tipo_busqueda              =   $this->input->post('tabs');
+        $fecha_inicio               =   $this->input->post('date_inicio');
+        $fecha_final                =   $this->input->post('date_final');
+        $txt_sala                   =   $this->input->post('txt_sala');
+        $txt_ids_anatomia           =   $this->input->post('txt_ids_anatomia');
+        $_post_filtro_xfechas       =   $this->input->post('ind_filtro_busqueda_xfechas');
+        $v_page_num                 =   $this->input->post('v_page_num');
+        $v_page_size                =   $this->input->post('v_page_size');
+        #TIENE QUE SABER QUE target 
+        #_INICIO BUSCADOR DEL FILTRO
+        $val_filtro_estaso                  =   '';
+        $arr_ids_anatomia                   =   '';
+        $cookie_target                      =   array(
+                                                    'name'      =>  'target',
+                                                    'value'     =>  $tipo_busqueda,
+                                                    'expire'    =>  86500,
+                                                    'secure'    =>  false
+                                                );
+        
+        $this->input->set_cookie($cookie_target);
+        if($tipo_busqueda                   === '#_panel_por_fecha')            {   #_panel_por_fecha   
+            #BUSCAR REPETIDOS
+            #cookie para los estados
+            $cookie_filtros                 =   array(
+                                                    'name'      =>  'data_filtro_fechas_estados',
+                                                    'value'     =>  $_post_filtro_xfechas,
+                                                    'expire'    =>  86500,
+                                                    'secure'    =>  false
+                                                );
+            $this->input->set_cookie($cookie_filtros);
+            #get_filtro_x_fecha
+            $val_filtro_estaso              =   $_post_filtro_xfechas;
+            #CONFIRMA CAMBIO
+            #COOKIE DATOS DE LA BUSQUEDA
+            $cookie_time                    =   array(
+                                                    'name'      =>  'data',
+                                                    'value'     =>  json_encode(array(
+                                                                        'tipo_busqueda'     =>  'por_fecha',
+                                                                        'fecha_inicio'      =>  $fecha_inicio,
+                                                                        'fecha_final'       =>  $fecha_final,
+                                                                    )),
+                                                    'expire'    =>  86500,
+                                                    'secure'    =>  false
+                                                );
+            $this->input->set_cookie($cookie_time);
+        } else if($tipo_busqueda            === '#_panel_por_gestion')          {   #_panel_por_gestion
+            $arr_ids_anatomia               =   $txt_ids_anatomia;
+        } else  if($tipo_busqueda           === '#_busqueda_xpersona'){
+            $arr_ids_anatomia               =   'null';
+        } else  if($tipo_busqueda           === '#_busqueda_bacode'){
+            $arr_ids_anatomia               =   'null';
+        }
+        #################################################
+        ########### LOAD ALL ETAPA ANALITICA ############
+        ########### GO_TO -> LOAD_ETAPA_ANALITICA #######
+        #################################################
+        $return_data                        =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(
+            "cod_empresa"                   =>  $this->session->userdata("COD_ESTAB"),
+            "usr_session"                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
+            "ind_opcion"                    =>  $tipo_busqueda,
+            "ind_first"                     =>  0,
+            "data_inicio"                   =>  $fecha_inicio,
+            "data_final"                    =>  $fecha_final,
+            "num_fase"                      =>  4,//etapa analitica
+            "ind_template"                  =>  "ssan_libro_etapaanalitica",
+            "arr_ids_anatomia"              =>  $arr_ids_anatomia,
+            "get_sala"                      =>  $txt_sala,
+            "txt_titulo"                    =>  'ETAPA ANALITICA',
+            "ind_filtros_ap"                =>  $val_filtro_estaso,
+            "ind_order_by"                  =>  $this->input->post('ind_order_by'),
+            "v_page_num"                    =>  $v_page_num,
+            "v_page_size"                   =>  $v_page_size,
+        ));
+        #OUT VIEWS
+        $this->output->set_output(json_encode(array(
+            'date_inicio'                   =>  $fecha_inicio,
+            'date_final'                    =>  $fecha_final,
+            #'arr_ids_anatomia'             =>  $arr_ids_anatomia,
+            'userdata'                      =>  $this->session->userdata,
+            'id_html_out'                   =>  substr($tipo_busqueda,1),
+            'out_html'                      =>  $return_data["HTML_LI"],
+            'return'                        =>  $return_data,
+        )));
+    }
+
     public function update_lista_etapaanalitica(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $tipo_busqueda                      =   $this->input->post('tabs');

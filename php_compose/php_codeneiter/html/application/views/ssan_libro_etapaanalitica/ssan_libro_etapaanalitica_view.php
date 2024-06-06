@@ -46,7 +46,7 @@
     </div>
     <div class="grid_head_body4" style="text-align: end;">
         <div class="btn-group" style="padding-right:24px;">
-            <button type="button" class="btn btn-success btn-fill"          id="btn_update_analitica"   onclick="update_etapaanalitica()">
+            <button type="button" class="btn btn-success btn-fill"          id="btn_update_analitica"   onclick="update_etapaanalitica(1)">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
             <?php if($txt_sala == 'analitica'){?>
@@ -85,7 +85,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="javascript:update_etapaanalitica()"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;ACTUALIZAR&nbsp;LISTADO&nbsp;PRINCIPAL</a></li>
+                    <li><a class="dropdown-item" href="javascript:update_etapaanalitica(1)"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;ACTUALIZAR&nbsp;LISTADO&nbsp;PRINCIPAL</a></li>
                     <li><a class="dropdown-item" href="javascript:get_excel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;EXCEL PRODUCCI&Oacute;N</a></li>
                     <li><a class="dropdown-item" href="javascript:delete_cookie()"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;ELIMINAR COOKIE</a></a></li>
                     <li><a class="dropdown-item" href="javascript:ver_cookie()"><i class="fa fa-beer" aria-hidden="true"></i>&nbsp;VER COOKIE</a></a></li>
@@ -174,6 +174,9 @@
         <div class="grid_titulo_panel_main">
             <div class="grid_titulo_panel_main1">
                 <a href="#">N&deg; DE RESULTADOS&nbsp;<span class="badge n_resultados_panel" style="background-color:dodgerblue;"><?php echo $n_resultado;?></span></a>
+                <input type="hidden" name="V_PAGE_NUMBER" id="V_PAGE_NUMBER" value="<?php echo $n_resultado;?>"/>
+                <input type="hidden" name="V_NUM_PAGINAS" id="V_NUM_PAGINAS" value="<?php echo isset($n_pagina)?$n_pagina:0;?>"/>
+                <input type="hidden" name="V_ULTIMA_PAGE" id="V_ULTIMA_PAGE" value="1"/>
             </div>
             <div class="grid_titulo_panel_main4">&nbsp;</div>
             <div class="grid_titulo_panel_main5">&nbsp;<!-- filtro de busqueda --></div>
@@ -206,15 +209,12 @@
                 </div>
             </div>
             <div class="grid_titulo_panel_main2" style="text-align: -webkit-right;">
-                <select id="ind_order_by" name="ind_order_by" style="width:auto;" class="form-control input-sm" onchange="update_etapaanalitica()">
+                <select id="ind_order_by" name="ind_order_by" style="width:auto;" class="form-control input-sm" onchange="update_etapaanalitica(1)">
                     <option value="0">N&deg; BIOPSIA - N&deg; CITOL&Oacute;GICO - N&deg; PAP</option>
                     <option value="1">N&deg; CITOL&Oacute;GICO - N&deg; PAP - N&deg; BIOPSIA</option>
                     <option value="2">N&deg; PAP - N&deg; BIOPSIA - N&deg; CITOL&Oacute;GICO</option>
                     <option value="3">FECHA DE TOMA DE MUESTRA</option>
                 </select>
-                <!--
-                    <div id="txt_busqueda_titulo"></div>
-                -->
             </div>
         </div>
         
@@ -232,6 +232,12 @@
         <ul class="list-group lista_etapa_analitica busqueda_por_persona" id="busqueda_por_persona" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_persona"];?> 
         </ul>
+
+        <div class="grid_contenedo_paginado">
+            <div class="grid_contenedo_paginado1">&nbsp;</div>
+            <div class="grid_contenedo_paginado1"><div class="btn-group anatomia_pagination" id="anatomia_pagination"></div></div>
+            <div class="grid_contenedo_paginado1">&nbsp;</div>
+        </div>
 
     </div>
     <div class="grid_etapaanalitica_3" style="display:none"> 

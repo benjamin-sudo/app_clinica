@@ -3992,7 +3992,6 @@ function js_confirma_cambio(id){
     });
 }
 
-
 function pdf_recepcion_ok(id_anatomia){
 	$('#loadFade').modal('show');
     $.ajax({ 

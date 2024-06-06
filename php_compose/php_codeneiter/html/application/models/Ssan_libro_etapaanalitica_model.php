@@ -14,6 +14,130 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db = $this->load->database('oracle_conteiner',true);
     }
 
+    public function load_etapa_analiticaap_paginado($DATA) {
+        $this->db->trans_start();
+        $_boreano_out = true;
+        if ($DATA["ind_opcion"] == '#_panel_por_gestion') {
+            if ($DATA["arr_ids_anatomia"] == '' || is_null($DATA["arr_ids_anatomia"])) {
+                $_boreano_out = false;
+            } else {
+                $DATA["arr_ids_anatomia"] = implode(",", array_unique(explode(",", $DATA["arr_ids_anatomia"])));
+            }
+        }
+        if ($DATA["ind_opcion"] == '#_panel_por_fecha') {
+            // Código específico para panel por fecha, si es necesario
+        }
+        if (!$_boreano_out) {
+            return array(
+                'HTML_LI'       =>  $this->li_lista_estapaanalitica([], $DATA["ind_opcion"], $DATA["ind_first"], $DATA["get_sala"]),
+                'n_resultado'   =>  '0',
+                'STATUS'        =>  false,
+                'BD'            =>  null,
+                'status_bd'     =>  false,
+                'ind_opcion'    =>  $DATA["ind_opcion"],
+                'date_inicio'   =>  strtotime(date("d-m-Y")),
+                'date_final'    =>  strtotime(date("d-m-Y")),
+                'cookie'        =>  isset($_COOKIE['target']) ? '<span class="label label-success">CON COOKIE</span>' : '<span class="label label-warning">SIN COOKIE</span>',
+                'ind_busqueda'  =>  isset($_COOKIE['target']) ? '<span class="label label-warning" id="span_tipo_busqueda">' . $_COOKIE['target'] . '</span>' : '<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+                'fechas'        =>  isset($_COOKIE['data']) ? $_COOKIE['data'] : 'null',
+                'ids_anatomia'  =>  isset($_COOKIE['id_anatomia']) ? json_decode($_COOKIE['id_anatomia']) : 'null',
+                'txt_sala'      =>  $DATA["get_sala"],
+                'txt_titulo'    =>  $DATA["txt_titulo"],
+                '_cookie'       =>  $_COOKIE,
+                'V_DATA'        =>  [],
+            );
+        }
+        $param = $DATA["ind_opcion"] == '#_panel_por_gestion' ?  array(
+            array('name' => ':V_COD_EMPRESA', 'value' =>  $DATA["cod_empresa"], 'length' =>  20,'type' => SQLT_CHR),
+            array('name' => ':V_USR_SESSION', 'value' =>  $DATA["usr_session"], 'length' =>  20,'type' => SQLT_CHR),
+            array('name' => ':V_OPCION', 'value' =>  $DATA["ind_order_by"], 'length' =>  20,'type' => SQLT_CHR),
+            array('name' => ':V_IND_FIRST', 'value' =>  $DATA["ind_first"], 'length' =>  20,'type' => SQLT_CHR),
+            array('name' => ':VAL_FECHA_INICIO', 'value' => $DATA["data_inicio"],  'length' =>  20, 'type' =>  SQLT_CHR),
+            array('name' => ':VAL_FECHA_FINAL', 'value' => $DATA["data_final"],  'length' => 20,  'type' =>  SQLT_CHR),
+            array('name' => ':V_ARR_DATA',  'value' =>  $DATA["ind_opcion"]=='#_panel_por_gestion'?$DATA["arr_ids_anatomia"]:$DATA["ind_filtros_ap"],'length' =>  1000,'type'      =>  SQLT_CHR ),
+            array('name' => ':C_LISTA_ANATOMIA', 'value' => $this->db->get_cursor(),   'length' => -1, 'type' => OCI_B_CURSOR),
+            array('name' => ':C_HISTORIAL_M', 'value' => $this->db->get_cursor(),   'length' =>  -1, 'type' => OCI_B_CURSOR),
+            array('name' => ':C_STATUS', 'value' => $this->db->get_cursor(), 'length' =>  -1, 'type' => OCI_B_CURSOR),
+        ) : array(
+            array('name' => ':V_COD_EMPRESA', 'value' => $DATA["cod_empresa"], 'length' => 20, 'type' => SQLT_CHR),
+            array('name' => ':V_USR_SESSION', 'value' => $DATA["usr_session"], 'length' => 20, 'type' => SQLT_CHR),
+            array('name' => ':V_OPCION', 'value' => $DATA["ind_order_by"], 'length' => 20, 'type' => SQLT_CHR),
+            array('name' => ':V_IND_FIRST', 'value' => $DATA["ind_first"], 'length' => 20, 'type' => SQLT_CHR),
+            array('name' => ':VAL_FECHA_INICIO', 'value' => $DATA["data_inicio"], 'length' => 20, 'type' => SQLT_CHR),
+            array('name' => ':VAL_FECHA_FINAL', 'value' => $DATA["data_final"], 'length' => 20, 'type' => SQLT_CHR),
+            array('name' => ':V_ARR_DATA', 'value' => $DATA["ind_opcion"] == '#_panel_por_gestion' ? $DATA["arr_ids_anatomia"] : $DATA["ind_filtros_ap"], 'length' => 1000, 'type' => SQLT_CHR),
+            array('name' => ':V_PAGE_NUM', 'value' => $DATA["v_page_num"], 'length' => 20, 'type' => OCI_B_INT),
+            array('name' => ':V_PAGE_SIZE', 'value' => $DATA["v_page_size"], 'length' => 20, 'type' => OCI_B_INT),
+            array('name' => ':C_LISTA_ANATOMIA', 'value' => $this->db->get_cursor(), 'length' => -1, 'type' => OCI_B_CURSOR),
+            array('name' => ':C_NUM_RESULTADOS', 'value' => $this->db->get_cursor(), 'length' => -1, 'type' => OCI_B_CURSOR),
+            array('name' => ':C_STATUS', 'value' => $this->db->get_cursor(), 'length' => -1, 'type' => OCI_B_CURSOR),
+        );
+        $_txt_proce_anatomia = $DATA["ind_opcion"] == '#_panel_por_gestion' ? 'LOAD_ETAPA_ANALITICA_IDSAP' : 'LOAD_ANALITICA_PAGINADO';
+        $result = $this->db->stored_procedure_multicursor($this->own . '.PROCE_ANATOMIA_PATOLOGIA', $_txt_proce_anatomia, $param);
+        $this->db->trans_complete();
+        return array(
+            'STATUS' =>  true,
+            'status_bd' =>  true,
+            'BD' =>  $result,
+            'HTML_LI' =>  $this->li_lista_estapaanalitica_paginado($result, $DATA["ind_opcion"], $DATA["ind_first"], $DATA["get_sala"]),
+            'n_resultado' =>  $DATA["ind_opcion"] == '#_panel_por_gestion' ? 1 : $result[":C_NUM_RESULTADOS"][0]["V_TOTAL_COUNT"],
+            'n_pagina' =>  $DATA["ind_opcion"] == '#_panel_por_gestion' ? 2 : $result[":C_NUM_RESULTADOS"][0]["V_NUM_PAGINAS"],
+            'ind_opcion' =>  $DATA["ind_opcion"],
+            'date_inicio' =>  strtotime($DATA["data_inicio"]),
+            'date_final' =>  strtotime($DATA["data_final"]),
+            'cookie' =>  isset($_COOKIE['target']) ? '<span class="label label-success">CON COOKIE</span>' : '<span class="label label-warning">SIN COOKIE</span>',
+            'ind_busqueda' =>  isset($_COOKIE['target']) ? '<span class="label label-warning" id="span_tipo_busqueda">' . $_COOKIE['target'] . '</span>' : '<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+            'fechas' =>  isset($_COOKIE['data']) ? $_COOKIE['data'] : 'null',
+            'ids_anatomia' =>  isset($_COOKIE['id_anatomia']) ? json_decode($_COOKIE['id_anatomia']) : 'null',
+            'txt_sala' =>  $DATA["get_sala"],
+            'txt_titulo' =>  $DATA["txt_titulo"],
+            '_cookie' =>  $_COOKIE,
+            'V_DATA' =>  $DATA,
+        );
+    }
+
+    public function li_lista_estapaanalitica_paginado($result, $ind_opcion, $ind_first, $get_sala) {
+        $html = '';
+        $v_num_registro = 0;
+        if (isset($result[":C_LISTA_ANATOMIA"])) {
+            if(count($result[":C_LISTA_ANATOMIA"]) > 0) {
+                foreach ($result[":C_LISTA_ANATOMIA"] as $i => $row) {
+                    $html .=    $this->load->view("ssan_libro_etapaanalitica/html_li_resul_anatomiaap", array(
+                                    'aux'           =>  ($i + 1),
+                                    'row'           =>  $row,
+                                    'ind_opcion'    =>  $ind_opcion,
+                                    'ind_first'     =>  $ind_first,
+                                    'get_sala'      =>  $get_sala
+                                ), true);
+                    
+                    //$html .= '<li class="list-group-item">And a fifth one -> <b>'.$row['RNUM'].'/'.$row['TOTAL_COUNT'].'</b> </li>';     
+                }
+            } else {
+                $html .= $this->sin_resultados(substr($ind_opcion, 1));
+            }
+
+            if ($ind_first == 1) {
+                return array(
+                    'return_html' => $ind_opcion === '#_panel_por_fecha' ? $html : $this->sin_resultados('_panel_por_fecha'),
+                    'return_por_gestion' => $ind_opcion === '#_panel_por_gestion' ? $html : $this->sin_resultados('_panel_por_gestion'),
+                    'return_por_codigo' => $ind_opcion === '#_busqueda_bacode' ? $html : $this->sin_resultados('_busqueda_bacode'),
+                    'return_por_persona' => $ind_opcion === '#_busqueda_xpersona' ? $html : $this->sin_resultados('_busqueda_xpersona'),
+                );
+            } else {
+                return array(
+                    'return_html' => $html // se encarga el js de agregar
+                );
+            }
+        } else {
+            return array(
+                'return_html' => $this->sin_resultados('_panel_por_fecha'),
+                'return_por_gestion' => $this->sin_resultados('_panel_por_gestion'),
+                'return_por_codigo' => $this->sin_resultados('_busqueda_bacode'),
+                'return_por_persona' => $this->sin_resultados('_busqueda_xpersona'),
+            );
+        }
+    }
+
     public function load_etapa_analiticaap($DATA){
         $this->db->trans_start();
         $_boreano_out                           =   true;

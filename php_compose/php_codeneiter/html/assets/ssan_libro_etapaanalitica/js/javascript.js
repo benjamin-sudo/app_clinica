@@ -8,23 +8,6 @@ $(document).ready(function(){
     var today			=   dd+'-'+mm+'-'+yyyy;
     var todayDate               =   new Date().getDate();
     
-    //console.log("fecha_inicio");
-    //console.log("fecha_final->",$(".info_userdata").data("fecha_final") );
-    //var date_inicio                   =   moment($(".info_userdata").data("fecha_inicio"))._d;
-    //console.log($(".info_userdata").data("fecha_inicio"),"->","date_inicio->",date_inicio);
-    //var date_final                    =   moment($(".info_userdata").data("fecha_final"))._d;
-    //console.log($(".info_userdata").data("fecha_final"),"->","date_final->",date_final);
-    //tiempo
-    //var date_inicio                   =   moment('22-03-2022 10:48',"DD-MM-YYYY HH:mm").valueOf();;
-    //console.log("date_inicio          ->  ",date_inicio,"     <-                  ");
-    //var date_final                    =   moment('22-03-2022 10:48',"DD-MM-YYYY HH:mm").valueOf();;
-    //console.log("date_final           ->  ",date_final,"     <-                   ");
-    //if (date_inicio === date_final)   {
-    //console.log("YES SON IGUALES");
-    //} else {
-    //console.log("NO SON IGUALES");
-    //}
-    
     $('#fecha_out').datetimepicker({
         useCurrent              :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
         inline			:   true,
@@ -301,6 +284,23 @@ $(document).ready(function(){
     //ws etapa analitica
     //desabilitado
     //ws_etapa_analitica();
+
+
+    let V_PAGE_NUMBER = $("#V_PAGE_NUMBER").val();
+    let V_NUM_PAGINAS = $("#V_NUM_PAGINAS").val();
+    $('.anatomia_pagination').bootpag({
+        page        :   1,  //pagina posicionado
+        total       :   V_NUM_PAGINAS,  //paginas disponibles
+        maxVisible  :   10,
+        href        :   "#pro-page-{{number}}",
+        leaps       :   false,
+        next        :   '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+        prev        :   '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+    }).on('page', function(event, num){
+        update_etapaanalitica(num);
+    });
+
+
 });
 
 
@@ -522,7 +522,7 @@ function star_automplete(_value){
                                     console.error("-----------------------------------------------------------------------------");
                                     console.error(" busqueda de arrs  ->  ",localStorage.getItem("storange_ids_anatomia"),"  <-      ");
                                     //console.error("-----------------------------------------------------------------------------");
-                                    update_etapaanalitica();
+                                    update_etapaanalitica(1);
                                 }
             //http://easyautocomplete.com/guide
         },
@@ -535,79 +535,69 @@ function star_automplete(_value){
 }
 
 
-function update_etapaanalitica(){
+
+function update_etapaanalitica(v_num_page){
     var date_inicio             =   $('#fecha_out').data().date;
     var date_final              =   $('#fecha_out2').data().date;
-    //return false;
     var v_storange_tabs_main    =   localStorage.getItem("storange_tabs_main");
     var v_get_sala              =   $("#get_sala").val();
     var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
+    let ind_orden               =   $("#ind_order_by").val();
     
-    /*
-    console.log("---------------------------------------------------------------------------------------------------");
-    console.log("------------------------fata update_etapaanalitica ------------------------------------------------");
-    console.log("storange_tabs_main                 ->  ",localStorage.getItem("storange_tabs_main"),"          <-  ");
-    console.log("ind_filtro_busqueda_xfechas        ->  ",$("#ind_filtro_busqueda_xfechas").val(),"             <-  ");
-    console.log("ind_filtro_busqueda_xfechas.join   ->  ",$("#ind_filtro_busqueda_xfechas").val().join(","),"   <-  ");
-    console.log("storange_ids_anatomia              ->  ",localStorage.getItem("storange_ids_anatomia"),"       <-  ");
-    console.log("---------------------------------------------------------------------------------------------------");
-    console.log("date_inicio                        ->  ",date_inicio);
-    console.log("date_final                         ->  ",date_final);
-    console.log("v_storange_tabs_main               ->  ",v_storange_tabs_main);
-    console.log("v_get_sala                         ->  ",v_get_sala);
-    console.log("v_filtro_fechas                    ->  ",v_filtro_fechas);
-    console.log("v_ids_anatomia                     ->  ",v_ids_anatomia);
-    console.log("---------------------------------------------------------------------------------------------------");
-    */
-
+    console.log("   --------------------------------------  ");
+    console.log("   v_storange_tabs_main  : ",v_storange_tabs_main);
+    
+    
+    
     $('#loadFade').modal('show');
     $.ajax({ 
         type        :   "POST",
-        url         :   "ssan_libro_etapaanalitica/update_lista_etapaanalitica",
+        url         :   "ssan_libro_etapaanalitica/update_lista_etapaanalitica_pagina",
         dataType    :   "json",
-        beforeSend  :   function(xhr)   {   
-                                            //console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
-                                            //setTimeout($('#loadFade').modal('show'),1000);
-                                        },
+        beforeSend  :   function(xhr)   { },
         data        :                   { 
+                                            tabs                            :   v_storange_tabs_main,
                                             date_inicio                     :   date_inicio,
                                             date_final                      :   date_final,
-                                            tabs                            :   v_storange_tabs_main,
                                             txt_sala                        :   v_get_sala,             //to_string
                                             ind_filtro_busqueda_xfechas     :   v_filtro_fechas,        //to_string
                                             txt_ids_anatomia                :   v_ids_anatomia,         //to string
-                                            ind_order_by                    :   $("#ind_order_by").val()
+                                            ind_order_by                    :   ind_orden,
+                                            v_page_num                      :   v_num_page,
+                                            v_page_size                     :   10
                                         },
         error       :   function(errro) { 
                                             console.log(errro);  
                                             console.log(errro.responseText);
-                                            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                            jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
                                             $('#loadFade').modal('hide'); 
                                         },
         success     :   function(aData) { 
-                                            //console.log("   ------------------------------------    ");
-                                            //console.log("   update_etapaanalitica   ->  ",aData);
-                                            $('#loadFade').modal('hide');
-                                            //console.log(aData.arr_ids_anatomia);
-                                            //console.log("id_html_out              ->",    aData.id_html_out);
-                                            //console.log("arr_ids_anatomia         ->",    aData.arr_ids_anatomia);
-                                            //console.log("out_html                 ->",    aData.out_html);
-                                            //console.log("html_li                  ->",    html_li);
-                                            //console.log("html                     ->",    aData.out_html.return_html);
-                                            //$("."+html_li).html('').html(aData.out_html.return_html;
-                                            var html_li                             =   $("."+aData.id_html_out).data().zona_li;
-                                            var html_out                            =   aData.out_html.return_html;
-                                            //console.log("----------------------out result--------------------------------------------");
-                                            //console.log("aData.V_DATA               ->  ", aData.return.V_DATA);
-                                            //console.log("aData.html_li            ->  ",html_li);
-                                            //console.log("aData.html_out           ->  ",html_out);
+                                            
+                                            //console.log("   -------------------    ");
+                                            //console.log("   aData   ->  ",aData);
+                                            //console.log("   -------------------    ");
+                                            let html_li = $("."+aData.id_html_out).data().zona_li;
+                                            let html_out = aData.out_html.return_html;
+                                            if (v_storange_tabs_main == '#_panel_por_fecha'){
+                                                $("#V_ULTIMA_PAGE").val(v_num_page);
+                                                if (aData.return.n_resultado == '0'){
+                                                    $("#anatomia_pagination").hide();
+                                                } else {
+                                                    $("#anatomia_pagination").show();
+                                                    $('.anatomia_pagination').bootpag({page : v_num_page, total : aData.return.n_pagina});
+                                                }
+                                            } else {
+                                                $("#anatomia_pagination").hide();
+                                            }
                                             $(".n_resultados_panel").html(aData.return.n_resultado);
                                             $("."+html_li).html('').html(html_out);
+                                            $('#loadFade').modal('hide');
                                         }, 
     });
-    //return false;
 }
+
 
 function js_vista_opcion_busqueda(_value){
     console.log("-----------------------------------------------");
@@ -633,7 +623,7 @@ function js_delete_list_gestion(new_id_anatomia){
     localStorage.removeItem('storange_ids_anatomia');
     if(arr_storange_ids_anatomia.length > 0){
         localStorage.setItem("storange_ids_anatomia",arr_storange_ids_anatomia.join(","));
-        update_etapaanalitica();
+        update_etapaanalitica(1);
     } else {
         $.ajax({ 
             type                :   "POST",
@@ -1159,7 +1149,7 @@ function delete_cookie(){
                                                     
                                                     null_tabs();
                                                     js_desabilita_filtro_busqueda();
-                                                    update_etapaanalitica();
+                                                    update_etapaanalitica(1);
                                                 }, 
     });
 }
@@ -3406,13 +3396,12 @@ function js_collapse_muestras(){
 */  
 
 function GET_PDF_ANATOMIA_PANEL(id){
-    $("#Dv_verdocumentos").modal("show");
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_libro_etapaanalitica_model/BLOB_PDF_ANATOMIA_PATOLOGICA",
         dataType    :   "json",
         beforeSend	:   function(xhr)       {   
-                                                        console.log(xhr);
+                                                console.log(xhr);
                                                 console.log("generando PDF");
                                                 $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
                                             },
@@ -3421,14 +3410,14 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                             },
         error		:   function(errro)     { 
                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                $("#protocoloPabellon").css("z-index","1500"); 
+                                                //$("#protocoloPabellon").css("z-index","1500"); 
                                                 jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                 $('#PDF_VERDOC').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                             },
         success		:   function(aData)     { 
-                                                console.log("---------------------------------------------");
+                                                
                                                 console.log(aData);
-                                                console.log("---------------------------------------------");
+
                                                 /*
                                                 if(!aData["STATUS"]){
                                                     jError("error al cargar protocolo PDF","Clinica Libre");
@@ -3452,6 +3441,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                     Objpdf.setAttribute('style','height:700px;');
                                                     Objpdf.setAttribute('title','PDF');
                                                     $('#PDF_VERDOC').html(Objpdf);
+                                                    $("#Dv_verdocumentos").modal("show");
                                                 }
                                                 */
                                             }, 

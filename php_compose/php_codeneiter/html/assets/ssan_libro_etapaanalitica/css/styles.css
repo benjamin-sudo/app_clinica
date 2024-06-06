@@ -979,3 +979,8 @@ input[type="file"]                      {
     padding                             :   10px;
 }
 
+.grid_contenedo_paginado                {
+    display                             :   grid;
+    grid-template-columns               :   1fr auto 1fr;
+    column-gap                          :   5px;
+}
