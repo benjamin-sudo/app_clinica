@@ -139,11 +139,11 @@ $(document).ready(function(){
         $("#btn_nueva_plantilla").attr('onclick','');
         $("#btn_guarda_descripcion").attr('onclick','');
         $(".main-panel").perfectScrollbar("destroy");
-        document.getElementById("modal_plantillas_macro_micro").style.overflowY     =   'auto';
+        document.getElementById("modal_plantillas_macro_micro").style.overflowY = 'auto';
     });
     $('#modal_nueva_plantilla').on('hidden.bs.modal',function(e){ 
         $(".main-panel").perfectScrollbar("destroy");
-        document.getElementById("modal_nueva_plantilla").style.overflowY            =   'auto';
+        document.getElementById("modal_nueva_plantilla").style.overflowY = 'auto';
     });
     $('#modal_gestion_firma_patologo').on('hidden.bs.modal',function(e){ 
         $("#html_gestion_firma_patologo").html(''); 
@@ -152,17 +152,25 @@ $(document).ready(function(){
         $("#PDF_VERDOC").html(''); 
     });
 
-    //tabs busqueda principal
-    //console.log("   ***********************************************************************  ");
-    //console.log("   storange_tabs_main  ->  ",localStorage.getItem("storange_tabs_main"));
+    
+    console.log("   *******************************************************************     ");
+    console.log("   *********** tabs busqueda principal *******************************     ");
+    console.log("   storange_tabs_main  ->  ",localStorage.getItem("storange_tabs_main"),"  ");
+    console.log("   *******************************************************************     ");
 
-    localStorage.getItem("storange_tabs_main")===null?null_tabs():js_gestion();
+    //localStorage.getItem("storange_tabs_main")===null?null_tabs():js_gestion();
+    null_tabs();
 
     var tabElements = document.querySelectorAll('.tabs_main_analitica .nav-link');
     tabElements.forEach(function(tab) {
         tab.addEventListener('shown.bs.tab', function(event) {
             var target = event.target.getAttribute('data-bs-target') || event.target.getAttribute('href');
+            
+            //console.log("   **************************  ");
+            console.log(" -> ",target);
             $("#span_tipo_busqueda").html(target);
+
+            /*
             $(".n_resultados_panel").html('0'); 
             $.ajax({ 
                 type                :   "POST",
@@ -189,9 +197,10 @@ $(document).ready(function(){
                                                             li_busqueda_ver_oculta($("."+target.slice(1)).data().zona_li);
                                                             localStorage.setItem("storange_tabs_main",target);
                                                             js_visualizacion_menu_principal(target);
-                                                            update_etapaanalitica();
+                                                            update_etapaanalitica(1);
                                                         }, 
             });
+            */
         });
     });
 
@@ -284,22 +293,22 @@ $(document).ready(function(){
     //ws etapa analitica
     //desabilitado
     //ws_etapa_analitica();
-
+    //console.log("Señor carcelero");
 
     let V_PAGE_NUMBER = $("#V_PAGE_NUMBER").val();
     let V_NUM_PAGINAS = $("#V_NUM_PAGINAS").val();
+
     $('.anatomia_pagination').bootpag({
-        page        :   1,  //pagina posicionado
-        total       :   V_NUM_PAGINAS,  //paginas disponibles
-        maxVisible  :   10,
-        href        :   "#pro-page-{{number}}",
-        leaps       :   false,
-        next        :   '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
-        prev        :   '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+        page : 1,  //pagina posicionado
+        total : V_NUM_PAGINAS,  //paginas disponibles
+        maxVisible : 10,
+        href : "#pro-page-{{number}}",
+        leaps : false,
+        next : '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+        prev : '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
     }).on('page', function(event, num){
         update_etapaanalitica(num);
     });
-
 
 });
 
@@ -413,9 +422,9 @@ function js_adjunto_firma(archivos){
                 console.log("response           ->",response);
                 return response.json();
             }).then(function(data_return){
-                console.log("---------------------------------");
-                console.log("data_return    ->  ",data_return);
-                console.log("---------------------------------");
+                //console.log("---------------------------------");
+                //console.log("data_return    ->  ",data_return);
+                //console.log("---------------------------------");
                 js_img_data(navegador.createObjectURL(archivos[0]))
                 jAlert("Subida con &eacute;xito","Clinica Libre");
             }).catch(function(err){  
@@ -544,12 +553,8 @@ function update_etapaanalitica(v_num_page){
     var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     let ind_orden               =   $("#ind_order_by").val();
-    
-    console.log("   --------------------------------------  ");
-    console.log("   v_storange_tabs_main  : ",v_storange_tabs_main);
-    
-    
-    
+    //console.log("   --------------------------------------  ");
+    //console.log("   v_storange_tabs_main  : ",v_storange_tabs_main);
     $('#loadFade').modal('show');
     $.ajax({ 
         type        :   "POST",
@@ -569,17 +574,19 @@ function update_etapaanalitica(v_num_page){
                                         },
         error       :   function(errro) { 
                                             console.log(errro);  
-                                            console.log(errro.responseText);
+                                            //console.log(errro.responseText);
                                             jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
                                             $('#loadFade').modal('hide'); 
                                         },
         success     :   function(aData) { 
-                                            
-                                            //console.log("   -------------------    ");
-                                            //console.log("   aData   ->  ",aData);
-                                            //console.log("   -------------------    ");
+                                            console.log("   -------------------    ");
+                                            console.log("   aData   ->  ",aData);
+
                                             let html_li = $("."+aData.id_html_out).data().zona_li;
                                             let html_out = aData.out_html.return_html;
+
+                                            console.log("html_out   ->  ",html_out);
+
                                             if (v_storange_tabs_main == '#_panel_por_fecha'){
                                                 $("#V_ULTIMA_PAGE").val(v_num_page);
                                                 if (aData.return.n_resultado == '0'){
@@ -591,13 +598,13 @@ function update_etapaanalitica(v_num_page){
                                             } else {
                                                 $("#anatomia_pagination").hide();
                                             }
+
                                             $(".n_resultados_panel").html(aData.return.n_resultado);
                                             $("."+html_li).html('').html(html_out);
                                             $('#loadFade').modal('hide');
                                         }, 
     });
 }
-
 
 function js_vista_opcion_busqueda(_value){
     console.log("-----------------------------------------------");

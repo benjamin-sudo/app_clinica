@@ -13,11 +13,13 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
     }
     
     public function index(){
-        $this->output->set_template("theme_principal/lightboot");
+        $this->output->set_template("blank");
         $arr_ids_anatomia               =   '';
         $arr_estados_filtro             =   '0';
         $var_fecha_inicio               =   date("d-m-Y");
         $var_fecha_final                =   date("d-m-Y");
+
+        /*
         if(isset($_COOKIE['target']))   {
             $tipo_busqueda              =   $_COOKIE['target'];
             if($tipo_busqueda           === '#_panel_por_fecha'){
@@ -44,12 +46,15 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
                 $arr_ids_anatomia       =   [];
             }
         } else {
-            #target por defecto
-            $tipo_busqueda              =   '#_panel_por_fecha';
-            $arr_ids_anatomia           =   [];
-            $var_fecha_inicio           =   date("d-m-Y");
-            $var_fecha_final            =   date("d-m-Y");
+           
         }
+        */
+
+        #target por defecto
+        $tipo_busqueda                  =   '#_panel_por_fecha';
+        $arr_ids_anatomia               =   [];
+        $var_fecha_inicio               =   date("d-m-Y");
+        $var_fecha_final                =   date("d-m-Y");
         #LOAD_ETAPA_ANALITICA
         $return_data                    =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
@@ -75,7 +80,7 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
         $this->load->js("assets/ssan_libro_etapaanalitica/js/javascript.js");
         #WEB SOCKET
         #$this->load->js("assets/themes/wsocket_io/2_3_0/socket.io.dev.js");
-        $this->load->js("assets/ssan_libro_biopsias_listaexterno1/js/ws_anatomiap_envio_a_recepcion.js");
+        #$this->load->js("assets/ssan_libro_biopsias_listaexterno1/js/ws_anatomiap_envio_a_recepcion.js");
         #AUTOSIZE BETA
         $this->load->js("assets/ssan_libro_etapaanalitica/js/autosize.js");
         #HTML OUT

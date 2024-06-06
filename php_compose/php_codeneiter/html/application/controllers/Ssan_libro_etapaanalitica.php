@@ -146,7 +146,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         ########### LOAD ALL ETAPA ANALITICA ############
         ########### GO_TO -> LOAD_ETAPA_ANALITICA #######
         #################################################
-        $return_data                        =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(
+        $return_data                        =   $this->Ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(
             "cod_empresa"                   =>  $this->session->userdata("COD_ESTAB"),
             "usr_session"                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "ind_opcion"                    =>  $tipo_busqueda,

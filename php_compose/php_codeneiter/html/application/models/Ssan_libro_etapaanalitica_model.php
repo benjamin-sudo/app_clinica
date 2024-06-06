@@ -76,17 +76,17 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $result = $this->db->stored_procedure_multicursor($this->own . '.PROCE_ANATOMIA_PATOLOGIA', $_txt_proce_anatomia, $param);
         $this->db->trans_complete();
         return array(
-            'STATUS' =>  true,
-            'status_bd' =>  true,
             'BD' =>  $result,
+            'STATUS' => true,
+            'status_bd' => true,
             'HTML_LI' =>  $this->li_lista_estapaanalitica_paginado($result, $DATA["ind_opcion"], $DATA["ind_first"], $DATA["get_sala"]),
             'n_resultado' =>  $DATA["ind_opcion"] == '#_panel_por_gestion' ? 1 : $result[":C_NUM_RESULTADOS"][0]["V_TOTAL_COUNT"],
             'n_pagina' =>  $DATA["ind_opcion"] == '#_panel_por_gestion' ? 2 : $result[":C_NUM_RESULTADOS"][0]["V_NUM_PAGINAS"],
             'ind_opcion' =>  $DATA["ind_opcion"],
             'date_inicio' =>  strtotime($DATA["data_inicio"]),
             'date_final' =>  strtotime($DATA["data_final"]),
-            'cookie' =>  isset($_COOKIE['target']) ? '<span class="label label-success">CON COOKIE</span>' : '<span class="label label-warning">SIN COOKIE</span>',
-            'ind_busqueda' =>  isset($_COOKIE['target']) ? '<span class="label label-warning" id="span_tipo_busqueda">' . $_COOKIE['target'] . '</span>' : '<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+            'cookie' =>  isset($_COOKIE['target']) ? '<span class="badge bg-dark">CON COOKIE</span>' : '<span class="badge bg-primary">SIN COOKIE</span>',
+            'ind_busqueda' =>  isset($_COOKIE['target']) ? '<span class="badge badge-warning" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="badge badge-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
             'fechas' =>  isset($_COOKIE['data']) ? $_COOKIE['data'] : 'null',
             'ids_anatomia' =>  isset($_COOKIE['id_anatomia']) ? json_decode($_COOKIE['id_anatomia']) : 'null',
             'txt_sala' =>  $DATA["get_sala"],
