@@ -553,8 +553,14 @@ function update_etapaanalitica(v_num_page){
     var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     let ind_orden               =   $("#ind_order_by").val();
+
+
     //console.log("   --------------------------------------  ");
     //console.log("   v_storange_tabs_main  : ",v_storange_tabs_main);
+    
+    console.log("   ------------------------------  ");
+    console.log("   v_num_page ->  ",v_num_page);
+
     $('#loadFade').modal('show');
     $.ajax({ 
         type        :   "POST",
@@ -581,12 +587,9 @@ function update_etapaanalitica(v_num_page){
         success     :   function(aData) { 
                                             console.log("   -------------------    ");
                                             console.log("   aData   ->  ",aData);
-
                                             let html_li = $("."+aData.id_html_out).data().zona_li;
                                             let html_out = aData.out_html.return_html;
-
                                             console.log("html_out   ->  ",html_out);
-
                                             if (v_storange_tabs_main == '#_panel_por_fecha'){
                                                 $("#V_ULTIMA_PAGE").val(v_num_page);
                                                 if (aData.return.n_resultado == '0'){
@@ -598,7 +601,6 @@ function update_etapaanalitica(v_num_page){
                                             } else {
                                                 $("#anatomia_pagination").hide();
                                             }
-
                                             $(".n_resultados_panel").html(aData.return.n_resultado);
                                             $("."+html_li).html('').html(html_out);
                                             $('#loadFade').modal('hide');
