@@ -569,21 +569,9 @@
 
 <script>
     $(document).ready(function() {
-    
-    
-        console.log( "ready!" );
-    
-    
-    
-    });
-
-    $('.tabs_muestras_macroscopia a[href="#_anatomia_macroscopia"]').tab('show');
-    document.addEventListener('DOMContentLoaded', function () {
-        var firstTabEl = document.querySelector('#ul_muestras .list-group-item');
+        var firstTabEl = document.querySelector('#tabs_muestras_macroscopica .nav-link');
         var firstTab = new bootstrap.Tab(firstTabEl);
-        console.log("firstTab   ->  ",firstTab);
         firstTab.show();
+        //$('.tabs_muestras_macroscopia a[href="#_anatomia_citologia"]').tab('show');
     });
-
-    //$('.tabs_muestras_macroscopia a[href="#_anatomia_citologia"]').tab('show');
 </script>

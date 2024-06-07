@@ -1441,7 +1441,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
     
-    public function get_informr_macroscopica() {
+    public function get_informr_macroscopica(){
         if(!$this->input->is_ajax_request()){ show_404(); }  
         $return                         =   '';
         $status                         =   true;
@@ -1465,14 +1465,15 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             'return'                    =>  $return,
         )));
     }
-    
+
+
     public function elimina_imagen(){
         if(!$this->input->is_ajax_request()){ show_404(); }  
         $status                         =   true;
         $img                            =   $this->input->post('img'); 
         $return                         =   $this->Ssan_libro_etapaanalitica_model->get_elimina_imagen(array( 
-                                                'img'       =>  $img,
-                                                'session'   =>  explode("-",$this->session->userdata("USERNAME"))[0],
+                                                'img' =>  $img,
+                                                'session' =>  explode("-",$this->session->userdata("USERNAME"))[0],
                                             ));
         $this->output->set_output(json_encode(array(
             'status'                    =>  $status,

@@ -2553,10 +2553,21 @@ function js_guarda_descripcion_muestras(id_anatomia){
     
     //console.log("---------------------------------");
     //console.log("array_nmuestras->",array_nmuestras);
-
     if(error.length === 0 ){
+
+        jFirmaUnica('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
+            if(pass,contrasena){
+                console.log("   ------------------------------- ");
+                console.log("   pass           ->  ",pass);
+                console.log("   contrasena     ->  ",contrasena);
+
+            }
+        });
+
+
+        /*
         jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
-            if(r) {
+            if(r){
                     $('#loadFade').modal('show'); 
                     $.ajax({ 
                         type		:   "POST",
@@ -2605,8 +2616,11 @@ function js_guarda_descripcion_muestras(id_anatomia){
                 jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
+        */
+
+
+
     } else {
-        //console.log("error -----------------> ",error);
         var txt_error   = '';
         error.forEach(function(value,index){ $(value.value).addClass("error_macroscopica"); txt_error+=value.txt+"<br>"; });
         showNotification('top','left',txt_error,4,'fa fa-exclamation-triangle');
