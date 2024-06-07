@@ -5,8 +5,8 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->get_sala     =   'salamacroscopia';
-        $this->txt_titulo   =   'MACROSC&Oacute;PICA';
+        $this->get_sala = 'salamacroscopia';
+        $this->txt_titulo = 'MACROSC&Oacute;PIA';
         $this->load->model("ssan_libro_etapaanalitica_model");
         $this->load->model("ssan_libro_biopsias_usuarioext_model");
         #$this->load->model("Ssan_libro_salamacroscopia_model");
@@ -14,11 +14,10 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
     
     public function index(){
         $this->output->set_template("blank");
-        $arr_ids_anatomia               =   '';
-        $arr_estados_filtro             =   '0';
-        $var_fecha_inicio               =   date("d-m-Y");
-        $var_fecha_final                =   date("d-m-Y");
-
+        $arr_ids_anatomia = '';
+        $arr_estados_filtro = '0';
+        $var_fecha_inicio = date("d-m-Y");
+        $var_fecha_final = date("d-m-Y");
         /*
         if(isset($_COOKIE['target']))   {
             $tipo_busqueda              =   $_COOKIE['target'];
@@ -49,14 +48,11 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
            
         }
         */
-
-        
         #target por defecto
         $tipo_busqueda                  =   '#_panel_por_fecha';
         $arr_ids_anatomia               =   [];
         $var_fecha_inicio               =   date("d-m-Y");
         $var_fecha_final                =   date("d-m-Y");
-
 
         #LOAD_ETAPA_ANALITICA
         $return_data                    =   $this->ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(

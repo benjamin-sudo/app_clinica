@@ -1271,7 +1271,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $get_sala                       =   $this->input->post('get_sala');
         $html                           =   '';
         $_issesion                      =   true;
-        $DATA_CURSOR = [];
+        $DATA_CURSOR                    =   [];
         if ($cod_empresa                ==  ''){
             $_issesion                  =   false;
         } else {

@@ -390,5 +390,4 @@
         $.alerts.firmaUnica(message, value, title, callback);
     };
 
-
 })(jQuery);
