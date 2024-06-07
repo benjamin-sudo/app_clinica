@@ -2555,16 +2555,24 @@ function js_guarda_descripcion_muestras(id_anatomia){
     //console.log("array_nmuestras->",array_nmuestras);
     if(error.length === 0 ){
 
-        jFirmaUnica('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
-            if(pass,contrasena){
-                console.log("   ------------------------------- ");
-                console.log("   pass           ->  ",pass);
-                console.log("   contrasena     ->  ",contrasena);
-
+        jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
+            let v_error = []; //array validador
+            let v_run = obj_salida.v_run; //run en formato 123.123.12-3
+            let status_run = obj_salida.status_run; // si el formato del run es correcto
+            let v_pass = obj_salida.v_pass; // texto de firma simple
+            if (status_run){
+                v_error.push("El RUN ingresado es incorrecto");
+            }
+            if((v_run=='')||(v_run==null)){
+                v_error.push("Firma simple incorrecta");
+            }
+            if (v_error.length>0){
+                showNotification('top','center',v_error.join("<br>"),4,'fa fa-exclamation-triangle');
+            } else {
+                //aqui continuaria el ajax
             }
         });
-
-
+      
         /*
         jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r){

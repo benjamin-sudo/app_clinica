@@ -244,7 +244,7 @@
                         <br>
                         <table style="margin-left: 70px;">
                             <tr>
-                                <td> <label id="txtRun" style="font-weight: bold;">RUN: </label>&nbsp;</td>
+                                <td><label id="txtRun" style="font-weight: bold;">RUN: </label>&nbsp;</td>
                                 <td><input type="text" autocomplete="run usuario" size="30" style="width:100px;" id="txt_run_prompt"/></td>
                             </tr>
                             <tr>
