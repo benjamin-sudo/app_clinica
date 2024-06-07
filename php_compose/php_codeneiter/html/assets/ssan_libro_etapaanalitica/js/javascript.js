@@ -2569,7 +2569,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
             if (v_error.length>0){
                 showNotification('top','center',v_error.join("<br>"),4,'fa fa-exclamation-triangle');
             } else {
-                //aqui continuaria el ajax
+                //aqui continuaria el ajax a validar con la bd el run mas firma
             }
         });
       

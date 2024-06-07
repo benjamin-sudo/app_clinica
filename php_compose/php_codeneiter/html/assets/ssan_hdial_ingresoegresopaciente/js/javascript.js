@@ -689,7 +689,7 @@ function NUEVOPACIENTEXCUPO_OLD(MKN,GRP,TRN){
                }); 
                */
            }
-   });
+    });
 }
 
 function E_INGRESODIAL(numIgreso,numfichae){
