@@ -60,6 +60,7 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
         $this->load->view("ssan_libro_biopsias_ii_fase/ssan_libro_biopsias_ii_fase_view",$return_data);
     }
 
+    
     #PERMITE BUSCAR PRESTADOR
     public function buscar() {
         $rut        =   $this->input->post('rutPac');

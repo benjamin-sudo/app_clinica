@@ -296,7 +296,7 @@
     </div>
 
     <div class="modal fade" id="modal_sala_tecnicas">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 95%; width: 95%;">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">
@@ -546,21 +546,22 @@
 <span id="nombre_nomina"></span>
 
 <section>
-    <div class="modal fade" id="Dv_verdocumentos" style="z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
-        <div class="modal-dialog modal-xl3" style="width:80%;">
+    <div class="modal fade" id="Dv_verdocumentos">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content">
-                <div class="modal-header"><button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
-                    <h3 class="modal-title"><b>PDF DOCUMENTOS</b></h3>
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="PDF_VERDOC"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-fill btn-sm" data-dismiss="modal">CIERRA VENTANA</button>
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
-
 </section>
 
 <!--

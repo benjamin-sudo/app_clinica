@@ -3,9 +3,7 @@
 <input type="hidden" id="NAMESESSION"       name="NAMESESSION"      value="<?php echo $this->session->userdata["NAMESESSION"];?>"/>
 <input type="hidden" id="USERNAME"          name="USERNAME"         value="<?php echo $this->session->userdata["USERNAME"];?>"/>
 <input type="hidden" id="unique"            name="unique"           value="<?php echo $this->session->userdata["unique"];?>"/>
-
 <div class="info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata));?>"></div>
-
 <div class="grid_body_form_analitica">
     <div class="grid_body_form_analitica1">
         <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
@@ -55,7 +53,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="card" id="card_tiempos_anatomia_patologica" style="margin-bottom:5px">
             <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
                 <h5 class="title"><i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">SOLICITUD</b></h5>

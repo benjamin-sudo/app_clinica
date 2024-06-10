@@ -3727,8 +3727,6 @@ function grabarUsu() {
 
 function js_add_hijo_tomamuestra(ID_ROTULADO){
     let open = $(".data_rotulado_"+ID_ROTULADO).data('open');
-    //console.log("ID_ROTULADO        ->  "+ID_ROTULADO);
-    //console.log("open               ->  "+open);
     if (!open){
         $(".data_rotulado_"+ID_ROTULADO).data().open = true;
         $.ajax({ 

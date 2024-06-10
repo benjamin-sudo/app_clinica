@@ -161,7 +161,6 @@ function js_ws_test(){
     $("#load_confirma_envio_recepcion").submit();
 }
 
-
 //UPDATE ANTES DE LA RECEPCION
 function UPDATE_PANEL(){
     var fecha_form          =   $("#NUM_FASE").val()==1?$("#txt_fec_inicio").val():fecha_cale('fecha_out');

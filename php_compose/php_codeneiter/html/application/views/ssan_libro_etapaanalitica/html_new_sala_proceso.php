@@ -396,7 +396,7 @@
                 </div>
         </div>
         <div id='tabs_tecnicas' class='tab-pane margin_panel_tabs'>
-            <h5 style="margin-bottom:4px;">
+            <h5 style="margin-bottom:4px;margin-top:15px;">
                 <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">TECNICAS</b>
             </h5>
             <div class="grid_tecnicas_complementaria">

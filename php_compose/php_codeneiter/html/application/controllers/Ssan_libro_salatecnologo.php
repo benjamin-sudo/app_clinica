@@ -10,8 +10,8 @@ class Ssan_libro_salatecnologo extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_libro_etapaanalitica_model");
-        $this->get_sala                 =   'sala_tecnologo';
-        $this->txt_titulo               =   'SALA DE TECNICAS';
+        $this->get_sala = 'sala_tecnologo';
+        $this->txt_titulo = 'SALA DE TECNICAS';
     }
     
     public function index(){
@@ -54,7 +54,7 @@ class Ssan_libro_salatecnologo extends CI_Controller {
         }
         #var_dump($arr_ids_anatomia);
         #LOAD_ETAPA_ANALITICA
-        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->load_etapa_analiticaap(array(
+        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(
             "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
             "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
             "ind_opcion"                =>  $tipo_busqueda,
@@ -68,9 +68,11 @@ class Ssan_libro_salatecnologo extends CI_Controller {
             "txt_titulo"                =>  $this->txt_titulo,
             "ind_filtros_ap"            =>  $arr_estados_filtro,
             "ind_order_by"              =>  "0",
+            "v_page_num"                =>  1,      
+            "v_page_size"               =>  10,    
         ));
         #API VOZ
-        #$this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
+        $this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES
         $this->load->css("assets/ssan_libro_etapaanalitica/css/styles.css");
         $this->load->js("assets/ssan_libro_etapaanalitica/js/javascript.js");
@@ -82,6 +84,5 @@ class Ssan_libro_salatecnologo extends CI_Controller {
         #HTML OUT
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
-
 }
 ?>

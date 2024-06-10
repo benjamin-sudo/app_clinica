@@ -2098,7 +2098,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
     
-    #tecnologo
+    #sala tecnologo
     public function gestion_sala_tecnicas(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa                        =   $this->session->userdata("COD_ESTAB");
