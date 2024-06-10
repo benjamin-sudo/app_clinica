@@ -2556,10 +2556,10 @@ function js_guarda_descripcion_muestras(id_anatomia){
     if(error.length === 0 ){
         /*
         jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
-            let v_error = []; //array validador
-            let v_run = obj_salida.v_run; //run en formato 123.123.12-3
-            let status_run = obj_salida.status_run; // si el formato del run es correcto
-            let v_pass = obj_salida.v_pass; // texto de firma simple
+            let v_error     =   [];                     //array validador
+            let v_run       =   obj_salida.v_run;       //run en formato 123.123.12-3
+            let status_run  =   obj_salida.status_run;  //si el formato del run es correcto
+            let v_pass      =   obj_salida.v_pass;      //texto de firma simple
             if (status_run){  v_error.push("El RUN ingresado es incorrecto");  }
             if((v_run=='')||(v_run==null)){ v_error.push("Firma simple incorrecta"); }
             if (v_error.length>0){
@@ -2870,7 +2870,9 @@ function js_inicia_sala_procesos(id_anatomia){
                                                             console.log("   return get_guardar_info_sala_proceso    ");
                                                             console.log("   ->",aData,"<-                           ");
                                                             console.log("-------------------------------------------");
+
                                                             $('#loadFade').modal('hide'); 
+
                                                             if(aData.status){
                                                                 jAlert("Se inici&oacute; tiempo en sala de proceso","Clinica Libre");
                                                                 $("#modal_star_sala_proceso").modal('hide');
@@ -2881,7 +2883,10 @@ function js_inicia_sala_procesos(id_anatomia){
                                                                 //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                 localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
                                                                 //$("#load_anuncios_anatomia_patologica").submit();
-                                                                update_etapaanalitica();
+                                                                
+                                                                let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
+                                                                update_etapaanalitica(V_ULTIMA_PAGE);
+
                                                             } else {
                                                                 jError("Error Firma simple","Clinica Libre");
                                                             }

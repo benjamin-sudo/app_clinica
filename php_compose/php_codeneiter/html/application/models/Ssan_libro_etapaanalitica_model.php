@@ -1667,7 +1667,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                     "DATE_AUDITA"           =>  "SYSDATE",
                     "TXT_DESC_MACROSCOPICA" =>  $row['txt'],
                     "DATE_MACROSCOPIA"      =>  "SYSDATE",
-                    "USER_MACROSCOPICA_"     =>  $DATA['session']
+                    "USER_MACROSCOPICA"     =>  $DATA['session']
                 ));
             }
             #PASA A SALA DE PROCESO = ID_HISTO_ZONA = 1
@@ -1675,6 +1675,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
                 "ID_HISTO_ZONA"             =>  1,#AVANZA DE ZONA
                 "TXT_DESC_MACROSCOPICA"     =>  $DATA["array_main"][0]["txt"],
+                "DATE_MACROSCOPIA"          =>  "SYSDATE",
+                "USER_MACROSCOPICA"         =>  $DATA['session']
             ));
         }
         $this->db->trans_complete();
