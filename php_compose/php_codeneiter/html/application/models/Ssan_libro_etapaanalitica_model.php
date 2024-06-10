@@ -1665,7 +1665,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                     "IND_ESTADO"            =>  1,
                     "USR_AUDITA"            =>  $DATA['session'],
                     "DATE_AUDITA"           =>  "SYSDATE",
-                    "TXT_DESC_MACROSCOPICA" =>  $row['txt']
+                    "TXT_DESC_MACROSCOPICA" =>  $row['txt'],
+                    "DATE_MACROSCOPIA"      =>  "SYSDATE",
+                    "USER_MACROSCOPICA_"     =>  $DATA['session']
                 ));
             }
             #PASA A SALA DE PROCESO = ID_HISTO_ZONA = 1
@@ -1676,7 +1678,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             ));
         }
         $this->db->trans_complete();
-        return array('status' =>  true);
+        return array('status' => true);
     }
     
     public function get_elimina_imagen($DATA){

@@ -2569,7 +2569,6 @@ function js_guarda_descripcion_muestras(id_anatomia){
             }
         });
         */
-
         jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r){
                     $('#loadFade').modal('show'); 
