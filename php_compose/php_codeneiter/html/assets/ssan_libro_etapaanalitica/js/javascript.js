@@ -2997,11 +2997,14 @@ function time_unix(TXTFECHA,TXTHORA){
 function js_sala_tecnicas(id_anatomia){
     $('#loadFade').modal('show'); 
     let v_get_sala = $("#get_sala").val();
+    console.log("   --------------------------------------- ");
+    console.log("   v_get_sala     ->  ",v_get_sala);
+    console.log("   id_anatomia    ->  ",id_anatomia);
     $.ajax({ 
-         type       :   "POST",
-         url        :   "ssan_libro_etapaanalitica/gestion_sala_tecnicas",
-         dataType   :   "json",
-         data       :   {   
+         type : "POST",
+         url : "ssan_libro_etapaanalitica/gestion_sala_tecnicas",
+         dataType : "json",
+         data : {   
                             id_anatomia : id_anatomia,
                             get_sala : v_get_sala,
                         },
@@ -3090,10 +3093,10 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
         var r = '';
         $('#loadFade').modal('show'); 
         $.ajax({ 
-            type        :   "POST",
-            url         :   "ssan_libro_etapaanalitica/get_guardadoprevio_tec_tecnologo",
-            dataType    :   "json",
-            data        :   {
+            type : "POST",
+            url : "ssan_libro_etapaanalitica/get_guardadoprevio_tec_tecnologo",
+            dataType : "json",
+            data :   {
                                 op              :   op,
                                 contrasena      :   r,
                                 id_anatomia     :   id_anatomia,
@@ -3101,12 +3104,12 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
                                 val_cierre      :   val_cierre?1:0,
                                 accesdata       :   obj_rce_anatomia,
                             },
-            error       :    function(errro)    {  
+            error : function(errro)    {  
                                                     console.log(errro);
                                                     $('#loadFade').modal('hide'); 
                                                     jError("Error en el aplicativo","Clinica Libre");
                                                 },
-            success     :    function(aData)     { 
+            success : function(aData)    { 
                                                     console.table("aData->",aData);
                                                     $('#loadFade').modal('hide');
                                                     if(aData.status){
@@ -3124,7 +3127,7 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
         }   else  {
             //ind cierre
             //console.log("val_cierre     ->  ",val_cierre);
-            var txt_estado                  =   val_cierre?'&nbsp;<b>CERRADO</b>':'&nbsp;<b>NO CERRADO</b>';
+            var txt_estado = val_cierre?'&nbsp;<b>CERRADO</b>':'&nbsp;<b>NO CERRADO</b>';
             //console.log("ws");
             jPrompt('Con esta acci&oacute;n agregara informaci&oacute;n a solicitud histopatol&oacute;gico <br>Estado:'+txt_estado+'<br>&iquest;Desea continuar?','','Confirmaci\u00f3n',function (r) {
                 //console.log("password       ->  ",r);

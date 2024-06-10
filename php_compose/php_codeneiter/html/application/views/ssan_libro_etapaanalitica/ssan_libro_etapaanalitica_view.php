@@ -296,7 +296,7 @@
     </div>
 
     <div class="modal fade" id="modal_sala_tecnicas">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
+        <div class="modal-dialog modal-dialog-top modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">

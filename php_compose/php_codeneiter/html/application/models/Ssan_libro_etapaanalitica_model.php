@@ -1963,7 +1963,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                             $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_INCLUCION"              =>0));
                         }
                     }
-                    
                     #TECNICA INCLUSION
                     if(isset($datos["checked_corte"])){
                         if ($datos["checked_tincion"] === 'true'){
@@ -1972,7 +1971,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                             $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_CORTE"                  =>0));
                         }
                     }
-                    
                     #TECNICA TINCION
                     if(isset($datos["checked_tincion"])){
                         if ($datos["checked_tincion"] === 'true'){
@@ -1981,8 +1979,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                             $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_TINCION"                =>0));
                         }
                     }
-                    
-                    
                     #FINALIZACION
                     if(isset($datos["checked_tenicas_all"])){
                         //$dataSolicitud                      =     array_merge($dataSolicitud,array("IND_ALL_TECNICAS"               =>  $datos["checked_tenicas_all"]?1:0));
