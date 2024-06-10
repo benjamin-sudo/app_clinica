@@ -2512,6 +2512,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
     var array_main              =   new Array();
     var array_nmuestras         =   new Array();
     var error                   =   new Array();
+    //alert("Cafe");
     $('.error_macroscopica').each(function(i,obj){  /*   console.log("  ->  ",obj.id);   */ $("#"+obj.id).removeClass("error_macroscopica"); });
     if($("#txt_descipcion_general").val() == '' && !document.getElementById('txt_descipcion_general').disabled ){
         error.push({txt:"Descripci&oacute;n Macrosc&oacute;pica general vac&iacute;a",value:"#txt_descipcion_general"});
@@ -2538,7 +2539,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
     });
     //console.log("array_nmuestras                ->  ",array_nmuestras,"<-       ");
     //descripcion macro de citologia
-    var booreane        =   document.getElementById("ind_deshabilitar_macro_cito").checked;
+    var booreane = document.getElementById("ind_deshabilitar_macro_cito").checked;
     //console.log("booreane   ->  no aplica para citologia o talvez si    <-  " , booreane);
     if(!booreane){
         $(".lista_citologia").each(function(index,value){
@@ -2550,30 +2551,25 @@ function js_guarda_descripcion_muestras(id_anatomia){
             });
         }); 
     }
-    
     //console.log("---------------------------------");
     //console.log("array_nmuestras->",array_nmuestras);
     if(error.length === 0 ){
-
+        /*
         jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
             let v_error = []; //array validador
             let v_run = obj_salida.v_run; //run en formato 123.123.12-3
             let status_run = obj_salida.status_run; // si el formato del run es correcto
             let v_pass = obj_salida.v_pass; // texto de firma simple
-            if (status_run){
-                v_error.push("El RUN ingresado es incorrecto");
-            }
-            if((v_run=='')||(v_run==null)){
-                v_error.push("Firma simple incorrecta");
-            }
+            if (status_run){  v_error.push("El RUN ingresado es incorrecto");  }
+            if((v_run=='')||(v_run==null)){ v_error.push("Firma simple incorrecta"); }
             if (v_error.length>0){
                 showNotification('top','center',v_error.join("<br>"),4,'fa fa-exclamation-triangle');
             } else {
                 //aqui continuaria el ajax a validar con la bd el run mas firma
             }
         });
-      
-        /*
+        */
+
         jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r){
                     $('#loadFade').modal('show'); 
@@ -2594,7 +2590,6 @@ function js_guarda_descripcion_muestras(id_anatomia){
                                                                 jError("Error en el aplicativo","Clinica Libre"); 
                                                             },
                         success     :   function(aData)     { 
-                                                                
                                                                 $('#loadFade').modal('hide');
                                                                 console.log("   aData   ->  ",aData);
                                                                 if(aData.status){
@@ -2624,12 +2619,9 @@ function js_guarda_descripcion_muestras(id_anatomia){
                 jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
-        */
-
-
 
     } else {
-        var txt_error   = '';
+        var txt_error = '';
         error.forEach(function(value,index){ $(value.value).addClass("error_macroscopica"); txt_error+=value.txt+"<br>"; });
         showNotification('top','left',txt_error,4,'fa fa-exclamation-triangle');
     }
@@ -2646,33 +2638,33 @@ function delete_img_x_main(data){
                                 img         :   data.img,
                             },
         error		:   function(errro)     {  
-                                                    console.log(error);
-                                                    console.log(errro.responseText); 
-                                                    jError("Error en el aplicativo","Clinica Libre"); 
-                                                },
-        success        :   function(aData)     { 
-                                                    if(aData.status){
-                                                        if ( $("#get_sala").val()=='analitica'){
-                                                            showNotification('top','center','Se ha eliminado imagen N&deg;:'+data.img,2,'fa fa-check');
-                                                            js_update_img(data.id);
-                                                        } else {
-                                                            $(".img_"+data.img).remove('');
-                                                            var aux =   0;
-                                                            $('.img_sala_macroscopia').each(function(i,obj){ aux++;});
-                                                            if (aux === 0){
-                                                                html_img    =   '<div class="card" style="margin-bottom:0px;padding:8px;" id="imagen_sala_macroscopia">'+
-                                                                                    '<div style="background-color:transparent !important; text-align:center"><div class="font_15"><b>SUBIR</b></div></div>'+
-                                                                                    '<hr style="margin-top:10px;margin-bottom:10px">'+
-                                                                                    '<div class="flex_box_center">'+
-                                                                                        '<label class="custom-file-label pointer" for="imagen_macroscopia_'+data.id+'"><i class="fa fa-cloud-upload fa-4x" aria-hidden="true"></i></label>'+
-                                                                                        '<input type="file" data-get_sala="salamacroscopia" id="imagen_macroscopia_'+data.id+'" onchange="main_js_adjunto_ap('+data.id+',this.files)">'+
-                                                                                    '</div>'+
-                                                                                '</div>';
-                                                                $("#imagen_main").html(html_img);
-                                                            } 
-                                                        }
-                                                    } 
-                                                }, 
+                                                console.log(error);
+                                                console.log(errro.responseText); 
+                                                jError("Error en el aplicativo","Clinica Libre"); 
+                                            },
+        success        :   function(aData)  { 
+                                                if(aData.status){
+                                                    if ( $("#get_sala").val()=='analitica'){
+                                                        showNotification('top','center','Se ha eliminado imagen N&deg;:'+data.img,2,'fa fa-check');
+                                                        js_update_img(data.id);
+                                                    } else {
+                                                        $(".img_"+data.img).remove('');
+                                                        var aux =   0;
+                                                        $('.img_sala_macroscopia').each(function(i,obj){ aux++;});
+                                                        if (aux === 0){
+                                                            html_img    =   '<div class="card" style="margin-bottom:0px;padding:8px;" id="imagen_sala_macroscopia">'+
+                                                                                '<div style="background-color:transparent !important; text-align:center"><div class="font_15"><b>SUBIR</b></div></div>'+
+                                                                                '<hr style="margin-top:10px;margin-bottom:10px">'+
+                                                                                '<div class="flex_box_center">'+
+                                                                                    '<label class="custom-file-label pointer" for="imagen_macroscopia_'+data.id+'"><i class="fa fa-cloud-upload fa-4x" aria-hidden="true"></i></label>'+
+                                                                                    '<input type="file" data-get_sala="salamacroscopia" id="imagen_macroscopia_'+data.id+'" onchange="main_js_adjunto_ap('+data.id+',this.files)">'+
+                                                                                '</div>'+
+                                                                            '</div>';
+                                                            $("#imagen_main").html(html_img);
+                                                        } 
+                                                    }
+                                                } 
+                                            }, 
     });
 }
 
