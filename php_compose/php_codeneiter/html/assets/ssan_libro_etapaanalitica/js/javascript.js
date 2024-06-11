@@ -2670,14 +2670,13 @@ function delete_img_x_main(data){
 
 function js_pdf_microscopica(id_anatomia){
     $('#loadFade').modal('show'); 
-    //console.log("id_anatomia    ->  ",id_anatomia);
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
         dataType    :   "json",
         beforeSend	:   function(xhr){ },
         data 		:                   { 
-                                            id  :   id_anatomia,
+                                            id : id_anatomia,
                                         },
         error		:   function(errro) { 
                                             console.log("quisas->",errro,"-error->",errro.responseText); 
@@ -2686,8 +2685,8 @@ function js_pdf_microscopica(id_anatomia){
                                             $('#loadFade').modal('hide'); 
                                         },
         success		:   function(aData) { 
-                                            console.log(" aData -> ",aData);
                                             $('#loadFade').modal('hide'); 
+                                            console.log("aData -> ",aData);
                                             if(!aData["STATUS"]){
                                                 jError("error al cargar protocolo PDF","Clinica Libre");
                                                 return false;
@@ -2704,7 +2703,7 @@ function js_pdf_microscopica(id_anatomia){
                                                 Objpdf.setAttribute('data',blobURL);
                                                 Objpdf.setAttribute('width','100%');
                                                 var windowHeight = window.innerHeight;
-                                                var adjustedHeight = windowHeight - 200; // Adjust the value as needed
+                                                var adjustedHeight = windowHeight - 200;
                                                 Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
                                                 Objpdf.setAttribute('title','PDF');
                                                 $('#html_pdf_fullscreen').html(Objpdf);
