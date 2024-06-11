@@ -148,10 +148,10 @@ function js_vista_opcion_busqueda(_value){
 }
 
 function update_etapaanalitica_cancer_edicion(){
-    var v_tipo_de_busqueda                          =   "#_panel_por_gestion";
-    var v_get_sala                                  =   $("#ind_pagina").val();
-    var v_filtro_consulta                           =   '0';
-    var v_ids_anatomia                              =   localStorage.getItem("storange_ids_anatomia");
+    var v_tipo_de_busqueda = "#_panel_por_gestion";
+    var v_get_sala = $("#ind_pagina").val();
+    var v_filtro_consulta = '0';
+    var v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
     $('#loadFade').modal('show');
     $.ajax({ 
         type        :   "POST",

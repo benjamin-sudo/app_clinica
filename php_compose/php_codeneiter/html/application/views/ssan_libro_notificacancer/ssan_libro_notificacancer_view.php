@@ -63,7 +63,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="modal_notificacion_cancer">
     <div class="modal-dialog">
 	<div class="modal-content">

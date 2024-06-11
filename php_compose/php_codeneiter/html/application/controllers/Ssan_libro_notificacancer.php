@@ -5,7 +5,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->model("ssan_libro_notificacancer_model");
+        $this->load->model("Ssan_libro_notificacancer_model");
         $this->load->model("ssan_libro_biopsias_usuarioext_model");
     }
 
@@ -23,9 +23,8 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $busq                           =   $this->input->post('tipo_busqueda');
         $txt_busqueda                   =   $this->input->post('phrase');
         $ind_template                   =   $this->input->post('template');
-        ######################################################################## 
         $arr_data_out                   =   [];
-        $return_data                    =   $this->ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
                                                 'arr_ids_anatomia'  =>  '',
                                                 'txt_bus'           =>  $txt_busqueda,
                                                 'busq'              =>  $busq,
@@ -68,12 +67,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $txt_busqueda                   =   $this->input->post('phrase');
         $ind_template                   =   $this->input->post('template');
         $arr_data_out                   =   [];
-        /*
-        var_dump("txt_busqueda          ->  ".$txt_busqueda);
-        var_dump("ind_template          ->  ".$ind_template);
-        var_dump("busq                  ->  ".$busq);
-        */
-        $return_data                    =   $this->ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
                                                 'arr_ids_anatomia'  =>  '',
                                                 'txt_bus'           =>  $txt_busqueda,
                                                 'busq'              =>  $busq,
@@ -115,7 +109,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $v_tipo_de_busqueda                 =   $this->input->post('v_tipo_de_busqueda');
         $v_get_sala                         =   $this->input->post('v_get_sala');
         $v_filtro_consulta                  =   $this->input->post('v_filtro_consulta');
-        $return_data                        =   $this->ssan_libro_notificacancer_model->load_lista_anatomiapatologica_model(array(
+        $return_data                        =   $this->Ssan_libro_notificacancer_model->load_lista_anatomiapatologica_model(array(
             'cod_empresa'                   =>  $this->session->userdata("COD_ESTAB"),
             'usr_session'                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
             'v_ids_anatomia'                =>  $v_ids_anatomia,
@@ -138,7 +132,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
     public function html_notificar_a_ususario(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $status                             =   true;
-        $return_data                        =   $this->ssan_libro_notificacancer_model->load_gestion_notificacion_cancer(array(
+        $return_data                        =   $this->Ssan_libro_notificacancer_model->load_gestion_notificacion_cancer(array(
             'cod_empresa'                   =>  $this->session->userdata("COD_ESTAB")
         ));
         $this->output->set_output(json_encode(array(
@@ -168,7 +162,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
             $TXT_ERROR                      =   implode("<br>",$arr_errores);
             $STATUS                         =   false;
         } else {
-            $DATA                           =   $this->ssan_libro_notificacancer_model->get_valida_notificacion_conjunta(array(
+            $DATA                           =   $this->Ssan_libro_notificacancer_model->get_valida_notificacion_conjunta(array(
                                                     "COD_EMPRESA"       =>  $empresa,
                                                     "SESSION"           =>  $usuarioh[0], 
                                                     "ID_ANATOMIA"       =>  $id_anatomia,
@@ -277,7 +271,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $DATA                           =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_biopsia));
         /* 
-        $return_data                    =   $this->ssan_libro_notificacancer_model->insert_edicion_solicitud(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->insert_edicion_solicitud(array(
             'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
             'id_biopsia'                =>  $id_biopsia,
         ));
@@ -298,7 +292,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $new_num_interno                =   $this->input->post('new_num_interno');
         $pass                           =   $this->input->post('pass'); 
         $ind_cambio                     =   $this->input->post('ind_cambio'); 
-        $return_data                    =   $this->ssan_libro_notificacancer_model->update_numero_biopsias(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->update_numero_biopsias(array(
             'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
             'pass'                      =>  $pass,
             'ind_tipo_biopsia'          =>  $ind_tipo_biopsia,
@@ -326,7 +320,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $empresa                        =   $this->session->userdata("COD_ESTAB");
         $v_date_inicio                  =   '01-01-'.$ind_year;
         $v_date_final                   =   '31-12-'.$ind_year;
-        $return_data                    =   $this->ssan_libro_notificacancer_model->listado_notificado_cancer(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->listado_notificado_cancer(array(
             'cod_empresa'               =>  $empresa,
             'ind_year'                  =>  $ind_year,
             'ind_opcion'                =>  1,
@@ -369,7 +363,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); }
         $status                         =   true;
         $txt_error                      =   '';
-        $return_data                    =   $this->ssan_libro_notificacancer_model->model_update_fecha_diagnostico(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_update_fecha_diagnostico(array(
             'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
             'constrasena'               =>  $this->input->post('constrasena'),
             'id_biopsia'                =>  $this->input->post('id_biopsia'),
@@ -391,7 +385,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         if(!$this->input->is_ajax_request()){   show_404();  }
         $status                         =   true;
         $txt_error                      =   '';
-        $return_data                    =   $this->ssan_libro_notificacancer_model->model_update_date_notificacancer(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_update_date_notificacancer(array(
             'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
             'constrasena'               =>  $this->input->post('constrasena'),
             'id_biopsia'                =>  $this->input->post('id_biopsia'),
@@ -413,7 +407,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); }
         $status                         =   true;
         $txt_error                      =   '';
-        $return_data                    =   $this->ssan_libro_notificacancer_model->model_record_elimina_definitivamente(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_record_elimina_definitivamente(array(
             'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
             'constrasena'               =>  $this->input->post('constrasena'),
             'id_biopsia'                =>  $this->input->post('id_biopsia'),
@@ -435,7 +429,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         if(!$this->input->is_ajax_request()){   show_404();  }
         $status                         =   true;
         $txt_error                      =   '';
-        $return_data                    =   $this->ssan_libro_notificacancer_model->model_record_fecha_toma_muestra(array(
+        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_record_fecha_toma_muestra(array(
             'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
             'constrasena'               =>  $this->input->post('constrasena'),
             'id_biopsia'                =>  $this->input->post('id_biopsia'),

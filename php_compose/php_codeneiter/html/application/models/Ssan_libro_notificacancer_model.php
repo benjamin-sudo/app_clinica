@@ -6,10 +6,11 @@ class ssan_libro_notificacancer_model extends CI_Model {
 
     var $own        =   "ADMIN";
     var $ownGu      =   "GUADMIN";
-    var $ownPab     =   "PABELLON";
+    var $ownPab     =   "ADMIN";
 
-    public function __construct() {
+    public function __construct(){
         parent::__construct();
+        $this->db = $this->load->database('oracle_conteiner',true);
     }
 
     #CONSULTA_MAIN
@@ -105,7 +106,6 @@ class ssan_libro_notificacancer_model extends CI_Model {
         );
     }
     
-    
     public function busqueda_solicitudes_ap($DATA){
         $this->db->trans_start();
         $param          =   array(
@@ -155,14 +155,12 @@ class ssan_libro_notificacancer_model extends CI_Model {
                                     'type'      =>  OCI_B_CURSOR
                                 ),
                             );
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_BUSQX_PARAMETROS',$param);
+        $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_BUSQX_PARAMETROS',$param);
         $this->db->trans_complete();
-        
         //if($DATA["busq"] == '2'){
             //var_dump(print_r($result));
             //var_dump(print_r($DATA));
         //}
-        
         #########################################
         #var_dump(print_r($result));
         #########################################
