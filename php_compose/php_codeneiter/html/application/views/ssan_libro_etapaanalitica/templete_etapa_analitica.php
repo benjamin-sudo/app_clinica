@@ -1110,7 +1110,7 @@
                 </div>
             </div>
             <div class="panel_body_muestras2">
-                <div class="card" id="card_muestra_citologica" style="margin-bottom:5px;padding:8px;">
+                <div class="card" id="card_muestra_citologica" style="margin-bottom:5px;padding:8px;margin-top:14px;">
                     <h6 class="title" style="margin: 8px 0px 12px 0px;">
                         <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;<b style="color:#888888;">LISTADO MUESTRAS CITOLOG&Iacute;CA</b>
                     </h6>

@@ -543,8 +543,6 @@ function star_automplete(_value){
     $("#slc_automplete_biopsia").easyAutocomplete(opciones);
 }
 
-
-
 function update_etapaanalitica(v_num_page){
     var date_inicio             =   $('#fecha_out').data().date;
     var date_final              =   $('#fecha_out2').data().date;
@@ -696,7 +694,7 @@ function conf_cookie_filtro_estados(_filtro_estados){
         success             :   function(aData) { 
                                                     console.log("aData  ->  ",aData);
                                                     console.log("localStorage   ->  ",localStorage.getItem("strorage_filtro_categorias"));
-                                                    update_etapaanalitica();
+                                                    update_etapaanalitica(1);
                                                 }, 
     });
 }
@@ -1356,36 +1354,35 @@ function js_informacion_administrativo(id_anatomia){
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_libro_etapaanalitica/gestion_perfil_administrativo",
-        dataType        :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        console.log("load ssan_libro_etapaanalitica/gestion_perfil_administrativo");
-                                                        $('#html_star_sala_proceso').html('');
-                                                        $('#loadFade').modal('hide'); 
-                                                    },
-        data 		:                           { 
-                                                        id_anatomia     :   id_anatomia,
-                                                        get_sala        :   $("#get_sala").val(),
-                                                    },
-        error		:   function(errro)         { 
-                                                        $('#html_star_sala_proceso').html('');
-                                                        $('#loadFade').modal('hide'); 
-                                                        console.log("errro              ->",errro);
-                                                        console.log("errro.responseText ->",errro.responseText);
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    },
-        success		:   function(aData)         { 
-                                                        
-                                                        console.log("aData  ->  ",aData);
-                                                        $('#loadFade').modal('hide');
-                                                        if(aData.status_session){
-                                                            $("#btn_perfil_administrativo").attr('onclick','js_data_administrativo('+id_anatomia+')');
-                                                            $("#html_perfil_administrativo").html(aData.out_html);
-                                                            $("#modal_perfil_administrativo").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                        } else {
-                                                            jError("Session ha caducado","Clinica Libre");
-                                                        }
-                                                    }, 
+        dataType    :   "json",
+        beforeSend	:   function(xhr)   {   
+                                            console.log(xhr);
+                                            console.log("load ssan_libro_etapaanalitica/gestion_perfil_administrativo");
+                                            $('#html_star_sala_proceso').html('');
+                                            //$('#loadFade').modal('hide'); 
+                                        },
+        data 		:                   { 
+                                            id_anatomia     :   id_anatomia,
+                                            get_sala        :   $("#get_sala").val(),
+                                        },
+        error		:   function(errro) { 
+                                            $('#html_star_sala_proceso').html('');
+                                            $('#loadFade').modal('hide'); 
+                                            console.log("errro              ->",errro);
+                                            console.log("errro.responseText ->",errro.responseText);
+                                            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                        },
+        success		:   function(aData) { 
+                                            console.log("aData  ->  ",aData);
+                                            $('#loadFade').modal('hide');
+                                            if(aData.status_session){
+                                                $("#btn_perfil_administrativo").attr('onclick','js_data_administrativo('+id_anatomia+')');
+                                                $("#html_perfil_administrativo").html(aData.out_html);
+                                                $("#modal_perfil_administrativo").modal({backdrop:'static',keyboard:false}).modal("show");
+                                            } else {
+                                                jError("Session ha caducado","Clinica Libre");
+                                            }
+                                        }, 
    });
 }
 
@@ -1419,8 +1416,8 @@ function js_data_administrativo(id_anatomia){
         obj_rce_anatomia.formulario_administrativo.push(data_main_administrativo);
         console.table("obj_rce_anatomia                 ->  ",obj_rce_anatomia);
         jPrompt('Con esta acci&oacute;n agregara informaci&oacute;n a solicitud histopatol&oacute;gico &iquest;desea continuar?','','Confirmaci\u00f3n',function (r) {
-            console.error("password                    ->   ",r);
             if(r){ 
+                $('#loadFade').modal('show'); 
                 $.ajax({ 
                     type                                :   "POST",
                     url                                 :   "ssan_libro_etapaanalitica/guardado_perfil_administrativo",
@@ -1435,9 +1432,12 @@ function js_data_administrativo(id_anatomia){
                                                                                 console.error("errro                  ->",errro); 
                                                                                 console.error("error.responseText     ->",errro.responseText); 
                                                                                 jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                                                $('#loadFade').modal('hide'); 
+
                                                                             },
                     success                             :   function(aData) { 
                                                                                 console.table("out      ->  ",aData);
+                                                                                $('#loadFade').modal('hide'); 
                                                                                 if(aData.status_firma){
                                                                                     jAlert("Se grab&oacute; informaci&oacute;n con &eacute;xito","Clinica Libre");
                                                                                     localStorage.setItem("ind_tipo_mensaje",7);
@@ -1446,9 +1446,12 @@ function js_data_administrativo(id_anatomia){
                                                                                     localStorage.setItem("id_anatomia",id_anatomia);
                                                                                     //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                                     localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                                    $("#load_anuncios_anatomia_patologica").submit();
+                                                                                    //$("#load_anuncios_anatomia_patologica").submit();
+                                                                                    
                                                                                     $("#modal_perfil_administrativo").modal("hide");
-                                                                                    update_etapaanalitica();
+                                                                                    let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
+                                                                                    update_etapaanalitica(V_ULTIMA_PAGE);
+
                                                                                     
                                                                                 } else {
                                                                                     jError("Error en la firma simple","Clinica Libre");

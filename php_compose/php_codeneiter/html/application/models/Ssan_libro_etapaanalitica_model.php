@@ -54,7 +54,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             array('name' => ':V_IND_FIRST', 'value' =>  $DATA["ind_first"], 'length' =>  20,'type' => SQLT_CHR),
             array('name' => ':VAL_FECHA_INICIO', 'value' => $DATA["data_inicio"],  'length' =>  20, 'type' => SQLT_CHR),
             array('name' => ':VAL_FECHA_FINAL', 'value' => $DATA["data_final"],  'length' => 20,  'type' => SQLT_CHR),
-            array('name' => ':V_ARR_DATA',  'value' =>  $DATA["ind_opcion"]=='#_panel_por_gestion'?$DATA["arr_ids_anatomia"]:$DATA["ind_filtros_ap"],'length' =>  1000,'type'      =>  SQLT_CHR ),
+            array('name' => ':V_ARR_DATA',  'value' =>  $DATA["ind_opcion"]=='#_panel_por_gestion'?$DATA["arr_ids_anatomia"]:$DATA["ind_filtros_ap"],'length' =>  1000,'type' => SQLT_CHR),
             array('name' => ':C_LISTA_ANATOMIA', 'value' => $this->db->get_cursor(), 'length' => -1, 'type' => OCI_B_CURSOR),
             array('name' => ':C_HISTORIAL_M', 'value' => $this->db->get_cursor(), 'length' =>  -1, 'type' => OCI_B_CURSOR),
             array('name' => ':C_STATUS', 'value' => $this->db->get_cursor(), 'length' =>  -1, 'type' => OCI_B_CURSOR),

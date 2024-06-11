@@ -24,10 +24,10 @@
   <link type="text/css" rel="stylesheet" media="screen" href="assets/recursos/jalert/jquery.alerts.css"/>
   <!-- select min  -->
   <!-- ui | 1.12.1 --> 
-  <!-- autocomplete -->
   <link rel="stylesheet" href="assets/recursos/css/jquery-ui.css">
   <!--  bootstrap-select.min.css -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min.css">
+  <!-- autocomplete -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/autocomplete.css"  />
   <link type="text/css" rel="stylesheet" href="assets/recursos/css//easy-autocomplete.css"  />
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.min.css"  />
@@ -179,6 +179,7 @@
 <!-- ./wrapper -->
 
   <div id="respuesta"></div>
+
   <script type="text/javascript" src="assets/recursos/bootstrap_5/js/jquery.min.js"></script>
   <!-- jQuery UI - v1.12.0-rc.2  -->
   <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
@@ -218,7 +219,6 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
   -->
   <section>
-    
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">

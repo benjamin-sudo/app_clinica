@@ -286,8 +286,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
 
-
-
     public function gestion_firma_patologo(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $status                             =   true;
@@ -321,8 +319,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
    
-    
-    
     public function get_elimina_cookie_paciente(){
         if(!$this->input->is_ajax_request()){  show_404(); }
         delete_cookie('id_anatomia');
@@ -330,7 +326,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             'status'                        =>  true,
         )));
     }
-    
     
     public function get_busqueda_solicitudes_ap(){
         if(!$this->input->is_ajax_request()){  show_404(); }

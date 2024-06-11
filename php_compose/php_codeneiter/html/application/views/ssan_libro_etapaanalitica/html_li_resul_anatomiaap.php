@@ -41,7 +41,7 @@
             <i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;<b><?php echo $row["NOM_PROFE_CORTO"];?></b>
         </div>
         <div class="grid_a_rce_anatomiapatologica5">
-            <i class="fa fa-map-marker" aria-hidden="true"></i><b><?php echo $row["TXT_HISTO_ZONA"];?></b>
+            <i class="fa fa-map-marker" aria-hidden="true"></i><b>&nbsp;<?php echo $row["TXT_HISTO_ZONA"];?></b>
             <!--<b><?php echo $row["ID_HISTO_ZONA"];?></b>-->
         </div>
         <div class="grid_a_rce_anatomiapatologica8 class num_biospias_<?php echo $row["ID_SOLICITUD"];?>" style="text-align: end;"  
@@ -177,7 +177,7 @@
                         </button>
                         <?php   }   ?>
                     <?php   }   ?>
-                <?php } else if($get_sala=='sala_tecnologo')    {   ?>
+                <?php } else if($get_sala=='sala_tecnologo') {   ?>
                     <?php #SALA TECNOLOGO; ?>
                     <?php if($row["ID_HISTO_ZONA"]==6 || $row["ID_HISTO_ZONA"]==4){?>
                         <button type="button" class="btn btn-danger btn-fill" id="star_sala_tecnicas" onclick="js_sala_tecnicas(<?php echo $ID_SOLICITUD;?>)">

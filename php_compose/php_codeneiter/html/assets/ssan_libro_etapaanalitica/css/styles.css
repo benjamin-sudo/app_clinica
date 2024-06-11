@@ -191,7 +191,7 @@ input[type="radio"]                     {
 
 .grid_a_rce_anatomiapatologica          {
     display                             :   grid;
-    grid-template-columns               :   22px 3fr 2fr 1fr 1.5fr 10px 1.5fr 100px;
+    grid-template-columns               :   22px 3fr 2fr auto 1.5fr 10px 1.5fr 100px;
     align-items                         :   baseline;
     padding-top                         :   7px;
     padding-bottom                      :   7px;
