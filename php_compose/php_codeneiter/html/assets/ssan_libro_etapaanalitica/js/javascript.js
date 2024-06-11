@@ -1323,8 +1323,8 @@ function star_analitica(id_anatomia){
                                                     $('#HTML_INFORMACION_HISTORIAL').html('');
                                                 },
         data 		:                           { 
-                                                    id_anatomia     :   id_anatomia,
-                                                    get_sala        :   $("#get_sala").val(),
+                                                    id_anatomia : id_anatomia,
+                                                    get_sala : $("#get_sala").val(),
                                                 },
         error		:   function(errro)         { 
                                                     console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
@@ -1333,8 +1333,7 @@ function star_analitica(id_anatomia){
                                                     $('#loadFade').modal('hide'); 
                                                 },
         success		:   function(aData)         { 
-                                                    console.error("   salida star_analitica   ->  ",aData);
-                                                    
+                                                    console.log("   salida star_analitica   ->  ",aData);
                                                     $('#loadFade').modal('hide');
                                                     if(aData.status_session){
                                                         $("#btn_guardado_previo").attr('onclick','js_guardado_previo('+id_anatomia+')');
@@ -1350,7 +1349,6 @@ function star_analitica(id_anatomia){
                                                     } 
                                                 },  
    });
-   return true;
 }
 
 function js_informacion_administrativo(id_anatomia){
@@ -2985,12 +2983,12 @@ function js_inicia_final_procesos(id_anatomia){
 
 function time_unix(TXTFECHA,TXTHORA){
     console.log(TXTFECHA,TXTHORA);
-    var from1       =   TXTFECHA.split("-");
-    var horalive    =   TXTHORA.split(":");
-    var fecha       =   from1[2]+'-'+from1[0]+'-'+from1[1]+' '+horalive[0]+':'+horalive[1]+':00';
-    var match       =   fecha.match(/^(\d+)-(\d+)-(\d+) (\d+)\:(\d+)\:(\d+)$/);
-    var date        =   new Date(match[1]+"-"+match[3]+"-"+match[2]+" "+match[4]+":"+match[5]+":00");
-    var valor       =   (date.getTime()/1000);
+    var from1 = TXTFECHA.split("-");
+    var horalive = TXTHORA.split(":");
+    var fecha = from1[2]+'-'+from1[0]+'-'+from1[1]+' '+horalive[0]+':'+horalive[1]+':00';
+    var match = fecha.match(/^(\d+)-(\d+)-(\d+) (\d+)\:(\d+)\:(\d+)$/);
+    var date = new Date(match[1]+"-"+match[3]+"-"+match[2]+" "+match[4]+":"+match[5]+":00");
+    var valor = (date.getTime()/1000);
     return { TXTFECHA : TXTFECHA, TXTHORA : TXTHORA,  match : match, date : date, UNIX : valor };
 }
 

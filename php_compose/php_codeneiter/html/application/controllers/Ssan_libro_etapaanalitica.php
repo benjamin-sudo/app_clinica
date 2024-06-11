@@ -1194,6 +1194,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
     
+    #rce patologo
     public function formulario_main_analitico(){
         if(!$this->input->is_ajax_request()){ show_404(); }  
         $cod_empresa                    =   $this->session->userdata("COD_ESTAB");
