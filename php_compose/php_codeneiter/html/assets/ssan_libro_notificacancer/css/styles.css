@@ -1,1 +1,111 @@
- /*Contenido CSS de la Extensión ssan_libro_notificacancer.*/
+.grid_fecha_hora                        {
+    display                             :   grid;
+    grid-template-columns               :   135px 120px auto;
+    gap                                 :   5px;
+}
+
+@media(min-width                        :   900px){
+    .modal_xl_900                       {
+        width                           :   98%;
+        height                          :   85%;
+        max-width                       :   90%;
+    }
+}
+
+.grid_head_notificacion                 {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr auto;
+    grid-column-gap                     :   5px;
+    grid-row-gap                        :   5px;
+    align-items                         :   center;
+    margin-bottom                       :   8px;
+}
+
+.grid_body_notificacion                 {
+    display                             :   grid;
+    grid-template-columns               :   1fr 3fr;
+    align-items                         :   flex-start;
+    margin                              :   10px 10px 0px 10px;
+    grid-column-gap                     :   5px;
+    grid-row-gap                        :   5px;
+}
+
+.grid_row_busqueda                      {
+    display                             :   grid;
+    grid-template-columns               :   1fr;
+}
+
+.grid_pabel_tipo_busqueda               {
+    display                             :   grid;
+    grid-template-columns               :   auto 1fr auto 1fr;
+    column-gap                          :   5px;
+    grid-template-rows                  :   30px;
+    margin-top                          :   4px;
+}
+
+.card_pading                            {
+    padding                             :   8px;
+    margin                              :   0px;
+}
+
+.grid_head_body2                        {
+    text-align                          :   end;
+    padding-right                       :   0px;
+    margin-right                        :   10px;
+}
+
+.grid_panel_notificacion                {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+}
+
+.css_grid_password_recepcion            {
+    display                             :   grid;
+    grid-template-columns               :   1fr 55px 1fr 0fr;
+    justify-items                       :   center;
+    align-items                         :   center;
+}
+
+.fieldset_local                         {
+    min-width                           :   0;
+    padding                             :   0;
+    margin                              :   0;
+    border                              :   1;
+    border-radius                       :   4px;
+    border                              :   1px solid silver;
+    width                               :   fit-content;
+    margin-bottom                       :   0px;
+}
+
+.legend                                 {
+    line-height                         :   inherit;
+    width                               :   auto;
+    margin-left                         :   8px;
+    font-size                           :   12px;
+    font-weight                         :   300;
+    border                              :   0;
+    color                               :   #888888;
+    margin-bottom                       :   -5px;
+    padding-left                        :   4px;
+    padding-right                       :   4px;
+}
+
+.grid_edicion_biopsia                   {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr auto;
+    column-gap                          :   5px;
+}
+
+.grid_edicion_biopsia_opciones          {
+    display                             :   grid;
+    grid-template-columns               :   2fr 1fr auto;
+    column-gap                          :   5px;
+    align-items                         :   center;
+}
+
+.grid_edita_fechatomamuestra            {
+    display                             :   grid;
+    grid-template-columns               :   2fr 1fr auto;
+    column-gap                          :   5px;
+    align-items                         :   center;
+}
