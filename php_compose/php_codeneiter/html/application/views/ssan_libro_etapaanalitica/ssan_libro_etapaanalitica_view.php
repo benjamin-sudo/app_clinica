@@ -401,24 +401,17 @@
     </div>
 
     <div class="modal fade" id="modal_pdf_fullscreen">
-        <div class="modal-dialog modal_xl_pdf">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">PDF</b></h4>
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_pdf_fullscreen"></div>
                 <div class="modal-footer">
-                    <div class="grid_modal_footer_btn">
-                        <div class="grid_modal_footer_btn1">&nbsp;</div>
-                        <div class="grid_modal_footer_btn2">&nbsp;</div>
-                        <div class="grid_modal_footer_btn3">&nbsp;</div>
-                        <div class="grid_modal_footer_btn4">
-                            <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                                <i class="fa fa-window-close" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
                 </div>
             </div>
         </div>

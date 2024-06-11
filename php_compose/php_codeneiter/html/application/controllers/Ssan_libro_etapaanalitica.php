@@ -5,8 +5,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->get_sala                 =   'analitica';
-        $this->txt_titulo               =   'ETAPA ANALITICA';
+        $this->load->library('pdf');
+        $this->get_sala = 'analitica';
+        $this->txt_titulo = 'ETAPA ANALITICA';
         $this->load->model("Ssan_libro_etapaanalitica_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
     }
@@ -20,7 +21,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     }
 
     public function index(){
-         $this->output->set_template('blank');
+        $this->output->set_template('blank');
         $arr_ids_anatomia               =   '';
         $arr_estados_filtro             =   '0';
         $var_fecha_inicio               =   date("d-m-Y");
@@ -425,186 +426,13 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     }
 
     
-
-    public function pdf_macroscopia_parte2_(){
-        require_once APPPATH  . '/third_party/mpdf/mpdf.php';
-        $mpdf = new mPDF('','',0,'',7,7,7,7,0,0,'L');
-        // Set a simple Footer including the page number
-        $mpdf->setFooter('{PAGENO} - {DATE j-m-Y}');
-        $mpdf->WriteHTML('Section 1');
-        $mpdf->WriteHTML('');
-        // You could also do this using
-        // $mpdf->AddPage('','','','','on');
-        $mpdf->WriteHTML('<pagebreak resetpagenum="1" pagenumstyle="a" suppress="off" />');
-        $mpdf->WriteHTML('Section 3 - Starting with page a');
-        $base64_pdf                 =   base64_encode($mpdf->Output($txt_name_pdf,'S'));
-        $TABLA["PDF_MODEL"]         =   $base64_pdf;
-        $TABLA["PDF_MODEL_DATA"]    =   $base64_pdf;
-        $TABLA["STATUS"]            =   true;
-        $this->output->set_output(json_encode($TABLA));
-    }
-
-
-
-    public function pdf_macroscopia_parte2_old(){
-        //if(!$this->input->is_ajax_request()){ show_404(); }
-        if($this->session->userdata("COD_ESTAB")!=''){
-            $empresa                    =   $this->session->userdata("COD_ESTAB");
-        } else {
-            $empresa                    =   $this->input->post('empresa');
-        }
-        $id_tabla                       =   $this->input->post('id');
-        #$html_macro                    =   '';
-        #$html_micro                    =   '';
-        $html_footer                    =   '';
-        $html_firma_ap                  =   '';
-        #$IND_TIPO_BIOPSIA              =   '';
-        $html_biopsia_citologia2        =   '';
-        $html_macro1                    =   '';
-        $html_micro2                    =   '';
-        $html_notificacion_cancer       =   '';
-        $html_conf_resumen              =   '';
-        #LEYENDA
-        #2.- CONTEMPORANEA
-        #3.- DIFERIDA
-        #4.- BIOPSIA + CITOLOGIA
-        #5.- CITOLOGIA
-        #6.- PAP
-        
-        $DATA                                       =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
-        require_once APPPATH                        .   '/third_party/mpdf/mpdf.php';
-        $txt_name_pdf                               =   'INFORME MICROSCOPIA DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
-        
-        //"A4","A3", "Letter" etc
-        //"A4-L","A3-L", "Letter-L" etc. for landscape
-        #verical 
-        $dompdf                                     =   new mPDF('','',0,'',7,7,7,7,0,0,'L');
-
-     
-
-        
-        #$dompdf->setFooter('{PAGENO}');
-        #$dompdf->setFooter('{nb}');
-        #$dompdf->setFooter('{nbpg}');
-        #horizontal
-        #$dompdf                                    =   new mPDF("en-GB-x","Letter-L","","",10,10,10,10,6,3);
-        #INTO BACKGROUND IMG
-        /*
-        $url_img                                    =   'assets/ssan_libro_biopsias_listagespab/img/micro.PNG';
-        $dompdf->SetDefaultBodyCSS('background'                 ,   "url('".$url_img."')");
-        $dompdf->SetDefaultBodyCSS('background-image-resize'    ,   6);
-        $dompdf->SetDefaultBodyCSS('background-position'        ,   '50% 50%');
-        $dompdf->SetDefaultBodyCSS('background-repeat'          ,   'no-repeat');
-        $dompdf->SetDefaultBodyCSS('background-image-opacity'   ,   '0.2');
-        */
-        #MICROSCOPIA
-        #DOBLE INFORME - BIOPSIA + CITOLOGIA
-        $AUX_PAGE                                   =   1;
-        $IND_TIPO_BIOPSIA                           =   $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_TIPO_BIOPSIA'];
-        #4.- BIOPSIA + CITOLOGIA
-        if($IND_TIPO_BIOPSIA                        === '4'){
-            
-            #INFORME DE BIOSIA
-            $html_biopsia_citologia2                .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_biopsia_mas_citologia_2",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
-            $AUX_PAGE++;
-            $dompdf->WriteHTML($html_biopsia_citologia2);
-            
-            $html_footer                            .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_html_footer_analitica",array('DATA'=>$DATA,"empresa"=>$empresa),true);
-            $html_firma_ap                          .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_firma_patologo",array('DATA'=>$DATA,"empresa"=>$empresa),true);
-            $dompdf->SetHTMLFooter($html_firma_ap.$html_footer);
-            $dompdf->AddPage();
-            
-            #INFOME DE CITOLOGIA
-            $html_biopsia_citologia1                .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_biopsia_mas_citologia_1",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
-            $AUX_PAGE++;
-            $dompdf->WriteHTML($html_biopsia_citologia1);
-            $html_firma_ap_cito                     .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_firma_patologo_citologico",array('DATA'=>$DATA,"empresa"=>$empresa),true);
-            $dompdf->SetHTMLFooter($html_firma_ap_cito.$html_footer);
-
-        } else {
-            
-            if($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_CONF_PAG'] == 0){
-                if($IND_TIPO_BIOPSIA === '5' || $IND_TIPO_BIOPSIA === '6' ){
-                    
-                } else {
-                    $html_macro1                     .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_info_sala_macroscopia_parte1_1",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
-                    $AUX_PAGE++;
-                    $dompdf->WriteHTML($html_macro1);
-                    $dompdf->AddPage();
-                    #$dompdf->SetHTMLFooter($html_footer);
-                }
-                #MACROSCOPIA
-                $html_micro2                         .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_info_sala_macroscopia_parte2_1",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
-                $AUX_PAGE++;
-                $dompdf->WriteHTML($html_micro2);
-            }  else {
-                $html_conf_resumen                   .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_informe_final_resumen_1",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
-                $AUX_PAGE++;
-                $dompdf->WriteHTML($html_conf_resumen);
-            }
-            $html_firma_ap                           .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_firma_patologo",array('DATA'=>$DATA,"empresa"=>$empresa),true);
-            $html_footer                             .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_html_footer_analitica",array('DATA'=>$DATA,"empresa"=>$empresa),true);
-            $dompdf->SetHTMLFooter($html_firma_ap.$html_footer);
-        }
-
-        #NOTIFICACION DE CANCER
-        if($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_CONF_CANCER']==1){
-            $dompdf->AddPage();
-            $html_notificacion_cancer               .=  $this->load->view("ssan_libro_etapaanalitica/pdf_new_notificacioncancer2",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
-            $AUX_PAGE++;
-            $dompdf->WriteHTML($html_notificacion_cancer);        
-            $html_firma_ap2                         .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_firma_patologo",array('DATA'=>$DATA,"empresa"=>$empresa),true);
-            //$dompdf->WriteHTML($html_firma_ap2);
-            $dompdf->SetHTMLFooter($html_firma_ap2);
-        }
-        
-        #VISUALIAZCION DE IMAGENES X MAIN
-        if(count($DATA['C_IMAGENES_BLOB'])>0){
-            $dompdf->AddPage();
-            $dompdf->WriteHTML($this->load->view("ssan_libro_biopsias_listagespab/pdf_info_img_x_main",array('DATA'=>$DATA,"empresa"=>$empresa),true));
-        }
-
-        /*
-        #VISUALIAZCION DE IMAGENES X MUESTRA
-        if(count($DATA['C_IMAGENES_BLOB_MUESTRAS'])>0){
-            $dompdf->AddPage();
-            $dompdf->WriteHTML($this->load->view("ssan_libro_biopsias_listagespab/pdf_info_img_x_muestra",array('DATA'=>$DATA,"empresa"=>$empresa),true));
-        }
-        */
-
-        ##################################
-        ############## OUT PDF ###########
-        ##################################
-        
-        $base64_pdf                     =   base64_encode($dompdf->Output($txt_name_pdf,'S'));
-        $TABLA["OUT_HTML"]              =   '';
-        $TABLA["EMPRESA"]               =   $empresa;
-        $TABLA["IND_TEMPLATE"]          =   1;
-        $TABLA["PDF_MODEL"]             =   $base64_pdf;
-        $TABLA["PDF_MODEL_DATA"]        =   $base64_pdf;
-        $TABLA["STATUS"]                =   true;
-        $TABLA["DATA_RETURN"]           =   $DATA;
-        $TABLA["ID_RETURN"]             =   $id_tabla;
-        $TABLA["GET_HTML1"]             =   $html_macro1;
-        $TABLA["GET_HTML2"]             =   $html_micro2;
-        $TABLA["TIPO_DE_BIOPSIA"]       =   $IND_TIPO_BIOPSIA;
-        $TABLA["HTML_TEST"]             =   $html_biopsia_citologia2;
-        $this->output->set_output(json_encode($TABLA));
-    }
-
-
-
-
     public function pdf_macroscopia_parte2(){
         if($this->session->userdata("COD_ESTAB")!=''){
             $empresa                    =   $this->session->userdata("COD_ESTAB");
         } else {
             $empresa                    =   $this->input->post('empresa');
         }
-        
         $id_tabla                       =   $this->input->post('id');
-        #$html_macro                    =   '';
-        #$html_micro                    =   '';
         $html_footer                    =   '';
         $html_firma_ap                  =   '';
         #$IND_TIPO_BIOPSIA              =   '';
@@ -619,56 +447,40 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         #4.- BIOPSIA + CITOLOGIA
         #5.- CITOLOGIA
         #6.- PAP
-        $DATA                                       =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
-        require_once APPPATH                        .   '/third_party/mpdf/mpdf.php';
+        $DATA                                       =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
         $txt_name_pdf                               =   'INFORME MICROSCOPIA DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
-        //"A4","A3", "Letter" etc
-        //"A4-L","A3-L", "Letter-L" etc. for landscape
         #verical 
         $dompdf                                     =   new mPDF('','',0,'',7,7,7,7,0,0,'L');
-        #$dompdf->setFooter('{PAGENO}');
-        #$dompdf->setFooter('{nb}');
-        #$dompdf->setFooter('{nbpg}');
-        #horizontal
-        #$dompdf                                    =   new mPDF("en-GB-x","Letter-L","","",10,10,10,10,6,3);
-        #INTO BACKGROUND IMG
-        /*
-        $url_img                                    =   'assets/ssan_libro_biopsias_listagespab/img/micro.PNG';
-        $dompdf->SetDefaultBodyCSS('background'                 ,   "url('".$url_img."')");
-        $dompdf->SetDefaultBodyCSS('background-image-resize'    ,   6);
-        $dompdf->SetDefaultBodyCSS('background-position'        ,   '50% 50%');
-        $dompdf->SetDefaultBodyCSS('background-repeat'          ,   'no-repeat');
-        $dompdf->SetDefaultBodyCSS('background-image-opacity'   ,   '0.2');
-        */
         #MICROSCOPIA
         #DOBLE INFORME - BIOPSIA + CITOLOGIA
         $AUX_PAGE                                   =   1;
         $IND_TIPO_BIOPSIA                           =   $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_TIPO_BIOPSIA'];
         $code_doc_patologo                          =   "";
+        /*
         if ($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_USER_PATOLOGO'] != ''){
             $partes                                 =   explode("<br>",$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_USER_PATOLOGO']);
             $subPartes                              =   explode("-", $partes[1]);
             $code_doc_patologo                      =   $this->validaciones->encodeNumber($subPartes[0].'&'.$empresa);
         }
+        */
         $code_doc_patologo_citologico               =   "";
+        /*
         if ($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_USER_PATOLOGO_CITOLOGICO'] != ''){
             $partes2                                =   explode("<br>",$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_USER_PATOLOGO_CITOLOGICO']);
             $subPartes2                             =   explode("-", $partes2[1]);
             $code_doc_patologo_citologico           =   $this->validaciones->encodeNumber($subPartes2[0].'&'.$empresa);
         }
-        
+        */
         #4.- BIOPSIA + CITOLOGIA
         if($IND_TIPO_BIOPSIA                        === '4'){
             #INFORME DE BIOSIA
             $html_biopsia_citologia2                .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_biopsia_mas_citologia_2",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
             $AUX_PAGE++;
             $dompdf->WriteHTML($html_biopsia_citologia2);
-            
             $html_footer                            .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_html_footer_analitica",array('DATA'=>$DATA,"empresa"=>$empresa),true);
             $html_firma_ap                          .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_firma_patologo",array('DATA'=>$DATA,"empresa"=>$empresa,"code_doc_patologo"=>$code_doc_patologo),true);
             $dompdf->SetHTMLFooter($html_firma_ap.$html_footer);
             $dompdf->AddPage();
-            
             #INFOME DE CITOLOGIA
             $html_biopsia_citologia1                .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_biopsia_mas_citologia_1",array('DATA'=>$DATA,"empresa"=>$empresa,"num_page"=>$AUX_PAGE),true);
             $AUX_PAGE++;
@@ -718,6 +530,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $dompdf->AddPage();
             $dompdf->WriteHTML($this->load->view("ssan_libro_biopsias_listagespab/pdf_info_img_x_main",array('DATA'=>$DATA,"empresa"=>$empresa),true));
         }
+
+
         $base64_pdf                     =   base64_encode($dompdf->Output($txt_name_pdf,'S'));
         $TABLA["OUT_HTML"]              =   '';
         $TABLA["EMPRESA"]               =   $empresa;

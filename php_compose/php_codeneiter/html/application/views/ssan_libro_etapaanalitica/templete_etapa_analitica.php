@@ -737,7 +737,7 @@
         ?>
         <div class="panel_body_muestras">
             <div class="panel_body_muestras1 muestras_iquierda">
-                <div class="card" id="card_muestra_anatomicas" style="margin-bottom:5px;padding:8px;">
+                <div class="card" id="card_muestra_anatomicas" style="margin-top:13px;margin-bottom:5px;padding:8px;">
                     
                     <h6 class="title" style="margin: 8px 0px 12px 0px;">
                         <i style="color:#888888;" class="fa fa-th-list" aria-hidden="true"></i>&nbsp;

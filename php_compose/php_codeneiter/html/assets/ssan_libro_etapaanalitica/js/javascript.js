@@ -96,7 +96,7 @@ $(document).ready(function(){
         $("#html_descipcion_muestras").html(''); 
     });
     $('#modal_pdf_fullscreen').on('show.bs.modal',function(e){ 
-        $("#html_pdf_fullscreen").html(''); 
+        //$("#html_pdf_fullscreen").html(''); 
         //$('.modal .modal-body').css('overflow-y','auto'); 
         //var _height = $(window).height()*0.8;
         //$('.modal .modal-body').css('max-height',_height);
@@ -1650,12 +1650,12 @@ function js_finaliza_rce(id_anatomia){
 }
     
 function js_gestion_patologo(id_salida,id_anatomia){
-    
+    /*
     console.log("---------------------------------------------------");
     console.log("id_salida                  ->",id_salida,"     <-  ");
     console.log("id_anatomia                ->",id_anatomia,"   <-  ");
     console.log("---------------------------------------------------");
-    
+    */
     //return false;
     var obj_rce_anatomia                    =   { 
         formulario_main                     :   [],
@@ -1836,12 +1836,14 @@ function js_gestion_patologo(id_salida,id_anatomia){
         //txt===''?'':obj_rce_anatomia.arr_info_microscopia.push({'txt':txt,'num':num});
     });
     
+    /*
     console.log("---------------------------------------------------------------------------------------");
     console.log("   add txt_macroscopia     ");
     console.log("---------------------------------------------------------------------------------------");
     console.log("   id_salida   ->  ",id_salida ," || obj_rce_anatomia ||    ->",obj_rce_anatomia,"<----");
     console.log("---------------------------------------------------------------------------------------");
-    
+    */
+
     //return false;
     if(id_salida == 1){
         $.ajax({ 
@@ -1905,10 +1907,12 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                                                         localStorage.setItem("id_anatomia",id_anatomia);
                                                                                         //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
                                                                                         localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                                        $("#load_anuncios_anatomia_patologica").submit();
-                                                                                        update_etapaanalitica();
+                                                                                        //$("#load_anuncios_anatomia_patologica").submit();
+                                                                                        let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
+                                                                                        update_etapaanalitica(V_ULTIMA_PAGE);
                                                                                         $("#MODAL_FORMULARIO_ANALITICA").modal("hide");
                                                                                     } 
+
                                                                                     jConfirm('Se ha finalizado reporte - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                                                                         if(r){
                                                                                             js_pdf_microscopica(id_anatomia);
@@ -2665,55 +2669,48 @@ function delete_img_x_main(data){
 }
 
 function js_pdf_microscopica(id_anatomia){
-    $("#modal_pdf_fullscreen").modal({backdrop:'static',keyboard:false}).modal("show");
+    $('#loadFade').modal('show'); 
+    //console.log("id_anatomia    ->  ",id_anatomia);
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
-        dataType        :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        //console.log("generando");
-                                                        $('#html_pdf_fullscreen').html("<i class='fa fa-spinner fa-spin fa-3x fa-fw' aria-hidden='true'></i>&nbsp;GENERANDO PDF <- ");
-                                                    },
-        data 		:                           { 
-                                                        id  :   id_anatomia,
-                                                    },
-        error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        //$('#html_pdf_fullscreen').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
-                                                        $("#modal_pdf_fullscreen").modal("hide");
-                                                    },
-        success		:   function(aData)         { 
-                                                        console.log("---------------------------------------");
-                                                        console.log("   aData   ->",aData,"<-           ");
-                                                      
-                                                        //$('#html_pdf_fullscreen').html(aData["GET_HTML2"]);
-                                                        if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","Clinica Libre");
-                                                            return false;
-                                                        } else {
-                                                            var base64str           =   aData["PDF_MODEL"];
-                                                            //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                            var binary              =   atob(base64str.replace(/\s/g,''));
-                                                            var len                 =   binary.length;
-                                                            var buffer              =   new ArrayBuffer(len);
-                                                            var view                =   new Uint8Array(buffer);
-                                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                            //console.log("view->",view);
-                                                            //create the blob object with content-type "application/pdf"  
-                                                            var blob                =   new Blob([view],{type:"application/pdf"});
-                                                            var blobURL             =   URL.createObjectURL(blob);
-                                                            //console.log("BlobURL->",blobURL);
-                                                            Objpdf                  =   document.createElement('object');
-                                                            Objpdf.setAttribute('data',blobURL);
-                                                            Objpdf.setAttribute('width','100%');
-                                                            Objpdf.setAttribute('style','height:700px;');
-                                                            Objpdf.setAttribute('title','PDF');
-                                                            $('#html_pdf_fullscreen').html(Objpdf);
-                                                        }
-                                                   }, 
+        dataType    :   "json",
+        beforeSend	:   function(xhr){ },
+        data 		:                   { 
+                                            id  :   id_anatomia,
+                                        },
+        error		:   function(errro) { 
+                                            console.log("quisas->",errro,"-error->",errro.responseText); 
+                                            $("#protocoloPabellon").css("z-index","1500"); 
+                                            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                            $('#loadFade').modal('hide'); 
+                                        },
+        success		:   function(aData) { 
+                                            console.log(" aData -> ",aData);
+                                            $('#loadFade').modal('hide'); 
+                                            if(!aData["STATUS"]){
+                                                jError("error al cargar protocolo PDF","Clinica Libre");
+                                                return false;
+                                            } else {
+                                                var base64str = aData["PDF_MODEL"];
+                                                var binary = atob(base64str.replace(/\s/g,''));
+                                                var len = binary.length;
+                                                var buffer = new ArrayBuffer(len);
+                                                var view = new Uint8Array(buffer);
+                                                for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                                var blob = new Blob([view],{type:"application/pdf"});
+                                                var blobURL = URL.createObjectURL(blob);
+                                                Objpdf = document.createElement('object');
+                                                Objpdf.setAttribute('data',blobURL);
+                                                Objpdf.setAttribute('width','100%');
+                                                var windowHeight = window.innerHeight;
+                                                var adjustedHeight = windowHeight - 200; // Adjust the value as needed
+                                                Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                                                Objpdf.setAttribute('title','PDF');
+                                                $('#html_pdf_fullscreen').html(Objpdf);
+                                                $("#modal_pdf_fullscreen").modal({backdrop:'static',keyboard:false}).modal("show");
+                                            }
+                                        }, 
    });
 }
 
