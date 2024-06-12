@@ -98,7 +98,6 @@ function star_automplete(ind_value,_name_template){
                                     var arr_storange_ids_anatomia                   =   [];
                                     arr_storange_ids_anatomia                       =   localStorage.getItem("storange_ids_anatomia");
                                     //filtro si tiene notificacion de cancer
-                                    
                                     if(v_not_cancer == null && $("#ind_pagina").val() == "notificacancer"){
                                         showNotification('top','center',"Solicitud n&uacute;mero "+v_new_id_anatomia+" no cuenta con notificaci&oacute;n de c&aacute;ncer",4,'fa fa-ban');
                                         return false;
@@ -115,35 +114,19 @@ function star_automplete(ind_value,_name_template){
                                             showNotification('top','center','La busqueda ya se encuentra en la lista;',1,'fa fa-ban');
                                         }
                                     }
-                                    console.log("---------------------------------------------------------------------------------------------------");
-                                    console.log("---> busqueda notificacion cancer  => ",$("#slc_automplete_biopsia").getSelectedItemData(),"  <-   ");
-                                    console.log("         ->  ",localStorage.getItem("storange_ids_anatomia"),"<-                                   ");
-                                    console.log("---------------------------------------------------------------------------------------------------");
                                     update_etapaanalitica_cancer_edicion();
                                 },       
                 },
             //http://easyautocomplete.com/guide
     };
     document.getElementById('slc_automplete_biopsia').type = _value == 1 ? 'text':'number';
-    /*
-    console.log("------------------------------------");
-    console.log("           ->  ",_value,"   <-      ");
-    console.log("opciones   ->  ",opciones,"    <-   ");
-    console.log("------------------------------------");
-    */
     $("#slc_automplete_biopsia").val('').prop('disabled',false).easyAutocomplete(opciones);
 }
 
 function js_vista_opcion_busqueda(_value){
     $("#slc_automplete_biopsia").val('');
     localStorage.setItem("storage_busqueda_por_n_biosia_cancer",_value);
-    var num_value                                           =   _value == 'busqueda_por_paciente'?1:2;
-    /*
-    console.log("-----------------------------------------------------------------------------------------------------------------------");
-    console.log("storage_busqueda_por_n_biosia_cancer       ->  ",localStorage.getItem("storage_busqueda_por_n_biosia_cancer"),"        ");
-    console.log("_value                                     ->  ",_value,"  <-                                                          ");
-    console.log("-----------------------------------------------------------------------------------------------------------------------");
-    */
+    var num_value = _value == 'busqueda_por_paciente'?1:2;
     star_automplete(num_value,$("#ind_pagina").val());
 }
 
@@ -154,30 +137,30 @@ function update_etapaanalitica_cancer_edicion(){
     var v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
     $('#loadFade').modal('show');
     $.ajax({ 
-        type        :   "POST",
-        url         :   "ssan_libro_notificacancer/load_lista_anatomiapatologica",
-        dataType    :   "json",
-        beforeSend  :   function(xhr)   {   
-                                            console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
-                                            //setTimeout($('#loadFade').modal('show'),1000);
-                                        },
-        data        :                   { 
-                                            v_ids_anatomia      :   v_ids_anatomia,         
-                                            v_tipo_de_busqueda  :   v_tipo_de_busqueda,
-                                            v_get_sala          :   v_get_sala,             
-                                            v_filtro_consulta   :   v_filtro_consulta,     
-                                        },
-        error       :   function(errro) { 
-                                            console.log(errro);  
-                                            console.log(errro.responseText);
-                                            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                            $('#loadFade').modal('hide'); 
-                                        },
-        success     :   function(aData) { 
-                                            console.log("aData                  ->  ",aData);
-                                            $('#loadFade').modal('hide');
-                                            $(".get_table_gestion").html('').html(aData.return_data.HTML_LI);
-                                        }, 
+        type : "POST",
+        url : "ssan_libro_notificacancer/load_lista_anatomiapatologica",
+        dataType : "json",
+        beforeSend : function(xhr)   {   
+                                        console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
+                                        //setTimeout($('#loadFade').modal('show'),1000);
+                                    },
+        data : { 
+                    v_ids_anatomia      :   v_ids_anatomia,         
+                    v_tipo_de_busqueda  :   v_tipo_de_busqueda,
+                    v_get_sala          :   v_get_sala,             
+                    v_filtro_consulta   :   v_filtro_consulta,     
+                },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    console.log(errro.responseText);
+                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                    $('#loadFade').modal('hide'); 
+                                },
+        success : function(aData) { 
+                                        console.log("aData -> ",aData);
+                                        $('#loadFade').modal('hide');
+                                        $(".get_table_gestion").html('').html(aData.return_data.HTML_LI);
+                                    }, 
     });
 }
 
