@@ -1,4 +1,3 @@
-<?php $ID_SOLICITUD = $row["ID_SOLICITUD"];?>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -19,7 +18,9 @@
     </thead>
     <tbody>
     <?php if (count($cursor[":C_LISTA_ANATOMIA"])){ 
-        foreach ($cursor[":C_LISTA_ANATOMIA"] as $i => $row){ $numero = ($i+1);  
+        foreach ($cursor[":C_LISTA_ANATOMIA"] as $i => $row){ 
+            $numero = ($i+1);  
+            $ID_SOLICITUD = $row["ID_SOLICITUD"];
         ?>
         <tr>
             <th scope="row" style="height: 40px;">
@@ -29,7 +30,7 @@
             <td><?php echo $row["NOMBRE_COMPLETO"];?></td>
             <td><?php echo $row["PROFESIONAL"];?></td>
             <td>
-                <?php echo $row["TXT_ESTADO_CANCER"]=='NOTIFICADO'?'<span class="label label-success">NOTIFICADO</span>':$row["TXT_ESTADO_CANCER"];?>
+                <?php echo $row["TXT_ESTADO_CANCER"]=='NOTIFICADO'?'   <span class="label label-success">NOTIFICADO</span>':$row["TXT_ESTADO_CANCER"];?>
             </td>
             <td style="text-align:center">
                 <div class="btn-group">
@@ -38,6 +39,7 @@
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </button>
                     <?php }  ?>
+
                     <?php if ($row["IND_NOTIFICACANCER"] == 1  ){ ?>
                         <button type="button" class="btn btn-danger btn-fill" id="btn_exel_closew" onclick="pdf_notificacion_cancer_ok(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>

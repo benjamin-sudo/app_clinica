@@ -82,8 +82,8 @@ class ssan_libro_notificacancer_model extends CI_Model {
     }
     
     public function load_gestion_notificacion_cancer($DATA){
-        $result                                 =   [];
-        return array ('HTML_LI'                 =>  $this->load->view("ssan_libro_notificacancer/html_inicio_notificacion_correo",array('cursor'=>$result),true));
+        $result = [];
+        return array ('HTML_LI' =>  $this->load->view("ssan_libro_notificacancer/html_inicio_notificacion_correo",array('cursor'=>$result),true));
     }
     
     public function get_valida_notificacion_conjunta($DATA){

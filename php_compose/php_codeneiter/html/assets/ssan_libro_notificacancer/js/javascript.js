@@ -214,50 +214,49 @@ function js_confirma_notificacion_cancer(id_anatomia){
         });
         return false;
     } else {
-        var pass        =   new Array({
-            "pass1"     :   $("#firma_simple_trasporte").val(),
-            "pass2"     :   $("#firma_simple_recepcion").val()
+        var pass = new Array({
+            "pass1" : $("#firma_simple_trasporte").val(),
+            "pass2" : $("#firma_simple_recepcion").val()
         });
         //console.log("pass           =>  ",pass);
+        $('#loadFade').modal('show'); 
         $.ajax({ 
-                type                :   "POST",
-                url                 :   "ssan_libro_notificacancer/confirma_notificacion_cancer",
-                dataType            :   "json",
-                beforeSend          :   function(xhr)   {   
-                                                            console.log("xhr    ->  ",xhr);   
-                                                        },
-                data                :                   {
-                                                            id_anatomia         :   id_anatomia,
-                                                            pass                :   pass,
-                                                        },
-                error               :   function(errro) { 
-                                                            console.log(errro);  
-                                                            console.log(errro.responseText);    
-                                                            jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                        },
-                success             :   function(aData) { 
-                                                            console.log("   -----------------------------------------------------    ");
-                                                            console.log("   return aData        ->  ",aData,"    <-                  ");
-                                                            //  console.log("   -----------------------------------------------------    ");
-                                                            if(aData.STATUS){
-                                                                var var_status_bd               =   aData["GET_BD"].STATUS;
-                                                                if(var_status_bd === false){
-                                                                    showNotification('top','right',aData["GET_BD"].TXT_ERROR,4,'fa fa-times');
-                                                                } else {
-                                                                    update_etapaanalitica_cancer_edicion();
-                                                                    $('#modal_notificacion_cancer').modal('hide');
-                                                                    jConfirm('Notificacion realizada con exito - &iquest;desea ver PDF informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
-                                                                        if(r){
-                                                                            pdf_notificacion_cancer_ok(id_anatomia);
-                                                                        } else {
-                                                                            //console.log("-> DIJO NO PDF <-");
-                                                                        }
-                                                                    });
-                                                                } 
-                                                            } else {
-                                                                jError(aData['TXT_ERROR'],"Clinica Libre");
-                                                            }
-                                                        }, 
+            type : "POST",
+            url : "ssan_libro_notificacancer/confirma_notificacion_cancer",
+            dataType : "json",
+            beforeSend : function(xhr) { },
+            data : {
+                        id_anatomia : id_anatomia,
+                        pass : pass,
+                    },
+            error :   function(errro)   { 
+                                            console.log(errro);  
+                                            console.log(errro.responseText);    
+                                            jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                            $('#loadFade').modal('hide'); 
+                                        },
+            success :   function(aData) { 
+                                            console.log(" return aData -> ",aData,);
+                                            $('#loadFade').modal('hide'); 
+                                            if(aData.STATUS){
+                                                var var_status_bd = aData["GET_BD"].STATUS;
+                                                if(var_status_bd === false){
+                                                    showNotification('top','right',aData["GET_BD"].TXT_ERROR,4,'fa fa-times');
+                                                } else {
+                                                    update_etapaanalitica_cancer_edicion();
+                                                    $('#modal_notificacion_cancer').modal('hide');
+                                                    jConfirm('Notificacion realizada con exito - &iquest;desea ver PDF informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
+                                                        if(r){
+                                                            pdf_notificacion_cancer_ok(id_anatomia);
+                                                        } else {
+                                                            //console.log("-> DIJO NO PDF <-");
+                                                        }
+                                                    });
+                                                } 
+                                            } else {
+                                                jError(aData['TXT_ERROR'],"Clinica Libre");
+                                            }
+                                        }, 
         });
     } 
 }
@@ -325,56 +324,43 @@ function js_validafirma(txt_firma_simple){
 }
 
 function pdf_notificacion_cancer_ok(id_anatomia){
-    
-    $("#modal_pdf_notificacion_cancer").css("z-index","1500").modal({backdrop:'static',keyboard:false}).modal("show");
-    
+    $('#loadFade').modal('show'); 
     $.ajax({ 
-        type		:   "POST",
-        url 		:   "ssan_libro_notificacancer/pdf_notificacion_cancer_ok",
-        dataType        :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        //console.log("generando");
-                                                        $('#html_pdf_notificacion_cancer').html("<i class='fa fa-spinner fa-spin fa-3x fa-fw' aria-hidden='true'></i>&nbsp;GENERANDO PDF <- ");
-                                                    },
-        data 		:                           { 
-                                                        id  :   id_anatomia,
-                                                    },
-        error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        //$("#html_pdf_notificacion_cancer").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        //$('#html_pdf_fullscreen').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
-                                                        $("#modal_pdf_notificacion_cancer").modal("hide");
-                                                    },
-        success		:   function(aData)         { 
-                                                        console.log("-----------------------------------");
-                                                        console.log("   aData   ->",aData,"<-           ");
-                                                        //$('#html_pdf_fullscreen').html(aData["GET_HTML2"]);
-                                                        if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","Clinica Libre");
-                                                            return false;
-                                                        } else {
-                                                            var base64str           =   aData["PDF_MODEL"];
-                                                            //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                            var binary              =   atob(base64str.replace(/\s/g,''));
-                                                            var len                 =   binary.length;
-                                                            var buffer              =   new ArrayBuffer(len);
-                                                            var view                =   new Uint8Array(buffer);
-                                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                            //console.log("view->",view);
-                                                            //create the blob object with content-type "application/pdf"  
-                                                            var blob                =   new Blob([view],{type:"application/pdf"});
-                                                            var blobURL             =   URL.createObjectURL(blob);
-                                                            //console.log("BlobURL->",blobURL);
-                                                            Objpdf                  =   document.createElement('object');
-                                                            Objpdf.setAttribute('data',blobURL);
-                                                            Objpdf.setAttribute('width','100%');
-                                                            Objpdf.setAttribute('style','height:700px;');
-                                                            Objpdf.setAttribute('title','PDF');
-                                                            $('#html_pdf_notificacion_cancer').html(Objpdf);
-                                                        }
-                                                   }, 
+        type : "POST",
+        url : "ssan_libro_notificacancer/pdf_notificacion_cancer_ok",
+        dataType : "json",
+        beforeSend	: function(xhr) { },
+        data : { id : id_anatomia },
+        error : function(errro) { 
+                                        console.log("quisas->",errro); 
+                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                        $('#loadFade').modal('hide'); 
+                                    },
+        success :   function(aData) { 
+                                        console.log(" aData ->",aData);
+                                        if(!aData["STATUS"]){
+                                            jError("error al cargar protocolo PDF","Clinica Libre");
+                                            return false;
+                                        } else {
+                                            var base64str = aData["PDF_MODEL"];
+                                            var binary = atob(base64str.replace(/\s/g,''));
+                                            var len = binary.length;
+                                            var buffer = new ArrayBuffer(len);
+                                            var view = new Uint8Array(buffer);
+                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                            var blob = new Blob([view],{type:"application/pdf"});
+                                            var blobURL = URL.createObjectURL(blob);
+                                            Objpdf = document.createElement('object');
+                                            Objpdf.setAttribute('data',blobURL);
+                                            Objpdf.setAttribute('width','100%');
+                                            let windowHeight = window.innerHeight;
+                                            let adjustedHeight = windowHeight - 200;
+                                            Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                                            Objpdf.setAttribute('title','PDF');
+                                            $('#html_pdf_notificacion_cancer').html(Objpdf);
+                                            $("#modal_pdf_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
+                                        }
+                                    }, 
    });
 }
 

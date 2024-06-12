@@ -552,6 +552,8 @@ function update_etapaanalitica(v_num_page){
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     let ind_orden               =   $("#ind_order_by").val();
     let v_num_page2             =   typeof v_num_page === 'undefined' ? 1 : v_num_page;
+
+    
     $('#loadFade').modal('show');
     $.ajax({ 
         type        :   "POST",

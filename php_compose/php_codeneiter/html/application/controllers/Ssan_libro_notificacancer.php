@@ -6,7 +6,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_libro_notificacancer_model");
-        $this->load->model("ssan_libro_biopsias_usuarioext_model");
+        $this->load->model("Ssan_libro_biopsias_usuarioext_model");
     }
 
     public function index(){
@@ -162,12 +162,12 @@ class Ssan_libro_notificacancer extends CI_Controller {
             $TXT_ERROR                      =   implode("<br>",$arr_errores);
             $STATUS                         =   false;
         } else {
-            $DATA                           =   $this->Ssan_libro_notificacancer_model->get_valida_notificacion_conjunta(array(
-                                                    "COD_EMPRESA"       =>  $empresa,
-                                                    "SESSION"           =>  $usuarioh[0], 
-                                                    "ID_ANATOMIA"       =>  $id_anatomia,
-                                                    "DATA_FIRMA"        =>  $valida,
-                                                ));
+            $DATA                           =   $this->Ssan_libro_notificacancer_model->get_valida_notificacion_conjunta([ 
+                                                    "COD_EMPRESA"   => $empresa,
+                                                    "SESSION"       => $usuarioh[0], 
+                                                    "ID_ANATOMIA"   => $id_anatomia,
+                                                    "DATA_FIRMA"    => $valida
+                                                ]);
         }
         $this->output->set_output(json_encode(array(
             'ERRORES'       =>  $arr_errores,
@@ -239,11 +239,11 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $id_tabla                       =   $this->input->post('id');
         $qr_to_base64                   =   $this->input->post('qr_to_base64');
         $DATA                           =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
-        //$DATA                         =   null;
-        require_once APPPATH            .   '/third_party/mpdf/mpdf.php';
+        #$DATA                          =   null;
+        #require_once APPPATH           .   '/third_party/mpdf/mpdf.php';
         $txt_name_pdf                   =   'RECEPCI&Oacute;N DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
         #verical 
-        //$dompdf                       =   new mPDF('','',0,'',15,15,16,16,9,9,'L');
+        #$dompdf                        =   new mPDF('','',0,'',15,15,16,16,9,9,'L');
         #horizontal
         $dompdf                         =   new mPDF("en-GB-x","Letter-L","","",10,10,10,10,6,3);
         $dompdf->AddPage();

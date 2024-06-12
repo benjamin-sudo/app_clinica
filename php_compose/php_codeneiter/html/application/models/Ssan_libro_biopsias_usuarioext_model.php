@@ -884,7 +884,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
     public function sqlValidaClave_doble($arr_password){
         $this->dbSession = $this->load->database('session', true); 
-
         $clave1	        =   strtolower($arr_password[0]["pass1"]);
         $SQL1           =   "  SELECT 
                                 ID_UID,
@@ -897,7 +896,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             WHERE 
                             TX_INTRANETSSAN_CLAVEUNICA IN ('$clave1') ";
         $clave2	    =   strtolower($arr_password[0]["pass2"]);
-
         $SQL2       =   "SELECT 
                                 ID_UID,
                                 USERNAME,
