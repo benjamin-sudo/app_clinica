@@ -334,7 +334,7 @@ class ssan_libro_notificacancer_model extends CI_Model {
                                     'type'      =>  OCI_B_CURSOR
                                 ),
                             );
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LISTADO_NOTF_CANCER',$param);
+        $result =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LISTADO_NOTF_CANCER',$param);
         $this->db->trans_complete();
         return array(
             'status'                            =>  true,

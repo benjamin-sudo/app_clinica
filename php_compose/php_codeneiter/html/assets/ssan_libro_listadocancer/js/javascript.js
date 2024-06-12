@@ -1,7 +1,7 @@
 $(function(){
     var fecha = new Date();
     var ano = fecha.getFullYear();
-    //listado_notifica_cancer(ano);
+    listado_notifica_cancer(ano);
  });
  
  function listado_notifica_cancer(ind_year){

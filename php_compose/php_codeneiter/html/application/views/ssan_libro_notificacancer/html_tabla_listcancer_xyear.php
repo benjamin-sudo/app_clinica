@@ -3,7 +3,7 @@
     $v_year_actual  = date('Y');
 ?>
 
-<table class="table card table-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             <th scope="row" style="height: 40px;" colspan="4">

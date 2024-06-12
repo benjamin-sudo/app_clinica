@@ -332,15 +332,15 @@ function pdf_notificacion_cancer_ok(id_anatomia){
         beforeSend	: function(xhr) { },
         data : { id : id_anatomia },
         error : function(errro) { 
-                                        console.log("quisas->",errro); 
-                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    console.log("quisas->",errro); 
+                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    $('#loadFade').modal('hide'); 
+                                },
+        success : function(aData) { 
+                                        console.log(" aData -> ",aData);
                                         $('#loadFade').modal('hide'); 
-                                    },
-        success :   function(aData) { 
-                                        console.log(" aData ->",aData);
                                         if(!aData["STATUS"]){
                                             jError("error al cargar protocolo PDF","Clinica Libre");
-                                            return false;
                                         } else {
                                             var base64str = aData["PDF_MODEL"];
                                             var binary = atob(base64str.replace(/\s/g,''));
@@ -366,10 +366,10 @@ function pdf_notificacion_cancer_ok(id_anatomia){
 
 function js_edita_numero_biopsia(id_biopsia){
     $.ajax({ 
-        type		:   "POST",
-        url 		:   "ssan_libro_notificacancer/html_gestion_numero_biopsia",
-        dataType        :   "json",
-        beforeSend	:   function(xhr)           {   
+        type : "POST",
+        url : "ssan_libro_notificacancer/html_gestion_numero_biopsia",
+        dataType : "json",
+        beforeSend	: function(xhr)           {   
                                                         console.log(xhr);
                                                         $('#loadFade').modal('show');
                                                     },
