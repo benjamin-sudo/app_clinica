@@ -1,3 +1,4 @@
+<?php $ID_SOLICITUD = $row["ID_SOLICITUD"];?>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -33,12 +34,12 @@
             <td style="text-align:center">
                 <div class="btn-group">
                     <?php if ($row["IND_CONF_CANCER"] == 1 && $row["IND_NOTIFICACANCER"] == 0  ){ ?>
-                        <button type="button" class="btn btn-primary btn-fill" id="btn_exel_closew" onclick="js_notificar_cancer(<?php echo $row["ID_SOLICITUD"];?>)">
+                        <button type="button" class="btn btn-primary btn-fill" id="btn_exel_closew" onclick="js_notificar_cancer(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </button>
                     <?php }  ?>
                     <?php if ($row["IND_NOTIFICACANCER"] == 1  ){ ?>
-                        <button type="button" class="btn btn-danger btn-fill" id="btn_exel_closew" onclick="pdf_notificacion_cancer_ok(<?php echo $row["ID_SOLICITUD"];?>)">
+                        <button type="button" class="btn btn-danger btn-fill" id="btn_exel_closew" onclick="pdf_notificacion_cancer_ok(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
                     <?php }  ?>
@@ -53,6 +54,7 @@
         //echo $rul_for_qr;
         ?>
         <script>
+            /*
             var qrcodjs = new QRCode("qrcode_<?php echo $row["ID_SOLICITUD"];?>", {
                 text: "<?php echo $rul_for_qr;?>",
                 width: 128,
@@ -61,6 +63,7 @@
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
             });
+            */
         </script>
     <?php }  ?>
     <?php } else { ?>

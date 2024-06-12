@@ -705,8 +705,6 @@ function Carga_listado_pabellon(){
     //AjaxExt(variables,id,funcion); //Funcion que Ejecuta la llamada del ajax
 }
 
-
-
 function PDF_NORECEP(correl){
    var rnadd    =   Math.floor((Math.random() * 900) + 1);
    var html     =   '<iframe src="pdf/pdf_comprobante_norecep?correl='+correl+'&r='+rnadd+'" frameborder="0" style="overflow:hidden;height: 650px;width:100%;" width="100%"></iframe>';

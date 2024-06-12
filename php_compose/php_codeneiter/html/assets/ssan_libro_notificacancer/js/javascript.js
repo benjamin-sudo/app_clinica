@@ -176,7 +176,7 @@ function js_notificar_cancer(id_anatomia){
         url         :   "ssan_libro_notificacancer/html_notificar_a_ususario",
         dataType    :   "json",
         beforeSend  :   function(xhr)   {   
-                                            console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
+                                            //console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
                                             //setTimeout($('#loadFade').modal('show'),1000);
                                         },
         data        :                   { 
@@ -184,14 +184,12 @@ function js_notificar_cancer(id_anatomia){
                                         },
         error       :   function(errro) { 
                                             console.log(errro);  
-                                            console.log(errro.responseText);
+                                            //console.log(errro.responseText);
                                             jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                             $('#loadFade').modal('hide'); 
                                         },
         success     :   function(aData) { 
-                                            console.log("aData                  ->  ",aData);
-                                            
-                                            //$("#btn_envia_correo").attr('onclick','js_confirma_envio('+id_anatomia+')');
+                                            console.log("aData -> ",aData);
                                             $("#btn_envia_correo").attr('onclick','js_confirma_notificacion_cancer('+id_anatomia+')');
                                             $('#loadFade').modal('hide');
                                             $("#html_notificacion_cancer").html(aData.return_data.HTML_LI);
@@ -201,9 +199,10 @@ function js_notificar_cancer(id_anatomia){
 }
 
 function js_confirma_notificacion_cancer(id_anatomia){
-    var errores                         =   [];
-    var firma_simple_trasporte          =   $("#firma_simple_trasporte").val();
-    var firma_simple_recepcion          =   $("#firma_simple_recepcion").val();
+    //ARREGLANDO EN LA TARDE
+    var errores =   [];
+    var firma_simple_trasporte = $("#firma_simple_trasporte").val();
+    var firma_simple_recepcion = $("#firma_simple_recepcion").val();
     firma_simple_trasporte  === ''?errores.push({"txt":"Falta firma simple de quien trasporto muestras","id":"#firma_simple_trasporte"}):$("#firma_simple_trasporte").css("border-color","");
     firma_simple_recepcion  === ''?errores.push({"txt":"Falta firma simple de quien recepciona las muestras","id":"#firma_simple_recepcion"}):$("#firma_simple_recepcion").css("border-color","");
     errores.length>0 ? '' : firma_simple_trasporte === firma_simple_recepcion ? errores.push({"txt":"Firmas Iguales","id":"#firma_simple_trasporte,#firma_simple_recepcion"}) : $("#firma_simple_trasporte,#firma_simple_recepcion").css("border-color","");
@@ -237,11 +236,9 @@ function js_confirma_notificacion_cancer(id_anatomia){
                                                             jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                         },
                 success             :   function(aData) { 
-                    
-                                                                console.log("   -----------------------------------------------------    ");
-                                                                console.log("   return aData        ->  ",aData,"    <-                  ");
+                                                            console.log("   -----------------------------------------------------    ");
+                                                            console.log("   return aData        ->  ",aData,"    <-                  ");
                                                             //  console.log("   -----------------------------------------------------    ");
-                                                            
                                                             if(aData.STATUS){
                                                                 var var_status_bd               =   aData["GET_BD"].STATUS;
                                                                 if(var_status_bd === false){
@@ -297,32 +294,33 @@ function js_confirma_envio(id_anatomia){
 
 function js_validafirma(txt_firma_simple){
     var txt_valida_firma = $("#"+txt_firma_simple).val();
-    if(txt_valida_firma == ''){
-        showNotification('top','center','Firma simple vacia',4,'fa fa-info');
-        return false;
-    }
+    if(txt_valida_firma == ''){  showNotification('top','center','Firma simple vacia',4,'fa fa-info');  return false; }
     $.ajax({ 
         type		:   "POST",
-        url 		:   "ssan_spab_gestionlistaquirurgica/ver_valida_firma_simple",
-        dataType        :   "json",
+        url 		:   "ssan_libro_biopsias_listaexterno1/ver_valida_firma_simple",
+        dataType    :   "json",
         beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        $('#loadFade').modal('show');
-                                                    },
+                                                    console.log(xhr);
+                                                    $('#loadFade').modal('show');
+                                                },
         data 		:                           {  
-                                                        contrasena      :   txt_valida_firma,
-                                                    },
+                                                    contrasena      :   txt_valida_firma,
+                                                },
         error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
-                                                    },
+                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                    $("#protocoloPabellon").css("z-index","1500"); 
+                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                    $('#loadFade').modal('hide');
+                                                },
         success		:   function(aData)         {   
-                                                        $('#loadFade').modal('hide');
-                                                        console.log("aData -> ",aData);
-                                                        showNotification('top','center','Firma simple ->'+aData.valida.NAME+' '+aData.valida.USERNAME,1,'fa fa-info');
-                                                    }, 
+                                                    $('#loadFade').modal('hide');
+                                                    if (aData.status){
+                                                        let data_user = aData.valida[0];
+                                                        showNotification('top','center','<i class="fa fa-info"></i>&nbsp;Firma simple ->'+data_user.NAME+' - '+data_user.USERNAME,1,'');
+                                                    } else {
+                                                        jError("Firma &uacute;nica. no tiene usuario asignado","Clinica Libre");
+                                                    }
+                                                }, 
     });
 }
 

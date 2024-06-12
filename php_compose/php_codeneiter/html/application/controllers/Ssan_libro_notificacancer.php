@@ -155,7 +155,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $STATUS                             =   true;
         $arr_errores                        =   array();
         $arr_password                       =   $this->input->post('pass');
-        $valida                             =	$this->ssan_libro_biopsias_usuarioext_model->sqlValidaClave_doble($arr_password);
+        $valida                             =	$this->Ssan_libro_biopsias_usuarioext_model->sqlValidaClave_doble($arr_password);
         count($valida['user_1'])>0?'':array_push($arr_errores,"Error en la firma del funcionario que notifica");
         count($valida['user_2'])>0?'':array_push($arr_errores,"Error en la firma del funcionario que recibe notificaci&oacute;n");
         if(count($arr_errores)>0){
@@ -446,5 +446,10 @@ class Ssan_libro_notificacancer extends CI_Controller {
             'txt_error'                 =>  $txt_error,
         )));
     }    
+
+
+    
+
+
 }
 ?>
