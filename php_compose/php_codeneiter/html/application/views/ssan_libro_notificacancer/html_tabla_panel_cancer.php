@@ -1,4 +1,4 @@
-<table class="table card table-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             <th scope="row" style="height: 40px;" colspan="4">
@@ -10,10 +10,10 @@
         </tr>
         <tr>
             <th scope="col" style="height: 40px;">#</th>
-            <th scope="col">Informaci&oacute;n del paciente</th>
-            <th scope="col">Informaci&oacute;n solicitante</th>
-            <th scope="col">Estado notificaci&oacute;n cancer</th>
-            <th scope="col"><i class="fa fa-cog" aria-hidden="true"></i></th>
+            <th scope="col" >Informaci&oacute;n del paciente</th>
+            <th scope="col" >Informaci&oacute;n solicitante</th>
+            <th scope="col" >Estado notificaci&oacute;n cancer</th>
+            <th scope="col" ><i class="fa fa-cog" aria-hidden="true"></i></th>
         </tr>
     </thead>
     <tbody>
