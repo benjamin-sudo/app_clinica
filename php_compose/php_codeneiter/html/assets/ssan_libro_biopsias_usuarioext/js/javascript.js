@@ -363,7 +363,6 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                         let adjustedHeight = windowHeight - 200;
                                                         Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
                                                         Objpdf.setAttribute('title','PDF');
-                                                        Objpdf.setAttribute('title','PDF');
                                                         $("#HTML_PDF_ANATOMIA_PATOLOGICA").html(Objpdf);
                                                         $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 
                                                     }

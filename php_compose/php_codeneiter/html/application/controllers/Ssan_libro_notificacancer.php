@@ -75,6 +75,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
                                                 'cod_empresa'       =>  $this->session->userdata("COD_ESTAB"),
                                                 'ind_template'      =>  $ind_template,
                                             ));
+                                            
         //var_dump($return_data["C_HISTORIAL_M_BUSQUEDA"]);
         if(count($return_data['C_LISTA_ANATOMIA_BUS'])>0){
             $aux                            =   0;

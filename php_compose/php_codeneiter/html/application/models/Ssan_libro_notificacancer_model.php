@@ -157,18 +157,11 @@ class ssan_libro_notificacancer_model extends CI_Model {
                             );
         $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_BUSQX_PARAMETROS',$param);
         $this->db->trans_complete();
-        //if($DATA["busq"] == '2'){
-            //var_dump(print_r($result));
-            //var_dump(print_r($DATA));
-        //}
-        #########################################
-        #var_dump(print_r($result));
-        #########################################
         return array(
-            'status'                            =>  true,
-            'data_bd'                           =>  $result,
-            'C_LISTA_ANATOMIA_BUS'              =>  $result[":C_LISTA_ANATOMIA_BUS"],
-            'C_HISTORIAL_M_BUSQUEDA'            =>  $result[":C_HISTORIAL_M_BUSQUEDA"]
+            'status' => true,
+            'data_bd' =>  $result,
+            'C_LISTA_ANATOMIA_BUS' => $result[":C_LISTA_ANATOMIA_BUS"],
+            'C_HISTORIAL_M_BUSQUEDA' => $result[":C_HISTORIAL_M_BUSQUEDA"]
         );
     }
     
