@@ -75,7 +75,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
                                                 'cod_empresa'       =>  $this->session->userdata("COD_ESTAB"),
                                                 'ind_template'      =>  $ind_template,
                                             ));
-                                            
+
         //var_dump($return_data["C_HISTORIAL_M_BUSQUEDA"]);
         if(count($return_data['C_LISTA_ANATOMIA_BUS'])>0){
             $aux                            =   0;
@@ -268,15 +268,8 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $status                         =   true;
         $id_biopsia                     =   $this->input->post('id_biopsia');
         $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $DATA                           =   $this->ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_biopsia));
-        /* 
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->insert_edicion_solicitud(array(
-            'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
-            'id_biopsia'                =>  $id_biopsia,
-        ));
-        */
+        $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_biopsia));
         $this->output->set_output(json_encode(array(
-            #'arr_ids_anatomia'         =>  $arr_ids_anatomia,
             'html_out'                  =>  $this->load->view("ssan_libro_notificacancer/html_edicion_numero_biopsia",array('cursor'=>$DATA),true),
             'status'                    =>  $status
         )));

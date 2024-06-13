@@ -1,17 +1,13 @@
 
 <?php
-
-$DATA = $cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0];
+    $DATA = $cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0];
 ?>
-
-
-
 <input type="hidden" id="V_IND_TIPO_BIOPSIA" name="V_IND_TIPO_BIOPSIA"  value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
 <div class="grid_edicion_biopsia">
     <div class="grid_edicion_biopsia1">
         <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
-            <div class="header" style="margin-bottom: 18px;">
-                <h5 class="title"><i class="fa fa-user-o" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">PACIENTE</b></h5>
+            <div class="header">
+                <h5 class="title" style="padding: 10px;"><i class="fa fa-user-o" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">PACIENTE</b></h5>
             </div>
             <div class="content card-body">
                 <div class="table-responsive" style="margin-bottom:-5px;margin-top:-20px;">
@@ -59,8 +55,8 @@ $DATA = $cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0];
     </div>
     <div class="grid_edicion_biopsia2">
         <div class="card" id="card_tiempos_anatomia_patologica" style="margin-bottom:5px">
-            <div class="header" style="margin-bottom: 18px;">
-                <h5 class="title"><i class="fa fa-id-card" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">SOLICITUD</b></h5>
+            <div class="header">
+                <h5 class="title" style="padding: 10px;"><i class="fa fa-id-card" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">SOLICITUD</b></h5>
             </div>
             <div class="content card-body">
                 <table width="100%" class="table table-striped table-sm" style="margin-bottom:-5px;margin-top:-20px;"> 
@@ -108,12 +104,12 @@ $DATA = $cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0];
     <div class="grid_edicion_biopsia3">
         <div class="card" id="card_tiempos_anatomia_patologica" style="margin-bottom:5px">
             <div class="header">
-                <h5 class="title">
+                <h5 class="title" style="padding: 10px;">
                     <i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>&nbsp;
                     <b style="color:#888888;">EDICI&Oacute;N DE NUMERO BIOPSIA</b>
                 </h5>
             </div>
-            <div class="content card-body">
+            <div class="content card-body" style="margin-top: -20px;">
                 <input type="hidden" id="ind_tipo_biopsia" name="ind_tipo_biopsia" value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
                 <div class="grid_edicion_biopsia_opciones">
                     <div class="grid_edicion_biopsia_opciones1">
@@ -134,7 +130,7 @@ $DATA = $cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0];
                                 <?php } ?>
                             </legend>
                             <div id="date_tabla2" class="input-group" style="width:200px;padding:8px;">
-                                <span class="input-group-addon"><span class="fa fa-info-circle"></span></span>
+                                <span class="input-group-addon" style="padding: 7px;"><span class="fa fa-info-circle"></span></span>
                                 <input type="number" class="form-control input-sm" id="num_interno" name="num_interno"  value="<?php echo $txt_numero_editar;?>"/>
                             </div>
                         </fieldset>
@@ -165,7 +161,7 @@ $DATA = $cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0];
                             <fieldset class="fieldset_local">
                                 <legend class="legend"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;N&deg; CITOLOG&Iacute;A</legend>
                                 <div id="date_tabla2" class="input-group" style="width:200px;padding:8px;">
-                                    <span class="input-group-addon"><span class="fa fa-info-circle"></span></span>
+                                    <span class="input-group-addon" style="padding: 7px;"><span class="fa fa-info-circle"></span></span>
                                     <input type="number" class="form-control input-sm" id="num_interno_cito" name="num_interno_cito"  value="<?php echo $DATA['NUM_CO_CITOLOGIA'];?>"/>
                                 </div>
                             </fieldset>
@@ -184,27 +180,27 @@ $DATA = $cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0];
                     </div>
                 <?php } ?>
 
-                    <hr>
+                <hr>
 
-                    <h5 class="title" style="margin-bottom: 12px;"><i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>
-                        &nbsp;<b style="color:#888888;">FECHA TOMA DE MUESTRA</b>
-                    </h5>
-                    <div class="grid_fecha_hora">
-                        <div class="grid_fecha_hora1">
-                            <div class="input-group class_fecha_emision" style="width: 125px;" id="fecha_emision">
-                                <input type="text" class="form-control input-sm grupo_time_pab" id="fecha_solicitud" name="fecha_solicitud"  value="<?php echo explode(" ",$cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0]['FECHA_TOMA_MUESTRA'])[0];?>">
-                                <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
-                            </div>
-                        </div>
-                        <div class="grid_fecha_hora2">
-                            <input type="time" class="form-control input-sm" style="width: 115px;" id="hora_solicitud" name="hora_solicitud" maxlength="5" size="5"  value="<?php echo explode(" ",$cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0]['FECHA_TOMA_MUESTRA'])[1];?>">
-                        </div>
-                        <div class="grid_fecha_hora3">
-                            <button type="button" class="btn btn-success btn-fill" id="btn_update_analitica" onclick="js_edicion_fecha_informe(<?php echo $DATA['ID_SOLICITUD'];?>)">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i> CONFIRMA CAMBIO 
-                            </button>
+                <h5 class="title" style="margin-bottom: 12px;"><i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>
+                    &nbsp;<b style="color:#888888;">FECHA TOMA DE MUESTRA</b>
+                </h5>
+                <div class="grid_fecha_hora">
+                    <div class="grid_fecha_hora1">
+                        <div class="input-group class_fecha_emision" style="width: 125px;" id="fecha_emision">
+                            <input type="text" class="form-control input-sm grupo_time_pab" id="fecha_solicitud" name="fecha_solicitud"  value="<?php echo explode(" ",$cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0]['FECHA_TOMA_MUESTRA'])[0];?>">
+                            <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true" style="padding: 3px;padding-left: 10px;margin-top: 8px;margin-left: 0px;"></span></span>
                         </div>
                     </div>
+                    <div class="grid_fecha_hora2">
+                        <input type="time" class="form-control input-sm" style="width: 115px;" id="hora_solicitud" name="hora_solicitud" maxlength="5" size="5"  value="<?php echo explode(" ",$cursor["P_ANATOMIA_PATOLOGICA_MAIN"][0]['FECHA_TOMA_MUESTRA'])[1];?>">
+                    </div>
+                    <div class="grid_fecha_hora3">
+                        <button type="button" class="btn btn-success btn-fill" id="btn_update_analitica" onclick="js_edicion_fecha_informe(<?php echo $DATA['ID_SOLICITUD'];?>)">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> CONFIRMA CAMBIO 
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>

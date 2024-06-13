@@ -347,69 +347,61 @@ function pdf_notificacion_cancer_ok(id_anatomia){
 }
 
 function js_edita_numero_biopsia(id_biopsia){
+    $('#loadFade').modal('show');
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_notificacancer/html_gestion_numero_biopsia",
         dataType : "json",
-        beforeSend	: function(xhr)           {   
-                                                        console.log(xhr);
-                                                        $('#loadFade').modal('show');
-                                                    },
-        data 		:                           {  
-                                                        id_biopsia      :   id_biopsia,
-                                                    },
-        error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
-                                                    },
-        success		:   function(aData)         {   
-                                                        $('#loadFade').modal('hide');
-                                                        console.log("aData -> ",aData);
-                                                        //$("#btn_confirma_edicion_biopsia").attr('onclick','js_confirma_notificacion_cancer('+id_biopsia+')');
-                                                        $("#html_edicion_numero_biopsia").html(aData.html_out);
-                                                        $("#modal_edicion_numero_biopsia").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                    }, 
+        beforeSend : function(xhr) { console.log(xhr); },
+        data : { id_biopsia : id_biopsia },
+        error :   function(errro){ 
+                                            console.log("quisas->",errro,"-error->",errro.responseText); 
+                                            $("#protocoloPabellon").css("z-index","1500"); 
+                                            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                            $('#loadFade').modal('hide');
+                                        },
+        success		:   function(aData){   
+                                            $('#loadFade').modal('hide');
+                                            console.log("aData -> ",aData);
+                                            //$("#btn_confirma_edicion_biopsia").attr('onclick','js_confirma_notificacion_cancer('+id_biopsia+')');
+                                            $("#html_edicion_numero_biopsia").html(aData.html_out);
+                                            $("#modal_edicion_numero_biopsia").modal({backdrop:'static',keyboard:false}).modal("show");
+                                        }, 
     });
 }
 
-
-
-
-
 //BUSQUEDA DEL CORRELATIVO SEGUN LA BIOPSIA
 function busqueda_numero_disponible(tipo_biopsia){
-    console.log("tipo_biopsia   ->  ",tipo_biopsia);
+    $('#loadFade').modal('show'); 
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/ultimo_numero_disponible",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("xhr->",xhr);
-                                                },
-        data                :                   {   tipo_biopsia    :   tipo_biopsia },
-        error		    :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                },
-        success             :   function(aData) { 
-                                                    console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
-                                                    $("#num_interno").val('');
-                                                    var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
-                                                    showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
-                                                    $("#num_interno").val(num_last);
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible",
+        dataType : "json",
+        beforeSend : function(xhr) { console.log("xhr->",xhr);   },
+        data : {   tipo_biopsia : tipo_biopsia },
+        error :   function(errro) { 
+                                        console.log(errro);  
+                                        console.log(errro.responseText);    
+                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                        $('#loadFade').modal('hide'); 
+                                    },
+        success : function(aData) { 
+                                        console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
+                                        $("#num_interno").val('');
+                                        $('#loadFade').modal('hide'); 
+                                        var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
+                                        showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
+                                        $("#num_interno").val(num_last);
+                                    }, 
     });
 }
 
 //SOLO BUSCA UN SEGUNDO CORRELATIVO
 function busqueda_numero_disponible_citologia(tipo_biopsia){
-    console.log("tipo_biopsia   ->  ",tipo_biopsia);
+    c$('#loadFade').modal('show'); 
     $.ajax({ 
         type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/ultimo_numero_disponible_citologia",
+        url                 :   "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
         dataType            :   "json",
         beforeSend          :   function(xhr)   {   
                                                     console.log("xhr->",xhr);
@@ -418,11 +410,13 @@ function busqueda_numero_disponible_citologia(tipo_biopsia){
         error		    :   function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre");
+                                                    $('#loadFade').modal('hide');  
                                                 },
         success             :   function(aData) { 
                                                     console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
                                                     $("#num_interno_cito").val('');
+                                                    $('#loadFade').modal('hide'); 
                                                     var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
                                                     showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
                                                     $("#num_interno_cito").val(num_last);
@@ -542,82 +536,72 @@ function GET_PDF_ANATOMIA_PANEL(id){
 function js_pdf_informe_final(id_anatomia){
     $('#loadFade').modal('show'); 
     $.ajax({ 
-        type :   "POST",
-        url :   "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
-        dataType :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                    console.log(xhr);
-                                                    //console.log("generando");
-                                                },
-        data 		:                           { 
-                                                    id  :   id_anatomia,
-                                                },
-        error		:   function(errro)         { 
-                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide'); 
-                                                    
-                                                },
-        success		:   function(aData)         { 
-                                                        console.log("   aData   ->",aData,"<-           ");
-                                                        $('#loadFade').modal('hide'); 
-                                                        if(!aData["STATUS"]){
-                                                            jError("error al cargar protocolo PDF","Clinica Libre");
-                                                            return false;
-                                                        } else {
-                                                            var base64str           =   aData["PDF_MODEL"];
-                                                            var binary              =   atob(base64str.replace(/\s/g,''));
-                                                            var len                 =   binary.length;
-                                                            var buffer              =   new ArrayBuffer(len);
-                                                            var view                =   new Uint8Array(buffer);
-                                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                            var blob                =   new Blob([view],{type:"application/pdf"});
-                                                            var blobURL             =   URL.createObjectURL(blob);
-                                                            Objpdf                  =   document.createElement('object');
-                                                            Objpdf.setAttribute('data',blobURL);
-                                                            Objpdf.setAttribute('width','100%');
-                                                            let windowHeight = window.innerHeight;
-                                                            let adjustedHeight = windowHeight - 200;
-                                                            Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
-                                                            Objpdf.setAttribute('title','PDF');
-                                                            $('#html_pdf_notificacion_cancer').html(Objpdf);
-                                                            $("#modal_pdf_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
-
-                                                        }
-                                                   }, 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
+        dataType : "json",
+        beforeSend : function(xhr) { },
+        data : {  id : id_anatomia },
+        error : function(errro) { 
+                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    $('#loadFade').modal('hide'); 
+                                },
+        success : function(aData) { 
+                                    console.log("aData -> ",aData);
+                                    $('#loadFade').modal('hide'); 
+                                    if(!aData["STATUS"]){
+                                        jError("error al cargar protocolo PDF","Clinica Libre");
+                                        return false;
+                                    } else {
+                                        var base64str = aData["PDF_MODEL"];
+                                        var binary = atob(base64str.replace(/\s/g,''));
+                                        var len = binary.length;
+                                        var buffer = new ArrayBuffer(len);
+                                        var view = new Uint8Array(buffer);
+                                        for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                        var blob = new Blob([view],{type:"application/pdf"});
+                                        var blobURL = URL.createObjectURL(blob);
+                                        Objpdf = document.createElement('object');
+                                        Objpdf.setAttribute('data',blobURL);
+                                        Objpdf.setAttribute('width','100%');
+                                        let windowHeight = window.innerHeight;
+                                        let adjustedHeight = windowHeight - 200;
+                                        Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                                        Objpdf.setAttribute('title','PDF');
+                                        $('#html_pdf_notificacion_cancer').html(Objpdf);
+                                        $("#modal_pdf_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    }
+                                }, 
    });
 }
 
-
-
-
 function js_cambio_numero_biopsia(id_biopsia){
-    var ind_tipo_biopsia        =   $("#ind_tipo_biopsia").val();
-    var new_num_interno         =   $("#num_interno").val();
-    var old_num_interno         =   $("#old_num_interno").val(); 
-    var error                   =   [];
-    new_num_interno             ==  old_num_interno ? error.push("Nuevo numero es igual anterior") : '' ;
-    new_num_interno             ==  '' ? error.push("Numero de biopsia vac&iacute;o") : '';
+    var ind_tipo_biopsia = $("#ind_tipo_biopsia").val();
+    var new_num_interno = $("#num_interno").val();
+    var old_num_interno = $("#old_num_interno").val(); 
+    var error = [];
+    new_num_interno == old_num_interno ? error.push("Nuevo numero es igual anterior") : '' ;
+    new_num_interno == '' ? error.push("Numero de biopsia vac&iacute;o") : '';
     error.length>0 ? showNotification('top','center',error.join("<br>"),4,'fa fa-ban') : load_cambio_numero_biopsia({
-        ind_tipo_biopsia        :   ind_tipo_biopsia,
-        id_biopsia              :   id_biopsia,         
-        new_num_interno         :   new_num_interno,
-        ind_cambio              :   '1',
+        ind_tipo_biopsia : ind_tipo_biopsia,
+        id_biopsia : id_biopsia,         
+        new_num_interno : new_num_interno,
+        ind_cambio : '1',
     });
 }
 
 function js_cambio_numero_biopsia_citologico(id_biopsia){
-    var ind_tipo_biopsia        =   $("#ind_tipo_biopsia").val();
-    var num_interno_cito        =   $("#num_interno_cito").val();
-    var old_num_interno         =   $("#old_num_interno_cito").val(); 
-    var error                   =   [];
-    num_interno_cito            ==  old_num_interno ? error.push("Nuevo numero es igual anterior") : '' ;
-    num_interno_cito            ==  '' ? error.push("numero citol&oacute;gico vac&iacute;o") : '';
+    var ind_tipo_biopsia = $("#ind_tipo_biopsia").val();
+    var num_interno_cito = $("#num_interno_cito").val();
+    var old_num_interno = $("#old_num_interno_cito").val(); 
+    var error = [];
+    num_interno_cito == old_num_interno ? error.push("Nuevo numero es igual anterior") : '' ;
+    num_interno_cito == '' ? error.push("numero citol&oacute;gico vac&iacute;o") : '';
     error.length>0 ? showNotification('top','center',error.join("<br>"),4,'fa fa-ban') : load_cambio_numero_biopsia({
-        ind_tipo_biopsia        :   ind_tipo_biopsia,
-        id_biopsia              :   id_biopsia,         
-        new_num_interno         :   num_interno_cito,
-        ind_cambio              :   '2',
+        ind_tipo_biopsia : ind_tipo_biopsia,
+        id_biopsia : id_biopsia,         
+        new_num_interno : num_interno_cito,
+        ind_cambio : '2',
     });
 }
 
@@ -626,33 +610,32 @@ function load_cambio_numero_biopsia(datasend){
         if(r){
             $('#loadFade').modal('show');
             datasend["pass"]        =   r;
-            //console.log("datasend ->  ",datasend);
             $.ajax({ 
-                type                :   "POST",
-                url                 :   "ssan_libro_notificacancer/get_cambio_numero_biopsia",
-                dataType            :   "json",
-                beforeSend          :   function(xhr)   {   console.log("xhr->",xhr);   },
-                data                :   datasend,
-                error		    :   function(errro) { 
-                                                            console.log(errro);  
-                                                            console.log(errro.responseText);
-                                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                            $('#loadFade').modal('hide');
-                                                        },
-                success             :   function(aData) { 
-                                                            $('#loadFade').modal('hide');
-                                                            console.log("retun  -> ",aData);
-                                                            if (aData.status){
-                                                                showNotification('top','center','El cambio de numero de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
-                                                                $(aData.ind_cambio == 1 ? "#old_num_interno": "#old_num_interno_cito").val(aData.nun_biopsia) ;
-                                                                update_etapaanalitica_cancer_edicion();
-                                                            } else {
-                                                                jError(aData.txt_error ,"Clinica Libre");
-                                                            }
-                                                        }, 
+                type : "POST",
+                url : "ssan_libro_notificacancer/get_cambio_numero_biopsia",
+                dataType : "json",
+                beforeSend : function(xhr)   {   console.log("xhr->",xhr);   },
+                data : datasend,
+                error : function(errro) { 
+                                            console.log(errro);  
+                                            console.log(errro.responseText);
+                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                            $('#loadFade').modal('hide');
+                                        },
+                success : function(aData) { 
+                                            $('#loadFade').modal('hide');
+                                            console.log("retun  -> ",aData);
+                                            if (aData.status){
+                                                showNotification('top','center','El cambio de numero de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
+                                                $(aData.ind_cambio == 1 ? "#old_num_interno": "#old_num_interno_cito").val(aData.nun_biopsia) ;
+                                                update_etapaanalitica_cancer_edicion();
+                                            } else {
+                                                jError(aData.txt_error ,"Clinica Libre");
+                                            }
+                                        }, 
             });
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
         }
     });
 }
@@ -797,7 +780,7 @@ function js_edita_fecha_emision_informe(id_biopsia){
                                                         }, 
             });
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
         }
     });
 }
@@ -851,7 +834,7 @@ function js_edita_fecha_notificacion_cancar(id_biopsia){
                                                         }, 
             });
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
         }
     });
 }
@@ -902,7 +885,7 @@ function elimina_biopsia_desde_anatomia(id_biopsia){
                                                         }, 
             });
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
         }
     });
 }
@@ -958,7 +941,7 @@ function js_edicion_fecha_informe(id_biopsia){
                                                         }, 
             });
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
         }
     });
 }
@@ -1038,7 +1021,7 @@ function js_update_macrocopica(id_biopsia){
                                                             }, 
                 });
             } else {
-                jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+                jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
     } else {

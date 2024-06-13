@@ -64,24 +64,6 @@
 
 
 
-<div class="modal fade" id="modal_edicion_numero_biopsia">
-    <div class="modal-dialog modal_xl_900">
-	<div class="modal-content">
-	    <div class="modal-header">
-             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 style="margin: 0px 0px 0px 0px;"><b style="color:#e34f49">EDICI&Oacute;N ANATOM&Iacute;A PATOL&Oacute;GICA</b></h4>
-            </div>
-            <div class="modal-body" id="html_edicion_numero_biopsia"></div>
-            <div class="modal-footer">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-danger btn-fill" data-dismiss="modal">
-                       <i class="fa fa-window-close" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="Dv_verdocumentos" style=" z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
     <div class="modal-dialog modal_xl_900" style="width:80%;">
@@ -179,9 +161,21 @@
         </div>
     </div>
 
-
-
-    
+    <div class="modal fade" id="modal_edicion_numero_biopsia">
+        <div class="modal-dialog modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
+            <div class="modal-content"> 
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;EDICI&Oacute;N ANATOM&Iacute;A PATOL&Oacute;GICA&nbsp;</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_edicion_numero_biopsia"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>
-
