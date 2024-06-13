@@ -15,7 +15,7 @@ $(function(){
         error : function(errro) { 
                                     console.log(errro);  
                                     $('#loadFade').modal('hide');
-                                    jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
         success : function(aData) { 
                                     $('#loadFade').modal('hide');
@@ -42,7 +42,7 @@ $(function(){
         error       :   function(errro) { 
                                             console.log(errro);  
                                             console.log(errro.responseText);
-                                            jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
+                                            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                             $('#loadFade').modal('hide'); 
                                         },
         success     :   function(aData) { 
@@ -70,7 +70,7 @@ $(function(){
        data : {   id : id, },
        error : function(errro) { 
                                     console.log("quisas->",errro,"-error->",errro.responseText); 
-                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                     $('#loadFade').modal('hide'); 
                                 },
        success : function(aData) { 
@@ -78,7 +78,7 @@ $(function(){
                                         $('#loadFade').modal('hide'); 
                                         $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('');
                                         if(!aData["STATUS"]){
-                                            jError("error al cargar protocolo PDF","e-SISSAN");
+                                            jError("error al cargar protocolo PDF","Clinica Libre");
                                             return false;
                                         } else {
                                             var base64str = aData["PDF_MODEL"];
@@ -104,34 +104,34 @@ $(function(){
  }
  
  function js_pdf_microscopica(id_anatomia){
-     /*
-     jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a generar documento correspondiente a paciente con informe de c&aacute;ncer<br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
-         let v_error = []; //array validador
-         let v_run = obj_salida.v_run; //run en formato 123.123.12-3
-         let status_run = obj_salida.status_run; // si el formato del run es correcto
-         let v_pass = obj_salida.v_pass; // texto de firma simple
-         if (!status_run){ v_error.push("El RUN ingresado es incorrecto");  }
-         if((v_run=='')||(v_run==null)){ v_error.push("Firma simple incorrecta"); }
-         if (v_error.length>0){
-             showNotification('top','center',v_error.join("<br>"),4,'fa fa-exclamation-triangle');
-         } else {
-             //aqui continuaria el ajax ya con la validacion del run  con la firma firma simple1
-             console.log("v_run ->",v_run);
-             console.log("v_pass ->",v_pass);
-         }
-     });
-     */
-     $('#loadFade').modal('show'); 
-     $.ajax({ 
+    /*
+    jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a generar documento correspondiente a paciente con informe de c&aacute;ncer<br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
+        let v_error = []; //array validador
+        let v_run = obj_salida.v_run; //run en formato 123.123.12-3
+        let status_run = obj_salida.status_run; // si el formato del run es correcto
+        let v_pass = obj_salida.v_pass; // texto de firma simple
+        if (!status_run){ v_error.push("El RUN ingresado es incorrecto");  }
+        if((v_run=='')||(v_run==null)){ v_error.push("Firma simple incorrecta"); }
+        if (v_error.length>0){
+            showNotification('top','center',v_error.join("<br>"),4,'fa fa-exclamation-triangle');
+        } else {
+            //aqui continuaria el ajax ya con la validacion del run  con la firma firma simple1
+            console.log("v_run ->",v_run);
+            console.log("v_pass ->",v_pass);
+        }
+    });
+    */
+    $('#loadFade').modal('show'); 
+    $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
         dataType : "json",
         beforeSend : function(xhr) { console.log(xhr);  },
         data :   { id : id_anatomia  },
         error :   function(errro) { 
-                                        jError("Error General, Consulte Al Administrador","e-SISSAN");
+                                        jError("Error General, Consulte Al Administrador","Clinica Libre");
                                         $('#loadFade').modal('hide'); 
-                                        $("#html_pdf_notificacion_cancer").html();
+                                        $("#html_pdf_notificacion_cancer").html('');
                                         $("#modal_pdf_notificacion_cancer").modal('hide');
                                     },
         success : function(aData) { 
@@ -139,7 +139,7 @@ $(function(){
                                     $("#modal_pdf_notificacion_cancer").css("z-index","1500").modal({backdrop:'static',keyboard:false}).modal("show");
                                     $('#html_pdf_notificacion_cancer').html('');
                                     if(!aData["STATUS"]){
-                                        jError("error al cargar protocolo PDF","e-SISSAN");
+                                        jError("error al cargar protocolo PDF","Clinica Libre");
                                         return false;
                                     } else {
                                         var base64str = aData["PDF_MODEL"];
