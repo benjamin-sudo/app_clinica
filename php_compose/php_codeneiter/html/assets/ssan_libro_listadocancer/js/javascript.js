@@ -59,53 +59,47 @@ $(function(){
  
  
  function GET_PDF_ANATOMIA_PANEL(id){
-    $("#modal_pdf_notificacion_cancer").css("z-index","1500").modal({backdrop:'static',keyboard:false}).modal("show");
+    $('#loadFade').modal('show'); 
     $.ajax({ 
-       type		:   "POST",
-       url 		:   "ssan_spab_gestionlistaquirurgica/BLOB_PDF_ANATOMIA_PATOLOGICA",
-       dataType         :   "json",
-       beforeSend	:   function(xhr)           {   
-                                                       console.log(xhr);
-                                                       console.log("generando PDF");
-                                                       $('#html_pdf_notificacion_cancer').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
-                                                    },
-       data 		:                           { 
-                                                       id  :   id,
-                                                    },
-       error		:   function(errro)         { 
-                                                       console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                       jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                       $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
-                                                    },
-       success		:   function(aData)         { 
-                                                        console.log("---------------------------------------------");
-                                                        console.log(aData);
-                                                        console.log("---------------------------------------------");
-                                                        $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('');
-                                                        if(!aData["STATUS"]){
-                                                           jError("error al cargar protocolo PDF","e-SISSAN");
-                                                           return false;
-                                                        } else {
-                                                            var base64str           =   aData["PDF_MODEL"];
-                                                            //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                            var binary              =   atob(base64str.replace(/\s/g,''));
-                                                            var len                 =   binary.length;
-                                                            var buffer              =   new ArrayBuffer(len);
-                                                            var view                =   new Uint8Array(buffer);
-                                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                            //console.log("view->",view);
-                                                            //create the blob object with content-type "application/pdf"  
-                                                            var blob                =   new Blob([view],{type:"application/pdf"});
-                                                            var blobURL             =   URL.createObjectURL(blob);
-                                                            //console.log("BlobURL->",blobURL);
-                                                            Objpdf                  =   document.createElement('object');
-                                                            Objpdf.setAttribute('data',blobURL);
-                                                            Objpdf.setAttribute('width','100%');
-                                                            Objpdf.setAttribute('style','height:700px;');
-                                                            Objpdf.setAttribute('title','PDF');
-                                                            $('#html_pdf_notificacion_cancer').html(Objpdf);
-                                                        }
-                                                    }, 
+       type : "POST",
+       url : "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
+       dataType  : "json",
+       beforeSend : function(xhr)   {   
+                                        console.log("generando PDF");
+                                    },
+       data : {   id : id, },
+       error : function(errro) { 
+                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                    $('#loadFade').modal('hide'); 
+                                },
+       success : function(aData) { 
+                                        console.log(aData);
+                                        $('#loadFade').modal('hide'); 
+                                        $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('');
+                                        if(!aData["STATUS"]){
+                                            jError("error al cargar protocolo PDF","e-SISSAN");
+                                            return false;
+                                        } else {
+                                            var base64str = aData["PDF_MODEL"];
+                                            var binary = atob(base64str.replace(/\s/g,''));
+                                            var len = binary.length;
+                                            var buffer = new ArrayBuffer(len);
+                                            var view = new Uint8Array(buffer);
+                                            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                            var blob = new Blob([view],{type:"application/pdf"});
+                                            var blobURL = URL.createObjectURL(blob);
+                                            Objpdf = document.createElement('object');
+                                            Objpdf.setAttribute('data',blobURL);
+                                            Objpdf.setAttribute('width','100%');
+                                            let windowHeight = window.innerHeight;
+                                            let adjustedHeight = windowHeight - 200;
+                                            Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                                            Objpdf.setAttribute('title','PDF');
+                                            $('#html_pdf_notificacion_cancer').html(Objpdf);
+                                            $("#modal_pdf_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
+                                        }
+                                    }, 
    });
  }
  
@@ -129,55 +123,43 @@ $(function(){
      */
      $('#loadFade').modal('show'); 
      $.ajax({ 
-        type		    :   "POST",
-        url 		    :   "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
-        dataType     :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                     console.log(xhr);
-                                                     //console.log("generando");
-                                                     $('#html_pdf_fullscreen').html("<i class='fa fa-spinner fa-spin fa-3x fa-fw' aria-hidden='true'></i>&nbsp;GENERANDO PDF <- ");
-                                                 },
-        data 		:                           { 
-                                                     id  : id_anatomia,
-                                                 },
-        error		:   function(errro)         { 
-                                                     jError("Error General, Consulte Al Administrador","e-SISSAN");
-                                                     $('#loadFade').modal('hide'); 
-                                                     $("#html_pdf_notificacion_cancer").html();
-                                                     $("#modal_pdf_notificacion_cancer").modal('hide');
-                                                     
-                                                 },
-        success		:   function(aData)         { 
-                                                     //console.log("-------------------------------------------");
-                                                     //console.log("   aData   ->",aData);
-                                                     $('#loadFade').modal('hide'); 
-                                                     $("#modal_pdf_notificacion_cancer").css("z-index","1500").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                     $('#html_pdf_notificacion_cancer').html('');
-                                                     if(!aData["STATUS"]){
-                                                         jError("error al cargar protocolo PDF","e-SISSAN");
-                                                         return false;
-                                                     } else {
-                                                         var base64str           =   aData["PDF_MODEL"];
-                                                         //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                         var binary              =   atob(base64str.replace(/\s/g,''));
-                                                         var len                 =   binary.length;
-                                                         var buffer              =   new ArrayBuffer(len);
-                                                         var view                =   new Uint8Array(buffer);
-                                                         for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                         //console.log("view->",view);
-                                                         //create the blob object with content-type "application/pdf"  
-                                                         var blob                =   new Blob([view],{type:"application/pdf"});
-                                                         var blobURL             =   URL.createObjectURL(blob);
-                                                         //console.log("BlobURL->",blobURL);
-                                                         Objpdf                  =   document.createElement('object');
-                                                         Objpdf.setAttribute('data',blobURL);
-                                                         Objpdf.setAttribute('width','100%');
-                                                         Objpdf.setAttribute('style','height:700px;');
-                                                         Objpdf.setAttribute('title','PDF');
-                                                         $('#html_pdf_notificacion_cancer').html(Objpdf);
-                                                     }
-                                                 }, 
-     });
-     
- }
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
+        dataType : "json",
+        beforeSend : function(xhr) { console.log(xhr);  },
+        data :   { id : id_anatomia  },
+        error :   function(errro) { 
+                                        jError("Error General, Consulte Al Administrador","e-SISSAN");
+                                        $('#loadFade').modal('hide'); 
+                                        $("#html_pdf_notificacion_cancer").html();
+                                        $("#modal_pdf_notificacion_cancer").modal('hide');
+                                    },
+        success : function(aData) { 
+                                    $('#loadFade').modal('hide'); 
+                                    $("#modal_pdf_notificacion_cancer").css("z-index","1500").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    $('#html_pdf_notificacion_cancer').html('');
+                                    if(!aData["STATUS"]){
+                                        jError("error al cargar protocolo PDF","e-SISSAN");
+                                        return false;
+                                    } else {
+                                        var base64str = aData["PDF_MODEL"];
+                                        var binary = atob(base64str.replace(/\s/g,''));
+                                        var len = binary.length;
+                                        var buffer = new ArrayBuffer(len);
+                                        var view = new Uint8Array(buffer);
+                                        for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                        var blob = new Blob([view],{type:"application/pdf"});
+                                        var blobURL = URL.createObjectURL(blob);
+                                        Objpdf = document.createElement('object');
+                                        Objpdf.setAttribute('data',blobURL);
+                                        Objpdf.setAttribute('width','100%');
+                                        let windowHeight = window.innerHeight;
+                                        let adjustedHeight = windowHeight - 200;
+                                        Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                                        Objpdf.setAttribute('title','PDF');
+                                        $('#html_pdf_notificacion_cancer').html(Objpdf);
+                                    }
+                                }, 
+    });
+}
  

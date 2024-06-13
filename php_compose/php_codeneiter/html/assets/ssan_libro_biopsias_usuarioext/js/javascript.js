@@ -318,7 +318,7 @@ function js_confirma_new_fecha(id){
                                                     }, 
             });
         } else {
-            jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
         }
     });
 }
@@ -359,7 +359,10 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                         Objpdf = document.createElement('object');
                                                         Objpdf.setAttribute('data',blobURL);
                                                         Objpdf.setAttribute('width','100%');
-                                                        Objpdf.setAttribute('style','height:700px;');
+                                                        let windowHeight = window.innerHeight;
+                                                        let adjustedHeight = windowHeight - 200;
+                                                        Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                                                        Objpdf.setAttribute('title','PDF');
                                                         Objpdf.setAttribute('title','PDF');
                                                         $("#HTML_PDF_ANATOMIA_PATOLOGICA").html(Objpdf);
                                                         $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 

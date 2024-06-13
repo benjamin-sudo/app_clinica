@@ -40,8 +40,8 @@
                     <td><?php echo $row['TIPO_DE_BIOPSIA'];?><br>N&deg;: <?php echo $row['NUM_NOF_CANCER'];?>  </td> 
                     <td style="text-align:center"><?php 
                         echo $row['IND_NOTIFICACANCER'] == 1 ? 
-                            '<span class="badge bg-danger" style="padding: 5px;"><i class="fa fa-check" aria-hidden="true"></i></span>':
-                            '<span class="badge bg-success" style="padding: 5px;"><i class="fa fa-times" aria-hidden="true"></i></span>';
+                            '<span class="badge bg-success" style="padding: 5px;"><i class="fa fa-check" aria-hidden="true"></i></span>':
+                            '<span class="badge bg-danger" style="padding: 5px;"><i class="fa fa-times" aria-hidden="true"></i></span>';
                     ?></td> 
                     <td style="text-align:center">
                         <div class="btn-group">
@@ -53,22 +53,24 @@
                                 <?php if ($row["IND_NOTIFICACANCER"] == 0) { ?>
                                     <li class="lista_notificacion_cancer">
                                         <a class="dropdown-item" href="javascript:js_notificar_cancer(<?php echo $row["ID_SOLICITUD"];?>)">
-                                        <i class="fa fa-users" aria-hidden="true"></i>INICIO NOTIFICACI&Oacute;N DE CANCER</a>
+                                        <i class="fa fa-users" aria-hidden="true"></i>&nbsp;INICIO NOTIFICACI&Oacute;N DE CANCER</a>
                                     </li>
                                 <?php }  ?>
                                 <li>
                                     <a class="dropdown-item" href="javascript:GET_PDF_ANATOMIA_PANEL(<?php echo $row["ID_SOLICITUD"];?>)">
-                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</a>
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="javascript:js_pdf_microscopica(<?php echo $row["ID_SOLICITUD"];?>)">
-                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF INFORME ANATOMIA PATOLOGIA</a>
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF INFORME ANATOMIA PATOLOGIA</a>
                                 </li>
                                 <?php if ($row["IND_NOTIFICACANCER"] == 1) { ?>
-                                <li>
-                                    <a class="dropdown-item" href="javascript:pdf_notificacion_cancer_ok(<?php echo $row["ID_SOLICITUD"];?>)">
-                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF <b>NOTIFICACI&Oacute;N DE CANCER</b></a>
-                                </li>
+                                    <!--
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:pdf_notificacion_cancer_ok(<?php echo $row["ID_SOLICITUD"];?>)">
+                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF <b>NOTIFICACI&Oacute;N DE CANCER</b></a>
+                                    </li>
+                                    -->
                                 <?php  }  ?>
                             </ul>
                         </div>

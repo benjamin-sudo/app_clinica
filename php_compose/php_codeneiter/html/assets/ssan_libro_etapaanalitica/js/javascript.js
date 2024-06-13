@@ -2693,7 +2693,7 @@ function js_pdf_microscopica(id_anatomia){
                                             $('#loadFade').modal('hide'); 
                                             console.log("aData -> ",aData);
                                             if(!aData["STATUS"]){
-                                                jError("error al cargar protocolo PDF","Clinica Libre");
+                                                jError("Error al cargar protocolo PDF","Clinica Libre");
                                                 return false;
                                             } else {
                                                 var base64str = aData["PDF_MODEL"];
@@ -2707,8 +2707,8 @@ function js_pdf_microscopica(id_anatomia){
                                                 Objpdf = document.createElement('object');
                                                 Objpdf.setAttribute('data',blobURL);
                                                 Objpdf.setAttribute('width','100%');
-                                                var windowHeight = window.innerHeight;
-                                                var adjustedHeight = windowHeight - 200;
+                                                let windowHeight = window.innerHeight;
+                                                let adjustedHeight = windowHeight - 200;
                                                 Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
                                                 Objpdf.setAttribute('title','PDF');
                                                 $('#html_pdf_fullscreen').html(Objpdf);
