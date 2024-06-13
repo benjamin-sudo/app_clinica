@@ -240,7 +240,6 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $id_tabla                       =   $this->input->post('id');
         $qr_to_base64                   =   $this->input->post('qr_to_base64');
         $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
-        #$DATA                          =   null;
         #require_once APPPATH           .   '/third_party/mpdf/mpdf.php';
         $txt_name_pdf                   =   'RECEPCI&Oacute;N DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
         

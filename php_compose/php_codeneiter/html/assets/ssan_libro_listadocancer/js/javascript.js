@@ -7,25 +7,21 @@ $(function(){
  function listado_notifica_cancer(ind_year){
     $('#loadFade').modal('show');
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_notificacancer/load_notificacion_cancer_por_year",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("xhr->",xhr);
-                                                },
-        data                :                   {   ind_year : ind_year },
-        error		        :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                    $('#loadFade').modal('hide');
-                                                },
-        success             :   function(aData) { 
-                                                    $('#loadFade').modal('hide');
-                                                    //console.log("aData      ->  ",aData);
-                                                    $(".return_table").html(aData.html);
-                                                    $(".lista_notificacion_cancer").hide();
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_notificacancer/load_notificacion_cancer_por_year",
+        dataType : "json",
+        beforeSend : function(xhr) { },
+        data : { ind_year : ind_year },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    $('#loadFade').modal('hide');
+                                    jAlert("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                },
+        success : function(aData) { 
+                                    $('#loadFade').modal('hide');
+                                    $(".return_table").html(aData.html);
+                                    $(".lista_notificacion_cancer").hide();
+                                }, 
     });
  }
  

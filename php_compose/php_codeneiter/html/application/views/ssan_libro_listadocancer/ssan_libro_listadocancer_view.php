@@ -1,12 +1,13 @@
 <h4 class="title" style="color:#e34f49;margin-left:13px;margin-bottom: 11px;">
-    <i class="fa fa-check" aria-hidden="true"></i>
-    <b id="txt_titulo_general">LISTADO DE CANCER</b>
+    <i class="fa fa-check" aria-hidden="true"></i><b id="txt_titulo_general">LISTADO DE CANCER</b>
 </h4>
-<div class="grid_listado_cancer">
+
+<div class="grid_listado_cancer card">
     <div class="grid_listado_cancer1"></div>
     <div class="grid_listado_cancer2 return_table"></div>
     <div class="grid_listado_cancer3"></div>
 </div>
+
 <div class="modal fade" id="modal_pdf_notificacion_cancer">
     <div class="modal-dialog modal_xl_900">
 	<div class="modal-content">
