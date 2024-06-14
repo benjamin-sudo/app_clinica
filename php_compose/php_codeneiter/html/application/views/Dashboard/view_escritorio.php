@@ -8,6 +8,7 @@
   <meta name="robots" content="all, index, follow"/>
   <meta name="googlebot" content="all, index, follow">
   <title>Clinica Libre</title>
+  <link rel="icon" href="assets/dist/img/anatomia/logo.ico" type="image/x-icon">
   <!-- Bootstrap 5.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap.min.css" >
   <!-- Bootstrap Icons v1.11.2 -->
@@ -34,11 +35,11 @@
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
   <style>
-    #loadFade .modal-content  { background-color: #fff;     }
-    #loadFade .modal-body     { text-align: center;  min-height: 100px;  max-height:200px }
-    .nav-link.activo          { }
-    .text-center              { text-align: center;  }
-    .btn-warning              { color: white !important; }
+    #loadFade .modal-content { background-color: #fff;     }
+    #loadFade .modal-body { text-align: center;  min-height: 100px;  max-height:200px }
+    .nav-link.activo { }
+    .text-center { text-align: center;  }
+    .btn-warning { color: white !important; }
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
