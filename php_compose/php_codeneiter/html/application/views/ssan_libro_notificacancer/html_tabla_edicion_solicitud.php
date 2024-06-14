@@ -47,11 +47,10 @@
                     <div class="btn-group">
                         <a class="btn btn-fill btn-primary dropdown-toggle dropdown-menu-end" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                             <i class="fa fa-cog" aria-hidden="true"></i>
-                            <span class="fa fa-angle-down" title="" aria-hidden="true"></span>
                             <span class="sr-only"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" style="margin-top:0px;min-width:240px;">
-                            <li><h6 class="dropdown-header" style="border-left:1px solid #ececec;text-align: justify;">&nbsp;HERRAMIENTAS</h6></li>
+                            <li><h6 class="dropdown-header" style="border-left:1px solid #ececec;text-align:justify;">&nbsp;HERRAMIENTAS</h6></li>
                             <li>
                                 <a class="dropdown-item" href="javascript:js_edita_numero_biopsia(<?php echo $row["ID_SOLICITUD"];?>)">
                                     <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;EDITAR NUMERACI&Oacute;N DE BIOPSIA
@@ -107,17 +106,14 @@
                             <?php } ?>
                         </ul>
                     </div>
-
-
                 </td>
             </tr>
-            
             <?php 
-            $array_post     =   [];
-            array_push($array_post,"id_anatomia=".$row["ID_SOLICITUD"]);
-            array_push($array_post,"empresa=".$this->session->userdata("COD_ESTAB"));
-            $rul_for_qr     =   (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://".$_SERVER['HTTP_HOST']."/ssan_libro_notificacancer?ind_externo=true&".join("&",$array_post);
-            //echo $rul_for_qr;
+                $array_post     =   [];
+                array_push($array_post,"id_anatomia=".$row["ID_SOLICITUD"]);
+                array_push($array_post,"empresa=".$this->session->userdata("COD_ESTAB"));
+                $rul_for_qr     =   (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://".$_SERVER['HTTP_HOST']."/ssan_libro_notificacancer?ind_externo=true&".join("&",$array_post);
+                //echo $rul_for_qr;
             ?>
         <?php }  ?>
         <?php } else { ?>

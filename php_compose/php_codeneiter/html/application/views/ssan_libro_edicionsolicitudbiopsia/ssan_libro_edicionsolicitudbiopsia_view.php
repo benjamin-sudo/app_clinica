@@ -144,6 +144,7 @@
 </section>
 
 <section>
+
     <div class="modal fade" id="modal_pdf_notificacion_cancer">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content"> 

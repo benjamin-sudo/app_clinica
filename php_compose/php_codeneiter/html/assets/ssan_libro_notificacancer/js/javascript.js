@@ -609,22 +609,21 @@ function load_cambio_numero_biopsia(datasend){
     jPrompt('Con esta acci&oacute;n se proceder&aacute; editar numero de biopsia.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
         if(r){
             $('#loadFade').modal('show');
-            datasend["pass"]        =   r;
+            datasend["pass"] = r;
             $.ajax({ 
                 type : "POST",
                 url : "ssan_libro_notificacancer/get_cambio_numero_biopsia",
                 dataType : "json",
-                beforeSend : function(xhr)   {   console.log("xhr->",xhr);   },
+                beforeSend : function(xhr) { console.log("xhr->",xhr); },
                 data : datasend,
                 error : function(errro) { 
                                             console.log(errro);  
-                                            console.log(errro.responseText);
                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                             $('#loadFade').modal('hide');
                                         },
                 success : function(aData) { 
                                             $('#loadFade').modal('hide');
-                                            console.log("retun  -> ",aData);
+                                            console.log("retun -> ",aData);
                                             if (aData.status){
                                                 showNotification('top','center','El cambio de numero de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
                                                 $(aData.ind_cambio == 1 ? "#old_num_interno": "#old_num_interno_cito").val(aData.nun_biopsia) ;

@@ -63,8 +63,6 @@
     </div>
 </div>
 
-
-
 <div class="modal fade" id="Dv_verdocumentos" style=" z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
     <div class="modal-dialog modal_xl_900" style="width:80%;">
         <div class="modal-content">

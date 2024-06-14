@@ -1880,7 +1880,7 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                                     }, 
         });
     } else {
-        jPrompt('Con esta acci&oacute;n se proceder&aacute; a cerrar  la solicitud de anatomia patologica .<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
+        jPrompt('Con esta acci&oacute;n se proceder&aacute; a generar informe final de oficina de pat&oacute;logo .<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r){
                $.ajax({ 
                     type                                :   "POST",

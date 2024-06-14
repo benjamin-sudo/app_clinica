@@ -8,6 +8,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $this->load->library('pdf');
         $this->load->model("Ssan_libro_notificacancer_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
+        $this->load->model("Ssan_libro_etapaanalitica_model");
     }
 
     public function index(){
@@ -237,71 +238,76 @@ class Ssan_libro_notificacancer extends CI_Controller {
     #PDF NOTIFICACION CANCER
     public function pdf_notificacion_cancer_ok(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $id_tabla                       =   $this->input->post('id');
-        $qr_to_base64                   =   $this->input->post('qr_to_base64');
-        $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
-        #require_once APPPATH           .   '/third_party/mpdf/mpdf.php';
-        $txt_name_pdf                   =   'RECEPCI&Oacute;N DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
-        
-        $dompdf                         =   new mPDF("en-GB-x","Letter-L","","",10,10,10,10,6,3);
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $id_tabla = $this->input->post('id');
+        $qr_to_base64 = $this->input->post('qr_to_base64');
+        $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_tabla));
+        $txt_name_pdf = 'RECEPCI&Oacute;N DE ANATOM&Iacute;A PATOL&Oacute;GICA:'.$id_tabla.'.pdf';
+        $dompdf = new mPDF("en-GB-x","Letter-L","","",10,10,10,10,6,3);
         $dompdf->AddPage();
         $dompdf->WriteHTML($this->load->view("ssan_libro_notificacancer/pdf_notificacion_cancer",array(
-                    'DATA'              =>  $DATA,
-                    "empresa"           =>  $empresa,
-                    "qr_to_base64"      =>  $qr_to_base64,
+                    'DATA' => $DATA,
+                    "empresa" =>  $empresa,
+                    "qr_to_base64" =>  $qr_to_base64,
                 ),true));
         $dompdf->SetHTMLFooter('NOTIFICACI&Oacute;N DE CANCER - ANATOM&Iacute;A PATOL&Oacute;GICA');
-        $out                            =   $dompdf->Output($txt_name_pdf,'S');
-        $base64_pdf                     =   base64_encode($out);
-        $TABLA["IND_TEMPLATE"]          =   1;
-        $TABLA["PDF_MODEL"]             =   $base64_pdf;
-        $TABLA["PDF_MODEL_DATA"]        =   $base64_pdf;
-        $TABLA["STATUS"]                =   true;
-        $TABLA["DATA_RETURN"]           =   $DATA;
-        $TABLA["ID_RETURN"]             =   $id_tabla;
+        $out = $dompdf->Output($txt_name_pdf,'S');
+        $base64_pdf = base64_encode($out);
+        $TABLA["IND_TEMPLATE"] = 1;
+        $TABLA["PDF_MODEL"] = $base64_pdf;
+        $TABLA["PDF_MODEL_DATA"] = $base64_pdf;
+        $TABLA["STATUS"] = true;
+        $TABLA["DATA_RETURN"] = $DATA;
+        $TABLA["ID_RETURN"] = $id_tabla;
         $this->output->set_output(json_encode($TABLA));
     }
     
     public function html_gestion_numero_biopsia(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $id_biopsia                     =   $this->input->post('id_biopsia');
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_biopsia));
+        $status = true;
+        $id_biopsia = $this->input->post('id_biopsia');
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array("COD_EMPRESA"=>$empresa,"ID_HISTO"=>$id_biopsia));
         $this->output->set_output(json_encode(array(
-            'html_out'                  =>  $this->load->view("ssan_libro_notificacancer/html_edicion_numero_biopsia",array('cursor'=>$DATA),true),
-            'status'                    =>  $status
+            'html_out' =>  $this->load->view("ssan_libro_notificacancer/html_edicion_numero_biopsia",array('cursor'=>$DATA),true),
+            'status' =>  $status
         )));
     }
     
     public function get_cambio_numero_biopsia(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $txt_error                      =   '';
-        $ind_tipo_biopsia               =   $this->input->post('ind_tipo_biopsia');
-        $id_biopsia                     =   $this->input->post('id_biopsia');
-        $new_num_interno                =   $this->input->post('new_num_interno');
-        $pass                           =   $this->input->post('pass'); 
-        $ind_cambio                     =   $this->input->post('ind_cambio'); 
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->update_numero_biopsias(array(
-            'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
-            'pass'                      =>  $pass,
-            'ind_tipo_biopsia'          =>  $ind_tipo_biopsia,
-            'id_biopsia'                =>  $id_biopsia,
-            'new_num_interno'           =>  $new_num_interno,
-            'ind_cambio'                =>  $ind_cambio,
-        ));
-        if (count($return_data['data_bd'][':C_STATUS'])>0){
-            $status                     =   false;
-            $txt_error                  =   $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+        $status = true;
+        $txt_error = '';
+        $ind_tipo_biopsia = $this->input->post('ind_tipo_biopsia');
+        $id_biopsia = $this->input->post('id_biopsia');
+        $new_num_interno = $this->input->post('new_num_interno');
+        $pass = $this->input->post('pass'); 
+        $ind_cambio = $this->input->post('ind_cambio'); 
+        $arr_user = $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($pass);
+        if (count($arr_user)>0){
+            $return_data = $this->Ssan_libro_notificacancer_model->update_numero_biopsias([
+                'cod_empresa' =>  $this->session->userdata("COD_ESTAB"),
+                'pass' =>  $pass,
+                'ind_tipo_biopsia' => $ind_tipo_biopsia,
+                'id_biopsia' =>  $id_biopsia,
+                'new_num_interno' => $new_num_interno,
+                'ind_cambio' => $ind_cambio,
+            ]);
+            }
+            if (count($return_data['data_bd'][':C_STATUS'])>0){
+                $status = false;
+                $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+            }
+        } else {
+            $status = false;
+            $txt_error = 'Error en la firma simple';
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'return'                    =>  $return_data,
-            'txt_error'                 =>  $txt_error,
-            'nun_biopsia'               =>  $new_num_interno,
-            'ind_cambio'                =>  $ind_cambio,
+            'status' => $status,
+            'return' => $return_data,
+            'txt_error' => $txt_error,
+            'nun_biopsia' => $new_num_interno,
+            'ind_cambio' => $ind_cambio,
         )));
     }
     

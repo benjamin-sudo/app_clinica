@@ -213,69 +213,69 @@ class ssan_libro_notificacancer_model extends CI_Model {
     
     public function update_numero_biopsias($DATA){
         $this->db->trans_start();
-        $param          =   array(
-                                #DATA IN
-                                array( 
-                                    'name'      =>  ':V_COD_EMPRESA',
-                                    'value'     =>  $DATA["cod_empresa"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_PASS',
-                                    'value'     =>  $DATA["pass"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_IND_TIPO_BIOPSIA',
-                                    'value'     =>  $DATA["ind_tipo_biopsia"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_ID_BIOPSIA',
-                                    'value'     =>  $DATA["id_biopsia"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_NEW_NUMERO',
-                                    'value'     =>  $DATA["new_num_interno"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_SESSION',
-                                    'value'     =>  explode("-",$this->session->userdata("USERNAME"))[0],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_IND_CAMBIO',
-                                    'value'     =>  $DATA["ind_cambio"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                #CURSORES OUT
-                                array( 
-                                    'name'      =>  ':C_HISTO_LOGS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_STATUS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                            );
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','UPDATE_NUMERO_BIOPSIA',$param);
+        $param = array(
+                        #DATA IN
+                        array( 
+                            'name'      =>  ':V_COD_EMPRESA',
+                            'value'     =>  $DATA["cod_empresa"],
+                            'length'    =>  20,
+                            'type'      =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name'      =>  ':V_PASS',
+                            'value'     =>  $DATA["pass"],
+                            'length'    =>  20,
+                            'type'      =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name'      =>  ':V_IND_TIPO_BIOPSIA',
+                            'value'     =>  $DATA["ind_tipo_biopsia"],
+                            'length'    =>  20,
+                            'type'      =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name'      =>  ':V_ID_BIOPSIA',
+                            'value'     =>  $DATA["id_biopsia"],
+                            'length'    =>  20,
+                            'type'      =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name'      =>  ':V_NEW_NUMERO',
+                            'value'     =>  $DATA["new_num_interno"],
+                            'length'    =>  20,
+                            'type'      =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name'      =>  ':V_SESSION',
+                            'value'     =>  explode("-",$this->session->userdata("USERNAME"))[0],
+                            'length'    =>  20,
+                            'type'      =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name'      =>  ':V_IND_CAMBIO',
+                            'value'     =>  $DATA["ind_cambio"],
+                            'length'    =>  20,
+                            'type'      =>  SQLT_CHR 
+                        ),
+                        #CURSORES OUT
+                        array( 
+                            'name'      =>  ':C_HISTO_LOGS',
+                            'value'     =>  $this->db->get_cursor(),
+                            'length'    =>  -1,
+                            'type'      =>  OCI_B_CURSOR
+                        ),
+                        array( 
+                            'name'      =>  ':C_STATUS',
+                            'value'     =>  $this->db->get_cursor(),
+                            'length'    =>  -1,
+                            'type'      =>  OCI_B_CURSOR
+                        ),
+                    );
+        $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','UPDATE_NUMERO_BIOPSIA',$param);
         $this->db->trans_complete();
         return array(
-            'status'                            =>  true,
-            'data_bd'                           =>  $result,
+            'status' =>  true,
+            'data_bd' =>  $result,
         );
     }
     
