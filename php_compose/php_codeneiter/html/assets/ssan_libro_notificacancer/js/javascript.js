@@ -398,29 +398,28 @@ function busqueda_numero_disponible(tipo_biopsia){
 
 //SOLO BUSCA UN SEGUNDO CORRELATIVO
 function busqueda_numero_disponible_citologia(tipo_biopsia){
-    c$('#loadFade').modal('show'); 
+    $('#loadFade').modal('show'); 
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("xhr->",xhr);
-                                                },
-        data                :                   {   tipo_biopsia : tipo_biopsia },
-        error		    :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre");
-                                                    $('#loadFade').modal('hide');  
-                                                },
-        success             :   function(aData) { 
-                                                    console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
-                                                    $("#num_interno_cito").val('');
-                                                    $('#loadFade').modal('hide'); 
-                                                    var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
-                                                    showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
-                                                    $("#num_interno_cito").val(num_last);
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
+        dataType : "json",
+        beforeSend : function(xhr) {   
+                                        console.log("xhr->",xhr);
+                                    },
+        data :                   {   tipo_biopsia : tipo_biopsia },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre");
+                                    $('#loadFade').modal('hide');  
+                                },
+        success : function(aData) { 
+                                    console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
+                                    $("#num_interno_cito").val('');
+                                    $('#loadFade').modal('hide'); 
+                                    var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
+                                    showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
+                                    $("#num_interno_cito").val(num_last);
+                                }, 
     });
 }
 
@@ -890,15 +889,9 @@ function elimina_biopsia_desde_anatomia(id_biopsia){
 }
 
 function js_edicion_fecha_informe(id_biopsia){
-    var fecha_solicitud   =   $("#fecha_solicitud").val();
-    var hora_solicitud    =   $("#hora_solicitud").val();
-    /*
-    console.log("    -----------------------------------------------------  ");
-    console.log("    id_biopsia              ->  ",id_biopsia,"             ");
-    console.log("    new_fecha_diagnostico   ->  ",fecha_solicitud,"        ");
-    console.log("    new_hora_diagnostico    ->  ",hora_solicitud,"         ");
-    console.log("    -----------------------------------------------------  ");
-    */
+    var fecha_solicitud = $("#fecha_solicitud").val();
+    var hora_solicitud = $("#hora_solicitud").val();
+   
     if (fecha_solicitud == '' || hora_solicitud == ''){
        jAlert("Fecha/hora vac&iacute;a","Clinica Libre");
        return false;
@@ -930,7 +923,6 @@ function js_edicion_fecha_informe(id_biopsia){
                                                             $('#loadFade').modal('hide');
                                                             console.log("record_fecha_toma_muestra -> ",aData,"  <-  ");
                                                             if (aData.status){
-                                                                //jError("Exito","Clinica Libre");
                                                                 showNotification('top','center','Se ha modificado fecha',1,'fa fa-info');
                                                                 $('#modal_edicion_numero_biopsia').modal('hide');
                                                                 update_etapaanalitica_cancer_edicion();

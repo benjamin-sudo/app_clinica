@@ -65,41 +65,40 @@ class Ssan_libro_notificacancer extends CI_Controller {
    
     public function get_busqueda_solicitudes_ap_edicion(){
         if(!$this->input->is_ajax_request()){  show_404(); }
-        $busq                           =   $this->input->post('tipo_busqueda');
-        $txt_busqueda                   =   $this->input->post('phrase');
-        $ind_template                   =   $this->input->post('template');
-        $arr_data_out                   =   [];
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
-                                                'arr_ids_anatomia'  =>  '',
-                                                'txt_bus'           =>  $txt_busqueda,
-                                                'busq'              =>  $busq,
-                                                'cod_empresa'       =>  $this->session->userdata("COD_ESTAB"),
-                                                'ind_template'      =>  $ind_template,
-                                            ));
-
-        //var_dump($return_data["C_HISTORIAL_M_BUSQUEDA"]);
+        $busq = $this->input->post('tipo_busqueda');
+        $txt_busqueda = $this->input->post('phrase');
+        $ind_template = $this->input->post('template');
+        $arr_data_out = [];
+        $return_data = $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
+            'arr_ids_anatomia' => '',
+            'txt_bus' => $txt_busqueda,
+            'busq' => $busq,
+            'cod_empresa' => $this->session->userdata("COD_ESTAB"),
+            'ind_template' => $ind_template,
+        ));
+        #var_dump($return_data["C_HISTORIAL_M_BUSQUEDA"]);
         if(count($return_data['C_LISTA_ANATOMIA_BUS'])>0){
-            $aux                            =   0;
+            $aux = 0;
             foreach ($return_data['C_LISTA_ANATOMIA_BUS'] as $i => $row){
-                $arr_n_biosia               =  [];
-                $row['NUM_INTERNO_AP']      == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_INTERNO_AP']."-".$row['YEAR_TOMA_MUESTRA']);
-                $row['NUM_CO_CITOLOGIA']    == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_CITOLOGIA']."-".$row['YEAR_TOMA_MUESTRA']);
-                $row['NUM_CO_PAP']          == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_PAP']."-".$row['YEAR_TOMA_MUESTRA']);
+                $arr_n_biosia = [];
+                $row['NUM_INTERNO_AP'] == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_INTERNO_AP']."-".$row['YEAR_TOMA_MUESTRA']);
+                $row['NUM_CO_CITOLOGIA'] == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_CITOLOGIA']."-".$row['YEAR_TOMA_MUESTRA']);
+                $row['NUM_CO_PAP'] == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_PAP']."-".$row['YEAR_TOMA_MUESTRA']);
                 $aux++;
-                $txt_nbiopsias              =   implode(",",$arr_n_biosia);
-                $txt_solicitud_editada      =   $row['IND_SOLICITUD_EDITADA'] == '1' ? '<font size=2 color="#007bff"><b>EDITADA</b></font>' : '<font size=2 color="#ffc107"><b>NO EDITADA</b></font>';
+                $txt_nbiopsias = implode(",",$arr_n_biosia);
+                $txt_solicitud_editada = $row['IND_SOLICITUD_EDITADA'] == '1' ? '<font size=2 color="#007bff"><b>EDITADA</b></font>' : '<font size=2 color="#ffc107"><b>NO EDITADA</b></font>';
                 array_push($arr_data_out,array(
-                    'html'              =>  '',
-                    'id_anatomia'       =>  $row['ID_ANATOMIA'],
-                    'name'              =>  $row['TXTPRIMERNOMBREAPELLIDO'],
-                    'type'              =>  '<br>'.$row['TIPO_DE_BIOPSIA'].'<br>'.$txt_nbiopsias .'<br>'.$txt_solicitud_editada,
-                    'tipo_biosia'       =>  $txt_nbiopsias,
-                    'icon'              =>  '<i class="fas fa-edit"></i>',
-                    '_busqueda'         =>  $busq,
-                    'n_muestras'        =>  $row['N_MUESTRAS_TOTAL'],
-                    'not_cancer'        =>  $row['NUM_NOF_CANCER'],
-                    'cod_establref'     =>  $row['COD_ESTABLREF'],
-                    'ind_notificado'    =>  $row['TXT_ESTADO_CANCER'],
+                    'html' => '',
+                    'id_anatomia' => $row['ID_ANATOMIA'],
+                    'name' =>  $row['TXTPRIMERNOMBREAPELLIDO'],
+                    'type' =>  '<br>'.$row['TIPO_DE_BIOPSIA'].'<br>'.$txt_nbiopsias .'<br>'.$txt_solicitud_editada,
+                    'tipo_biosia' =>  $txt_nbiopsias,
+                    'icon' => '<i class="fas fa-edit"></i>',
+                    '_busqueda' => $busq,
+                    'n_muestras' => $row['N_MUESTRAS_TOTAL'],
+                    'not_cancer' => $row['NUM_NOF_CANCER'],
+                    'cod_establref' => $row['COD_ESTABLREF'],
+                    'ind_notificado' => $row['TXT_ESTADO_CANCER'],
                 ));
             }
         }
@@ -278,6 +277,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         if(!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
         $txt_error = '';
+        $return_data = [];
         $ind_tipo_biopsia = $this->input->post('ind_tipo_biopsia');
         $id_biopsia = $this->input->post('id_biopsia');
         $new_num_interno = $this->input->post('new_num_interno');
@@ -293,7 +293,6 @@ class Ssan_libro_notificacancer extends CI_Controller {
                 'new_num_interno' => $new_num_interno,
                 'ind_cambio' => $ind_cambio,
             ]);
-            }
             if (count($return_data['data_bd'][':C_STATUS'])>0){
                 $status = false;
                 $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
@@ -403,51 +402,63 @@ class Ssan_libro_notificacancer extends CI_Controller {
 
     public function record_elimina_definitivamente(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $txt_error                      =   '';
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_record_elimina_definitivamente(array(
-            'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
-            'constrasena'               =>  $this->input->post('constrasena'),
-            'id_biopsia'                =>  $this->input->post('id_biopsia'),
-            'new_fecha_diagnostico'     =>  $this->input->post('new_fecha_diagnostico'), 
-            'new_hora_diagnostico'      =>  $this->input->post('new_hora_diagnostico'),  
-        ));
-        if(count($return_data['data_bd'][':C_STATUS'])>0){
-            $status                     =   false;
-            $txt_error                  =   $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+        $status = true;
+        $txt_error = '';
+        $return_data = [];
+        $pass = $this->input->post('constrasena');
+        $arr_user = $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($pass);
+        if (count($arr_user)>0){
+            $return_data = $this->Ssan_libro_notificacancer_model->model_record_elimina_definitivamente(array(
+                'cod_empresa' => $this->session->userdata("COD_ESTAB"),
+                'constrasena' => $this->input->post('constrasena'),
+                'id_biopsia' => $this->input->post('id_biopsia'),
+                'new_fecha_diagnostico' => $this->input->post('new_fecha_diagnostico'), 
+                'new_hora_diagnostico' => $this->input->post('new_hora_diagnostico'),  
+            ));
+            if(count($return_data['data_bd'][':C_STATUS'])>0){
+                $status = false;
+                $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+            }
+        } else {
+            $status = false;
+            $txt_error = 'Error en la firma &uacute;nica digital';
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'return'                    =>  $return_data,
-            'txt_error'                 =>  $txt_error,
+            'status' =>  $status,
+            'return' =>  $return_data,
+            'txt_error' =>  $txt_error,
         )));
     }
 
     public function record_fecha_toma_muestra(){
-        if(!$this->input->is_ajax_request()){   show_404();  }
-        $status                         =   true;
-        $txt_error                      =   '';
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_record_fecha_toma_muestra(array(
-            'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
-            'constrasena'               =>  $this->input->post('constrasena'),
-            'id_biopsia'                =>  $this->input->post('id_biopsia'),
-            'fecha_solicitud'           =>  $this->input->post('fecha_solicitud'), 
-            'hora_solicitud'            =>  $this->input->post('hora_solicitud'),  
-        ));
-        if(count($return_data['data_bd'][':C_STATUS'])>0){
-            $status                     =   false;
-            $txt_error                  =   $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $status = true;
+        $txt_error = '';
+        $return_data = [];
+        $password = $this->input->post('constrasena');
+        $arr_user = $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($password);
+        if (count($arr_user)>0){
+            $return_data = $this->Ssan_libro_notificacancer_model->model_record_fecha_toma_muestra(array(
+                'cod_empresa' => $this->session->userdata("COD_ESTAB"),
+                'constrasena' => $password,
+                'id_biopsia' => $this->input->post('id_biopsia'),
+                'fecha_solicitud' => $this->input->post('fecha_solicitud'), 
+                'hora_solicitud' => $this->input->post('hora_solicitud'),  
+            ));
+            if(count($return_data['data_bd'][':C_STATUS'])>0){
+                $status = false;
+                $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+            }
+        } else {
+            $status = false;
+            $txt_error = 'Error en la firme &uacute;nica digital';
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'return'                    =>  $return_data,
-            'txt_error'                 =>  $txt_error,
+            'status' => $status,
+            'return' => $return_data,
+            'txt_error' => $txt_error,
         )));
     }    
-
-
-    
-
 
 }
 ?>

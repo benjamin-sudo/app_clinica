@@ -571,4 +571,5 @@ class ssan_libro_notificacancer_model extends CI_Model {
             'data_bd'                           =>  $result,
         );
     }
+
 }
