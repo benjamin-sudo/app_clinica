@@ -74,7 +74,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
-      <span class="brand-text font-weight-light">CLINICA LIBRE</span>
+      <span class="brand-text font-weight-light">Anatom&iacute;a cl&iacute;nica</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -84,7 +84,7 @@
           <img src="assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Nombre Establecimiento</a>
+          <a href="#" class="d-block">Clinica&nbsp;Anatomia</a>
         </div>
       </div>
       <!-- Sidebar Menu -->
