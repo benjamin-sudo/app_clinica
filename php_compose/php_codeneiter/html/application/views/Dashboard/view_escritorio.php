@@ -40,7 +40,6 @@
     .text-center              { text-align: center;  }
     .btn-warning              { color: white !important; }
   </style>
-
 </head>
 <body data-scrollbar-auto-hide="n">
 <!-- Site wrapper -->
@@ -81,7 +80,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="assets/dist/img/anatomia/logo.webp" class="img-circle elevation-2" alt="Imagen Anatomia Patologica">
         </div>
         <div class="info">
           <a href="#" class="d-block">Clinica&nbsp;Anatomia</a>
