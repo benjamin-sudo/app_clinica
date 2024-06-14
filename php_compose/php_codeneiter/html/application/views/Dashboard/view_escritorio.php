@@ -35,8 +35,8 @@
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
   <style>
-    #loadFade .modal-content { background-color: #fff;     }
-    #loadFade .modal-body { text-align: center;  min-height: 100px;  max-height:200px }
+    #loadFade .modal-content { background-color: #fff; }
+    #loadFade .modal-body { text-align: center; min-height: 100px; max-height:200px }
     .nav-link.activo { }
     .text-center { text-align: center;  }
     .btn-warning { color: white !important; }

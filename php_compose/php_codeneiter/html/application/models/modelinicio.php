@@ -58,6 +58,7 @@ class modelinicio extends CI_Model {
                         m.MENP_FRAME = 3 AND 
                         m.MENP_IDPADRE = 0
                     ";
+        #var_dump($sql);
         $menuData = $this->db->query($sql)->result_array();
         $menu = [];
         if(count($menuData)>0){
@@ -84,6 +85,9 @@ class modelinicio extends CI_Model {
             }
         }
         return $menu;
+
+
+
         /*
         $sql_permisos    = "
                             SELECT 

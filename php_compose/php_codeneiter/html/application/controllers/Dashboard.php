@@ -5,10 +5,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Dashboard extends CI_Controller {
 
     function __construct(){
-        parent::__construct();              # Primero, llama al constructor del padre.
-        $this->load->library('session');    # Después, carga las bibliotecas y otros recursos.
-        $this->load->helper('url');         #
-        $this->load->model('modelinicio');  # Consultas MYSQL
+        parent::__construct(); # Primero, llama al constructor del padre.
+        $this->load->library('session'); # Después, carga las bibliotecas y otros recursos.
+        $this->load->helper('url'); #
+        $this->load->model('modelinicio'); # Consultas MYSQL
     }
 
     public function index(){
@@ -41,29 +41,29 @@ class Dashboard extends CI_Controller {
 
     public function solicitudNuevaFirma() {
         if(!$this->input->is_ajax_request()){ show_404(); return; }
-        $html           =   ''; 
-        $html_codigo    =   '';
-        $status         =   true; 
-        $firma          =   $this->input->post('firma');
-        $username       =   $this->session->userdata('USERNAME');
-        $fechaAhora     =   $this->sumarMinutosFecha(date('Y-m-d H:i:s'),5);
-        $datetime       =   strtotime($fechaAhora);
-        $data_user      =   $this->modelinicio->model_consultaporusuario($username);
+        $html = ''; 
+        $html_codigo = '';
+        $status = true; 
+        $firma = $this->input->post('firma');
+        $username = $this->session->userdata('USERNAME');
+        $fechaAhora = $this->sumarMinutosFecha(date('Y-m-d H:i:s'),5);
+        $datetime = strtotime($fechaAhora);
+        $data_user = $this->modelinicio->model_consultaporusuario($username);
         if(count($data_user)>0){
-            $userEmail      =   $data_user[0]['EMAIL'];
-            $subject        =   'CONFIGURACIÓN FIRMA UNICA';
+            $userEmail = $data_user[0]['EMAIL'];
+            $subject = 'CONFIGURACIÓN FIRMA UNICA';
             $config = [
-                'smtp_user'     =>  'clinicalibrechile@gmail.com',
-                'smtp_pass'     =>  'hdmbkfrxxrleunqu',
-                'protocol'      =>  'smtp',
-                'smtp_host'     =>  'smtp.gmail.com',
-                #'smtp_port'    =>  465,
-                #'smtp_crypto'  =>  'ssl', 
-                'smtp_port'     =>  587,
-                'smtp_crypto'   =>  'tls', 
-                'mailtype'      =>  'html',
-                'starttls'      =>  true,
-                'newline'       =>  "\r\n",
+                'smtp_user' => 'clinicalibrechile@gmail.com',
+                'smtp_pass' => 'hdmbkfrxxrleunqu',
+                'protocol' => 'smtp',
+                'smtp_host' => 'smtp.gmail.com',
+                #'smtp_port' =>  465,
+                #'smtp_crypto' =>  'ssl', 
+                'smtp_port' => 587,
+                'smtp_crypto' => 'tls', 
+                'mailtype' => 'html',
+                'starttls' => true,
+                'newline' => "\r\n",
             ];
             $this->load->library('email', $config);
             $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
