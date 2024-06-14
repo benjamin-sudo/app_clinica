@@ -46,7 +46,7 @@ class Ssan_libro_edicionsolicitudbiopsia_model extends CI_Model {
         $this->db->trans_start();
         $this->db->where('ID_SOLICITUD_HISTO',$DATA["id_anatomia"]);
         $this->db->update($this->pabellon.'.PB_SOLICITUD_HISTO',array(
-            "DATE_MACROSCOPICA"     =>  "TO_DATE('".$DATA["v_date_fecha"].":00','DD-MM-YYYY hh24:mi:ss')",
+            "DATE_MACROSCOPIA"      =>  "TO_DATE('".$DATA["v_date_fecha"].":00','DD-MM-YYYY hh24:mi:ss')",
             "LAST_USR_AUDITA"       =>  $DATA["session"],
             "LAST_DATE_AUDITA"      =>  'SYSDATE',
             "IND_SOLICITUD_EDITADA" =>  "1"

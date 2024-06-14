@@ -692,43 +692,34 @@ function listado_notifica_cancer(ind_year){
 //new
 //solo en estado:8
 function js_edita_fecha_notificacion(ind_opcion,id_biopsia){
-    console.log("tipo_biopsia           ->  ",id_biopsia);
     var arr_info                        =   $("#biopsia_"+id_biopsia).data('info');
-    console.log("   ----------------------------------------------------------------      ");
-    console.log("   arr_info            ->  ",arr_info);
-    //
-//console.log("TXT_FECHA_DIAGNOSTICO  ->  ",arr_info.TXT_FECHA_DIAGNOSTICO);
-    //console.log("TXT_HORA_DIAGNOSTICO   ->  ",arr_info.TXT_HORA_DIAGNOSTICO);
-    //return false;
-    
-    
+    $('#loadFade').modal('show'); 
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_notificacancer/load_edicion_fechas",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("xhr->",xhr);
-                                                },
-        data                :                   {   
-                                                    id_biopsia              :   id_biopsia,
-                                                    ind_opcion              :   ind_opcion,
-                                                    arr_info                :   arr_info,
-                                                    txt_fecha_diag          :   arr_info.TXT_FECHA_DIAGNOSTICO,
-                                                    txt_hora_diagnostico    :   arr_info.TXT_HORA_DIAGNOSTICO,
-                                                },
-        error		    :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                },
-        success             :   function(aData) { 
-                                                    console.log("load_edicion_fechas citologia -> ",aData,"  <-  ");
-                                                    $("#html_modifica_fechas").html(aData.html);
-                                                    $("#modal_modifica_fechas").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_notificacancer/load_edicion_fechas",
+        dataType :   "json",
+        beforeSend :   function(xhr) {  console.log("xhr->",xhr);   },
+        data : {   
+                                    id_biopsia : id_biopsia,
+                                    ind_opcion : ind_opcion,
+                                    arr_info : arr_info,
+                                    txt_fecha_diag : arr_info.TXT_FECHA_DIAGNOSTICO,
+                                    txt_hora_diagnostico : arr_info.TXT_HORA_DIAGNOSTICO,
+                                },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    console.log(errro.responseText);   
+                                    $('#loadFade').modal('hide');  
+                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                },
+        success : function(aData) { 
+                                        console.log("load_edicion_fechas citologia -> ",aData,"  <-  ");
+                                        $('#loadFade').modal('hide'); 
+                                        $("#html_modifica_fechas").html(aData.html);
+                                        $("#modal_modifica_fechas").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    }, 
     });
 }
-
 
 function js_edita_fecha_emision_informe(id_biopsia){
    var new_fecha_diagnostico                =   $("#new_fecha_diagnostico").val();
@@ -752,24 +743,22 @@ function js_edita_fecha_emision_informe(id_biopsia){
                                                             console.log("xhr->",xhr);
                                                         },
                 data                :                   {   
-                                                            constrasena             :   r,
-                                                            id_biopsia              :   id_biopsia,
-                                                            ind_opcion              :   0,
-                                                            new_fecha_diagnostico   :   new_fecha_diagnostico,
-                                                            new_hora_diagnostico    :   new_hora_diagnostico
+                                                            constrasena : r,
+                                                            id_biopsia : id_biopsia,
+                                                            ind_opcion : 0,
+                                                            new_fecha_diagnostico : new_fecha_diagnostico,
+                                                            new_hora_diagnostico : new_hora_diagnostico
                                                         },
                 error		    :   function(errro) { 
                                                             console.log(errro);  
-                                                            console.log(errro.responseText);    
                                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                             $('#loadFade').modal('hide');
                                                         },
                 success             :   function(aData) { 
                                                             $('#loadFade').modal('hide');
-                                                            console.log("lrecord_fecha_diagnostico -> ",aData,"  <-  ");
+                                                            //console.log("lrecord_fecha_diagnostico -> ",aData,"  <-  ");
                                                             if (aData.status){
-                                                                //jError("Exito","Clinica Libre");
-                                                                showNotification('top','center','Se ha modificado la fecga de diagnostico',1,'fa fa-info');
+                                                                showNotification('top','center','Se ha modificado la fecha de diagnostico',1,'fa fa-info');
                                                                 $('#modal_modifica_fechas').modal('hide');
                                                                 update_etapaanalitica_cancer_edicion();
                                                             } else {
@@ -940,39 +929,39 @@ function js_edicion_fecha_informe(id_biopsia){
 //24.05.2024
 function js_edita_macrocopica(id_biopsia){
     $.ajax({ 
-        type		:   "POST",
-        url 		:   "ssan_libro_edicionsolicitudbiopsia/html_edicion_macrocopica",
-        dataType    :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                    console.log(xhr);
-                                                    $('#loadFade').modal('show');
-                                                },
-        data 		:                           {  
-                                                    id_biopsia      :   id_biopsia,
-                                                },
-        error		:   function(errro)         { 
-                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                    $("#protocoloPabellon").css("z-index","1500"); 
-                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide');
-                                                },
-        success		:   function(aData)         {   
-                                                    $('#loadFade').modal('hide');
-                                                    console.error("aData -> ",aData);
-                                                    $("#new_fecha_macrocopica").val('');
-                                                    $("#new_hora_macrocopica").val('');
-                                                    $("#btn_update_macrocopica").attr('onclick','js_update_macrocopica('+id_biopsia+')');
-                                                    $("#modal_edita_macro").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_edicionsolicitudbiopsia/html_edicion_macrocopica",
+        dataType : "json",
+        beforeSend	: function(xhr) {   
+                                        console.log(xhr);
+                                        $('#loadFade').modal('show');
+                                    },
+        data :   {  
+                            id_biopsia      :   id_biopsia,
+                        },
+        error : function(errro) { 
+                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                    $("#protocoloPabellon").css("z-index","1500"); 
+                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    $('#loadFade').modal('hide');
+                                },
+        success : function(aData)   {   
+                                        $('#loadFade').modal('hide');
+                                        console.error("aData -> ",aData);
+                                        $("#new_fecha_macrocopica").val('');
+                                        $("#new_hora_macrocopica").val('');
+                                        $("#btn_update_macrocopica").attr('onclick','js_update_macrocopica('+id_biopsia+')');
+                                        $("#modal_edita_macro").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    }, 
     });
 }
 
 function js_update_macrocopica(id_biopsia){
     let error = [];
-    let v_date_fecha                    =   $("#new_fecha_macrocopica").val();
-    let v_hora_macrocopica              =   $("#new_hora_macrocopica").val();
-    if (v_date_fecha == '' )            {   error.push("-   Falta fecha");  }
-    if (v_hora_macrocopica == '' )      {   error.push("-   Falta hora");   }
+    let v_date_fecha = $("#new_fecha_macrocopica").val();
+    let v_hora_macrocopica = $("#new_hora_macrocopica").val();
+    if (v_date_fecha == '' ) { error.push("-   Falta fecha");  }
+    if (v_hora_macrocopica == '' ) { error.push("-   Falta hora");   }
     if (error.length  === 0 ){
         jPrompt('Con esta acci&oacute;n se proceder&aacute; editar el tiempo de toma sala de macrosocopia. seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r){

@@ -62,7 +62,5 @@ class Ssan_libro_edicionsolicitudbiopsia extends CI_Controller {
         )));
     }
 
-
-
 }
 ?>

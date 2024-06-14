@@ -7,7 +7,7 @@
             <div class="grid_fecha_hora1">
                 <div class="input-group row_calendar" style="width: 125px;" id="fec_ingresopab">
                     <input type="text" class="form-control input-sm grupo_time_pab" id="new_fecha_diagnostico" name="new_fecha_diagnostico"  value="<?php echo $txt_fecha_diag;?>">
-                    <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                    <span class="input-group-addon" style="cursor:pointer; padding:4px;margin-left: 3px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                 </div>
             </div>
             <div class="grid_fecha_hora2">
@@ -31,7 +31,7 @@
             <div class="grid_fecha_hora1">
                 <div class="input-group row_calendar" style="width: 125px;" id="fec_ingresopab">
                     <input type="text" class="form-control input-sm grupo_time_pab" id="new_fecha_notifica_cancer" name="new_fecha_notifica_cancer"  value="<?php echo $arr_info["TXT_FECHA_CANCER"];?>">
-                    <span class="input-group-addon" style="cursor:pointer;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
+                    <span class="input-group-addon" style="cursor:pointer; padding:4px;margin-left: 3px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                 </div>
             </div>
             <div class="grid_fecha_hora2">

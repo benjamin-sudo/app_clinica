@@ -97,20 +97,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_modifica_fechas" style=" z-index: 1602;overflow-y: scroll;" data-backdrop="static">  
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title" style="color:#e34f49"><b>EDICI&Oacute;N DE FECHAS</b></h3>
-            </div>
-            <div class="modal-body" id="html_modifica_fechas"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-fill btn-sm btn-danger "  data-dismiss="modal">CIERRA VENTANA</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <section>
 
@@ -118,7 +105,7 @@
         <div class="modal-dialog">
             <div class="modal-content"> 
                 <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;CAMBIO DE FECHA DE MACROSCOPIA&nbsp;</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_edita_macro">
@@ -170,6 +157,23 @@
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_edicion_numero_biopsia"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_modifica_fechas">
+        <div class="modal-dialog">
+            <div class="modal-content"> 
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;EDICI&Oacute;N DE FECHAS&nbsp;</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_modifica_fechas"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
                         <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;

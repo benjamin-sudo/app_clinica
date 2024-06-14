@@ -337,66 +337,74 @@ class Ssan_libro_notificacancer extends CI_Controller {
     
     public function load_edicion_fechas(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $id_biopsia                     =   $this->input->post('id_biopsia');
-        $ind_opcion                     =   $this->input->post('ind_opcion');
-        $txt_fecha_diag                 =   $this->input->post('txt_fecha_diag');
-        $txt_hora_diagnostico           =   $this->input->post('txt_hora_diagnostico');
-        $arr_info                       =   $this->input->post('arr_info');
-        $v_html                         =   $this->load->view("ssan_libro_notificacancer/html_edicion_fecha",array(
-                                                'id_biopsia'            =>  $id_biopsia,
-                                                'ind_opcion'            =>  $ind_opcion,
-                                                'txt_fecha_diag'        =>  $txt_fecha_diag,
-                                                'txt_hora_diagnostico'  =>  $txt_hora_diagnostico,
-                                                'arr_info'              =>  $arr_info,
-                                            ),true);
+        $status = true;
+        $id_biopsia = $this->input->post('id_biopsia');
+        $ind_opcion = $this->input->post('ind_opcion');
+        $txt_fecha_diag = $this->input->post('txt_fecha_diag');
+        $txt_hora_diagnostico = $this->input->post('txt_hora_diagnostico');
+        $arr_info = $this->input->post('arr_info');
+        $v_html = $this->load->view("ssan_libro_notificacancer/html_edicion_fecha",array(
+            'id_biopsia' => $id_biopsia,
+            'ind_opcion' => $ind_opcion,
+            'txt_fecha_diag' => $txt_fecha_diag,
+            'txt_hora_diagnostico' => $txt_hora_diagnostico,
+            'arr_info' => $arr_info,
+        ),true);
         $this->output->set_output(json_encode(array(
-            'html'                      =>  $v_html,
-            'status'                    =>  $status,
+            'html' =>  $v_html,
+            'status' =>  $status,
         )));
     }
     
     public function record_fecha_diagnostico(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $txt_error                      =   '';
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_update_fecha_diagnostico(array(
-            'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
-            'constrasena'               =>  $this->input->post('constrasena'),
-            'id_biopsia'                =>  $this->input->post('id_biopsia'),
-            'new_fecha_diagnostico'     =>  $this->input->post('new_fecha_diagnostico'), 
-            'new_hora_diagnostico'      =>  $this->input->post('new_hora_diagnostico'),  
-        ));
-        if(count($return_data['data_bd'][':C_STATUS'])>0){
-            $status                     =   false;
-            $txt_error                  =   $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+        $status =   true;
+        $return_data = [];
+        $txt_error = '';
+        $pass = $this->input->post('constrasena');
+        $arr_user = $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($pass);
+        if (count($arr_user)>0){
+            $return_data = $this->Ssan_libro_notificacancer_model->model_update_fecha_diagnostico(array(
+                'cod_empresa' => $this->session->userdata("COD_ESTAB"),
+                'constrasena' => $this->input->post('constrasena'),
+                'id_biopsia' => $this->input->post('id_biopsia'),
+                'new_fecha_diagnostico' => $this->input->post('new_fecha_diagnostico'), 
+                'new_hora_diagnostico' => $this->input->post('new_hora_diagnostico'),  
+            ));
+            if(count($return_data['data_bd'][':C_STATUS'])>0){
+                $status = false;
+                $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+            }
+        } else {
+            $status = false;
+            $txt_error = 'Error en la clave &uacute;nica';
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'return'                    =>  $return_data,
-            'txt_error'                 =>  $txt_error,
+            'status' => $status,
+            'return' => $return_data,
+            'txt_error' => $txt_error,
         )));
     }
-    
+
     public function record_fecha_notificacancer(){
         if(!$this->input->is_ajax_request()){   show_404();  }
-        $status                         =   true;
-        $txt_error                      =   '';
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->model_update_date_notificacancer(array(
-            'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
-            'constrasena'               =>  $this->input->post('constrasena'),
-            'id_biopsia'                =>  $this->input->post('id_biopsia'),
-            'new_fecha_notifica_cancer' =>  $this->input->post('new_fecha_notifica_cancer'), 
-            'new_hora_notifica_cancer'  =>  $this->input->post('new_hora_notifica_cancer'),  
+        $status = true;
+        $txt_error = '';
+        $return_data = $this->Ssan_libro_notificacancer_model->model_update_date_notificacancer(array(
+            'cod_empresa' =>  $this->session->userdata("COD_ESTAB"),
+            'constrasena' =>  $this->input->post('constrasena'),
+            'id_biopsia' =>  $this->input->post('id_biopsia'),
+            'new_fecha_notifica_cancer' => $this->input->post('new_fecha_notifica_cancer'), 
+            'new_hora_notifica_cancer' => $this->input->post('new_hora_notifica_cancer'),  
         ));
         if(count($return_data['data_bd'][':C_STATUS'])>0){
-            $status                     =   false;
-            $txt_error                  =   $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+            $status =   false;
+            $txt_error =   $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'return'                    =>  $return_data,
-            'txt_error'                 =>  $txt_error,
+            'status' => $status,
+            'return' => $return_data,
+            'txt_error' => $txt_error,
         )));
     }
 
