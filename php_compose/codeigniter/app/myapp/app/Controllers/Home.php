@@ -18,29 +18,61 @@ class Home extends BaseController {
 
     public function administrador(): string {
         if ($this->request->isAJAX()){  }
-        $arr            =   [];
-        $arr            =   $this->usersModel->ini_contendido();
-        $data           =   [
-                                'css'       => ['administrador/css/style.css'],
-                                'js'        => ['administrador/js/javascript.js'],
-                                'respuesta' => $arr 
-                            ];
+        $arr = [];
+        $arr = $this->usersModel->ini_contendido();
+        $data = [
+                    'css' => ['administrador/css/style.css'],
+                    'js' => ['administrador/js/javascript.js'],
+                    'respuesta' => $arr 
+                ];
         return view('administrador',$data);
     }
 
     public function buscaExtArch(){
         if ($this->request->isAJAX()){  }
-        $status         =  true;
-        $rutaactual     =  $this->request->getPost('rutaactual');
-        $aData          =  $this->usersModel->buscaExtArch(array('rutaactual'=>$rutaactual));
+        $status =  true;
+        $rutaactual =  $this->request->getPost('rutaactual');
+        $aData =  $this->usersModel->buscaExtArch(array('rutaactual'=>$rutaactual));
         if (count($aData) >0 ){
-            $status     =  false;
+            $status =  false;
         }
         echo json_encode(array(
             'status' => $status,
-            'aData'  => $aData,
+            'aData' => $aData,
         ));
     }
+    
+    public function arr_login_(){
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+
+
+
+        /*
+        $session = session();
+        $session->set([
+            'username' => '16869726'
+            'isLoggedIn' => true,
+        ]);
+        */
+        //return redirect()->to('administrador');
+        /*
+        $user = $this->usersModel->where('username', $username)->first();
+        if ($user && password_verify($password, $user['password'])) {
+            // Aquí puedes configurar la sesión del usuario
+            $session = session();
+            $session->set([
+                'username' => $user['username'],
+                'isLoggedIn' => true,
+            ]);
+            return redirect()->to('/auth/administrador');
+        } else {
+            // Si la autenticación falla, redirigir al login con un mensaje de error
+            return redirect()->back()->with('error', 'Usuario o contraseña incorrectos');
+        }
+        */
+    }
+
 
     public function grabraExt() {
         if ($this->request->isAJAX()){  }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Iniciar SesiSesi&oacute;n</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +13,6 @@
             align-items: center;
             height: 100vh;
         }
-
         .login-container {
             background-color: #fff;
             padding: 20px;
@@ -21,25 +20,22 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
         }
-
         .login-container h2 {
             text-align: center;
             margin-bottom: 20px;
         }
-
         .login-container label {
             display: block;
             margin-bottom: 5px;
         }
-
         .login-container input[type="text"], .login-container input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 0px;
+            height: 31px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
         .login-container button {
             width: 100%;
             padding: 10px;
@@ -49,19 +45,18 @@
             border-radius: 4px;
             cursor: pointer;
         }
-
-        .login-container button:hover {
-            background-color: #0056b3;
+        .login-container button:hover   {
+            background-color : #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form action="/path/to/your/authentication/endpoint" method="POST">
+        <h2>Iniciar Sesi&oacute;n v2</h2>
+        <form action="<?php base_url('auth/login');?>" method="POST">
             <label for="username">Usuario:</label>
             <input type="text" id="username" name="username" required>
-            <label for="password">Contraseña:</label>
+            <label for="password">Contrase&ntilde;a:</label>
             <input type="password" id="password" name="password" required>
             <button type="submit">Ingresar</button>
         </form>

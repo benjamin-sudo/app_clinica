@@ -68,7 +68,6 @@
     </ul>
   </nav>
   <!-- /.navbar -->
-  
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -97,8 +96,8 @@
                 // Menú principal
                 echo '<li class="nav-item">';
                 echo '<a href="#" class="nav-link">';
-                echo '<i class="nav-icon ' . $mainItem['data']['main_icon'] . '"></i>';
-                echo '<p>' . $mainItem['data']['main_nombre'];
+                echo '<i class="nav-icon ' . $mainItem['data']['MAIN_ICON'] . '"></i>';
+                echo '<p>' . $mainItem['data']['MAIN_NOMBRE'];
                   if (!empty($mainItem['submenus'])) {
                     echo ' <i class="right fa fa-caret-down" aria-hidden="true"></i>';
                   }
@@ -109,9 +108,9 @@
                     echo '<ul class="nav nav-treeview">';
                     foreach ($mainItem['submenus'] as $subId => $subItem) {
                         echo '<li class="nav-item">';
-                        echo '<a href="' . $subItem['data']['sub_ruta'] . '" class="nav-link" id="menu-' . $mainId . '-sub-' . $subId . '">';
+                        echo '<a href="' . $subItem['data']['SUB_RUTA'] . '" class="nav-link" id="menu-' . $mainId . '-sub-' . $subId . '">';
                         echo '<i class="fa fa-folder-open-o"></i> ';
-                        echo '<p>' . $subItem['data']['sub_nombre'];
+                        echo '<p>' . $subItem['data']['SUB_NOMBRE'];
                         if (!empty($subItem['extensions'])) {
                             //echo '<i class="right fas fa-angle-left"></i>';
                         }
@@ -122,9 +121,9 @@
                             echo '<ul class="nav nav-treeview">';
                             foreach ($subItem['extensions'] as $extId => $extItem) {
                               echo '<li class="nav-item">';
-                              echo '<a href="' . $extItem['ext_ruta'] . '" class="nav-link load-in-frame" id="menu-' . $mainId . '-sub-' . $subId . '-ext-' . $extId . '">';
+                              echo '<a href="' . $extItem['EXT_RUTA'] . '" class="nav-link load-in-frame" id="menu-' . $mainId . '-sub-' . $subId . '-ext-' . $extId . '">';
                               echo '<i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;';
-                              echo '<p>' . $extItem['ext_nombre'] . '</p>';
+                              echo '<p>' . $extItem['EXT_NOMBRE'] . '</p>';
                               echo '</a>';
                               echo '</li>';
                           }
@@ -177,9 +176,7 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
   <div id="respuesta"></div>
-
   <script type="text/javascript" src="assets/recursos/bootstrap_5/js/jquery.min.js"></script>
   <!-- jQuery UI - v1.12.0-rc.2  -->
   <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
@@ -252,7 +249,6 @@
         </div>
       </div>
     </div>
-
     <div class="modal fade" id="modal_perfil_usuario">
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
@@ -271,7 +267,6 @@
             </div>
         </div>
     </div>
-
   </section>
   </body>
 </html>

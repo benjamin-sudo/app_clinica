@@ -25,6 +25,7 @@ class Constructor extends CI_Controller {
         $redirect = '';
         $user = $this->modelinicio->login_modelo($user,$password);
         $status = $user['status'];
+        
         if($user['status']){   
             $userL = $user['row'];
             $unique = str_replace('-','', $userL->USERNAME).$this->getRandomCode();

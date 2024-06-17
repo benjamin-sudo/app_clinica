@@ -14,7 +14,8 @@ class Dashboard extends CI_Controller {
     public function index(){
         $MENUARRFR = [];
         if(!$this->session->userdata('ID_UID')){
-            redirect('/'); // Asegúrate de reemplazar 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
+            #Asegúrate de reemplazar 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
+            redirect('/'); 
         }
         $MENUARRFR = $this->session->userdata('MENUARRFR');
         $this->load->view('Dashboard/view_escritorio',['menu'=>$MENUARRFR]);
@@ -57,8 +58,8 @@ class Dashboard extends CI_Controller {
                 'smtp_pass' => 'hdmbkfrxxrleunqu',
                 'protocol' => 'smtp',
                 'smtp_host' => 'smtp.gmail.com',
-                #'smtp_port' =>  465,
-                #'smtp_crypto' =>  'ssl', 
+                #'smtp_port' => 465,
+                #'smtp_crypto' => 'ssl', 
                 'smtp_port' => 587,
                 'smtp_crypto' => 'tls', 
                 'mailtype' => 'html',
