@@ -46,17 +46,17 @@ class modelinicio extends CI_Model {
 
     public function load_menuxuser($ID_UID){
         $sql    =   "SELECT 
-                        m.MENP_ID as main_id, m.MENP_NOMBRE as main_nombre, m.MENP_ESTADO as main_estado, m.MENP_RUTA as main_ruta, m.MENP_IDPADRE as main_idpadre, m.MENP_TIPO as main_tipo, m.MENP_ORDER as main_order, m.MENP_FRAME as main_frame, m.MENP_ICON as main_icon, m.MENP_THEME as main_theme, m.MENP_ISTOKEN as main_istoken, m.MENP_PARAM as main_param,
-                        sm.MENP_ID as sub_id, sm.MENP_NOMBRE as sub_nombre, sm.MENP_ESTADO as sub_estado, sm.MENP_RUTA as sub_ruta, sm.MENP_IDPADRE as sub_idpadre, sm.MENP_TIPO as sub_tipo, sm.MENP_ORDER as sub_order, sm.MENP_FRAME as sub_frame, sm.MENP_ICON as sub_icon, sm.MENP_THEME as sub_theme, sm.MENP_ISTOKEN as sub_istoken, sm.MENP_PARAM as sub_param,
-                        ex.MENP_ID as ext_id, ex.MENP_NOMBRE as ext_nombre, ex.MENP_ESTADO as ext_estado, ex.MENP_RUTA as ext_ruta, ex.MENP_IDPADRE as ext_idpadre, ex.MENP_TIPO as ext_tipo, ex.MENP_ORDER as ext_order, ex.MENP_FRAME as ext_frame, ex.MENP_ICON as ext_icon, ex.MENP_THEME as ext_theme, ex.MENP_ISTOKEN as ext_istoken, ex.MENP_PARAM as ext_param
+                        M.MENP_ID AS MAIN_ID, M.MENP_NOMBRE AS MAIN_NOMBRE, M.MENP_ESTADO AS MAIN_ESTADO, M.MENP_RUTA AS MAIN_RUTA, M.MENP_IDPADRE AS MAIN_IDPADRE, M.MENP_TIPO AS MAIN_TIPO, M.MENP_ORDER AS MAIN_ORDER, M.MENP_FRAME AS MAIN_FRAME, M.MENP_ICON AS MAIN_ICON, M.MENP_THEME AS MAIN_THEME, M.MENP_ISTOKEN AS MAIN_ISTOKEN, M.MENP_PARAM AS MAIN_PARAM,
+                        SM.MENP_ID AS SUB_ID, SM.MENP_NOMBRE AS SUB_NOMBRE, SM.MENP_ESTADO AS SUB_ESTADO, SM.MENP_RUTA AS SUB_RUTA, SM.MENP_IDPADRE AS SUB_IDPADRE, SM.MENP_TIPO AS SUB_TIPO, SM.MENP_ORDER AS SUB_ORDER, SM.MENP_FRAME AS SUB_FRAME, SM.MENP_ICON AS SUB_ICON, SM.MENP_THEME AS SUB_THEME, SM.MENP_ISTOKEN AS SUB_ISTOKEN, SM.MENP_PARAM AS SUB_PARAM,
+                        EX.MENP_ID AS EXT_ID, EX.MENP_NOMBRE AS EXT_NOMBRE, EX.MENP_ESTADO AS EXT_ESTADO, EX.MENP_RUTA AS EXT_RUTA, EX.MENP_IDPADRE AS EXT_IDPADRE, EX.MENP_TIPO AS EXT_TIPO, EX.MENP_ORDER AS EXT_ORDER, EX.MENP_FRAME AS EXT_FRAME, EX.MENP_ICON AS EXT_ICON, EX.MENP_THEME AS EXT_THEME, EX.MENP_ISTOKEN AS EXT_ISTOKEN, EX.MENP_PARAM AS EXT_PARAM
                     FROM 
-                        $own.GU_TMENUPRINCIPAL m 
-                        LEFT JOIN $own.GU_TMENUPRINCIPAL sm ON sm.MENP_IDPADRE = m.MENP_ID AND sm.MENP_FRAME = 3
-                        LEFT JOIN $own.GU_TMENUPRINCIPAL ex ON ex.MENP_IDPADRE = sm.MENP_ID AND ex.MENP_FRAME = 3
+                        $OWN.GU_TMENUPRINCIPAL M 
+                        LEFT JOIN $OWN.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
+                        LEFT JOIN $OWN.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
                     WHERE 
-                        m.MENP_ESTADO = 1 AND 
-                        m.MENP_FRAME = 3 AND 
-                        m.MENP_IDPADRE = 0
+                        M.MENP_ESTADO = 1 AND 
+                        M.MENP_FRAME = 3 AND 
+                        M.MENP_IDPADRE = 0
                     ";
         #var_dump($sql);
         $menuData = $this->db->query($sql)->result_array();
