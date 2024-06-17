@@ -85,21 +85,18 @@ class modelinicio extends CI_Model {
             }
         }
         return $menu;
-
-
-
+    
         /*
-        $sql_permisos    = "
-                            SELECT 
-                            P.ID_UTP,
-                            P.PER_ID,
-                            P.ID_UID,
-                            P.IND_ESTADO 
+        $sql_permisos    = "SELECT 
+                                P.ID_UTP,
+                                P.PER_ID,
+                                P.ID_UID,
+                                P.IND_ESTADO 
                             FROM 
-                            ADMIN.GU_TUSUTIENEPER P 
+                                ADMIN.GU_TUSUTIENEPER P 
                             WHERE 
-                            P.ID_UID IN (10) AND 
-                            P.IND_ESTADO IN (1)
+                                P.ID_UID IN (10) AND 
+                                P.IND_ESTADO IN (1)
                             ";
         */
     }
