@@ -97,20 +97,18 @@ class UserModel extends Model {
 
 
     public function buscaExtArch($aData){
-        $db         = db_connect();
+        $db = db_connect();
         $rutaactual = $aData['rutaactual'];
         return $db->query("select A.MENP_RUTA from ADMIN.GU_TMENUPRINCIPAL A WHERE A.MENP_RUTA='$rutaactual'")->getResult();
     }
 
-   
-
     public function creaPrivilegio($nombre) {
-        $db     =   \Config\Database::connect();
+        $db = \Config\Database::connect();
         $db->transStart();
-        $data   =   [
-                        'PER_NOMBRE' => $nombre,
-                        'PER_ESTADO' => 3
-                    ];
+        $data = [
+                    'PER_NOMBRE' => $nombre,
+                    'PER_ESTADO' => 3
+                ];
         $constructora = $db->table('ADMIN.GU_TPERMISOS');
         $constructora->insert($data);
         $db->transComplete();
@@ -317,10 +315,10 @@ class UserModel extends Model {
                                         A.IND_ESTADO    =   1 ")->getResultArray();
 
         return  [
-                    'id'                =>  $id,
-                    'SQL'               =>  $SQL,
+                    'id' =>  $id,
+                    'SQL' =>  $SQL,
                     'gu_tmenuprincipal' =>  $query,
-                    'arr_permisos'      =>  $query2,
+                    'arr_permisos' =>  $query2,
                 ];                    
     }
 

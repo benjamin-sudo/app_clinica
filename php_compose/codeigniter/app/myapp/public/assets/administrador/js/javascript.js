@@ -615,41 +615,36 @@ function crearPriv() {
         return false;
     }
    $.ajax({ 
-      type          :   "POST",
-      url           :   "Home/creaPrivilegio",
-      dataType      :   "json",
-      beforeSend    :   function(xhr){  $("#loadFade").modal("show"); },
-      data          :   {
-                           "nombre": nombre.toUpperCase() 
-                        },
-      error         :  function(errro)   {  
-                                             console.log(errro);
-                                             jAlert("Error General, Consulte Al Administrador"); 
-                                             $('#loadFade').modal('hide');
-                                          },
-      success        :   function(aData)  {  
-                                             $('#loadFade').modal('hide');
-                                             console.log(aData);
-                                             if(aData.status){
-                                                $("#nomProv").val("");
-                                                jAlert('Privilegio creado correctamente', "Confirmac\u00f3on", function (r) {
-                                                   if (r) { location.reload(true);   }
-                                                });
-                                             }
-                                          }, 
+      type : "POST",
+      url : "Home/creaPrivilegio",
+      dataType : "json",
+      beforeSend : function(xhr){  $("#loadFade").modal("show"); },
+      data :   {
+                    "nombre": nombre.toUpperCase() 
+                },
+      error : function(errro)   {  
+                    console.log(errro);
+                    jAlert("Error General, Consulte Al Administrador"); 
+                    $('#loadFade').modal('hide');
+                },
+      success : function(aData){  
+                                    $('#loadFade').modal('hide');
+                                    console.log(aData);
+                                    if(aData.status){
+                                    $("#nomProv").val("");
+                                    jAlert('Privilegio creado correctamente', "Confirmac\u00f3on", function (r) {
+                                        if (r) { location.reload(true);   }
+                                    });
+                                    }
+                                }, 
    });
 }
 
+
 function js_estado_r(PER_ID){
-    let v_bool  =  document.getElementById(PER_ID).checked?1:0;
-    let b_bool  =  document.getElementById(PER_ID).checked?true:false;
-    /*   
-        console.log("  *******************   js_estado_r **********************");
-        console.log("  bool           :",v_bool);
-        console.log("  b_bool         :",b_bool);
-        console.log("  PER_ID         :",PER_ID);
-    */
-    jConfirm('Se aplicaran cambios', 'Clinica libre ', function(r) {
+    let v_bool = document.getElementById(PER_ID).checked?1:0;
+    let b_bool = document.getElementById(PER_ID).checked?true:false;
+    jConfirm('Se aplicar&aacute;n los cambios', 'Clinica libre ', function(r) {
       if (r){
         $.ajax({ 
             type           : "POST",
@@ -668,7 +663,7 @@ function js_estado_r(PER_ID){
             success        :   function(aData)  {  
                                                    $('#loadFade').modal('hide');
                                                    //console.log("actualiza_privilegio   -> ",aData);
-                                                   jAlert('Se modifico información', "Confirmac\u00f3on", function (r) {
+                                                   jAlert('Se modifico informaci&aacute;n', "Confirmac\u00f3on", function (r) {
                                                       if (r) { location.reload(true);   }
                                                    });
                                                 }, 

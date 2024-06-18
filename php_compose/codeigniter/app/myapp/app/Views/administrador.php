@@ -9,7 +9,7 @@
         </h4>
     </div>
     <div class="grid_cabecera2">
-        <button type="button" class="btn btn-primary"><i class="bi bi-h-square-fill"></i></button>
+        <button type="button" class="btn btn-primary"><i class="fa fa-times" aria-hidden="true"></i> SALIR</button>
     </div>
 </div>
 <div class="content">
@@ -160,24 +160,38 @@
                                         <i class="bi bi-2-circle-fill"></i>
                                     </div>
                                     <div class="grid_li_permisos_4">
+
+                                        <button 
+                                            type    =   "button" 
+                                            class   =   "btn btn-danger"  
+                                            id      =   "<?php echo $row['PER_ID'];?>" 
+                                            onclick =   "js_estado_r(this.id)"
+                                            ><i class   =   "fa fa-times" aria-hidden="true"></i>
+                                        </button>
+
+                                        <!--
                                         <div class="form-check form-switch">
                                             <input 
-                                                type    =   "checkbox" 
-                                                role    =   "switch" 
-                                                class   =   "form-check-input" 
-                                                style   =   "width: 4em;height: 2em;" 
-                                                id      =   "<?php echo $row['PER_ID'];?>"
-                                                onclick =   "js_estado_r(this.id)"
+                                                type = "checkbox" 
+                                                role = "switch" 
+                                                class = "form-check-input" 
+                                                style = "width: 4em;height: 2em;" 
+                                                id = "<?php echo $row['PER_ID'];?>"
+                                                onclick = "js_estado_r(this.id)"
                                                 <?php echo $row['PER_ESTADO']==0?'':'checked';?>>
-                                                <label class="form-check-label" for="sw_<?php echo $row['PER_ID'];?>">
-                                                    <p style="margin-left: 10px;" class="h6">DESACTIVADO/ACTIVADO</p>
-                                                </label>
+                                            <label class="form-check-label" for="sw_<?php echo $row['PER_ID'];?>">
+                                                <p style="margin-left: 10px;" class="h6">DESACTIVADO/ACTIVADO</p>
+                                            </label>
                                         </div>
+                                        -->
+
+
                                     </div>
                                 </div>   
                             </li>
                         <?php } }?>
                     </ul>
+
                 </div>
             </div>
         </div>

@@ -120,5 +120,6 @@
     <script src="<?= 'assets/'.$jsFile; ?>"></script>
   <?php endforeach; ?>
 <?php endif; ?>
+
 </body>
 </html>

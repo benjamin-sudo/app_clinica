@@ -33,9 +33,7 @@ class Home extends BaseController {
         #if($this->request->isAJAX()){ }
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
-
-        var_dump($username);
-
+        #var_dump($username);
         $arr = [];
         $arr = $this->usersModel->ini_contendido();
         $data = [
@@ -63,7 +61,6 @@ class Home extends BaseController {
     public function arr_login_(){
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
-
         //return redirect()->to('administrador');
         /*
         $session = session();
