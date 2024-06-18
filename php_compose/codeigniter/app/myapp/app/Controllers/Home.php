@@ -12,12 +12,16 @@ class Home extends BaseController {
         $this->usersModel = new UserModel();
     }
 
-    public function index(): string {
+    public function index() : string {
         return view('login');
     }
 
-    public function administrador(): string {
-        if ($this->request->isAJAX()){  }
+    public function arr_login()  {
+        return redirect()->to('administrador');
+    }
+
+    public function administrador() {
+        if ($this->request->isAJAX()){ }
         $arr = [];
         $arr = $this->usersModel->ini_contendido();
         $data = [
@@ -41,13 +45,12 @@ class Home extends BaseController {
             'aData' => $aData,
         ));
     }
-    
+
     public function arr_login_(){
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
-
-
+        //return redirect()->to('administrador');
         /*
         $session = session();
         $session->set([
@@ -177,12 +180,12 @@ class Home extends BaseController {
             $files .= $fileJs . '<br>';
         }
         echo json_encode(array(
-            'post'          =>  $_POST,
-            'return'        =>  $aData,
-            'status'        =>  $status,
-            'tip'           =>  $tip,
-            'files'         =>  $files,
-            'parentPath'    =>  $parentPath,
+            'post' => $_POST,
+            'return' => $aData,
+            'status' => $status,
+            'tip' => $tip,
+            'files' => $files,
+            'parentPath' => $parentPath,
         ));
     }
 

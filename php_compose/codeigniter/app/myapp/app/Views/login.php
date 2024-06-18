@@ -52,8 +52,8 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Iniciar Sesi&oacute;n v2</h2>
-        <form action="<?php base_url('auth/login');?>" method="POST">
+    <h2>Iniciar Sesi&oacute;n</h2>
+        <form action="<?= base_url('auth/login');?>" method="POST">
             <label for="username">Usuario:</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Contrase&ntilde;a:</label>

@@ -1,13 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
+
     # Si tu aplicación está en un subdirectorio, cambia la siguiente línea a '/subdirectorio/'
     RewriteBase /
 
     # Evita que se acceda directamente a los directorios
     RewriteCond %{REQUEST_FILENAME} !-d
 
-    # Evita que se acceda directamente a los archivos PHP, excepto index.php
+    # Evita que se acceda directamente a los archivos
     RewriteCond %{REQUEST_FILENAME} !-f
 
     # Redirige todas las solicitudes al index.php de CodeIgniter

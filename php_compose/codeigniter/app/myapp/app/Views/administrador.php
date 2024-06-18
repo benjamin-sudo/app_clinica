@@ -9,8 +9,7 @@
         </h4>
     </div>
     <div class="grid_cabecera2">
-        <i class="bi bi-flower1"></i>
-        <i class="bi bi-h-square-fill"></i>
+        <button type="button" class="btn btn-primary"><i class="bi bi-h-square-fill"></i></button>
     </div>
 </div>
 <div class="content">
@@ -346,8 +345,6 @@
 
 <?php
     #var_dump($respuesta['arr_empresas']);
-?>
-<?php
     /*
     echo current_url();
     echo "<br>";
@@ -368,14 +365,12 @@
     */
     //$parentPath = dirname(APPPATH);
     //echo $parentPath;
-?>
-<?php
-/*
-if (file_exists(APPPATH."Controllers")) {
-    echo "Existe";
-} else {
-    echo "No existe";
-}
-*/
+    
+    #if (file_exists(APPPATH."Controllers")) {
+    #    echo "Existe";
+    #} else {
+    #    echo "No existe";
+    #}
+    
 ?>
 <?= $this->endSection() ?>

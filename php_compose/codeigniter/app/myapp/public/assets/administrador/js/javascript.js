@@ -5,7 +5,6 @@ $(document).ready(function(){
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
-
     $('#run_esissan').Rut({
         on_error    :   function()  { 
                                         console.log($("#run_esissan").val());  
