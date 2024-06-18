@@ -154,7 +154,7 @@ function btn_defaultuser(){
     js_reload_establecimientos();
 }
 
-function grabarUsu() {
+function grabarUsu(){
     var ok              =   0;
     var user            =   $('#run_esissan').val();
     var nombres         =   $('#txtNombres').val();

@@ -45,21 +45,67 @@ class modelinicio extends CI_Model {
     }
 
     public function load_menuxuser($ID_UID){
+
         $sql = "SELECT 
-                    M.MENP_ID AS MAIN_ID, M.MENP_NOMBRE AS MAIN_NOMBRE, M.MENP_ESTADO AS MAIN_ESTADO, M.MENP_RUTA AS MAIN_RUTA, M.MENP_IDPADRE AS MAIN_IDPADRE, M.MENP_TIPO AS MAIN_TIPO, M.MENP_ORDER AS MAIN_ORDER, M.MENP_FRAME AS MAIN_FRAME, M.MENP_ICON AS MAIN_ICON, M.MENP_THEME AS MAIN_THEME, M.MENP_ISTOKEN AS MAIN_ISTOKEN, M.MENP_PARAM AS MAIN_PARAM,
-                    SM.MENP_ID AS SUB_ID, SM.MENP_NOMBRE AS SUB_NOMBRE, SM.MENP_ESTADO AS SUB_ESTADO, SM.MENP_RUTA AS SUB_RUTA, SM.MENP_IDPADRE AS SUB_IDPADRE, SM.MENP_TIPO AS SUB_TIPO, SM.MENP_ORDER AS SUB_ORDER, SM.MENP_FRAME AS SUB_FRAME, SM.MENP_ICON AS SUB_ICON, SM.MENP_THEME AS SUB_THEME, SM.MENP_ISTOKEN AS SUB_ISTOKEN, SM.MENP_PARAM AS SUB_PARAM,
-                    EX.MENP_ID AS EXT_ID, EX.MENP_NOMBRE AS EXT_NOMBRE, EX.MENP_ESTADO AS EXT_ESTADO, EX.MENP_RUTA AS EXT_RUTA, EX.MENP_IDPADRE AS EXT_IDPADRE, EX.MENP_TIPO AS EXT_TIPO, EX.MENP_ORDER AS EXT_ORDER, EX.MENP_FRAME AS EXT_FRAME, EX.MENP_ICON AS EXT_ICON, EX.MENP_THEME AS EXT_THEME, EX.MENP_ISTOKEN AS EXT_ISTOKEN, EX.MENP_PARAM AS EXT_PARAM
+                    M.MENP_ID AS MAIN_ID, 
+                    M.MENP_NOMBRE AS MAIN_NOMBRE, 
+                    M.MENP_ESTADO AS MAIN_ESTADO, 
+                    M.MENP_RUTA AS MAIN_RUTA, 
+                    M.MENP_IDPADRE AS MAIN_IDPADRE, 
+                    M.MENP_TIPO AS MAIN_TIPO, 
+                    M.MENP_ORDER AS MAIN_ORDER, 
+                    M.MENP_FRAME AS MAIN_FRAME, 
+                    M.MENP_ICON AS MAIN_ICON, 
+                    M.MENP_THEME AS MAIN_THEME, 
+                    M.MENP_ISTOKEN AS MAIN_ISTOKEN, 
+                    M.MENP_PARAM AS MAIN_PARAM,
+                    
+                    SM.MENP_ID AS SUB_ID, 
+                    SM.MENP_NOMBRE AS SUB_NOMBRE, 
+                    SM.MENP_ESTADO AS SUB_ESTADO, 
+                    SM.MENP_RUTA AS SUB_RUTA, 
+                    SM.MENP_IDPADRE AS SUB_IDPADRE, 
+                    SM.MENP_TIPO AS SUB_TIPO, 
+                    SM.MENP_ORDER AS SUB_ORDER, 
+                    SM.MENP_FRAME AS SUB_FRAME, 
+                    SM.MENP_ICON AS SUB_ICON, 
+                    SM.MENP_THEME AS SUB_THEME, 
+                    SM.MENP_ISTOKEN AS SUB_ISTOKEN, 
+                    SM.MENP_PARAM AS SUB_PARAM,
+                    
+                    EX.MENP_ID AS EXT_ID, 
+                    EX.MENP_NOMBRE AS EXT_NOMBRE, 
+                    EX.MENP_ESTADO AS EXT_ESTADO, 
+                    EX.MENP_RUTA AS EXT_RUTA, 
+                    EX.MENP_IDPADRE AS EXT_IDPADRE, 
+                    EX.MENP_TIPO AS EXT_TIPO, 
+                    EX.MENP_ORDER AS EXT_ORDER, 
+                    EX.MENP_FRAME AS EXT_FRAME, 
+                    EX.MENP_ICON AS EXT_ICON, 
+                    EX.MENP_THEME AS EXT_THEME, 
+                    EX.MENP_ISTOKEN AS EXT_ISTOKEN, 
+                    EX.MENP_PARAM AS EXT_PARAM
+
                 FROM 
-                        $own.GU_TMENUPRINCIPAL M 
+                
+                    $own.GU_TMENUPRINCIPAL M 
                     LEFT JOIN 
-                        $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
+                    $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
                     LEFT JOIN 
-                        $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
+                    $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
+
                 WHERE 
                     M.MENP_ESTADO = 1 AND 
                     M.MENP_FRAME = 3 AND 
                     M.MENP_IDPADRE = 0 
                 ";
+
+        //GU_TUSUTIENEPER
+
+
+
+        
+
         #var_dump($sql);
         $menuData = $this->db->query($sql)->result_array();
         $menu = [];
@@ -102,6 +148,56 @@ class modelinicio extends CI_Model {
                             ";
         */
     }
+
+    public function busca_menu2($iuid)
+    {
+        $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_IDPADRE , MENP_ICON, MENP_TIPO,MENP_RUTA,MENP_THEME,MENP_ISTOKEN,MENP_PARAM
+                FROM (SELECT UNIQUE D.MENP_ID,
+                                    MENP_ICON,
+                                    D.MENP_NOMBRE,
+                                    D.MENP_RUTA,
+                                    D.MENP_IDPADRE,
+                                    D.MENP_TIPO,
+                                    D.MENP_ESTADO,
+                                    MENP_ORDER,
+                                    MENP_THEME,MENP_ISTOKEN,MENP_PARAM
+                        FROM $this->ownGu.GU_TUSUTIENEPER a,
+                             $this->ownGu.GU_TPERMISOS b,
+                             $this->ownGu.GU_TMENPTIENEPER c,
+                             $this->ownGu.GU_TMENUPRINCIPAL d
+                       WHERE     a.per_id = b.per_id
+                             AND a.per_id = c.per_id
+                             AND id_uid = $iuid
+                             AND C.MENP_ID = D.MENP_ID
+                             AND a.ind_estado = 1
+                             AND D.MENP_ESTADO = 1
+                             AND c.ind_estado = 1
+                             AND b.PER_ESTADO = 3
+                             AND MENP_FRAME = 3)
+            ORDER BY MENP_ID, MENP_ORDER ASC";
+
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
+    public function busca_menu($iuid, $access = ''){
+        $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_ICON FROM (select unique D.MENP_ID, MENP_ICON,D.MENP_NOMBRE,D.MENP_RUTA,D.MENP_IDPADRE,D.MENP_TIPO,D.MENP_ESTADO, MENP_ORDER
+            from $this->ownGu.GU_TUSUTIENEPER a, $this->ownGu.GU_TPERMISOS b, $this->ownGu.GU_TMENPTIENEPER  c,$this->ownGu.GU_TMENUPRINCIPAL d
+            where a.per_id=b.per_id and
+            a.per_id=c.per_id and id_uid=$iuid and
+            C.MENP_ID=D.MENP_ID and a.ind_estado=1
+            and D.MENP_ESTADO=1 and c.ind_estado=1 AND MENP_TIPO= 1 AND b.PER_ESTADO = 3 AND MENP_FRAME = 3) ORDER BY MENP_NOMBRE ASC";
+
+        if ($access == 'decomiso') {
+            $query = $this->dbFac->query($sql);
+        } else {
+            $query = $this->db->query($sql);
+        }
+
+        return $query->result_array();
+    }
+
+
 
     public function model_consultaporusuario($username){
         $status = true;

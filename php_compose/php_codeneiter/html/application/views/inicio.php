@@ -63,6 +63,7 @@
 <!-- RUN  -->
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js"></script>
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
+
 <script>
     $(document).ready(function(){
       $("#rut_profesional").Rut({

@@ -1,10 +1,8 @@
 version: '3'
 services:
-
   #14528409-0
   #administrador
   #http://localhost:9000/administrador
-
   codeigniter:
     container_name: user_administrador
     image: bitnami/codeigniter:4.4.3-debian-11-r0

@@ -191,7 +191,7 @@ class UserModel extends Model {
         $status                     =   true;
         $name                       =   $aData['post']['nombres']." ".$aData['post']['apepate']." ".$aData['post']['apemate'];
         $arr_run                    =   str_replace('.','',$aData['post']['user']);
-        $db = \Config\Database::connect();
+        $db                         =   \Config\Database::connect();
         $db->transStart();
         $hash                       =   password_hash($aData['post']['pass'],PASSWORD_BCRYPT);
         $dataUs                     =   array(
@@ -225,6 +225,7 @@ class UserModel extends Model {
             $constructora->insert($dataUs);
             $last_id        =   $db->insertID();
         }
+        
         //privilegios
         $arrPrivilegios                 =   $aData['post']['arrPrivilegios'];
         if(count($arrPrivilegios)>0){
@@ -245,6 +246,7 @@ class UserModel extends Model {
                 }
             }
         }
+
         //establecimientos
         $arrEmpresas                    =   $aData['post']['arrEmpresas'];
         if(count($arrEmpresas)>0){
