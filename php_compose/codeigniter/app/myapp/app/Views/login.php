@@ -53,7 +53,7 @@
 <body>
     <div class="login-container">
     <h2>Iniciar Sesi&oacute;n</h2>
-        <form action="<?= base_url('auth/login');?>" method="POST">
+        <form action="<?= base_url('ruta_login');?>" method="POST">
             <label for="username">Usuario:</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Contrase&ntilde;a:</label>

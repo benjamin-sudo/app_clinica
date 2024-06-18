@@ -16,12 +16,26 @@ class Home extends BaseController {
         return view('login');
     }
 
-    public function arr_login()  {
-        return redirect()->to('administrador');
+    public function arr_login(){
+        #return redirect()->to('administrador');
+        if ($this->request->isAJAX()){ }
+        $arr = [];
+        $arr = $this->usersModel->ini_contendido();
+        $data = [
+                    'css' => ['administrador/css/style.css'],
+                    'js' => ['administrador/js/javascript.js'],
+                    'respuesta' => $arr 
+                ];
+        return view('administrador',$data);
     }
 
     public function administrador() {
-        if ($this->request->isAJAX()){ }
+        #if($this->request->isAJAX()){ }
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+
+        var_dump($username);
+
         $arr = [];
         $arr = $this->usersModel->ini_contendido();
         $data = [
