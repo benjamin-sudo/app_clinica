@@ -5109,14 +5109,13 @@ Insert into ADMIN.PB_PATOLOGIA_ANATOMIA
 COMMIT;
 /
 
-
-
-
 -------------------
 -- ZONA DE TYPES --
 -- OBJCT_TYPES ----
 -------------------
-
+------------------------
+-- COLLECTION_TYPES ----
+------------------------
 CREATE OR REPLACE TYPE  ADMIN.OBJ_LIS_ANATOMIAP AS OBJECT (
   ID_SOLICITUD_HISTO            NUMBER,
   NUM_FICHAE                    NUMBER,
@@ -5231,12 +5230,7 @@ CREATE OR REPLACE TYPE  ADMIN.OBJ_LIS_ANATOMIAP AS OBJECT (
   IND_GEST_ADMINISTRATIVO       NUMBER,
   ID_UID_ADMINISTRATIVO         NUMBER
 );
-COMMIT;
 /
-
-------------------------
--- COLLECTION_TYPES ----
-------------------------
 CREATE OR REPLACE TYPE ADMIN.COL_LIS_ANATOMIAP AS TABLE OF ADMIN.OBJ_LIS_ANATOMIAP;
 /
 CREATE OR REPLACE TYPE ADMIN.MYTYPE2 as object (a int,b varchar2(100));
