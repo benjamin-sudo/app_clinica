@@ -10,10 +10,10 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
     public function index(){
         $this->output->set_template('blank');
-        $data       =   [
-                            'USERNAME'  =>  $this->session->userdata('USERNAME'),
-                            'COD_ESTAB' =>  $this->session->userdata('COD_ESTAB')
-                        ];
+        $data = [
+                    'USERNAME'  =>  $this->session->userdata('USERNAME'),
+                    'COD_ESTAB' =>  $this->session->userdata('COD_ESTAB')
+                ];
         $this->load->css("assets/ssan_bdu_creareditarpaciente/css/styles.css");
         $this->load->js("assets/ssan_bdu_creareditarpaciente/js/javascript.js");
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view',$data);
@@ -998,7 +998,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     public function buscarPac(){
         if (!$this->input->is_ajax_request()) {  show_404();  }
         //  $codEmpresa         =    $this->session->userdata("COD_ESTAB");
-	    $codEmpresa         =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
+	    $codEmpresa =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
 	    $html               =    '';
         $NUM_COUNT          =    '';
         $isNal              =    '';

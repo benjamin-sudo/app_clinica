@@ -149,23 +149,29 @@ class modelinicio extends CI_Model {
         */
     }
 
-    public function busca_menu2($iuid)
-    {
+    public function busca_menu2($iuid){
         $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_IDPADRE , MENP_ICON, MENP_TIPO,MENP_RUTA,MENP_THEME,MENP_ISTOKEN,MENP_PARAM
-                FROM (SELECT UNIQUE D.MENP_ID,
-                                    MENP_ICON,
-                                    D.MENP_NOMBRE,
-                                    D.MENP_RUTA,
-                                    D.MENP_IDPADRE,
-                                    D.MENP_TIPO,
-                                    D.MENP_ESTADO,
-                                    MENP_ORDER,
-                                    MENP_THEME,MENP_ISTOKEN,MENP_PARAM
-                        FROM $this->ownGu.GU_TUSUTIENEPER a,
-                             $this->ownGu.GU_TPERMISOS b,
-                             $this->ownGu.GU_TMENPTIENEPER c,
-                             $this->ownGu.GU_TMENUPRINCIPAL d
-                       WHERE     a.per_id = b.per_id
+                FROM (
+                        SELECT 
+                            UNIQUE 
+                            D.MENP_ID,
+                            MENP_ICON,
+                            D.MENP_NOMBRE,
+                            D.MENP_RUTA,
+                            D.MENP_IDPADRE,
+                            D.MENP_TIPO,
+                            D.MENP_ESTADO,
+                            MENP_ORDER,
+                            MENP_THEME,
+                            MENP_ISTOKEN,
+                            MENP_PARAM
+                        FROM 
+                            $this->ownGu.GU_TUSUTIENEPER a,
+                            $this->ownGu.GU_TPERMISOS b,
+                            $this->ownGu.GU_TMENPTIENEPER c,
+                            $this->ownGu.GU_TMENUPRINCIPAL d
+                        WHERE     
+                                a.per_id = b.per_id
                              AND a.per_id = c.per_id
                              AND id_uid = $iuid
                              AND C.MENP_ID = D.MENP_ID
@@ -173,9 +179,9 @@ class modelinicio extends CI_Model {
                              AND D.MENP_ESTADO = 1
                              AND c.ind_estado = 1
                              AND b.PER_ESTADO = 3
-                             AND MENP_FRAME = 3)
+                             AND MENP_FRAME = 3
+                    )
             ORDER BY MENP_ID, MENP_ORDER ASC";
-
         $query = $this->db->query($sql);
         return $query->result_array();
     }

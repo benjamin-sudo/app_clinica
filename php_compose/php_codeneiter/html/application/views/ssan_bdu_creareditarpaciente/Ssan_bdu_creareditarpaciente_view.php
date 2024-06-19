@@ -5,7 +5,7 @@
         </h4>
     </div>
     <div class="grid_cabecera_bdu1">
-        <button type="button" class="btn btn-primary" onclick="js_test();">
+        <button type="button" class="btn btn-primary" onclick="js_test();" style="display:none">
             <i class="bi bi-prescription"></i>&nbsp;TEST
         </button>
     </div>
@@ -107,12 +107,10 @@
                 </thead>    
                 <tbody id="resultados"></tbody>
             </table>
-            <div class="row">
-                <div class="col-xs-1 center-block">
-                    <div style="text-align:center;">  
-                        <div id="new_paginacion" style="display: none;"></div>
-                    </div>
-                </div>
+            <div class="grid_contenedo_paginado">
+                <div class="grid_contenedo_paginado1">&nbsp;</div>
+                <div class="grid_contenedo_paginado1"><div class="btn-group anatomia_pagination" id="new_paginacion"></div></div>
+                <div class="grid_contenedo_paginado1">&nbsp;</div>
             </div>
         </div>
     </div>
