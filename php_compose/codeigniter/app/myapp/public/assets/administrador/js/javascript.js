@@ -1,10 +1,13 @@
 $(document).ready(function(){
+
     //https://getbootstrap.com/docs/5.3/getting-started/introduction/
+
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 4                                   ");
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
+
     $('#run_esissan').Rut({
         on_error    :   function()  { 
                                         console.log($("#run_esissan").val());  
@@ -19,12 +22,12 @@ $(document).ready(function(){
         format_on   :   'keyup'
     });
 
-    const triggerFirstTabEl         =   document.querySelector('#myTab li:first-child button');
+    const triggerFirstTabEl = document.querySelector('#myTab li:first-child button');
     //console.log("triggerFirstTabEl   -> ",triggerFirstTabEl);
     if (triggerFirstTabEl) {
         let tab = bootstrap.Tab.getInstance(triggerFirstTabEl);
         if (!tab) {   
-            tab                     =   new bootstrap.Tab(triggerFirstTabEl);
+            tab =   new bootstrap.Tab(triggerFirstTabEl);
         }
         tab.show();
     } else {
@@ -74,8 +77,8 @@ function valida_run_esissan(val)   {
                                                     $('#loadFade').modal('hide');
                                                 },
         success          :   function(aData)    {   
-                                                    console.log("   ----------------------------    ");
-                                                    console.log("   aData   :   ",aData);
+                                                    console.log(" ---------------------------- ");
+                                                    console.log(" aData : ",aData);
                                                     $("#loadFade").modal("hide");
                                                     if(aData.return_bd.status_existe){
                                                         showNotification('top','right','<i class="fa fa-television" aria-hidden="true"></i>&nbsp;Editando usuario',2);

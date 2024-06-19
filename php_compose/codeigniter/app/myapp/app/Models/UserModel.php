@@ -45,8 +45,6 @@ class UserModel extends Model {
             }
         }
 
-
-
         //*************************************** */
         // Variable para almacenar el HTML
         $html   =   "";

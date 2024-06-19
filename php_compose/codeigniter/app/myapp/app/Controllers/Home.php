@@ -213,30 +213,30 @@ class Home extends BaseController {
 
     public function actualiza_privilegio() {
         if ($this->request->isAJAX()){  }
-        $status         =   true;
-        $PER_ID         =   $this->request->getPost("PER_ID");
-        $v_bool         =   $this->request->getPost("v_bool");
-        $return         =   $this->usersModel->actualiza_Privilegio([
-            'PER_ID'    =>  $PER_ID,
-            'v_bool'    =>  $v_bool
+        $status = true;
+        $PER_ID = $this->request->getPost("PER_ID");
+        $v_bool = $this->request->getPost("v_bool");
+        $return = $this->usersModel->actualiza_Privilegio([
+            'PER_ID' =>  $PER_ID,
+            'v_bool' =>  $v_bool
         ]);
         echo json_encode(array(
-            'status'    =>  $status,
-            'return'    =>  $return
+            'status' =>  $status,
+            'return' =>  $return
         ));
     }
 
     public function fn_valida_cuenta_esissan() {
         if ($this->request->isAJAX()){  }
-        $status         =   true;
-        $data_return    =   [];
-        $data_return    =   $this->usersModel->valida_cuenta_esissan_anatomia([
-            'run'       =>  $this->request->getPost("run"),
-            'dv'        =>  $this->request->getPost("dv")
+        $status = true;
+        $data_return = [];
+        $data_return = $this->usersModel->valida_cuenta_esissan_anatomia([
+            'run' => $this->request->getPost("run"),
+            'dv' => $this->request->getPost("dv")
         ]);
         echo json_encode([
-            'status'    =>  $status,
-            'return_bd' =>  $data_return,
+            'status' => $status,
+            'return_bd' => $data_return,
         ]);            
     }
 

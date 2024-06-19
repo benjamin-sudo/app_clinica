@@ -25,12 +25,12 @@ class Constructor extends CI_Controller {
         $redirect = '';
         $user = $this->modelinicio->login_modelo($user,$password);
         $status = $user['status'];
-        
-        if($user['status']){   
+        if($user['status'] && $user['status_empresa']){
             $userL = $user['row'];
             $unique = str_replace('-','', $userL->USERNAME).$this->getRandomCode();
             #falta agregar empresa por default
-            $empresas = '100';
+            $empresas = $user['txt_empresa_default'];
+            $txt_empresa = $user['cod_empresa_default'];
             $_SESSION["IP"] = $this->input->ip_address();
             $_SESSION["ID_UID"] = $userL->ID_UID;
             $_SESSION["unique"] = $unique;
@@ -39,18 +39,19 @@ class Constructor extends CI_Controller {
             $_SESSION["FONOSESSION"] = $userL->TELEPHONE;
             $_SESSION["loginFr"] = 'si';
             $_SESSION["COD_ESTAB"] = $empresas;
-            $newdata = array(
-                        'unique' => $unique,
-                        'ID_UID' => $userL->ID_UID,
-                        'USERNAME' => $userL->USERNAME,
-                        'NAMESESSION' => $userL->NAME,
-                        'FONOSESSION' => $userL->TELEPHONE,
-                        'LASTLOGIN' => $userL->LASTLOGIN,
-                        'loginFr' => 'si',
-                        'MENUARRFR' => $user['menu'],
-                        'COD_ESTAB' => $empresas,
-                    );
-            $this->session->set_userdata($newdata);
+            $_SESSION["NOM_ESTAB"] = $txt_empresa;
+            $this->session->set_userdata( [
+                'unique' => $unique,
+                'ID_UID' => $userL->ID_UID,
+                'USERNAME' => $userL->USERNAME,
+                'NAMESESSION' => $userL->NAME,
+                'FONOSESSION' => $userL->TELEPHONE,
+                'LASTLOGIN' => $userL->LASTLOGIN,
+                'loginFr' => 'si',
+                'MENUARRFR' => $user['menu'],
+                'COD_ESTAB' => $empresas,
+                'NOM_ESTAB' => $txt_empresa,
+            ]);
             $redirect = 'Dashboard';
         }
         $this->output->set_output(json_encode([

@@ -8747,7 +8747,7 @@ END;
             ORDER 
                 BY PR.NOM_PRESTACION;
                     
-            --BUSQUEDA DE PRESTACIÓNES
+            --BUSQUEDA DE PRESTACIONES
             OPEN P_LISTA_PRESTACIONES                                                           FOR  
                 SELECT  
                     G.COD_PRESTA,

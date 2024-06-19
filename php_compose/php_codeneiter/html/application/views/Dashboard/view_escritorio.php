@@ -13,7 +13,7 @@
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap.min.css" >
   <!-- Bootstrap Icons v1.11.2 -->
   <!--
-  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
+    <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   -->
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/icon/bootstrap-icons.css">
@@ -43,6 +43,7 @@
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
+
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -109,7 +110,7 @@
                     foreach ($mainItem['submenus'] as $subId => $subItem) {
                         echo '<li class="nav-item">';
                         echo '<a href="' . $subItem['data']['SUB_RUTA'] . '" class="nav-link" id="menu-' . $mainId . '-sub-' . $subId . '">';
-                        echo '<i class="fa fa-folder-open-o"></i> ';
+                        echo '<i class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;';
                         echo '<p>' . $subItem['data']['SUB_NOMBRE'];
                         if (!empty($subItem['extensions'])) {
                             //echo '<i class="right fas fa-angle-left"></i>';
@@ -122,7 +123,7 @@
                             foreach ($subItem['extensions'] as $extId => $extItem) {
                               echo '<li class="nav-item">';
                               echo '<a href="' . $extItem['EXT_RUTA'] . '" class="nav-link load-in-frame" id="menu-' . $mainId . '-sub-' . $subId . '-ext-' . $extId . '">';
-                              echo '<i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;';
+                              echo '<i class="fa fa-long-arrow-right" aria-hidden="true"></i>&nbsp;';
                               echo '<p>' . $extItem['EXT_NOMBRE'] . '</p>';
                               echo '</a>';
                               echo '</li>';
