@@ -84,7 +84,7 @@
           <img src="assets/dist/img/anatomia/logo.webp" class="img-circle elevation-2" alt="Imagen Anatomia Patologica">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Clinica&nbsp;Anatomia</a>
+          <a href="#" class="d-block">Clinica&nbsp;Anatomia (<?php echo $this->session->userdata("COD_ESTAB");?>)</a>
         </div>
       </div>
       <!-- Sidebar Menu -->

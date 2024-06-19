@@ -133,7 +133,6 @@ INSERT INTO ADMIN.GU_TPERMISOS (`PER_ID`, `PER_NOMBRE`, `PER_ESTADO`) VALUES
 (1,	'ADMIN',	1),
 (2,	'SISTEMA->BDU->MAESTROPACIENTES',	3); //
 
-
 CREATE TABLE ADMIN.GU_TMENUPRINCIPAL (
   MENP_ID               INT NOT NULL AUTO_INCREMENT,
   MENP_NOMBRE           VARCHAR(100),
@@ -335,15 +334,15 @@ INSERT INTO `GU_TUSUTIENEPER` (`ID_UTP`, `PER_ID`, `ID_UID`, `IND_ESTADO`) VALUE
 CREATE TABLE ADMIN.GU_TUSUXEMPRESA (
   ID_UXE                        INT AUTO_INCREMENT PRIMARY KEY,  
   ID_UID                        INT(10),
-  COD_ESTABL                    INT(5),
-  IND_ESTADO                    INT(1)
+  COD_ESTABL                    VARCHAR(5),
+  IND_ESTADO                    INT(1),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
 
 INSERT INTO `GU_TUSUXEMPRESA` (`ID_UXE`, `ID_UID`, `COD_ESTABL`, `IND_ESTADO`) VALUES
-(1,	10,	29,	1),
-(2,	10,	800,	1),
-(3,	10,	801,	1),
-(4,	11,	800,	1); //
-
+(1,	10,	'029',	1),
+(2,	10,	'800',	1),
+(3,	10,	'801',	1),
+(4,	11,	'800',	1),
+(5,	12,	'801',	1); //
 
 DELIMITER //

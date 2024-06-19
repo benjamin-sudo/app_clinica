@@ -77,10 +77,9 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             error_log("---------->".$apellidoM);
             error_log("-------------------------------------");
         */
-
         # A.FEC_NACIMI,
         if ($identifier == '' and $pasaporte == ''){
-            $query =  $this->db->select('G.NUM_FICHAE            FALLECIDO,
+            $query =  $this->db->select('G.NUM_FICHAE FALLECIDO,
                                 A.COD_PAIS,
                                 A.NUM_IDENTIFICACION,
                                 A.FEC_VENCEPASPORT,

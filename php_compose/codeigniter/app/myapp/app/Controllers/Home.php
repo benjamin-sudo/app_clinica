@@ -242,13 +242,13 @@ class Home extends BaseController {
 
     public function fn_gestion_perfil(){
         if ($this->request->isAJAX()){  }
-        $data_return        =   [];    
-        $status             =   true;
-        $data_return        =   $this->usersModel->grabaUsu(['post'=>$this->request->getPost()]);
+        $data_return =   [];    
+        $status =   true;
+        $data_return =   $this->usersModel->grabaUsu(['post'=>$this->request->getPost()]);
         echo json_encode([
-            'data_return'   =>  $data_return,
-            'status'        =>  $status,
-            'post'          =>  $_POST,
+            'data_return' =>  $data_return,
+            'status' =>  $status,
+            'post' =>  $_POST,
         ]);   
     }
 

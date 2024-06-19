@@ -20,31 +20,31 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     }
 
     public function function_test(){
-        if (!$this->input->is_ajax_request()) {  show_404();  }
-        $return_data        =   $this->ssan_bdu_creareditarpaciente_model->function_test();
+        if (!$this->input->is_ajax_request()) { show_404(); }
+        $return_data =   $this->ssan_bdu_creareditarpaciente_model->function_test();
         $this->output->set_output(json_encode([
-            'return_data'   =>  $return_data,
-            'status'        =>  true,
+            'return_data' =>  $return_data,
+            'status' =>  true,
         ]));
     }
     
     public function CreaEditaPaciente(){
-        if (!$this->input->is_ajax_request()) {  show_404();  }
-        $codEmpresa         =   $this->session->userdata("COD_ESTAB");
-        $numFichae          =   $this->input->post("numFichae");
-        $isNal              =   $this->input->post("isNal");
-        $templete           =   $this->input->post("template");
-        $edad               =   $this->input->post("Numedad");
+        if (!$this->input->is_ajax_request()) { show_404();  }
+        $codEmpresa = $this->session->userdata("COD_ESTAB");
+        $numFichae = $this->input->post("numFichae");
+        $isNal = $this->input->post("isNal");
+        $templete = $this->input->post("template");
+        $edad = $this->input->post("Numedad");
 
-        $value_sex          =   '';
-        $dateGenero         =   $this->ssan_bdu_creareditarpaciente_model->getTraeGenero();
+        $value_sex = '';
+        $dateGenero = $this->ssan_bdu_creareditarpaciente_model->getTraeGenero();
         if (count($dateGenero) > 0) {
             foreach ($dateGenero as $sex) {
                 $value_sex  .= "<option value='" . $sex['IND_SEXO'] . "'>" . $sex['NOM_SEXO'] . "</option>";
             }
         }
-        $value_etn          =    '';
-        $dateEtnia          =    $this->ssan_bdu_creareditarpaciente_model->getTraeEtnia();
+        $value_etn = '';
+        $dateEtnia = $this->ssan_bdu_creareditarpaciente_model->getTraeEtnia();
         if (count($dateEtnia) > 0) {
             $value_etn .= "<option value=''>SELECCIONE...</option>";
             foreach ($dateEtnia as $etn) {

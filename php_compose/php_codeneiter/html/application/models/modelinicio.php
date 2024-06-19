@@ -43,22 +43,18 @@ class modelinicio extends CI_Model {
             #activo 
             if ($status) {
                 $arr_empresa = $this->db->query("SELECT 
-                    A.*, 
-                    B.*
-                    FROM 
-                        ADMIN.GU_TUSUXEMPRESA A,
-                        ADMIN.SS_TEMPRESAS B
-                    WHERE 
-                        A.COD_ESTABL = B.COD_EMPRESA
-                        AND 
-                        B.IND_ESTADO = 1
-                        AND
-                        A.IND_ESTADO = 1 
-                        AND 
-                        A.ID_UID = ".$ID_UID)->result_array();
-                if (count($arr_empresa) > 0) {
+                                                    A.*,
+                                                    'TEST' AS NOM_ESTAB 
+                                                    FROM 
+                                                    ADMIN.GU_TUSUXEMPRESA A 
+                                                    WHERE 
+                                                    A.IND_ESTADO = 1 
+                                                    AND 
+                                                    A.ID_UID = $ID_UID
+                ")->result_array();
+                if (count($arr_empresa)>0) {
                     $status_empresa = true;
-                    $txt_empresa_default = $arr_empresa[0]['NOM_RAZSOC'];
+                    $txt_empresa_default = $arr_empresa[0]['NOM_ESTAB'];
                     $cod_empresa_default = $arr_empresa[0]['COD_ESTABL'];
                 }
             }

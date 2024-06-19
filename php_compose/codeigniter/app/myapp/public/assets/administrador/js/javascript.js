@@ -215,7 +215,6 @@ function grabarUsu(){
         ok = 0;
     }
     let arrEmpresas         =   $("#establecimiento").val() || [];
-    //console.log("arrEmpresas  -> ",arrEmpresas);
     if (arrEmpresas.length == 0) {
         errores.push("  -   Debe asignar a lo menos una empresa al ususario");
         ok = 0;

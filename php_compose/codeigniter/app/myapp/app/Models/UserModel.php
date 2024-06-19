@@ -161,38 +161,38 @@ class UserModel extends Model {
     }
 
     public function valida_cuenta_esissan_anatomia($aData){
-        $run_gestion            =   $aData['run']."-".$aData['dv'];
-        $status_existe          =   true;
-        $getResultArray         =   [];
-        $arr_privilegios        =   [];
-        $arr_empresa            =   [];
-        $db                     =   db_connect();
-        $get_fe_users           =   $db->query("SELECT * FROM ADMIN.FE_USERS WHERE TX_INTRANETSSAN_RUN = ".$aData['run'])->getResultArray();
+        $run_gestion = $aData['run']."-".$aData['dv'];
+        $status_existe = true;
+        $getResultArray = [];
+        $arr_privilegios = [];
+        $arr_empresa = [];
+        $db = db_connect();
+        $get_fe_users = $db->query("SELECT * FROM ADMIN.FE_USERS WHERE TX_INTRANETSSAN_RUN = ".$aData['run'])->getResultArray();
         if(count($get_fe_users)>0){
-            $arr_privilegios    =   $db->query("SELECT * FROM ADMIN.GU_TUSUTIENEPER WHERE IND_ESTADO = 1 AND ID_UID =".$get_fe_users[0]['ID_UID'])->getResultArray();
-            $arr_empresa        =   $db->query("SELECT * FROM ADMIN.GU_TUSUXEMPRESA WHERE IND_ESTADO = 1 AND ID_UID =".$get_fe_users[0]['ID_UID'])->getResultArray();
+            $arr_privilegios = $db->query("SELECT * FROM ADMIN.GU_TUSUTIENEPER WHERE IND_ESTADO = 1 AND ID_UID =".$get_fe_users[0]['ID_UID'])->getResultArray();
+            $arr_empresa = $db->query("SELECT * FROM ADMIN.GU_TUSUXEMPRESA WHERE IND_ESTADO = 1 AND ID_UID =".$get_fe_users[0]['ID_UID'])->getResultArray();
         } else {
-            $status_existe      =   false;    
+            $status_existe = false;    
         }
         return [
-            'status'            =>  true,
-            'arr_privilegios'   =>  $arr_privilegios,
-            'arr_empresa'       =>  $arr_empresa,
-            'getResultArray'    =>  $get_fe_users,
-            'status_existe'     =>  $status_existe, 
-            'date'              =>  date("d-m-Y"),
-            'run_gestion'       =>  $run_gestion
+            'status' =>  true,
+            'arr_privilegios' => $arr_privilegios,
+            'arr_empresa' =>  $arr_empresa,
+            'getResultArray' =>  $get_fe_users,
+            'status_existe' => $status_existe, 
+            'date' => date("d-m-Y"),
+            'run_gestion' => $run_gestion
         ];
     }
 
     public function grabaUsu($aData){
-        $status                     =   true;
-        $name                       =   $aData['post']['nombres']." ".$aData['post']['apepate']." ".$aData['post']['apemate'];
-        $arr_run                    =   str_replace('.','',$aData['post']['user']);
-        $db                         =   \Config\Database::connect();
+        $status = true;
+        $name = $aData['post']['nombres']." ".$aData['post']['apepate']." ".$aData['post']['apemate'];
+        $arr_run =   str_replace('.','',$aData['post']['user']);
+        $db =   \Config\Database::connect();
         $db->transStart();
-        $hash                       =   password_hash($aData['post']['pass'],PASSWORD_BCRYPT);
-        $dataUs                     =   array(
+        $hash =   password_hash($aData['post']['pass'],PASSWORD_BCRYPT);
+        $dataUs =   array(
             //'ID_UID'              =>  $uID,
             'USERNAME'              =>  trim($arr_run),
             'NAME'                  =>  $name, 
@@ -246,20 +246,20 @@ class UserModel extends Model {
         }
 
         //establecimientos
-        $arrEmpresas                    =   $aData['post']['arrEmpresas'];
+        $arrEmpresas = $aData['post']['arrEmpresas'];
         if(count($arrEmpresas)>0){
-            $constructora4              =   $db->table('ADMIN.GU_TUSUXEMPRESA');
+            $constructora4 = $db->table('ADMIN.GU_TUSUXEMPRESA');
             $constructora4->set(['IND_ESTADO' => 0]);
             $constructora4->where('ID_UID',$last_id);
             foreach($arrEmpresas as $i => $row){
-                $get_arrEmpresas        =   $db->query("SELECT ID_UXE FROM ADMIN.GU_TUSUXEMPRESA WHERE COD_ESTABL IN (".$row.") AND ID_UID = ".$last_id)->getResultArray();
+                $get_arrEmpresas = $db->query("SELECT ID_UXE FROM ADMIN.GU_TUSUXEMPRESA WHERE COD_ESTABL IN (".$row.") AND ID_UID = ".$last_id)->getResultArray();
                 if (count($get_arrEmpresas)>0){
-                    $constructora5      =   $db->table('ADMIN.GU_TUSUXEMPRESA');
+                    $constructora5 = $db->table('ADMIN.GU_TUSUXEMPRESA');
                     $constructora5->set(['IND_ESTADO' => 1]);
                     $constructora5->where('ID_UXE',$get_arrEmpresas[0]['ID_UXE']);
                     $constructora5->update();
                 } else {
-                    $constructora6      =    $db->table('ADMIN.GU_TUSUXEMPRESA');
+                    $constructora6 = $db->table('ADMIN.GU_TUSUXEMPRESA');
                     $constructora6->insert(['ID_UID'=>$last_id,'COD_ESTABL'=>$row,'IND_ESTADO'=>1]);
                 }
             }
