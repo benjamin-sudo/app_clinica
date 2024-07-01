@@ -1,10 +1,8 @@
 version: '3'
 services:
-
   #14528409-0
   #administrador
   #http://localhost:9000/administrador
-
   codeigniter:
     container_name: user_administrador
     image: bitnami/codeigniter:4.4.3-debian-11-r0
@@ -123,12 +121,14 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
       - mynetwork
     depends_on:
       - php_codeneiter_3
+    restart: always  
 
 volumes:
   oracle-data:
