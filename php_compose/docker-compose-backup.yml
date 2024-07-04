@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  backup:
+    build: .
+    container_name: backup_container
+    environment:
+      - RESTIC_REPOSITORY=/mnt/restic-repo
+      - RESTIC_PASSWORD=yourpassword
+      - AWS_ACCESS_KEY_ID=yourawsaccesskeyid
+      - AWS_SECRET_ACCESS_KEY=yourawssecretaccesskey
+    volumes:
+      - ./path/to/your/backup/repository:/mnt/restic-repo
+      - oracle-data:/backup/oracle-data
+      - db_data:/backup/db_data
+    restart: always
+    networks:
+      - mynetwork
+
+volumes:
+  oracle-data:
+    external: true
+  db_data:
+    external: true
+
+networks:
+  mynetwork:
+    external: true
