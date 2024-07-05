@@ -1,2 +1,19 @@
+
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 
+
+
+dtrafico_https
+
+docker logs -f oracle_slim
+
+docker logs -f dtrafico_https
+
+docker logs -f codeneite_3_app 
+
+generador_certificados
+
+user_administradorcodeneite_4_admin
+
+
+sudo chmod -R 777 /home/ubuntu/app_clinica
 
