@@ -14,6 +14,12 @@ generador_certificados
 
 user_administradorcodeneite_4_admin
 
-
 sudo chmod -R 777 /home/ubuntu/app_clinica
+
+
+cat /home/ubuntu/app_clinica/php_compose/php_codeneiter/html/application/config/config.php
+
+
+18.189.15.74
+
 
