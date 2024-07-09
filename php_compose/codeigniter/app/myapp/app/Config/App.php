@@ -18,7 +18,10 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
-    public string $baseURL = 'http://localhost:9000/';
+    
+     //public string $baseURL = 'http://localhost:9000/';
+     public $baseURL = 'https://panel.clinicalibre.cl/';  // Para producción
+
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
