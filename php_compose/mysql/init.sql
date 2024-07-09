@@ -1,6 +1,6 @@
 DELIMITER //
 
-SET TIME_ZONE             = '-04:00';
+SET TIME_ZONE = '-04:00';
 ALTER DATABASE ADMIN CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
 SET NAMES 'utf8mb4' COLLATE 'utf8mb4_spanish_ci';
 SET collation_connection  = 'utf8mb4_spanish_ci';
@@ -191,7 +191,7 @@ CREATE TABLE ADMIN.GU_TMENPTIENEPER (
   PRIMARY KEY           (ID_MPTP)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
 
-INSERT INTO `GU_TMENPTIENEPER` (`ID_MPTP`, `PER_ID`, `MENP_ID`, `IND_ESTADO`) VALUES
+INSERT INTO ADMIN.GU_TMENPTIENEPER (`ID_MPTP`, `PER_ID`, `MENP_ID`, `IND_ESTADO`) VALUES
 (1,	1,	2,	1),
 (2,	1,	1,	1),
 (3,	1,	3,	1),

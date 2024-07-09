@@ -13,10 +13,10 @@
     <!-- NUEVO OLD -->
     <link rel="stylesheet" type="text/css" href="recursos/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="recursos/fontawesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="recursos/css/bootstrap-icons.min.css">
     <!-- jAlert... -->
     <link rel="stylesheet" type="text/css" href="assets/themes/css/jquery.alerts.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="recursos/css/bootstrap-select.min.css">
     <?php if (isset($css)): ?>
         <?php foreach ($css as $cssFile): ?>
             <link rel="stylesheet" href="<?= 'assets/' . $cssFile; ?>">
@@ -81,7 +81,7 @@
 
 <script type="text/javascript" src="assets/themes/js/jquery.easy-autocomplete.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/funciones.js" ></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="recursos/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="assets/themes/lightboot/js/bootstrap-notify.js"></script>
 <script type="text/javascript" src="assets/themes/js/javaGlobal.js"></script>
 <!--
