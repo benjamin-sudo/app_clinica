@@ -42,83 +42,84 @@ $(document).ready(function(){
     //$.notify('actualizando',{ showProgressbar: true });
 });
 
-function valida_run_esissan(val)   {
-    var _rut            =   "";
-    var rut_array       =   "";
-    var rut2            =   "";
-    var rut             =   "";
-    var dv              =   "";
-    _rut                =   $("#run_esissan").val();
-    $("#run_esissan").css('border-color','');
-    if(_rut == ''){
-        jError("RUN vac&iacute;o","Clinica Libre");
-        $("#run_esissan").css('border-color','red');
+function valida_run_esissan(val) {
+    var _rut = "";
+    var rut_array = "";
+    var rut2 = "";
+    var rut = "";
+    var dv = "";
+    _rut = $("#run_esissan").val();
+    $("#run_esissan").css('border-color', '');
+    if (_rut == '') {
+        jError("RUN vacío", "Clinica Libre");
+        $("#run_esissan").css('border-color', 'red');
         return false;
     }
-    rut_array           =   _rut.split("-");
-    rut2                =   rut_array[0].replace(".","");
-    rut                 =   rut2.replace(".","");
-    dv                  =   rut_array[1];
-    $.ajax({ 
-        type            :   "POST",
-        url             :   "Home/fn_valida_cuenta_esissan",
-        dataType        :   "json",
-        beforeSend      :   function(xhr)       {   
-                                                    //console.log(xhr);
-                                                    $('#loadFade').modal('show');
-                                                },
-        data            :                       {  
-                                                    run : rut,
-                                                    dv  : dv
-                                                },
-        error           :   function(errro)     { 
-                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                    jError("Error General, Consulte Al Administrador","e-SISSAN");
-                                                    $('#loadFade').modal('hide');
-                                                },
-        success          :   function(aData)    {   
-                                                    console.log(" ---------------------------- ");
-                                                    console.log(" aData : ",aData);
-                                                    $("#loadFade").modal("hide");
-                                                    if(aData.return_bd.status_existe){
-                                                        showNotification('top','right','<i class="fa fa-television" aria-hidden="true"></i>&nbsp;Editando usuario',2);
-                                                        $("#txtNombres").val(aData.return_bd.getResultArray[0]["FIRST_NAME"]);
-                                                        $("#txtApePate").val(aData.return_bd.getResultArray[0]["MIDDLE_NAME"]);
-                                                        $("#txtApeMate").val(aData.return_bd.getResultArray[0]["LAST_NAME"]);
-                                                        $("#txtEmail").val(aData.return_bd.getResultArray[0]["EMAIL"]);
-                                                        //console.log("ind_id_uid ->  ",aData.return_bd.getResultArray[0]["ID_UID"]);
-                                                        $("#ind_id_uid").val(aData.return_bd.getResultArray[0]["ID_UID"]);
-                                                        if(aData.return_bd.getResultArray[0]["DISABLE"] == '0'){
-                                                            document.getElementById('CheckboxUsu').checked  =   true;
-                                                        }
-                                                        if(aData.return_bd.getResultArray[0]["STATUS"] == '1'){
-                                                            document.getElementById('checkTipo').checked    =   true;
-                                                        }
-                                                        let listItems1 = aData.return_bd.arr_privilegios.map(value=>value.PER_ID);
-                                                        //console.log("listItems1 -> ",listItems1);
-                                                        if (listItems1.length>0){
-                                                            $("#destinoPriv").selectpicker('val',listItems1);
-                                                            js_reload_previlegios();
-                                                        }
-                                                        let listItems = aData.return_bd.arr_empresa.map(value => {
-                                                            return value.COD_ESTABL === "29" ? "0" + value.COD_ESTABL : value.COD_ESTABL;
-                                                        });
-                                                        if (listItems.length>0){
-                                                            //listItems.push('029')
-                                                            $("#establecimiento").selectpicker('val',listItems);
-                                                            js_reload_establecimientos();
-                                                        }
-                                                        document.getElementById('ind_actualiza_pass').checked = false;
-                                                        $("#ind_actualiza_pass").attr('onclick','js_cambio_pass()');
-                                                        $("#txtPass,#txtPassRep").attr("disabled",true);
-                                                        default_gestionuser(false);
-                                                    } else {
-                                                        showNotification('top','right','<i class="bi bi-person-add"></i>&nbsp;Nuevo usuario',1);
-                                                        default_gestionuser(true);
-                                                    }
-                                                }, 
+    rut_array = _rut.split("-");
+    rut2 = rut_array[0].replace(".", "");
+    rut = rut2.replace(".", "");
+    dv = rut_array[1];
+    $.ajax({
+        type: "POST",
+        url: "Home/fn_valida_cuenta_esissan",
+        dataType: "json",
+        beforeSend: function(xhr) {
+            console.log("Mostrar modal");
+            $('#loadFade').modal('show');
+        },
+        data: {
+            run: rut,
+            dv: dv
+        },
+        error: function(error) {
+            console.log("Error:", error);
+            jError("Error General, Consulte Al Administrador", "e-SISSAN");
+            $('#loadFade').modal('hide');
+        },
+        success: function(aData) {
+            console.log(" ---------------------------- ");
+            console.log("aData:", aData);
+
+            if (aData.return_bd.status_existe) {
+                showNotification('top', 'right', '<i class="fa fa-television" aria-hidden="true"></i>&nbsp;Editando usuario', 2);
+                $("#txtNombres").val(aData.return_bd.getResultArray[0]["FIRST_NAME"]);
+                $("#txtApePate").val(aData.return_bd.getResultArray[0]["MIDDLE_NAME"]);
+                $("#txtApeMate").val(aData.return_bd.getResultArray[0]["LAST_NAME"]);
+                $("#txtEmail").val(aData.return_bd.getResultArray[0]["EMAIL"]);
+                $("#ind_id_uid").val(aData.return_bd.getResultArray[0]["ID_UID"]);
+                if (aData.return_bd.getResultArray[0]["DISABLE"] == '0') {
+                    document.getElementById('CheckboxUsu').checked = true;
+                }
+                if (aData.return_bd.getResultArray[0]["STATUS"] == '1') {
+                    document.getElementById('checkTipo').checked = true;
+                }
+                let listItems1 = aData.return_bd.arr_privilegios.map(value => value.PER_ID);
+                if (listItems1.length > 0) {
+                    $("#destinoPriv").selectpicker('val', listItems1);
+                    js_reload_previlegios();
+                }
+                let listItems = aData.return_bd.arr_empresa.map(value => {
+                    return value.COD_ESTABL === "29" ? "0" + value.COD_ESTABL : value.COD_ESTABL;
+                });
+                if (listItems.length > 0) {
+                    $("#establecimiento").selectpicker('val', listItems);
+                    js_reload_establecimientos();
+                }
+                document.getElementById('ind_actualiza_pass').checked = false;
+                $("#ind_actualiza_pass").attr('onclick', 'js_cambio_pass()');
+                $("#txtPass,#txtPassRep").attr("disabled", true);
+                default_gestionuser(false);
+            } else {
+                showNotification('top', 'right', '<i class="bi bi-person-add"></i>&nbsp;Nuevo usuario', 1);
+                default_gestionuser(true);
+            }
+
+            console.log("Ocultar modal");
+            $("#loadFade").modal("hide");
+        },
     });
 }
+
 
 function default_gestionuser(bool_new){
     $("#btn_creaedita_user").attr('onclick','grabarUsu()').attr("disabled",false);
