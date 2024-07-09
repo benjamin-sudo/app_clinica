@@ -32,53 +32,19 @@
   </div>
 </div>
 
-<section>
-    <div class="modal bg-dark fade" id="loadFade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Cargando ...</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-            <div class="modal-body" style="text-align: center;">
-                <div class="spinner-grow text-primary" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-border text-secondary" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-grow text-success" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-border text-danger" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-grow text-info" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-border text-info" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-grow text-dark" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        </div>
-      </div>
-    </div>
-</section>
 
 <script type="text/javascript" src="recursos/js/bootstrap/dist/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="recursos/js/socket/4_6_1/socket.io.js"></script>
+<!--
 <script type="text/javascript" src="recursos/js/jquery/1_12_4/jquery.min.js"></script>
+-->
+<script type="text/javascript" src="assets/themes/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/jquery-ui.js"></script>
-
 <!-- VALIDADOR RUT -->
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.js" ></script>
 <script type="text/javascript" src="assets/themes/js/jquery.Rut.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/jquery.alerts.mod.js"></script>
 <!-- OTROS -->
-
 <script type="text/javascript" src="assets/themes/js/jquery.easy-autocomplete.min.js"></script>
 <script type="text/javascript" src="assets/themes/js/funciones.js" ></script>
 <script type="text/javascript" src="recursos/js/bootstrap-select.min.js"></script>
@@ -120,6 +86,46 @@
     <script src="<?= 'assets/'.$jsFile; ?>"></script>
   <?php endforeach; ?>
 <?php endif; ?>
+
+
+<section>
+
+    <div class="modal bg-dark fade" id="loadFade" tabindex="1000" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Cargando ...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+            <div class="modal-body" style="text-align: center;">
+                <div class="spinner-grow text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-border text-secondary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-border text-danger" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-info" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-border text-info" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-dark" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
 
 </body>
 </html>

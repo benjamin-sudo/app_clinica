@@ -1,7 +1,5 @@
 $(document).ready(function(){
-
     //https://getbootstrap.com/docs/5.3/getting-started/introduction/
-
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 4                                   ");
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
@@ -59,13 +57,13 @@ function valida_run_esissan(val) {
     rut2 = rut_array[0].replace(".", "");
     rut = rut2.replace(".", "");
     dv = rut_array[1];
+    $("#loadFade").modal("show");
     $.ajax({
         type: "POST",
         url: "Home/fn_valida_cuenta_esissan",
         dataType: "json",
         beforeSend: function(xhr) {
             console.log("Mostrar modal");
-            $('#loadFade').modal('show');
         },
         data: {
             run: rut,
@@ -74,7 +72,9 @@ function valida_run_esissan(val) {
         error: function(error) {
             console.log("Error:", error);
             jError("Error General, Consulte Al Administrador", "e-SISSAN");
-            $('#loadFade').modal('hide');
+            setTimeout(function() {
+                $("#loadFade").modal("hide");
+            }, 1000);
         },
         success: function(aData) {
             console.log(" ---------------------------- ");
@@ -114,8 +114,20 @@ function valida_run_esissan(val) {
                 default_gestionuser(true);
             }
 
-            console.log("Ocultar modal");
-            $("#loadFade").modal("hide");
+            
+            setTimeout(function() {
+                $("#loadFade").modal("hide");
+            }, 1000);
+
+
+            /*
+            $('#loadFade').removeClass('show').hide()
+            $('#loadFade').modal('hide'); // Método estándar
+            $('#loadFade').removeClass('show'); // Remueve la clase show
+            $('#loadFade').hide(); // Esconde el elemento modal
+            $('#loadFade').modal('dispose'); // Dispose si Bootstrap 4
+            */
+
         },
     });
 }
@@ -285,11 +297,15 @@ function grabarUsu(){
                                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
                                                                 $("#protocoloPabellon").css("z-index","1500"); 
                                                                 jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                                $('#loadFade').modal('hide');
+                                                                setTimeout(function() {
+                                                                    $("#loadFade").modal("hide");
+                                                                }, 1000);
                                                             },
                     success     :   function(aData)         { 
                                                                 console.log("return  ->",aData);
-                                                                $('#loadFade').modal('hide');
+                                                                setTimeout(function() {
+                                                                    $("#loadFade").modal("hide");
+                                                                }, 1000);
                                                                 showNotification('top','center','<i class="bi bi-check-square-fill"></i> Se ha modificado perfil :<b>'+user+'</b>, numero : '+aData.data_return.last_id+'</b>',2);
                                                                 btn_defaultuser();
                                                             }, 
@@ -420,10 +436,15 @@ function test(val){
                                              console.log(errro);
                                              console.log(errro.responseText);  
                                              jAlert("Error General, Consulte Al Administrador"); 
-                                             $('#loadFade').modal('hide');
-                                          },
+                                             setTimeout(function() {
+                                                $("#loadFade").modal("hide");
+                                            }, 1000);
+                                            },
       success		   :   function(aData)  {  
-                                             $('#loadFade').modal('hide');
+                                             setTimeout(function() {
+                                                $("#loadFade").modal("hide");
+                                            }, 1000);
+
                                              console.log("------------------------------------------");
                                              console.log("aData         -> ",aData);
                                              console.log("aData         -> ",aData.patient)
@@ -475,7 +496,12 @@ function buscaExtArch() {
                                              $('#loadFade').modal('hide');
                                           },
       success        :   function(aData)  {  
-                                             $('#loadFade').modal('hide');
+                                            
+                                             setTimeout(function() {
+                                                $("#loadFade").modal("hide");
+                                            }, 1000);
+
+
                                              console.log(aData);
                                              if (aData.status){
                                                 $("#existeExt").val(0);
@@ -582,11 +608,20 @@ function grabarExt(opt){
                                                 console.log(errro);
                                                 //console.log(errro.responseText);  
                                                 jAlert("Error General, Consulte Al Administrador"); 
-                                                $('#loadFade').modal('hide');
+                                                
+                                                setTimeout(function() {
+                                                    $("#loadFade").modal("hide");
+                                                }, 1000);
+
+
                                                 js_limpia_panel();
                                             },
             success        :   function(aData) {  
-                                                $('#loadFade').modal('hide');
+                                                
+                                                setTimeout(function() {
+                                                    $("#loadFade").modal("hide");
+                                                }, 1000);
+
                                                 //console.log("--------- Exito  ------------- ");
                                                 //console.log(aData);
                                                 if (aData.status){
@@ -628,10 +663,19 @@ function crearPriv() {
       error : function(errro)   {  
                     console.log(errro);
                     jAlert("Error General, Consulte Al Administrador"); 
-                    $('#loadFade').modal('hide');
+                    
+                    setTimeout(function() {
+                        $("#loadFade").modal("hide");
+                    }, 1000);
+
                 },
       success : function(aData){  
-                                    $('#loadFade').modal('hide');
+                                    
+                                    setTimeout(function() {
+                                        $("#loadFade").modal("hide");
+                                    }, 1000);
+
+
                                     console.log(aData);
                                     if(aData.status){
                                     $("#nomProv").val("");
@@ -659,16 +703,21 @@ function js_estado_r(PER_ID){
                                  "v_bool" : v_bool,
                               },
             error          :  function(errro)   {  
-                                                   console.log(errro);
-                                                   jAlert("Error General, Consulte Al Administrador"); 
-                                                   $('#loadFade').modal('hide');
+                                                    console.log(errro);
+                                                    jAlert("Error General, Consulte Al Administrador"); 
+                                                    setTimeout(function() {
+                                                        $("#loadFade").modal("hide");
+                                                    }, 1000);
+
                                                 },
             success        :   function(aData)  {  
-                                                   $('#loadFade').modal('hide');
-                                                   //console.log("actualiza_privilegio   -> ",aData);
-                                                   jAlert('Se modifico informaci&aacute;n', "Confirmac\u00f3on", function (r) {
-                                                      if (r) { location.reload(true);   }
-                                                   });
+                                                    setTimeout(function() {
+                                                        $("#loadFade").modal("hide");
+                                                    }, 1000);
+                                                    //console.log("actualiza_privilegio   -> ",aData);
+                                                    jAlert('Se modifico informaci&aacute;n', "Confirmac\u00f3on", function (r) {
+                                                        if (r) { location.reload(true);   }
+                                                    });
                                                 }, 
          });
       } else {
@@ -682,7 +731,7 @@ function validar(e){
    if(tecla==13)     {
       $("#rut").css("border-color","");  
       if($("#rut").val() == ''){
-         jError("RUN del paciente esta vacío.","e-SISSAN Error");
+         jError("RUN del paciente esta vacio.","e-SISSAN Error");
          $("#rut").css("border-color","red");  
          return false;
       } else {
@@ -736,13 +785,20 @@ function editarExt(idMen){
         dataType       :   "json",
         beforeSend     :   function(xhr){  $('#loadFade').modal('show'); },
         data           :   { "idMen" : idMen },
-        error          :   function(errro)   {  
+        error          :   function(errro)  {  
                                                console.log(errro);
                                                jAlert("Error General, Consulte Al Administrador"); 
-                                               $('#loadFade').modal('hide');
+                                                setTimeout(function() {
+                                                    $("#loadFade").modal("hide");
+                                                }, 1000);
                                             },
         success        :   function(aData)  {  
-                                                $('#loadFade').modal('hide');
+                                                
+                                                setTimeout(function() {
+                                                    $("#loadFade").modal("hide");
+                                                }, 1000);
+
+
                                                 console.log("   out -> ",aData);
                                                 let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
                                                 if (aData.arr_bd.gu_tmenuprincipal.length>0){
@@ -825,10 +881,17 @@ function js_editarextension(idMen){
                     error          :    function(errro) {  
                                                            console.log(errro);
                                                            jAlert("Error General, Consulte Al Administrador"); 
-                                                           $('#loadFade').modal('hide');
+                                                        
+                                                           setTimeout(function() {
+                                                            $("#loadFade").modal("hide");
+                                                        }, 1000);
+
                                                         },
                     success        :    function(aData) {  
-                                                            $('#loadFade').modal('hide');
+
+                                                            setTimeout(function() {
+                                                                $("#loadFade").modal("hide");
+                                                            }, 1000);
                                                             console.log("editando_estensiones_privilegios   -> ",aData);
                                                             showNotification('top','right','<i class="bi bi-database-fill-slash"></i> Se edito privilegios',2);
                                                         }, 
