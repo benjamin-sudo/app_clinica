@@ -17,9 +17,9 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
         $this->load->js("assets/ssan_spab_gestionlistaquirurgica/js/javascript.js");
         $this->load->css("assets/ssan_spab_gestionlistaquirurgica/css/styles.css");
         $this->load->js("assets/themes/wsocket_io/2_3_0/socket.io.dev.js");
-        $BOOLEANO                               =   $this->input->get('external_call',true);
+        $BOOLEANO =   $this->input->get('external_call',true);
         if ($BOOLEANO){
-            $template                           =   $this->input->get('template',true);
+            $template =   $this->input->get('template',true);
             $this->output->set_template("Theme_blank");
             $this->load->helper('url');
             #DATA MOMENTOS
