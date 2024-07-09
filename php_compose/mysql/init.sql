@@ -322,9 +322,9 @@ CREATE TABLE ADMIN.GU_TUSUTIENEPER (
   PER_ID                        INT(5),
   ID_UID                        INT(10),
   IND_ESTADO                    INT(1)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci;  //
 
-INSERT INTO `GU_TUSUTIENEPER` (`ID_UTP`, `PER_ID`, `ID_UID`, `IND_ESTADO`) VALUES
+INSERT INTO ADMIN.GU_TUSUTIENEPER (`ID_UTP`, `PER_ID`, `ID_UID`, `IND_ESTADO`) VALUES
 (1,	1,	5,	1),
 (2,	1,	7,	1),
 (5,	1,	10,	1),
@@ -335,10 +335,10 @@ CREATE TABLE ADMIN.GU_TUSUXEMPRESA (
   ID_UXE                        INT AUTO_INCREMENT PRIMARY KEY,  
   ID_UID                        INT(10),
   COD_ESTABL                    VARCHAR(5),
-  IND_ESTADO                    INT(1),
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; 
+  IND_ESTADO                    INT(1)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_spanish_ci; // 
 
-INSERT INTO `GU_TUSUXEMPRESA` (`ID_UXE`, `ID_UID`, `COD_ESTABL`, `IND_ESTADO`) VALUES
+INSERT INTO ADMIN.GU_TUSUXEMPRESA (`ID_UXE`, `ID_UID`, `COD_ESTABL`, `IND_ESTADO`) VALUES
 (1,	10,	'029',	1),
 (2,	10,	'800',	1),
 (3,	10,	'801',	1),
