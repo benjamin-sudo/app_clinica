@@ -1,5 +1,6 @@
 $(document).ready(function(){
     //https://getbootstrap.com/docs/5.3/getting-started/introduction/
+
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 4                                   ");
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
@@ -855,25 +856,20 @@ function js_editarextension(idMen,ind_tipo_menu) {
         let ind_extension_padre = 0;
         let tipo_de_extension = 0;
         if (ind_tipo_menu != 0) {
-            /*
-                let value = $("#listarMenup").val();
-                listarMenup = parseInt(value);
-                let num_tipo = $('option[value="' + value + '"]').data('tipo');
-                extension_principal = parseInt(num_tipo) + 1;
-            */
             ind_extension_padre = parseInt($("#listarMenup").prop("value"));
             tipo_de_extension = ind_tipo_menu;
         }
         
-        console.log("   -----------------------------  ");
+        console.log("   ----------------------------------------------------------  ");
         console.log("idMen                  ->", idMen);
-        console.log("ind_extension_padre    ->", ind_extension_padre);
+        console.log("idMen_extension_padre  ->", ind_extension_padre);
         console.log("tipo_de_extension      ->", tipo_de_extension);
         console.log("check                  ->", check);
         console.log("arr_permisos           ->", arr_permisos);
         console.log("bool_checked           ->", bool_checked);
-
-        return false;
+        console.log("   ----------------------------------------------------------  ");
+        
+        //return false;
 
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
             if (r) {
