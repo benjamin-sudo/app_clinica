@@ -790,11 +790,9 @@ function editarExt(idMen){
                                 },
         success : function(aData){  
                                     console.log(" editarExt  -> ",aData);
-                                    
                                     setTimeout(function(){
                                         $("#loadFade").modal("hide");
                                     }, 1000);
-
                                     let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
                                     if (aData.arr_bd.gu_tmenuprincipal.length>0){
                                         $("#nomExt").val(data_menu.MENP_NOMBRE);
@@ -804,6 +802,8 @@ function editarExt(idMen){
                                     }
                                     if(aData.arr_bd.arr_permisos.length>0){
                                         aData.arr_bd.arr_permisos.forEach((row, index) => {
+                                            console.log("   --------------------------  ");
+                                            console.log("   row ->  ",row);
                                             document.getElementById('ck_permiso_'+row.PER_ID).checked = true;
                                         });   
                                     }

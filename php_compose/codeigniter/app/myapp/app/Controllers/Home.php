@@ -276,12 +276,11 @@ class Home extends BaseController {
             ]);
             return;
         }
-        $data_return = $this->usersModel->editando_extension(['post' => $postData]);
+        $data_return = $this->usersModel->editando_extension_last(['post' => $postData]);
         echo json_encode([
             'status' => $data_return['status'],
             'data_return' => $data_return,
         ]);
     }
-    
     
 }

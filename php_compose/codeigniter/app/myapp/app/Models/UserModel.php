@@ -21,8 +21,8 @@ class UserModel extends Model {
                     WHERE 
                         m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;
                     ";
-        $menuData = $db->query($sql)->getResultArray();
-        $menu = [];
+        $menuData           =   $db->query($sql)->getResultArray();
+        $menu               =   [];
         foreach($menuData as $row) {
             $menuId         =   $row['main_id'];
             $subMenuId      =   $row['sub_id'];
@@ -272,8 +272,55 @@ class UserModel extends Model {
                 ];
     }
 
-    
-    
+    public function buscaExtEdit($aData){
+        $db         =   db_connect();
+        $id         =   $aData['idMen'];
+        $query      =   $db->query("SELECT 
+                                        MENP_ID, 
+                                        MENP_NOMBRE, 
+                                        MENP_RUTA, 
+                                        MENP_IDPADRE, 
+                                        MENP_TIPO, 
+                                        MENP_ESTADO 
+                                    FROM 
+                                        ADMIN.GU_TMENUPRINCIPAL 
+                                    WHERE 
+                                        MENP_ID         =   ".$id)->getResultArray();
+        
+
+        $SQL        =   "SELECT 
+                            A.MENP_ID,
+                            A.PER_ID,
+                            B.PER_NOMBRE,
+                            B.PER_ESTADO 
+                        FROM 
+                            ADMIN.GU_TMENPTIENEPER A, 
+                            ADMIN.GU_TPERMISOS B 
+                        WHERE 
+                            A.MENP_ID = ".$id." AND PER_ESTADO = 1 AND A.PER_ID = B.PER_ID AND IND_ESTADO = 1";
+
+
+        $query2     =   $db->query("SELECT 
+                                        A.MENP_ID,
+                                        A.PER_ID,
+                                        B.PER_NOMBRE,
+                                        B.PER_ESTADO 
+                                    FROM 
+                                        ADMIN.GU_TMENPTIENEPER A,
+                                        ADMIN.GU_TPERMISOS B 
+                                    WHERE 
+                                        A.MENP_ID       =   ".$id."     AND 
+                                        B.PER_ESTADO    =   1           AND
+                                        A.PER_ID        =   B.PER_ID    AND 
+                                        A.IND_ESTADO    =   1 ")->getResultArray();
+
+        return  [
+                    'id' =>  $id,
+                    'SQL' =>  $SQL,
+                    'gu_tmenuprincipal' =>  $query,
+                    'arr_permisos' =>  $query2,
+                ];                    
+    }
 
 
     public function grabarExt($v_post){
@@ -303,7 +350,7 @@ class UserModel extends Model {
             $sigMen     =   0;
             while ($sigMen <= 2) {
                 foreach ($arrPrivilegios as $key => $idPer) {
-                    $res = $db->query("SELECT PER_ID  FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = $idPer AND MENP_ID = $idExt ")->getResult();
+                    $res = $db->query("select PER_ID  FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = $idPer AND MENP_ID = $idExt ")->getResult();
                     if (count($res)>0){
                         $builder = $db->table('ADMIN.GU_TMENPTIENEPER');
                         $builder->set('IND_ESTADO', 1);
@@ -339,122 +386,7 @@ class UserModel extends Model {
         return true;
     }
 
-    
-    public function buscaExtEdit($aData) {
-        $db = \Config\Database::connect();
-        $id = $aData['idMen'];
-    
-        // Consulta para obtener información del menú principal
-        $query = $db->table('ADMIN.GU_TMENUPRINCIPAL')
-                    ->select('MENP_ID, MENP_NOMBRE, MENP_RUTA, MENP_IDPADRE, MENP_TIPO, MENP_ESTADO')
-                    ->where('MENP_ID', $id)
-                    ->get()
-                    ->getResultArray();
-    
-        // Consulta para obtener los permisos asociados
-        $query2 = $db->table('ADMIN.GU_TMENPTIENEPER A')
-                     ->select('A.MENP_ID, A.PER_ID, B.PER_NOMBRE, B.PER_ESTADO')
-                     ->join('ADMIN.GU_TPERMISOS B', 'A.PER_ID = B.PER_ID')
-                     ->where('A.MENP_ID', $id)
-                     ->where('B.PER_ESTADO', 1)
-                     ->where('A.IND_ESTADO', 1)
-                     ->get()
-                     ->getResultArray();
-    
-        return [
-            'id' => $id,
-            'gu_tmenuprincipal' => $query,
-            'arr_permisos' => $query2,
-        ];
-    }
-
-
-    public function editando_extension($aData) {
-    $postData = $aData['post'];
-
-    // Verifica si los datos necesarios están presentes
-    $idExt = isset($postData['idMen']) ? $postData['idMen'] : null;
-    $nombre = isset($postData['nombre']) ? $postData['nombre'] : '';
-    $rutaactual = isset($postData['nomArch']) ? $postData['nomArch'] : '';
-    $check = isset($postData['bool_checked']) ? $postData['bool_checked'] : 0;
-    $arrPrivilegios = isset($postData['arrPrivilegios']) ? $postData['arrPrivilegios'] : [];
-    $tip = isset($postData['extension_principal']) ? $postData['extension_principal'] : '';
-    $listarMenup = isset($postData['listarMenup']) ? $postData['listarMenup'] : '';
-
-    if (is_null($idExt)) {
-        // Manejo del error cuando falta el idMen
-        return [
-            "data" => $aData,
-            "status" => false,
-            "message" => "ID de extensión faltante"
-        ];
-    }
-
-    $db = \Config\Database::connect();
-    $db->transStart();
-
-    // Actualizar el menú principal
-    $data = [
-        'MENP_NOMBRE' => $nombre,
-        'MENP_ESTADO' => $check,
-        'MENP_TIPO' => $tip,
-        'MENP_IDPADRE' => $listarMenup,
-        'MENP_RUTA' => $rutaactual,
-        'MENP_FRAME' => 3
-    ];
-
-    $db->table('ADMIN.GU_TMENUPRINCIPAL')
-       ->where('MENP_ID', $idExt)
-       ->update($data);
-
-    // Actualizar privilegios
-    if (count($arrPrivilegios) > 0) {
-        // Desactivar todos los privilegios existentes para este menú
-        $db->table('ADMIN.GU_TMENPTIENEPER')
-           ->set('IND_ESTADO', 0)
-           ->where('MENP_ID', $idExt)
-           ->update();
-        
-        foreach ($arrPrivilegios as $idPer) {
-            $res = $db->table('ADMIN.GU_TMENPTIENEPER')
-                      ->select('PER_ID')
-                      ->where('PER_ID', $idPer)
-                      ->where('MENP_ID', $idExt)
-                      ->get()
-                      ->getResultArray();
-
-            if (count($res) > 0) {
-                // Actualizar el registro existente
-                $db->table('ADMIN.GU_TMENPTIENEPER')
-                   ->set('IND_ESTADO', 1)
-                   ->where('PER_ID', $idPer)
-                   ->where('MENP_ID', $idExt)
-                   ->update();
-            } else {
-                // Insertar un nuevo registro
-                $data = [
-                    'MENP_ID' => $idExt,
-                    'PER_ID' => $idPer,
-                    'IND_ESTADO' => 1
-                ];
-                $db->table('ADMIN.GU_TMENPTIENEPER')
-                   ->insert($data);
-            }
-        }
-    }
-
-    $db->transComplete();
-    return [
-        "data" => $aData,
-        "status" => $db->transStatus()
-    ];
-}
-
-    
-    
-
-
-    public function editando_extension_OLD($aData){
+    public function editando_extension_last($aData){
         $idExt              =   $aData['post']['idMen'];
         $nombre             =   $aData['post']['nombre'];
         $listarMenup        =   $aData['post']['listarMenup'];
@@ -476,20 +408,18 @@ class UserModel extends Model {
         $obj_update->where('MENP_ID',$idExt);
         $obj_update->update();
         //******************************************************** */
-        $count =   count($arrPrivilegios);
+        $count              =   count($arrPrivilegios);
         if ($count > 0) {
             $sigMen = 0;
             while ($sigMen <= 2) { //Pasa 3 veces si se detectan menus padres // 
-                
                 if ($sigMen == 0) {
                     $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO',0)->where('MENP_ID',$idExt)->update();
                 }
-
                 foreach ($arrPrivilegios as $key => $idPer) {
-                    $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = $idPer AND MENP_ID = $idExt ")->getResultArray();
+                    $res            =   $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = $idPer AND MENP_ID = $idExt ")->getResultArray();
                     if (count($res) > 0) {
                         // Actualizar el registro existente
-                        $builder1 = $db->table('ADMIN.GU_TMENPTIENEPER');
+                        $builder1   =   $db->table('ADMIN.GU_TMENPTIENEPER');
                         $builder1->set('IND_ESTADO', 1)
                             ->where('PER_ID', $idPer)
                             ->where('MENP_ID', $idExt)
