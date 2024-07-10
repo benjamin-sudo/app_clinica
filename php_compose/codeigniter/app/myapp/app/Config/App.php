@@ -6,8 +6,6 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
-
-    
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
@@ -18,7 +16,6 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
-    
         public string $baseURL = 'http://localhost:9000/';
         #public $baseURL = 'https://panel.clinicalibre.cl/';  // Para producción
 
