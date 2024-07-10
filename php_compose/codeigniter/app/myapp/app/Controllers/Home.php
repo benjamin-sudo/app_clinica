@@ -265,8 +265,6 @@ class Home extends BaseController {
         ]); 
     }
 
-
-
     public function editExtension() {
         $postData = $this->request->getPost();
         // Log para depuración

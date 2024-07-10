@@ -861,7 +861,7 @@ function js_editarextension(idMen,ind_tipo_menu) {
                 let num_tipo = $('option[value="' + value + '"]').data('tipo');
                 extension_principal = parseInt(num_tipo) + 1;
             */
-            ind_extension_padre = $("#listarMenup").prop("value");
+            ind_extension_padre = parseInt($("#listarMenup").prop("value"));
             tipo_de_extension = ind_tipo_menu;
         }
         
