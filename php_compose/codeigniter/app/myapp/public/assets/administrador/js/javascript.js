@@ -769,18 +769,25 @@ function alfanumerico(e) {
     }
 }
 
-function editarExt(idMen){
-    console.log("   ------------------------------- ");
-    console.log("   editarExt -> idMen  ->  ",idMen);
+
+
+function editarExt(idMen,ind_tipo_menu){
+    //ind_tipo_menu 
+        // 0 : Abuelo - Menu principal 
+        // 1 : hijo - Sub Menu 
+        // 2 : nieto - Extension
+    //vuelve a cero los menu    
+
     document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
         checkbox.checked = false;
     });
+
     $.ajax({ 
         type : "POST",
         url : "Home/buscaEditar",
         dataType : "json",
         beforeSend : function(xhr){  $('#loadFade').modal('show'); },
-        data : { "idMen" : idMen },
+        data : { "idMen" : idMen ,ind_tipo_menu : ind_tipo_menu },
         error : function(errro) {  
                                     console.log(errro);
                                     jAlert("Error General, Consulte Al Administrador"); 
@@ -794,12 +801,14 @@ function editarExt(idMen){
                                         $("#loadFade").modal("hide");
                                     }, 1000);
                                     let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
+
                                     if (aData.arr_bd.gu_tmenuprincipal.length>0){
                                         $("#nomExt").val(data_menu.MENP_NOMBRE);
                                         $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled",true);
-                                        $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);;
-                                        $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+')');
+                                        $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);
+                                        $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+','+ind_tipo_menu+')');
                                     }
+
                                     if(aData.arr_bd.arr_permisos.length>0){
                                         aData.arr_bd.arr_permisos.forEach((row, index) => {
                                             console.log("   --------------------------  ");
@@ -807,17 +816,18 @@ function editarExt(idMen){
                                             document.getElementById('ck_permiso_'+row.PER_ID).checked = true;
                                         });   
                                     }
+
+
+
                                 }, 
     });
-    /*
-    cargaPrivOrigen();
-    var id          =   "carga";
-    var funcion     =   'buscaEditar';
-    var variables   =   {"id":idMen}
-    AjaxExt(variables, id, funcion);
-    */
 }
-function js_editarextension(idMen) {
+
+
+
+function js_editarextension(idMen,ind_tipo_menu) {
+    console.log("idMen -> ",idMen);
+    console.log("ind_tipo_menu -> ",ind_tipo_menu);
     let const_error = [];
     let check = document.getElementById('habilitado').checked ? 1 : 0; // menú habilitado
 
@@ -838,29 +848,34 @@ function js_editarextension(idMen) {
     }
 
     if (const_error.length > 0) {
-        jError(const_error.join("<br>"), "ERROR - CLINICA WALDO ORELLANA");
+        jError(const_error.join("<br>"), "ERROR - CLinica libre");
         return false;
     } else {
         let bool_checked = document.getElementById('habilitado').checked; // menú habilitado
-        let listarMenup = 0;
-        let extension_principal = 1;
-
-        if ($("#listarMenup").val() != "0") {
-            let value = $("#listarMenup").val();
-            listarMenup = parseInt(value);
-            let num_tipo = $('option[value="' + value + '"]').data('tipo');
-            extension_principal = parseInt(num_tipo) + 1;
+        let ind_extension_padre = 0;
+        let tipo_de_extension = 0;
+        if (ind_tipo_menu != 0) {
+            /*
+                let value = $("#listarMenup").val();
+                listarMenup = parseInt(value);
+                let num_tipo = $('option[value="' + value + '"]').data('tipo');
+                extension_principal = parseInt(num_tipo) + 1;
+            */
+            ind_extension_padre = $("#listarMenup").val();
+            tipo_de_extension = ind_tipo_menu;
         }
-
+        
         console.log("   -----------------------------  ");
         console.log("idMen                  ->", idMen);
-        console.log("listarMenup            ->", listarMenup);
-        console.log("extension_principal    ->", extension_principal);
+        console.log("ind_extension_padre    ->", ind_extension_padre);
+        console.log("tipo_de_extension      ->", tipo_de_extension);
         console.log("check                  ->", check);
         console.log("arr_permisos           ->", arr_permisos);
         console.log("bool_checked           ->", bool_checked);
 
-        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta CLINICA LIBRE <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
+        return false;
+
+        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
             if (r) {
                 $.ajax({ 
                     type: "POST",
@@ -871,11 +886,12 @@ function js_editarextension(idMen) {
                         "idMen": idMen,
                         "nombre": $("#nomExt").val(),
                         "nomArch" : $("#nomExt").val(),
-                        "listarMenup": listarMenup,
-                        "extension_principal": extension_principal,
+                        "ind_extension_padre": ind_extension_padre,
+                        "tipo_de_extension": tipo_de_extension,
                         "check": check,
                         "arrPrivilegios": arr_permisos,
                         "bool_checked": bool_checked,
+                        "ind_tipo_menu" : ind_tipo_menu,
                     },
                     error: function(error) {  
                         console.log(error);
@@ -890,7 +906,7 @@ function js_editarextension(idMen) {
                         }, 1000);
                         console.log("editando_estensiones_privilegios   -> ", aData);
                         showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
-                        editarExt(idMen);
+                      
                     }, 
                 });
             } else {

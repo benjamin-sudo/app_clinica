@@ -256,13 +256,16 @@ class Home extends BaseController {
         if ($this->request->isAJAX()){  }
         $status = true;    
         $idMen = $this->request->getPost("idMen");
+        $ind_tipo_menu = $this->request->getPost("ind_tipo_menu");
         $data_return = $this->usersModel->buscaExtEdit(['idMen'=>$idMen]);
         echo json_encode([
             'arr_bd' => $data_return,
             'idMen' => $idMen,
             'status' => $status,
-        ]);   
+        ]); 
     }
+
+
 
     public function editExtension() {
         $postData = $this->request->getPost();
