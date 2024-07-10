@@ -18,6 +18,19 @@ sudo chmod -R 777 /home/ubuntu/app_clinica
 
 cat /home/ubuntu/app_clinica/php_compose/php_codeneiter/html/application/config/config.php
 
-18.189.15.74:
+# Listar contenedores y su tamaño
+docker ps -s
+# Mostrar el tamaño de las imágenes Docker
+docker images
+# Verificar el uso de espacio en todo Docker
+docker system df
+# Mostrar el uso de espacio en disco en Ubuntu
+df -h
+# Verificar el uso de espacio en el directorio de Docker
+sudo du -sh /var/lib/docker
 
-mysqli
+docker container prune -f
+docker image prune -f
+docker volume prune -f
+docker system prune -a -f
+
