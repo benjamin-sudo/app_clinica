@@ -770,10 +770,11 @@ function alfanumerico(e) {
 }
 
 function editarExt(idMen){
-
     console.log("   ------------------------------- ");
-    console.log("   idMen  ->  ",idMen);
-
+    console.log("   editarExt -> idMen  ->  ",idMen);
+    document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
+        checkbox.checked = false;
+    });
     $.ajax({ 
         type : "POST",
         url : "Home/buscaEditar",
@@ -818,6 +819,8 @@ function editarExt(idMen){
 }
 
 function js_editarextension(idMen){
+
+
     let const_error     =   [];
     let check           =   document.getElementById('habilitado').checked?1:0; // menu habilitado
     //console.log("bool_checked   ->  ",bool_checked);
@@ -855,7 +858,15 @@ function js_editarextension(idMen){
         //console.log("     ----------------------------------------    ");
         //console.log("     editando_estensiones_privilegios            ");
         //console.log("     ----------------------------------------    ");
-        
+        console.log("   -----------------------------  ");
+        console.log("idMen                  ->",idMen);
+        console.log("listarMenup            ->",listarMenup);
+        console.log("extension_principal    ->",extension_principal);
+        console.log("check                  ->",check);
+        console.log("arr_permisos           ->",arr_permisos);
+        console.log("bool_checked           ->",bool_checked);
+        //return false;
+
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta e-SISSAN <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
                 $.ajax({ 

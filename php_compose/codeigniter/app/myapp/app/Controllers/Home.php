@@ -254,23 +254,23 @@ class Home extends BaseController {
 
     public function buscaEditar(){
         if ($this->request->isAJAX()){  }
-        $status         =   true;    
-        $idMen          =   $this->request->getPost("idMen");
-        $data_return    =   $this->usersModel->buscaExtEdit(['idMen'=>$idMen]);
+        $status = true;    
+        $idMen = $this->request->getPost("idMen");
+        $data_return = $this->usersModel->buscaExtEdit(['idMen'=>$idMen]);
         echo json_encode([
-            'arr_bd'    =>  $data_return,
-            'idMen'     =>  $idMen,
-            'status'    =>  $status,
+            'arr_bd' => $data_return,
+            'idMen' => $idMen,
+            'status' => $status,
         ]);   
     }
 
     public function editExtension(){
-        $status             =   true;
-        $data_return        =   [];
-        $data_return        =   $this->usersModel->editando_extension(['post'=>$this->request->getPost()]);
+        $status = true;
+        $data_return = [];
+        $data_return = $this->usersModel->editando_extension_new(['post'=>$this->request->getPost()]);
         echo json_encode([
-            'status'        =>  $status,
-            'data_return'   =>  $data_return,
+            'status' => $status,
+            'data_return' => $data_return,
         ]);
     }
 
