@@ -817,96 +817,89 @@ function editarExt(idMen){
     AjaxExt(variables, id, funcion);
     */
 }
+function js_editarextension(idMen) {
+    let const_error = [];
+    let check = document.getElementById('habilitado').checked ? 1 : 0; // menú habilitado
 
-function js_editarextension(idMen){
-
-
-    let const_error     =   [];
-    let check           =   document.getElementById('habilitado').checked?1:0; // menu habilitado
-    //console.log("bool_checked   ->  ",bool_checked);
-    if ($("#nomExt").val()   == ''){
-        const_error.push("Falta nombre del menu");
+    if ($("#nomExt").val() == '') {
+        const_error.push("Falta nombre del menú");
     }
-    //console.log("   editando    ->  ",idMen);
+
     let arr_permisos = [];
-    $(".checked_id").each(function(index){
+    $(".checked_id").each(function(index) {
         let ck_permiso = document.getElementById(this.id).checked;
-        if (ck_permiso){
+        if (ck_permiso) {
             arr_permisos.push(this.id.split("_")[2]);
         }
     });
-    //console.log("arr_permisos   ->",arr_permisos);
-    if (arr_permisos.length==0){ 
-        const_error.push("Falta previlegios"); 
+
+    if (arr_permisos.length == 0) { 
+        const_error.push("Faltan privilegios"); 
     }
-    if (const_error.length>0){
-        jError(const_error.join("<br>"),"ERROR - CLINICA WALDO ORELLANA");
+
+    if (const_error.length > 0) {
+        jError(const_error.join("<br>"), "ERROR - CLINICA WALDO ORELLANA");
         return false;
     } else {
-        let bool_checked          = document.getElementById('habilitado').checked; // menu habilitado
-        let listarMenup           = [];
-        let extension_principal   = 1;
-        if($("#listarMenup").val() == "0"){
-            listarMenup            =  0;
-        } else {
-            let value              =  $("#listarMenup").val();
-            listarMenup            =  parseInt(value);
-            num_tipo               =  $('option[value="'+value+'"]').data('tipo');
-            extension_principal    =  parseInt(num_tipo) + 1;
+        let bool_checked = document.getElementById('habilitado').checked; // menú habilitado
+        let listarMenup = 0;
+        let extension_principal = 1;
+
+        if ($("#listarMenup").val() != "0") {
+            let value = $("#listarMenup").val();
+            listarMenup = parseInt(value);
+            let num_tipo = $('option[value="' + value + '"]').data('tipo');
+            extension_principal = parseInt(num_tipo) + 1;
         }
-        
-        //console.log("     ----------------------------------------    ");
-        //console.log("     editando_estensiones_privilegios            ");
-        //console.log("     ----------------------------------------    ");
+
         console.log("   -----------------------------  ");
-        console.log("idMen                  ->",idMen);
-        console.log("listarMenup            ->",listarMenup);
-        console.log("extension_principal    ->",extension_principal);
-        console.log("check                  ->",check);
-        console.log("arr_permisos           ->",arr_permisos);
-        console.log("bool_checked           ->",bool_checked);
-        //return false;
+        console.log("idMen                  ->", idMen);
+        console.log("listarMenup            ->", listarMenup);
+        console.log("extension_principal    ->", extension_principal);
+        console.log("check                  ->", check);
+        console.log("arr_permisos           ->", arr_permisos);
+        console.log("bool_checked           ->", bool_checked);
 
-        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta e-SISSAN <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
-            if(r){
+        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta CLINICA LIBRE <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
+            if (r) {
                 $.ajax({ 
-                    type           :    "POST",
-                    url            :    "Home/editExtension",
-                    dataType       :    "json",
-                    beforeSend     :    function(xhr){ $('#loadFade').modal('show'); },
-                    data           :    { 
-                                            "idMen"                 :   idMen,
-                                            "nombre"                :   $("#nomExt").val(),   
-                                            "listarMenup"           :   listarMenup,
-                                            "extension_principal"   :   extension_principal,
-                                            "check"                 :   check,
-                                            "arrPrivilegios"        :   arr_permisos,
-                                            "bool_checked"          :   bool_checked,
-                                        },
-                    error          :    function(errro) {  
-                                                           console.log(errro);
-                                                           jAlert("Error General, Consulte Al Administrador"); 
-                                                        
-                                                           setTimeout(function() {
-                                                            $("#loadFade").modal("hide");
-                                                        }, 1000);
-
-                                                        },
-                    success        :    function(aData) {  
-
-                                                            setTimeout(function() {
-                                                                $("#loadFade").modal("hide");
-                                                            }, 1000);
-                                                            console.log("editando_estensiones_privilegios   -> ",aData);
-                                                            showNotification('top','right','<i class="bi bi-database-fill-slash"></i> Se edito privilegios',2);
-                                                        }, 
+                    type: "POST",
+                    url: "Home/editExtension",
+                    dataType: "json",
+                    beforeSend: function(xhr) { $('#loadFade').modal('show'); },
+                    data: { 
+                        "idMen": idMen,
+                        "nombre": $("#nomExt").val(),
+                        "nomArch" : $("#nomExt").val(),
+                        "listarMenup": listarMenup,
+                        "extension_principal": extension_principal,
+                        "check": check,
+                        "arrPrivilegios": arr_permisos,
+                        "bool_checked": bool_checked,
+                    },
+                    error: function(error) {  
+                        console.log(error);
+                        jAlert("Error General, Consulte Al Administrador"); 
+                        setTimeout(function() {
+                            $("#loadFade").modal("hide");
+                        }, 1000);
+                    },
+                    success: function(aData) {  
+                        setTimeout(function() {
+                            $("#loadFade").modal("hide");
+                        }, 1000);
+                        console.log("editando_estensiones_privilegios   -> ", aData);
+                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
+                        editarExt(idMen);
+                    }, 
                 });
             } else {
-                //jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+                // jError("Firma simple vac&iacute;a", "Error - CLINICA LIBRE"); 
             }
         });
     }
 }
+
 
 /*
 function cargaPrivOrigen() {

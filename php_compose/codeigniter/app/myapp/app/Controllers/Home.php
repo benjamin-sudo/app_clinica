@@ -264,14 +264,24 @@ class Home extends BaseController {
         ]);   
     }
 
-    public function editExtension(){
-        $status = true;
-        $data_return = [];
-        $data_return = $this->usersModel->editando_extension_new(['post'=>$this->request->getPost()]);
+    public function editExtension() {
+        $postData = $this->request->getPost();
+        // Log para depuración
+        // log_message('debug', 'Post data: ' . json_encode($postData));
+        // Verifica si los datos necesarios están presentes
+        if (!isset($postData['idMen']) || !isset($postData['nombre']) || !isset($postData['listarMenup']) || !isset($postData['extension_principal']) || !isset($postData['check']) || !isset($postData['arrPrivilegios']) || !isset($postData['bool_checked'])) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Faltan datos necesarios en la solicitud.'
+            ]);
+            return;
+        }
+        $data_return = $this->usersModel->editando_extension(['post' => $postData]);
         echo json_encode([
-            'status' => $status,
+            'status' => $data_return['status'],
             'data_return' => $data_return,
         ]);
     }
-
+    
+    
 }
