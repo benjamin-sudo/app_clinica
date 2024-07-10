@@ -31,8 +31,6 @@
     <?php $this->renderSection('content');?>
   </div>
 </div>
-
-
 <script type="text/javascript" src="recursos/js/bootstrap/dist/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="recursos/js/socket/4_6_1/socket.io.js"></script>
 <!--

@@ -770,49 +770,43 @@ function alfanumerico(e) {
 }
 
 function editarExt(idMen){
-    //console.log("----------------------------------------------");
-    //console.log("editarExt  ->  ",idMen);
-    /*
-    $('#titleGest').html('Editar extension');
-    $('#nomBTN').html('Editar extension');
-    $('#grabarExt').attr('class', 'btn btn-small btn-info');
-    $('#iconBtn').attr('class', 'fa fa-pencil-square-o fa-large');
-    $('#idExt').val(idMen);
-    */
+
+    console.log("   ------------------------------- ");
+    console.log("   idMen  ->  ",idMen);
+
     $.ajax({ 
-        type           :   "POST",
-        url            :   "Home/buscaEditar",
-        dataType       :   "json",
-        beforeSend     :   function(xhr){  $('#loadFade').modal('show'); },
-        data           :   { "idMen" : idMen },
-        error          :   function(errro)  {  
-                                               console.log(errro);
-                                               jAlert("Error General, Consulte Al Administrador"); 
-                                                setTimeout(function() {
-                                                    $("#loadFade").modal("hide");
-                                                }, 1000);
-                                            },
-        success        :   function(aData)  {  
-                                                
-                                                setTimeout(function() {
-                                                    $("#loadFade").modal("hide");
-                                                }, 1000);
+        type : "POST",
+        url : "Home/buscaEditar",
+        dataType : "json",
+        beforeSend : function(xhr){  $('#loadFade').modal('show'); },
+        data : { "idMen" : idMen },
+        error : function(errro) {  
+                                    console.log(errro);
+                                    jAlert("Error General, Consulte Al Administrador"); 
+                                    setTimeout(function() {
+                                        $("#loadFade").modal("hide");
+                                    }, 1000);
+                                },
+        success : function(aData){  
+                                    console.log(" editarExt  -> ",aData);
+                                    
+                                    setTimeout(function(){
+                                        $("#loadFade").modal("hide");
+                                    }, 1000);
 
-
-                                                console.log("   out -> ",aData);
-                                                let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
-                                                if (aData.arr_bd.gu_tmenuprincipal.length>0){
-                                                    $("#nomExt").val(data_menu.MENP_NOMBRE);
-                                                    $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled",true);
-                                                    $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);;
-                                                    $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+')');
-                                                }
-                                                if(aData.arr_bd.arr_permisos.length>0){
-                                                    aData.arr_bd.arr_permisos.forEach((row, index) => {
-                                                        document.getElementById('ck_permiso_'+row.PER_ID).checked = true;
-                                                    });   
-                                                }
-                                            }, 
+                                    let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
+                                    if (aData.arr_bd.gu_tmenuprincipal.length>0){
+                                        $("#nomExt").val(data_menu.MENP_NOMBRE);
+                                        $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled",true);
+                                        $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);;
+                                        $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+')');
+                                    }
+                                    if(aData.arr_bd.arr_permisos.length>0){
+                                        aData.arr_bd.arr_permisos.forEach((row, index) => {
+                                            document.getElementById('ck_permiso_'+row.PER_ID).checked = true;
+                                        });   
+                                    }
+                                }, 
     });
     /*
     cargaPrivOrigen();
