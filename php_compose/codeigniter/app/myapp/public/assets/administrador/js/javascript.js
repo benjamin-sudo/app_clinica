@@ -268,7 +268,7 @@ function grabarUsu(){
         //console.log("       ------------------------    ");
         //console.log("       pasa                        ");
         //console.log("       enviando -> ",variables,"   ");
-        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta e-SISSAN <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
+        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta CLINICA LIBRE <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
                 console.log(" r -> ",r);
                 $.ajax({ 
@@ -778,6 +778,9 @@ function editarExt(idMen,ind_tipo_menu){
         // 1 : hijo - Sub Menu 
         // 2 : nieto - Extension
     //vuelve a cero los menu    
+    console.log("********************************");
+    console.log("idMen -> ",idMen);
+    console.log("ind_tipo_menu  ->",ind_tipo_menu);
 
     document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
         checkbox.checked = false;
@@ -798,6 +801,7 @@ function editarExt(idMen,ind_tipo_menu){
                                 },
         success : function(aData){  
                                     console.log(" editarExt  -> ",aData);
+                                    console.log("sql ->" , aData.arr_bd.SQL);
                                     setTimeout(function(){
                                         $("#loadFade").modal("hide");
                                     }, 1000);
@@ -868,7 +872,7 @@ function js_editarextension(idMen,ind_tipo_menu) {
         console.log("arr_permisos           ->", arr_permisos);
         console.log("bool_checked           ->", bool_checked);
         console.log("   ----------------------------------------------------------  ");
-        
+
         //return false;
 
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {

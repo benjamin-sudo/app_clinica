@@ -95,17 +95,6 @@ class UserModel extends Model {
 
 
 
-    protected $table = 'GU_TMENUPRINCIPAL';
-    protected $primaryKey = 'MENP_ID';
-
-    public function buscaElemento($id, $tipo) {
-        return $this->db->query("SELECT MENP_ID, MENP_NOMBRE, MENP_RUTA, MENP_IDPADRE, MENP_TIPO, MENP_ESTADO FROM {$this->table} WHERE MENP_ID = ?", [$id])->getResultArray();
-    }
-
-    public function buscaPrivExt($id) {
-        return $this->db->query("SELECT A.MENP_ID, A.PER_ID, B.PER_NOMBRE, B.PER_ESTADO FROM GU_TMENPTIENEPER A JOIN GU_TPERMISOS B ON A.PER_ID = B.PER_ID WHERE A.MENP_ID = ? AND B.PER_ESTADO = 3 AND A.IND_ESTADO = 1", [$id])->getResultArray();
-    }
-
 
     public function buscaExtArch($aData){
         $db = db_connect();
@@ -224,7 +213,8 @@ class UserModel extends Model {
         );
         //**************************************************************
         $last_id            =   0;
-        $arr_username       =   $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = ".$arr_run)->getResultArray();
+        $arr_username       =   $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = '".$arr_run."'")->getResultArray();
+        
         if(count($arr_username)>0){
             $last_id        =   $arr_username[0]['ID_UID'];
             $constructora   =   $db->table('ADMIN.FE_USERS');
@@ -245,14 +235,14 @@ class UserModel extends Model {
             $constructora0->where('ID_UID',$last_id);
             $constructora0->update();
             foreach($arrPrivilegios as $i => $row){
-                $get_tusutieneper       =   $db->query("SELECT ID_UTP FROM ADMIN.GU_TUSUTIENEPER WHERE PER_ID IN (".$row.") AND ID_UID  = ".$last_id)->getResultArray();
+                $get_tusutieneper = $db->query("SELECT ID_UTP FROM ADMIN.GU_TUSUTIENEPER WHERE PER_ID IN (".$row.") AND ID_UID  = ".$last_id)->getResultArray();
                 if (count($get_tusutieneper)>0){
-                    $constructora3      =   $db->table('ADMIN.GU_TUSUTIENEPER');
+                    $constructora3 = $db->table('ADMIN.GU_TUSUTIENEPER');
                     $constructora3->set(['IND_ESTADO' => 1]);
                     $constructora3->where('ID_UTP',$get_tusutieneper[0]['ID_UTP']);
                     $constructora3->update();
                 } else {
-                    $constructora2      =   $db->table('ADMIN.GU_TUSUTIENEPER');
+                    $constructora2 = $db->table('ADMIN.GU_TUSUTIENEPER');
                     $constructora2->insert(['ID_UID'=>$last_id,'PER_ID'=>$row,'IND_ESTADO'=>1]);
                 }
             }
@@ -286,55 +276,45 @@ class UserModel extends Model {
     }
 
     public function buscaExtEdit($aData){
-        $db         =   db_connect();
-        $id         =   $aData['idMen'];
-        $query      =   $db->query("SELECT 
-                                        MENP_ID, 
-                                        MENP_NOMBRE, 
-                                        MENP_RUTA, 
-                                        MENP_IDPADRE, 
-                                        MENP_TIPO, 
-                                        MENP_ESTADO 
-                                    FROM 
-                                        ADMIN.GU_TMENUPRINCIPAL 
-                                    WHERE 
-                                        MENP_ID = ".$id)->getResultArray();
+        $db = db_connect();
+        $id = $aData['idMen'];
         
-
-        $SQL        =   "SELECT 
-                            A.MENP_ID,
-                            A.PER_ID,
-                            B.PER_NOMBRE,
-                            B.PER_ESTADO 
-                        FROM 
-                            ADMIN.GU_TMENPTIENEPER A, 
-                            ADMIN.GU_TPERMISOS B 
-                        WHERE 
-                            A.MENP_ID = ".$id." AND PER_ESTADO = 1 AND A.PER_ID = B.PER_ID AND IND_ESTADO = 1";
-
-
-        $query2     =   $db->query("SELECT 
-                                        A.MENP_ID,
-                                        A.PER_ID,
-                                        B.PER_NOMBRE,
-                                        B.PER_ESTADO 
-                                    FROM 
-                                        ADMIN.GU_TMENPTIENEPER A,
-                                        ADMIN.GU_TPERMISOS B 
-                                    WHERE 
-                                        A.MENP_ID       =   ".$id."     AND 
-                                        B.PER_ESTADO    =   1           AND
-                                        A.PER_ID        =   B.PER_ID    AND 
-                                        A.IND_ESTADO    =   1 ")->getResultArray();
-
-        return  [
-                    'id' =>  $id,
-                    'SQL' =>  $SQL,
-                    'gu_tmenuprincipal' =>  $query,
-                    'arr_permisos' =>  $query2,
-                ];                    
+        // Consulta para gu_tmenuprincipal
+        $query = $db->query("SELECT 
+                                MENP_ID, 
+                                MENP_NOMBRE, 
+                                MENP_RUTA, 
+                                MENP_IDPADRE, 
+                                MENP_TIPO, 
+                                MENP_ESTADO 
+                            FROM 
+                                ADMIN.GU_TMENUPRINCIPAL 
+                            WHERE 
+                                MENP_ID = ?", [$id])->getResultArray();
+    
+        // Consulta para arr_permisos
+        $SQL = "SELECT 
+                    E.ID_MPTP,
+                    E.PER_ID,
+                    E.MENP_ID,
+                    E.IND_ESTADO  
+                    FROM 
+                    ADMIN.GU_TMENPTIENEPER E 
+                    WHERE 
+                    E.MENP_ID = ?
+                    AND 
+                    E.IND_ESTADO = 1";
+    
+        $query2 = $db->query($SQL, [$id])->getResultArray();
+    
+        return [
+            'id' => $id,
+            'SQL' => $SQL,
+            'gu_tmenuprincipal' => $query,
+            'arr_permisos' => $query2,
+        ];                    
     }
-
+    
 
     public function grabarExt($v_post){
         $opt                    =   $v_post['opt'];
@@ -399,9 +379,7 @@ class UserModel extends Model {
         return true;
     }
 
-
-    public function editando_extension_last($aData)
-    {
+    public function editando_extension_last($aData) {
         $idExt = $aData['post']['idMen'];
         $nombre = $aData['post']['nombre'];
         $listarMenup = $aData['post']['ind_extension_padre'];
@@ -409,8 +387,6 @@ class UserModel extends Model {
         $check = $aData['post']['check'];
         $arrPrivilegios = $aData['post']['arrPrivilegios'];
         $bool_checked = $aData['post']['bool_checked'];
-        
-        
         $db = \Config\Database::connect();
         $db->transStart();
 
@@ -464,9 +440,7 @@ class UserModel extends Model {
                 $sigMen++;
             }
         }
-
         $db->transComplete();
-
         return [
             "data" => $aData,
             "status" => $db->transStatus()
