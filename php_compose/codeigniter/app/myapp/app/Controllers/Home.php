@@ -260,7 +260,7 @@ class Home extends BaseController {
             // Obtener datos del menú
             $data_return = $this->usersModel->buscaExtEdit(['idMen' => $idMen]);
             // Obtener permisos heredados desde el modelo
-            $herencia_permisos = $this->usersModel->obtenerPermisosHeredados($idMen);
+            $herencia_permisos = $this->usersModel->get_obtenerPermisosHeredados($idMen);
             echo json_encode([
                 'arr_bd' => array_merge($data_return, ['herencia_permisos' => $herencia_permisos]),
                 'idMen' => $idMen,
@@ -286,24 +286,44 @@ class Home extends BaseController {
 
     public function editExtension() {
         $postData = $this->request->getPost();
-        // Log para depuración
-        // log_message('debug', 'Post data: ' . json_encode($postData));
-        // Verifica si los datos necesarios están presentes
-        /*
-        if (!isset($postData['idMen']) || !isset($postData['nombre']) || !isset($postData['listarMenup']) || !isset($postData['extension_principal']) || !isset($postData['check']) || !isset($postData['arrPrivilegios']) || !isset($postData['bool_checked'])) {
-            echo json_encode([
-                'status' => false,
-                'message' => 'Faltan datos necesarios en la solicitud.',
-                'postData' => $postData
-            ]);
-            return;
+        // Validar datos
+        if (!isset($postData['idMen']) || !isset($postData['nombre']) || empty($postData['nombre'])) {
+            return $this->response->setStatusCode(400)->setJSON(['status' => false, 'message' => 'Datos inválidos']);
         }
-        */
+        // Log para depuración
         $data_return = $this->usersModel->editando_extension_last(['post' => $postData]);
-        echo json_encode([
+        return $this->response->setJSON([
             'status' => $data_return['status'],
             'data_return' => $data_return,
         ]);
+    }
+
+    public function editExtension_new() {
+        $request = \Config\Services::request();
+        $postData = $request->getPost();
+
+        // Obtener los datos del POST
+        $idMen = $postData['idMen'] ?? null;
+        $nombre = $postData['nombre'] ?? null;
+        $check = $postData['check'] ?? null;
+        $tip = $postData['tipo_de_extension'] ?? null;
+        $listarMenup = $postData['ind_extension_padre'] ?? null;
+        $arrPrivilegios = $postData['arrPrivilegios'] ?? [];
+
+        // Validar los datos
+        if (!$idMen || !$nombre || empty($arrPrivilegios)) {
+            return $this->response->setStatusCode(400)->setJSON(['status' => false, 'message' => 'Datos inválidos']);
+        }
+
+        // Instanciar el modelo
+        $result = $this->usersModel->editarExt($nombre, $check, $tip, $listarMenup, $arrPrivilegios, $idMen);
+
+        // Devolver la respuesta adecuada
+        if ($result) {
+            return $this->response->setJSON(['status' => true, 'message' => 'Extensión editada correctamente']);
+        } else {
+            return $this->response->setStatusCode(500)->setJSON(['status' => false, 'message' => 'Error al editar la extensión']);
+        }
     }
     
 }

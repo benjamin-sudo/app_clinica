@@ -8,6 +8,8 @@ class UserModel extends Model {
         parent::__construct();
     }
 
+
+    
     public function ini_contendido(){
         $db     =   db_connect();
         $sql    =   "SELECT 
@@ -92,6 +94,298 @@ class UserModel extends Model {
             'html'              =>  $html,
         ];
     }
+
+    public function ini_contendido_1() {
+        $db = db_connect();
+        $sql = "SELECT 
+                    m.MENP_ID as main_id, m.MENP_NOMBRE as main_nombre, m.MENP_ESTADO as main_estado, m.MENP_RUTA as main_ruta, m.MENP_IDPADRE as main_idpadre, m.MENP_TIPO as main_tipo, m.MENP_ORDER as main_order, m.MENP_FRAME as main_frame, m.MENP_ICON as main_icon, m.MENP_THEME as main_theme, m.MENP_ISTOKEN as main_istoken, m.MENP_PARAM as main_param,
+                    sm.MENP_ID as sub_id, sm.MENP_NOMBRE as sub_nombre, sm.MENP_ESTADO as sub_estado, sm.MENP_RUTA as sub_ruta, sm.MENP_IDPADRE as sub_idpadre, sm.MENP_TIPO as sub_tipo, sm.MENP_ORDER as sub_order, sm.MENP_FRAME as sub_frame, sm.MENP_ICON as sub_icon, sm.MENP_THEME as sub_theme, sm.MENP_ISTOKEN as sub_istoken, sm.MENP_PARAM as sub_param,
+                    ex.MENP_ID as ext_id, ex.MENP_NOMBRE as ext_nombre, ex.MENP_ESTADO as ext_estado, ex.MENP_RUTA as ext_ruta, ex.MENP_IDPADRE as ext_idpadre, ex.MENP_TIPO as ext_tipo, ex.MENP_ORDER as ext_order, ex.MENP_FRAME as ext_frame, ex.MENP_ICON as ext_icon, ex.MENP_THEME as ext_theme, ex.MENP_ISTOKEN as ext_istoken, ex.MENP_PARAM as ext_param
+                FROM 
+                    ADMIN.GU_TMENUPRINCIPAL m 
+                    LEFT JOIN ADMIN.GU_TMENUPRINCIPAL sm ON sm.MENP_IDPADRE = m.MENP_ID AND sm.MENP_FRAME = 3
+                    LEFT JOIN ADMIN.GU_TMENUPRINCIPAL ex ON ex.MENP_IDPADRE = sm.MENP_ID AND ex.MENP_FRAME = 3
+                WHERE 
+                    m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;";
+        
+        $menuData = $db->query($sql)->getResultArray();
+        $menu = [];
+    
+        foreach ($menuData as $row) {
+            $menuId = $row['main_id'];
+            $subMenuId = $row['sub_id'];
+            $extensionId = $row['ext_id'];
+    
+            // Organizar en estructura jerárquica
+            if (!isset($menu[$menuId])) {
+                $menu[$menuId] = [
+                    'data' => $row, // Datos del menú principal
+                    'submenus' => []
+                ];
+            }
+    
+            if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
+                $menu[$menuId]['submenus'][$subMenuId] = [
+                    'data' => $row, // Datos del submenú
+                    'extensions' => []
+                ];
+            }
+    
+            if ($extensionId) {
+                $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = $row; // Datos de la extensión
+            }
+        }
+    
+        // Generación del HTML
+        $html = "";
+        foreach ($menu as $mainId => $mainMenu) {
+            $mainData = $mainMenu['data'];
+    
+            $html .= "<div class='card' style='margin-bottom: 8px;'>";
+            $html .= "<div class='card-body'>";
+            $html .= "<h3 class='card-title' style='color:#888888;'>";
+            $html .= "<a href='javascript:editarExt(" . $mainData['main_id'] . ",0)'><i class='bi bi-pencil'></i></a>";
+            $html .= htmlspecialchars($mainData['main_nombre']);
+            $html .= "</h3>";
+    
+            // Generar la lista de submenús y sus extensiones
+            $html .= "<ul class='list-group'>";
+            foreach ($mainMenu['submenus'] as $subMenuId => $subMenu) {
+                $subData = $subMenu['data'];
+                $html .= "<h5 style='color:#888888;margin-left: 10px;'>";
+                $html .= "<a href='javascript:editarExt(" . $subData['sub_id'] . ",1)'><i class='bi bi-pencil'></i></a>" . htmlspecialchars($subData['sub_nombre']);
+                $html .= "</h5>";
+    
+                $html .= "<ul class='no-bullet'>";
+                foreach ($subMenu['extensions'] as $extensionId => $extension) {
+                    $html .= "<li><h6 style='color:#888888;margin-left: 15px;'><a href='javascript:editarExt(" . $extension['ext_id'] . ",2)'>";
+                    $html .= "<i class='bi bi-pencil'></i></a>&nbsp;" . htmlspecialchars($extension['ext_nombre']) . "</h6></li>";
+                }
+                $html .= "</ul>"; // Cerrar la lista del submenú
+            }
+            $html .= "</ul>";
+            $html .= "</div>";
+            $html .= "</div>";
+        }
+    
+        return $output = [
+            'menu_principal' => array_values($menu), // Convertir a array para un mejor formato JSON
+            'menuData' => $menuData,
+            'roles_creados' => $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3)")->getResultArray(),
+            'arr_empresas' => $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V'")->getResultArray(),
+            'html' => $html,
+        ];
+    }
+    
+
+
+
+    function ini_contendido_old4() {
+        $db = db_connect();
+        $sql = "SELECT 
+                    m.MENP_ID as main_id, m.MENP_NOMBRE as main_nombre, m.MENP_ESTADO as main_estado, m.MENP_RUTA as main_ruta, m.MENP_IDPADRE as main_idpadre, m.MENP_TIPO as main_tipo, m.MENP_ORDER as main_order, m.MENP_FRAME as main_frame, m.MENP_ICON as main_icon, m.MENP_THEME as main_theme, m.MENP_ISTOKEN as main_istoken, m.MENP_PARAM as main_param,
+                    sm.MENP_ID as sub_id, sm.MENP_NOMBRE as sub_nombre, sm.MENP_ESTADO as sub_estado, sm.MENP_RUTA as sub_ruta, sm.MENP_IDPADRE as sub_idpadre, sm.MENP_TIPO as sub_tipo, sm.MENP_ORDER as sub_order, sm.MENP_FRAME as sub_frame, sm.MENP_ICON as sub_icon, sm.MENP_THEME as sub_theme, sm.MENP_ISTOKEN as sub_istoken, sm.MENP_PARAM as sub_param,
+                    ex.MENP_ID as ext_id, ex.MENP_NOMBRE as ext_nombre, ex.MENP_ESTADO as ext_estado, ex.MENP_RUTA as ext_ruta, ex.MENP_IDPADRE as ext_idpadre, ex.MENP_TIPO as ext_tipo, ex.MENP_ORDER as ext_order, ex.MENP_FRAME as ext_frame, ex.MENP_ICON as ext_icon, ex.MENP_THEME as ext_theme, ex.MENP_ISTOKEN as ext_istoken, ex.MENP_PARAM as ext_param
+                FROM 
+                    ADMIN.GU_TMENUPRINCIPAL m 
+                    LEFT JOIN ADMIN.GU_TMENUPRINCIPAL sm ON sm.MENP_IDPADRE = m.MENP_ID AND sm.MENP_FRAME = 3
+                    LEFT JOIN ADMIN.GU_TMENUPRINCIPAL ex ON ex.MENP_IDPADRE = sm.MENP_ID AND ex.MENP_FRAME = 3
+                WHERE 
+                    m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;";
+        $menuData = $db->query($sql)->getResultArray();
+    
+        // Depuración inicial para verificar los datos obtenidos
+        //echo "<pre>";
+        //print_r($menuData);
+        //echo "</pre>";
+    
+        $menu = [];
+        foreach($menuData as $row) {
+            $menuId = $row['main_id'];
+            $subMenuId = $row['sub_id'];
+            $extensionId = $row['ext_id'];
+    
+            // Verificación de las claves
+            if (!isset($row['main_id']) || !isset($row['main_nombre'])) {
+                echo "Error: Faltan datos principales en la fila.";
+                continue;
+            }
+    
+            if (!isset($menu[$menuId])) {
+                $menu[$menuId] = [
+                    'data' => [
+                        'id' => $row['main_id'],
+                        'nombre' => $row['main_nombre'],
+                        'estado' => $row['main_estado'],
+                        'ruta' => $row['main_ruta'],
+                        'idpadre' => $row['main_idpadre'],
+                        'tipo' => $row['main_tipo'],
+                        'order' => $row['main_order'],
+                        'frame' => $row['main_frame'],
+                        'icon' => $row['main_icon'],
+                        'theme' => $row['main_theme'],
+                        'istoken' => $row['main_istoken'],
+                        'param' => $row['main_param'],
+                    ],
+                    'submenus' => []
+                ];
+            }
+    
+            if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
+                $menu[$menuId]['submenus'][$subMenuId] = [
+                    'data' => [
+                        'id' => $row['sub_id'],
+                        'nombre' => $row['sub_nombre'],
+                        'estado' => $row['sub_estado'],
+                        'ruta' => $row['sub_ruta'],
+                        'idpadre' => $row['sub_idpadre'],
+                        'tipo' => $row['sub_tipo'],
+                        'order' => $row['sub_order'],
+                        'frame' => $row['sub_frame'],
+                        'icon' => $row['sub_icon'],
+                        'theme' => $row['sub_theme'],
+                        'istoken' => $row['sub_istoken'],
+                        'param' => $row['sub_param'],
+                    ],
+                    'extensions' => []
+                ];
+            }
+    
+            if ($extensionId) {
+                $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = [
+                    'id' => $row['ext_id'],
+                    'nombre' => $row['ext_nombre'],
+                    'estado' => $row['ext_estado'],
+                    'ruta' => $row['ext_ruta'],
+                    'idpadre' => $row['ext_idpadre'],
+                    'tipo' => $row['ext_tipo'],
+                    'order' => $row['ext_order'],
+                    'frame' => $row['ext_frame'],
+                    'icon' => $row['ext_icon'],
+                    'theme' => $row['ext_theme'],
+                    'istoken' => $row['ext_istoken'],
+                    'param' => $row['ext_param'],
+                ];
+            }
+        }
+    
+        $html = "";
+        foreach ($menu as $mainId => $mainMenu) {
+            $mainData = $mainMenu['data'];
+            $html .= "<div class='card' style='margin-bottom: 8px;'>";
+            $html .= "<div class='card-body'>";
+            $html .= "<h3 class='card-title' style='color:#888888;'>";
+            $html .= "<a href='javascript:editarExt(" . $mainData['id'] . ",0)'><i class='bi bi-pencil'></i></a>";
+            $html .= htmlspecialchars($mainData['nombre']);
+            $html .= "</h3>";
+            $html .= "<ul class='list-group'>";
+            foreach ($mainMenu['submenus'] as $subMenuId => $subMenu) {
+                $subData = $subMenu['data'];
+                $html .= "<h5 style='color:#888888;margin-left: 10px;'>";
+                $html .= "<a href='javascript:editarExt(" . $subData['id'] . ",1)'><i class='bi bi-pencil'></i></a>" . htmlspecialchars($subData['nombre']);
+                $html .= "</h5>";
+                $html .= "<ul class='no-bullet'>";
+                foreach ($subMenu['extensions'] as $extensionId => $extension) {
+                    $html .= "<li><h6 style='color:#888888;margin-left: 15px;'><a href='javascript:editarExt(" . $extension['id'] . ",2)'><i class='bi bi-pencil'></i></a>&nbsp;" . htmlspecialchars($extension['nombre']) . "</h6></li>";
+                }
+                $html .= "</ul>";
+            }
+            $html .= "</ul>";
+            $html .= "</div>";
+            $html .= "</div>";
+        }
+    
+        return $output = [
+            'menu_principal' => array_values($menu), // Convertir a array para un mejor formato JSON
+            'menuData' => $menuData,
+            'roles_creados' => $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3)")->getResultArray(),
+            'arr_empresas' => $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V'")->getResultArray(),
+            'html' => $html,
+        ];
+    }
+    
+    
+
+
+    public function ini_contendido_old3() {
+        $db     =   db_connect();
+        $sql    =   "SELECT 
+                        m.MENP_ID as main_id, m.MENP_NOMBRE as main_nombre, m.MENP_ESTADO as main_estado, m.MENP_RUTA as main_ruta, m.MENP_IDPADRE as main_idpadre, m.MENP_TIPO as main_tipo, m.MENP_ORDER as main_order, m.MENP_FRAME as main_frame, m.MENP_ICON as main_icon, m.MENP_THEME as main_theme, m.MENP_ISTOKEN as main_istoken, m.MENP_PARAM as main_param,
+                        sm.MENP_ID as sub_id, sm.MENP_NOMBRE as sub_nombre, sm.MENP_ESTADO as sub_estado, sm.MENP_RUTA as sub_ruta, sm.MENP_IDPADRE as sub_idpadre, sm.MENP_TIPO as sub_tipo, sm.MENP_ORDER as sub_order, sm.MENP_FRAME as sub_frame, sm.MENP_ICON as sub_icon, sm.MENP_THEME as sub_theme, sm.MENP_ISTOKEN as sub_istoken, sm.MENP_PARAM as sub_param,
+                        ex.MENP_ID as ext_id, ex.MENP_NOMBRE as ext_nombre, ex.MENP_ESTADO as ext_estado, ex.MENP_RUTA as ext_ruta, ex.MENP_IDPADRE as ext_idpadre, ex.MENP_TIPO as ext_tipo, ex.MENP_ORDER as ext_order, ex.MENP_FRAME as ext_frame, ex.MENP_ICON as ext_icon, ex.MENP_THEME as ext_theme, ex.MENP_ISTOKEN as ext_istoken, ex.MENP_PARAM as ext_param,
+                        p.PER_ID as permiso_id, p.PER_NOMBRE as permiso_nombre
+                    FROM 
+                        ADMIN.GU_TMENUPRINCIPAL m 
+                        LEFT JOIN ADMIN.GU_TMENUPRINCIPAL sm ON sm.MENP_IDPADRE = m.MENP_ID AND sm.MENP_FRAME = 3
+                        LEFT JOIN ADMIN.GU_TMENUPRINCIPAL ex ON ex.MENP_IDPADRE = sm.MENP_ID AND ex.MENP_FRAME = 3
+                        LEFT JOIN ADMIN.GU_TMENPTIENEPER mp ON mp.MENP_ID = m.MENP_ID
+                        LEFT JOIN ADMIN.GU_TPERMISOS p ON p.PER_ID = mp.PER_ID
+                    WHERE 
+                        m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;";
+        $menuData = $db->query($sql)->getResultArray();
+        $menu = [];
+        foreach($menuData as $row) {
+            $menuId =   $row['main_id'];
+            $subMenuId =   $row['sub_id'];
+            $extensionId =   $row['ext_id'];
+            // Organizar en estructura jerárquica
+            if (!isset($menu[$menuId])) {
+                $menu[$menuId] = [
+                    'data' => $row, // Datos del menú principal
+                    'submenus' => []
+                ];
+            }
+            if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
+                $menu[$menuId]['submenus'][$subMenuId] = [
+                    'data' => $row, // Datos del submenu
+                    'extensions' => []
+                ];
+            }
+            if ($extensionId) {
+                $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = $row; // Datos de la extensión
+            }
+        }
+    
+        // Generar el HTML
+        $html   =   "";
+        foreach ($menu as $mainId => $mainMenu){
+            $mainData = $mainMenu['data'];
+            $html .=    "<div class='card' style='margin-bottom: 8px;'>";
+            $html .=    "<div class='card-body'>";
+            $html .=    "<h3 class='card-title' style='color:#888888;'>";
+            $html .=    "<a href='javascript:editarExt(".$mainData['main_id'].",0)'><i class='bi bi-pencil'></i></a>" ;
+            $html .=    htmlspecialchars($mainData['main_nombre']);
+            $html .=    "</h3>";
+    
+            $html   .= "<ul class='list-group'>";
+            foreach ($mainMenu['submenus'] as $subMenuId => $subMenu){
+                $subData    =   $subMenu['data'];
+                $html   .=  "<h5 style='color:#888888;margin-left: 10px;'>";
+                $html   .=  "<a href='javascript:editarExt(".$subData['sub_id'].",1)'><i class='bi bi-pencil'></i></a>".htmlspecialchars($subData['sub_nombre'])."";
+                $html   .=  "</h5>";
+    
+                $html   .=  "<ul class='no-bullet'>";
+                foreach ($subMenu['extensions'] as $extensionId => $extension) {
+                    $html   .=  "<li><h6 style='color:#888888;margin-left: 15px;'><a href='javascript:editarExt(".$subData['ext_id'].",2)'>";
+                    $html   .=  "<i class='bi bi-pencil'></i></a>&nbsp;" . htmlspecialchars($extension['ext_nombre'])."</h6>";
+                    $html   .=  "</li>";
+                }
+                $html       .= "</ul>";
+            }
+            $html   .=  "</ul>";
+            $html   .=  "</div>";
+            $html   .=  "</div>";
+        }
+    
+        return $output  = [
+            'menu_principal'    =>  array_values($menu), 
+            'menuData'          =>  $menuData,
+            'roles_creados'     =>  $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3) ")->getResultArray(),
+            'arr_empresas'      =>  $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V' ")->getResultArray(),
+            'html'              =>  $html,
+        ];
+    }
+    
 
 
 
@@ -303,6 +597,7 @@ class UserModel extends Model {
     public function buscaExtEdit($aData) {
         $db = db_connect();
         $id = $aData['idMen'];
+    
         // Consulta para gu_tmenuprincipal
         $query = $db->query("SELECT 
                                 MENP_ID, 
@@ -325,9 +620,7 @@ class UserModel extends Model {
                 FROM 
                     ADMIN.GU_TMENPTIENEPER E 
                 WHERE 
-                    E.MENP_ID = ?
-                    AND 
-                    E.IND_ESTADO = 1";
+                    E.MENP_ID = ? AND E.IND_ESTADO = 1";
     
         $query2 = $db->query($SQL, [$id])->getResultArray();
     
@@ -337,6 +630,23 @@ class UserModel extends Model {
             'gu_tmenuprincipal' => $query,
             'arr_permisos' => $query2,
         ];                    
+    }
+    
+    public function get_obtenerPermisosHeredados($menuId) {
+        $db = db_connect();
+        $query = $db->query("SELECT 
+                                p.PER_ID, 
+                                p.PER_NOMBRE 
+                             FROM 
+                                ADMIN.GU_TMENPTIENEPER mp
+                             JOIN 
+                                ADMIN.GU_TPERMISOS p ON mp.PER_ID = p.PER_ID
+                             WHERE 
+                                mp.MENP_ID = (SELECT MENP_IDPADRE FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?)
+                             AND 
+                                mp.IND_ESTADO = 1", [$menuId])->getResultArray();
+        
+        return $query;
     }
     
     
@@ -488,60 +798,69 @@ class UserModel extends Model {
     # cuando trae un numero, es de quien hereda segun el tipo de tipo_de_extension . calcular si hay que subir un nivel o 2 if 
 
     public function editando_extension_last($aData) {
-        $idExt = $aData['post']['idMen'];
-        $nombre = $aData['post']['nombre'];
-        $tip = $aData['post']['tipo_de_extension'];
-        $listarMenup = $aData['post']['ind_extension_padre'];
-        $check = $aData['post']['check'];
-        $arrPrivilegios = $aData['post']['arrPrivilegios'];
-        $bool_checked = $aData['post']['bool_checked'];
-    
         $db = \Config\Database::connect();
         $db->transStart();
-    
-        $v_padre = 0;
-        if ($tip != 0) {
-            $arr_idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
-            $v_padre = $arr_idPadre['MENP_IDPADRE'];
+
+        try {
+            $idExt = $aData['post']['idMen'];
+            $nombre = $aData['post']['nombre'];
+            $tip = $aData['post']['tipo_de_extension'];
+            $listarMenup = $aData['post']['ind_extension_padre'];
+            $check = $aData['post']['check'];
+            $arrPrivilegios = $aData['post']['arrPrivilegios'];
+            $bool_checked = $aData['post']['bool_checked'];
+
+            $v_padre = 0;
+            if ($tip != 0) {
+                $arr_idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
+                $v_padre = $arr_idPadre['MENP_IDPADRE'];
+            }
+
+            $db->table('ADMIN.GU_TMENUPRINCIPAL')
+                ->set([
+                    'MENP_NOMBRE' => $nombre,
+                    'MENP_ESTADO' => $check,
+                    'MENP_TIPO' => $tip,
+                    'MENP_IDPADRE' => $v_padre,
+                    'MENP_FRAME' => 3
+                ])
+                ->where('MENP_ID', $idExt)
+                ->update();
+
+            // Desheredar permisos si es necesario
+            $this->desheredarPermisos($db, $idExt, $tip);
+            
+            // Actualizar permisos
+            $this->actualizarPermisos($db, $idExt, $arrPrivilegios);
+
+            // Heredar permisos y propagar según el tipo
+            if ($tip == 0) {
+                // Es un abuelo, propagar permisos hacia abajo
+                $this->propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios);
+            } else if ($tip == 1) {
+                // Es un submenú, heredar permisos hacia arriba y hacia abajo
+                $this->heredarPermisos($db, $idExt, $arrPrivilegios);
+                $this->propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios);
+            } else if ($tip == 2) {
+                // Es una extensión, heredar permisos hacia arriba
+                $this->heredarPermisos($db, $idExt, $arrPrivilegios);
+            }
+
+            $db->transComplete();
+            return [
+                "data" => $aData,
+                "status" => $db->transStatus()
+            ];
+        } catch (\Exception $e) {
+            $db->transRollback();
+            return [
+                "data" => $aData,
+                "status" => false,
+                "error" => $e->getMessage()
+            ];
         }
-    
-        $db->table('ADMIN.GU_TMENUPRINCIPAL')
-            ->set([
-                'MENP_NOMBRE' => $nombre,
-                'MENP_ESTADO' => $check,
-                'MENP_TIPO' => $tip,
-                'MENP_IDPADRE' => $v_padre,
-                'MENP_FRAME' => 3
-            ])
-            ->where('MENP_ID', $idExt)
-            ->update();
-    
-        // Desheredar permisos si es necesario
-        $this->desheredarPermisos($db, $idExt, $tip);
-        
-        // Actualizar permisos
-        $this->actualizarPermisos($db, $idExt, $arrPrivilegios);
-    
-        // Heredar permisos y propagar según el tipo
-        if ($tip == 0) {
-            // Es un abuelo, propagar permisos hacia abajo
-            $this->propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios);
-        } else if ($tip == 1) {
-            // Es un submenú, heredar permisos hacia arriba y hacia abajo
-            $this->heredarPermisos($db, $idExt, $arrPrivilegios);
-            $this->propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios);
-        } else if ($tip == 2) {
-            // Es una extensión, heredar permisos hacia arriba
-            $this->heredarPermisos($db, $idExt, $arrPrivilegios);
-        }
-    
-        $db->transComplete();
-        return [
-            "data" => $aData,
-            "status" => $db->transStatus()
-        ];
     }
-    
+
     private function desheredarPermisos($db, $idExt, $tip) {
         if ($tip == 0) {
             // Desactivar permisos propagados a todos los hijos y descendientes
@@ -579,7 +898,6 @@ class UserModel extends Model {
     private function actualizarPermisos($db, $idExt, $arrPrivilegios) {
         // Desactivar todos los permisos actuales
         $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO', 0)->where('MENP_ID', $idExt)->update();
-    
         // Activar los nuevos permisos
         foreach ($arrPrivilegios as $idPer) {
             $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
@@ -599,13 +917,15 @@ class UserModel extends Model {
             }
         }
     }
-    
+
+
+
     private function heredarPermisos($db, $idExt, $arrPrivilegios, $profundidad = 0, $maxProfundidad = 10) {
         if ($profundidad > $maxProfundidad) {
             log_message('debug', 'Máxima profundidad alcanzada en heredarPermisos: ' . $profundidad);
             return;
         }
-    
+
         $visitados = [];
         while ($idExt != 0 && !in_array($idExt, $visitados)) {
             log_message('debug', 'Herencia de permisos para menú: ' . $idExt . ' a profundidad: ' . $profundidad);
@@ -630,12 +950,12 @@ class UserModel extends Model {
                 $idExt = 0;
             }
         }
-    
+
         if ($idExt != 0) {
             $this->heredarPermisos($db, $idExt, $arrPrivilegios, $profundidad + 1, $maxProfundidad);
         }
     }
-    
+
     private function propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios) {
         log_message('debug', 'Propagando permisos hacia abajo para menú: ' . $idExt);
         $hijos = $db->query("SELECT MENP_ID FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_IDPADRE = ?", [$idExt])->getResultArray();
@@ -656,8 +976,93 @@ class UserModel extends Model {
             $this->propagarPermisosHaciaAbajo($db, $idHijo, $arrPrivilegios);
         }
     }
-    
-    
+
+
+    protected $table = 'ADMIN.GU_TMENUPRINCIPAL';
+    protected $primaryKey = 'MENP_ID';
+    protected $allowedFields = [
+        'MENP_NOMBRE', 'MENP_ESTADO', 'MENP_TIPO', 'MENP_IDPADRE', 'MENP_FRAME'
+    ];
+
+    public function editarExt($nombre, $check, $tip, $listarMenup, $arrPrivilegios, $idExt) {
+        if (empty($listarMenup)) {
+            $listarMenup = 0;
+        }
+        if (empty($tip)) {
+            $tip = 1;
+        } else if ($tip == 1) {
+            $tip = 2;
+        } else if ($tip == 2) {
+            $tip = 3;
+        }
+
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        $data = [
+            'MENP_NOMBRE' => $nombre,
+            'MENP_ESTADO' => $check,
+            'MENP_TIPO' => $tip,
+            'MENP_IDPADRE' => $listarMenup,
+            'MENP_FRAME' => 3
+        ];
+        $this->update($idExt, $data);
+        // Actualizar privilegios del menú o extensión
+        $this->updatePrivilegios($db, $arrPrivilegios, $idExt, $listarMenup);
+        $db->transComplete();
+        return $db->transStatus();
+    }
+
+    private function updatePrivilegios($db, $arrPrivilegios, $idExt, $listarMenup) {
+        $count = count($arrPrivilegios);
+        if ($count > 0) {
+            $sigMen = 0;
+            while ($sigMen <= 2) { // Pasa 3 veces si se detectan menús padres 
+                if ($sigMen == 0) {
+                    $db->table('ADMIN.GU_TMENPTIENEPER')
+                       ->set('IND_ESTADO', 0)
+                       ->where('MENP_ID', $idExt)
+                       ->update();
+                }
+
+                foreach ($arrPrivilegios as $row) {
+                    $idPer =  $row;
+                    $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
+                    if ($res) {
+                        // Edita Privilegios Existentes
+                        $db->table('ADMIN.GU_TMENPTIENEPER')
+                           ->set('IND_ESTADO', 1)
+                           ->where('PER_ID', $idPer)
+                           ->where('MENP_ID', $idExt)
+                           ->update();
+                    } else {
+                        // Inserta Nuevos Privilegios 
+                        $dataIn = [
+                            //'ID_MPTP' => $idSeqPriv,
+                            'MENP_ID' => $idExt,
+                            'PER_ID' => $idPer,
+                            'IND_ESTADO' => 1
+                        ];
+                        $db->table('ADMIN.GU_TMENPTIENEPER')->insert($dataIn);
+                    }
+                }
+
+                if ($listarMenup != 0 && $sigMen == 0) {
+                    $idExt = $listarMenup;
+                } else if ($sigMen == 1) {
+                    $idPadre1 = $db->query("SELECT MENP_IDPADRE FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getResultArray();
+                    if ($idPadre1) {
+                        $idExt = $idPadre1[0]['MENP_IDPADRE'];
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+                $sigMen++;
+            }
+        }
+    }
 
 }
 ?>

@@ -776,13 +776,11 @@ function alfanumerico(e) {
 // 1 : hijo - Sub Menu 
 // 2 : nieto - Extension 
 
-
 function editarExt(idMen, ind_tipo_menu) {
     console.log("********************************");
     console.log("idMen          ->  ", idMen);
     console.log("ind_tipo_menu  ->  ", ind_tipo_menu);
     console.log("********************************");
-
     document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
         checkbox.checked = false;
     });
@@ -815,15 +813,13 @@ function editarExt(idMen, ind_tipo_menu) {
                 $("#nomExt").val(data_menu.MENP_NOMBRE);
                 $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled", true);
                 $("#listarMenup").val(data_menu.MENP_ID).attr("disabled", true);
-                $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick', 'js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
+                $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSIÓN').attr('onclick', 'js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
             }
-            // 
             if (aData.arr_bd.arr_permisos.length > 0) {
                 aData.arr_bd.arr_permisos.forEach((row) => {
                     document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
                 });
             }
-            // Heredar permisos de los padres
             if (aData.arr_bd.herencia_permisos && aData.arr_bd.herencia_permisos.length > 0) {
                 aData.arr_bd.herencia_permisos.forEach((row) => {
                     document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
@@ -833,22 +829,23 @@ function editarExt(idMen, ind_tipo_menu) {
     });
 }
 
-function js_editarextension(idMen,ind_tipo_menu) {
 
-    console.log("idMen          -> ",idMen);
-    console.log("ind_tipo_menu  -> ",ind_tipo_menu);
+function js_editarextension(idMen, ind_tipo_menu) {
+    console.log("idMen          -> ", idMen);
+    console.log("ind_tipo_menu  -> ", ind_tipo_menu);
     
     let const_error = [];
     let check = document.getElementById('habilitado').checked ? 1 : 0; // menú habilitado
-    if ($("#nomExt").val() == '') {
+    let nombreMenu = $("#nomExt").val().trim();
+    let arr_permisos = [];
+
+    if (nombreMenu == '') {
         const_error.push("Falta nombre del menú");
     }
 
-    let arr_permisos = [];
     $(".checked_id").each(function(index) {
-        let ck_permiso = document.getElementById(this.id).checked;
-        if (ck_permiso) {
-            arr_permisos.push(this.id.split("_")[2]);
+        if (this.checked) {
+            arr_permisos.push(this.value);
         }
     });
 
@@ -859,67 +856,53 @@ function js_editarextension(idMen,ind_tipo_menu) {
     if (const_error.length > 0) {
         jError(const_error.join("<br>"), "ERROR - CLinica libre");
         return false;
-    } else {
-        let bool_checked = document.getElementById('habilitado').checked; // menú habilitado
-        let ind_extension_padre = 0;
-        let tipo_de_extension = 0;
-        if (ind_tipo_menu != 0) {
-            ind_extension_padre = parseInt($("#listarMenup").prop("value"));
-            tipo_de_extension = ind_tipo_menu;
-        }
-       
-
-        console.log("       ----------------------------------------------------------  ");
-        console.error("     ind_tipo_menu          ->   ", ind_tipo_menu);
-        console.log("       idMen                  ->   ", idMen);
-        console.log("       idMen_extension_padre  ->   ", ind_extension_padre);
-        console.log("       tipo_de_extension      ->   ", tipo_de_extension);
-        console.log("       check                  ->   ", check);
-        console.log("       arr_permisos           ->   ", arr_permisos);
-        console.log("       bool_checked           ->   ", bool_checked);
-        console.log("       ----------------------------------------------------------  ");
-        
-        //return false;
-        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
-            if (r) {
-                $.ajax({ 
-                    type: "POST",
-                    url: "Home/editExtension",
-                    dataType: "json",
-                    beforeSend: function(xhr) { $('#loadFade').modal('show'); },
-                    data: { 
-                        "idMen": idMen,
-                        "nombre": $("#nomExt").val(),
-                        "nomArch" : $("#nomExt").val(),
-                        "ind_extension_padre": ind_extension_padre,
-                        "tipo_de_extension": tipo_de_extension,
-                        "check": check,
-                        "arrPrivilegios": arr_permisos,
-                        "bool_checked": bool_checked,
-                        "ind_tipo_menu" : ind_tipo_menu,
-                    },
-                    error: function(error) {  
-                        console.log(error);
-                        jAlert("Error General, Consulte Al Administrador"); 
-                        setTimeout(function() {
-                            $("#loadFade").modal("hide");
-                        }, 1000);
-                    },
-                    success: function(aData) {  
-                        setTimeout(function() {
-                            $("#loadFade").modal("hide");
-                        }, 1000);
-                        console.log("editando_estensiones_privilegios   -> ", aData);
-                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
-                      
-                    }, 
-                });
-            } else {
-                // jError("Firma simple vac&iacute;a", "Error - CLINICA LIBRE"); 
-            }
-        });
     }
+
+    let ind_extension_padre = 0;
+    let tipo_de_extension = 0;
+    if (ind_tipo_menu != 0) {
+        ind_extension_padre = parseInt($("#listarMenup").val());
+        tipo_de_extension = ind_tipo_menu;
+    }
+
+    jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
+        if (r) {
+            $.ajax({ 
+                type: "POST",
+                url: "Home/editExtension",
+                //url: "Home/editExtension_new", 
+                dataType: "json",
+                beforeSend: function(xhr) { $('#loadFade').modal('show'); },
+                data: { 
+                    idMen: idMen,
+                    nombre: nombreMenu,
+                    nomArch: nombreMenu,
+                    ind_extension_padre: ind_extension_padre,
+                    tipo_de_extension: tipo_de_extension,
+                    check: check,
+                    arrPrivilegios: arr_permisos,
+                    bool_checked: check,
+                    ind_tipo_menu: ind_tipo_menu,
+                },
+                error: function(error) {  
+                    console.log(error);
+                    jAlert("Error General, Consulte Al Administrador"); 
+                    setTimeout(function() {
+                        $("#loadFade").modal("hide");
+                    }, 1000);
+                },
+                success: function(aData) {  
+                    setTimeout(function() {
+                        $("#loadFade").modal("hide");
+                    }, 1000);
+                    console.log("editando_estensiones_privilegios   -> ", aData);
+                    showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
+                }
+            });
+        }
+    });
 }
+
 
 
 /*

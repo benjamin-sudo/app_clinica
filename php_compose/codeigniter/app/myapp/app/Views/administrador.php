@@ -56,57 +56,52 @@
                 <i class="fa fa-cog" aria-hidden="true"></i><b>&nbsp;GESTI&Oacute;N DE EXTENSIONES</b>
             </h4>
             <div class="grid_body_extensiones">
-                <div class=" grid_body_extensiones1">
-                    <?php echo $respuesta['html'];?>
+                <div class="grid_body_extensiones1">
+                    <?php echo $respuesta['html']; ?>
                 </div>
                 <div class="grid_body_extensiones1 card">
                     <table class="table table-striped" style="margin-bottom: 0px;">
                         <tr>
-                            <td width="250px"><b>Nombre del men&uacute;</b></td>
+                            <td width="250px"><b>Nombre del menú</b></td>
                             <td>
                                 <div class="div_2">
                                     <div class="div_21"><input type="text" id="nomExt" onkeypress="return soloLetras(event)" class="form-control form-control-sm;" style="text-transform: inherit;" onblur="validaExt()"> </div>
                                     <div class="div_21">
-                                    <input type="checkbox" class="form-check-input mt-1" id="habilitado" name="habilitado" value="1" checked>&nbsp;Men&uacute; Habilitado</div>
+                                        <input type="checkbox" class="form-check-input mt-1" id="habilitado" name="habilitado" value="1" checked>&nbsp;Menú Habilitado
+                                    </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td width="200px"><b>Nombre extensi&oacute;n</b> </td>
+                            <td width="200px"><b>Nombre extensión</b> </td>
                             <td>
                                 <input type="text" id="nomArch" class="form-control form-control-sm;" onkeypress="return alfanumericoRuta(event)" style="text-transform: lowercase;" onblur="buscaExtArch();">
                                 <input type="hidden" id="existeExt" value="0">
                             </td>
                         </tr>
                         <tr>
-                            <td><b>Extensi&oacute;n principal o padre</b></td>
+                            <td><b>Extensión principal o padre</b></td>
                             <td>
-                                <?php echo view("html_administrador",['menu_principal'=>$respuesta['menu_principal']]); ?>
+                                <?php echo view("html_administrador", ['menu_principal' => $respuesta['menu_principal']]); ?>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Privilegios asignados</b></td>
                             <td>
                                 <ul class="list-group">
-                                    <?php if (count($respuesta['roles_creados'])>0){ 
-                                        foreach ($respuesta['roles_creados'] as $i => $row){ ?>
-                                        <li class="list-group-item  ">
-                                            <div class="grid_li_permisos">
-                                                <div class="grid_li_permisos2">
-                                                    <input 
-                                                        type    =   "checkbox" 
-                                                        class   =   "form-check-input checked_id"
-                                                        id      =   "ck_permiso_<?php echo $row['PER_ID'];?>" 
-                                                        name    =   "ck_permiso"
-                                                        style   =   "display: block;cursor: pointer;margin-top: 0px;margin-bottom: -1px;"
-                                                        value   =   "<?php echo $row['PER_ID'];?>">
-                                                </div>   
-                                                <div class="grid_li_permisos1">
-                                                    <?php echo $row['PER_NOMBRE'];?>
-                                                </div>   
-                                            </div>   
-                                        </li>
-                                    <?php } }?>
+                                    <?php if (count($respuesta['roles_creados']) > 0) {
+                                        foreach ($respuesta['roles_creados'] as $i => $row) { ?>
+                                            <li class="list-group-item">
+                                                <div class="grid_li_permisos">
+                                                    <div class="grid_li_permisos2">
+                                                        <input type="checkbox" class="form-check-input checked_id" id="ck_permiso_<?php echo $row['PER_ID']; ?>" name="ck_permiso" style="display: block; cursor: pointer; margin-top: 0px; margin-bottom: -1px;" value="<?php echo $row['PER_ID']; ?>">
+                                                    </div>
+                                                    <div class="grid_li_permisos1">
+                                                        <?php echo $row['PER_NOMBRE']; ?>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                    <?php } } ?>
                                 </ul>
                             </td>
                         </tr>

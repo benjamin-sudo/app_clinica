@@ -73,8 +73,8 @@ class modelinicio extends CI_Model {
 
     #carga de menu principal
     public function load_menuxuser($ID_UID){
-        #$sql = $this->arr_menu_default(); 
-        $sql = $this->nuevo_busqueda_menu($ID_UID);
+        $sql = $this->arr_menu_default(); 
+        #$sql = $this->nuevo_busqueda_menu($ID_UID);
         $menu = [];
         $menuData = $this->db->query($sql)->result_array();
         if(count($menuData)>0){
@@ -104,6 +104,7 @@ class modelinicio extends CI_Model {
     }
 
     public function arr_menu_default(){
+        $own = "ADMIN";
         $sql = "SELECT 
                     M.MENP_ID AS MAIN_ID, 
                     M.MENP_NOMBRE AS MAIN_NOMBRE, 
@@ -158,68 +159,71 @@ class modelinicio extends CI_Model {
     }
 
     public function nuevo_busqueda_menu($iuid){
+
+        $own = "ADMIN";
+
         $sql = "SELECT 
-                M.MENP_ID AS MAIN_ID, 
-                M.MENP_NOMBRE AS MAIN_NOMBRE, 
-                M.MENP_ESTADO AS MAIN_ESTADO, 
-                M.MENP_RUTA AS MAIN_RUTA, 
-                M.MENP_IDPADRE AS MAIN_IDPADRE, 
-                M.MENP_TIPO AS MAIN_TIPO, 
-                M.MENP_ORDER AS MAIN_ORDER, 
-                M.MENP_FRAME AS MAIN_FRAME, 
-                M.MENP_ICON AS MAIN_ICON, 
-                M.MENP_THEME AS MAIN_THEME, 
-                M.MENP_ISTOKEN AS MAIN_ISTOKEN, 
-                M.MENP_PARAM AS MAIN_PARAM,
-                
-                SM.MENP_ID AS SUB_ID, 
-                SM.MENP_NOMBRE AS SUB_NOMBRE, 
-                SM.MENP_ESTADO AS SUB_ESTADO, 
-                SM.MENP_RUTA AS SUB_RUTA, 
-                SM.MENP_IDPADRE AS SUB_IDPADRE, 
-                SM.MENP_TIPO AS SUB_TIPO, 
-                SM.MENP_ORDER AS SUB_ORDER, 
-                SM.MENP_FRAME AS SUB_FRAME, 
-                SM.MENP_ICON AS SUB_ICON, 
-                SM.MENP_THEME AS SUB_THEME, 
-                SM.MENP_ISTOKEN AS SUB_ISTOKEN, 
-                SM.MENP_PARAM AS SUB_PARAM,
-                
-                EX.MENP_ID AS EXT_ID, 
-                EX.MENP_NOMBRE AS EXT_NOMBRE, 
-                EX.MENP_ESTADO AS EXT_ESTADO, 
-                EX.MENP_RUTA AS EXT_RUTA, 
-                EX.MENP_IDPADRE AS EXT_IDPADRE, 
-                EX.MENP_TIPO AS EXT_TIPO, 
-                EX.MENP_ORDER AS EXT_ORDER, 
-                EX.MENP_FRAME AS EXT_FRAME, 
-                EX.MENP_ICON AS EXT_ICON, 
-                EX.MENP_THEME AS EXT_THEME, 
-                EX.MENP_ISTOKEN AS EXT_ISTOKEN, 
-                EX.MENP_PARAM AS EXT_PARAM
-            FROM 
-                $own.GU_TMENUPRINCIPAL M 
-                LEFT JOIN $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
-                LEFT JOIN $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
-            WHERE 
-                M.MENP_ESTADO = 1 
-                AND M.MENP_FRAME = 3 
-                AND M.MENP_IDPADRE = 0 
-                AND EXISTS (
-                    SELECT 1 
+                    M.MENP_ID AS MAIN_ID, 
+                    M.MENP_NOMBRE AS MAIN_NOMBRE, 
+                    M.MENP_ESTADO AS MAIN_ESTADO, 
+                    M.MENP_RUTA AS MAIN_RUTA, 
+                    M.MENP_IDPADRE AS MAIN_IDPADRE, 
+                    M.MENP_TIPO AS MAIN_TIPO, 
+                    M.MENP_ORDER AS MAIN_ORDER, 
+                    M.MENP_FRAME AS MAIN_FRAME, 
+                    M.MENP_ICON AS MAIN_ICON, 
+                    M.MENP_THEME AS MAIN_THEME, 
+                    M.MENP_ISTOKEN AS MAIN_ISTOKEN, 
+                    M.MENP_PARAM AS MAIN_PARAM,
+                    
+                    SM.MENP_ID AS SUB_ID, 
+                    SM.MENP_NOMBRE AS SUB_NOMBRE, 
+                    SM.MENP_ESTADO AS SUB_ESTADO, 
+                    SM.MENP_RUTA AS SUB_RUTA, 
+                    SM.MENP_IDPADRE AS SUB_IDPADRE, 
+                    SM.MENP_TIPO AS SUB_TIPO, 
+                    SM.MENP_ORDER AS SUB_ORDER, 
+                    SM.MENP_FRAME AS SUB_FRAME, 
+                    SM.MENP_ICON AS SUB_ICON, 
+                    SM.MENP_THEME AS SUB_THEME, 
+                    SM.MENP_ISTOKEN AS SUB_ISTOKEN, 
+                    SM.MENP_PARAM AS SUB_PARAM,
+                    
+                    EX.MENP_ID AS EXT_ID, 
+                    EX.MENP_NOMBRE AS EXT_NOMBRE, 
+                    EX.MENP_ESTADO AS EXT_ESTADO, 
+                    EX.MENP_RUTA AS EXT_RUTA, 
+                    EX.MENP_IDPADRE AS EXT_IDPADRE, 
+                    EX.MENP_TIPO AS EXT_TIPO, 
+                    EX.MENP_ORDER AS EXT_ORDER, 
+                    EX.MENP_FRAME AS EXT_FRAME, 
+                    EX.MENP_ICON AS EXT_ICON, 
+                    EX.MENP_THEME AS EXT_THEME, 
+                    EX.MENP_ISTOKEN AS EXT_ISTOKEN, 
+                    EX.MENP_PARAM AS EXT_PARAM
+                FROM 
+                    $own.GU_TMENUPRINCIPAL M 
+                    LEFT JOIN $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
+                    LEFT JOIN $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
+                WHERE 
+                    M.MENP_ESTADO = 1 
+                    AND M.MENP_FRAME = 3 
+                    AND M.MENP_IDPADRE = 0 
+                    AND EXISTS (
+                        SELECT 1 
                         FROM $own.GU_TUSUTIENEPER a
                         JOIN $own.GU_TPERMISOS b ON a.per_id = b.per_id
                         JOIN $own.GU_TMENPTIENEPER c ON a.per_id = c.per_id
                         JOIN $own.GU_TMENUPRINCIPAL d ON c.MENP_ID = d.MENP_ID
-                    WHERE a.id_uid = $iuid
-                        AND a.ind_estado = 1
-                        AND d.MENP_ESTADO = 1
-                        AND c.ind_estado = 1
-                        AND b.PER_ESTADO = 3
-                        AND d.MENP_FRAME = 3
-                        AND (d.MENP_ID = M.MENP_ID OR d.MENP_ID = SM.MENP_ID OR d.MENP_ID = EX.MENP_ID)
-                )
-            ORDER BY MAIN_ID, MAIN_ORDER ASC
+                        WHERE a.id_uid = $iuid
+                            AND a.ind_estado = 1
+                            AND d.MENP_ESTADO = 1
+                            AND c.ind_estado = 1
+                            AND b.PER_ESTADO = 3
+                            AND d.MENP_FRAME = 3
+                            AND (d.MENP_ID = M.MENP_ID OR d.MENP_ID = SM.MENP_ID OR d.MENP_ID = EX.MENP_ID)
+                    )
+                ORDER BY MAIN_ID, MAIN_ORDER ASC
         ";
         return $sql;
     }
