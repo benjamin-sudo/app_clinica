@@ -160,7 +160,6 @@
                                         <i class="bi bi-2-circle-fill"></i>
                                     </div>
                                     <div class="grid_li_permisos_4">
-
                                         <button 
                                             type    =   "button" 
                                             class   =   "btn btn-danger"  
@@ -168,7 +167,6 @@
                                             onclick =   "js_estado_r(this.id)"
                                             ><i class   =   "fa fa-times" aria-hidden="true"></i>
                                         </button>
-
                                         <!--
                                         <div class="form-check form-switch">
                                             <input 
@@ -184,8 +182,6 @@
                                             </label>
                                         </div>
                                         -->
-
-
                                     </div>
                                 </div>   
                             </li>

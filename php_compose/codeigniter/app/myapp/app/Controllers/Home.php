@@ -252,8 +252,26 @@ class Home extends BaseController {
         ]);   
     }
 
+    public function buscaEditar() {
+        if ($this->request->isAJAX()) {
+            $status = true;
+            $idMen = $this->request->getPost("idMen");
+            $ind_tipo_menu = $this->request->getPost("ind_tipo_menu");
+            // Obtener datos del menú
+            $data_return = $this->usersModel->buscaExtEdit(['idMen' => $idMen]);
+            // Obtener permisos heredados desde el modelo
+            $herencia_permisos = $this->usersModel->obtenerPermisosHeredados($idMen);
+            echo json_encode([
+                'arr_bd' => array_merge($data_return, ['herencia_permisos' => $herencia_permisos]),
+                'idMen' => $idMen,
+                'status' => $status,
+            ]);
+        }
+    }
+
+    /*
     public function buscaEditar(){
-        if ($this->request->isAJAX()){  }
+        if ($this->request->isAJAX()){ }
         $status = true;    
         $idMen = $this->request->getPost("idMen");
         $ind_tipo_menu = $this->request->getPost("ind_tipo_menu");
@@ -264,6 +282,7 @@ class Home extends BaseController {
             'status' => $status,
         ]); 
     }
+    */
 
     public function editExtension() {
         $postData = $this->request->getPost();

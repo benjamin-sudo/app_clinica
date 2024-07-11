@@ -21,23 +21,23 @@ class UserModel extends Model {
                     WHERE 
                         m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;
                     ";
-        $menuData           =   $db->query($sql)->getResultArray();
-        $menu               =   [];
+        $menuData = $db->query($sql)->getResultArray();
+        $menu = [];
         foreach($menuData as $row) {
-            $menuId         =   $row['main_id'];
-            $subMenuId      =   $row['sub_id'];
-            $extensionId    =   $row['ext_id'];
+            $menuId =   $row['main_id'];
+            $subMenuId =   $row['sub_id'];
+            $extensionId =   $row['ext_id'];
             // Organizar en estructura jerárquica
             if (!isset($menu[$menuId])) {
                 $menu[$menuId] = [
-                    'data'      => $row, // Datos del menú principal
-                    'submenus'  => []
+                    'data' => $row, // Datos del menú principal
+                    'submenus' => []
                 ];
             }
             if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
                 $menu[$menuId]['submenus'][$subMenuId] = [
-                    'data'          => $row, // Datos del submenu
-                    'extensions'    => []
+                    'data' => $row, // Datos del submenu
+                    'extensions' => []
                 ];
             }
             if ($extensionId) {
@@ -275,10 +275,34 @@ class UserModel extends Model {
                 ];
     }
 
-    public function buscaExtEdit($aData){
+
+    public function obtenerPermisosHeredados($idMen) {
+        $db = db_connect();
+        $permisos = [];
+        $visitados = [];
+
+        while ($idMen != 0 && !in_array($idMen, $visitados)) {
+            $visitados[] = $idMen;
+            $padre = $db->query("SELECT MENP_IDPADRE FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idMen])->getRowArray();
+            if ($padre && $padre['MENP_IDPADRE'] != 0) {
+                $idMen = $padre['MENP_IDPADRE'];
+                $permisosPadre = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE MENP_ID = ? AND IND_ESTADO = 1", [$idMen])->getResultArray();
+                foreach ($permisosPadre as $permiso) {
+                    if (!in_array($permiso, $permisos)) {
+                        $permisos[] = $permiso;
+                    }
+                }
+            } else {
+                $idMen = 0;
+            }
+        }
+        return $permisos;
+    }
+    
+
+    public function buscaExtEdit($aData) {
         $db = db_connect();
         $id = $aData['idMen'];
-        
         // Consulta para gu_tmenuprincipal
         $query = $db->query("SELECT 
                                 MENP_ID, 
@@ -290,7 +314,7 @@ class UserModel extends Model {
                             FROM 
                                 ADMIN.GU_TMENUPRINCIPAL 
                             WHERE 
-                                MENP_ID = ?", [$id])->getResultArray();
+                                MENP_ID = ? AND MENP_ESTADO = 1", [$id])->getResultArray();
     
         // Consulta para arr_permisos
         $SQL = "SELECT 
@@ -298,9 +322,9 @@ class UserModel extends Model {
                     E.PER_ID,
                     E.MENP_ID,
                     E.IND_ESTADO  
-                    FROM 
+                FROM 
                     ADMIN.GU_TMENPTIENEPER E 
-                    WHERE 
+                WHERE 
                     E.MENP_ID = ?
                     AND 
                     E.IND_ESTADO = 1";
@@ -314,6 +338,7 @@ class UserModel extends Model {
             'arr_permisos' => $query2,
         ];                    
     }
+    
     
 
     public function grabarExt($v_post){
@@ -379,6 +404,8 @@ class UserModel extends Model {
         return true;
     }
 
+
+    /*
     public function editando_extension_last($aData) {
         $idExt = $aData['post']['idMen'];
         $nombre = $aData['post']['nombre'];
@@ -446,9 +473,191 @@ class UserModel extends Model {
             "status" => $db->transStatus()
         ];
     }
+    */
 
+ 
+        
+    #$tip = $aData['post']['tipo_de_extension'];
+    #leyeda tip de  $aData['post']['tipo_de_extension'];
+        #0 = sistema principal  -   abuelo
+        #1 = submenu            -   padre 
+        #2 = extesion           -   hijo
 
+    #$listarMenup = $aData['post']['ind_extension_padre'];
+    # cuando es = 0 , cero significa es abuelo y tiene queheredar hacia abajo 
+    # cuando trae un numero, es de quien hereda segun el tipo de tipo_de_extension . calcular si hay que subir un nivel o 2 if 
 
+    public function editando_extension_last($aData) {
+        $idExt = $aData['post']['idMen'];
+        $nombre = $aData['post']['nombre'];
+        $tip = $aData['post']['tipo_de_extension'];
+        $listarMenup = $aData['post']['ind_extension_padre'];
+        $check = $aData['post']['check'];
+        $arrPrivilegios = $aData['post']['arrPrivilegios'];
+        $bool_checked = $aData['post']['bool_checked'];
+    
+        $db = \Config\Database::connect();
+        $db->transStart();
+    
+        $v_padre = 0;
+        if ($tip != 0) {
+            $arr_idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
+            $v_padre = $arr_idPadre['MENP_IDPADRE'];
+        }
+    
+        $db->table('ADMIN.GU_TMENUPRINCIPAL')
+            ->set([
+                'MENP_NOMBRE' => $nombre,
+                'MENP_ESTADO' => $check,
+                'MENP_TIPO' => $tip,
+                'MENP_IDPADRE' => $v_padre,
+                'MENP_FRAME' => 3
+            ])
+            ->where('MENP_ID', $idExt)
+            ->update();
+    
+        // Desheredar permisos si es necesario
+        $this->desheredarPermisos($db, $idExt, $tip);
+        
+        // Actualizar permisos
+        $this->actualizarPermisos($db, $idExt, $arrPrivilegios);
+    
+        // Heredar permisos y propagar según el tipo
+        if ($tip == 0) {
+            // Es un abuelo, propagar permisos hacia abajo
+            $this->propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios);
+        } else if ($tip == 1) {
+            // Es un submenú, heredar permisos hacia arriba y hacia abajo
+            $this->heredarPermisos($db, $idExt, $arrPrivilegios);
+            $this->propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios);
+        } else if ($tip == 2) {
+            // Es una extensión, heredar permisos hacia arriba
+            $this->heredarPermisos($db, $idExt, $arrPrivilegios);
+        }
+    
+        $db->transComplete();
+        return [
+            "data" => $aData,
+            "status" => $db->transStatus()
+        ];
+    }
+    
+    private function desheredarPermisos($db, $idExt, $tip) {
+        if ($tip == 0) {
+            // Desactivar permisos propagados a todos los hijos y descendientes
+            $this->desactivarPermisosHaciaAbajo($db, $idExt);
+        } else if ($tip == 1 || $tip == 2) {
+            // Desactivar permisos heredados de los padres
+            $this->desactivarPermisosHaciaArriba($db, $idExt);
+        }
+    }
+    
+    private function desactivarPermisosHaciaArriba($db, $idExt) {
+        $visitados = [];
+        while ($idExt != 0 && !in_array($idExt, $visitados)) {
+            $visitados[] = $idExt;
+            $idPadre = $db->query("SELECT MENP_IDPADRE FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
+            if ($idPadre && $idPadre['MENP_IDPADRE'] != 0) {
+                $idExtPadre = $idPadre['MENP_IDPADRE'];
+                $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO', 0)->where('MENP_ID', $idExtPadre)->update();
+                $idExt = $idExtPadre;
+            } else {
+                $idExt = 0;
+            }
+        }
+    }
+    
+    private function desactivarPermisosHaciaAbajo($db, $idExt) {
+        $hijos = $db->query("SELECT MENP_ID FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_IDPADRE = ?", [$idExt])->getResultArray();
+        foreach ($hijos as $hijo) {
+            $idHijo = $hijo['MENP_ID'];
+            $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO', 0)->where('MENP_ID', $idHijo)->update();
+            $this->desactivarPermisosHaciaAbajo($db, $idHijo);
+        }
+    }
+    
+    private function actualizarPermisos($db, $idExt, $arrPrivilegios) {
+        // Desactivar todos los permisos actuales
+        $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO', 0)->where('MENP_ID', $idExt)->update();
+    
+        // Activar los nuevos permisos
+        foreach ($arrPrivilegios as $idPer) {
+            $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
+            if (count($res) > 0) {
+                $db->table('ADMIN.GU_TMENPTIENEPER')
+                    ->set('IND_ESTADO', 1)
+                    ->where('PER_ID', $idPer)
+                    ->where('MENP_ID', $idExt)
+                    ->update();
+            } else {
+                $data = [
+                    'MENP_ID' => $idExt,
+                    'PER_ID' => $idPer,
+                    'IND_ESTADO' => 1
+                ];
+                $db->table('ADMIN.GU_TMENPTIENEPER')->insert($data);
+            }
+        }
+    }
+    
+    private function heredarPermisos($db, $idExt, $arrPrivilegios, $profundidad = 0, $maxProfundidad = 10) {
+        if ($profundidad > $maxProfundidad) {
+            log_message('debug', 'Máxima profundidad alcanzada en heredarPermisos: ' . $profundidad);
+            return;
+        }
+    
+        $visitados = [];
+        while ($idExt != 0 && !in_array($idExt, $visitados)) {
+            log_message('debug', 'Herencia de permisos para menú: ' . $idExt . ' a profundidad: ' . $profundidad);
+            $visitados[] = $idExt;
+            $idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
+            
+            if ($idPadre && $idPadre['MENP_IDPADRE'] != 0) {
+                $idExtPadre = $idPadre['MENP_IDPADRE'];
+                $permisosPadre = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE MENP_ID = ? AND IND_ESTADO = 1", [$idExtPadre])->getResultArray();
+                foreach ($permisosPadre as $permiso) {
+                    $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$permiso['PER_ID'], $idExt])->getResultArray();
+                    if (count($res) == 0) {
+                        $data = [
+                            'MENP_ID' => $idExt,
+                            'PER_ID' => $permiso['PER_ID'],
+                            'IND_ESTADO' => 1
+                        ];
+                        $db->table('ADMIN.GU_TMENPTIENEPER')->insert($data);
+                    }
+                }
+            } else {
+                $idExt = 0;
+            }
+        }
+    
+        if ($idExt != 0) {
+            $this->heredarPermisos($db, $idExt, $arrPrivilegios, $profundidad + 1, $maxProfundidad);
+        }
+    }
+    
+    private function propagarPermisosHaciaAbajo($db, $idExt, $arrPrivilegios) {
+        log_message('debug', 'Propagando permisos hacia abajo para menú: ' . $idExt);
+        $hijos = $db->query("SELECT MENP_ID FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_IDPADRE = ?", [$idExt])->getResultArray();
+        foreach ($hijos as $hijo) {
+            $idHijo = $hijo['MENP_ID'];
+            foreach ($arrPrivilegios as $idPer) {
+                $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idHijo])->getResultArray();
+                if (count($res) == 0) {
+                    $data = [
+                        'MENP_ID' => $idHijo,
+                        'PER_ID' => $idPer,
+                        'IND_ESTADO' => 1
+                    ];
+                    $db->table('ADMIN.GU_TMENPTIENEPER')->insert($data);
+                }
+            }
+            // Recursivamente propagar a los hijos
+            $this->propagarPermisosHaciaAbajo($db, $idHijo, $arrPrivilegios);
+        }
+    }
+    
+    
 
 }
 ?>

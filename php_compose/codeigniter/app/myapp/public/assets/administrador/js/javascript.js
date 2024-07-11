@@ -771,71 +771,75 @@ function alfanumerico(e) {
 }
 
 
+//ind_tipo_menu 
+// 0 : Abuelo - Menu principal 
+// 1 : hijo - Sub Menu 
+// 2 : nieto - Extension 
 
-function editarExt(idMen,ind_tipo_menu){
-    //ind_tipo_menu 
-        // 0 : Abuelo - Menu principal 
-        // 1 : hijo - Sub Menu 
-        // 2 : nieto - Extension
-    //vuelve a cero los menu    
+
+function editarExt(idMen, ind_tipo_menu) {
     console.log("********************************");
-    console.log("idMen -> ",idMen);
-    console.log("ind_tipo_menu  ->",ind_tipo_menu);
+    console.log("idMen          ->  ", idMen);
+    console.log("ind_tipo_menu  ->  ", ind_tipo_menu);
+    console.log("********************************");
 
     document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
         checkbox.checked = false;
     });
 
     $.ajax({ 
-        type : "POST",
-        url : "Home/buscaEditar",
-        dataType : "json",
-        beforeSend : function(xhr){  $('#loadFade').modal('show'); },
-        data : { "idMen" : idMen ,ind_tipo_menu : ind_tipo_menu },
-        error : function(errro) {  
-                                    console.log(errro);
-                                    jAlert("Error General, Consulte Al Administrador"); 
-                                    setTimeout(function() {
-                                        $("#loadFade").modal("hide");
-                                    }, 1000);
-                                },
-        success : function(aData){  
-                                    console.log(" editarExt  -> ",aData);
-                                    console.log("sql ->" , aData.arr_bd.SQL);
-                                    setTimeout(function(){
-                                        $("#loadFade").modal("hide");
-                                    }, 1000);
-                                    let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
-
-                                    if (aData.arr_bd.gu_tmenuprincipal.length>0){
-                                        $("#nomExt").val(data_menu.MENP_NOMBRE);
-                                        $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled",true);
-                                        $("#listarMenup").val(data_menu.MENP_ID).attr("disabled",true);
-                                        $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension('+idMen+','+ind_tipo_menu+')');
-                                    }
-
-                                    if(aData.arr_bd.arr_permisos.length>0){
-                                        aData.arr_bd.arr_permisos.forEach((row, index) => {
-                                            console.log("   --------------------------  ");
-                                            console.log("   row ->  ",row);
-                                            document.getElementById('ck_permiso_'+row.PER_ID).checked = true;
-                                        });   
-                                    }
-
-
-
-                                }, 
+        type: "POST",
+        url: "Home/buscaEditar",
+        dataType: "json",
+        beforeSend: function(xhr) { 
+            $('#loadFade').modal('show'); 
+        },
+        data: { 
+            "idMen": idMen, 
+            "ind_tipo_menu": ind_tipo_menu 
+        },
+        error: function(error) {  
+            console.log(error);
+            jAlert("Error General, Consulte Al Administrador"); 
+            setTimeout(function() {
+                $("#loadFade").modal("hide");
+            }, 1000);
+        },
+        success: function(aData) {  
+            console.log("editarExt -> ", aData);
+            setTimeout(function() {
+                $("#loadFade").modal("hide");
+            }, 1000);
+            let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
+            if (data_menu) {
+                $("#nomExt").val(data_menu.MENP_NOMBRE);
+                $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled", true);
+                $("#listarMenup").val(data_menu.MENP_ID).attr("disabled", true);
+                $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick', 'js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
+            }
+            // 
+            if (aData.arr_bd.arr_permisos.length > 0) {
+                aData.arr_bd.arr_permisos.forEach((row) => {
+                    document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
+                });
+            }
+            // Heredar permisos de los padres
+            if (aData.arr_bd.herencia_permisos && aData.arr_bd.herencia_permisos.length > 0) {
+                aData.arr_bd.herencia_permisos.forEach((row) => {
+                    document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
+                });
+            }
+        }
     });
 }
 
-
-
 function js_editarextension(idMen,ind_tipo_menu) {
-    console.log("idMen -> ",idMen);
-    console.log("ind_tipo_menu -> ",ind_tipo_menu);
+
+    console.log("idMen          -> ",idMen);
+    console.log("ind_tipo_menu  -> ",ind_tipo_menu);
+    
     let const_error = [];
     let check = document.getElementById('habilitado').checked ? 1 : 0; // menú habilitado
-
     if ($("#nomExt").val() == '') {
         const_error.push("Falta nombre del menú");
     }
@@ -863,18 +867,19 @@ function js_editarextension(idMen,ind_tipo_menu) {
             ind_extension_padre = parseInt($("#listarMenup").prop("value"));
             tipo_de_extension = ind_tipo_menu;
         }
+       
+
+        console.log("       ----------------------------------------------------------  ");
+        console.error("     ind_tipo_menu          ->   ", ind_tipo_menu);
+        console.log("       idMen                  ->   ", idMen);
+        console.log("       idMen_extension_padre  ->   ", ind_extension_padre);
+        console.log("       tipo_de_extension      ->   ", tipo_de_extension);
+        console.log("       check                  ->   ", check);
+        console.log("       arr_permisos           ->   ", arr_permisos);
+        console.log("       bool_checked           ->   ", bool_checked);
+        console.log("       ----------------------------------------------------------  ");
         
-        console.log("   ----------------------------------------------------------  ");
-        console.log("idMen                  ->", idMen);
-        console.log("idMen_extension_padre  ->", ind_extension_padre);
-        console.log("tipo_de_extension      ->", tipo_de_extension);
-        console.log("check                  ->", check);
-        console.log("arr_permisos           ->", arr_permisos);
-        console.log("bool_checked           ->", bool_checked);
-        console.log("   ----------------------------------------------------------  ");
-
         //return false;
-
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
             if (r) {
                 $.ajax({ 
