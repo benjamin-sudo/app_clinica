@@ -8,8 +8,6 @@ class UserModel extends Model {
         parent::__construct();
     }
 
-
-    
     public function ini_contendido(){
         $db     =   db_connect();
         $sql    =   "SELECT 
