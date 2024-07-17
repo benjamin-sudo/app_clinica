@@ -73,8 +73,8 @@ class modelinicio extends CI_Model {
 
     #carga de menu principal
     public function load_menuxuser($ID_UID){
-        $sql = $this->arr_menu_default(); 
-        #$sql = $this->nuevo_busqueda_menu($ID_UID);
+        #$sql = $this->arr_menu_default(); 
+        $sql = $this->nuevo_busqueda_menu($ID_UID);
         $menu = [];
         $menuData = $this->db->query($sql)->result_array();
         if(count($menuData)>0){
@@ -82,16 +82,16 @@ class modelinicio extends CI_Model {
                 $menuId = $row['MAIN_ID'];
                 $subMenuId = $row['SUB_ID'];
                 $extensionId = $row['EXT_ID'];
-                // Organizar en estructura jerarquica
+                // Organizar en estructura jerárquica
                 if (!isset($menu[$menuId])) {
                     $menu[$menuId] = [
-                        'data' =>  $row, // Datos del menu principal
+                        'data' => $row, // Datos del menú principal
                         'submenus' => []
                     ];
                 }
                 if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
                     $menu[$menuId]['submenus'][$subMenuId] = [
-                        'data' =>  $row, // Datos del submenu
+                        'data' => $row, // Datos del submenu
                         'extensions' => []
                     ];
                 }
@@ -158,10 +158,10 @@ class modelinicio extends CI_Model {
         return $sql;
     }
 
+
+
     public function nuevo_busqueda_menu($iuid){
-
         $own = "ADMIN";
-
         $sql = "SELECT 
                     M.MENP_ID AS MAIN_ID, 
                     M.MENP_NOMBRE AS MAIN_NOMBRE, 
@@ -175,7 +175,6 @@ class modelinicio extends CI_Model {
                     M.MENP_THEME AS MAIN_THEME, 
                     M.MENP_ISTOKEN AS MAIN_ISTOKEN, 
                     M.MENP_PARAM AS MAIN_PARAM,
-                    
                     SM.MENP_ID AS SUB_ID, 
                     SM.MENP_NOMBRE AS SUB_NOMBRE, 
                     SM.MENP_ESTADO AS SUB_ESTADO, 
@@ -188,7 +187,6 @@ class modelinicio extends CI_Model {
                     SM.MENP_THEME AS SUB_THEME, 
                     SM.MENP_ISTOKEN AS SUB_ISTOKEN, 
                     SM.MENP_PARAM AS SUB_PARAM,
-                    
                     EX.MENP_ID AS EXT_ID, 
                     EX.MENP_NOMBRE AS EXT_NOMBRE, 
                     EX.MENP_ESTADO AS EXT_ESTADO, 
@@ -203,28 +201,20 @@ class modelinicio extends CI_Model {
                     EX.MENP_PARAM AS EXT_PARAM
                 FROM 
                     $own.GU_TMENUPRINCIPAL M 
-                    LEFT JOIN $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
-                    LEFT JOIN $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
+                    LEFT JOIN 
+                    $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
+                    LEFT JOIN 
+                    $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
+                    LEFT JOIN 
+                    $own.GU_TUSUTIENEPER UP ON UP.PER_ID = M.MENP_ID
+                    LEFT JOIN
+                    $own.FE_USERS U ON U.ID_UID = UP.ID_UID
                 WHERE 
-                    M.MENP_ESTADO = 1 
-                    AND M.MENP_FRAME = 3 
-                    AND M.MENP_IDPADRE = 0 
-                    AND EXISTS (
-                        SELECT 1 
-                        FROM $own.GU_TUSUTIENEPER a
-                        JOIN $own.GU_TPERMISOS b ON a.per_id = b.per_id
-                        JOIN $own.GU_TMENPTIENEPER c ON a.per_id = c.per_id
-                        JOIN $own.GU_TMENUPRINCIPAL d ON c.MENP_ID = d.MENP_ID
-                        WHERE a.id_uid = $iuid
-                            AND a.ind_estado = 1
-                            AND d.MENP_ESTADO = 1
-                            AND c.ind_estado = 1
-                            AND b.PER_ESTADO = 3
-                            AND d.MENP_FRAME = 3
-                            AND (d.MENP_ID = M.MENP_ID OR d.MENP_ID = SM.MENP_ID OR d.MENP_ID = EX.MENP_ID)
-                    )
-                ORDER BY MAIN_ID, MAIN_ORDER ASC
-        ";
+                    U.ID_UID = $iuid AND 
+                    UP.IND_ESTADO = 1 AND 
+                    M.MENP_ESTADO = 1 AND 
+                    M.MENP_FRAME = 3 AND 
+                    M.MENP_IDPADRE = 0";
         return $sql;
     }
     
