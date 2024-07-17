@@ -775,7 +775,6 @@ function alfanumerico(e) {
 // 0 : Abuelo - Menu principal 
 // 1 : hijo - Sub Menu 
 // 2 : nieto - Extension 
-
 function editarExt(idMen, ind_tipo_menu) {
     console.log("********************************");
     console.log("idMen          ->  ", idMen);
@@ -784,7 +783,6 @@ function editarExt(idMen, ind_tipo_menu) {
     document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
         checkbox.checked = false;
     });
-
     $.ajax({ 
         type: "POST",
         url: "Home/buscaEditar",
@@ -804,31 +802,26 @@ function editarExt(idMen, ind_tipo_menu) {
             }, 1000);
         },
         success: function(aData) {  
-            console.log("editarExt -> ", aData);
             setTimeout(function() {
                 $("#loadFade").modal("hide");
             }, 1000);
-            let data_menu = aData.arr_bd.gu_tmenuprincipal[0];
-            if (data_menu) {
+            console.log("salida para edicion -> ", aData);
+            let data_menu = aData.arr_bd.arr_menuprincipal[0];
+            if (data_menu){
                 $("#nomExt").val(data_menu.MENP_NOMBRE);
                 $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled", true);
                 $("#listarMenup").val(data_menu.MENP_ID).attr("disabled", true);
-                $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSIÓN').attr('onclick', 'js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
+                $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick', 'js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
             }
-            if (aData.arr_bd.arr_permisos.length > 0) {
-                aData.arr_bd.arr_permisos.forEach((row) => {
-                    document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
-                });
-            }
-            if (aData.arr_bd.herencia_permisos && aData.arr_bd.herencia_permisos.length > 0) {
-                aData.arr_bd.herencia_permisos.forEach((row) => {
-                    document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
+            console.log("directPermissions -> ",aData.arr_bd.directPermissions);
+            if (aData.arr_bd.directPermissions.length > 0) {
+                aData.arr_bd.directPermissions.forEach((row) => {
+                    document.getElementById('ck_permiso_' + row).checked = true;
                 });
             }
         }
     });
 }
-
 
 function js_editarextension(idMen, ind_tipo_menu) {
     console.log("idMen          -> ", idMen);

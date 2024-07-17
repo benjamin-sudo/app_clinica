@@ -256,13 +256,11 @@ class Home extends BaseController {
         if ($this->request->isAJAX()) {
             $status = true;
             $idMen = $this->request->getPost("idMen");
-            $ind_tipo_menu = $this->request->getPost("ind_tipo_menu");
-            // Obtener datos del menú
+            $menuType = $this->request->getPost("ind_tipo_menu");
             $data_return = $this->usersModel->buscaExtEdit(['idMen' => $idMen]);
-            // Obtener permisos heredados desde el modelo
-            $herencia_permisos = $this->usersModel->get_obtenerPermisosHeredados($idMen);
+            $herencia_permisos = $this->usersModel->get_obtenerPermisosHeredados($idMen,$menuType);
             echo json_encode([
-                'arr_bd' => array_merge($data_return, ['herencia_permisos' => $herencia_permisos]),
+                'arr_bd' => $herencia_permisos,
                 'idMen' => $idMen,
                 'status' => $status,
             ]);
