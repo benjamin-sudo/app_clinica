@@ -839,6 +839,9 @@ class UserModel extends Model {
     public function get_obtenerPermisosHeredados($menuId) {
         $db = db_connect();
         $directPermissions = [];
+
+        $logger = service('logger'); // Obtener la instancia del logger
+
         // Consulta para obtener información del menú principal
         $arr_menuprincipal = $db->query("SELECT 
                                             MENP_ID, 
@@ -853,10 +856,8 @@ class UserModel extends Model {
                                             MENP_ID = ? AND MENP_ESTADO = 1", [$menuId])->getResultArray();
         if (!empty($arr_menuprincipal)) {
             $menuInfo = $arr_menuprincipal[0];
-            
             $menuType = $menuInfo['MENP_TIPO'];
             $parentMenuId = $menuInfo['MENP_IDPADRE'];
-
             // Función para obtener permisos de un menú dado
             $getPermissions = function($menuId) use ($db) {
                 $permissions = $db->query("SELECT pm.PER_ID
@@ -864,13 +865,16 @@ class UserModel extends Model {
                                            WHERE pm.MENP_ID = ? AND pm.IND_ESTADO = 1", [$menuId])->getResultArray();
                 return array_column($permissions, 'PER_ID');
             };
-
             // Obtener permisos directos del menú
             $directPermissions = $getPermissions($menuId);
+
+
+
             // Obtener permisos del padre si es submenú o extensión
             if ($menuType == 1 || $menuType == 2) {
                 if ($parentMenuId) {
                     $parentPermissions = $getPermissions($parentMenuId);
+                    $logger->info("a - parentMenuId = {$parentMenuId} -  parentPermissions " . json_encode($parentPermissions) . " ");
                     $directPermissions = array_merge($directPermissions, $parentPermissions);
                 }
             }
@@ -881,11 +885,13 @@ class UserModel extends Model {
                                                  FROM ADMIN.GU_TMENUPRINCIPAL
                                                  WHERE MENP_ID = ?", [$parentMenuId])->getRowArray()['MENP_IDPADRE'];
                 if ($grandParentMenuId && $grandParentMenuId != 0) {
+                    $logger->info("b - parentMenuId = {$parentMenuId} -  grandParentMenuId  " . json_encode($grandParentMenuId) . " ");
                     $grandParentPermissions = $getPermissions($grandParentMenuId);
+
+                    $logger->info("  grandParentPermissions  " . json_encode($grandParentPermissions) . " ");
                     $directPermissions = array_merge($directPermissions, $grandParentPermissions);
                 }
             }
-
             // Eliminar duplicados
             $directPermissions = array_unique($directPermissions);
         }
@@ -895,10 +901,6 @@ class UserModel extends Model {
         ];
     }
     
-    
-    
-    
-        
     #$tip = $aData['post']['tipo_de_extension'];
     #leyeda tip de  $aData['post']['tipo_de_extension'];
         #0 = sistema principal  -   abuelo
