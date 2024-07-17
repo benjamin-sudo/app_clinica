@@ -889,7 +889,14 @@ function js_editarextension(idMen, ind_tipo_menu) {
                         $("#loadFade").modal("hide");
                     }, 1000);
                     console.log("editando_estensiones_privilegios   -> ", aData);
-                    showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
+                    
+                    if (aData.status){
+                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
+                    } else {
+                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
+                    }
+                   
+
                 }
             });
         }

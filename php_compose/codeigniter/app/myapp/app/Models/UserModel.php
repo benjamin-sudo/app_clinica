@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
+
 use CodeIgniter\Model;
+use CodeIgniter\Log\Logger;
 
 class UserModel extends Model {
 
@@ -831,11 +833,13 @@ class UserModel extends Model {
     }
     
 
+    // MENP_TIPO	
 
-    public function get_obtenerPermisosHeredados($menuId, $menuType) {
+
+    public function get_obtenerPermisosHeredados($menuId) {
         $db = db_connect();
-    
-        // Consulta para gu_tmenuprincipal
+        $directPermissions = [];
+        // Consulta para obtener información del menú principal
         $arr_menuprincipal = $db->query("SELECT 
                                             MENP_ID, 
                                             MENP_NOMBRE, 
@@ -847,50 +851,50 @@ class UserModel extends Model {
                                             ADMIN.GU_TMENUPRINCIPAL 
                                         WHERE 
                                             MENP_ID = ? AND MENP_ESTADO = 1", [$menuId])->getResultArray();
-    
-        // Obtener permisos directos del menú
-        $sqlDirectPermissions = "SELECT pm.PER_ID
-                                 FROM ADMIN.GU_TMENPTIENEPER pm
-                                 WHERE pm.MENP_ID = ? AND pm.IND_ESTADO = 1";
-        $directPermissions = $db->query($sqlDirectPermissions, [$menuId])->getResultArray();
-        $directPermissions = array_column($directPermissions, 'PER_ID');
-    
-        // Función para obtener permisos de un menú dado
-        $getPermissions = function($menuId) use ($db) {
-            $permissions = $db->query("SELECT pm.PER_ID
-                                       FROM ADMIN.GU_TMENPTIENEPER pm
-                                       WHERE pm.MENP_ID = ? AND pm.IND_ESTADO = 1", [$menuId])->getResultArray();
-            return array_column($permissions, 'PER_ID');
-        };
-        // Obtener permisos del padre si es submenú o extensión
-        if ($menuType == 1 || $menuType == 2) {
-            $parentMenuId = $db->query("SELECT MENP_IDPADRE
-                                        FROM ADMIN.GU_TMENUPRINCIPAL
-                                        WHERE MENP_ID = ?", [$menuId])->getRowArray()['MENP_IDPADRE'];
-    
-            if ($parentMenuId) {
-                $parentPermissions = $getPermissions($parentMenuId);
-                $directPermissions = array_merge($directPermissions, $parentPermissions);
+        if (!empty($arr_menuprincipal)) {
+            $menuInfo = $arr_menuprincipal[0];
+            
+            $menuType = $menuInfo['MENP_TIPO'];
+            $parentMenuId = $menuInfo['MENP_IDPADRE'];
+
+            // Función para obtener permisos de un menú dado
+            $getPermissions = function($menuId) use ($db) {
+                $permissions = $db->query("SELECT pm.PER_ID
+                                           FROM ADMIN.GU_TMENPTIENEPER pm
+                                           WHERE pm.MENP_ID = ? AND pm.IND_ESTADO = 1", [$menuId])->getResultArray();
+                return array_column($permissions, 'PER_ID');
+            };
+
+            // Obtener permisos directos del menú
+            $directPermissions = $getPermissions($menuId);
+            // Obtener permisos del padre si es submenú o extensión
+            if ($menuType == 1 || $menuType == 2) {
+                if ($parentMenuId) {
+                    $parentPermissions = $getPermissions($parentMenuId);
+                    $directPermissions = array_merge($directPermissions, $parentPermissions);
+                }
             }
-        }
-        // Obtener permisos del abuelo si es extensión
-        if ($menuType == 2 && isset($parentMenuId)) {
-            $grandParentMenuId = $db->query("SELECT MENP_IDPADRE
-                                             FROM ADMIN.GU_TMENUPRINCIPAL
-                                             WHERE MENP_ID = ?", [$parentMenuId])->getRowArray()['MENP_IDPADRE'];
-    
-            if ($grandParentMenuId) {
-                $grandParentPermissions = $getPermissions($grandParentMenuId);
-                $directPermissions = array_merge($directPermissions, $grandParentPermissions);
+            
+            // Obtener permisos del abuelo si es extensión
+            if ($menuType == 2 && $parentMenuId) {
+                $grandParentMenuId = $db->query("SELECT MENP_IDPADRE
+                                                 FROM ADMIN.GU_TMENUPRINCIPAL
+                                                 WHERE MENP_ID = ?", [$parentMenuId])->getRowArray()['MENP_IDPADRE'];
+                if ($grandParentMenuId && $grandParentMenuId != 0) {
+                    $grandParentPermissions = $getPermissions($grandParentMenuId);
+                    $directPermissions = array_merge($directPermissions, $grandParentPermissions);
+                }
             }
+
+            // Eliminar duplicados
+            $directPermissions = array_unique($directPermissions);
         }
-        // Eliminar duplicados
-        $directPermissions = array_unique($directPermissions);
         return [
             'arr_menuprincipal' => $arr_menuprincipal,
             'directPermissions' => array_values($directPermissions) // Asegurarse de devolver un array indexado
         ];
     }
+    
     
     
     
@@ -904,9 +908,11 @@ class UserModel extends Model {
     #$listarMenup = $aData['post']['ind_extension_padre'];
     # cuando es = 0 , cero significa es abuelo y tiene queheredar hacia abajo 
     # cuando trae un numero, es de quien hereda segun el tipo de tipo_de_extension . calcular si hay que subir un nivel o 2 if 
-
+    
+    //use CodeIgniter\Log\Logger;
     public function editando_extension_last($aData) {
         $db = \Config\Database::connect();
+        $logger = service('logger'); // Obtener la instancia del logger
         $db->transStart();
     
         try {
@@ -916,12 +922,15 @@ class UserModel extends Model {
             $listarMenup = $aData['post']['ind_extension_padre'];
             $check = $aData['post']['check'];
             $arrPrivilegios = $aData['post']['arrPrivilegios'];
-            $bool_checked = $aData['post']['bool_checked'];
+    
+            $logger->info("****************************************************************************");
+            $logger->info("Editando extensión: ID = {$idExt}, Nombre = {$nombre}, Tipo = {$tip}");
     
             $v_padre = 0;
             if ($tip != 0) {
                 $arr_idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
                 $v_padre = $arr_idPadre['MENP_IDPADRE'];
+                $logger->info("Padre encontrado: MENP_IDPADRE = {$v_padre}");
             }
     
             $db->table('ADMIN.GU_TMENUPRINCIPAL')
@@ -935,149 +944,211 @@ class UserModel extends Model {
                 ->where('MENP_ID', $idExt)
                 ->update();
     
+            if ($db->error()['code']) {
+                $logger->error("Error en la actualización de ADMIN.GU_TMENUPRINCIPAL: " . $db->error()['message']);
+                throw new \Exception($db->error()['message']);
+            }
+    
+            $logger->info("Actualización de ADMIN.GU_TMENUPRINCIPAL exitosa para MENP_ID = {$idExt}");
+    
             // Marcar permisos actuales como inactivos
             $sqlUpdate = "UPDATE ADMIN.GU_TMENPTIENEPER
                             SET IND_ESTADO = 0
-                            WHERE MENP_ID = ?
-            ";
+                            WHERE MENP_ID = ?";
             $db->query($sqlUpdate, [$idExt]);
+    
+            if ($db->error()['code']) {
+                $logger->error("Error en la actualización de permisos: " . $db->error()['message']);
+                throw new \Exception($db->error()['message']);
+            }
     
             // Insertar o actualizar permisos
             foreach ($arrPrivilegios as $perId) {
                 $sqlCheck = "SELECT ID_MPTP
-                    FROM ADMIN.GU_TMENPTIENEPER
-                    WHERE MENP_ID = ? AND PER_ID = ?
-                ";
+                            FROM ADMIN.GU_TMENPTIENEPER
+                            WHERE MENP_ID = ? AND PER_ID = ?";
                 $existingPermission = $db->query($sqlCheck, [$idExt, $perId])->getRowArray();
+    
+                if ($db->error()['code']) {
+                    $logger->error("Error en la verificación de permisos: " . $db->error()['message']);
+                    throw new \Exception($db->error()['message']);
+                }
     
                 if ($existingPermission) {
                     // Actualizar permiso existente
                     $sqlUpdatePermission = "UPDATE ADMIN.GU_TMENPTIENEPER
-                        SET IND_ESTADO = 1
-                        WHERE ID_MPTP = ?
-                    ";
+                                            SET IND_ESTADO = 1
+                                            WHERE ID_MPTP = ?";
                     $db->query($sqlUpdatePermission, [$existingPermission['ID_MPTP']]);
+    
+                    if ($db->error()['code']) {
+                        $logger->error("Error en la actualización de permisos: " . $db->error()['message']);
+                        throw new \Exception($db->error()['message']);
+                    }
                 } else {
                     // Insertar nuevo permiso
-                    $sqlInsert = "
-                        INSERT INTO ADMIN.GU_TMENPTIENEPER (MENP_ID, PER_ID, IND_ESTADO)
-                        VALUES (?, ?, 1)
-                    ";
+                    $sqlInsert = "INSERT INTO ADMIN.GU_TMENPTIENEPER (MENP_ID, PER_ID, IND_ESTADO) VALUES (?, ?, 1)";
                     $db->query($sqlInsert, [$idExt, $perId]);
+    
+                    if ($db->error()['code']) {
+                        $logger->error("Error en la inserción de permisos: " . $db->error()['message']);
+                        throw new \Exception($db->error()['message']);
+                    }
                 }
             }
+    
+            $logger->info("Permisos actualizados exitosamente para MENP_ID = {$idExt}");
     
             // Heredar permisos según el tipo de menú
             $this->heredarPermisos($db, $idExt, $arrPrivilegios, $tip);
     
             $db->transComplete();
+            if ($db->transStatus() === false) {
+                $logger->error("Error en la transacción");
+                throw new \Exception("Transaction failed");
+            }
+    
+            $logger->info("Transacción completada exitosamente para MENP_ID = {$idExt}");
+    
             return [
                 "data" => $aData,
-                "status" => $db->transStatus()
+                "status" => true,
+                "error" => "",
             ];
         } catch (\Exception $e) {
             $db->transRollback();
+            $logger->error("Excepción capturada: " . $e->getMessage());
             return [
                 "data" => $aData,
                 "status" => false,
-                "error" => $e->getMessage()
+                "error" => $e->getMessage(),
             ];
         }
     }
     
-    
     private function heredarPermisos($db, $menuId, $permissions, $menuType) {
+        $logger = service('logger'); // Obtener la instancia del logger
+    
+        $logger->info("heredarPermisos -> menuType = {$menuType} , permissions => " . json_encode($permissions) . " , menuId => {$menuId}");
+    
         if ($menuType == 2) { // Si es una extensión, heredar permisos al padre y abuelo
             $parentMenuId = $db->query("SELECT MENP_IDPADRE
-                FROM ADMIN.GU_TMENUPRINCIPAL
-                WHERE MENP_ID = ?", [$menuId])->getRowArray()['MENP_IDPADRE'];
-    
+                                        FROM ADMIN.GU_TMENUPRINCIPAL
+                                        WHERE MENP_ID = ?", [$menuId])->getRowArray()['MENP_IDPADRE'];
             if ($parentMenuId) {
+                $logger->info("La extensión  = {$menuId} su sub-menu padre es MENP_IDPADRE = {$parentMenuId} ,  Heredando hacia arriba los permisos " . json_encode($permissions) . "");
+    
                 // Actualizar permisos del padre
-                $this->actualizarPermisos($db, $parentMenuId, $permissions);
+                $this->actualizarPermisos($db, $parentMenuId, $permissions, true);
+                $grandParentMenuId = $db->query("SELECT MENP_IDPADRE  FROM ADMIN.GU_TMENUPRINCIPAL  WHERE MENP_ID = ?", [$parentMenuId])->getRowArray()['MENP_IDPADRE'];
     
-                $grandParentMenuId = $db->query("SELECT MENP_IDPADRE
-                    FROM ADMIN.GU_TMENUPRINCIPAL
-                    WHERE MENP_ID = ?", [$parentMenuId])->getRowArray()['MENP_IDPADRE'];
-    
-                if ($grandParentMenuId) {
+                // Buscar permisos del abuelo y combinarlos
+                if ($grandParentMenuId && $grandParentMenuId != 0) {
+                    $logger->info("Heredando permisos al abuelo/extension  MENP_IDPADRE = {$grandParentMenuId}");
                     // Actualizar permisos del abuelo
-                    $this->actualizarPermisos($db, $grandParentMenuId, $permissions);
+                    $this->actualizarPermisos($db, $grandParentMenuId, $permissions, true);
                 }
             }
         }
     
         if ($menuType == 0) { // Si es un menú principal (Abuelo), heredar permisos a submenús y extensiones
             $subMenus = $db->query("SELECT MENP_ID
-                FROM ADMIN.GU_TMENUPRINCIPAL
-                WHERE MENP_IDPADRE = ?", [$menuId])->getResultArray();
+                                    FROM ADMIN.GU_TMENUPRINCIPAL
+                                    WHERE MENP_IDPADRE = ?", [$menuId])->getResultArray();
     
             foreach ($subMenus as $subMenu) {
-                $this->actualizarPermisos($db, $subMenu['MENP_ID'], $permissions);
-    
+                $logger->info("  -  Heredando Abuelo/Menu a hijo - Sub Menu  = {$subMenu['MENP_ID']}");
+                $this->actualizarPermisos($db, $subMenu['MENP_ID'], $permissions, false);
                 $extensions = $db->query("SELECT MENP_ID
-                    FROM ADMIN.GU_TMENUPRINCIPAL
-                    WHERE MENP_IDPADRE = ?", [$subMenu['MENP_ID']])->getResultArray();
-    
+                                        FROM ADMIN.GU_TMENUPRINCIPAL
+                                        WHERE MENP_IDPADRE = ?", [$subMenu['MENP_ID']])->getResultArray();
                 foreach ($extensions as $extension) {
-                    $this->actualizarPermisos($db, $extension['MENP_ID'], $permissions);
+                    $logger->info("Heredando permisos a la extensión MENP_ID = {$extension['MENP_ID']}");
+                    $this->actualizarPermisos($db, $extension['MENP_ID'], $permissions, false);
                 }
             }
         }
     
         if ($menuType == 1) { // Si es un submenú (Hijo), heredar permisos al padre y a sus propias extensiones
             $parentMenuId = $db->query("SELECT MENP_IDPADRE
-                FROM ADMIN.GU_TMENUPRINCIPAL
-                WHERE MENP_ID = ?", [$menuId])->getRowArray()['MENP_IDPADRE'];
+                                        FROM ADMIN.GU_TMENUPRINCIPAL
+                                        WHERE MENP_ID = ?", [$menuId])->getRowArray()['MENP_IDPADRE'];
     
             if ($parentMenuId) {
+                $logger->info("Heredando permisos al padre MENP_IDPADRE = {$parentMenuId}");
                 // Actualizar permisos del padre
-                $this->actualizarPermisos($db, $parentMenuId, $permissions);
+                $this->actualizarPermisos($db, $parentMenuId, $permissions, true);
             }
     
             $extensions = $db->query("SELECT MENP_ID
-                FROM ADMIN.GU_TMENUPRINCIPAL
-                WHERE MENP_IDPADRE = ?", [$menuId])->getResultArray();
+                                    FROM ADMIN.GU_TMENUPRINCIPAL
+                                    WHERE MENP_IDPADRE = ?", [$menuId])->getResultArray();
     
             foreach ($extensions as $extension) {
-                $this->actualizarPermisos($db, $extension['MENP_ID'], $permissions);
+                $logger->info("Heredando permisos a la extensión MENP_ID = {$extension['MENP_ID']}");
+                $this->actualizarPermisos($db, $extension['MENP_ID'], $permissions, false);
             }
         }
     }
     
-
-    private function actualizarPermisos($db, $menuId, $permissions) {
+    private function actualizarPermisos($db, $menuId, $permissions, $merge = false) {
+        $logger = service('logger'); // Obtener la instancia del logger
+    
+        // Si mergear es verdadero, obtener los permisos existentes y combinarlos
+        if ($merge) {
+            $existingPermissions = $db->query("SELECT PER_ID
+                                               FROM ADMIN.GU_TMENPTIENEPER
+                                               WHERE MENP_ID = ? AND IND_ESTADO = 1", [$menuId])->getResultArray();
+            $existingPermissions = array_column($existingPermissions, 'PER_ID');
+            $permissions = array_unique(array_merge($permissions, $existingPermissions));
+        }
+    
         // Marcar permisos actuales como inactivos
-        $sqlUpdate = "UPDATE ADMIN.GU_TMENPTIENEPER
-            SET IND_ESTADO = 0
-            WHERE MENP_ID = ?
-        ";
+        $sqlUpdate = "UPDATE ADMIN.GU_TMENPTIENEPER SET IND_ESTADO = 0  WHERE MENP_ID = ?";
         $db->query($sqlUpdate, [$menuId]);
+    
+        if ($db->error()['code']) {
+            $logger->error("Error en la actualización de permisos para MENP_ID = {$menuId}: " . $db->error()['message']);
+            throw new \Exception($db->error()['message']);
+        }
     
         // Insertar o actualizar permisos
         foreach ($permissions as $perId) {
-            $sqlCheck = "SELECT ID_MPTP
-                FROM ADMIN.GU_TMENPTIENEPER
-                WHERE MENP_ID = ? AND PER_ID = ?
-            ";
+            
+            $sqlCheck = "SELECT ID_MPTP  FROM ADMIN.GU_TMENPTIENEPER   WHERE MENP_ID = ? AND PER_ID = ?";
             $existingPermission = $db->query($sqlCheck, [$menuId, $perId])->getRowArray();
+            
+            $logger->info("sqlCheck  menuId = {$menuId}: perId =  {$perId} === " . json_encode($existingPermission) . "  } ");
+            
+            if ($db->error()['code']) {
+                $logger->error("Error en la verificación de permisos para MENP_ID = {$menuId}: " . $db->error()['message']);
+                throw new \Exception($db->error()['message']);
+            }
+
     
             if ($existingPermission) {
                 // Actualizar permiso existente
-                $sqlUpdatePermission = "UPDATE ADMIN.GU_TMENPTIENEPER
-                    SET IND_ESTADO = 1
-                    WHERE ID_MPTP = ?
-                ";
+                $sqlUpdatePermission = "UPDATE ADMIN.GU_TMENPTIENEPER SET IND_ESTADO = 1  WHERE ID_MPTP = ?";
                 $db->query($sqlUpdatePermission, [$existingPermission['ID_MPTP']]);
+    
+                if ($db->error()['code']) {
+                    $logger->error("Error en la actualización de permisos para MENP_ID = {$menuId}: " . $db->error()['message']);
+                    throw new \Exception($db->error()['message']);
+                }
             } else {
                 // Insertar nuevo permiso
-                $sqlInsert = "INSERT INTO ADMIN.GU_TMENPTIENEPER (MENP_ID, PER_ID, IND_ESTADO)
-                    VALUES (?, ?, 1)
-                ";
+                $sqlInsert = "INSERT INTO ADMIN.GU_TMENPTIENEPER (MENP_ID, PER_ID, IND_ESTADO) VALUES (?, ?, 1)";
                 $db->query($sqlInsert, [$menuId, $perId]);
+    
+                if ($db->error()['code']) {
+                    $logger->error("Error en la inserción de permisos para MENP_ID = {$menuId}: " . $db->error()['message']);
+                    throw new \Exception($db->error()['message']);
+                }
             }
         }
     }
+    
+    
     
 
 

@@ -292,6 +292,7 @@ class Home extends BaseController {
         $data_return = $this->usersModel->editando_extension_last(['post' => $postData]);
         return $this->response->setJSON([
             'status' => $data_return['status'],
+            'error' => $data_return['error'],
             'data_return' => $data_return,
         ]);
     }
