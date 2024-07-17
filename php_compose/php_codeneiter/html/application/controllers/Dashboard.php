@@ -251,5 +251,4 @@ class Dashboard extends CI_Controller {
         $FechaNueva     = date("Y-m-d H:i:s", mktime($Horas, $Minutos, $Segundos, $Mes, $Dia, $Ano));
         return $FechaNueva;
     }
-    
 }

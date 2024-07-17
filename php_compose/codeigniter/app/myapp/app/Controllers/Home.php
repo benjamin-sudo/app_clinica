@@ -253,12 +253,12 @@ class Home extends BaseController {
     }
 
     public function buscaEditar() {
-        if ($this->request->isAJAX()) {
-            $status = true;
-            $idMen = $this->request->getPost("idMen");
-            $menuType = $this->request->getPost("ind_tipo_menu");
-            $data_return = $this->usersModel->buscaExtEdit(['idMen' => $idMen]);
-            $herencia_permisos = $this->usersModel->get_obtenerPermisosHeredados($idMen,$menuType);
+        if ($this->request->isAJAX()){
+            $status             =   true;
+            $idMen              =   $this->request->getPost("idMen");
+            $menuType           =   $this->request->getPost("ind_tipo_menu");
+            $data_return        =   $this->usersModel->buscaExtEdit(['idMen' => $idMen]);
+            $herencia_permisos  =   $this->usersModel->get_obtenerPermisosHeredados($idMen,$menuType);
             echo json_encode([
                 'arr_bd' => $herencia_permisos,
                 'idMen' => $idMen,
@@ -300,24 +300,7 @@ class Home extends BaseController {
     public function editExtension_new() {
         $request = \Config\Services::request();
         $postData = $request->getPost();
-
-        // Obtener los datos del POST
-        $idMen = $postData['idMen'] ?? null;
-        $nombre = $postData['nombre'] ?? null;
-        $check = $postData['check'] ?? null;
-        $tip = $postData['tipo_de_extension'] ?? null;
-        $listarMenup = $postData['ind_extension_padre'] ?? null;
-        $arrPrivilegios = $postData['arrPrivilegios'] ?? [];
-
-        // Validar los datos
-        if (!$idMen || !$nombre || empty($arrPrivilegios)) {
-            return $this->response->setStatusCode(400)->setJSON(['status' => false, 'message' => 'Datos inválidos']);
-        }
-
-        // Instanciar el modelo
-        $result = $this->usersModel->editarExt($nombre, $check, $tip, $listarMenup, $arrPrivilegios, $idMen);
-
-        // Devolver la respuesta adecuada
+        $result = $this->usersModel->editando_extension_old(['post' => $postData]);
         if ($result) {
             return $this->response->setJSON(['status' => true, 'message' => 'Extensión editada correctamente']);
         } else {

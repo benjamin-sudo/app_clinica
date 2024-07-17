@@ -33,21 +33,22 @@
                 <h4 class="alert-heading">INICIO</h4>
                 <hr>
                 <p><i class="bi bi-check-circle-fill mt-1"></i> 
-                    Plataforma de Gestión de Usuarios, Privilegios y Extensiones de la Plataforma e-SISSAN del Servicio de Salud Araucanía Norte.
+                    Plataforma de gesti&oacute;n de usuarios, privilegios y extensiones de la plataforma Clinica Libre.
                 </p>
                 <hr>
                 <p><i class="bi bi-check-circle mt-1"></i> 
-                    Gestión de Extensiones: En esta sección podrá crear nuevas extensiones y 
-                    modificar las ya existentes, además podrá asignar privilegios para cada menú o extensión para asi controlar el acceso a estos.
+                    Gesti&oacute;n de extensiones: En esta sección podrá crear nuevas extensiones y 
+                    modificar las ya existentes, adem&aacute;s podr&aacute; asignar privilegios para cada men&uacute; 
+                    o extensi&oacute;n para asi controlar el acceso a estos.
                 </p>
                 <hr>
                 <p><i class="bi bi-check-square-fill mt-1"></i> 
-                    Gestion de Privilegios: En esta sección podrá crear y gestionar los privilegios para asignarlos a usuarios o menus.
+                    Gestion de privilegios: En esta secci&oacute;n podr&aacute; crear y gestionar los privilegios para asignarlos a usuarios o menus.
                 </p>
                 <hr>
                 <p style="margin-bottom: 0px;"><i class="bi bi-check2-circle mt-1"></i> 
-                    Gestion de Usuarios: En esta sección podrá crear y gestionar los usuarios que acceden a la plataforma, 
-                    en la cual se pueden asignar los privilegios y establecimientos a los cuales tendrá acceso.
+                    Gesti&oacute;n de usuarios: En esta secci&oacute;n podr&aacute; crear y gestionar los usuarios que acceden a la plataforma, 
+                    en la cual se pueden asignar los privilegios y establecimientos a los cuales tendr&aacute; acceso.
                 </p>
             </div>
         </div>
@@ -62,25 +63,25 @@
                 <div class="grid_body_extensiones1 card">
                     <table class="table table-striped" style="margin-bottom: 0px;">
                         <tr>
-                            <td width="250px"><b>Nombre del menú</b></td>
+                            <td width="250px"><b>Nombre del men&uacute;</b></td>
                             <td>
                                 <div class="div_2">
-                                    <div class="div_21"><input type="text" id="nomExt" onkeypress="return soloLetras(event)" class="form-control form-control-sm;" style="text-transform: inherit;" onblur="validaExt()"> </div>
+                                    <div class="div_21"><input type="text" id="nomExt" onkeypress="return soloLetras(event)" class="form-control form-control-sm;" style="text-transform: inherit;width:380px;" onblur="validaExt()"></div>
                                     <div class="div_21">
-                                        <input type="checkbox" class="form-check-input mt-1" id="habilitado" name="habilitado" value="1" checked>&nbsp;Menú Habilitado
+                                        <input type="checkbox" class="form-check-input mt-1" id="habilitado" name="habilitado" value="1" checked>&nbsp;Men&uacute; Habilitado
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td width="200px"><b>Nombre extensión</b> </td>
+                            <td width="200px"><b>Nombre extensi&oacute;n</b> </td>
                             <td>
                                 <input type="text" id="nomArch" class="form-control form-control-sm;" onkeypress="return alfanumericoRuta(event)" style="text-transform: lowercase;" onblur="buscaExtArch();">
                                 <input type="hidden" id="existeExt" value="0">
                             </td>
                         </tr>
                         <tr>
-                            <td><b>Extensión principal o padre</b></td>
+                            <td><b>Extensi&oacute;n principal o padre</b></td>
                             <td>
                                 <?php echo view("html_administrador", ['menu_principal' => $respuesta['menu_principal']]); ?>
                             </td>
@@ -94,10 +95,10 @@
                                             <li class="list-group-item">
                                                 <div class="grid_li_permisos">
                                                     <div class="grid_li_permisos2">
-                                                        <input type="checkbox" class="form-check-input checked_id" id="ck_permiso_<?php echo $row['PER_ID']; ?>" name="ck_permiso" style="display: block; cursor: pointer; margin-top: 0px; margin-bottom: -1px;" value="<?php echo $row['PER_ID']; ?>">
+                                                        <input type="checkbox" class="form-check-input checked_id" id="ck_permiso_<?php echo $row['PER_ID'];?>" name="ck_permiso" style="display: block; cursor: pointer; margin-top: 0px; margin-bottom: -1px;" value="<?php echo $row['PER_ID']; ?>">
                                                     </div>
                                                     <div class="grid_li_permisos1">
-                                                        <?php echo $row['PER_NOMBRE']; ?>
+                                                    <i>(<?php echo $row['PER_ID'];?>)</i>&nbsp;-&nbsp;<?php echo $row['PER_NOMBRE'];?>
                                                     </div>
                                                 </div>
                                             </li>
@@ -108,7 +109,7 @@
                         <tr>
                             <td colspan="2" style="text-align: center">
                                 <button class="btn btn-small btn-success btn-fill" id="grabarExt" style="color:#fff;" onclick="grabarExt(0);">
-                                    <i class="fa fa-save fa-large" id="iconBtn"></i><span id="nomBTN">&nbsp;CREAR EXTENSIÓN</span>
+                                    <i class="fa fa-save fa-large" id="iconBtn"></i><span id="nomBTN">&nbsp;CREAR EXTENSI&Oacute;N</span>
                                 </button>
                                 &nbsp;
                                 <button class="btn btn-small btn-danger btn-fill" style="color:#fff;" onclick="js_limpia_panel();">
@@ -156,10 +157,10 @@
                                     </div>
                                     <div class="grid_li_permisos_4">
                                         <button 
-                                            type    =   "button" 
-                                            class   =   "btn btn-danger"  
-                                            id      =   "<?php echo $row['PER_ID'];?>" 
-                                            onclick =   "js_estado_r(this.id)"
+                                            type        =   "button" 
+                                            class       =   "btn btn-danger"  
+                                            id          =   "<?php echo $row['PER_ID'];?>" 
+                                            onclick     =   "js_estado_r(this.id)"
                                             ><i class   =   "fa fa-times" aria-hidden="true"></i>
                                         </button>
                                         <!--
@@ -351,22 +352,22 @@
 <?php
     #var_dump($respuesta['arr_empresas']);
     /*
-    echo current_url();
-    echo "<br>";
-    echo $_SERVER['REQUEST_URI'];
-    echo "<br>";
-    echo $_SERVER['PHP_SELF'];
+        echo current_url();
+        echo "<br>";
+        echo $_SERVER['REQUEST_URI'];
+        echo "<br>";
+        echo $_SERVER['PHP_SELF'];
     */
     //echo "<br>";
     /*
-    echo APPPATH;
-    echo "<br>";
-    echo __DIR__;
-    echo "<br>";
-    echo __FILE__;
-    echo "<br>";
-    echo APPPATH."Controllers";
-    echo "<br>";
+        echo APPPATH;
+        echo "<br>";
+        echo __DIR__;
+        echo "<br>";
+        echo __FILE__;
+        echo "<br>";
+        echo APPPATH."Controllers";
+        echo "<br>";
     */
     //$parentPath = dirname(APPPATH);
     //echo $parentPath;
@@ -378,4 +379,5 @@
     #}
     
 ?>
+
 <?= $this->endSection() ?>

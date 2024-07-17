@@ -39,7 +39,8 @@ class modelinicio extends CI_Model {
                 $ID_UID = $row->ID_UID;
                 $row = $row;
                 $menu = $this->load_menuxuser($ID_UID);
-            } 
+            
+            }
             #activo 
             if ($status) {
                 $arr_empresa = $this->db->query("SELECT 

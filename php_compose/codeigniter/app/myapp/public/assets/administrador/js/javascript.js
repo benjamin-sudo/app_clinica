@@ -780,130 +780,130 @@ function editarExt(idMen, ind_tipo_menu) {
     console.log("idMen          ->  ", idMen);
     console.log("ind_tipo_menu  ->  ", ind_tipo_menu);
     console.log("********************************");
+
     document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
         checkbox.checked = false;
     });
+    
     $.ajax({ 
-        type: "POST",
-        url: "Home/buscaEditar",
-        dataType: "json",
-        beforeSend: function(xhr) { 
-            $('#loadFade').modal('show'); 
-        },
-        data: { 
-            "idMen": idMen, 
-            "ind_tipo_menu": ind_tipo_menu 
-        },
-        error: function(error) {  
-            console.log(error);
-            jAlert("Error General, Consulte Al Administrador"); 
-            setTimeout(function() {
-                $("#loadFade").modal("hide");
-            }, 1000);
-        },
-        success: function(aData) {  
-            setTimeout(function() {
-                $("#loadFade").modal("hide");
-            }, 1000);
-            console.log("salida para edicion -> ", aData);
-            let data_menu = aData.arr_bd.arr_menuprincipal[0];
-            if (data_menu){
-                $("#nomExt").val(data_menu.MENP_NOMBRE);
-                $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled", true);
-                $("#listarMenup").val(data_menu.MENP_ID).attr("disabled", true);
-                $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick', 'js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
-            }
-            console.log("directPermissions -> ",aData.arr_bd.directPermissions);
-            if (aData.arr_bd.directPermissions.length > 0) {
-                aData.arr_bd.directPermissions.forEach((row) => {
-                    document.getElementById('ck_permiso_' + row).checked = true;
-                });
-            }
-        }
+        type        :   "POST",
+        url         :   "Home/buscaEditar",
+        dataType    :   "json",
+        beforeSend  :   function(xhr) { 
+                            $('#loadFade').modal('show'); 
+                        },
+        data:       { 
+                        "idMen": idMen, 
+                        "ind_tipo_menu": ind_tipo_menu 
+                    },
+        error       :   function(error){  
+                                            console.log(error);
+                                            jAlert("Error General, Consulte Al Administrador"); 
+                                            setTimeout(function() {
+                                                $("#loadFade").modal("hide");
+                                            }, 1000);
+                                        },
+        success     :   function(aData)    {
+                                        setTimeout(function(){ $("#loadFade").modal("hide"); },1000);
+                                        //console.log("***********************************************");
+                                        //console.log("buscaEditar -> aData -> ",aData);
+                                        let data_menu = aData.arr_bd.arr_menuprincipal[0];
+                                        if (data_menu){
+                                            $("#nomExt").val(data_menu.MENP_NOMBRE);
+                                            $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled", true);
+                                            $("#listarMenup").val(data_menu.MENP_ID).attr("disabled", true);
+                                            
+                                            $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
+                                        }
+                                        if (aData.arr_bd.directPermissions.length > 0) {
+                                            aData.arr_bd.directPermissions.forEach((row) => {
+                                                //console.log("   ******************  ");
+                                                //console.log("row : ",row);
+                                                document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
+                                            });
+                                        }
+                                    }
     });
 }
 
-function js_editarextension(idMen, ind_tipo_menu) {
-    console.log("idMen          -> ", idMen);
-    console.log("ind_tipo_menu  -> ", ind_tipo_menu);
-    
+function js_editarextension(idMen, ind_tipo_menu){
     let const_error = [];
-    let check = document.getElementById('habilitado').checked ? 1 : 0; // menú habilitado
+    let check = document.getElementById('habilitado').checked ? 1 : 0; // menu habilitado
     let nombreMenu = $("#nomExt").val().trim();
     let arr_permisos = [];
-
     if (nombreMenu == '') {
         const_error.push("Falta nombre del menú");
     }
-
     $(".checked_id").each(function(index) {
         if (this.checked) {
             arr_permisos.push(this.value);
         }
     });
-
     if (arr_permisos.length == 0) { 
         const_error.push("Faltan privilegios"); 
     }
-
     if (const_error.length > 0) {
         jError(const_error.join("<br>"), "ERROR - CLinica libre");
         return false;
     }
-
     let ind_extension_padre = 0;
     let tipo_de_extension = 0;
     if (ind_tipo_menu != 0) {
-        ind_extension_padre = parseInt($("#listarMenup").val());
+        $("#listarMenup").attr("disabled", false);
+        var selectElement = document.getElementById("listarMenup");
+        ind_extension_padre = parseInt(selectElement.value);
+        $("#listarMenup").attr("disabled", true);
         tipo_de_extension = ind_tipo_menu;
     }
 
-    jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'Confirmaci&oacute;n', function(r) {
+    console.log("   *****************************************************   ");
+    console.log("   ************    js_editarextension  ********************");
+    console.log("   idMen               => ",idMen);
+    console.log("   ind_tipo_menu       => ",ind_tipo_menu);
+    console.log("   nombreMenu          => ",nombreMenu);
+    console.log("   ind_extension_padre => ",ind_extension_padre);
+    console.log("   tipo_de_extension   => ",tipo_de_extension);
+    console.log("   arr_permisos        => ",arr_permisos);
+
+    //return false;
+    
+    jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'CLINICA LIBRE', function(r) {
         if (r) {
             $.ajax({ 
-                type: "POST",
-                url: "Home/editExtension",
-                //url: "Home/editExtension_new", 
-                dataType: "json",
-                beforeSend: function(xhr) { $('#loadFade').modal('show'); },
-                data: { 
-                    idMen: idMen,
-                    nombre: nombreMenu,
-                    nomArch: nombreMenu,
-                    ind_extension_padre: ind_extension_padre,
-                    tipo_de_extension: tipo_de_extension,
-                    check: check,
-                    arrPrivilegios: arr_permisos,
-                    bool_checked: check,
-                    ind_tipo_menu: ind_tipo_menu,
-                },
-                error: function(error) {  
-                    console.log(error);
-                    jAlert("Error General, Consulte Al Administrador"); 
-                    setTimeout(function() {
-                        $("#loadFade").modal("hide");
-                    }, 1000);
-                },
-                success: function(aData) {  
-                    setTimeout(function() {
-                        $("#loadFade").modal("hide");
-                    }, 1000);
-                    console.log("editando_estensiones_privilegios   -> ", aData);
-                    
-                    if (aData.status){
-                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
-                    } else {
-                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
-                    }
-                   
-
-                }
+                type        :   "POST",
+                //url       :   "Home/editExtension",
+                url         :   "Home/editExtension_new",
+                dataType    :   "json",
+                beforeSend  :   function(xhr) { $('#loadFade').modal('show'); },
+                data        :   { 
+                                    idMen                   :   idMen,
+                                    nombre                  :   nombreMenu,
+                                    nomArch                 :   nombreMenu,
+                                    ind_tipo_menu           :   ind_tipo_menu,
+                                    ind_extension_padre     :   ind_extension_padre,
+                                    tipo_de_extension       :   tipo_de_extension,
+                                    check                   :   check,
+                                    arrPrivilegios          :   arr_permisos,
+                                    bool_checked            :   check,
+                                },
+                error   :   function(error) {  
+                                                console.log(error);
+                                                jAlert("Error General, Consulte Al Administrador"); 
+                                                setTimeout(function(){  $("#loadFade").modal("hide");  }, 1000);
+                                            },
+                success : function(aData)   {  
+                                                setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
+                                                console.log("editando_estensiones_privilegios   -> ", aData);
+                                                if (aData.status){
+                                                    showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
+                                                } else {
+                                                    showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
+                                                }
+                                            }
             });
         }
     });
 }
-
-
 
 /*
 function cargaPrivOrigen() {
