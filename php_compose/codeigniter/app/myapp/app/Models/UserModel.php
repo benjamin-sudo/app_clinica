@@ -1019,11 +1019,11 @@ class UserModel extends Model {
                 }
                 foreach ($arrPrivilegios as $aux => $idPer){
                     /*
-                    $logger->info(" ---------------------------------   ");
-                    $logger->info(" aux     =   {$aux}");
-                    $logger->info(" sigMen  =   {$sigMen}");
-                    $logger->info(" idExt   =   {$idExt}");
-                    $logger->info(" idPer   =   {$idPer}");
+                        $logger->info(" ---------------------------------   ");
+                        $logger->info(" aux     =   {$aux}");
+                        $logger->info(" sigMen  =   {$sigMen}");
+                        $logger->info(" idExt   =   {$idExt}");
+                        $logger->info(" idPer   =   {$idPer}");
                     */
                     $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
                     if (count($res) > 0) {

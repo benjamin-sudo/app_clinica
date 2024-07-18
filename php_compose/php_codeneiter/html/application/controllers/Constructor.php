@@ -29,7 +29,7 @@ class Constructor extends CI_Controller {
         # var_dump($user);
         if($user['status']){
             $userL = $user['row'];
-            $unique = str_replace('-','', $userL->USERNAME).$this->getRandomCode();
+            $unique = str_replace('-','',$userL->USERNAME).$this->getRandomCode();
             $empresas = $user['cod_empresa_default'];
             $txt_empresa = $user['txt_empresa_default'];
             $_SESSION["IP"] = $this->input->ip_address();

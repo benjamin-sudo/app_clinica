@@ -307,5 +307,4 @@ class Home extends BaseController {
             return $this->response->setStatusCode(500)->setJSON(['status' => false, 'message' => 'Error al editar la extensión']);
         }
     }
-    
 }

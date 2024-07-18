@@ -856,17 +856,17 @@ function js_editarextension(idMen, ind_tipo_menu){
         tipo_de_extension = ind_tipo_menu;
     }
 
-    console.log("   *****************************************************   ");
-    console.log("   ************    js_editarextension  ********************");
-    console.log("   idMen               => ",idMen);
-    console.log("   ind_tipo_menu       => ",ind_tipo_menu);
-    console.log("   nombreMenu          => ",nombreMenu);
-    console.log("   ind_extension_padre => ",ind_extension_padre);
-    console.log("   tipo_de_extension   => ",tipo_de_extension);
-    console.log("   arr_permisos        => ",arr_permisos);
-
+    /*
+        console.log("   *****************************************************   ");
+        console.log("   ************    js_editarextension  ********************");
+        console.log("   idMen               => ",idMen);
+        console.log("   ind_tipo_menu       => ",ind_tipo_menu);
+        console.log("   nombreMenu          => ",nombreMenu);
+        console.log("   ind_extension_padre => ",ind_extension_padre);
+        console.log("   tipo_de_extension   => ",tipo_de_extension);
+        console.log("   arr_permisos        => ",arr_permisos);
+    */
     //return false;
-    
     jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'CLINICA LIBRE', function(r) {
         if (r) {
             $.ajax({ 

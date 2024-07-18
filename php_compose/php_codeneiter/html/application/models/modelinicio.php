@@ -39,7 +39,6 @@ class modelinicio extends CI_Model {
                 $ID_UID = $row->ID_UID;
                 $row = $row;
                 $menu = $this->load_menuxuser($ID_UID);
-            
             }
             #activo 
             if ($status) {
@@ -74,8 +73,9 @@ class modelinicio extends CI_Model {
 
     #carga de menu principal
     public function load_menuxuser($ID_UID){
-        #$sql = $this->arr_menu_default(); 
-        $sql = $this->nuevo_busqueda_menu($ID_UID);
+        $sql = $this->arr_menu_default(); 
+        #pendiente
+        #$sql = $this->nuevo_busqueda_menu($ID_UID);
         $menu = [];
         $menuData = $this->db->query($sql)->result_array();
         if(count($menuData)>0){
