@@ -35,7 +35,6 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $isNal = $this->input->post("isNal");
         $templete = $this->input->post("template");
         $edad = $this->input->post("Numedad");
-
         $value_sex = '';
         $dateGenero = $this->ssan_bdu_creareditarpaciente_model->getTraeGenero();
         if (count($dateGenero) > 0) {

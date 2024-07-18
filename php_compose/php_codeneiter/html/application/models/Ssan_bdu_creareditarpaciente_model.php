@@ -1,15 +1,13 @@
 <?php
 defined("BASEPATH") OR exit("No direct script access allowed");
-
 //require_once(APPPATH . '/models/ClassFonasa/libsp/nusoapwsf.php');
-
 class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
     var $tableSpace = "ADMIN";
    
     public function __construct(){
         parent::__construct();
-        $this->db = $this->load->database('oracle_conteiner',true);
+        #$this->db = $this->load->database('oracle_conteiner',true);
         $this->load->helper('text');
         $this->load->model("sql_class/sql_class_ggpacientes");
         $this->load->model("sql_class/sqlclass_archivo");
@@ -17,10 +15,10 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
     }
 
     public function function_test(){
-        $fecha              =   "18-APR-1988";
-        $fecha_formateada   =   date('d-M-Y', strtotime($fecha));
-        #$fecha_formateada  =   str_replace("'", "''", $fecha_formateada); // Elimina o comenta esta línea
-        $arr                =   array('FECHA_CREACION' => "TO_DATE('" . $fecha_formateada . "','DD-MON-YYYY')");
+        $fecha = "18-APR-1988";
+        $fecha_formateada = date('d-M-Y', strtotime($fecha));
+        #$fecha_formateada = str_replace("'", "''", $fecha_formateada); // Elimina o comenta esta línea
+        $arr = array('FECHA_CREACION' => "TO_DATE('" . $fecha_formateada . "','DD-MON-YYYY')");
         $this->db->trans_start();
         $this->db->insert($this->tableSpace.'.TABLA_PRUEBAS', $arr);
         $this->db->trans_complete();
@@ -64,20 +62,6 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
     }
 
     public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete) {
-        /*
-            error_log("--------------------------------------");
-            error_log("---------->".$numFichaE);
-            error_log("---------->".$identifier);
-            error_log("---------->".$codEmpresa);
-            error_log("---------->".$isnal);
-            error_log("---------->".$pasaporte);
-            error_log("---------->".$tipoEx);
-            error_log("---------->".$nombre);
-            error_log("---------->".$apellidoP);
-            error_log("---------->".$apellidoM);
-            error_log("-------------------------------------");
-        */
-        # A.FEC_NACIMI,
         if ($identifier == '' and $pasaporte == ''){
             $query =  $this->db->select('G.NUM_FICHAE FALLECIDO,
                                 A.COD_PAIS,
@@ -1545,7 +1529,5 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             "transaccion"                       =>  $this->db->trans_status()
         );
     }
-
-
 
 }

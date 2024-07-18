@@ -59,7 +59,6 @@ $(document).ready(function(){
     $('.dropdown-toggle').dropdown();
 });
 
-
 function js_test(){
     $.ajax({ 
         type        :	"POST",
@@ -130,13 +129,11 @@ function buscar(OP,LIM_INI){
     var tipoPac     =	$('input:radio[name=tipPac]:checked').val();
     var tipoEx      =	$("#tipoEx").val();
     var numxpag     =	10;
-    
     if (rut!=''){
         rut         =	rut.replace(/\./g, '');
         rut         =	rut.split('-');
         rut         =	rut[0];
     }
-    
     var valida      = 0;
     if ((rut!= '' ||	nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 0)) {
         valida      = 1;
@@ -155,12 +152,10 @@ function buscar(OP,LIM_INI){
         //$("#result").hide();
         document.getElementById("btn_buscageneral").disabled = false;
     } else {
-
         $("#icoSe").hide();
         $("#respuesta").hide();
         $("#icoLoa").css('display','inline-block');
         $("#txBusc").html('Buscando');
-
         $.ajax({ 
             type            :	"POST",
             url             :	"ssan_bdu_creareditarpaciente/buscarPac",
