@@ -41,17 +41,17 @@ services:
     networks:
       - mynetwork
 
-  app_clinica:
-    container_name: codeneite_3_app
+  php_clinica:
+    container_name: php_clinica
     build:
       context: ./
-      dockerfile: ./app_clinica/Dockerfile
+      dockerfile: ./php_clinica/Dockerfile
     ports:
-      - "9015:80"
-      - "9014:443"
+      - "9025:80"
+      - "9026:443"
     restart: always  
     volumes:
-      - ./app_clinica/html:/var/www/html/
+      - ./php_clinica/html:/var/www/html/
     networks:
       - mynetwork
 
