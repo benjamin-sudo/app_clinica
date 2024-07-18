@@ -41,6 +41,21 @@ services:
     networks:
       - mynetwork
 
+  app_clinica:
+    container_name: codeneite_3_app
+    build:
+      context: ./
+      dockerfile: ./app_clinica/Dockerfile
+    ports:
+      - "9015:80"
+      - "9014:443"
+    restart: always  
+    volumes:
+      - ./app_clinica/html:/var/www/html/
+    networks:
+      - mynetwork
+
+
   #codeneiter_4 - app ususario
   codeneiter_4:
     container_name: codeneite_4_admin
