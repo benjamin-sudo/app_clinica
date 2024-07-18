@@ -24,11 +24,11 @@ class sql_class_ggpacientes extends CI_Model {
         return $sql;
     }
 
-    public static function sqlConsultaPacienteNEW($oracle_own, $numFichaE, $identifier = '', $codEmpresa, $isnal, $pasaporte  = '', $tipoEx  = ''){
-        $wheBusca           = '';
-        if ($codEmpresa     == '29') { $codEmpresa = '029';  }
-        if ($isnal          == '') { $isnal = 0;  }
-
+    public function sqlConsultaPacienteNEW($oracle_own, $numFichaE, $identifier = '', $codEmpresa, $isnal, $pasaporte  = '', $tipoEx  = '') {
+        $wheBusca = '';
+        if ($codEmpresa == '29') { $codEmpresa = '029'; }
+        if ($isnal == '') { $isnal = 0; }
+    
         #SI VIENE NUM_FICHA_E MANDA
         if (!empty($numFichaE)) {
             $wheBusca = " A.NUM_FICHAE = '$numFichaE' AND ";
@@ -36,73 +36,69 @@ class sql_class_ggpacientes extends CI_Model {
             //1 nacional
             if ($isnal == '1') {
                 if (!empty($identifier)) {
-                    $wheBusca                       = " A.COD_RUTPAC                        = '$identifier' AND (A.IND_EXTRANJERO IN (1,0) OR A.IND_EXTRANJERO is null) AND ";
+                    $wheBusca = " A.COD_RUTPAC = '$identifier' AND (A.IND_EXTRANJERO IN (1,0) OR A.IND_EXTRANJERO IS NULL) AND ";
                 }
             } else {
-                if ($tipoEx ==  '2') {
-                    $wheBusca                       = " A.COD_RUTPAC                        = '$identifier' AND A.IND_EXTRANJERO = 1 AND ";
-                } else if ($tipoEx ==  '1') {
+                if ($tipoEx == '2') {
+                    $wheBusca = " A.COD_RUTPAC = '$identifier' AND A.IND_EXTRANJERO = 1 AND ";
+                } else if ($tipoEx == '1') {
                     if (!empty($pasaporte)) {
-                        $pasaporte                  = strtoupper(trim($pasaporte));
-                        $wheBusca                   = " UPPER(A.NUM_IDENTIFICACION)         = '$pasaporte' AND A.IND_EXTRANJERO = 1 AND ";
+                        $pasaporte = strtoupper(trim($pasaporte));
+                        $wheBusca = " UPPER(A.NUM_IDENTIFICACION) = '$pasaporte' AND A.IND_EXTRANJERO = 1 AND ";
                     }
                 }
             }
         }
-
+    
         #DISTINCT 
         $sQuery = "SELECT
-                    M.NUM_FICHAE                                                                AS FALLECIDO,
-                    '1'                                                                         AS RNUM,
-                    '1'                                                                         AS RESULT_COUNT,
-                    A.NUM_FICHAE                                                                AS NUM_FICHAEPACTE,
-                    (CASE WHEN(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))<>0 THEN 
-                        TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12) || DECODE(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12),1, 'YEAR',' YEAR') 
+                    M.NUM_FICHAE AS FALLECIDO,
+                    '1' AS RNUM,
+                    '1' AS RESULT_COUNT,
+                    A.NUM_FICHAE AS NUM_FICHAEPACTE,
+                    (CASE 
+                        WHEN FLOOR(TIMESTAMPDIFF(MONTH, A.FEC_NACIMI, CURDATE()) / 12) <> 0 THEN 
+                            FLOOR(TIMESTAMPDIFF(MONTH, A.FEC_NACIMI, CURDATE()) / 12) 
                         ELSE 
-                        (CASE WHEN(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)-(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))*12))<>0 THEN 
-                            TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)-(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))*12) || 
-                            DECODE(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)-(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))*12),1,' MES',' MESES')    
-                        ELSE 
-                            TRUNC(((MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)- (TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))*12)-
-                            TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)-(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))*12))*30) || 
-                            DECODE(TRUNC(((MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)-(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))*12)-
-                            TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)-(TRUNC(MONTHS_BETWEEN(SYSDATE,A.FEC_NACIMI)/12))*12))*30),1,' DIA',' DIAS') 
-                        END) 
-                    END)                                                                          AS EDAD,
-
+                            (CASE 
+                                WHEN MOD(TIMESTAMPDIFF(MONTH, A.FEC_NACIMI, CURDATE()), 12) <> 0 THEN 
+                                    MOD(TIMESTAMPDIFF(MONTH, A.FEC_NACIMI, CURDATE()), 12) 
+                                ELSE 
+                                    DATEDIFF(CURDATE(), A.FEC_NACIMI) 
+                            END) 
+                    END) AS EDAD,
                     A.COD_RUTPAC,
                     A.COD_DIGVER,
                     A.NUM_IDENTIFICACION,
                     A.FEC_VENCEPASPORT,
                     A.IND_EXTRANJERO,
                     A.TIP_IDENTIFICACION,
-                    TO_CHAR(A.FEC_NACIMI,'DD-MM-YYYY') AS FEC_NACIMI,
+                    DATE_FORMAT(A.FEC_NACIMI, '%d-%m-%Y') AS FEC_NACIMI,
                     A.IND_TISEXO,
-                    A.NUM_FICHAE,
                     A.NUM_FICHAE,
                     A.NOM_NOMBRE,
                     A.NOM_APEPAT,
                     A.NOM_APEMAT,
-
                     (SELECT 
-                    E.NUM_NFICHA FROM $oracle_own.SO_TCPACTE E 
-                    WHERE  
-                    E.NUM_FICHAE = A.NUM_FICHAE  AND E.COD_EMPRESA= '$codEmpresa')              AS NUM_NFICHA,
-
+                        E.NUM_NFICHA 
+                     FROM $oracle_own.SO_TCPACTE E 
+                     WHERE  
+                        E.NUM_FICHAE = A.NUM_FICHAE AND E.COD_EMPRESA= '$codEmpresa') AS NUM_NFICHA,
                     A.NOM_SOCIAL,
-                    
                     A.NUM_FICHAE,
-                    NVL(A.IND_RECNAC,'0')                                                       AS IND_RECNAC,
-                    A.COD_RUTPAC                                                                AS RUTPAC,
-                    A.COD_DIGVER                                                                AS DIGVERPAC,
-                    A.NOM_NOMBRE                                                                AS NOMBREPAC,
-                    A.NOM_APEPAT                                                                AS APEPATPAC,
-                    A.NOM_APEMAT                                                                AS APEMATPAC,
-                    
-                    TO_CHAR(A.FEC_NACIMI, 'YYYY-MM-DD')                                         AS FECHANACTO,
-
-                    A.IND_TISEXO                                                                AS IND_TISEXO,
-                    DECODE(A.IND_TISEXO,'M','MASCULINO','F','FEMENINO','NO ESPECIFICADO')       AS TIPO_SEXO,
+                    IFNULL(A.IND_RECNAC, '0') AS IND_RECNAC,
+                    A.COD_RUTPAC AS RUTPAC,
+                    A.COD_DIGVER AS DIGVERPAC,
+                    A.NOM_NOMBRE AS NOMBREPAC,
+                    A.NOM_APEPAT AS APEPATPAC,
+                    A.NOM_APEMAT AS APEMATPAC,
+                    DATE_FORMAT(A.FEC_NACIMI, '%Y-%m-%d') AS FECHANACTO,
+                    A.IND_TISEXO AS IND_TISEXO,
+                    CASE 
+                        WHEN A.IND_TISEXO = 'M' THEN 'MASCULINO'
+                        WHEN A.IND_TISEXO = 'F' THEN 'FEMENINO'
+                        ELSE 'NO ESPECIFICADO'
+                    END AS TIPO_SEXO,
                     A.IND_ETN,
                     A.IND_PERCETN,
                     A.IND_ESTCIV,
@@ -110,119 +106,95 @@ class sql_class_ggpacientes extends CI_Model {
                     A.NOM_NPADRE,
                     A.NOM_NMADRE,
                     A.COD_PAIS,
-                    A.COD_REGION                                                                AS REGION,
+                    A.COD_REGION AS REGION,
                     A.COD_COMUNA,
                     A.COD_CIUDAD,
                     A.COD_VIADIRECCION,
                     A.NOM_DIRECC,
-                    A.NUM_CASA                                                                  NCASAL,
+                    A.NUM_CASA AS NCASAL,
                     A.NOM_RESTODIRECC,
-                    CASE WHEN A.IND_URBRUR='U' THEN 'URBANO' ELSE 'RURAL' END                   AS DES_SECTOR,
+                    CASE WHEN A.IND_URBRUR = 'U' THEN 'URBANO' ELSE 'RURAL' END AS DES_SECTOR,
                     A.IND_URBRUR,
                     A.NUM_CELULAR,
                     A.EMAIL,
                     A.IND_FAX,
                     A.COD_RUTTIT,
-                    A.NUM_TELEFO1                                                               AS FONO1,
+                    A.NUM_TELEFO1 AS FONO1,
                     A.COD_GRUSAN,
                     A.COD_FACSAN,
                     A.IND_TIPPAC,
                     A.IND_CONDPRAIS,
                     A.IND_TRANS,
-
                     A.COD_NACIONALIDAD,
-                    TO_CHAR(A.FEC_IDFONASA,'DD/MM/YYYY')                                        FEC_IDFONASA,
-
-
+                    DATE_FORMAT(A.FEC_IDFONASA, '%d/%m/%Y') AS FEC_IDFONASA,
                     A.IND_RUT,
                     A.IND_REFER,
                     A.OCUPACION,
                     A.LUGAR_TRAB,
                     A.IND_ESTCIV,
-                    A.COD_VIADIRECCION                                                          VIAGENERAL,
-                    NVL(A.IND_CONDPRAIS,'0')                                                    IND_CONDPRAIS,
-                       
-                    DECODE(G.IND_ESTADO,'E','',NVL(G.COD_FAMILIA,''))                           COD_FAMILIA,
-                    DECODE(G.IND_ESTADO,'E','',NVL(SUBSTR(G.COD_FAMILIA,1,2),'-'))              SECTOR,
-                    
-                    F.NOM_DIRECC                                                                DIRECLOCAL,
-                    F.NUM_TELEFO1                                                               FONO2,
-                    F.NUM_TELEFO1_2                                                             CELLOCAL,
-                    F.NUM_CASA                                                                  LCASAL,                                                           
-                     
-                    F.COD_COMUNAL                                                               COMUNALOCAL,
-                    F.COD_CIUDADL                                                               CIUDADLOCAL,
-
+                    A.COD_VIADIRECCION AS VIAGENERAL,
+                    IFNULL(A.IND_CONDPRAIS, '0') AS IND_CONDPRAIS,
+                    IFNULL(G.COD_FAMILIA, '') AS COD_FAMILIA,
+                    IFNULL(SUBSTR(G.COD_FAMILIA, 1, 2), '-') AS SECTOR,
+                    F.NOM_DIRECC AS DIRECLOCAL,
+                    F.NUM_TELEFO1 AS FONO2,
+                    F.NUM_TELEFO1_2 AS CELLOCAL,
+                    F.NUM_CASA AS LCASAL,
+                    F.COD_COMUNAL AS COMUNALOCAL,
+                    F.COD_CIUDADL AS CIUDADLOCAL,
                     F.NOM_CONTACTO,
                     F.DIRECC_CONTACTO,
                     F.TELEFO_CONTACTO,
-                    F.TELEFO_CONTACTO_2                                                         CELCONTACTO,
-                   
+                    F.TELEFO_CONTACTO_2 AS CELCONTACTO,
                     COD_SECTOR,
-                   
-                    F.COD_VIADIRECCION                                                          VIADIREL,
-                    NVL(NUM_CORPAC,0)                                                           ESOPACTE,
-                    F.COD_VIADIRECCION                                                          VIA,
-                    
+                    F.COD_VIADIRECCION AS VIADIREL,
+                    IFNULL(NUM_CORPAC, 0) AS ESOPACTE,
+                    F.COD_VIADIRECCION AS VIA,
                     F.NUM_CORPAC,
-                    F.NUM_NFICHA                                                                FLOCAL,
-                    
-                    NVL(G.FEC_ELIMIN,NULL) FECHA_ELIMINACION,
-                    NVL(DECODE(G.IND_ESTADO,'E','ELIMINADO','V','INSCRITO'),'-')                INSCRITO,
-                    NVL(DECODE(M.IND_ESTADO,'V','FALLECIDO'),'VIVO')                            MUERTO,
-
+                    F.NUM_NFICHA AS FLOCAL,
+                    IFNULL(G.FEC_ELIMIN, NULL) AS FECHA_ELIMINACION,
+                    CASE 
+                        WHEN G.IND_ESTADO = 'E' THEN 'ELIMINADO'
+                        WHEN G.IND_ESTADO = 'V' THEN 'INSCRITO'
+                        ELSE '-'
+                    END AS INSCRITO,
+                    CASE 
+                        WHEN M.IND_ESTADO = 'V' THEN 'FALLECIDO'
+                        ELSE 'VIVO'
+                    END AS MUERTO,
                     A.REP_LEGAL,
-		    
                     A.IND_PREMATURO,
                     A.EDAD_GESTA_SEMANA, 
                     A.EDAD_GESTA_DIAS, 
                     A.EDAD_CORREGIDA_SEMANA, 
                     A.EDAD_CORREGIDA_DIAS,
-                    
                     A.IND_NIVEL_EDUCACIONAL,
                     A.IND_POBLACION_MIGRANTE,
-		    
                     (SELECT 
                         IND_PREVIS 
-                    FROM 
+                     FROM 
                         $oracle_own.SO_TTITUL C 
-                    WHERE A.COD_RUTTIT = C.COD_RUTTIT )                                         IND_PREVIS,
-                        
-                    DECODE(A.TIP_IDENTIFICACION,
-                                            '1','PASAPORTE',
-                                            '2','DNI',
-                                            'NO INFORMADO')                                     AS TXT_IDENTIFACION,
-                    
-                    TO_CHAR(FEC_VENCEPASPORT,'DD/MM/YYYY')                                      FECVENCEPASPORT,
-                    A.IND_CORTEINTERA                                                           PRILONCO
-                    
-
+                     WHERE A.COD_RUTTIT = C.COD_RUTTIT) AS IND_PREVIS,
+                    CASE 
+                        WHEN A.TIP_IDENTIFICACION = '1' THEN 'PASAPORTE'
+                        WHEN A.TIP_IDENTIFICACION = '2' THEN 'DNI'
+                        ELSE 'NO INFORMADO'
+                    END AS TXT_IDENTIFACION,
+                    DATE_FORMAT(FEC_VENCEPASPORT, '%d/%m/%Y') AS FECVENCEPASPORT,
+                    A.IND_CORTEINTERA AS PRILONCO
                 FROM
-                    $oracle_own.GG_TGPACTE                                      A, 
-                    $oracle_own.SO_TCPACTE                                      F,
-                    $oracle_own.IN_TMIEMBROS                                    G,
-                    $oracle_own.GG_TPACFALLECIDO                                M
+                    $oracle_own.GG_TGPACTE A
+                LEFT JOIN $oracle_own.SO_TCPACTE F ON A.NUM_FICHAE = F.NUM_FICHAE AND F.COD_EMPRESA = '$codEmpresa' AND F.IND_ESTADO = 'V'
+                LEFT JOIN $oracle_own.IN_TMIEMBROS G ON F.COD_RUTPAC = G.COD_RUTPAC AND F.COD_EMPRESA = G.COD_EMPRESA AND G.IND_ESTADO = 'V'
+                LEFT JOIN $oracle_own.GG_TPACFALLECIDO M ON A.NUM_FICHAE = M.NUM_FICHAE AND M.IND_ESTADO = 'V'
                 WHERE
                     $wheBusca
-                    A.NUM_FICHAE        = F.NUM_FICHAE(+)   AND
-                    F.COD_EMPRESA(+)    = '$codEmpresa'     AND
-                    F.IND_ESTADO(+)     = 'V'               AND
-		            A.IND_ESTADO	    = 'V'               AND
-                    F.COD_RUTPAC        = G.COD_RUTPAC(+)   AND
-                    F.COD_EMPRESA       = G.COD_EMPRESA(+)  AND 
-                    G.IND_ESTADO(+)     = 'V'               AND
-                    A.NUM_FICHAE        = M.NUM_FICHAE(+)   AND
-                    M.IND_ESTADO(+)     = 'V' 
-            ";
-        
-        /*
-            F.NUM_NFICHA,
-            A.ID_FONASA IDFONASA,
-            TO_CHAR(FEC_IDFONASA,'DD/MM/YYYY')                                         FECIDFONASA
-        */
-        #error_log($sQuery);
+                    A.IND_ESTADO = 'V';
+                ";
+    
         return $sQuery;
     }
+    
 
     public static function sqlObtieneNfichaLocal($oracle_tablespace, $cod_empresa)
     {

@@ -21,7 +21,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
     public function function_test(){
         if (!$this->input->is_ajax_request()) { show_404(); }
-        $return_data =   $this->ssan_bdu_creareditarpaciente_model->function_test();
+        $return_data = $this->ssan_bdu_creareditarpaciente_model->function_test();
         $this->output->set_output(json_encode([
             'return_data' =>  $return_data,
             'status' =>  true,
@@ -996,8 +996,8 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
 
     public function buscarPac(){
         if (!$this->input->is_ajax_request()) {  show_404();  }
-        //  $codEmpresa         =    $this->session->userdata("COD_ESTAB");
-	    $codEmpresa =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
+        //  $codEmpresa     =    $this->session->userdata("COD_ESTAB");
+	    $codEmpresa         =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
 	    $html               =    '';
         $NUM_COUNT          =    '';
         $isNal              =    '';
@@ -1027,7 +1027,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>"-------------------------------------");
             //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>$codEmpresa);
             //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>"-------------------------------------");
-            $script        =    '<script type="text/javascript">jAlert(" - SU SESI&Oacute;N A EXPIRADO", "Listado de Errores - e-EISSAN", function(){';
+            $script        =    '<script type="text/javascript">jAlert(" - SU SESI&Oacute;N A EXPIRADO", "Listado de Errores ", function(){';
             if ($this->session->userdata("SISTYPO") != 1) {
                 //$script   .=  'window.location = "../../inicio"';
             }
