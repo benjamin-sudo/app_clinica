@@ -1,0 +1,19 @@
+
+.grid_titulo_presta                     {
+    display                             :   grid;
+    grid-template-columns               :   1fr auto;
+    align-items                         :   flex-start;
+    gap                                 :   8px;
+ }
+
+.cell-with-button                       {
+    display                             :   flex;
+    flex-direction                      :   column;
+    justify-content                     :   space-between;
+    height                              :   100px; 
+}
+
+.cell-with-button                       {
+    align-items                         :   flex-end;
+}
+

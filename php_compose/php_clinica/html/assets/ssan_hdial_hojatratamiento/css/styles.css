@@ -1,0 +1,211 @@
+.grid_hoja_diaria_titulo                {
+    display                             :   grid;
+    grid-template-columns               :   3fr 1fr;
+}
+
+.grid_body_cabecera                     {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+}
+
+.style_titulo                           {
+    color                               :   #e34f49;
+    margin-left                         :   20px;
+    margin-bottom                       :   10px;
+    margin-left                         :   30px;
+}
+
+.animated                               { 
+    z-index                             :   9999 !important; 
+}
+
+.grid_programacion_final                {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+    align-items                         :   flex-start;
+    justify-items                       :   flex-start;
+    margin-top                          :   10px;
+    margin-left                         :   10px;
+    margin-right                        :   10px;
+    margin-bottom                       :   10px;
+}
+
+.grid_datos_paiente                     {
+    display                             :   grid;
+    grid-template-columns               :   25px 1fr;
+}
+
+.grid_body_cierrehermo                  {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr 1.5fr;
+    gap                                 :   8px;
+    padding                             :   4px;
+    margin-bottom                       :   3px;
+}
+
+.plomo                                  {
+    color                               :   #888888;
+}
+
+.grid_primera_programacion              {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+    gap                                 :   8px;
+    padding                             :   4px;
+}
+
+.grid_segunda_programacion2             {
+    display                             :   grid;
+    grid-template-columns               :   1fr;
+    gap                                 :   8px;
+    padding                             :   4px;
+}
+
+.grid_lista_profesionales_conexion      {
+    display                             :   grid;
+    grid-template-columns               :   auto 1fr;
+    gap                                 :   8px;
+    margin-bottom                       :   6px;
+    margin-left                         :   25px;
+    margin-right                        :   16px;
+}
+
+@media(min-width                        :   900px){
+    .modal_xl_900                       {
+        width                           :   98%;
+        height                          :   85%;
+        max-width                       :   90%;
+    }
+}
+
+.grid_heard_hoja_tratamiento            {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr 1fr;
+    gap                                 :   8px;
+    padding                             :   4px;
+}
+
+.grid_contenedor_hojas                  {
+    display                             :   grid;
+    grid-template-columns               :   1fr;
+    gap                                 :   8px;
+    padding                             :   4px;
+}
+
+.grid_panel_hojasdiarias                {
+    display                             :   grid;
+    grid-template-columns               :   1fr 1fr;
+    gap                                 :   8px;
+    padding                             :   4px;
+}
+
+.grid_panel_hojasdiarias2               {
+    text-align                          :   -webkit-right;;
+}
+
+@media(min-width                        :   900px){
+    .modal-xl3                          {
+        width                           :   98%;
+        max-width                       :   1600px;
+    }
+}
+
+@media(min-width                        :   600px){
+    .modal-xl4                          {
+        width                           :   90%;
+        max-width                       :   900px;
+    }
+}
+
+@media(min-width                        :   900px){
+    .modal_PREINICIO                    {
+        width                           :   85%;
+        max-width                       :   1400px;
+    }
+}
+
+@media(min-width                        :   900px){
+    .modal_ANTERIORES                   {
+        width                           :   85%;
+        max-width                       :   90%;
+    }
+}
+
+@media(min-width                        :   80%){
+    .class_modal_pdf{
+        width                           :   85%;
+        max-width                       :   90%;
+        max-height                      :   98%;
+    }
+}
+
+.contenedor {
+   display                              :   flex;
+   flex-direction                       :   row;
+   flex-wrap                            :   wrap; 
+   /* respeta ancho */
+   /* justify-content      : space-around; */
+   align-content                        :   flex-start;
+}
+
+.contenedor2 {
+   display                              :   flex;
+   flex-direction                       :   row;
+   margin                               :   -10px 186px -10px 11px;
+   flex-wrap                            :   wrap; 
+   /* respeta ancho */
+   /* justify-content      : space-around; */
+   align-content                        :   flex-start;
+}
+
+.input-group-addon                      {
+    width                               :   0%;  
+    padding                             :   0px 12px;  
+    background-color                    :   #eee;
+}
+
+.form-group                             {
+   margin                               :   10px;
+}
+
+.input-flex                             {
+    display                             :   flex;
+    width                               :   auto;
+}
+
+/*
+Full screen Modal 
+*/
+
+.fullscreen-modal .modal-dialog {
+  margin                                :   0;
+  margin-right                          :   auto;
+  margin-left                           :   auto;
+  width                                 :   100%;
+}
+
+@media (min-width: 768px)               {
+    .fullscreen-modal .modal-dialog     {
+        width                           :   750px;
+    }
+}
+
+@media (min-width: 992px)               {
+    .fullscreen-modal .modal-dialog     {
+        width                           :   970px;
+    }
+}
+
+@media (min-width: 1200px)              {
+    .fullscreen-modal .modal-dialog     {
+        width                           :   1170px;
+    }
+}
+
+
+@media (min-width: 576px)               { 
+    .modal-95 {
+        max-width                       :   95%; 
+        margin                          :   auto;
+    }
+}

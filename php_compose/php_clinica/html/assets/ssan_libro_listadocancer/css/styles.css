@@ -1,0 +1,8 @@
+.grid_listado_cancer                    {
+    display                             :   grid;
+    grid-template-columns               :   40px 1fr 40px;
+    grid-column-gap                     :   5px;
+    grid-row-gap                        :   5px;
+    align-items                         :   center;
+    margin-bottom                       :   8px;
+}
