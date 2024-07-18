@@ -55,21 +55,20 @@ services:
     networks:
       - mynetwork
 
-
   #codeneiter_4 - app ususario
-  codeneiter_4:
-    container_name: codeneite_4_admin
-    build:
-      context: ./
-      dockerfile: ./php/Dockerfile
-    ports:
-      - "9005:80"
-      - "9004:443"
-    restart: always  
-    volumes:
-      - ./php/html:/var/www/html/
-    networks:
-      - mynetwork
+  #codeneiter_4:
+    #container_name: codeneite_4_admin
+    #build:
+      #context: ./
+      #dockerfile: ./php/Dockerfile
+    #ports:
+      #- "9005:80"
+      #- "9004:443"
+    #restart: always  
+    #volumes:
+      #- ./php/html:/var/www/html/
+    #networks:
+      #- mynetwork
       
   #https://hub.docker.com/r/gvenzl/oracle-free
   oracle_slim:
