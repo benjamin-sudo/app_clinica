@@ -215,69 +215,57 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         return $query->result_array();
     }
 
-
     public function GestorDatosBDU($codEmpresa, $session, $isNew, $isNal, $RN, $numFichae, $IDselect, $txtNumero, $RutMon, $FORM, $rutTitul, $Previ, $nuevaNFicha) {
         $this->db->trans_start();
-        $actualiza_local        =   '';
-        $cod_titulocompara      =   '';
-        $rut                    =   '';
-        $div                    =   '';
-        $creaDatosLocales       =   [];
-
-        ####################################################
-        #PERCAPITA
-        #$isNal 1      #NACIONAL, 0 EXTRANJERO 
-        #$isNew 1      #NUEVO, 0 PASADO (DEBE VENIR CON NUM_FICHAE)        
-        #GG_TGPACTE    #DATOS GENERALES 
-        #SO_TCPACTE    #DATOS LOCALES 
-        #SO_TTITUL     #DATOS PREVISIONALES
-        ####################################################
-
+        $actualiza_local = '';
+        $cod_titulocompara = '';
+        $rut = '';
+        $div = '';
+        $creaDatosLocales = [];
+    
         if ($isNew == 0) {
-            $creaProtocolo      =   array(
-                'COD_USUARI'    =>  $session, 
-                #'FEC_AUDITA'    => 'SYSDATE'
+            $creaProtocolo = array(
+                'COD_USUARI' => $session, 
+                'FEC_AUDITA' => date('Y-m-d H:i:s') // En lugar de SYSDATE
             );
         } else {
-            
-            $query		        =   $this->db->query($this->sql_class_pabellon->busquedaLastNumfichae());
-            $LastNumfichae      =   $query->result_array();
-	        $RnumFichae         =   $LastNumfichae[0]['NUM_CORREL'];
-            $numFichae          =   ($RnumFichae + 1);
-            $TransResulta       =   $this->db->query($this->sql_class_pabellon->UpdateLastNumfichae($numFichae));
-
+            $query = $this->db->query($this->sql_class_pabellon->busquedaLastNumfichae());
+            $LastNumfichae = $query->result_array();
+            $RnumFichae = $LastNumfichae[0]['NUM_CORREL'];
+            $numFichae = ($RnumFichae + 1);
+            $TransResulta = $this->db->query($this->sql_class_pabellon->UpdateLastNumfichae($numFichae));
+    
             if ($TransResulta){
                 error_log("------------------------------------>Grabado Fichae<---------------------------------");
             } else {
                 error_log("------------------------------------>Query failed Fichae<----------------------------");
                 ///$this->db->trans_rollback();
             }
-
+    
             $creaProtocolo = array(
-                'COD_USRCREA'   =>  $session,
-                'FEC_USRCREA'   =>  'SYSDATE',
-                'NUM_FICHAE'    =>  $numFichae,
-                'IND_ESTADO'    =>  'V',
+                'COD_USRCREA' => $session,
+                'FEC_USRCREA' => date('Y-m-d H:i:s'), // En lugar de SYSDATE
+                'NUM_FICHAE' => $numFichae,
+                'IND_ESTADO' => 'V',
             );
         }
-
+    
         foreach ($FORM as $infObject => $Object) {
             if ($infObject == 'DatosGenerales') {
                 $datosGenerales = $Object[0]['Form_Datosgenerales'];
-
+    
                 foreach ($datosGenerales as $i => $From){
                     if ($From['name'] == 'txtrutpac') {
-                        $creaProtocolo  =   array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
-                        $rut            =   $From['value'];
+                        $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTPAC' => $From['value']));
+                        $rut = $From['value'];
                     }
                     if ($From['name'] == 'txtdvpac') {
-                        $creaProtocolo  =   array_merge($creaProtocolo, array('COD_DIGVER' => $From['value']));
-                        $div            =   $From['value'];
+                        $creaProtocolo = array_merge($creaProtocolo, array('COD_DIGVER' => $From['value']));
+                        $div = $From['value'];
                     }
                     if ($From['name'] == 'txtruttitular') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_RUTTIT' => $From['value']));
                     }
-                    //INI SOLO EXTRANJEROS
                     if ($From['name'] == 'txt_extranjero') {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_EXTRANJERO' => strtoupper(trim($From['value']))));
                     }
@@ -288,9 +276,8 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $creaProtocolo = array_merge($creaProtocolo, array('NUM_IDENTIFICACION' => strtoupper(trim($From['value']))));
                     }
                     if ($From['name'] == 'txtFecvencePasport') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_VENCEPASPORT' => "TO_DATE('" . $From['value'] . "','DD/MM/YYYY')"));
+                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_VENCEPASPORT' => date('Y-m-d', strtotime($From['value']))));
                     }
-                    //FIN SOLO EXTRANJEROS
                     if ($From['name'] == 'txtNombre') {
                         $creaProtocolo = array_merge($creaProtocolo, array('NOM_NOMBRE' => quotes_to_entities(strtoupper($From['value']))));
                     }
@@ -303,9 +290,8 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($From['name'] == 'txtApellidoMaterno') {
                         $creaProtocolo = array_merge($creaProtocolo, array('NOM_APEMAT' => quotes_to_entities(strtoupper($From['value']))));
                     }
-                    if ($From['name']       ==  'txtFechaNacimineto') {
-                        #Esto sería '1988-04-18'
-                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_NACIMI' => "TO_DATE('" . $From['value'] . "','YYYY-MM-DD')"));
+                    if ($From['name'] == 'txtFechaNacimineto') {
+                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_NACIMI' => date('Y-m-d', strtotime($From['value']))));
                     }
                     if ($From['name'] == 'cboGenero') {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_TISEXO' => $From['value']));
@@ -331,16 +317,16 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($From['name'] == 'cboPais') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_PAIS' => $From['value']));
                     }
-
-		            /*agregado 25.06.2018*/
+    
+                    /*agregado 25.06.2018*/
                     if ($From['name'] == 'cboNacionalidad') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_NACIONALIDAD' => $From['value']));
                     }
                     if ($From['name'] == 'txtFecvence_fonasa') {
-                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_IDFONASA' => "TO_DATE('".$From['value']."','DD/MM/YYYY')"));
+                        $creaProtocolo = array_merge($creaProtocolo, array('FEC_IDFONASA' => date('Y-m-d', strtotime($From['value']))));
                     }
                     /*agregado 25.06.2018*/
-
+    
                     if ($From['name'] == 'cboRegion') {
                         $creaProtocolo = array_merge($creaProtocolo, array('COD_REGION' => $From['value']));
                     }
@@ -389,15 +375,12 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($From['name'] == 'rdotrans') {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_TRANS' => $From['value']));
                     }
-                    //Last Agregado 
                     if ($From['name'] == 'txtRepLegal') {
                         $creaProtocolo = array_merge($creaProtocolo, array('REP_LEGAL' => $From['value']));
                     }
                     if ($From['name'] == 'txtOcupacion') {
                         $creaProtocolo = array_merge($creaProtocolo, array('OCUPACION' => $From['value']));
                     }
-                    
-                    //agregado 20-09-2021
                     if ($From['name'] == 'ind_nivel_educacional') {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_NIVEL_EDUCACIONAL' => $From['value']));
                     }
@@ -405,57 +388,52 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                         $creaProtocolo = array_merge($creaProtocolo, array('IND_POBLACION_MIGRANTE' => $From['value']));
                     }
                 }
-
-                if($isNew == 0) {
-                    //FALTA GUARDA EN EL HISTORIAL
-                    $this->db->where('NUM_FICHAE = ' . $numFichae);
+    
+                if ($isNew == 0) {
+                    $this->db->where('NUM_FICHAE', $numFichae);
                     $this->db->update($this->tableSpace . '.GG_TGPACTE', $creaProtocolo);
                 } else {
                     $this->db->insert($this->tableSpace . '.GG_TGPACTE', $creaProtocolo);
                 }
-
-
             } else if ($infObject == 'DatosLocales') {
-                $datosLocales   =   $Object[0]['FormDatoslocales'];
+                $datosLocales = $Object[0]['FormDatoslocales'];
                 if ($isNew == 1) {
-                    $actualiza_local            =   '0';
-                    $creaDatosLocales           =   array(
-                                                    'IND_ESTADO'    =>  'V', 
-                                                    'COD_USRCREA'   =>  $session, 
-                                                    'FEC_USRCREA'   =>  'SYSDATE', 
-                                                    'NUM_FICHAE'    =>  $numFichae, 
-                                                    'COD_EMPRESA'   =>  $codEmpresa
-                                                );
+                    $actualiza_local = '0';
+                    $creaDatosLocales = array(
+                        'IND_ESTADO' => 'V', 
+                        'COD_USRCREA' => $session, 
+                        'FEC_USRCREA' => date('Y-m-d H:i:s'), // En lugar de SYSDATE
+                        'NUM_FICHAE' => $numFichae, 
+                        'COD_EMPRESA' => $codEmpresa
+                    );
                     error_log("DATOS LOCALES ES NUEVO");
                 } else {
-                    $query	                    =   $this->db->query($this->sql_class_ggpacientes->sqlExisteDatosLocales($this->tableSpace, $numFichae, $codEmpresa));
-		            $query2                     =   $query->result_array();
+                    $query = $this->db->query($this->sql_class_ggpacientes->sqlExisteDatosLocales($this->tableSpace, $numFichae, $codEmpresa));
+                    $query2 = $query->result_array();
                     if ($query2[0]['NUM'] == '0') {
-                        $actualiza_local        = '0';
-                        $creaDatosLocales       = array(
-                            'IND_ESTADO'        => 'V', 
-                            'COD_USRCREA'       => $session, 
-                            'FEC_USRCREA'     => 'SYSDATE', 
-                            'NUM_FICHAE'        => $numFichae, 
-                            'COD_EMPRESA'       => $codEmpresa, 
-                            'COD_SISTEMA'       => '58');
-                        //error_log("DATOS LOCALES NO TIENE DATOS LOCALES");
+                        $actualiza_local = '0';
+                        $creaDatosLocales = array(
+                            'IND_ESTADO' => 'V', 
+                            'COD_USRCREA' => $session, 
+                            'FEC_USRCREA' => date('Y-m-d H:i:s'), // En lugar de SYSDATE
+                            'NUM_FICHAE' => $numFichae, 
+                            'COD_EMPRESA' => $codEmpresa, 
+                            'COD_SISTEMA' => '58');
                     } else {
                         $actualiza_local = '1';
-                        $creaDatosLocales       = array(
-                            'IND_ESTADO'        => 'V', 
-                            'COD_USUARI'        => $session, 
-                            'FEC_AUDITA'      => 'SYSDATE', 
-                            'NUM_FICHAE'        => $numFichae, 
-                            'COD_EMPRESA'       => $codEmpresa, 
-                            'COD_SISTEMAUDITA'  => '58'
+                        $creaDatosLocales = array(
+                            'IND_ESTADO' => 'V', 
+                            'COD_USUARI' => $session, 
+                            'FEC_AUDITA' => date('Y-m-d H:i:s'), // En lugar de SYSDATE
+                            'NUM_FICHAE' => $numFichae, 
+                            'COD_EMPRESA' => $codEmpresa, 
+                            'COD_SISTEMAUDITA' => '58'
                         );
                         error_log("DATOS LOCALES TIENE");
                     }
                 }
-
+    
                 foreach ($datosLocales as $i => $From) {
-                    //***************************************************************************************************************************************************  
                     if ($From['name'] == 'txtrutpac') {
                         $creaDatosLocales = array_merge($creaDatosLocales, array('COD_RUTPAC' => $From['value']));
                     }
@@ -498,115 +476,105 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($From['name'] == 'txtCelularContacto') {
                         $creaDatosLocales = array_merge($creaDatosLocales, array('TELEFO_CONTACTO_2' => quotes_to_entities(strtoupper($From['value']))));
                     }
-                    //***************************************************************************************************************************************************   
                 }
-
-                //Actualizar el numero de ficha
+    
                 if ($nuevaNFicha == 'NUEVA') {
-                    $nficha_local           =   $this->db->query($this->sql_class_ggpacientes->sqlObtieneNfichaLocal($this->tableSpace, $codEmpresa))->result_array();
+                    $nficha_local = $this->db->query($this->sql_class_ggpacientes->sqlObtieneNfichaLocal($this->tableSpace, $codEmpresa))->result_array();
                     if ($nficha_local[0]['NUMFICHALOCALMAX'] == NULL){
-                        $fhl                    =   1;
+                        $fhl = 1;
                         $this->db->insert($this->tableSpace.'.GG_TFICHA',['NUM_NFICHA'=>$fhl,'COD_EMPRESA'=>$codEmpresa,'IND_ESTADO'=>'V']);
                     } else {
-                        $fhl                    =   $nficha_local[0]['NUMFICHALOCALMAX'] + 1;
-                        $UpdateNfichaLocal      =   array('NUM_NFICHA' => $fhl);
+                        $fhl = $nficha_local[0]['NUMFICHALOCALMAX'] + 1;
+                        $UpdateNfichaLocal = array('NUM_NFICHA' => $fhl);
                         $this->db->where('COD_EMPRESA', $codEmpresa);
                         $this->db->update($this->tableSpace . '.GG_TFICHA', $UpdateNfichaLocal);
                     }
-                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA' => $fhl));
+                    $creaDatosLocales = array_merge($creaDatosLocales, array('NUM_NFICHA' => $fhl));
                 } else {
-                    $creaDatosLocales       =   array_merge($creaDatosLocales, array('NUM_NFICHA' => $nuevaNFicha));
+                    $creaDatosLocales = array_merge($creaDatosLocales, array('NUM_NFICHA' => $nuevaNFicha));
                 }
-                //actualizar el numero de ficha
-
+    
                 if ($actualiza_local == '1') {
-                    $sQueryPHist1	        =   '';
-                    $campo1		            =   '';
-                    $campo2		            =   '';
-                    $campo3		            =   '';
-                    $query		            =   $this->db->query($this->sql_class_ggpacientes->sqlinfoDatoLocalxHistorial($this->tableSpace,$numFichae,$codEmpresa));
-                    $infoDatoLocalxHist     =   $query->result_array();
-                    $dirCC		            =	$infoDatoLocalxHist[0]['DIRECC_CONTACTO'];
-                    $dirCC		            =	str_replace("'","",$dirCC);
-		            //$fecFEC_AUDITA	    =   $infoRecetaxHist[0]['FEC_AUDITA'];
-                    
-			$SO_THISTCPACTE		=   array(
-			    'COD_RUTPAC'	    =>  $infoDatoLocalxHist[0]['COD_RUTPAC'], 
-			    'NUM_CORPAC'	    =>  $infoDatoLocalxHist[0]['NUM_CORPAC'],
-			    'NUM_NFICHA'	    =>  $infoDatoLocalxHist[0]['NUM_NFICHA'],
-			    'NUM_AFICHA'	    =>  $infoDatoLocalxHist[0]['NUM_AFICHA'],
-			    'IND_ESTPAC'	    =>  $infoDatoLocalxHist[0]['IND_ESTPAC'],
-			    'COD_SERULA'	    =>  $infoDatoLocalxHist[0]['COD_SERULA'],
-			    'NUM_CORHOS'	    =>  $infoDatoLocalxHist[0]['NUM_CORHOS'],
-			    'COD_ULTSER'	    =>  $infoDatoLocalxHist[0]['COD_ULTSER'],
-			    'IND_ARCHIVO'	    =>  $infoDatoLocalxHist[0]['IND_ARCHIVO'],
-			    'COD_USRCREA'	    =>  $infoDatoLocalxHist[0]['COD_USRCREA'],
-			    //'FEC_USRCREA'	    =>  "TO_DATE('".$infoDatoLocalxHist[0]['FEC_USRCREA']."','DD-MM-YYYY HH24:MI:SS')",
-			    'COD_USUARI'	    =>  $rut,
-			    //'FEC_AUDITA'	    =>  'SYSDATE',
-			    'IND_ESTADO'	    =>  $infoDatoLocalxHist[0]['IND_ESTADO'],
-			    'COD_EMPRESA'	    =>  $infoDatoLocalxHist[0]['COD_EMPRESA'],
-			    'NOM_DIRECC'	    =>  $infoDatoLocalxHist[0]['NOM_DIRECC'],
-			    'NOM_CONTACTO'	    =>  $infoDatoLocalxHist[0]['NOM_CONTACTO'],
-			    'DIRECC_CONTACTO'   =>  $dirCC,
-			    'NUM_FICHAE'	    =>  $infoDatoLocalxHist[0]['NUM_FICHAE'],
-			    'IND_IMPRES'	    =>  $infoDatoLocalxHist[0]['IND_IMPRES'],
-			    'NUM_TELEFO1_2'	    =>  $infoDatoLocalxHist[0]['NUM_TELEFO1_2'],
-			    'TELEFO_CONTACTO_2'	=>  $infoDatoLocalxHist[0]['TELEFO_CONTACTO_2'],
-			    'NUM_TELEFO1'	    =>  $infoDatoLocalxHist[0]['NUM_TELEFO1'],
-			    'TELEFO_CONTACTO'	=>  $infoDatoLocalxHist[0]['TELEFO_CONTACTO'],
-			    'COD_SISTEMA'	    =>  $infoDatoLocalxHist[0]['COD_SISTEMA'],
-			    'COD_SISTEMAUDITA'	=>  $infoDatoLocalxHist[0]['COD_SISTEMAUDITA'],
-			    'COD_SECTOR'	    =>  $infoDatoLocalxHist[0]['COD_SECTOR'],
-			    'COD_FAMILIA'	    =>  $infoDatoLocalxHist[0]['COD_FAMILIA'],
-			    'NUM_CASA'		    =>  $infoDatoLocalxHist[0]['NUM_CASA'],
-			    'COD_VIADIRECCION'	=>  $infoDatoLocalxHist[0]['COD_VIADIRECCION'],
-			    'COD_COMUNAL'	    =>  $infoDatoLocalxHist[0]['COD_COMUNAL'],
-			    'COD_CIUDADL'	    =>  $infoDatoLocalxHist[0]['COD_CIUDADL'],
-			);
-			
-			if ($infoDatoLocalxHist[0]['FEC_ULTASI'] != '')    {
-			    //$SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_ULTASI' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_ULTASI']."','DD-MM-YYYY HH24:MI:SS')"));
-			}
-			if ($infoDatoLocalxHist[0]['FEC_ULTSER'] != '')   {
-			    //$SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_IMPRES' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_ULTSER']."','DD-MM-YYYY HH24:MI:SS')"));
-			}
-			if ($infoDatoLocalxHist[0]['FEC_IMPRES'] != '')   {
-			    //$SO_THISTCPACTE	=   array_merge($SO_THISTCPACTE,array('FEC_ULTSER' => "TO_DATE('".$infoDatoLocalxHist[0]['FEC_IMPRES']."','DD-MM-YYYY HH24:MI:SS')"));
-			}
-			//$this->db->insert($this->tableSpace . '.SO_THISTCPACTE', $SO_THISTCPACTE);
-			
-                $this->db->where('COD_EMPRESA', $codEmpresa);
-                $this->db->where('NUM_FICHAE', $numFichae);
-                $this->db->update($this->tableSpace . '.SO_TCPACTE', $creaDatosLocales);
-		    
+                    $sQueryPHist1 = '';
+                    $campo1 = '';
+                    $campo2 = '';
+                    $campo3 = '';
+                    $query = $this->db->query($this->sql_class_ggpacientes->sqlinfoDatoLocalxHistorial($this->tableSpace,$numFichae,$codEmpresa));
+                    $infoDatoLocalxHist = $query->result_array();
+                    $dirCC = $infoDatoLocalxHist[0]['DIRECC_CONTACTO'];
+                    $dirCC = str_replace("'","",$dirCC);
+    
+                    $SO_THISTCPACTE = array(
+                        'COD_RUTPAC' => $infoDatoLocalxHist[0]['COD_RUTPAC'], 
+                        'NUM_CORPAC' => $infoDatoLocalxHist[0]['NUM_CORPAC'],
+                        'NUM_NFICHA' => $infoDatoLocalxHist[0]['NUM_NFICHA'],
+                        'NUM_AFICHA' => $infoDatoLocalxHist[0]['NUM_AFICHA'],
+                        'IND_ESTPAC' => $infoDatoLocalxHist[0]['IND_ESTPAC'],
+                        'COD_SERULA' => $infoDatoLocalxHist[0]['COD_SERULA'],
+                        'NUM_CORHOS' => $infoDatoLocalxHist[0]['NUM_CORHOS'],
+                        'COD_ULTSER' => $infoDatoLocalxHist[0]['COD_ULTSER'],
+                        'IND_ARCHIVO' => $infoDatoLocalxHist[0]['IND_ARCHIVO'],
+                        'COD_USRCREA' => $infoDatoLocalxHist[0]['COD_USRCREA'],
+                        'COD_USUARI' => $rut,
+                        'IND_ESTADO' => $infoDatoLocalxHist[0]['IND_ESTADO'],
+                        'COD_EMPRESA' => $infoDatoLocalxHist[0]['COD_EMPRESA'],
+                        'NOM_DIRECC' => $infoDatoLocalxHist[0]['NOM_DIRECC'],
+                        'NOM_CONTACTO' => $infoDatoLocalxHist[0]['NOM_CONTACTO'],
+                        'DIRECC_CONTACTO' => $dirCC,
+                        'NUM_FICHAE' => $infoDatoLocalxHist[0]['NUM_FICHAE'],
+                        'IND_IMPRES' => $infoDatoLocalxHist[0]['IND_IMPRES'],
+                        'NUM_TELEFO1_2' => $infoDatoLocalxHist[0]['NUM_TELEFO1_2'],
+                        'TELEFO_CONTACTO_2' => $infoDatoLocalxHist[0]['TELEFO_CONTACTO_2'],
+                        'NUM_TELEFO1' => $infoDatoLocalxHist[0]['NUM_TELEFO1'],
+                        'TELEFO_CONTACTO' => $infoDatoLocalxHist[0]['TELEFO_CONTACTO'],
+                        'COD_SISTEMA' => $infoDatoLocalxHist[0]['COD_SISTEMA'],
+                        'COD_SISTEMAUDITA' => $infoDatoLocalxHist[0]['COD_SISTEMAUDITA'],
+                        'COD_SECTOR' => $infoDatoLocalxHist[0]['COD_SECTOR'],
+                        'COD_FAMILIA' => $infoDatoLocalxHist[0]['COD_FAMILIA'],
+                        'NUM_CASA' => $infoDatoLocalxHist[0]['NUM_CASA'],
+                        'COD_VIADIRECCION' => $infoDatoLocalxHist[0]['COD_VIADIRECCION'],
+                        'COD_COMUNAL' => $infoDatoLocalxHist[0]['COD_COMUNAL'],
+                        'COD_CIUDADL' => $infoDatoLocalxHist[0]['COD_CIUDADL'],
+                    );
+    
+                    if ($infoDatoLocalxHist[0]['FEC_ULTASI'] != '') {
+                        $SO_THISTCPACTE = array_merge($SO_THISTCPACTE, array('FEC_ULTASI' => date('Y-m-d H:i:s', strtotime($infoDatoLocalxHist[0]['FEC_ULTASI']))));
+                    }
+                    if ($infoDatoLocalxHist[0]['FEC_ULTSER'] != '') {
+                        $SO_THISTCPACTE = array_merge($SO_THISTCPACTE, array('FEC_IMPRES' => date('Y-m-d H:i:s', strtotime($infoDatoLocalxHist[0]['FEC_ULTSER']))));
+                    }
+                    if ($infoDatoLocalxHist[0]['FEC_IMPRES'] != '') {
+                        $SO_THISTCPACTE = array_merge($SO_THISTCPACTE, array('FEC_ULTSER' => date('Y-m-d H:i:s', strtotime($infoDatoLocalxHist[0]['FEC_IMPRES']))));
+                    }
+                    $this->db->insert($this->tableSpace . '.SO_THISTCPACTE', $SO_THISTCPACTE);
+    
+                    $this->db->where('COD_EMPRESA', $codEmpresa);
+                    $this->db->where('NUM_FICHAE', $numFichae);
+                    $this->db->update($this->tableSpace . '.SO_TCPACTE', $creaDatosLocales);
                 } else {
-		    
-                    $query		            =   $this->db->query($this->sql_class_ggpacientes->sqlObtieneNCORPAC($this->tableSpace, $codEmpresa));
-                    $LastNCORPAC	        =   $query->result_array();
+                    $query = $this->db->query($this->sql_class_ggpacientes->sqlObtieneNCORPAC($this->tableSpace, $codEmpresa));
+                    $LastNCORPAC = $query->result_array();
                     if(isset($LastNCORPAC[0]['NUM_CORREL'])) {
-                        $NUM_CORREL	        =   $LastNCORPAC[0]['NUM_CORREL'] + 1;
-                        $UpdateNfichaLocal  =   array('NUM_CORREL' => $NUM_CORREL, 'COD_SISTEMA' => '58');
+                        $NUM_CORREL = $LastNCORPAC[0]['NUM_CORREL'] + 1;
+                        $UpdateNfichaLocal = array('NUM_CORREL' => $NUM_CORREL, 'COD_SISTEMA' => '58');
                         $this->db->where('ID_CORREL','CORPAC');
                         $this->db->where('COD_EMPRESA',$codEmpresa);
                         $this->db->update($this->tableSpace.'.GG_TCORREL', $UpdateNfichaLocal);
                     } else {
-                        $NUM_CORREL	        =   '1';
-                        $UpdateNfichaLocal  =   array('COD_EMPRESA' => $codEmpresa, 'NUM_CORREL' => $NUM_CORREL, 'ID_CORREL' => 'CORPAC', 'COD_SISTEMA' => '58');
+                        $NUM_CORREL = '1';
+                        $UpdateNfichaLocal = array('COD_EMPRESA' => $codEmpresa, 'NUM_CORREL' => $NUM_CORREL, 'ID_CORREL' => 'CORPAC', 'COD_SISTEMA' => '58');
                         $this->db->insert($this->tableSpace.'.GG_TCORREL', $UpdateNfichaLocal);
                     }
                     
                     $creaDatosLocales = array_merge($creaDatosLocales, array('NUM_CORPAC' => $NUM_CORREL));
                     $this->db->insert($this->tableSpace.'.SO_TCPACTE', $creaDatosLocales);
-		        }
-
-		
+                }
             } else if ($infObject == 'DatosPrevisionales') {
                 if ($Previ == 1) {
-                    $creaDatosPrevi             =   [];
-                    $rutTitular                 =   $rut;
-                    $divTirulae                 =   $div;
-                    $datosProfesionales         =   $Object[0]['From_Previsiones'];
+                    $creaDatosPrevi = [];
+                    $rutTitular = $rut;
+                    $divTirulae = $div;
+                    $datosProfesionales = $Object[0]['From_Previsiones'];
                     foreach ($datosProfesionales as $i => $From) {
                         if ($From['name'] == 'txtRuttit') {
                             $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_RUTTIT' => quotes_to_entities(strtoupper($From['value']))));
@@ -630,28 +598,27 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                             $creaDatosPrevi = array_merge($creaDatosPrevi, array('NUM_RUTINS' => quotes_to_entities(strtoupper($From['value']))));
                         }
                     }
-		    
-                    $query                  =   $this->db->query($this->sql_class_ggpacientes->sqlTraeDatosTitularxRut($this->tableSpace,$numFichae));
-                    $LastNCORPAC            =   $query->result_array();
+            
+                    $query = $this->db->query($this->sql_class_ggpacientes->sqlTraeDatosTitularxRut($this->tableSpace,$numFichae));
+                    $LastNCORPAC = $query->result_array();
                     if (count($LastNCORPAC)>0) {
-                        $cod_titulocompara      =   $LastNCORPAC[0]['COD_RUTTIT'];
-                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_RUTTIT'   =>  $LastNCORPAC[0]['COD_RUTPAC']));
-                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_DIGVER'   =>  $LastNCORPAC[0]['COD_DIGVER']));
+                        $cod_titulocompara = $LastNCORPAC[0]['COD_RUTTIT'];
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_RUTTIT' => $LastNCORPAC[0]['COD_RUTPAC']));
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_DIGVER' => $LastNCORPAC[0]['COD_DIGVER']));
                     } else {
-                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_RUTTIT'   =>  $rut));
-                        $creaDatosPrevi         =   array_merge($creaDatosPrevi, array('COD_DIGVER'   =>  $div));
-                        $cod_titulocompara      =   '';
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_RUTTIT' => $rut));
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_DIGVER' => $div));
+                        $cod_titulocompara = '';
                     }
-
-                    if ($cod_titulocompara  == '') {
-                        $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USRCREA'  =>  $session));
-                        $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USUARI'   =>  $session));
-                        $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('IND_ESTADO'   =>  'V'));
+    
+                    if ($cod_titulocompara == '') {
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_USRCREA' => $session));
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_USUARI' => $session));
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('IND_ESTADO' => 'V'));
                         $this->db->insert($this->tableSpace . '.SO_TTITUL', $creaDatosPrevi);
                     } else {
-                        #$creaDatosPrevi    =   array_merge($creaDatosPrevi, array('FEC_USRCREA'  =>  'SYSDATE'));
-                        $creaDatosPrevi     =   array_merge($creaDatosPrevi, array('COD_USUARI'   =>  $session));
-                        $creaDatosPrevi    =   array_merge($creaDatosPrevi, array('FEC_AUDITA'   =>  'SYSDATE'));
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('COD_USUARI' => $session));
+                        $creaDatosPrevi = array_merge($creaDatosPrevi, array('FEC_AUDITA' => date('Y-m-d H:i:s'))); // En lugar de SYSDATE
                         $this->db->where('COD_RUTTIT', $rutTitul);
                         $this->db->update($this->tableSpace . '.SO_TTITUL', $creaDatosPrevi);
                     }
@@ -662,6 +629,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         $this->db->trans_complete();
         return $this->db->trans_status() . "#" . $numFichae;
     }
+    
 
    
     //AQUi EMPIEZA LA MAGIA 

@@ -8,7 +8,7 @@ class sql_class_ggpacientes extends CI_Model {
 
     public static function sqlBuscaRutLocalFacil($oracle_tablespace, $codRutPac){
         $sql = "
-                Select  MAX(num_nficha) as numfichalocalmax from $oracle_tablespace.gg_tficha
+                Select  MAX(num_nficha) as numfichalocalmax from $oracle_tablespace.GG_TFICHA
 		where
 		cod_empresa= '$codRutPac'
                        
@@ -198,7 +198,7 @@ class sql_class_ggpacientes extends CI_Model {
 
     public static function sqlObtieneNfichaLocal($oracle_tablespace, $cod_empresa)
     {
-        $sql = "Select  MAX(num_nficha) as numfichalocalmax from $oracle_tablespace.gg_tficha
+        $sql = "Select  MAX(num_nficha) as numfichalocalmax from $oracle_tablespace.GG_TFICHA
 		   where
 		   cod_empresa= '$cod_empresa' ";
         //error_log('sql '.$sql);
@@ -208,7 +208,7 @@ class sql_class_ggpacientes extends CI_Model {
     public static function sqlUpdateNfichaLocal($oracle_tablespace, $cod_empresa, $num_nficha)
     {
 
-        $sql = "Update $oracle_tablespace.gg_tficha set " .
+        $sql = "Update $oracle_tablespace.GG_TFICHA set " .
             "num_nficha= '$num_nficha' " .
             "where " .
             "cod_empresa= '$cod_empresa' ";
@@ -265,64 +265,60 @@ class sql_class_ggpacientes extends CI_Model {
     }
 
 
-    public function sqlTraeDatosLocalesPac($oracle_own, $Ficha_e, $empresa_cod)
-    {
+    public function sqlTraeDatosLocalesPac($mysql_db, $Ficha_e, $empresa_cod)
+{
+    $sQuery = "
+        SELECT
+            A.COD_RUTPAC,
+            F.NUM_NFICHA AS NUM_NFICHA,
+            F.NOM_DIRECC AS DIRECLOCAL,
+            F.NUM_CASA AS LNCASA,
+            F.NUM_TELEFO1 AS FONO2,
+            F.NUM_TELEFO1_2 AS CELLOCAL,
+            F.NOM_CONTACTO,
+            F.DIRECC_CONTACTO,
+            F.TELEFO_CONTACTO,
+            F.TELEFO_CONTACTO_2 AS CELCONTACTO,
+            
+            (SELECT 
+                IF(G.IND_ESTADO = 'E', '', COALESCE(SUBSTRING(G.COD_FAMILIA, 1, 2), '-'))
+            FROM $mysql_db.IN_TMIEMBROS G
+            WHERE 
+                F.COD_RUTPAC = G.COD_RUTPAC AND
+                F.COD_EMPRESA = G.COD_EMPRESA AND
+                G.IND_ESTADO = 'V'
+            LIMIT 1) AS COD_SECTOR,
+             
+            (SELECT COD_FAMILIA 
+            FROM $mysql_db.IN_TMIEMBROS B
+            WHERE 
+                F.COD_RUTPAC = B.COD_RUTPAC AND
+                F.COD_EMPRESA = B.COD_EMPRESA AND
+                B.IND_ESTADO = 'V'
+            LIMIT 1) AS COD_FAMILIA,
 
-        // error_log("EMPRESA LOCAL ---------->".$empresa_cod);
+            F.COD_VIADIRECCION AS VIA,
+            F.NUM_CASA AS NCASA,
+            F.NUM_CORPAC,
+            
+            F.COD_CIUDADL,
+            F.COD_COMUNAL,
+            F.COD_REGIONL,
+            
+            A.REP_LEGAL,
+            A.OCUPACION
+        FROM
+            $mysql_db.GG_TGPACTE A,
+            $mysql_db.SO_TCPACTE F
+        WHERE
+            F.NUM_FICHAE = $Ficha_e
+        AND F.COD_EMPRESA = '" . $empresa_cod . "'
+        AND A.NUM_FICHAE = F.NUM_FICHAE
+    ";
 
-        $sQuery = "
-                    SELECT
-                        A.COD_RUTPAC,
-                        F.NUM_NFICHA            NUM_NFICHA,
-                        F.NOM_DIRECC            DIRECLOCAL,
-                        F.NUM_CASA              LNCASA,
-                        F.NUM_TELEFO1           FONO2,
-                        F.NUM_TELEFO1_2         CELLOCAL,
-                        F.NOM_CONTACTO,
-                        F.DIRECC_CONTACTO,
-                        F.TELEFO_CONTACTO,
-                        F.TELEFO_CONTACTO_2     CELCONTACTO,
-                        
-			(SELECT 
-                        DECODE(G.IND_ESTADO,'E','',NVL(SUBSTR(G.COD_FAMILIA,1,2), '-'))
-                            FROM $oracle_own.IN_TMIEMBROS G
-                        WHERE 
-                            F.COD_RUTPAC    = G.COD_RUTPAC AND
-                            F.COD_EMPRESA   = G.COD_EMPRESA AND
-                            G.IND_ESTADO    = 'V'  and rownum = 1 )       COD_SECTOR,
-                         
-                        (SELECT COD_FAMILIA 
-                        FROM 
-                            $oracle_own.IN_TMIEMBROS B
-                        WHERE 
-                            F.COD_RUTPAC    = B.COD_RUTPAC AND
-                            F.COD_EMPRESA   = B.COD_EMPRESA AND
-                            B.ind_estado    = 'V' and rownum = 1 )          COD_FAMILIA,
+    return $sQuery;
+}
 
-                        F.COD_VIADIRECCION                  VIA,
-                        F.NUM_CASA                          NCASA,
-                        F.NUM_CORPAC,
-                        
-                        F.COD_CIUDADL,
-                        F.COD_COMUNAL,
-                        F.COD_REGIONL,
-                        
-                        
-                        A.REP_LEGAL,
-                        A.OCUPACION
-                        
-                    FROM
-                        $oracle_own.GG_TGPACTE A,
-                        $oracle_own.SO_TCPACTE F
-                    WHERE
-                        F.NUM_FICHAE    = $Ficha_e
-                    AND F.COD_EMPRESA   = '" . $empresa_cod . "'
-                    AND A.NUM_FICHAE    = F.NUM_FICHAE 
-
-                ";
-
-        return $sQuery;
-    }
 
     public static function sqlConsultaFicLoal($oracle_own, $fLPaciente, $codEmpresa)
     {
@@ -797,54 +793,55 @@ class sql_class_ggpacientes extends CI_Model {
         return $sQuery;
     }
 
-    public static function sqlinfoDatoLocalxHistorial($oracle_own, $nfichaE, $codEmpresa)
+    public static function sqlinfoDatoLocalxHistorial($mysql_db, $nfichaE, $codEmpresa)
     {
-        $sQuery = " 
-		    SELECT 
-                        COD_RUTPAC,
-                        NUM_CORPAC,
-                        NUM_NFICHA,
-                        NUM_AFICHA,
-                        IND_ESTPAC,
-                        COD_SERULA,
-                        
-			TO_CHAR(FEC_ULTASI,'dd-mm-YYYY HH24:mi:ss')		AS FEC_ULTASI,
-                        NUM_CORHOS,
-                        TO_CHAR(FEC_ULTSER,'dd-mm-YYYY HH24:mi:ss')		AS FEC_ULTSER,
-			COD_ULTSER,
-                        IND_ARCHIVO,
-			TO_CHAR(FEC_IMPRES,'dd-mm-YYYY HH24:mi:ss')		AS FEC_IMPRES,
-			
-			COD_USRCREA,
-                        TO_CHAR(FEC_USRCREA,'dd-mm-YYYY HH24:mi:ss')		AS FEC_USRCREA, 
-                        COD_USUARI,
-                        TO_CHAR(FEC_AUDITA,'dd-mm-YYYY HH24:mi:ss')		AS FEC_AUDITA,
-                        
-			IND_ESTADO,
-                        COD_EMPRESA,
-                        NOM_DIRECC,
-                        NOM_CONTACTO,
-                        DIRECC_CONTACTO,
-                        NUM_FICHAE,
-                        IND_IMPRES,
-                        NUM_TELEFO1_2,
-                        TELEFO_CONTACTO_2,
-                        NUM_TELEFO1,
-                        TELEFO_CONTACTO,
-                        COD_SISTEMA,
-                        COD_SISTEMAUDITA,
-                        COD_SECTOR,
-                        COD_FAMILIA,
-                        NUM_CASA ,
-                        COD_VIADIRECCION,
-                        COD_COMUNAL ,
-                        COD_CIUDADL
-                    FROM
-                          $oracle_own.SO_TCPACTE
-                    WHERE
-                        COD_EMPRESA = '$codEmpresa' AND NUM_FICHAE = $nfichaE";
+        $sQuery = "
+            SELECT 
+                COD_RUTPAC,
+                NUM_CORPAC,
+                NUM_NFICHA,
+                NUM_AFICHA,
+                IND_ESTPAC,
+                COD_SERULA,
+                
+                DATE_FORMAT(FEC_ULTASI, '%d-%m-%Y %H:%i:%s') AS FEC_ULTASI,
+                NUM_CORHOS,
+                DATE_FORMAT(FEC_ULTSER, '%d-%m-%Y %H:%i:%s') AS FEC_ULTSER,
+                COD_ULTSER,
+                IND_ARCHIVO,
+                DATE_FORMAT(FEC_IMPRES, '%d-%m-%Y %H:%i:%s') AS FEC_IMPRES,
+                
+                COD_USRCREA,
+                DATE_FORMAT(FEC_USRCREA, '%d-%m-%Y %H:%i:%s') AS FEC_USRCREA,
+                COD_USUARI,
+                DATE_FORMAT(FEC_AUDITA, '%d-%m-%Y %H:%i:%s') AS FEC_AUDITA,
+                
+                IND_ESTADO,
+                COD_EMPRESA,
+                NOM_DIRECC,
+                NOM_CONTACTO,
+                DIRECC_CONTACTO,
+                NUM_FICHAE,
+                IND_IMPRES,
+                NUM_TELEFO1_2,
+                TELEFO_CONTACTO_2,
+                NUM_TELEFO1,
+                TELEFO_CONTACTO,
+                COD_SISTEMA,
+                COD_SISTEMAUDITA,
+                COD_SECTOR,
+                COD_FAMILIA,
+                NUM_CASA,
+                COD_VIADIRECCION,
+                COD_COMUNAL,
+                COD_CIUDADL
+            FROM
+                $mysql_db.SO_TCPACTE
+            WHERE
+                COD_EMPRESA = '$codEmpresa' AND NUM_FICHAE = $nfichaE";
         return $sQuery;
     }
+    
 
     public function busquedaLastNumfichae(){  
         $sql= "select /*+ RULE */ NUM_CORREL  from ADMIN.gg_tcorrel WHERE id_correl= 'NUM_FICHAE'  for update";//busca el ultimo num_fichae ocupado

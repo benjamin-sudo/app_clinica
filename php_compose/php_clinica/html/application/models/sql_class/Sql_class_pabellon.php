@@ -3710,7 +3710,7 @@ OBS_RECHAZO,
                 $sql= "SELECT NUM_CORREL
                         FROM ADMIN.GG_TCORREL
                         WHERE id_correl = 'NUM_FICHAE'
-                        FOR UPDATE;
+                        FOR UPDATE
                         ";
                 return $sql;
         }
