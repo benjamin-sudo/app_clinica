@@ -3707,12 +3707,16 @@ OBS_RECHAZO,
         }
         
         public function busquedaLastNumfichae(){  
-                $sql= "select /*+ RULE */ NUM_CORREL  from ADMIN.gg_tcorrel WHERE id_correl= 'NUM_FICHAE'  for update";//busca el ultimo num_fichae ocupado
+                $sql= "SELECT NUM_CORREL
+                        FROM ADMIN.GG_TCORREL
+                        WHERE id_correl = 'NUM_FICHAE'
+                        FOR UPDATE;
+                        ";
                 return $sql;
         }
                             
         public function UpdateLastNumfichae($num_fichae){
-                $sql2= "UPDATE ADMIN.gg_tcorrel set num_correl= $num_fichae  where id_correl= 'NUM_FICHAE'";//se debe actualizar parametro
+                $sql2= "UPDATE ADMIN.GG_TCORREL set num_correl= $num_fichae  where id_correl= 'NUM_FICHAE'";//se debe actualizar parametro
                 return $sql2;
         }
         
