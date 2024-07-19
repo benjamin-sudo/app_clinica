@@ -63,62 +63,63 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
     }
 
     public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete) {
-        if ($identifier == '' and $pasaporte == ''){
-            $query =  $this->db->select('G.NUM_FICHAE FALLECIDO,
-                                A.COD_PAIS,
-                                A.NUM_IDENTIFICACION,
-                                A.FEC_VENCEPASPORT,
-                                A.COD_RUTPAC,
-                                A.COD_DIGVER,
-                                A.NOM_NOMBRE,
-                                A.NOM_APEPAT,
-                                A.NOM_APEMAT,
-                                TO_CHAR(A.FEC_NACIMI,"DD-MM-YYYY") AS FEC_NACIMI,  
-                                A.IND_TISEXO,
-                                A.NUM_FICHAE,
-				                A.IND_EXTRANJERO,
-                                F.NUM_NFICHA,
-                                COUNT(*) OVER () RESULT_COUNT
-                            ');
+        if ($identifier == '' && $pasaporte == '') {
+            // Realiza la cuenta en una subconsulta separada
+            $this->db->select('
+                G.NUM_FICHAE AS FALLECIDO,
+                A.COD_PAIS,
+                A.NUM_IDENTIFICACION,
+                A.FEC_VENCEPASPORT,
+                A.COD_RUTPAC,
+                A.COD_DIGVER,
+                A.NOM_NOMBRE,
+                A.NOM_APEPAT,
+                A.NOM_APEMAT,
+                DATE_FORMAT(A.FEC_NACIMI, "%d-%m-%Y") AS FEC_NACIMI,  
+                A.IND_TISEXO,
+                A.NUM_FICHAE,
+                A.IND_EXTRANJERO,
+                F.NUM_NFICHA,
+                (SELECT COUNT(*) FROM ' . $this->tableSpace . '.GG_TGPACTE WHERE IND_ESTADO = "V" AND COD_EMPRESA = "' . $codEmpresa . '") AS RESULT_COUNT
+            ');
             $this->db->from($this->tableSpace . '.GG_TGPACTE A');
-	
+        
             if ($templete == 1 || $templete == 4 || $templete == 5) {
-                //OPCION BUSCA TODO TEMPLETE GENERAL = 1
-                $this->db->join($this->tableSpace . '.SO_TCPACTE F', ' F.NUM_FICHAE = A.NUM_FICHAE AND F.COD_EMPRESA =' . $codEmpresa, 'LEFT');
+                $this->db->join($this->tableSpace . '.SO_TCPACTE F', 'F.NUM_FICHAE = A.NUM_FICHAE AND F.COD_EMPRESA = ' . $codEmpresa, 'LEFT');
             } else {
-                //SOLO BUSCA FICHA LOCAL templete solo fichaLocal  = 2
-                $this->db->join($this->tableSpace . '.SO_TCPACTE F', ' F.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
+                $this->db->join($this->tableSpace . '.SO_TCPACTE F', 'F.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
                 $this->db->where('F.COD_EMPRESA', $codEmpresa);
             }
-            $this->db->join($this->tableSpace . '.GG_TPACFALLECIDO G', ' G.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
-        	$this->db->where('A.IND_ESTADO','V');
-            /*
-            $this->db->join($this->tableSpace.".SO_TCPACTE F"       ,"F.NUM_FICHAE = A.NUM_FICHAE AND F.NUM_FICHAE  = A.NUM_FICHAE AND F.NUM_FICHAE IS NULL ", 'left');
-            $this->db->join($this->tableSpace.".IN_TMIEMBROS G"     ,"G.COD_RUTPAC = F.COD_RUTPAC AND F.COD_EMPRESA = G.COD_EMPRESA AND G.IND_ESTADO = 'V' ", 'left');
-            $this->db->join($this->tableSpace.".GG_TPACFALLECIDO M" ,"M.NUM_FICHAE = A.NUM_FICHAE AND M.IND_ESTADO  = 'V' ", 'left');
-            */
-            if(!empty($nombre) || !empty($apellidoP) || !empty($apellidoM)){
-                if(!empty($nombre)){
-                    $nombre	    =	str_replace("'", "&#39;", $nombre);
+            $this->db->join($this->tableSpace . '.GG_TPACFALLECIDO G', 'G.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
+            $this->db->where('A.IND_ESTADO', 'V');
+            
+            if (!empty($nombre) || !empty($apellidoP) || !empty($apellidoM)) {
+                if (!empty($nombre)) {
+                    $nombre = str_replace("'", "&#39;", $nombre);
                     $this->db->like('A.NOM_NOMBRE', trim($nombre), 'both');
                 }
-                if(!empty($apellidoP)){
-                    $apellidoP	    =	str_replace("'", "&#39;", $apellidoP);
+                if (!empty($apellidoP)) {
+                    $apellidoP = str_replace("'", "&#39;", $apellidoP);
                     $this->db->like('A.NOM_APEPAT', trim($apellidoP), 'both');
                 }
-                if(!empty($apellidoM)){
-                    $apellidoM	    =	str_replace("'", "&#39;", $apellidoM);
+                if (!empty($apellidoM)) {
+                    $apellidoM = str_replace("'", "&#39;", $apellidoM);
                     $this->db->like('A.NOM_APEMAT', trim($apellidoM), 'both');
                 }
             }
-	        $this->db->limit(10,($LIM_INI - 1)*10);
+    
+            $this->db->limit(10, ($LIM_INI - 1) * 10);
             $query = $this->db->get();
         } else {
             $query = $this->db->query($this->sql_class_ggpacientes->sqlConsultaPacienteNEW($this->tableSpace, $numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx));
         }
+    
         return $query->result_array();
     }
+    
+    
 
+    
     public function getBusquedaDatosExtranjero($empresa, $numfichae) {
         $query = $this->db->query($this->sql_class_pabellon->sqlBusquedaDatosExtranjero($empresa, $numfichae));
         return $query->row();
@@ -546,7 +547,8 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     if ($infoDatoLocalxHist[0]['FEC_IMPRES'] != '') {
                         $SO_THISTCPACTE = array_merge($SO_THISTCPACTE, array('FEC_ULTSER' => date('Y-m-d H:i:s', strtotime($infoDatoLocalxHist[0]['FEC_IMPRES']))));
                     }
-                    $this->db->insert($this->tableSpace . '.SO_THISTCPACTE', $SO_THISTCPACTE);
+                    
+                    #$this->db->insert($this->tableSpace . '.SO_THISTCPACTE', $SO_THISTCPACTE);
     
                     $this->db->where('COD_EMPRESA', $codEmpresa);
                     $this->db->where('NUM_FICHAE', $numFichae);
