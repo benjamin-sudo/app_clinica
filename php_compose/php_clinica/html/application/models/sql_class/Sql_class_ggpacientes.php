@@ -842,12 +842,10 @@ class sql_class_ggpacientes extends CI_Model {
         return $sQuery;
     }
     
-
     public function busquedaLastNumfichae(){  
         $sql= "select /*+ RULE */ NUM_CORREL  from ADMIN.gg_tcorrel WHERE id_correl= 'NUM_FICHAE'  for update";//busca el ultimo num_fichae ocupado
         return $sql;
-}
-    
+    }
 }
    
 

@@ -53,7 +53,7 @@
                 <td id="nameType" style="text-align: right;">RUN</td>
                 <td>
                     <input type="text" id="rut" class="form-control">
-                    <input type="text" id="dni" style="display: none;" maxlength="20">
+                    <input type="text" id="dni" class="form-control" style="display: none;" maxlength="20">
                 </td>
             </tr>
             <tr>
@@ -136,15 +136,17 @@
     </div>
 
     <div class="modal fade" id="modalExtranjero">
-        <div class="modal-dialog modal-xl3">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content"> 
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3 class="modal-title" id="tituloModal"><B>CERTIFICADO EXTRANJERO</B></h3>
+                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;CERTIFICADO EXTRANJERO&nbsp;</b></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="HTML_PDF"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger  btn-sm" data-dismiss="modal"><i class="fa fa-window-close-o" aria-hidden="true"></i> CIERRA VENTANA</button>
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
                 </div>
             </div>
         </div>
@@ -182,11 +184,8 @@
 
     <div id="respuesta"></div>
     <div id="dialogo_prestacion"></div>
-    
     <input type="hidden" name="indTemplateNum"  id="indTemplateNum"     value="1"/>
     <input type="hidden" name="USERNAME"        id="USERNAME"           value="<?php echo $USERNAME; ?>"/>
     <input type="hidden" name="COD_ESTAB"       id="COD_ESTAB"          value="<?php echo $COD_ESTAB; ?>"/>
 
 </section>
-
-

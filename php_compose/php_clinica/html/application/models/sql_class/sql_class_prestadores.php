@@ -45,13 +45,12 @@ class sql_class_prestadores extends CI_Model {
 
     //OBTIENE EL TIPO DE PROFESIONAL EN LA CONSULTA
     public function cargartipo(){
-        $sQuery = "
-            SELECT 
-            IND_TIPOATENCION, 
-            DES_TIPOATENCION 
-            FROM 
-            $this->own.AP_TTIPOATENCION 
-            WHERE IND_ESTADO='V'";
+        $sQuery = "SELECT 
+                IND_TIPOATENCION, 
+                DES_TIPOATENCION 
+                FROM 
+                $this->own.AP_TTIPOATENCION 
+                WHERE IND_ESTADO='V'";
         return $sQuery;
     }
 

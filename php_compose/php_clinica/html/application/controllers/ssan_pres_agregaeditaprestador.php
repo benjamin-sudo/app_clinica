@@ -10,8 +10,8 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
 
     public function index(){
         $this->output->set_template('blank');
-        $data       =   [];
-        $data       =   $this->Ssan_pres_agregaeditaprestador_model->cargatipo();
+        $data = [];
+        $data = $this->Ssan_pres_agregaeditaprestador_model->cargatipo();
         $this->load->css("assets/ssan_pres_agregaeditaprestador/css/styles.css");
         $this->load->js("assets/ssan_pres_agregaeditaprestador/js/javascript.js");
         $this->load->view('ssan_pres_agregaeditaprestador/ssan_pres_agregaeditaprestador_view',$data);
@@ -27,7 +27,6 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
         $rutfin             =   $rutsin[0];
         $arr                =   $this->Ssan_pres_agregaeditaprestador_model->buscar($rutfin);
         if(count($arr['prestador'])>0)    {
-
             $retor          =   $arr['prestador'];
             /*
             $html           =   '<script>setTimeout(function(){ CARGAPROF("' . $retor[0]['COD_TPROFE'] . '");},200)</script>';

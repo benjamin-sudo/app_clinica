@@ -118,7 +118,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         if ($isNal == 0) {
             $html .= '<tr>
                     <td width="35%" style="text-align:center"> 
-                        <select name="cboNumIdentifica" id="cboNumIdentifica" class="spetit" onchange="js_cambiaNID(this.id,this.value)" style="width: 100%;">
+                        <select name="cboNumIdentifica" id="cboNumIdentifica" class="form-select spetit" onchange="js_cambiaNID(this.id,this.value)" style="width: 100%;">
                             <option value="1" >N&deg; PASAPORTE VIGENTE/(DNI)</option>
                             <option value="2" >N&deg; PROVISORIO FONASA</option>
                             <option value="4" >N&deg; EXTRANJERO SSAN (SOLO BUSQUEDA) </option>
@@ -133,7 +133,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                     </td>
                     <td width="30%" style="text-align:center">
                         <div id="numExtranjero" style="text-align:left">
-                            <input name="txtNumIdentiExtra" type="text" id="txtNumIdentiExtra" style="TEXT-TRANSFORM: uppercase;" value="" size="30">
+                            <input name="txtNumIdentiExtra" type="text" id="txtNumIdentiExtra" class="form-control" style="TEXT-TRANSFORM: uppercase;" value="" size="30">
                         </div>
                         <div id="numFonasa" style="display:none" style="text-align:center">
                             <input type="text" class="form-control" name="txtBuscarFonasa" id="txtBuscarFonasa" size="8" maxlength="8" style="width:70px" onkeypress="return soloNumeros(event)"> 

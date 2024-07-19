@@ -107,18 +107,13 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                     $this->db->like('A.NOM_APEMAT', trim($apellidoM), 'both');
                 }
             }
-    
             $this->db->limit(10, ($LIM_INI - 1) * 10);
             $query = $this->db->get();
         } else {
             $query = $this->db->query($this->sql_class_ggpacientes->sqlConsultaPacienteNEW($this->tableSpace, $numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx));
         }
-    
         return $query->result_array();
     }
-    
-    
-
     
     public function getBusquedaDatosExtranjero($empresa, $numfichae) {
         $query = $this->db->query($this->sql_class_pabellon->sqlBusquedaDatosExtranjero($empresa, $numfichae));

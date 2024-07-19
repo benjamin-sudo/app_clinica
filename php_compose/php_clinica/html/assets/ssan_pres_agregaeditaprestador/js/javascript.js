@@ -1,4 +1,5 @@
 $(function(){
+    alert("hola");
     $('#rutPac').Rut({
         on_error    :   function() {
                                         jError("RUN ingresado incorrecto","Clinica Libre");
@@ -15,13 +16,14 @@ $(function(){
 
 function buscar_prestador(){
     //limpiar();
+
     let rut = $('#rutPac').val();
     if (rut === '') {
         jError("RUN ingresado incorrecto","Clinica Libre");
     } else {
         $.ajax({ 
             type        :	"POST",
-            url         :	"Ssan_pres_agregaeditaprestador/buscar",
+            url         :	"Ssan_pres_agregaeditaprestador/buscar_",
             beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
             dataType    :	"json",
             data        :	{ rutPac : rut },
@@ -29,10 +31,12 @@ function buscar_prestador(){
 
                                                                 console.log("--------------------------------"); 
                                                                 console.log(errro); 
-                                                                console.log(error2);
-                                                                console.log(error3);
-                                                                console.log(errro.responseText); 
-                                                                $('#loadFade').modal('hide');
+                                                                
+                                                                
+                                                                setTimeout(() => {
+                                                                    $('#loadFade').modal('hide');
+                                                                },"1000");
+
                                                                 jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
                                                                 
                                                             },
@@ -55,11 +59,20 @@ function buscar_prestador(){
                                                                 } else {
                                                                     showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
                                                                 }
-                                                                $('#loadFade').modal('hide');
+
+
+                                                                setTimeout(() => {
+                                                                    $('#loadFade').modal('hide');
+                                                                },"1000");
+
+                                                                
                                                             }, 
         });
     }
 }
+
+
+
 
 function CARGAPROF(_value){
     let rut             =   $('#rutPac').val();

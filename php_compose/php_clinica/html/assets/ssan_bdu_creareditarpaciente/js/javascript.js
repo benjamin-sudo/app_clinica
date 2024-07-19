@@ -96,11 +96,11 @@ function FormModal(isNal,numFichae){
                             template    :   $("#indTemplateNum").val(),
                             Numedad	    :   '0',
                         },
-        error      :	function(errro)	    {  
-                                                console.log(errro);
-                                                $("#HTML_DIALOGO").html('');	 
-                                                jError("Error General, Consulte Al Administrador"); 
-                                            },
+        error      :	function(errro){  
+                                            console.log(errro);
+                                            $("#HTML_DIALOGO").html('');	 
+                                            jError("Error General, Consulte Al Administrador"); 
+                                        },
         success    :	function(aData) {    
                                             console.log("aData  ->  ",aData);
                                             $("#HTML_DIALOGO").html('');
