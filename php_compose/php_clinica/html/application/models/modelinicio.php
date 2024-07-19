@@ -32,6 +32,8 @@ class modelinicio extends CI_Model {
         $ID_UID = '';
         $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
         $query = $this->db->query($sql, array($user));
+
+        
         if ($query->num_rows() > 0) {
             $row = $query->row();
             if (password_verify($pass, $row->PASSWORD)) {
