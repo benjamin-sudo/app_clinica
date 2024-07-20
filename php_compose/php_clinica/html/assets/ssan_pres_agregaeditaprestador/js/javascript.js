@@ -1,5 +1,4 @@
 $(function(){
-    alert("hola");
     $('#rutPac').Rut({
         on_error    :   function() {
                                         jError("RUN ingresado incorrecto","Clinica Libre");
@@ -16,29 +15,23 @@ $(function(){
 
 function buscar_prestador(){
     //limpiar();
-
     let rut = $('#rutPac').val();
     if (rut === '') {
         jError("RUN ingresado incorrecto","Clinica Libre");
     } else {
         $.ajax({ 
             type        :	"POST",
-            url         :	"Ssan_pres_agregaeditaprestador/buscar_",
+            url         :	"Ssan_pres_agregaeditaprestador/buscar",
             beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
             dataType    :	"json",
             data        :	{ rutPac : rut },
             error       :	function(errro,error2,error3)	{ 
-
                                                                 console.log("--------------------------------"); 
                                                                 console.log(errro); 
-                                                                
-                                                                
                                                                 setTimeout(() => {
                                                                     $('#loadFade').modal('hide');
                                                                 },"1000");
-
                                                                 jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
-                                                                
                                                             },
             success     :	function(aData)	                {	
                                                                 console.log("--------------------------------");
@@ -59,13 +52,9 @@ function buscar_prestador(){
                                                                 } else {
                                                                     showNotification('top','center','<i class="fa fa-check" aria-hidden="true"></i> Resgistro nuevo profesional',2,'');
                                                                 }
-
-
                                                                 setTimeout(() => {
                                                                     $('#loadFade').modal('hide');
                                                                 },"1000");
-
-                                                                
                                                             }, 
         });
     }
