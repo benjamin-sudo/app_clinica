@@ -102,10 +102,14 @@ function CARGAPROF(_value){
                                                                         $("#prof").val(_value);
                                                                     }
                                                                 } 
-                                                                $('#loadFade').modal('hide');
+                                                                setTimeout(() => {
+                                                                    $('#loadFade').modal('hide');
+                                                                },"1000");
                                                             }, 
             complete    :   function()                      {
-                                                                $('#loadFade').modal('hide');
+                                                                setTimeout(() => {
+                                                                    $('#loadFade').modal('hide');
+                                                                },"1000");
                                                             }                                                
         });
     }
@@ -226,7 +230,9 @@ function prestador() {
                                                             }
                                                         }, 
                     complete    :   function()          {
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(() => {
+                                                                $('#loadFade').modal('hide');
+                                                            },"1000");
                                                         }                                                
                 });
             }

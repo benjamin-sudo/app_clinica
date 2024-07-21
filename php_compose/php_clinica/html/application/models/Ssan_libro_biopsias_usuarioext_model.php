@@ -12,7 +12,75 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->db = $this->load->database('oracle_conteiner',true);
+        $this->db = $this->load->database('session',true);
+    }
+
+
+    ########################################
+    #### MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
+    #### LISTA POR CLIENTES################# 
+    ########################################
+    public function CARGA_LISTA_MISSOLICITUDES_ANATOMIA($DATA){
+        $this->db->trans_start();
+        $CALL_FASE          =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;
+        $LODA_X_SISTEMAS    =   isset($DATA['LODA_X_SISTEMAS'])?$DATA['LODA_X_SISTEMAS']:0;
+        $param              =   array(
+                                    array( 
+                                        'name'      =>  ':V_COD_EMPRESA',
+                                        'value'     =>  $DATA["COD_EMPRESA"],
+                                        'length'    =>  20,
+                                        'type'      =>  SQLT_CHR 
+                                    ),
+                                    array( 
+                                        'name'      =>  ':V_USR_SESSION',
+                                        'value'     =>  $DATA["USR_SESSION"],
+                                        'length'    =>  20,
+                                        'type'      =>  SQLT_CHR 
+                                    ),
+                                    array( 
+                                        'name'      =>  ':V_LOADXZONA',
+                                        'value'     =>  $LODA_X_SISTEMAS,
+                                        'length'    =>  20,
+                                        'type'      =>  SQLT_CHR 
+                                    ),
+                                    array( 
+                                        'name'      =>  ':VAL_FECHA_INICIO',
+                                        'value'     =>  $DATA["DATE_FROM"],
+                                        'length'    =>  20,
+                                        'type'      =>  SQLT_CHR 
+                                    ),
+                                    array( 
+                                        'name'      =>  ':VAL_FECHA_FINAL',
+                                        'value'     =>  $DATA["DATE_TO"],
+                                        'length'    =>  20,
+                                        'type'      =>  SQLT_CHR 
+                                    ),
+                                    array( 
+                                        'name'      =>  ':C_RESULT_LISTA',
+                                        'value'     =>  $this->db->get_cursor(),
+                                        'length'    =>  -1,
+                                        'type'      =>  OCI_B_CURSOR
+                                    ),
+                                    array( 
+                                        'name'      =>  ':C_HISTORIAL_M',
+                                        'value'     =>  $this->db->get_cursor(),
+                                        'length'    =>  -1,
+                                        'type'      =>  OCI_B_CURSOR
+                                    ),
+                                );
+        #RESULTADOS_ANATOMIA -> RECEPCION DE MUESTRAS
+        $result                                     =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','GET_LISTA_ANOTOMIAPATOLOGICA',$param);
+        $this->db->trans_complete();
+        return [
+            'STATUS'                                =>  true,
+            'RESULT'                                =>  $result,
+            'ARRAY_RESULT'                          =>  empty($result[':C_RESULT_LISTA'])?null:$result[':C_RESULT_LISTA'],
+            'HTML_SOLICITUDEAP'                     =>  $this->RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"]),//table 
+            'HTML_LI'                               =>  $this->LI_RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"],$CALL_FASE),//en li
+            'DATE_FROM'                             =>  $DATA["DATE_FROM"],
+            'DATE_TO'                               =>  $DATA["DATE_TO"],
+            'EMPRESA'                               =>  $DATA["COD_EMPRESA"],
+        ];
     }
 
     public function data_pre_nuevasoliciud_anatomia($DATA){
@@ -930,72 +998,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         return $query->result_array();
     }
 
-    ########################################
-    #### MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
-    #### LISTA POR CLIENTES################# 
-    ########################################
-    public function CARGA_LISTA_MISSOLICITUDES_ANATOMIA($DATA){
-        $this->db->trans_start();
-        $CALL_FASE          =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;
-        $LODA_X_SISTEMAS    =   isset($DATA['LODA_X_SISTEMAS'])?$DATA['LODA_X_SISTEMAS']:0;
-        $param              =   array(
-                                    array( 
-                                        'name'      =>  ':V_COD_EMPRESA',
-                                        'value'     =>  $DATA["COD_EMPRESA"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_USR_SESSION',
-                                        'value'     =>  $DATA["USR_SESSION"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_LOADXZONA',
-                                        'value'     =>  $LODA_X_SISTEMAS,
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':VAL_FECHA_INICIO',
-                                        'value'     =>  $DATA["DATE_FROM"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':VAL_FECHA_FINAL',
-                                        'value'     =>  $DATA["DATE_TO"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':C_RESULT_LISTA',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':C_HISTORIAL_M',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                );
-        #RESULTADOS_ANATOMIA -> RECEPCION DE MUESTRAS
-        $result                                     =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','GET_LISTA_ANOTOMIAPATOLOGICA',$param);
-        $this->db->trans_complete();
-        return [
-            'STATUS'                                =>  true,
-            'RESULT'                                =>  $result,
-            'ARRAY_RESULT'                          =>  empty($result[':C_RESULT_LISTA'])?null:$result[':C_RESULT_LISTA'],
-            'HTML_SOLICITUDEAP'                     =>  $this->RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"]),//table 
-            'HTML_LI'                               =>  $this->LI_RESULTADOS_ANATOMIA($result[":C_RESULT_LISTA"],$CALL_FASE),//en li
-            'DATE_FROM'                             =>  $DATA["DATE_FROM"],
-            'DATE_TO'                               =>  $DATA["DATE_TO"],
-            'EMPRESA'                               =>  $DATA["COD_EMPRESA"],
-        ];
-    }
+    
 
     #########################################
     #   ssan_libro_biopsias_ii_fase         #

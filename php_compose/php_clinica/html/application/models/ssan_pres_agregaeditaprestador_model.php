@@ -89,45 +89,41 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
             'COD_EMPRESA'   =>  $codemp,
             'COD_TPROFENEW' =>  $tprof
         );
-        #var_dump($rutfin);
-        $mprestador         =   $this->consultaPrestador($rutfin);
+        $mprestador = $this->consultaPrestador($rutfin);
         if ($mprestador) {
-            #MODIFICO EL PRESTADOR
             $this->db->set('COD_USUARI', $rutUsClave);
-            $this->db->set('FEC_AUDITA', 'SYSDATE');
+            $this->db->set('FEC_AUDITA', date('Y-m-d H:i:s')); // Usar formato de fecha y hora de PHP para MySQL
             $this->db->where('COD_RUTPRO', $rutfin);
-            $this->db->update($this->own . '.GG_TPROFESIONAL', $dataUs);
+            $this->db->update('GG_TPROFESIONAL', $dataUs);
         } else {
-            #CREA EL PRESTADOR
-            $id_profesional = $this->db->sequence($this->own,'SEQ_UNICOPROFESIONAL');
-            $this->db->set('ID_PROFESIONAL', $id_profesional);
             $this->db->set('COD_PROMED', strtoupper($iniciales));
             $this->db->set('COD_USRCREA', $rutUsClave);
-            $this->db->set('FEC_USRCREA', 'SYSDATE');
-            $this->db->insert($this->own . '.GG_TPROFESIONAL', $dataUs);
+            $this->db->set('FEC_USRCREA', date('Y-m-d H:i:s')); // Usar formato de fecha y hora de PHP para MySQL
+            $this->db->insert('GG_TPROFESIONAL', $dataUs);
+            $id_profesional = $this->db->insert_id(); // Obtener el ID autoincremental generado
         }
-
-            ###########################################
-            $profxemp = $this->consultaPrestadorxEmp($rutfin, $codemp);
+    
+        $profxemp = $this->consultaPrestadorxEmp($rutfin, $codemp);
         if ($profxemp) {
             $this->db->set('IND_ESTADO', 'V');
             $this->db->where('COD_RUTPRO', $rutfin);
             $this->db->where('COD_EMPRESA', $codemp);
-            $this->db->update($this->own . '.AP_TPROFXESTABL');
+            $this->db->update('AP_TPROFXESTABL');
         } else {
             $dataUp = array(
                 'COD_RUTPRO'    =>  $rutfin,
                 'COD_USRCREA'   =>  $rutUsClave,
                 'COD_EMPRESA'   =>  $codemp,
-                'FEC_USRCREA'   =>  'SYSDATE', //solo cuando se edita
+                'FEC_USRCREA'   =>  date('Y-m-d H:i:s'), // Usar formato de fecha y hora de PHP para MySQL
                 'IND_ESTADO'    =>  'V'
             );
-            $this->db->where('COD_RUTPRO', $rutfin);
-            $this->db->insert($this->own . '.AP_TPROFXESTABL', $dataUp);
+            $this->db->insert('AP_TPROFXESTABL', $dataUp);
         }
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
+    
+    
 
 
 }

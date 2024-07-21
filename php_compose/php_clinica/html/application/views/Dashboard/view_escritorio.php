@@ -30,7 +30,7 @@
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min.css">
   <!-- autocomplete -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/autocomplete.css"  />
-  <link type="text/css" rel="stylesheet" href="assets/recursos/css//easy-autocomplete.css"  />
+  <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.css"  />
   <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.min.css"  />
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
@@ -178,44 +178,7 @@
 </div>
 <!-- ./wrapper -->
   <div id="respuesta"></div>
-  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/jquery.min.js"></script>
-  <!-- jQuery UI - v1.12.0-rc.2  -->
-  <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
-  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/popper.min.js"></script>
-  <!-- Bootstrap 5.0.1 -->
-  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/bootstrap.min.js"></script>
-  <!-- AdminLTE App -->
-  <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
-  <!-- Validador rut -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js" ></script>
-  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
-  <!-- jalert y otro -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
-  <!-- shownotificacion -->
-  <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
-  <!-- web socket -->
-  <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
-  <!-- personalizable --> 
-  <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
-  <!-- moment.min.js -->
-  <!-- moment.js -->
-  <!-- bootstrap-datetimejs -->  
-  <script type="text/javascript" src="assets/recursos/js/moment.min.js"></script>
-  <script type="text/javascript" src="assets/recursos/js/moment.js"></script>
-  <!--  bootstrap-datetimepicker.js -->
-  <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
-  <!-- bootstrap-select.min.js -->
-  <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
-  <!-- Wizard Plugin    -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
-  <!--paginacion bootpage-->
-  <script type="text/javascript" src="assets/recursos/js/jquery.bootpag.min.js"></script>
-  <!-- easy-autocomplete -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.easy-autocomplete.min.js"></script>
-  <!-- PerfectScrollbar  -->
-  <!--
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
-  -->
+  
   <section>
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -269,5 +232,48 @@
         </div>
     </div>
   </section>
+
+  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/jquery.min.js"></script>
+  <!-- jQuery UI - v1.12.0-rc.2  -->
+  <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
+  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/popper.min.js"></script>
+  <!-- Bootstrap 5.0.1 -->
+  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/bootstrap.min.js"></script>
+  <!-- AdminLTE App -->
+  <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
+  <!-- Validador rut -->
+  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js" ></script>
+  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
+  <!-- jalert y otro -->
+  <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
+  <!-- shownotificacion -->
+  <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
+  <!-- web socket -->
+  <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
+  <!-- personalizable --> 
+  <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
+  <!-- moment.min.js -->
+  <!-- moment.js -->
+  <!-- bootstrap-datetimejs -->  
+  <script type="text/javascript" src="assets/recursos/js/moment.min.js"></script>
+  <script type="text/javascript" src="assets/recursos/js/moment.js"></script>
+  <!--  bootstrap-datetimepicker.js -->
+  <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
+  <!-- bootstrap-select.min.js -->
+  <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
+  <!-- Wizard Plugin    -->
+  <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
+  <!--paginacion bootpage-->
+  <script type="text/javascript" src="assets/recursos/js/jquery.bootpag.min.js"></script>
+  <!-- easy-autocomplete -->
+  <script type="text/javascript" src="assets/recursos/js/jquery.easy-autocomplete.min.js"></script>
+  <!-- PerfectScrollbar  -->
+  <!--
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
+  -->
+
+
+
+
   </body>
 </html>
