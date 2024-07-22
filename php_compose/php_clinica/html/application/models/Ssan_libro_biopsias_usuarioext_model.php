@@ -327,7 +327,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
         $query = $this->db->query($sql, array($cod_empresa, $fecha_inicio, $fecha_final));
         /*
-            if ($query->num_rows() > 0) { return $query->result_array();  } else {   return array();   }
+            if ($query->num_rows() > 0) { return $query->result_array(); } else { return array(); }
         */
         $arr_data = $query->result_array();;
         //$result[":C_RESULT_LISTA"] = $query->result_array();
