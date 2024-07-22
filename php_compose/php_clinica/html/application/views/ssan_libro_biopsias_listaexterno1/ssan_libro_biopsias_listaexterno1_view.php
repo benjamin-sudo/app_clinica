@@ -1,6 +1,5 @@
 <input type="hidden" id="NUM_FASE" name="NUM_FASE" value="1"/>
 <input type="hidden" id="IND_TEMPLETE" name="IND_TEMPLETE" value="ssan_libro_biopsias_listaexterno1"/>
-
 <div class="header" style="padding-top:0;">
     <h4 class="title" style="color:#e34f49;margin-bottom:10px;"><b>TOMA DE MUESTRA | ROTULADO | CUSTODIA O TRASPORTE | ADMINISTRADOR</b></h4>
 </div>

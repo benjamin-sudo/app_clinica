@@ -129,6 +129,215 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         return $query->result_array();
     }
     
+    
+
+    public function obtener_resultados_lista($aData) {
+        $fecha_inicio = $aData['data_inicio'] . ' 00:00:00';
+        $fecha_final = $aData['data_final'] . ' 23:59:59';
+        $cod_empresa = $aData['COD_EMPRESA'];
+    
+        $sql = "SELECT 
+            P.ID_ROTULADO AS ID_ROTULADO,
+            CASE
+                WHEN P.COD_ESTABLREF = ? THEN
+                    (SELECT G.NOM_RAZSOC
+                     FROM ADMIN.SS_TEMPRESAS G
+                     WHERE G.COD_EMPRESA IN (P.COD_EMPRESA)
+                     LIMIT 1)
+                ELSE '' 
+            END AS TXT_EMPRESA_DERIVADO,
+            P.COD_ESTABLREF AS COD_ESTABLREF,
+            P.ID_SIC,
+            P.IND_DERIVACION_IC,
+            P.ID_HISTO_ZONA,
+            CONCAT(UPPER(SUBSTRING(A.NOM_NOMBRE, 1, 1)), '.', UPPER(A.NOM_APEPAT), ' ', UPPER(A.NOM_APEMAT)) AS NOM_PROFE_CORTO,
+            CONCAT(UPPER(A.NOM_APEPAT), ' ', UPPER(A.NOM_APEMAT), ' ', UPPER(A.NOM_NOMBRE)) AS NOM_PROFE,
+            CONCAT(UPPER(A.COD_RUTPRO), '-', UPPER(A.COD_DIGVER)) AS TXT_RUTPRO,
+            CONCAT(L.COD_RUTPAC, '-', L.COD_DIGVER) AS RUTPACIENTE,
+            L.IND_TISEXO AS IND_TISEXO,
+            L.COD_RUTPAC AS COD_RUTPAC,
+            FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12) AS NUMEDAD,
+            DATE_FORMAT(L.FEC_NACIMI, '%d-%m-%Y') AS NACIMIENTO,
+            FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12) AS EDAD,
+            CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT)) AS NOMBRE_COMPLETO,
+            CONCAT(SUBSTRING(L.NOM_NOMBRE, 1, 1), '.', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT)) AS TXTNOMCIRUSMALL,
+            CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(SUBSTRING(L.NOM_APEMAT, 1, 1))) AS TXTPRIMERNOMBREAPELLIDO,
+            L.NUM_FICHAE AS NUM_FICHAE,
+            CASE
+                WHEN P.COD_EMPRESA = 1000 THEN
+                    (SELECT E.NUM_NFICHA
+                     FROM ADMIN.SO_TCPACTE E
+                     WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = 100 LIMIT 1)
+                ELSE
+                    (SELECT E.NUM_NFICHA
+                     FROM ADMIN.SO_TCPACTE E
+                     WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = P.COD_EMPRESA LIMIT 1)
+            END AS FICHAL,
+            (SELECT A.NOM_PREVIS
+             FROM ADMIN.GG_TDATPREV A,
+                  ADMIN.SO_TTITUL B,
+                  ADMIN.GG_TGPACTE C,
+                  ADMIN.GG_TINSEMP D
+             WHERE A.IND_PREVIS = B.IND_PREVIS
+               AND B.COD_RUTTIT = C.COD_RUTTIT
+               AND B.NUM_RUTINS = D.COD_RUTINS
+               AND C.NUM_FICHAE = P.NUM_FICHAE
+               AND A.IND_ESTADO = 'V') AS TXT_PREVISION,
+            CONCAT(UPPER(G.NOM_NOMBRE), ' ', UPPER(G.NOM_APEPAT), ' ', UPPER(G.NOM_APEMAT)) AS PROFESIONAL,
+            CONCAT(G.NOM_APEPAT, ' ', G.NOM_APEMAT, ' ', G.NOM_NOMBRE) AS PROFESIONAL_2,
+            CONCAT(G.COD_RUTPRO, '-', G.COD_DIGVER) AS RUT_PROFESIONAL,
+            G.COD_RUTPRO AS ID,
+            G.COD_DIGVER AS DV,
+            G.COD_TPROFE AS MEDI,
+            P.PA_ID_PROCARCH AS PA_ID_PROCARCH,
+            CASE
+                WHEN P.PA_ID_PROCARCH = '31' THEN 'PABELLÓN'
+                WHEN P.PA_ID_PROCARCH = '63' THEN 'RCE ESPECIALIDADES'
+                WHEN P.PA_ID_PROCARCH = '65' THEN 'MODULO ANATOMIA'
+                ELSE 'NO INFORMADO'
+            END AS TXT_PROCEDENCIA,
+            P.ID_SERDEP AS ID_SERVICIO,
+            (SELECT S.NOM_SERVIC
+             FROM ADMIN.GG_TSERVICIOXEMP T,
+                  ADMIN.GG_TSERVICIO S
+             WHERE T.ID_SERDEP = P.ID_SERDEP
+               AND T.COD_EMPRESA = P.COD_EMPRESA
+               AND S.ID_SERDEP = T.ID_SERDEP LIMIT 1) AS NOMBRE_SERVICIO,
+            P.ID_SOLICITUD_HISTO AS ID_SOLICITUD,
+            UPPER(P.TXT_DIAGNOSTICO) AS TXT_DIAGNOSTICO,
+            DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i') AS FEC_EMISION,
+            DATE_FORMAT(P.FEC_USRCREA, '%d-%m-%Y %H:%i') AS FECHA_SOLICITUD,
+            DATE_FORMAT(P.DATE_INICIOREGISTRO, '%d-%m-%Y %H:%i') AS FECHA_TOMA_MUESTRA,
+            DATE_FORMAT(P.DATE_INICIOREGISTRO, '%H:%i') AS INICIOHORAMIN,
+            CASE P.IND_TIPO_BIOPSIA
+                WHEN '1' THEN 'SI'
+                WHEN '2' THEN 'CONTEMPORANEA'
+                WHEN '3' THEN 'DIFERIDA'
+                WHEN '4' THEN 'BIOPSIA + CITOLOGÍA'
+                WHEN '6' THEN 'CITOLOGÍA PAP'
+                WHEN '5' THEN 'SOLO CITOLOGÍA'
+                ELSE 'NO INFORMADO'
+            END AS TIPO_DE_BIOPSIA,
+            P.IND_TIPO_BIOPSIA AS IND_TIPO_BIOPSIA,
+            CASE P.IND_ESTADO
+                WHEN '1' THEN 'NUEVA SOLICITUD'
+                WHEN '2' THEN 'ESTADO 1'
+                WHEN '3' THEN 'ESTADO 2'
+            END AS TXT_ESTADO,
+            P.DES_SITIOEXT,
+            P.DES_UBICACION,
+            P.DES_TAMANNO,
+            CASE P.ID_TIPO_LESION
+                WHEN '1' THEN 'LIQUIDO'
+                WHEN '2' THEN 'ORGANO'
+                WHEN '3' THEN 'TEJIDO'
+                ELSE 'NO INFORMADO'
+            END AS TXT_TIPOSESION,
+            CASE P.ID_ASPECTO
+                WHEN '1' THEN 'INFLAMATORIA'
+                WHEN '2' THEN 'BENIGNA'
+                WHEN '3' THEN 'NEOPLASICA'
+                ELSE 'NO INFORMADO'
+            END AS TXT_ASPECTO,
+            CASE P.ID_ANT_PREVIOS
+                WHEN '1' THEN 'NO'
+                WHEN '2' THEN 'BIOPSIA'
+                WHEN '3' THEN 'CITOLOGIA'
+                ELSE 'NO INFORMADO'
+            END AS TXT_ANT_PREVIOS,
+            P.ID_ANT_PREVIOS,
+            P.NUM_ANTECEDENTES,
+            P.DES_BIPSIA,
+            P.DES_CITOLOGIA,
+            P.DES_OBSERVACIONES,
+            P.NUM_FICHAE,
+            P.COD_USRCREA,
+            P.FEC_USRCREA,
+            P.COD_EMPRESA,
+            P.DES_SITIOEXT,
+            P.DES_UBICACION,
+            P.DES_TAMANNO,
+            P.ID_TIPO_LESION,
+            P.ID_ASPECTO,
+            P.ID_ANT_PREVIOS,
+            P.NUM_ANTECEDENTES,
+            P.DES_BIPSIA,
+            P.DES_CITOLOGIA,
+            P.DES_OBSERVACIONES,
+            P.IND_ESTADO,
+            P.FEC_REVISION,
+            P.ID_TABLA,
+            P.DES_TIPOMUESTRA,
+            P.NUM_SUBNUMERACION,
+            P.COD_USRCREA_TO_MUE,
+            P.FEC_USRCREA_TO_MUE,
+            P.COD_USRCREA_ENV,
+            P.FEC_USRCREA_ENV,
+            P.COD_USRCREA_RECEP,
+            P.FEC_USRCREA_RECEP,
+            P.COD_EMPRESA_RECEP,
+            P.COD_USRCREA_INFORMADA,
+            P.FEC_USRCREA_INFORMADA,
+            P.COD_EMPRESA_INFORMADA,
+            P.ID_ARCHIVO_SUBIDO,
+            P.COD_USRCREA_RECH,
+            P.FEC_USRCREA_RECH,
+            P.COD_EMPRESA_RECH,
+            P.TIPO_RECHAZO,
+            P.OBS_RECHAZO,
+            P.ID_HISTO_ESTADO,
+            CASE P.ID_HISTO_ESTADO
+                WHEN '1' THEN 'NUEVA SOLICITUD'
+                WHEN '2' THEN 'CUSTODIA'
+                WHEN '3' THEN 'TRASPORTE'
+                WHEN '4' THEN 'RECEPCIONADA'
+                WHEN '5' THEN 'RECHAZADA'
+                ELSE 'NO INFORMADA'
+            END AS TXT_HISTO_ESTADO,
+            P.AD_ID_ADMISION,
+            P.ID_SERDEP,
+            P.IND_TIPO_BIOPSIA,
+            P.IND_TEMPLATE,
+            P.DATE_INICIOREGISTRO,
+            P.COD_RUTPRO,
+            CASE P.ID_HISTO_ESTADO
+                WHEN '1' THEN 'NUEVA SOLICITUD'
+                WHEN '2' THEN 'CUSTODIA'
+                WHEN '3' THEN 'TRASPORTE'
+                WHEN '4' THEN 'RECEPCIONADA'
+                WHEN '5' THEN 'RECHAZADA'
+                ELSE 'NO INFORMADO'
+            END AS TXT_HISTO_ESTADO,
+            P.IND_ESTADO_MUESTRAS AS IND_ESTADO_MUESTRAS,
+            P.ID_NUM_CARGA,
+            P.ID_UID,
+            P.LAST_USR_AUDITA,
+            DATE_FORMAT(P.LAST_DATE_AUDITA, '%d-%m-%Y %H:%i') AS LAST_DATE_AUDITA,
+            P.TXT_NAMEAUDITA
+        FROM 
+            ADMIN.GG_TPROFESIONAL A,
+            ADMIN.GG_TGPACTE L,
+            ADMIN.GG_TPROFESIONAL G,
+            ADMIN.PB_SOLICITUD_HISTO P
+        WHERE
+            P.DATE_INICIOREGISTRO BETWEEN ? AND ?
+            AND A.COD_RUTPRO = P.COD_RUTPRO
+            AND P.NUM_FICHAE = L.NUM_FICHAE
+            AND P.COD_RUTPRO = G.COD_RUTPRO
+            AND P.IND_ESTADO IN (1)
+        ORDER BY P.DATE_INICIOREGISTRO";
+        
+        $query = $this->db->query($sql, array($cod_empresa, $fecha_inicio, $fecha_final));
+    
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return array();
+        }
+    }
+    
+
+
 
     public function load_info_ap($data_controller){
         $this->db->trans_start();
@@ -457,9 +666,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         );
     }
     
-    #######
-    #update
-    #######
+   
     public function carga_lista_rce_externo_ap($data_controller) {
         $this->db->trans_start();
         $param          =   array(
@@ -571,7 +778,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         ];
     }
 
-    
     #llamada de externo 
     public function html_externo_rce($data){
         $html                   =   '';

@@ -1,6 +1,5 @@
 $(document).ready(function(){
     var todayDate           =   new Date().getDate();
-    
     $("#date_tabla").datetimepicker({
         format              :   'DD-MM-YYYY',
         //minDate           :   new Date(new Date().setDate((todayDate)-(30))),
@@ -36,11 +35,6 @@ function changeviwes_punto_entrega(_this){
 }
 
 function consulta_(value){
-    /*
-    console.log("-----------------------------------");
-    console.log("value      ->",value,"             ");
-    console.log("-----------------------------------");
-    */
     $.ajax({ 
         type		:   "POST",
         url		    :   "ssan_spab_gestionlistaquirurgica/consulta_hoja_faph",

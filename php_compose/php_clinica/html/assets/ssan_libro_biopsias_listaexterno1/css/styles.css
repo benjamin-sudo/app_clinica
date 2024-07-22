@@ -240,9 +240,6 @@
     justify-items                       :   stretch;
 }
 
-
-
-
 .grid_main_titulo_op                    {
     text-align                          :   -webkit-right;
     margin-right                        :   10px;
@@ -573,4 +570,3 @@
     margin-left                 :   10px;
     margin-right                :   13px;
 }
-
