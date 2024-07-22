@@ -5,6 +5,7 @@
 </div>
 
 <hr style="margin:0px 0px 0px 0px">
+
 <div class="css_rotulado_externo">
     <div class="css_rotulado_externo1"> 
         <!-- data-width="370px" -->
@@ -42,18 +43,6 @@
     </div>
     <div class="css_rotulado_externo3 _CENTER">
         <input type="hidden" class="form-control input-sm" id="get_etiqueta" name="get_etiqueta" value="">
-        <!--
-        <b style="color:#888888;">C&Oacute;DIGO DE BARRAS</b>
-        <div id="date_tabla2" class="input-group center-block" style="width:200px;">
-        <span class="input-group-addon"><span class="fa fa-barcode" aria-hidden="true"></span></span>
-        <input type="text" class="form-control input-sm" id="get_etiqueta" name="get_etiqueta" value="">
-        <span class="input-group-addon">
-            <a href="javascript:busqueda_etiquera(0,'')" style="opacity:0.5;color:#000;">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </a>
-        </span>
-        </div>
-        -->
     </div>
     <div class="css_rotulado_externo4" style="text-align:inherit;"> 
         <b style="color:#888888;">OPCIONES</b><br>

@@ -18,6 +18,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $pto_entrega = 0;  #listado de origen puntos de entrega descrita en la solicitud de anatomia - (DEFAULT 0 - ALL) 
         $ind_opcion = 0;  #0-MASTER | 1-PB_PROFESIONALXROTULO
 
+        
         $return_data = $this->Ssan_libro_biopsias_usuarioext_model->obtener_resultados_lista([
             "data_inicio" => date("d-m-Y"),
             "data_final" => date("d-m-Y"),
@@ -30,22 +31,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             "num_fase" =>  1,
             "ind_template" =>  "ssan_libro_biopsias_listaexterno1",
         ]);
-
-        /*
-        $return_data = $this->Ssan_libro_biopsias_usuarioext_model->carga_lista_rce_externo_ap(array(
-            "data_inicio" => date("d-m-Y"),
-            "data_final" => date("d-m-Y"),
-            "usr_session" => $session[0],
-            "ind_opcion" => $ind_opcion,
-            "ind_first" => 1,
-            "origen_sol" => $origen_sol,
-            "pto_entrega" => $pto_entrega,
-            "COD_EMPRESA" => $empresa,
-            "num_fase" =>  1,
-            "ind_template" =>  "ssan_libro_biopsias_listaexterno1",
-        ));
-        */
-
 
         #ETIQUETA ZEBRA BROWSER PRINT
         #$this->load->js("assets/ssan_libro_biopsias_listagespab/js/BrowserPrint-1.0.4.min.js");
