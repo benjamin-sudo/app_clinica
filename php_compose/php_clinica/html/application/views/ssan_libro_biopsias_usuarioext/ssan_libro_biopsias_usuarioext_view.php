@@ -93,6 +93,10 @@
     </div>
 </div>    
 
+<?php
+    #var_dump($RESULT);
+?>
+
 <section>
     
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
