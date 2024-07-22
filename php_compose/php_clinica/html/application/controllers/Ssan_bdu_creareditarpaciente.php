@@ -1229,7 +1229,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>"-------------------------------------");
             //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>$codEmpresa);
             //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>"-------------------------------------");
-            $script         =    '<script type="text/javascript">jAlert(" - SU SESI&Oacute;N A EXPIRADO", "Listado de Errores - e-EISSAN", function(){';
+            $script         =    '<script type="text/javascript">jAlert(" - SU SESI&Oacute;N A EXPIRADO", "Listado de Errores - e-Clinica libre", function(){';
             if ($this->session->userdata("SISTYPO") != 1) {
                 //$script	    .=		'window.location = "../../inicio"';
             }

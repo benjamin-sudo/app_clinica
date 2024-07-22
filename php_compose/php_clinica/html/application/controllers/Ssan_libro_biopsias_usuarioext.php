@@ -6,9 +6,9 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->library('pdf');
-        #$this->load->model("ssan_spab_gestionlistaquirurgica_model");
-        #$this->load->model("Ssan_hdial_ingresoegresopaciente_model");
+        $this->load->model("Ssan_hdial_ingresoegresopaciente_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
+        #$this->load->model("ssan_spab_gestionlistaquirurgica_model");
     }
     
     public function index(){
@@ -64,22 +64,22 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     #elimina el usuario
     public function desabilita_solicitud_simple_ext(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                            =   $this->session->userdata("COD_ESTAB");
-        $session                            =   explode("-",$this->session->userdata("USERNAME"));
-        $idanatomia                         =   $this->input->post('idanatomia');
-        $contrasena                         =   $this->input->post('contrasena');
-        $status                             =   true;
-        $aData                              =   '';
-        $valida                             =   $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $session = explode("-",$this->session->userdata("USERNAME"));
+        $idanatomia = $this->input->post('idanatomia');
+        $contrasena = $this->input->post('contrasena');
+        $status = true;
+        $aData = '';
+        $valida = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($contrasena);
         if(count($valida)>0){
-            $aData                          =   $this->Ssan_libro_biopsias_usuarioext_model->get_elimina_solicitud_anatomia_ext($empresa,$session,$idanatomia,$valida);
+            $aData = $this->Ssan_libro_biopsias_usuarioext_model->get_elimina_solicitud_anatomia_ext($empresa,$session,$idanatomia,$valida);
         } else {
-            $status                         =   false;
+            $status = false;
         }
         $this->output->set_output(json_encode(array(
-            'STATUS_OUT'                    =>  $aData,
-            'STATUS_PASS'                   =>  $status,
-            'valida'                        =>  $valida,
+            'STATUS_OUT' =>  $aData,
+            'STATUS_PASS' =>  $status,
+            'valida' =>  $valida,
         )));
     }
 
@@ -206,25 +206,29 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
 
     public function get_cambio_fecha(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $txt_error                      =   '';
-        $id                             =   $this->input->post('id'); 
-        $pass                           =   $this->input->post('pass'); 
-        $fecha                          =   $this->input->post('fecha'); 
-        $return_data                    =   $this->Ssan_libro_biopsias_usuarioext_model->get_cambio_fecha(array(
-            'cod_empresa'               =>  $this->session->userdata("COD_ESTAB"),
-            'id'                        =>  $id,
-            'pass'                      =>  $pass,
-            'fecha'                     =>  $fecha,
-        ));
-        if (count($return_data['data_bd'][':C_STATUS'])>0){
-            $status                     =   false;
-            $txt_error                  =   $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
+        $status = true;
+        $txt_error = '';
+        $return_data = [];
+        $id = $this->input->post('id'); 
+        $pass = $this->input->post('pass'); 
+        $fecha = $this->input->post('fecha'); 
+        $valida = $this->Ssan_hdial_ingresoegresopaciente_model->validaClave($pass);
+        if (count($valida)>0){
+            $return_data = $this->Ssan_libro_biopsias_usuarioext_model->get_cambio_fecha2(array(
+                'cod_empresa' =>  $this->session->userdata("COD_ESTAB"),
+                'id' =>  $id,
+                'valida' =>  $valida,
+                'fecha' =>  $fecha,
+            ));
+        } else {
+            $status = false;
+            $txt_error = 'Error en la firma simple';
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'return'                    =>  $return_data,
-            'txt_error'                 =>  $txt_error,
+            'valida' => $valida,
+            'status' =>  $status,
+            'return' =>  $return_data,
+            'txt_error' =>  $txt_error,
         )));
     }
 

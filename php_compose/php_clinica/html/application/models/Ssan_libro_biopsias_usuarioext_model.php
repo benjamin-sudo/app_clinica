@@ -2464,6 +2464,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     WHEN '100' THEN 'H.MAURICIO HEYERMANN T.ANGOL'
                     WHEN '106' THEN 'SAN JOSE DE VICTORIA'
                     WHEN '029' THEN 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                    WHEN '800' THEN 'CLINICA ANATOMIA'
                     WHEN '1000' THEN 'HOSPITAL MILITAR'
                     ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
                 END AS TXT_HOSPITAL_ETI,
@@ -3438,6 +3439,24 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         );
     }
 
+    public function get_cambio_fecha2($aData) {
+        $this->db->trans_start();
+        $empresa = $aData['empresa'];
+        $V_ID = $aData['id']; 
+        $V_DATE_INICIOREGISTRO = $aData['fecha']; 
+        $valida = $aData['valida']; 
+        $current_date = date('Y-m-d H:i:s');
+        $this->db->set('DATE_INICIOREGISTRO', "STR_TO_DATE('$V_DATE_INICIOREGISTRO', '%d-%m-%Y %H:%i')", false);
+        $this->db->set('FEC_AUDITA', $current_date);
+        // $this->db->set('ID_UID_AUDITA', $valida[0]['ID_UID']); // Descomentarlo si es necesario
+        $this->db->where('ID_SOLICITUD_HISTO', $V_ID);
+        $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO');
+        $this->db->trans_complete();
+        return array(
+            'status' => $this->db->trans_status(),
+        );
+    }
+
     public function record_newsubpunto_tomamuestra($aData){
         $this->db->trans_start();
         $id_unico = $this->db->sequence($this->own,'SEQ_INFOROTULADO_SUB');
@@ -3511,29 +3530,27 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         );
     }
 
-    public function get_elimina_solicitud_anatomia_ext($empresa,$session,$idanatomia,$valida){
+    public function get_elimina_solicitud_anatomia_ext($empresa, $session, $idanatomia, $valida) {
         $this->db->trans_start();
-        $out_borreano                   =   true;
-        $txt_out                        =   '';
-        #FORM MAIN
-        $this->db->where('ID_SOLICITUD_HISTO',$idanatomia); 
-        $this->db->update($this->GESPAB.'.PB_SOLICITUD_HISTO',array(
-            "IND_ESTADO"                =>  0,
-            "ID_UID_CANCELA"            =>  $valida->ID_UID,
-            "FEC_CANCELA"               =>  "SYSDATE",
-            "LAST_USR_AUDITA"           =>  $session[0],
-            "LAST_DATE_AUDITA"          =>  "SYSDATE",
+        $out_borreano = true;
+        $txt_out = '';
+        $current_date = date('Y-m-d H:i:s');
+        $this->db->where('ID_SOLICITUD_HISTO', $idanatomia); 
+        $this->db->update($this->GESPAB . '.PB_SOLICITUD_HISTO', array(
+            "IND_ESTADO" => 0,
+            "ID_UID_CANCELA" => $valida->ID_UID,
+            "FEC_CANCELA" => $current_date,
+            "LAST_USR_AUDITA" => $session[0],
+            "LAST_DATE_AUDITA" => $current_date,
         ));
-        #FOR MUESTRAS
-        $this->db->where('ID_SOLICITUD_HISTO',$idanatomia); 
-        $this->db->update($this->GESPAB.'.PB_HISTO_NMUESTRAS',array("IND_ESTADO"=>0));
+        $this->db->where('ID_SOLICITUD_HISTO', $idanatomia); 
+        $this->db->update($this->GESPAB . '.PB_HISTO_NMUESTRAS', array("IND_ESTADO" => 0));
         $this->db->trans_complete();
         return array(
-            'STATUS'                    =>  $out_borreano,
-            'ID_ANATOMIA'               =>  $empresa,
-            'TXT_OUT'                   =>  $txt_out,
+            'STATUS'     => $out_borreano,
+            'ID_ANATOMIA'=> $empresa,
+            'TXT_OUT'    => $txt_out,
         );
     }
-
 
 }

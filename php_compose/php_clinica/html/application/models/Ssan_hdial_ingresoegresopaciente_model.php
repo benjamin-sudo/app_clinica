@@ -5,12 +5,12 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
 
     var $tableSpace = "ADMIN";
-    var $own        = "ADMIN";
-    var $ownGu      = "GUADMIN";
+    var $own = "ADMIN";
+    var $ownGu = "GUADMIN";
 
     public function __construct() {
         parent::__construct();
-        $this->db = $this->load->database('oracle_conteiner',true);
+        $this->db = $this->load->database('session',true);
         $this->load->model("sql_class/sqlclass_archivo");
     }
 
@@ -451,7 +451,6 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
     }
 
     public function validaClave($clave){
-        $this->dbSession = $this->load->database('session', true); 
         $sql = "SELECT
                     ID_UID,
                     USERNAME,
@@ -464,11 +463,8 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
                     ADMIN.FE_USERS
                 WHERE 
                     TX_INTRANETSSAN_CLAVEUNICA = ? AND DISABLE = 0";
-        $query = $this->dbSession->query($sql,array($clave));
+        $query = $this->db->query($sql,array($clave));
         return $query->result_array();
     }
-
-
-
 
 }
