@@ -1,7 +1,7 @@
 SET TIME_ZONE = '-04:00';
 ALTER DATABASE ADMIN CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
 SET NAMES 'utf8mb4' COLLATE 'utf8mb4_spanish_ci';
-SET collation_connection  = 'utf8mb4_spanish_ci';
+SET collation_connection = 'utf8mb4_spanish_ci';
 
 CREATE TABLE ADMIN.FE_USERS (
   ID_UID                          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
