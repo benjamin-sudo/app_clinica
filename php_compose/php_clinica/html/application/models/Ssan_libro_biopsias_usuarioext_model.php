@@ -2227,298 +2227,217 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     }
     
     #USUARIO EXTERNO + RCE
-    public function MODEL_RECORD_ANATOMIA_PATOLOGICA_EXT($session,$accesdata){
+    public function MODEL_RECORD_ANATOMIA_PATOLOGICA_EXT($session, $accesdata) {
         $this->db->trans_start();
-        $PLZ_ETIQUETA_MEDIANA               =   [];
-        $DATA_TEMPLATE                      =   $accesdata["DATA_TEMPLATE"][0]["DATA"];
-        $ID_GESPAB                          =   $DATA_TEMPLATE["ID_GESPAB"];
-        $numfichae                          =   $DATA_TEMPLATE["TEMPLATE_NUMFICHAE"];
-        //$TEMPLATE_RUTPAC                  =   $DATA_TEMPLATE["TEMPLATE_RUTPAC"]; ;
-        //$TEMPLATE_ID_PROFESIONAL          =   $DATA_TEMPLATE["TEMPLATE_ID_PROFESIONAL"];
-        //$TEMPLATE_CALL_FROM               =   $DATA_TEMPLATE["TEMPLATE_CALL_FROM"];
-        $empresa                            =   $DATA_TEMPLATE["TEMPLATE_EMPRESA"]===''?$this->session->userdata("COD_ESTAB"):$DATA_TEMPLATE["TEMPLATE_EMPRESA"];  
-        $TEMPLATE_RUT_PROFESIONAL           =   $DATA_TEMPLATE["TEMPLATE_RUT_PROFESIONAL"];
-        $TEMPLATE_IND_TIPO_BIOPSIA          =   $DATA_TEMPLATE["TEMPLATE_IND_TIPO_BIOPSIA"];
-        $TEMPLATE_IND_ESPECIALIDAD          =   $DATA_TEMPLATE["TEMPLATE_IND_ESPECIALIDAD"];
-        $TEMPLATE_PA_ID_PROCARCH            =   $DATA_TEMPLATE["TEMPLATE_PA_ID_PROCARCH"];
-        $TEMPLATE_AD_ID_ADMISION            =   $DATA_TEMPLATE["TEMPLATE_AD_ID_ADMISION"];
-        $TXT_DIAGNOSTICO                    =   $DATA_TEMPLATE["TXT_DIAGNOSTICO"];
-        $TEMPLATE_PLANTILLA                 =   $DATA_TEMPLATE["TEMPLATE_PLANTILLA"];
-        $V_BOOLEANO_CASSETTE                =   $DATA_TEMPLATE["TEMPLATE_USODECASSETTE"];
-        $FORM_POST                          =   $DATA_TEMPLATE["TEMPLATE_INFOPOST"]; 
-        $TEMPLATE_IND_ROTULADO              =   $DATA_TEMPLATE["TEMPLATE_IND_ROTULADO"];
-
-        $TEMPLATE_IND_ROTULADO_SUB          =   $DATA_TEMPLATE["TEMPLATE_IND_ROTULADO_SUB"];
-        
-
-        $DATE_SOLICITUD                     =   $DATA_TEMPLATE["TEMPLATE_DATE_DMYHM"];   
-        $TEMPLATE_DATE_SOLICITUD            =   $DATA_TEMPLATE["TEMPLATE_DATE_SOLICITUD"];
-        $TEMPLATE_HRS_SOLICITUD             =   $DATA_TEMPLATE["TEMPLATE_HRS_SOLICITUD"];
-        
-        $template_ind_derivacion            =   $DATA_TEMPLATE["TEMPLATE_IND_DERIVACION"];
-        $template_ind_sic                   =   $DATA_TEMPLATE["TEMPLATE_IND_ID_SIC"];
-        
-        
-        #GESTION DE HORA
-        /*
-        if ($TEMPLATE_PA_ID_PROCARCH        == '63'){
-            $arr_citacion                   =   $this->db->query("SELECT TO_CHAR(CI_FECCITACION,'DD-MM-YYYY HH24:MI') AS FEC_CITA FROM ADMIN.AE_TCITACION WHERE CI_ID_CITACION = ".$TEMPLATE_AD_ID_ADMISION);
-            if(count($arr_citacion)>0){
-                $DATE_SOLICITUD             =   $arr_citacion[0]["FEC_CITA"];
-            } else {
-                $DATE_SOLICITUD             =   date("d-m-Y H:i");
-            }
-        }
-        */
-        
-        #DESDE FUERA CON LA HORA QUE SE REGISTRO
-        if ($TEMPLATE_PA_ID_PROCARCH        == '65'){
-            $DATE_SOLICITUD                 =   date("d-m-Y H:i");
-        } else {
-            $DATE_SOLICITUD                 =   date("d-m-Y H:i");
-        }
-        
-        /*
-        $AD_ID_ADMISION                     =   empty($DATA_TEMPLATE["AD_ID_ADMISION"])?'':$DATA_TEMPLATE["AD_ID_ADMISION"];
-        $IND_TIPO_BIOPSIA                   =   $DATA_TEMPLATE["IND_TIPO_BIOPSIA"];
-        $DATE_SOLICITUD                     =   $DATA_TEMPLATE["DATE_SOLICITUD"];
-        $ID_SERDEP                          =   $DATA_TEMPLATE["ID_SERDEP"];
-        $empresa                            =   $DATA_TEMPLATE["COD_EMPRESA"];
-        */
-        
-        foreach($accesdata as $infObject => $Object){
-            if($infObject == 'examenHispatologico'){
-                //if(count($hispatologico)>0){
-                    $dataSolicitud = array(
-                     #'ID_SOLICITUD_HISTO'          =>  $ID_BIOPSIA,
-                     #'ID_TABLA'                    =>  $id,
-                        'NUM_FICHAE'                =>  $numfichae,
-                        'COD_USRCREA'               =>  $session,
-                        'FEC_USRCREA'               =>  'SYSDATE',
-                        'COD_EMPRESA'               =>  $empresa,
-                        'COD_RUTPRO'                =>  $TEMPLATE_RUT_PROFESIONAL,
-                        'IND_ESTADO'                =>  1,//SOLICITUD VALIDA
-                        'ID_HISTO_ESTADO'           =>  1,//SOLICITUD DE ENTRADA
-                        //'DATE_INICIOREGISTRO'     =>  "TO_DATE('".$TEMPLATE_DATE_SOLICITUD.' '.$TEMPLATE_HRS_SOLICITUD."','DD-MM-YYYY hh24:mi')",
-                        'DATE_INICIOREGISTRO'       =>  "TO_DATE('".$DATE_SOLICITUD."','DD-MM-YYYY hh24:mi')",
-                        'IND_TEMPLATE'              =>  1,
-                        'IND_TIPO_BIOPSIA'          =>  $TEMPLATE_IND_TIPO_BIOPSIA,
-                        'PA_ID_PROCARCH'            =>  $TEMPLATE_PA_ID_PROCARCH,
-                        'ID_SERDEP'                 =>  $TEMPLATE_IND_ESPECIALIDAD,
-                        'AD_ID_ADMISION'            =>  $TEMPLATE_AD_ID_ADMISION,
-                        'TXT_DIAGNOSTICO'           =>  $TXT_DIAGNOSTICO,
-                        'NUM_PLANTILLA'             =>  $TEMPLATE_PLANTILLA,
-                        'IND_USOCASSETTE'           =>  $V_BOOLEANO_CASSETTE,
-                        'IND_INFOPOST'              =>  $FORM_POST,
-                        'ID_ROTULADO'               =>  $TEMPLATE_IND_ROTULADO,
-                        'ID_ROTULADO_SUB'           =>  $TEMPLATE_IND_ROTULADO_SUB
-                    );
-                    
-                    
-                    #RESUELVE INTERCONSULTA
-                    if ($template_ind_derivacion    ==  1){
-                        $dataSolicitud              =   array_merge($dataSolicitud,array(
-                            "IND_DERIVACION_IC"     =>  1,
-                            "ID_SIC"                =>  $template_ind_sic,
-                        )); 
-                        #CAMBIAR ESTADO DE LA INTERCONSULTAS
-                        
-                        
-                        
-                        
-                    }
-                    if($ID_GESPAB!=''){
-                        $dataSolicitud                                          =   array_merge($dataSolicitud,array("ID_TABLA"=>$ID_GESPAB)); 
-                    }
-                    //**************************************************************************************************************************************************
-                    #IDENTIFICAR QUE TEMPLATE ES                               :   IND_TEMPLATE                :   0 Y 1 // DEFAULT 0 //
-                    #TIPO DE MUESTRA DE BIOPSIA                                :   IND_TIPO_BIOPSIA            :   
-                    #FECHA DE SOLICITUD                                        :   DATE_INICIOREGISTRO         :   TABLA A PARTE CON HISTORIAL DE CADA MOVIMIENTO Y PROFESIONAL A CARGO.
-                    #********** LOS FK ********************************************************************************************************************************
-                    #COD_RUTPRO (GG_TPROFESIONAL)
-                    #ID_PROFESIONAL (GG_TPROFESIONAL)                          :   ID_PROFESIONAL              :   
-                    #CODIGO SISTEMA (SS_TSISTEMAS)                             :   PA_ID_PROCARCH              :   (SIDRA ANATOMIA PATOLOGICA : 65) (PABELLON : 31)
-                    #SERVICIO DE LA SOLICITUD (GG_TSERVICIO)                   :   ID_SERDEP                   :   DEFAULT PABELLON
-                    #REGISTRO ELECTRONICO (SO_TECITAS)                         :   NUM_CORREL + COD_EMPRESA    :   
-                    //**************************************************************************************************************************************************
-                    if(isset($Object[0]['listadoHISPATO'])){
-                        $hispatologico                                               =   $Object[0]['listadoHISPATO'];
-                        foreach ($hispatologico as $i => $datos){
-                            if ($datos['name']=='slc_ind_cancer')                    {   $dataSolicitud    =     array_merge($dataSolicitud,array("IND_NOTIF_CANCER"      =>  quotes_to_entities($datos['value']))); }
-                            if ($datos['name']=='bio_extraInput')                    {   $dataSolicitud    =     array_merge($dataSolicitud,array("DES_SITIOEXT"          =>  quotes_to_entities($datos['value']))); }
-                            if ($datos['name']=='bio_ubicaInput')                    {   $dataSolicitud    =     array_merge($dataSolicitud,array("DES_UBICACION"         =>  quotes_to_entities($datos['value']))); }
-                            if ($datos['name']=='bio_tamannoInput')                  {   $dataSolicitud    =     array_merge($dataSolicitud,array("DES_TAMANNO"           =>  quotes_to_entities($datos['value']))); }
-                            //P.ID_TIPO_LESION,ID_ASPECTO,P.ID_ANT_PREVIOS,P.NUM_ANTECEDENTES,
-                            if ($datos['name']=='bio_lesionSelect')                  {   $dataSolicitud    =     array_merge($dataSolicitud,array("ID_TIPO_LESION"        =>  $datos['value'])); }
-                            if ($datos['name']=='bio_aspectoSelect')                 {   $dataSolicitud    =     array_merge($dataSolicitud,array("ID_ASPECTO"            =>  $datos['value'])); }
-                            // falta agregar al formulario
-                            if ($datos['name']=='bio_ant_previosSelect')             {   $dataSolicitud    =     array_merge($dataSolicitud,array("ID_ANT_PREVIOS"        =>  $datos['value'])); }
-                            if ($datos['name']=='bio_ant_nMuestasSelect')            {   $dataSolicitud    =     array_merge($dataSolicitud,array("NUM_ANTECEDENTES"      =>  $datos['value'])); }
-                            // fin falta agregar al formulario
-                            if ($datos['name']=='bio_des_BiopsiaInput')              {   $dataSolicitud    =     array_merge($dataSolicitud,array("DES_BIPSIA"            =>  quotes_to_entities($datos['value']))); }
-                            if ($datos['name']=='bio_des_CitologiaInput')            {   $dataSolicitud    =     array_merge($dataSolicitud,array("DES_CITOLOGIA"         =>  quotes_to_entities($datos['value']))); }
-                            if ($datos['name']=='bio_observTextarea')                {   $dataSolicitud    =     array_merge($dataSolicitud,array("DES_OBSERVACIONES"     =>  quotes_to_entities($datos['value']))); }
-                            if ($datos['name']=='bio_des_tipodemuestra')             {   $dataSolicitud    =     array_merge($dataSolicitud,array("DES_TIPOMUESTRA"       =>  quotes_to_entities($datos['value']))); }
-                            if ($datos['name']=='bio_subnumeracion')                 {   $dataSolicitud    =     array_merge($dataSolicitud,array("NUM_SUBNUMERACION"     =>  $datos['value'])); }
-                            //if ($datos['name']=='fechaHoraFinal')                  {   $fecha_sol        =     "TO_DATE('".$From['value']."', 'DD-MM-YYYY hh24:mi')"; }
-                            //if ($datos['name']=='profesional')                     {   $cod_respo        =     $datos['value']; }
-                       }
-                    }
-                    
-                    //**********************************************************
-                    //SOLO GESPAB
-                    if($TEMPLATE_PA_ID_PROCARCH == '31' || $TEMPLATE_PA_ID_PROCARCH == '36'){
-                        //admision?
-                        $arr_data                                               =   $ID_GESPAB==''?[]:$this->db->query("SELECT AP.ID_SOLICITUD_HISTO FROM PABELLON.PB_SOLICITUD_HISTO AP WHERE AP.ID_TABLA=".$ID_GESPAB." ORDER BY AP.ID_SOLICITUD_HISTO")->result_array();
-                        if(count($arr_data)>0){
-                            $ID_BIOPSIA                                         =   $arr_data[0]["ID_SOLICITUD_HISTO"];
-                            $this->db->where('ID_SOLICITUD_HISTO',$ID_BIOPSIA); 
-                            $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',$dataSolicitud);
-                        } else {
-                            $ID_BIOPSIA                                         =   $this->db->sequence($this->ownPab,'SEQ_SOLICITUD_HISTO');
-                            $dataSolicitud                                      =   array_merge($dataSolicitud,array("ID_SOLICITUD_HISTO"=>$ID_BIOPSIA)); 
-                            $this->db->insert($this->ownPab.'.PB_SOLICITUD_HISTO',$dataSolicitud);  
+        $PLZ_ETIQUETA_MEDIANA = [];
+        $DATA_TEMPLATE = $accesdata["DATA_TEMPLATE"][0]["DATA"];
+        $ID_GESPAB = $DATA_TEMPLATE["ID_GESPAB"];
+        $numfichae = $DATA_TEMPLATE["TEMPLATE_NUMFICHAE"];
+        $empresa = $DATA_TEMPLATE["TEMPLATE_EMPRESA"] === '' ? $this->session->userdata("COD_ESTAB") : $DATA_TEMPLATE["TEMPLATE_EMPRESA"];
+        $TEMPLATE_RUT_PROFESIONAL = $DATA_TEMPLATE["TEMPLATE_RUT_PROFESIONAL"];
+        $TEMPLATE_IND_TIPO_BIOPSIA = $DATA_TEMPLATE["TEMPLATE_IND_TIPO_BIOPSIA"];
+        $TEMPLATE_IND_ESPECIALIDAD = $DATA_TEMPLATE["TEMPLATE_IND_ESPECIALIDAD"];
+        $TEMPLATE_PA_ID_PROCARCH = $DATA_TEMPLATE["TEMPLATE_PA_ID_PROCARCH"];
+        $TEMPLATE_AD_ID_ADMISION = $DATA_TEMPLATE["TEMPLATE_AD_ID_ADMISION"];
+        $TXT_DIAGNOSTICO = $DATA_TEMPLATE["TXT_DIAGNOSTICO"];
+        $TEMPLATE_PLANTILLA = $DATA_TEMPLATE["TEMPLATE_PLANTILLA"];
+        $V_BOOLEANO_CASSETTE = $DATA_TEMPLATE["TEMPLATE_USODECASSETTE"];
+        $FORM_POST = $DATA_TEMPLATE["TEMPLATE_INFOPOST"];
+        $TEMPLATE_IND_ROTULADO = $DATA_TEMPLATE["TEMPLATE_IND_ROTULADO"];
+        $TEMPLATE_IND_ROTULADO_SUB = $DATA_TEMPLATE["TEMPLATE_IND_ROTULADO_SUB"];
+        $DATE_SOLICITUD = $DATA_TEMPLATE["TEMPLATE_DATE_DMYHM"];
+        $TEMPLATE_DATE_SOLICITUD = $DATA_TEMPLATE["TEMPLATE_DATE_SOLICITUD"];
+        $TEMPLATE_HRS_SOLICITUD = $DATA_TEMPLATE["TEMPLATE_HRS_SOLICITUD"];
+        $template_ind_derivacion = $DATA_TEMPLATE["TEMPLATE_IND_DERIVACION"];
+        $template_ind_sic = $DATA_TEMPLATE["TEMPLATE_IND_ID_SIC"];
+    
+        // Aseguramos que la fecha se formatee correctamente para MySQL
+        $DATE_SOLICITUD = date("Y-m-d H:i:s");
+    
+        foreach($accesdata as $infObject => $Object) {
+            if($infObject == 'examenHispatologico') {
+                $dataSolicitud = array(
+                    'NUM_FICHAE' => $numfichae,
+                    'COD_USRCREA' => $session,
+                    'FEC_USRCREA' => date('Y-m-d H:i:s'),
+                    'COD_EMPRESA' => $empresa,
+                    'COD_RUTPRO' => $TEMPLATE_RUT_PROFESIONAL,
+                    'IND_ESTADO' => 1,
+                    'ID_HISTO_ESTADO' => 1,
+                    'DATE_INICIOREGISTRO' => $DATE_SOLICITUD,
+                    'IND_TEMPLATE' => 1,
+                    'IND_TIPO_BIOPSIA' => $TEMPLATE_IND_TIPO_BIOPSIA,
+                    'PA_ID_PROCARCH' => $TEMPLATE_PA_ID_PROCARCH,
+                    'ID_SERDEP' => $TEMPLATE_IND_ESPECIALIDAD,
+                    'AD_ID_ADMISION' => $TEMPLATE_AD_ID_ADMISION,
+                    'TXT_DIAGNOSTICO' => $TXT_DIAGNOSTICO,
+                    'NUM_PLANTILLA' => $TEMPLATE_PLANTILLA,
+                    'IND_USOCASSETTE' => $V_BOOLEANO_CASSETTE,
+                    'IND_INFOPOST' => $FORM_POST,
+                    'ID_ROTULADO' => $TEMPLATE_IND_ROTULADO,
+                    'ID_ROTULADO_SUB' => $TEMPLATE_IND_ROTULADO_SUB
+                );
+    
+                if ($template_ind_derivacion == 1) {
+                    $dataSolicitud = array_merge($dataSolicitud, array(
+                        "IND_DERIVACION_IC" => 1,
+                        "ID_SIC" => $template_ind_sic,
+                    ));
+                }
+    
+                if($ID_GESPAB != '') {
+                    $dataSolicitud = array_merge($dataSolicitud, array("ID_TABLA" => $ID_GESPAB));
+                }
+    
+                if(isset($Object[0]['listadoHISPATO'])) {
+                    $hispatologico = $Object[0]['listadoHISPATO'];
+                    foreach ($hispatologico as $i => $datos) {
+                        if ($datos['name'] == 'slc_ind_cancer') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("IND_NOTIF_CANCER" => $datos['value']));
                         }
+                        if ($datos['name'] == 'bio_extraInput') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("DES_SITIOEXT" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_ubicaInput') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("DES_UBICACION" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_tamannoInput') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("DES_TAMANNO" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_lesionSelect') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("ID_TIPO_LESION" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_aspectoSelect') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("ID_ASPECTO" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_ant_previosSelect') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("ID_ANT_PREVIOS" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_ant_nMuestasSelect') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("NUM_ANTECEDENTES" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_des_BiopsiaInput') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("DES_BIPSIA" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_des_CitologiaInput') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("DES_CITOLOGIA" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_observTextarea') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("DES_OBSERVACIONES" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_des_tipodemuestra') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("DES_TIPOMUESTRA" => $datos['value']));
+                        }
+                        if ($datos['name'] == 'bio_subnumeracion') {
+                            $dataSolicitud = array_merge($dataSolicitud, array("NUM_SUBNUMERACION" => $datos['value']));
+                        }
+                    }
+                }
+    
+                if ($TEMPLATE_PA_ID_PROCARCH == '31' || $TEMPLATE_PA_ID_PROCARCH == '36') {
+                    $arr_data = $ID_GESPAB == '' ? [] : $this->db->query("SELECT AP.ID_SOLICITUD_HISTO FROM ADMIN.PB_SOLICITUD_HISTO AP WHERE AP.ID_TABLA=".$ID_GESPAB." ORDER BY AP.ID_SOLICITUD_HISTO")->result_array();
+                    if (count($arr_data) > 0) {
+                        $ID_BIOPSIA = $arr_data[0]["ID_SOLICITUD_HISTO"];
+                        $this->db->where('ID_SOLICITUD_HISTO', $ID_BIOPSIA);
+                        $this->db->update('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
                     } else {
-                        $arr_data                                               =   $TEMPLATE_AD_ID_ADMISION==''?[]:$this->db->query("SELECT AP.ID_SOLICITUD_HISTO FROM PABELLON.PB_SOLICITUD_HISTO AP WHERE AP.AD_ID_ADMISION=".$TEMPLATE_AD_ID_ADMISION." ORDER BY AP.ID_SOLICITUD_HISTO")->result_array();
-                        if(count($arr_data)>0){
-                            $ID_BIOPSIA                                         =   $arr_data[0]["ID_SOLICITUD_HISTO"];
-                            $this->db->where('ID_SOLICITUD_HISTO',$ID_BIOPSIA); 
-                            $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',$dataSolicitud);
-                        } else {
-                            $ID_BIOPSIA                                         =   $this->db->sequence($this->ownPab,'SEQ_SOLICITUD_HISTO');
-                            $dataSolicitud                                      =   array_merge($dataSolicitud,array("ID_SOLICITUD_HISTO"=>$ID_BIOPSIA)); 
-                            $this->db->insert($this->ownPab.'.PB_SOLICITUD_HISTO',$dataSolicitud);  
-                        }
+                        $this->db->insert('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
+                        $ID_BIOPSIA = $this->db->insert_id();
                     }
-                    //**********************************************************
-                    
-                    
-                    //*************MUESTARS A CERO******************************
-                    $this->db->where('ID_SOLICITUD_HISTO',$ID_BIOPSIA); 
-                    $this->db->where_in('IND_TIPOMUESTRA',array('1','2')); 
-                    $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array('IND_ESTADO'=> '0','USR_AUDITA'=> $session,'USR_AUDITA'=>'SYSDATE'));
-                    //*************MUESTARS A CERO******************************
-                    
-                    if(isset($Object[0]['numero_muestas'])){
-                        //************ NUMEROS DE MUESTRAS *********************
-                        /*
-                        $array_MUESTRAS_0                           =   array('IND_ESTADO'=> '0','USR_AUDITA'=> $session,'USR_AUDITA'=>'SYSDATE');
-                        $this->db->where('ID_SOLICITUD_HISTO',$ID_BIOPSIA); 
-                        $this->db->where('IND_TIPOMUESTRA',1); 
-                        $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',$array_MUESTRAS_0);
-                        */
-                        //************ NUMEROS DE MUESTRAS *********************
-                        $numero_muestas                             =   $Object[0]['numero_muestas'];
-                        if(count($numero_muestas)>0){
-                            foreach($numero_muestas as $i => $row){
-                                $ARR_MUESTRA                        =   is_null($row['N_MUESTRA'])?$i+1:$row['N_MUESTRA'];
-                                $NUMERO_MUESTRA                     =   array(
-                                    'N_MUESTRA'                     =>  $ARR_MUESTRA,
-                                    'TXT_MUESTRA'                   =>  substr($row['TXT_MUESTRA'],0,51),
-                                    'IND_ESTADO'                    =>  '1',
-                                    'IND_ETIQUETA'                  =>  $row['IND_ETIQUETA'],
-                                    'NUM_CASSETTE'                  =>  $row['IND_NUMCASSETTE'],
-                                    'IND_TIPOMUESTRA'               =>  1,
-                                );
-                                //***********************************************************************************
-                                //********** $ID_BIOPSIA ************************************************************
-                                //********** $ID_NMUESTA_AP *********************************************************
-                                //********** $row['IND_NUMCASSETTE'] ************************************************
-                                //********** $ID_CASETE = $this->db->sequence($this->ownPab,'SEQ_NUM_AP_CASETE'); ***
-                                //***********************************************************************************
-                                if($V_BOOLEANO_CASSETTE     ==  1){
-                                    $id_casete                      =   $this->db->query("SELECT 
-                                                                                                AP.ID_CASETE AS ID_CASETE
-                                                                                            FROM 
-                                                                                                PABELLON.PB_HISTO_NMUESTRAS AP 
-                                                                                            WHERE 
-                                                                                                AP.NUM_CASSETTE       = ".$row['IND_NUMCASSETTE']." 
-                                                                                            AND 
-                                                                                                AP.ID_SOLICITUD_HISTO = ".$ID_BIOPSIA." 
-                                                                                            AND 
-                                                                                                AP.ID_CASETE IS NOT NULL 
-                                                                                            ORDER BY 
-                                                                                                AP.ID_SOLICITUD_HISTO
-                                                                                        ")->result_array();
-                                    $ID_CASETE                      =   count($id_casete)>0?$id_casete[0]['ID_CASETE']:$this->db->sequence($this->ownPab,'SEQ_NUM_AP_CASETE');
-                                } else {
-                                    $ID_CASETE                      =   0;
-                                }
-                                
-                                if(($row['ID_NMUESTRA']=='')||($row['ID_NMUESTRA']==null)){
-                                    $ID_NMUESTA_AP              =   $this->db->sequence($this->ownPab,'SEQ_HISTO_NUMNUESTRAS');
-                                    $NUMERO_MUESTRA             =   array_merge($NUMERO_MUESTRA,array(
-                                        "ID_NMUESTRA"           =>  $ID_NMUESTA_AP,
-                                        'ID_SOLICITUD_HISTO'    =>  $ID_BIOPSIA,
-                                        'USR_CREA'              =>  $session,
-                                        'DATE_CREA'             =>  'SYSDATE',
-                                        'ID_CASETE'             =>  $ID_CASETE,
-                                    ));
-                                    $this->db->insert($this->ownPab.'.PB_HISTO_NMUESTRAS',$NUMERO_MUESTRA);
-                                } else {
-                                    $NUMERO_MUESTRA             =   array_merge($NUMERO_MUESTRA,array(
-                                        'USR_AUDITA'            =>  $session,
-                                        'DATE_AUDITA'           =>  'SYSDATE',
-                                        'ID_CASETE'             =>  $ID_CASETE,
-                                    )); 
-                                    $this->db->where('ID_NMUESTRA',$row['ID_NMUESTRA']); 
-                                    $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',$NUMERO_MUESTRA);
-                                }
+                } else {
+                    $arr_data = $TEMPLATE_AD_ID_ADMISION == '' ? [] : $this->db->query("SELECT AP.ID_SOLICITUD_HISTO FROM ADMIN.PB_SOLICITUD_HISTO AP WHERE AP.AD_ID_ADMISION=".$TEMPLATE_AD_ID_ADMISION." ORDER BY AP.ID_SOLICITUD_HISTO")->result_array();
+                    if (count($arr_data) > 0) {
+                        $ID_BIOPSIA = $arr_data[0]["ID_SOLICITUD_HISTO"];
+                        $this->db->where('ID_SOLICITUD_HISTO', $ID_BIOPSIA);
+                        $this->db->update('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
+                    } else {
+                        $this->db->insert('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
+                        $ID_BIOPSIA = $this->db->insert_id();
+                    }
+                }
+    
+                $this->db->where('ID_SOLICITUD_HISTO', $ID_BIOPSIA);
+                $this->db->where_in('IND_TIPOMUESTRA', array('1', '2'));
+                $this->db->update('ADMIN.PB_HISTO_NMUESTRAS', array('IND_ESTADO' => '0', 'USR_AUDITA' => $session, 'DATE_AUDITA' => date('Y-m-d H:i:s')));
+    
+                if (isset($Object[0]['numero_muestas'])) {
+                    $numero_muestas = $Object[0]['numero_muestas'];
+                    if (count($numero_muestas) > 0) {
+                        foreach ($numero_muestas as $i => $row) {
+                            $ARR_MUESTRA = is_null($row['N_MUESTRA']) ? $i + 1 : $row['N_MUESTRA'];
+                            $NUMERO_MUESTRA = array(
+                                'N_MUESTRA' => $ARR_MUESTRA,
+                                'TXT_MUESTRA' => substr($row['TXT_MUESTRA'], 0, 51),
+                                'IND_ESTADO' => '1',
+                                'IND_ETIQUETA' => $row['IND_ETIQUETA'],
+                                'NUM_CASSETTE' => $row['IND_NUMCASSETTE'],
+                                'IND_TIPOMUESTRA' => 1,
+                            );
+    
+                            $ID_CASETE = $V_BOOLEANO_CASSETTE == 1 ? $this->db->query("SELECT AP.ID_CASETE AS ID_CASETE FROM ADMIN.PB_HISTO_NMUESTRAS AP WHERE AP.NUM_CASSETTE = ".$row['IND_NUMCASSETTE']." AND AP.ID_SOLICITUD_HISTO = ".$ID_BIOPSIA." AND AP.ID_CASETE IS NOT NULL ORDER BY AP.ID_SOLICITUD_HISTO")->row_array()['ID_CASETE'] : 0;
+    
+                            if (empty($row['ID_NMUESTRA'])) {
+                                $NUMERO_MUESTRA = array_merge($NUMERO_MUESTRA, array(
+                                    'ID_NMUESTRA' => NULL, // Esto permitirá que MySQL auto-incremente el ID
+                                    'ID_SOLICITUD_HISTO' => $ID_BIOPSIA,
+                                    'USR_CREA' => $session,
+                                    'DATE_CREA' => date('Y-m-d H:i:s'),
+                                    'ID_CASETE' => $ID_CASETE,
+                                ));
+                                $this->db->insert('ADMIN.PB_HISTO_NMUESTRAS', $NUMERO_MUESTRA);
+                            } else {
+                                $NUMERO_MUESTRA = array_merge($NUMERO_MUESTRA, array(
+                                    'USR_AUDITA' => $session,
+                                    'DATE_AUDITA' => date('Y-m-d H:i:s'),
+                                    'ID_CASETE' => $ID_CASETE,
+                                ));
+                                $this->db->where('ID_NMUESTRA', $row['ID_NMUESTRA']);
+                                $this->db->update('ADMIN.PB_HISTO_NMUESTRAS', $NUMERO_MUESTRA);
                             }
                         }
                     }
-                    //**********************************************************
-                    if(isset($Object[0]['arr_citologia'])){
-                        //**************** NUMEROS DE MUESTRAS *****************
-                        /*
-                        $array_MUESTRAS_0 = array('IND_ESTADO'=>'0','USR_AUDITA'=> $session,'USR_AUDITA'=>'SYSDATE');
-                        $this->db->where('ID_SOLICITUD_HISTO',$ID_BIOPSIA); 
-                        $this->db->where('IND_TIPOMUESTRA',2); 
-                        $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',$array_MUESTRAS_0);
-                        */
-                        //**************** NUMEROS DE MUESTRAS *****************
-                        $arr_citologia                          =   $Object[0]['arr_citologia'];
-                        if(count($arr_citologia)>0){
-                            foreach ($arr_citologia as $i => $row){
-                                $NUMERO_CITOLGIA                =   array(
-                                    'N_MUESTRA'                 =>  $row['N_MUESTRA'],
-                                    'TXT_MUESTRA'               =>  substr($row['TXT_MUESTRA'], 0, 51),
-                                    'IND_ESTADO'                =>  '1',
-                                    'IND_ETIQUETA'              =>  $row['IND_ETIQUETA'],
-                                    'NUM_ML'                    =>  str_replace('.',',',$row['NUM_ML']),
-                                    'IND_TIPOMUESTRA'           =>  2,
-                                    'ID_SOLICITUD_HISTO'        =>  $ID_BIOPSIA,
-                                );
-                                $ID_NMUESTA_AP                  =   '';
-                                if($row['ID_NMUESTRA']!=null){
-                                    $ID_NMUESTA_AP              =   $row['ID_NMUESTRA'];
-                                    $NUMERO_CITOLGIA            =   array_merge($NUMERO_CITOLGIA,array("USR_AUDITA"=>$session,"DATE_AUDITA"=>'SYSDATE')); 
-                                    $this->db->where('ID_NMUESTRA',$row['ID_NMUESTRA']); 
-                                    $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',$NUMERO_CITOLGIA);
-                                } else {
-                                    $ID_NMUESTA_AP              =   $this->db->sequence($this->ownPab,'SEQ_HISTO_NUMNUESTRAS');
-                                    $NUMERO_CITOLGIA            =   array_merge($NUMERO_CITOLGIA,array("ID_NMUESTRA"    =>  $ID_NMUESTA_AP)); 
-                                    $NUMERO_CITOLGIA            =   array_merge($NUMERO_CITOLGIA,array("USR_CREA"       =>  $session)); 
-                                    $NUMERO_CITOLGIA            =   array_merge($NUMERO_CITOLGIA,array("DATE_CREA"      =>  'SYSDATE')); 
-                                    $this->db->insert($this->ownPab.'.PB_HISTO_NMUESTRAS',$NUMERO_CITOLGIA);
-                                }
+                }
+                if (isset($Object[0]['arr_citologia'])) {
+                    $arr_citologia = $Object[0]['arr_citologia'];
+                    if (count($arr_citologia) > 0) {
+                        foreach ($arr_citologia as $i => $row) {
+                            $NUMERO_CITOLGIA = array(
+                                'N_MUESTRA' => $row['N_MUESTRA'],
+                                'TXT_MUESTRA' => substr($row['TXT_MUESTRA'], 0, 51),
+                                'IND_ESTADO' => '1',
+                                'IND_ETIQUETA' => $row['IND_ETIQUETA'],
+                                'NUM_ML' => str_replace('.', ',', $row['NUM_ML']),
+                                'IND_TIPOMUESTRA' => 2,
+                                'ID_SOLICITUD_HISTO' => $ID_BIOPSIA,
+                            );
+                            if (!empty($row['ID_NMUESTRA'])) {
+                                $NUMERO_CITOLGIA = array_merge($NUMERO_CITOLGIA, array("USR_AUDITA" => $session, "DATE_AUDITA" => date('Y-m-d H:i:s')));
+                                $this->db->where('ID_NMUESTRA', $row['ID_NMUESTRA']);
+                                $this->db->update('ADMIN.PB_HISTO_NMUESTRAS', $NUMERO_CITOLGIA);
+                            } else {
+                                $NUMERO_CITOLGIA = array_merge($NUMERO_CITOLGIA, array(
+                                    'ID_NMUESTRA' => NULL, // Esto permitirá que MySQL auto-incremente el ID
+                                    "USR_CREA" => $session,
+                                    "DATE_CREA" => date('Y-m-d H:i:s')
+                                ));
+                                $this->db->insert('ADMIN.PB_HISTO_NMUESTRAS', $NUMERO_CITOLGIA);
                             }
-                        }  
+                        }
                     }
-                //}
+                }
             }
         }
         $this->db->trans_complete();
         return array(
-            'STATUS'        =>  true,
-            'ID_ANATOMIA'   =>  $ID_BIOPSIA,
-            'GET_PLZ'       =>  $PLZ_ETIQUETA_MEDIANA,
+            'STATUS' => true,
+            'ID_ANATOMIA' => $ID_BIOPSIA,
+            'GET_PLZ' => $PLZ_ETIQUETA_MEDIANA,
         );
     }
     
+    
     public function zpl_nuemero_muestra($ID_NMUESTA_AP){
-        $VAL_ZPL                                =   'HTML ->'.$ID_NMUESTA_AP;
+        $VAL_ZPL = 'HTML ->'.$ID_NMUESTA_AP;
         return $VAL_ZPL;
     }
 

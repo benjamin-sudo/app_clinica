@@ -70,14 +70,13 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
                         NUM_FICHAE  :   NUM_FICHAE,
                         ADMISION    :   ADMISION,
                     },
-        error   : function(errro) { 
-                    console.log(errro);
-                    $("#loadFade").modal('hide');  
-                    jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
-                },
+        error   :    function(errro) { 
+                        console.log(errro);
+                        $("#loadFade").modal('hide');  
+                        jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                    },
         success :   function(aData) { 
                                         console.log("aData , ",aData);
-                                        
                                         $("#loadFade").modal('hide'); 
                                         $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
                                         $("#PA_ID_PROCARCH").val('65');
