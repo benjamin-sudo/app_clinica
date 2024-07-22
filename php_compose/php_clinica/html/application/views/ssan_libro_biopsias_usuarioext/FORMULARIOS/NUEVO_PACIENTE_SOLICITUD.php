@@ -477,7 +477,11 @@ $(document).ready(function () {
                                                     IND_GESPAB          :   0
                                                 },
                         error       :   function(errro) {  
+                            
+                                                            console.log("   -------------------------   ");
                                                             console.log(errro);
+                                                            console.log(errro.responseText);
+
                                                             $('#loadFade').modal('hide'); 
                                                             $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
                                                             $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
@@ -584,10 +588,10 @@ function buscar(OP,LIM_INI){
     $("#resultados_busquedapac,#new_paginacion").hide();
     $("#msj_busqueda").show();
 
-    document.getElementById("BTN_BUSQ_PAC_1").disabled          =   true;
-    document.getElementById("BTN_DELETE_PAC_1").disabled        =   true;
-    document.getElementById("BTN_BUSQ_PAC_2").disabled          =   true;
-    document.getElementById("BTN_DELETE_PAC_2").disabled        =   true;
+    document.getElementById("BTN_BUSQ_PAC_1").disabled = true;
+    document.getElementById("BTN_DELETE_PAC_1").disabled = true;
+    document.getElementById("BTN_BUSQ_PAC_2").disabled = true;
+    document.getElementById("BTN_DELETE_PAC_2").disabled = true;
     
     var tipoEx		    =   $("input[name='tipoEx']:checked").val();
     var tipoPac		    =   $("input[name='tipPac']:checked").val();

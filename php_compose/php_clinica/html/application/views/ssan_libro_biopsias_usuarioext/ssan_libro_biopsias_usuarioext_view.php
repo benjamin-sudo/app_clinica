@@ -93,13 +93,10 @@
     </div>
 </div>    
 
-<?php
-    #var_dump($RESULT);
-?>
 
 <section>
-    
-    <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
+
+<div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -260,5 +257,6 @@
             </div>
         </div>
     </div>
-
 </section>
+
+<input type="hidden"  id="cod_empresa" name="cod_empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>"/>

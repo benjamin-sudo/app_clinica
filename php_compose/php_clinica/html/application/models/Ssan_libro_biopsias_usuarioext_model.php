@@ -15,18 +15,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db = $this->load->database('session',true);
     }
 
-
-    ########################################
-    #### MAIN ANATOMIA PATOLOGICA PRINCIPAL# 
-    #### LISTA POR CLIENTES################# 
-    ########################################
-
     public function CARGA_LISTA_MISSOLICITUDES_ANATOMIA($DATA) {
         $this->db->trans_start();
-    
         $CALL_FASE = isset($DATA['CALL_FASE']) ? $DATA['CALL_FASE'] : -1;
         $LODA_X_SISTEMAS = isset($DATA['LODA_X_SISTEMAS']) ? $DATA['LODA_X_SISTEMAS'] : 0;
-    
         $V_COD_EMPRESA = $this->db->escape($DATA["COD_EMPRESA"]);
         $V_USR_SESSION = $this->db->escape($DATA["USR_SESSION"]);
         $V_LOADXZONA = $this->db->escape($LODA_X_SISTEMAS);
@@ -42,9 +34,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     $result->free();
                 }
             } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
-    
             $this->db->trans_complete();
-    
             if ($this->db->trans_status() === FALSE) {
                 return [
                     'STATUS' => false,
@@ -71,50 +61,72 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         }
     }
 
-    
-    public function data_pre_nuevasoliciud_anatomia($DATA){
-        $this->db->trans_start();
-        $param                      =   array(
-                                            array( 
-                                                'name'      =>  ':V_COD_EMPRESA',
-                                                'value'     =>  $DATA["COD_EMPRESA"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':V_USR_SESSION',
-                                                'value'     =>  $DATA["USR_SESSION"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':C_LISTADOSERVICIOS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':C_LISTADOMEDICOS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':C_ESPECIALIDADES',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                        );
-        $result                             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','GET_INFOPRESOLICITUD',$param);
-        $this->db->trans_complete();
-        $this->db->trans_status();
-        return array(
-            'STATUS'                        =>  true,
-            'C_LISTADOSERVICIOS'            =>  empty($result[':C_LISTADOSERVICIOS'])?null:$result[':C_LISTADOSERVICIOS'],
-            'C_ESPECIALIDADES'              =>  empty($result[':C_ESPECIALIDADES'])?null:$result[':C_ESPECIALIDADES'],
-            'C_LISTADOMEDICOS'              =>  empty($result[':C_LISTADOMEDICOS'])?null:$result[':C_LISTADOMEDICOS'],
+    public function data_pre_nuevasoliciud_anatomia($DATA) {
+        $result = array(
+            'STATUS' => true,
+            'C_ESPECIALIDADES' => $this->get_especialidades($DATA['COD_EMPRESA'], $DATA['USR_SESSION']),
+            'C_LISTADOSERVICIOS' => $this->get_listado_servicios($DATA['COD_EMPRESA']),
+            'C_LISTADOMEDICOS' => $this->get_listado_medicos($DATA['COD_EMPRESA']),
         );
+        return $result;
+    }
+    
+    public function get_especialidades($cod_empresa, $usr_session) {
+        $this->db->select('A.COD_GRUPO AS VALUE, A.ID_GRUPO AS ID_VALUE, A.NOM_GRUPO AS OPCION');
+        $this->db->from('ADMIN.GG_TGRUESP A');
+        $this->db->join('ADMIN.SO_TMOTICIQ B', 'A.COD_GRUPO = B.COD_ESPEC');
+        $this->db->where('A.IND_ESTADO', 'V');
+        $this->db->where('A.COD_GRUPO <>', 'NOAP');
+        $this->db->group_by(array('A.COD_GRUPO', 'A.ID_GRUPO', 'A.NOM_GRUPO'));
+        $this->db->order_by('A.NOM_GRUPO');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function get_listado_servicios($cod_empresa) {
+        $query = $this->db->query("SELECT *
+                                        FROM (
+                                            SELECT  
+                                                GG_TSERVICIO.ID_SERDEP AS ID, 
+                                                GG_TSERVICIO.NOM_SERVIC AS TXT_DES
+                                            FROM 
+                                                ADMIN.GG_TSERVICIO
+                                            JOIN ADMIN.GG_TSERVICIOXEMP ON GG_TSERVICIOXEMP.ID_SERDEP = GG_TSERVICIO.ID_SERDEP 
+                                            WHERE 
+                                                (GG_TSERVICIOXEMP.IND_MED = '1' OR GG_TSERVICIO.ID_SERDEP IN ('268', '266'))
+                                                AND GG_TSERVICIOXEMP.COD_EMPRESA IN ('{$cod_empresa}')
+                                                AND GG_TSERVICIO.IND_SERDEP = 'S'
+                                            UNION 
+                                            SELECT 
+                                                A.ID_SERDEP AS ID,
+                                                A.NOM_SERVIC AS TXT_DES 
+                                            FROM 
+                                                ADMIN.GG_TSERVICIO A
+                                            JOIN ADMIN.GG_TSERVICIOXEMP B ON A.ID_SERDEP = B.ID_SERDEP
+                                            WHERE 
+                                                B.COD_EMPRESA IN ('{$cod_empresa}')
+                                                AND B.IND_MED = 1
+                                                AND (A.IND_SERDEP = 'S' OR A.IND_SERDEP = 'D')
+                                                AND A.ID_SERDEP NOT IN (229)
+                                        ) AS LISTADOSERVICIOS
+                                        ORDER BY TXT_DES;
+                                    ");
+        return $query->result_array();
+    }
+    
+    public function get_listado_medicos($cod_empresa) {
+        $this->db->select("A.COD_RUTPRO, A.ID_PROFESIONAL AS ID_PRO, A.COD_DIGVER AS COD_DIGVER, CONCAT(UPPER(A.NOM_APEPAT), ' ', UPPER(A.NOM_APEMAT), ' ', UPPER(A.NOM_NOMBRE)) AS NOM_PROFE, C.DES_TIPOATENCION AS DES_TIPOATENCION, B.COD_TPROFE AS COD_TPROFE, B.NOM_TPROFE AS NOM_TPROFE, C.IND_TIPOATENCION AS IND_TIPOATENCION");
+        $this->db->from('ADMIN.GG_TPROFESIONAL A');
+        $this->db->join('ADMIN.GG_TPROFESION B', 'A.COD_TPROFE = B.COD_TPROFE');
+        $this->db->join('ADMIN.AP_TTIPOATENCION C', 'B.IND_TIPOATENCION = C.IND_TIPOATENCION');
+        $this->db->join('ADMIN.AP_TPROFXESTABL D', 'A.COD_RUTPRO = D.COD_RUTPRO');
+        $this->db->where('A.IND_ESTADO', 'V');
+        $this->db->where('D.IND_ESTADO', 'V');
+        $this->db->where_in('D.COD_EMPRESA', $cod_empresa);
+        $this->db->order_by('C.IND_TIPOATENCION');
+        $this->db->order_by('A.NOM_APEPAT');
+        $query = $this->db->get();
+        return $query->result_array();
     }
     
 
@@ -751,133 +763,287 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         );
     }
     
-    public function main_form_anatomiapatologica($DATA){
+
+    public function main_form_anatomiapatologica($DATA) {
         $this->db->trans_start();
-        $CALL_FASE      =   isset($DATA['CALL_FASE'])?$DATA['CALL_FASE']:-1;
-        $ID_SERDEP      =   isset($DATA['ID_SERDEP'])?$DATA['ID_SERDEP']:-1;
-        //return false;
-        $param          =   array(
-                                array( 
-                                    'name'      =>  ':V_COD_EMPRESA',
-                                    'value'     =>  $DATA["COD_EMPRESA"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_CALL_FASE',
-                                    'value'     =>  $CALL_FASE,
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_IND_SISTEMA',
-                                    'value'     =>  $DATA["V_IND_SISTEMA"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_IND_GESPAB',
-                                    'value'     =>  $DATA["IND_GESPAB"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_ZONA_PAB',
-                                    'value'     =>  $DATA["ZONA_PAB"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_IND_ADMISION',
-                                    'value'     =>  $DATA["IND_ADMISION"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':PA_ID_PROCARCH',
-                                    'value'     =>  $DATA["PA_ID_PROCARCH"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':VAL_ID_SERDEP',
-                                    'value'     =>  $ID_SERDEP,
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                #OUT
-                                array( 
-                                    'name'      =>  ':C_DATA_ROTULADO',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_DATA_ROTULADO_SUB',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_AUTOCOMPLETE_MUESTRAS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_GETDATAACTIVE',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_RETURN_ESTADOS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                #SI TIENE RESULTADO EL EXTERNO
-                                array( 
-                                    'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':P_LOGS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                            );
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','FORM_START_HISPATOLOGICO',$param);
+        // Parámetros de entrada
+        $V_COD_EMPRESA = $DATA["COD_EMPRESA"];
+        $V_CALL_FASE = isset($DATA['CALL_FASE']) ? $DATA['CALL_FASE'] : -1;
+        $V_IND_SISTEMA = $DATA["V_IND_SISTEMA"];
+        $V_IND_GESPAB = $DATA["IND_GESPAB"];
+        $V_ZONA_PAB = $DATA["ZONA_PAB"];
+        $V_IND_ADMISION = $DATA["IND_ADMISION"];
+        $V_PA_ID_PROCARCH = $DATA["PA_ID_PROCARCH"];
+        $VAL_ID_SERDEP = isset($DATA['ID_SERDEP']) ? $DATA['ID_SERDEP'] : -1;
+    
+        $results = array(
+            'C_DATA_ROTULADO' => null,
+            'C_DATA_ROTULADO_SUB' => null,
+            'C_AUTOCOMPLETE_MUESTRAS' => null,
+            'C_GETDATAACTIVE' => null,
+            'C_RETURN_ESTADOS' => null,
+            'P_ANATOMIA_PATOLOGICA_MAIN' => null,
+            'P_ANATOMIA_PATOLOGICA_MUESTRAS' => null,
+            'P_AP_MUESTRAS_CITOLOGIA' => null,
+            'P_LOGS' => null
+        );
+    
+        // Primera consulta para C_DATA_ROTULADO
+        if ($V_IND_GESPAB == '1') {
+            $sql = "SELECT 
+                        P.ID_ROTULADO, 
+                        P.COD_EMPRESA, 
+                        P.TXT_OBSERVACION, 
+                        P.IND_ESTADO, 
+                        P.IND_GESPAB, 
+                        P.IND_ZONA_GESPAB
+                    FROM 
+                        ADMIN.PB_INFOROTULADO P
+                    WHERE
+                        P.COD_EMPRESA = ?
+                        AND P.IND_ESTADO = 1
+                        AND P.IND_GESPAB = 1
+                        AND P.IND_ZONA_GESPAB = ?";
+            $query = $this->db->query($sql, array($V_COD_EMPRESA, $V_ZONA_PAB));
+            $results['C_DATA_ROTULADO'] = $query->result_array();
+
+        } else {
+
+            if (in_array($V_PA_ID_PROCARCH, array('65', '63'))) {
+
+                $sql = "SELECT COUNT(*) AS V_COUN_ROTULADO FROM ADMIN.PB_INFOROTULADO P WHERE P.COD_EMPRESA = ? AND P.IND_ESTADO = 1 AND P.ID_SERDEP = ?";
+                $query = $this->db->query($sql, array($V_COD_EMPRESA, $VAL_ID_SERDEP));
+                $V_COUN_ROTULADO = $query->row()->V_COUN_ROTULADO;
+    
+                if ($V_COUN_ROTULADO == 0) {
+                    $sql = "SELECT NOM_SERVIC FROM ADMIN.GG_TSERVICIO WHERE ID_SERDEP = ?";
+                    $query = $this->db->query($sql, array($VAL_ID_SERDEP));
+                    $V_TXT_TOMA_NUESTRA = 'TOMA MUESTRA ' . $query->row()->NOM_SERVIC;
+    
+                    $sql = "
+                        INSERT INTO ADMIN.PB_INFOROTULADO (COD_EMPRESA, TXT_OBSERVACION, IND_ESTADO, ID_SERDEP, IND_GESPAB) 
+                        VALUES (?, ?, 1, ?, 0)";
+                    $this->db->query($sql, array($V_COD_EMPRESA, $V_TXT_TOMA_NUESTRA, $VAL_ID_SERDEP));
+    
+                    $results['C_DATA_ROTULADO'] = array(array(
+                        'ID_ROTULADO' => $this->db->insert_id(),
+                        'COD_EMPRESA' => $V_COD_EMPRESA,
+                        'TXT_OBSERVACION' => $V_TXT_TOMA_NUESTRA,
+                        'IND_ESTADO' => 1,
+                        'IND_GESPAB' => '',
+                        'IND_ZONA_GESPAB' => '',
+                        'ID_SERDEP' => $VAL_ID_SERDEP
+                    ));
+                } else {
+
+                    $sql = "SELECT 
+                                P.ID_ROTULADO, 
+                                P.COD_EMPRESA, 
+                                P.TXT_OBSERVACION, 
+                                P.IND_ESTADO, 
+                                P.IND_GESPAB, 
+                                P.IND_ZONA_GESPAB,
+                                P.ID_SERDEP
+                            FROM 
+                                ADMIN.PB_INFOROTULADO P
+                            WHERE
+                                P.ID_SERDEP = ? 
+                                AND P.COD_EMPRESA = ?";
+                        $query = $this->db->query($sql, array($VAL_ID_SERDEP, $V_COD_EMPRESA));
+                        $results['C_DATA_ROTULADO'] = $query->result_array();
+    
+                    $sql = "SELECT 
+                                P.ID_ROTULADO_SUB, 
+                                P.ID_ROTULADO, 
+                                P.COD_EMPRESA, 
+                                P.TXT_OBSERVACION, 
+                                P.IND_ESTADO, 
+                                P.DATE_CREA, 
+                                P.ID_UID, 
+                                P.DATE_AUDITA, 
+                                P.ID_UID_AUDITA
+                            FROM 
+                                ADMIN.PB_INFOROTULADO_SUB P
+                            JOIN ADMIN.PB_INFOROTULADO S ON P.ID_ROTULADO = S.ID_ROTULADO
+                            WHERE
+                                S.ID_SERDEP = ? 
+                                AND P.IND_ESTADO = 1";
+                        $query = $this->db->query($sql, array($VAL_ID_SERDEP));
+                        $results['C_DATA_ROTULADO_SUB'] = $query->result_array();
+                }
+            } else {
+                $sql = "SELECT 
+                            P.ID_ROTULADO, 
+                            P.COD_EMPRESA, 
+                            P.TXT_OBSERVACION, 
+                            P.IND_ESTADO, 
+                            P.IND_GESPAB, 
+                            P.IND_ZONA_GESPAB,
+                            P.ID_SERDEP
+                        FROM 
+                            ADMIN.PB_INFOROTULADO P
+                        WHERE
+                            P.COD_EMPRESA = ?
+                            AND P.IND_ESTADO = 1
+                            AND P.IND_GESPAB = 0";
+                    $query = $this->db->query($sql, array($V_COD_EMPRESA));
+                    $results['C_DATA_ROTULADO'] = $query->result_array();
+            }
+    
+            $results['P_LOGS'] = array(array(
+                'ID_SERDEP' => $VAL_ID_SERDEP,
+                'V_PA_ID_PROCARCH' => $V_PA_ID_PROCARCH,
+                'V_COUN_ROTULADO' => isset($V_COUN_ROTULADO) ? $V_COUN_ROTULADO : null,
+                'V_TXT_TOMA_NUESTRA' => isset($V_TXT_TOMA_NUESTRA) ? $V_TXT_TOMA_NUESTRA : null
+            ));
+    
+            if ($V_IND_ADMISION == '0' || $V_IND_ADMISION == null || $V_IND_ADMISION == '') {
+                $V_ID_SOLICITUD_HISTO = '-1';
+            } else {
+                $sql = "SELECT F_PATOLOGICOXAMISION(?) AS V_ID_SOLICITUD_HISTO";
+                $query = $this->db->query($sql, array($V_IND_ADMISION));
+                $V_ID_SOLICITUD_HISTO = $query->row()->V_ID_SOLICITUD_HISTO;
+            }
+    
+
+
+        if ($V_ID_SOLICITUD_HISTO != '-1') {
+                $sql = "SELECT 
+                        -- Aquí irían todas las columnas que necesitas obtener
+                        P.ID_SOLICITUD_HISTO,
+                        P.TXT_DIAGNOSTICO,
+                        TO_CHAR(SYSDATE,'DD-MM-YYYY hh24:mi') AS FEC_EMISION,
+                        TO_CHAR(P.FEC_USRCREA, 'DD-MM-YYYY hh24:mi') AS FECHA_SOLICITUD,
+                        TO_CHAR(P.DATE_INICIOREGISTRO,'DD-MM-YYYY hh24:mi') AS FECHA_TOMA_MUESTRA,
+                        -- Añadir el resto de columnas
+                    FROM  
+                        ADMIN.GG_TGPACTE L,
+                        ADMIN.GG_TPROFESIONAL G,
+                        ADMIN.PB_SOLICITUD_HISTO P,
+                        ADMIN.PB_INFOROTULADO R
+                    WHERE
+                        P.ID_SOLICITUD_HISTO = ?
+                        AND P.ID_ROTULADO = R.ID_ROTULADO
+                        AND P.NUM_FICHAE = L.NUM_FICHAE
+                        AND P.COD_RUTPRO = G.COD_RUTPRO
+                        AND P.IND_ESTADO = 1
+                    ORDER BY 
+                        P.DATE_INICIOREGISTRO";
+                $query = $this->db->query($sql, array($V_ID_SOLICITUD_HISTO));
+                $results['P_ANATOMIA_PATOLOGICA_MAIN'] = $query->result_array();
+    
+                $sql = "SELECT 
+                            '0' AS TOTAL_MUESTRAS,
+                            CASE V_COD_EMPRESA
+                                WHEN '100' THEN 'H.MAURICIO HEYERMANN T.ANGOL'
+                                WHEN '106' THEN 'SAN JOSE DE VICTORIA' 
+                                WHEN '029' THEN 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                                WHEN '1000' THEN 'HOSPITAL MILITAR'
+                                ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                            END AS TXT_HOSPITAL_ETI,
+                            M.IND_ESTADO_CU,
+                            M.ID_NUM_CARGA,
+                            NULL AS ID_TABLA,
+                            M.IND_ESTADO AS ESTADO,
+                            M.ID_NMUESTRA AS ID_NMUESTRA,
+                            M.N_MUESTRA AS N_MUESTRA,
+                            UPPER(M.TXT_MUESTRA) AS TXT_MUESTRA,
+                            M.IND_ESTADO_REG AS IND_ESTADO_REG,
+                            M.IND_TIPOMUESTRA AS IND_TIPOMUESTRA, 
+                            CASE
+                                WHEN M.NUM_CASSETTE IS NULL THEN 0 ELSE M.NUM_CASSETTE
+                            END AS NUM_CASSETTE,
+                            M.ID_CASETE AS ID_CASETE,
+                            CASE
+                                WHEN M.NUM_ML IS NULL THEN 0 ELSE M.NUM_ML
+                            END AS NUM_ML,
+                            DECODE(M.IND_ETIQUETA, '1', 'PEQUEÑO', '2', 'MEDIANO', 'NO INFORMADO') AS TXT_ETIQUETA,
+                            CASE
+                                WHEN M.IND_ETIQUETA IS NULL THEN 2 ELSE M.IND_ETIQUETA
+                            END AS IND_ETIQUETA
+                        FROM 
+                            ADMIN.PB_HISTO_NMUESTRAS M
+                        WHERE
+                            M.ID_SOLICITUD_HISTO = ?
+                            AND M.IND_TIPOMUESTRA = 1
+                            AND M.IND_ESTADO = 1
+                        ORDER BY 
+                            M.N_MUESTRA";
+                    $query = $this->db->query($sql, array($V_ID_SOLICITUD_HISTO));
+                    $results['P_ANATOMIA_PATOLOGICA_MUESTRAS'] = $query->result_array();
+    
+                $sql = "SELECT 
+                            '0' AS TOTAL_MUESTRAS,
+                            CASE V_COD_EMPRESA
+                                WHEN '100' THEN 'H.MAURICIO HEYERMANN T.ANGOL'
+                                WHEN '106' THEN 'SAN JOSE DE VICTORIA' 
+                                WHEN '029' THEN 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                                WHEN '1000' THEN 'HOSPITAL MILITAR'
+                                ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                            END AS TXT_HOSPITAL_ETI,
+                            M.IND_ESTADO_CU,
+                            M.ID_NUM_CARGA,
+                            NULL AS ID_TABLA,
+                            M.IND_ESTADO AS ESTADO,
+                            M.ID_NMUESTRA AS ID_NMUESTRA,
+                            M.N_MUESTRA AS N_MUESTRA,
+                            UPPER(M.TXT_MUESTRA) AS TXT_MUESTRA,
+                            M.IND_ESTADO_REG AS IND_ESTADO_REG,
+                            M.IND_TIPOMUESTRA AS IND_TIPOMUESTRA,
+                            CASE
+                                WHEN M.NUM_CASSETTE IS NULL THEN 0 ELSE M.NUM_CASSETTE
+                            END AS NUM_CASSETTE,
+                            CASE
+                                WHEN M.NUM_ML IS NULL THEN 0 ELSE M.NUM_ML
+                            END AS NUM_ML,
+                            DECODE(M.IND_ETIQUETA, '1', 'PEQUEÑO', '2', 'MEDIANO', 'NO INFORMADO') AS TXT_ETIQUETA,
+                            CASE
+                                WHEN M.IND_ETIQUETA IS NULL THEN 2 ELSE M.IND_ETIQUETA
+                            END AS IND_ETIQUETA
+                        FROM 
+                            ADMIN.PB_HISTO_NMUESTRAS M
+                        WHERE
+                            M.ID_SOLICITUD_HISTO = ?
+                            AND M.IND_TIPOMUESTRA = 2
+                            AND M.IND_ESTADO = 1
+                        ORDER BY 
+                            M.N_MUESTRA";
+                    $query = $this->db->query($sql, array($V_ID_SOLICITUD_HISTO));
+                    $results['P_AP_MUESTRAS_CITOLOGIA'] = $query->result_array();
+            }
+        }
+    
+        $sql = "SELECT 
+                    P.ID_AUTOCOMPLETADO, 
+                    P.TXT_CHARACTER, 
+                    P.TXT_REALNAME,
+                    P.IND_ESTADO 
+                FROM 
+                    ADMIN.PB_NMUESTRA_AUTOCOMPLETADO P 
+                WHERE 
+                    P.IND_ESTADO = 1 
+                ORDER BY 
+                    P.ID_AUTOCOMPLETADO";
+            $query = $this->db->query($sql);
+            $results['C_AUTOCOMPLETE_MUESTRAS'] = $query->result_array();
+
         $this->db->trans_complete();
         return array(
-            'STATUS'                                =>  true,
-            'ID_SERDEP_MODEL'                       =>  $ID_SERDEP,
-            'DATA_ROTULADO'                         =>  empty($result[':C_DATA_ROTULADO'])?null:$result[':C_DATA_ROTULADO'],
-            'DATA_AUTOCOMPLETE'                     =>  empty($result[':C_AUTOCOMPLETE_MUESTRAS'])?null:$result[':C_AUTOCOMPLETE_MUESTRAS'],
-            'C_RETURN_ESTADOS'                      =>  empty($result[':C_RETURN_ESTADOS'])?null:$result[':C_RETURN_ESTADOS'],
-            'P_ANATOMIA_PATOLOGICA_MAIN'            =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
-            'P_ANATOMIA_PATOLOGICA_MUESTRAS'        =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
-            'P_AP_MUESTRAS_CITOLOGIA'               =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
-            'C_DATA_ROTULADO_SUB'                   =>  empty($result[':C_DATA_ROTULADO_SUB'])?null:$result[':C_DATA_ROTULADO_SUB'], 
-            'P_LOGS'                                =>	empty($result[':P_LOGS'])?null:$result[':P_LOGS'],
-            'PA_ID_PROCARCH_MODEL'                  =>  $DATA["PA_ID_PROCARCH"],
+            'STATUS' => $this->db->trans_status(),
+            'ID_SERDEP_MODEL' => $ID_SERDEP,
+            'DATA_ROTULADO' => empty($results['C_DATA_ROTULADO']) ? null : $results['C_DATA_ROTULADO'],
+            'DATA_AUTOCOMPLETE' => empty($results['C_AUTOCOMPLETE_MUESTRAS']) ? null : $results['C_AUTOCOMPLETE_MUESTRAS'],
+            'C_RETURN_ESTADOS' => empty($results['C_RETURN_ESTADOS']) ? null : $results['C_RETURN_ESTADOS'],
+            'P_ANATOMIA_PATOLOGICA_MAIN' => empty($results['P_ANATOMIA_PATOLOGICA_MAIN']) ? null : $results['P_ANATOMIA_PATOLOGICA_MAIN'],
+            'P_ANATOMIA_PATOLOGICA_MUESTRAS' => empty($results['P_ANATOMIA_PATOLOGICA_MUESTRAS']) ? null : $results['P_ANATOMIA_PATOLOGICA_MUESTRAS'],
+            'P_AP_MUESTRAS_CITOLOGIA' => empty($results['P_AP_MUESTRAS_CITOLOGIA']) ? null : $results['P_AP_MUESTRAS_CITOLOGIA'],
+            'C_DATA_ROTULADO_SUB' => empty($results['C_DATA_ROTULADO_SUB']) ? null : $results['C_DATA_ROTULADO_SUB'],
+            'P_LOGS' => empty($results['P_LOGS']) ? null : $results['P_LOGS'],
+            'PA_ID_PROCARCH_MODEL' => $DATA["PA_ID_PROCARCH"]
         );
     }
+    
+
     
     public function get_indrotulado_forgespab($DATA){
         return $this->db->query("SELECT 

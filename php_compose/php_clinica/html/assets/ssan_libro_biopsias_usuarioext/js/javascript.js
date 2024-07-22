@@ -62,28 +62,27 @@ $(document).ready(function(){
 
 function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_biopsias_usuarioext/new_nueva_solicitud_anatomia_ext",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    $("#loadFade").modal('show'); 
-                                                },
-        data                :                   {
-                                                    NUM_FICHAE  :   NUM_FICHAE,
-                                                    ADMISION    :   ADMISION,
-                                                },
-        error		        :   function(errro) { 
-                                                    console.log(errro);
-                                                    $("#loadFade").modal('hide');  
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
-                                                },
-        success             :   function(aData) { 
-                                                    console.log("aData , ",aData);
-                                                    $("#loadFade").modal('hide'); 
-                                                    $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
-                                                    $("#PA_ID_PROCARCH").val('65');
-                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_biopsias_usuarioext/new_nueva_solicitud_anatomia_ext",
+        dataType : "json",
+        beforeSend : function(xhr) { $("#loadFade").modal('show'); },
+        data    :   {
+                        NUM_FICHAE  :   NUM_FICHAE,
+                        ADMISION    :   ADMISION,
+                    },
+        error   : function(errro) { 
+                    console.log(errro);
+                    $("#loadFade").modal('hide');  
+                    jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                },
+        success :   function(aData) { 
+                                        console.log("aData , ",aData);
+                                        
+                                        $("#loadFade").modal('hide'); 
+                                        $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
+                                        $("#PA_ID_PROCARCH").val('65');
+                                        $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    }, 
     });
 }
 
