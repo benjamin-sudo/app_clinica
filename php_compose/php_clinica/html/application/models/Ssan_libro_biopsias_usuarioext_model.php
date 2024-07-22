@@ -2108,68 +2108,463 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     }
 
     #PDF_GLOBAL
-    public function LOAD_ANATOMIAPATOLOGICA_PDF($DATA){
+    public function LOAD_ANATOMIAPATOLOGICA_PDF($DATA) {
         $this->db->trans_start();
-        $param  =   array(
-                        #IN
-                        array( 
-                            'name'          =>  ':V_COD_EMPRESA',
-                            'value'         =>  $DATA["COD_EMPRESA"],
-                            'length'        =>  20,
-                            'type'          =>  SQLT_CHR 
-                        ),
-                        array( 
-                            'name'          =>  ':V_ID_HISTO',
-                            'value'         =>  $DATA["ID_HISTO"],
-                            'length'        =>  20,
-                            'type'          =>  SQLT_CHR 
-                        ),
-                        #OUT
-                        array( 
-                            'name'          =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
-                            'value'         =>  $this->db->get_cursor(),
-                            'length'        =>  -1,
-                            'type'          =>  OCI_B_CURSOR
-                            ),
-                            array( 
-                                'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                            array( 
-                                'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                            #BLOB
-                            array( 
-                                'name'      =>  ':C_IMAGENES_BLOB',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                            array( 
-                                'name'      =>  ':C_IMAGENES_BLOB_MUESTRAS',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                        );
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_ANATOMIAPATOLOGICA_PDF',$param);
-        $this->db->trans_complete();
+        $V_COD_EMPRESA = $DATA["COD_EMPRESA"];
+        $V_ID_HISTO = $DATA["ID_HISTO"];
+        // GESTOR DE IMAGENES
+        $C_IMAGENES_BLOB = $this->db->query("SELECT
+                I.ID_MAIN AS ID_UNICO_IMAGEN,
+                I.ID_HISTO_ZONA AS ID_HISTO_ZONA,
+                I.ID_SOLICITUD_HISTO,
+                I.COD_EMPRESA,
+                I.SIZE_BLG,
+                I.CONTEXT_TYPE,
+                I.MAIN_BLOB,
+                I.IND_ESTADO,
+                I.IMG_DATA,
+                I.NAME_IMG,
+                I.TXT_OBSERVACIONES,
+                I.ID_UID,
+                I.USR_CREA,
+                I.DATE_CREA,
+                I.BFILE,
+                I.NCLOB
+            FROM
+                ADMIN.PB_MAIN_BLG_ANATOMIA I
+            WHERE
+                I.ID_SOLICITUD_HISTO = ?
+                AND I.IND_ESTADO = 1
+            ORDER BY
+                I.DATE_CREA", array($V_ID_HISTO))->result_array();
+    
+        // GESTOR DE IMAGENES MUESTRAS
+        $C_IMAGENES_BLOB_MUESTRAS = $this->db->query("SELECT
+                I.ID_MAIN AS ID_IMAGEN,
+                I.ID_SOLICITUD_HISTO,
+                I.COD_EMPRESA,
+                I.SIZE_BLG,
+                I.CONTEXT_TYPE,
+                I.MAIN_BLOB,
+                I.IND_ESTADO,
+                I.IMG_DATA,
+                I.NAME_IMG,
+                I.TXT_OBSERVACIONES,
+                I.ID_UID,
+                I.USR_CREA,
+                I.DATE_CREA,
+                I.BFILE,
+                I.NCLOB,
+                I.ID_HISTO_ZONA
+            FROM
+                ADMIN.PB_IMG_APMUESTRAS I
+            WHERE
+                I.ID_SOLICITUD_HISTO = ?
+                AND I.IND_ESTADO = 1
+            ORDER BY
+                I.DATE_CREA", array($V_ID_HISTO))->result_array();
+    
+        // ZONA DE CONSULTAS DE ANATOMIA
+        $P_ANATOMIA_PATOLOGICA_MAIN = $this->db->query("SELECT 
+                P.COD_EMPRESA,
+                CASE
+                    WHEN P.ID_ROTULADO_SUB = '' THEN ''
+                    ELSE CONCAT(' / ', (
+                        SELECT F.TXT_OBSERVACION 
+                        FROM ADMIN.PB_INFOROTULADO_SUB F
+                        WHERE F.ID_ROTULADO_SUB = P.ID_ROTULADO_SUB LIMIT 1
+                    ))
+                END AS TXT_SUBDIVISION,
+                CASE
+                    WHEN P.COD_EMPRESA IN ('100','303','301','304','300','103','102','105') THEN 'H.MAURICIO HEYERMANN T.ANGOL'
+                    WHEN P.COD_EMPRESA IN ('106','318','104','108','107','302') THEN 'SAN JOSE DE VICTORIA'
+                    ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                END AS TXT_HOSPDERIVADO,
+                CASE
+                    WHEN P.COD_EMPRESA IN ('100','303','301','304','300','103','102','105') THEN '100'
+                    WHEN P.COD_EMPRESA IN ('106','318','104','108','107','302') THEN '106'
+                    ELSE '029'
+                END AS COD_EMPRESA_DERIVADA,
+                CASE
+                    WHEN P.COD_ESTABLREF = ? THEN (
+                        SELECT G.NOM_RAZSOC
+                        FROM ADMIN.SS_TEMPRESAS G
+                        WHERE G.COD_EMPRESA = P.COD_EMPRESA LIMIT 1
+                    )
+                    ELSE ''
+                END AS TXT_EMPRESA_DERIVADA,
+                IF(P.IND_USOCASSETTE = '1', 'SI', IF(P.IND_USOCASSETTE = '0', 'NO', '--')) AS TXT_USOCASSETTE,
+                P.IND_USOCASSETTE,
+                P.IND_TEMPLATE AS TXT_PLANTILLA,
+                DATE_FORMAT(P.DATE_NOTIFICACANCER, '%d-%m-%Y %H:%i') AS DATE_NOTIFICACANCER,
+                (SELECT CONCAT(F.FIRST_NAME, ' ', F.MIDDLE_NAME, ' ', F.LAST_NAME) 
+                FROM ADMIN.FE_USERS F
+                WHERE F.ID_UID = P.ID_UID_RC_NOTIFICA_CANCER LIMIT 1) AS TXT_NOTIFICA_CANCER,
+                (SELECT CONCAT(F.FIRST_NAME, ' ', F.MIDDLE_NAME, ' ', F.LAST_NAME) 
+                FROM ADMIN.FE_USERS F
+                WHERE F.ID_UID = P.ID_UID_NOTIFICA_CANCER LIMIT 1) AS TXT_RECIBE_NOTIFICA_CANCER,
+                CASE
+                    WHEN P.ID_HISTO_ZONA = 8 THEN (
+                        SELECT F.IMG_DATA 
+                        FROM ADMIN.PB_FIRMAMEDICO F
+                        WHERE F.IND_ESTADO = 1 AND F.ID_PROFESIONAL = P.ID_PROFESIONAL LIMIT 1
+                    )
+                    ELSE NULL
+                END AS CLOB_FIRMA,
+                CASE
+                    WHEN P.IND_TIPO_BIOPSIA = 4 AND P.ID_HISTO_ZONA = 8 THEN (
+                        SELECT F.IMG_DATA 
+                        FROM ADMIN.PB_FIRMAMEDICO F
+                        WHERE F.IND_ESTADO = 1 AND F.ID_PROFESIONAL = P.ID_PROFESIONAL_CITOLOGICO LIMIT 1
+                    )
+                    ELSE NULL
+                END AS CLOB_FIRMA_CITO,
+                P.IND_CONF_CANCER,
+                P.NUM_NOF_CANCER,
+                P.IND_CONF_PAG,
+                P.TXT_DIAG_CITOLOGIA,
+                P.NUM_CO_CITOLOGIA,
+                P.NUM_CO_PAP,
+                IFNULL(P.NUM_INTERNO_AP, 0) AS NUM_INTERNO_AP,
+                P.TXT_CITOLOGICO,
+                
+                (SELECT CONCAT(UPPER(PAT.NOM_NOMBRE), ' ', UPPER(PAT.NOM_APEPAT), ' ', UPPER(PAT.NOM_APEMAT), '<br>', PAT.COD_RUTPRO, '-', PAT.COD_DIGVER)
+                FROM ADMIN.GG_TPROFESIONAL PAT
+                WHERE PAT.ID_PROFESIONAL = P.ID_PROFESIONAL LIMIT 1) AS TXT_USER_PATOLOGO,
+
+                (SELECT CONCAT(UPPER(PAT.NOM_NOMBRE), ' ', UPPER(PAT.NOM_APEPAT), ' ', UPPER(PAT.NOM_APEMAT), '<br>', PAT.COD_RUTPRO, '-', PAT.COD_DIGVER)
+                FROM ADMIN.GG_TPROFESIONAL PAT
+                WHERE PAT.ID_PROFESIONAL = P.ID_PROFESIONAL_CITOLOGICO LIMIT 1) AS TXT_USER_PATOLOGO_CITOLOGICO,
+
+                P.TXT_DESC_MACROSCOPICA AS TXT_DESC_MACROSCOPICA,
+                P.TXT_DIADNOSTICO_AP AS TXT_DIADNOSTICO_AP,
+                '' AS TXT_DESC_CITOLOGICO,
+                P.TXT_DESC_MACROSCOPICA AS TXT_DESC_MACROSCOPICA,
+                (SELECT CONCAT(F.FIRST_NAME, ' ', F.MIDDLE_NAME, ' ', F.LAST_NAME, '#', F.USERNAME)
+                FROM ADMIN.FE_USERS F
+                WHERE F.ID_UID = P.ID_UID_TRASPORTE_OK LIMIT 1) AS TXT_USER_TRASPORTE_FIRMA,
+                (SELECT CONCAT(F.FIRST_NAME, ' ', F.MIDDLE_NAME, ' ', F.LAST_NAME, '#', F.USERNAME)
+                FROM ADMIN.FE_USERS F
+                WHERE F.ID_UID = P.ID_UID_RECEPCIONA_OK LIMIT 1) AS TXT_USER_RECPCIONA_FIRMA,
+                P.ID_UID_RECEPCIONA_OK,
+                DATE_FORMAT(P.DATE_TRASLADO, '%d-%m-%Y') AS FECHA_TRASLADO,
+                DATE_FORMAT(P.DATE_TRASLADO, '%H:%i') AS HORA_TRASLADO,
+                P.ID_UID_TRASLADO,
+                P.ID_USER_TRASLADO,
+                (SELECT CONCAT(F.FIRST_NAME, ' ', F.MIDDLE_NAME, ' ', F.LAST_NAME) 
+                FROM ADMIN.FE_USERS F
+                WHERE F.ID_UID = P.ID_UID_TRASLADO LIMIT 1) AS TXT_USER_TRASPORTE,
+                S.NOM_RAZSOC AS TXT_HOSPITAL_ETI,
+                (SELECT CONCAT(F.FIRST_NAME, ' ', F.MIDDLE_NAME, ' ', F.LAST_NAME) 
+                FROM ADMIN.PB_LINETIME_HISTO L, ADMIN.FE_USERS F
+                WHERE L.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO
+                AND L.IND_ESTADO = 1
+                AND L.NUM_FASE = 2
+                AND L.ID_UID = F.ID_UID LIMIT 1) AS TXT_USER_TRASPORTE,
+                (SELECT CONCAT(F.FIRST_NAME, ' ', F.MIDDLE_NAME, ' ', F.LAST_NAME) 
+                FROM ADMIN.PB_LINETIME_HISTO L, ADMIN.FE_USERS F
+                WHERE L.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO
+                AND L.IND_ESTADO = 1
+                AND L.NUM_FASE = 3
+                AND L.ID_UID = F.ID_UID LIMIT 1) AS TXT_USER_RECEPCION,
+                (SELECT COUNT(M.ID_NMUESTRA) FROM ADMIN.PB_HISTO_NMUESTRAS M
+                WHERE M.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO
+                AND M.IND_ESTADO = 1) AS N_MUESTRAS,
+                DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i') AS FEC_EMISION,
+                CONCAT(L.COD_RUTPAC, '-', L.COD_DIGVER, ' ', L.NUM_IDENTIFICACION) AS RUTPACIENTE,
+                L.IND_TISEXO AS IND_TISEXO,
+                L.COD_RUTPAC AS COD_RUTPAC,
+                FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12) AS NUMEDAD,
+                DATE_FORMAT(L.FEC_NACIMI, '%d-%m-%Y') AS NACIMIENTO,
+                FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12) AS EDAD,
+                CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT), 
+                    CASE WHEN L.NOM_SOCIAL IS NULL THEN '' ELSE CONCAT(', social: ', L.NOM_SOCIAL) END) AS NOMBRE_COMPLETO,
+                CONCAT(SUBSTR(L.NOM_NOMBRE, 1, 1), '.', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT)) AS TXTNOMCIRUSMALL,
+                CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(SUBSTR(L.NOM_APEMAT, 1, 1))) AS TXTPRIMERNOMBREAPELLIDO,
+                CASE
+                    WHEN P.COD_EMPRESA = 1000 THEN (
+                        SELECT E.NUM_NFICHA
+                        FROM ADMIN.SO_TCPACTE E
+                        WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = 100 LIMIT 1
+                    )
+                    ELSE (
+                        SELECT E.NUM_NFICHA
+                        FROM ADMIN.SO_TCPACTE E
+                        WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = P.COD_EMPRESA LIMIT 1
+                    )
+                END AS FICHAL,
+                
+                (SELECT A.NOM_PREVIS
+                FROM ADMIN.GG_TDATPREV A, ADMIN.SO_TTITUL B, ADMIN.GG_TGPACTE C, ADMIN.GG_TINSEMP D
+                WHERE A.IND_PREVIS = B.IND_PREVIS
+                AND B.COD_RUTTIT = C.COD_RUTTIT
+                AND B.NUM_RUTINS = D.COD_RUTINS
+                AND C.NUM_FICHAE = P.NUM_FICHAE
+                AND A.IND_ESTADO = 'V') AS TXT_PREVISION,
+
+                CONCAT(UPPER(G.NOM_NOMBRE), ' ', UPPER(G.NOM_APEPAT), ' ', UPPER(G.NOM_APEMAT)) AS PROFESIONAL,
+                CONCAT(G.NOM_APEPAT, ' ', G.NOM_APEMAT, ' ', G.NOM_NOMBRE) AS PROFESIONAL_2,
+                CONCAT(G.COD_RUTPRO, '-', G.COD_DIGVER) AS RUT_PROFESIOAL,
+                G.COD_RUTPRO AS ID,
+                G.COD_DIGVER AS DV,
+                G.COD_TPROFE AS MEDI,
+                DATE_FORMAT(P.DATE_INICIOREGISTRO, '%d-%m-%Y %H:%i') AS FECHA_SOLICITUD,
+                DATE_FORMAT(P.FEC_USRCREA_RECEP, '%d-%m-%Y') AS FECHA_RECEPCION,
+                DATE_FORMAT(P.FEC_USRCREA_RECEP, '%Y') AS FECHA_YEAR_RECEPCION,
+                DATE_FORMAT(P.FEC_USRCREA_RECEP, '%H:%i') AS HORA_RECEPCION,
+                DATE_FORMAT(P.DATE_FECHA_DIAGNOSTICO, '%d-%m-%Y %H:%i') AS DATE_FECHA_DIAGNOSTICO,
+                DATE_FORMAT(P.DATE_IMPRESION_INFORME, '%d-%m-%Y') AS FECHA_IMREPSION_INFORME,
+                DATE_FORMAT(P.DATE_ENTREGA_INFORME, '%d-%m-%Y %H:%i') AS FECHA_ENTREGA_INFORME,
+                P.PA_ID_PROCARCH,
+                CASE
+                    WHEN P.PA_ID_PROCARCH = '31' THEN 'PABELLÓN CENTRAL'
+                    WHEN P.PA_ID_PROCARCH = '63' THEN 'RCE ESPECIALIDADES'
+                    WHEN P.PA_ID_PROCARCH = '65' THEN 'MODULO ANATOMIA'
+                    ELSE 'NO INFORMADO'
+                END AS TXT_PROCEDENCIA,
+                CASE
+                    WHEN P.PA_ID_PROCARCH = '31' THEN (
+                        SELECT CONCAT(DATE_FORMAT(PP.FEC_INICIO_SOLICITUD, '%d-%m-%Y %H:%i'), ' - ', SS.SALA_DESCRIPCION)
+                        FROM ADMIN.PB_TABLAOPERATORIA PP, ADMIN.PB_SALA_PABELLON SS
+                        WHERE PP.COD_PABELLON = SS.COD_PABELLON AND PP.ID_TABLA = P.ID_TABLA LIMIT 1
+                    )
+                    ELSE 'NO INFORMADO'
+                END AS INFO_GESPAB,
+                '' AS TXT_SALAPAB,
+                '' AS TXT_FECIRU,
+                P.ID_SERDEP AS ID_SERVICIO,
+                CASE
+                    WHEN P.COD_EMPRESA IN ('100', '106', '029') THEN (
+                        SELECT S.NOM_SERVIC
+                        FROM ADMIN.GG_TSERVICIOXEMP T, ADMIN.GG_TSERVICIO S
+                        WHERE T.ID_SERDEP = P.ID_SERDEP
+                        AND T.COD_EMPRESA = P.COD_EMPRESA
+                        AND S.ID_SERDEP = T.ID_SERDEP LIMIT 1
+                    )
+                    ELSE (
+                        SELECT S.NOM_SERVIC
+                        FROM ADMIN.GG_TSERVICIOXEMP T, ADMIN.GG_TSERVICIO S
+                        WHERE T.ID_SERDEP = P.ID_SERDEP
+                        AND T.COD_EMPRESA = P.COD_ESTABLREF
+                        AND S.ID_SERDEP = T.ID_SERDEP LIMIT 1
+                    )
+                END AS NOMBRE_SERVICIO,
+                P.ID_SOLICITUD_HISTO AS ID_SOLICITUD,
+                P.TXT_DIAGNOSTICO AS TXT_DIAGNOSTICO,
+                DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i') AS FEC_EMISION,
+                DATE_FORMAT(P.FEC_USRCREA, '%d-%m-%Y %H:%i') AS FECHA_SOLICITUD,
+                DATE_FORMAT(P.DATE_INICIOREGISTRO, '%d-%m-%Y %H:%i') AS FECHA_TOMA_MUESTRA,
+                CASE P.IND_TIPO_BIOPSIA
+                    WHEN '1' THEN 'SI'
+                    WHEN '2' THEN 'CONTEMPORANEA'
+                    WHEN '3' THEN 'DIFERIDA'
+                    WHEN '4' THEN 'BIOPSIA + CITOLOGÍA'
+                    WHEN '6' THEN 'CITOLOGÍA PAP'
+                    WHEN '5' THEN 'SOLO CITOLOGÍA'
+                    ELSE 'NO INFORMADO'
+                END AS TIPO_DE_BIOPSIA,
+                P.IND_TIPO_BIOPSIA AS IND_TIPO_BIOPSIA,
+                CASE P.IND_ESTADO
+                    WHEN '1' THEN 'SOLICITUD ACTIVA'
+                    WHEN '0' THEN 'SOLICITUD DESHABILITADA'
+                    ELSE 'NO INFORMADA'
+                END AS TXT_ESTADO,
+                P.DES_SITIOEXT,
+                P.DES_UBICACION,
+                P.DES_TAMANNO,
+                CASE P.ID_TIPO_LESION
+                    WHEN '1' THEN 'LIQUIDO'
+                    WHEN '2' THEN 'ORGANO'
+                    WHEN '3' THEN 'TEJIDO'
+                    ELSE 'NO INFORMADO'
+                END AS TXT_TIPOSESION,
+                CASE P.ID_ASPECTO
+                    WHEN '1' THEN 'INFLAMATORIA'
+                    WHEN '2' THEN 'BENIGNA'
+                    WHEN '3' THEN 'NEOPLASICA'
+                    ELSE 'NO INFORMADO'
+                END AS TXT_ASPECTO,
+                CASE P.ID_ANT_PREVIOS
+                    WHEN '1' THEN 'NO'
+                    WHEN '2' THEN 'BIOPSIA'
+                    WHEN '3' THEN 'CITOLOGIA'
+                    ELSE 'NO INFORMADO'
+                END AS TXT_ANT_PREVIOS,
+                P.ID_ANT_PREVIOS,
+                P.NUM_ANTECEDENTES,
+                P.DES_BIPSIA,
+                P.DES_CITOLOGIA,
+                P.DES_OBSERVACIONES,
+                P.NUM_FICHAE,
+                P.COD_USRCREA,
+                P.FEC_USRCREA,
+                P.COD_EMPRESA,
+                P.DES_SITIOEXT,
+                P.DES_UBICACION,
+                P.DES_TAMANNO,
+                P.ID_TIPO_LESION,
+                P.ID_ASPECTO,
+                P.ID_ANT_PREVIOS,
+                P.NUM_ANTECEDENTES,
+                P.DES_BIPSIA,
+                P.DES_CITOLOGIA,
+                P.DES_OBSERVACIONES,
+                P.IND_ESTADO,
+                P.FEC_REVISION,
+                P.ID_TABLA,
+                P.DES_TIPOMUESTRA,
+                P.NUM_SUBNUMERACION,
+                P.COD_USRCREA_TO_MUE,
+                P.FEC_USRCREA_TO_MUE,
+                P.COD_USRCREA_ENV,
+                P.FEC_USRCREA_ENV,
+                P.COD_USRCREA_RECEP,
+                P.FEC_USRCREA_RECEP,
+                P.COD_EMPRESA_RECEP,
+                P.COD_USRCREA_INFORMADA,
+                P.FEC_USRCREA_INFORMADA,
+                P.COD_EMPRESA_INFORMADA,
+                P.ID_ARCHIVO_SUBIDO,
+                P.COD_USRCREA_RECH,
+                P.FEC_USRCREA_RECH,
+                P.COD_EMPRESA_RECH,
+                P.TIPO_RECHAZO,
+                P.OBS_RECHAZO,
+                P.ID_HISTO_ESTADO,
+                P.AD_ID_ADMISION,
+                P.ID_SERDEP,
+                P.IND_TIPO_BIOPSIA,
+                P.IND_TEMPLATE,
+                P.DATE_INICIOREGISTRO,
+                P.COD_RUTPRO,
+                P.TXT_DIAGNOSTICO,
+                P.NUM_PLANTILLA,
+                P.IND_USOCASSETTE,
+                P.IND_USOCASSETTE
+            FROM
+                ADMIN.GG_TGPACTE L,
+                ADMIN.GG_TPROFESIONAL G,
+                ADMIN.PB_SOLICITUD_HISTO P,
+                ADMIN.SS_TEMPRESAS S
+            WHERE
+                P.ID_SOLICITUD_HISTO = ?
+                AND P.NUM_FICHAE = L.NUM_FICHAE
+                AND P.COD_RUTPRO = G.COD_RUTPRO
+                AND S.COD_EMPRESA = P.COD_EMPRESA
+                AND P.IND_ESTADO = 1
+            ORDER BY
+                P.DATE_INICIOREGISTRO
+        ", array($V_COD_EMPRESA, $V_ID_HISTO))->result_array();
+
+
+        // MAIN DE MUESTRAS
+        $P_ANATOMIA_PATOLOGICA_MUESTRAS = $this->db->query("SELECT 
+                '0' AS TOTAL_MUESTRAS,
+                CASE ?
+                    WHEN '100' THEN 'H.MAURICIO HEYERMANN T.ANGOL'
+                    WHEN '106' THEN 'SAN JOSE DE VICTORIA'
+                    WHEN '029' THEN 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                    WHEN '1000' THEN 'HOSPITAL MILITAR'
+                    ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                END AS TXT_HOSPITAL_ETI,
+                M.IND_ESTADO_CU,
+                M.ID_NUM_CARGA,
+                NULL AS ID_TABLA,
+                M.IND_ESTADO AS ESTADO,
+                M.ID_NMUESTRA AS ID_NMUESTRA,
+                M.N_MUESTRA AS N_MUESTRA,
+                UPPER(M.TXT_MUESTRA) AS TXT_MUESTRA,
+                UPPER(M.TXT_DESC_MICROSCOPICA) AS TXT_DESC_MICROSCOPICA,
+                UPPER(M.TXT_DESC_MACROSCOPICA) AS TXT_DESC_MACROSCOPICA,
+                M.IND_ESTADO_REG AS IND_ESTADO_REG,
+                M.IND_TIPOMUESTRA AS IND_TIPOMUESTRA,
+                CASE
+                    WHEN M.NUM_CASSETTE IS NULL THEN 0 ELSE M.NUM_CASSETTE
+                END AS NUM_CASSETTE,
+                M.ID_CASETE AS ID_CASETE,
+                CASE
+                    WHEN M.NUM_ML IS NULL THEN 0 ELSE M.NUM_ML
+                END AS NUM_ML,
+                CASE M.IND_ETIQUETA
+                    WHEN 1 THEN 'PEQUEÑO'
+                    WHEN 2 THEN 'MEDIANO'
+                    ELSE 'NO INFORMADO'
+                END AS TXT_ETIQUETA,
+                CASE
+                    WHEN M.IND_ETIQUETA IS NULL THEN 2 ELSE M.IND_ETIQUETA
+                END AS IND_ETIQUETA,
+                IFNULL(M.TXT_DESC_MICROSCOPICA, '') AS TXT_DESC_MICROSCOPICA,
+                IFNULL(M.TXT_DESC_MACROSCOPICA, '') AS TXT_DESC_MACROSCOPICA
+            FROM
+                ADMIN.PB_HISTO_NMUESTRAS M
+            WHERE
+                M.ID_SOLICITUD_HISTO = ?
+                AND M.IND_TIPOMUESTRA = 1
+                AND M.IND_ESTADO = 1
+            ORDER BY
+                M.N_MUESTRA;
+        ", array($V_COD_EMPRESA, $V_ID_HISTO))->result_array();
+    
+        // AP MUESTRAS CITOLOGIA
+        $P_AP_MUESTRAS_CITOLOGIA = $this->db->query("SELECT 
+                '0' AS TOTAL_MUESTRAS,
+                CASE ?
+                    WHEN '100' THEN 'H.MAURICIO HEYERMANN T.ANGOL'
+                    WHEN '106' THEN 'SAN JOSE DE VICTORIA'
+                    WHEN '029' THEN 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                    WHEN '1000' THEN 'HOSPITAL MILITAR'
+                    ELSE 'SERVICIO DE SALUD ARAUCANIA NORTE'
+                END AS TXT_HOSPITAL_ETI,
+                M.IND_ESTADO_CU,
+                M.ID_NUM_CARGA,
+                NULL AS ID_TABLA,
+                M.IND_ESTADO AS ESTADO,
+                M.ID_NMUESTRA AS ID_NMUESTRA,
+                M.N_MUESTRA AS N_MUESTRA,
+                UPPER(M.TXT_MUESTRA) AS TXT_MUESTRA,
+                UPPER(M.TXT_DESC_MICROSCOPICA) AS TXT_DESC_MICROSCOPICA,
+                UPPER(M.TXT_DESC_MACROSCOPICA) AS TXT_DESC_MACROSCOPICA,
+                M.IND_ESTADO_REG AS IND_ESTADO_REG,
+                M.IND_TIPOMUESTRA AS IND_TIPOMUESTRA,
+                CASE
+                    WHEN M.NUM_CASSETTE IS NULL THEN 0 ELSE M.NUM_CASSETTE
+                END AS NUM_CASSETTE,
+                M.ID_CASETE AS ID_CASETE,
+                CASE
+                    WHEN M.NUM_ML IS NULL THEN 0 ELSE M.NUM_ML
+                END AS NUM_ML,
+                CASE M.IND_ETIQUETA
+                    WHEN 1 THEN 'PEQUEÑO'
+                    WHEN 2 THEN 'MEDIANO'
+                    ELSE 'NO INFORMADO'
+                END AS TXT_ETIQUETA,
+                CASE
+                    WHEN M.IND_ETIQUETA IS NULL THEN 2 ELSE M.IND_ETIQUETA
+                END AS IND_ETIQUETA,
+                IFNULL(M.TXT_DESC_MICROSCOPICA, '') AS TXT_DESC_MICROSCOPICA,
+                IFNULL(M.TXT_DESC_MACROSCOPICA, '') AS TXT_DESC_MACROSCOPICA
+            FROM
+                ADMIN.PB_HISTO_NMUESTRAS M
+            WHERE
+                M.ID_SOLICITUD_HISTO = ?
+                AND M.IND_TIPOMUESTRA = 2
+                AND M.IND_ESTADO = 1
+            ORDER BY
+                M.N_MUESTRA;
+        ", array($V_COD_EMPRESA, $V_ID_HISTO))->result_array();
+
+    $this->db->trans_complete();
         return array(
-            'STATUS'                            =>	$this->db->trans_status(),
-            'ID_HISTO'                          =>	$DATA["ID_HISTO"],
-            'COD_EMPRESA'                       =>	$DATA["COD_EMPRESA"],
-            'HTML_QR'                           =>  '',
-            'P_ANATOMIA_PATOLOGICA_MAIN'        =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
-            'P_ANATOMIA_PATOLOGICA_MUESTRAS'    =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
-            'P_AP_MUESTRAS_CITOLOGIA'           =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
-            'C_IMAGENES_BLOB'                   =>	empty($result[':C_IMAGENES_BLOB'])?null:$result[':C_IMAGENES_BLOB'],
-            'C_IMAGENES_BLOB_MUESTRAS'          =>	empty($result[':C_IMAGENES_BLOB_MUESTRAS'])?null:$result[':C_IMAGENES_BLOB_MUESTRAS'],
-        );  
+            'STATUS' => $this->db->trans_status(),
+            'ID_HISTO' => $DATA["ID_HISTO"],
+            'COD_EMPRESA' => $DATA["COD_EMPRESA"],
+            'HTML_QR' => '',
+            'P_ANATOMIA_PATOLOGICA_MAIN' => $P_ANATOMIA_PATOLOGICA_MAIN,
+            'P_ANATOMIA_PATOLOGICA_MUESTRAS' => $P_ANATOMIA_PATOLOGICA_MUESTRAS,
+            'P_AP_MUESTRAS_CITOLOGIA' => $P_AP_MUESTRAS_CITOLOGIA,
+            'C_IMAGENES_BLOB' => $C_IMAGENES_BLOB,
+            'C_IMAGENES_BLOB_MUESTRAS' => $C_IMAGENES_BLOB_MUESTRAS,
+        );
     }
     
     #PDF RECHAZO
