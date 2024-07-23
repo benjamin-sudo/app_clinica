@@ -19,7 +19,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $ind_opcion = 0;  #0-MASTER | 1-PB_PROFESIONALXROTULO
 
         
-        $return_data = $this->Ssan_libro_biopsias_usuarioext_model->obtener_resultados_lista([
+        $return_data = $this->Ssan_libro_biopsias_usuarioext_model->model_busquedasolicitudes([
             "data_inicio" => date("d-m-Y"),
             "data_final" => date("d-m-Y"),
             "COD_EMPRESA" => $empresa,
@@ -48,35 +48,37 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     
     public function update_main(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $session                    =   explode("-",$this->session->userdata("USERNAME"));
-        $date_inicio                =   $this->input->post('fecha_inicio');
-        $date_final                 =   $this->input->post('fecha_final');
+        $session = explode("-",$this->session->userdata("USERNAME"));
+        $date_inicio = $this->input->post('fecha_inicio');
+        $date_final = $this->input->post('fecha_final');
         #DATE INICIO TIEMPO
+        /*
         $this->input->set_cookie(array(
-            'name'                  =>  'date_inicio',
-            'value'                 =>  $date_inicio,
-            'expire'                =>  86500,
-            'secure'                =>  false
+            'name' => 'date_inicio',
+            'value' =>  $date_inicio,
+            'expire' =>  86500,
+            'secure' =>  false
         ));
         #DATE INICIO TIEMPO
         $this->input->set_cookie(array(
-            'name'                  =>  'date_final',
-            'value'                 =>  $date_final,
-            'expire'                =>  86500,
-            'secure'                =>  false
+            'name' => 'date_final',
+            'value' =>  $date_final,
+            'expire' =>  86500,
+            'secure' =>  false
         ));
+        */
         #SALIDA ARREGLO
-        $aData                      =   $this->Ssan_libro_biopsias_usuarioext_model->carga_lista_rce_externo_ap(array(
-            "data_inicio"           =>  $date_inicio,
-            "data_final"            =>  $date_final,
-            "usr_session"           =>  $session[0],
-            "ind_opcion"            =>  $this->input->post('OPTION'),
-            "ind_first"             =>  0,
-            "origen_sol"            =>  $this->input->post('origen_sol'),
-            "pto_entrega"           =>  $this->input->post('pto_entrega'),
-            "COD_EMPRESA"           =>  $this->session->userdata("COD_ESTAB"),
-            "num_fase"              =>  $this->input->post('NUM_FASE'),
-            "ind_template"          =>  $this->input->post('ind_template'),
+        $aData = $this->Ssan_libro_biopsias_usuarioext_model->model_busquedasolicitudes(array(
+            "data_inicio" => $date_inicio,
+            "data_final" => $date_final,
+            "usr_session" => $session[0],
+            "ind_opcion" => $this->input->post('OPTION'),
+            "ind_first" => 0,
+            "origen_sol" => $this->input->post('origen_sol'),
+            "pto_entrega" => $this->input->post('pto_entrega'),
+            "COD_EMPRESA" => $this->session->userdata("COD_ESTAB"),
+            "num_fase" => $this->input->post('NUM_FASE'),
+            "ind_template" => $this->input->post('ind_template'),
         ));
         #OUT
         $this->output->set_output(json_encode(array(
@@ -89,26 +91,34 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     #editando para multriplice solicitudes sean procesadas
     public function informacion_x_muestra_grupal(){
         if (!$this->input->is_ajax_request()){  show_404(); }
-        $empresa                            =   $this->session->userdata('COD_ESTAB');
-        $html                               =   '';
-        #$from                              =   $this->input->post('from');
-        #$opcion                            =   $this->input->post('opcion');
-        $ARR_CASETE_ORD                     =   [];
-        $data_main                          =   [];
-        $get_etiqueta                       =   $this->input->post('get_etiqueta');
-        $vista                              =   $this->input->post('vista');
-        $NUM_FASE                           =   $this->input->post('NUM_FASE');
-        $IND_MODAL                          =   $this->input->post('MODAL');
-        $array_data                         =   $this->input->post('array_data');
+        $empresa = $this->session->userdata('COD_ESTAB');
+        $html = '';
+        #$from = $this->input->post('from');
+        #$opcion = $this->input->post('opcion');
+        $ARR_CASETE_ORD = [];
+        $data_main = [];
+        $get_etiqueta = $this->input->post('get_etiqueta');
+        $vista = $this->input->post('vista');
+        $NUM_FASE = $this->input->post('NUM_FASE');
+        $IND_MODAL = $this->input->post('MODAL');
+        $array_data = $this->input->post('array_data');
         #LEYENDA
-        $data_return                        =   '';
-        $DATA                               =   $this->Ssan_libro_biopsias_usuarioext_model->LOAD_INFOXMUESTRAANATOMIACA(
-                                                array(
-                                                    "COD_EMPRESA"               =>  $empresa,
-                                                    "TXTMUESTRA"                =>  $get_etiqueta,
-                                                    "NUM_FASE"                  =>  $NUM_FASE,
-                                                    "ARR_DATA"                  =>  count($array_data["array_anatomia"])>0?implode(",",$array_data["array_anatomia"]):'null', 
-                                                ));
+        $data_return = '';
+        
+        
+        #editando         
+        $ARR_DATA = 'null';
+        if (isset($array_data["array_anatomia"]) && is_array($array_data["array_anatomia"]) && count($array_data["array_anatomia"]) > 0) {
+            $ARR_DATA = implode(",", $array_data["array_anatomia"]);
+        }
+        
+        $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_INFOXMUESTRAANATOMIACA(array(
+            "COD_EMPRESA" =>  $empresa,
+            "TXTMUESTRA" =>  $get_etiqueta,
+            "NUM_FASE" =>  $NUM_FASE,
+            "ARR_DATA" =>  $ARR_DATA,
+        ));
+
         ###
         $ARR_GENTIONMSJ                                                         =   [];
         if (count($DATA["P_ANATOMIA_PATOLOGICA_MAIN"])>0){
@@ -271,19 +281,19 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         
         #out json 
         $this->output->set_output(json_encode(array(
-            'STATUS'                        =>  count($DATA['P_ERROR'])>0?false:true,
-            'NUM_ANAT'                      =>  $NUM_ANATOMIA,
-            'IND_MODAL'                     =>  $IND_MODAL,
-            'RETURN'                        =>  $data_return,
-            'BUSQ'                          =>  $get_etiqueta,
-            'EMPRESA'                       =>  $empresa,
-            'DATA'                          =>  $DATA,
-            'HTML_VIWE'                     =>  $html,
-            'HTML_OUT'                      =>  $TABS_HTML,
-            'DATA_GET'                      =>  $array_data,
-            'data_main'                     =>  $data_main,
-            'ARR_CASETE_ORD'                =>  $ARR_CASETE_ORD,
-            'P_AP_INFORMACION_ADICIONAL'    =>  $DATA["P_AP_INFORMACION_ADICIONAL"],
+            'STATUS' =>  true,
+            'NUM_ANAT' =>  $NUM_ANATOMIA,
+            'IND_MODAL' =>  $IND_MODAL,
+            'RETURN' =>  $data_return,
+            'BUSQ' =>  $get_etiqueta,
+            'EMPRESA' =>  $empresa,
+            'DATA' =>  $DATA,
+            'HTML_VIWE' =>  $html,
+            'HTML_OUT' =>  $TABS_HTML,
+            'DATA_GET' =>  $array_data,
+            'data_main' =>  $data_main,
+            'ARR_CASETE_ORD' =>  $ARR_CASETE_ORD,
+            'P_AP_INFORMACION_ADICIONAL' =>  $DATA["P_AP_INFORMACION_ADICIONAL"],
         )));
     }
 

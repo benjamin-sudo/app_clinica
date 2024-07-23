@@ -466,5 +466,4 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
         $query = $this->db->query($sql,array($clave));
         return $query->result_array();
     }
-
 }

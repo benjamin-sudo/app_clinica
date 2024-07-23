@@ -64,54 +64,47 @@ function update_main(value){
     let ind_ruta        =   IND_TEMPLETE === "ssan_libro_biopsias_listaxusuarios"
                                 ?   "ssan_libro_biopsias_listaxusuarios/update_main_ususarios"
                                 :   "ssan_libro_biopsias_listaexterno1/update_main";
-              
-    console.log("   ---------------------------------------------------------------------------     ");
-    console.log("   ind_ruta                   ->  ",ind_ruta);
-    console.log("   IND_TEMPLETE               ->  ",IND_TEMPLETE);
-    console.log("   numFecha                   ->  ",$("#numFecha").val());
-    console.log("   viwes_punto_entrega        ->  ",$("#viwes_punto_entrega").val());
-    console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
-    console.log("   ---------------------------------------------------------------------------     ");
-        
+    /*
+        console.log("   ---------------------------------------------------------------------------     ");
+        console.log("   ind_ruta                   ->  ",ind_ruta);
+        console.log("   IND_TEMPLETE               ->  ",IND_TEMPLETE);
+        console.log("   numFecha                   ->  ",$("#numFecha").val());
+        console.log("   viwes_punto_entrega        ->  ",$("#viwes_punto_entrega").val());
+        console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
+        console.log("   ---------------------------------------------------------------------------     ");
+    */
     $.ajax({ 
-        type		:   "POST",
-        url		    :   ind_ruta,
-        dataType	:   "json",
-	    beforeSend  :   function(xhr)   { 
-                                            console.log(" xhr ",xhr);
-                                            $('#loadFade').modal('show');
-                                        },
-	    data		:                   { 
-                                            fecha_inicio    :   $("#numFecha").val(),
-                                            fecha_final     :   $("#numFecha").val(),
-                                            OPTION          :   1,
-                                            pto_entrega     :   0,
-                                            origen_sol      :   0,
-                                            ind_template    :   "ssan_libro_biopsias_listaexterno1",
-                                        },
-        error		:   function(errro)	{  
-                                           $('#loadFade').modal('hide');
-                                            console.log("errro   ->  ",errro); 
-                                            jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre");
-                                        },
-        success		:   function(aData)	{   
-                                            console.log("   ************************************    ");
-                                            console.log("   aData           ->   ",aData,"          ");
-                                            console.log("   ind_ruta        ->   ",ind_ruta,"       ");
-                                            console.log("   IND_TEMPLETE    ->   ",IND_TEMPLETE,"   ");
-                                            console.log("   ************************************    ");
-                                            $('#loadFade').modal('hide');
-                                            $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
-                                            $("#LI_LISTA_MAIN").append(aData.STATUS_OUT.html_exteno);
-                                            //$("[data-toggle='tooltip']").tooltip();
-                                            if(IND_TEMPLETE == "ssan_libro_biopsias_listaexterno1"){
-                                                let viwes_punto_entrega = $("#viwes_punto_entrega").val();
-                                                if (viwes_punto_entrega != '0'){
-                                                    console.log("viwes_punto_entrega    ->  ",viwes_punto_entrega);
-                                                    $(".li_lista_externo_rce").hide();
-                                                    $(".rotulo_"+viwes_punto_entrega).show();
-                                                }
-                                            }
-                                        }, 
+        type : "POST",
+        url : ind_ruta,
+        dataType : "json",
+	    beforeSend : function(xhr) {  $('#loadFade').modal('show');  },
+	    data : { 
+                    fecha_inicio : $("#numFecha").val(),
+                    fecha_final : $("#numFecha").val(),
+                    OPTION : 1,
+                    pto_entrega : 0,
+                    origen_sol : 0,
+                    ind_template : "ssan_libro_biopsias_listaexterno1",
+                },
+        error : function(errro)	{  
+                                    $('#loadFade').modal('hide');
+                                    console.log("errro   ->  ",errro); 
+                                    jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre");
+                                },
+        success : function(aData) {   
+                                    console.log("   aData -> ",aData," ");
+                                    $('#loadFade').modal('hide');
+                                    $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
+                                    $("#LI_LISTA_MAIN").append(aData.STATUS_OUT.html_exteno);
+                                    //$("[data-toggle='tooltip']").tooltip();
+                                    if(IND_TEMPLETE == "ssan_libro_biopsias_listaexterno1"){
+                                        let viwes_punto_entrega = $("#viwes_punto_entrega").val();
+                                        if (viwes_punto_entrega != '0'){
+                                            console.log("viwes_punto_entrega    ->  ",viwes_punto_entrega);
+                                            $(".li_lista_externo_rce").hide();
+                                            $(".rotulo_"+viwes_punto_entrega).show();
+                                        }
+                                    }
+                                }, 
     });
 }

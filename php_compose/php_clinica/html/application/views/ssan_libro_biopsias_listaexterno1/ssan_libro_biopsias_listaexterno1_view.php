@@ -323,7 +323,9 @@
                 </div>
                 <div class="modal-body" id="HTML_INFORMACION_ETIQUETA"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;</button>
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
                 </div>
             </div>
         </div>

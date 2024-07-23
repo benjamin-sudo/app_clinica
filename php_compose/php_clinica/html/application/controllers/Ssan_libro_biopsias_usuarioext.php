@@ -389,18 +389,21 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         #ssan_spab_coordepabellonenfe_new
         #remplazado por
         #ssan_libro_biopsias_usuarioext
+        
         if(count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"][0])>0){
             $DATA_FIRST = true;
             $HTML_BIOPSIAS = $this->load->view("ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
             $dompdf->WriteHTML($HTML_BIOPSIAS);
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.ANATOMICA');
         }
+        
         if(count($DATA["P_AP_MUESTRAS_CITOLOGIA"][0])>0){
             $dompdf->AddPage();
             $HTML_CITOLOGIA = $this->load->view("ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS_CITO",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
             $dompdf->WriteHTML($HTML_CITOLOGIA);
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.CITOLOGIA');
         }
+
         $base64_pdf = base64_encode($dompdf->Output($txt_name_pdf,'S'));
         $this->output->set_output(json_encode([
             'STATUS' =>  $STATUS,
