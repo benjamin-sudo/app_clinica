@@ -133,7 +133,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $fecha_inicio = $data_controller['data_inicio'] . ' 00:00:00';
         $fecha_final = $data_controller['data_final'] . ' 23:59:59';
         $cod_empresa = $data_controller['COD_EMPRESA'];
-
         $sql = "SELECT 
                 P.ID_ROTULADO AS ID_ROTULADO,
                 CASE
@@ -326,11 +325,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             ORDER BY P.DATE_INICIOREGISTRO";
 
         $query = $this->db->query($sql, array($cod_empresa, $fecha_inicio, $fecha_final));
-        /*
-            if ($query->num_rows() > 0) { return $query->result_array(); } else { return array(); }
-        */
         $arr_data = $query->result_array();;
-        //$result[":C_RESULT_LISTA"] = $query->result_array();
         return [
             'html_externo'  =>  $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
                             ?   $this->html_externo_rce(array("data_controller"=>$data_controller,"data"=>$arr_data))
@@ -341,25 +336,22 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'ind_template'  =>  $data_controller["ind_template"],
             'date_inicio'   =>  $data_controller["data_inicio"],
             'date_final'    =>  $data_controller["data_final"],
-           
         ];
     }
 
-
     #llamada de externo 
     public function html_externo_rce($data){
-        $html                   =   '';
-        $btn_traza_visible      =   $data["data_controller"]["ind_template"] == "ssan_libro_biopsias_listaexterno1"?true:false;
-        //var_dump($data);
+        $html = '';
+        $btn_traza_visible = $data["data_controller"]["ind_template"] == "ssan_libro_biopsias_listaexterno1"?true:false;
         if(count($data["data"])>0){
             foreach($data["data"] as $i => $row){
-                $style_li               =   '';
-                $cirujano1              =   '';
-                $ARR_ANATOMIA           =   $row['ID_SOLICITUD'];
-                $html_tooltip2          =   '';
+                $style_li = '';
+                $cirujano1 = '';
+                $ARR_ANATOMIA = $row['ID_SOLICITUD'];
+                $html_tooltip2 = '';
                 if($row['ID_HISTO_ESTADO']!=1){
                     //error
-                    $html_tooltip2      =   '
+                    $html_tooltip2 =   '
                                             <div class="grid_tooltip">
                                                 <div class="grid_11">'.$row['TXT_HISTO_ESTADO'].'</div>
                                                 <div class="grid_12">'.$row['TXT_NAMEAUDITA'].'</div>
@@ -404,7 +396,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 }
                 
                 $disabled           =   'disabled';
-
                 $ID_MAIN_AP         =   $row['ID_SOLICITUD'];
                 ################################################
                 $btn_trazabilidad   =   '';

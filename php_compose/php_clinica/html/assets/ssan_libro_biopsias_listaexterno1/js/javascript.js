@@ -60,18 +60,18 @@ function consulta_(value){
 
 function update_main(value){
     $('.popover').popover('hide');
-    var IND_TEMPLETE    =   $("#IND_TEMPLETE").val();
-    var ind_ruta        =   IND_TEMPLETE === "ssan_libro_biopsias_listaxusuarios"
+    let IND_TEMPLETE    =   $("#IND_TEMPLETE").val();
+    let ind_ruta        =   IND_TEMPLETE === "ssan_libro_biopsias_listaxusuarios"
                                 ?   "ssan_libro_biopsias_listaxusuarios/update_main_ususarios"
                                 :   "ssan_libro_biopsias_listaexterno1/update_main";
-    /*
-        console.log("   ---------------------------------------------------------------------------     ");
-        console.log("   ind_ruta                   ->  ",ind_ruta);
-        console.log("   numFecha                   ->  ",$("#numFecha").val());
-        console.log("   viwes_punto_entrega        ->  ",$("#viwes_punto_entrega").val() );
-        console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
-        console.log("   ---------------------------------------------------------------------------     ");
-    */
+              
+    console.log("   ---------------------------------------------------------------------------     ");
+    console.log("   ind_ruta                   ->  ",ind_ruta);
+    console.log("   IND_TEMPLETE               ->  ",IND_TEMPLETE);
+    console.log("   numFecha                   ->  ",$("#numFecha").val());
+    console.log("   viwes_punto_entrega        ->  ",$("#viwes_punto_entrega").val());
+    console.log("   viwes_origen_solicitud     ->  ",$("#viwes_origen_solicitud").val());
+    console.log("   ---------------------------------------------------------------------------     ");
         
     $.ajax({ 
         type		:   "POST",
