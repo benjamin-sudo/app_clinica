@@ -135,6 +135,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $fecha_inicio = $v_fecha_inicio[2].'-'.$v_fecha_inicio[1].'-'.$v_fecha_inicio[0].' 00:00:00';
         $fecha_final = $v_data_final[2].'-'.$v_data_final[1].'-'.$v_data_final[0].' 23:59:59';
         $cod_empresa = $data_controller['COD_EMPRESA'];
+
+
         $sql = "SELECT 
                     P.ID_ROTULADO AS ID_ROTULADO,
                     CASE
@@ -525,11 +527,13 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     </li>';
         }
         return array(
-            'html_exteno'       =>  $html,
-            'html_exteno2'      =>  $html,
+            'html_exteno' => $html,
+            'html_exteno2' => $html,
         );
     }
 
+
+    /*
     public function carga_lista_rce_externo_ap($data_controller) {
         $this->db->trans_start();
         $param          =   array(
@@ -640,7 +644,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'date_final'    =>  $data_controller["data_final"],
         ];
     }
-
+    */
     
 
 
@@ -2738,88 +2742,90 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 	}
 	$this->db->trans_complete();
         return array(
-			'STATUS'	    =>	$this->db->trans_status(),
-			'P_RETURN_DATA'     =>	$result[':P_RETURN_DATA'],
-                        'P_HISTORIAL'       =>	$result[':P_HISTORIAL'],
-                        'P_STATUS'          =>	$result[':P_STATUS'],
-    		    );
-    }
-    
-    public function model_ultimo_numero_disponible($valiable){
-        $this->db->trans_start();
-        $param  =   array(
-                            array( 
-                                'name'      =>  ':V_COD_EMPRESA',
-                                'value'     =>  $valiable["val_empresa"],
-                                'length'    =>  20,
-                                'type'      =>  SQLT_CHR 
-                            ),
-                            array( 
-                                'name'      =>  ':IND_TIPO_BIOPSIA',
-                                'value'     =>  $valiable["ind_tipo_biopsia"],
-                                'length'    =>  20,
-                                'type'      =>  SQLT_CHR 
-                            ),
-                            array( 
-                                'name'      =>  ':P_ULTIMO_NUMERO',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                            array( 
-                                'name'      =>  ':P_STATUS',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                        );
-        $result             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','DATA_LAST_NUMERO3',$param);
-        $this->db->trans_complete();
-        return array(
-            'STATUS'	    =>	$this->db->trans_status(),
-            'DATA'          =>  $result,
-            'DATA_NUMBER'   =>  $result[':P_ULTIMO_NUMERO'],
-            'P_STATUS'      =>  $result[':P_STATUS'],
+			'STATUS' => $this->db->trans_status(),
+			'P_RETURN_DATA' => $result[':P_RETURN_DATA'],
+            'P_HISTORIAL' => $result[':P_HISTORIAL'],
+            'P_STATUS' => $result[':P_STATUS'],
         );
     }
     
+    public function model_ultimo_numero_disponible($aData) {
+        $v_cod_empresa = $aData['val_empresa'];
+        $v_ind_tipo_biopsia =  $aData['ind_tipo_biopsia'];
+        $v_last_numero = 0;
+        $v_id_anatomia = null;
+        $result = [];
+        if (in_array($v_ind_tipo_biopsia, [2, 3, 4])) {
+            $query = $this->db->query("SELECT 
+                                            COALESCE(MAX(NUM_INTERNO_AP), 0) + 1 AS V_LAST_NUMERO
+                                        FROM 
+                                            ADMIN.PB_SOLICITUD_HISTO
+                                        WHERE 
+                                            COD_EMPRESA IN (?) 
+                                            AND IND_TIPO_BIOPSIA IN (2, 3, 4)
+                                            AND YEAR(DATE_INICIOREGISTRO) = YEAR(NOW())
+                                            AND NUM_FICHAE IS NOT NULL
+            ", [$v_cod_empresa]);
+        } elseif ($v_ind_tipo_biopsia == 5) {
+            $query = $this->db->query("SELECT 
+                                            COALESCE(MAX(NUM_CO_CITOLOGIA), 0) + 1 AS V_LAST_NUMERO
+                                        FROM 
+                                            ADMIN.PB_SOLICITUD_HISTO
+                                        WHERE 
+                                            COD_EMPRESA IN (?)
+                                            AND IND_TIPO_BIOPSIA IN (4, 5)
+                                            AND YEAR(DATE_INICIOREGISTRO) = YEAR(NOW())
+                                            AND NUM_FICHAE IS NOT NULL
+            ", [$v_cod_empresa]);
+        } elseif ($v_ind_tipo_biopsia == 6) {
+            $query = $this->db->query("SELECT 
+                                            COALESCE(MAX(NUM_CO_PAP), 0) + 1 AS V_LAST_NUMERO
+                                        FROM 
+                                            ADMIN.PB_SOLICITUD_HISTO
+                                        WHERE 
+                                            COD_EMPRESA IN (?)
+                                            AND IND_TIPO_BIOPSIA = 6
+                                            AND YEAR(DATE_INICIOREGISTRO) = YEAR(NOW())
+                                            AND NUM_FICHAE IS NOT NULL
+            ", [$v_cod_empresa]);
+        }
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $v_last_numero = $row->V_LAST_NUMERO;
+        }
+        return [
+            'STATUS' => true,
+            'V_LAST_NUMERO' => $v_last_numero,
+            'V_IND_TIPO_BIOPSIA' => $v_ind_tipo_biopsia,
+            'V_ID_ANATOMIA' => $v_id_anatomia
+        ];
+    }
     
-    public function model_ultimo_numero_disponible_citologia($valiable){
-        $this->db->trans_start();
-        $param          =   array(
-                            array( 
-                                'name'      =>  ':V_COD_EMPRESA',
-                                'value'     =>  $valiable["val_empresa"],
-                                'length'    =>  20,
-                                'type'      =>  SQLT_CHR 
-                            ),
-                            array( 
-                                'name'      =>  ':IND_TIPO_BIOPSIA',
-                                'value'     =>  $valiable["ind_tipo_biopsia"],
-                                'length'    =>  20,
-                                'type'      =>  SQLT_CHR 
-                            ),
-                            array( 
-                                'name'      =>  ':P_ULTIMO_NUMERO',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                            array( 
-                                'name'      =>  ':P_STATUS',
-                                'value'     =>  $this->db->get_cursor(),
-                                'length'    =>  -1,
-                                'type'      =>  OCI_B_CURSOR
-                            ),
-                        );
-        $result             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','DATA_LAST_NUMERO_CITOLOGIA',$param);
-        $this->db->trans_complete();
-        return array(
-            'STATUS'	    =>	$this->db->trans_status(),
-            'DATA'          =>  $result,
-            'DATA_NUMBER'   =>  $result[':P_ULTIMO_NUMERO'],
-            'P_STATUS'      =>  $result[':P_STATUS'],
-        );
+    public function model_ultimo_numero_disponible_citologia($aData){
+        $v_cod_empresa = $aData['val_empresa'];
+        $v_ind_tipo_biopsia =  $aData['ind_tipo_biopsia'];
+        $v_last_numero = 0;
+        $v_id_anatomia = null;
+        $query = $this->db->query("SELECT 
+                                        COALESCE(MAX(NUM_CO_CITOLOGIA), 0) + 1 AS V_LAST_NUMERO
+                                    FROM 
+                                        ADMIN.PB_SOLICITUD_HISTO
+                                    WHERE 
+                                        COD_EMPRESA IN (?) 
+                                        AND IND_TIPO_BIOPSIA IN (4, 5)
+                                        AND YEAR(DATE_INICIOREGISTRO) = YEAR(NOW())
+                                        AND NUM_FICHAE IS NOT NULL
+                                ", [$v_cod_empresa]);
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $v_last_numero = $row->V_LAST_NUMERO;
+        }
+        return [
+            'V_LAST_NUMERO' => $v_last_numero,
+            'V_IND_TIPO_BIOPSIA' => $v_ind_tipo_biopsia,
+            'V_ID_ANATOMIA' => $v_id_anatomia
+        ];
     }
     
     

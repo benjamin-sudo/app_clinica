@@ -19,16 +19,16 @@
     <div class="GRID_LIBRO_BIOPSIAS_II_MAIN1 _CENTER">&nbsp;</div>
     <div class="GRID_LIBRO_BIOPSIAS_II_MAIN3 grid_left">
         <div class="btn-group" style="padding:6px;">
-            <button type="button" class="btn btn-success btn-fill"      id="BTN_UPDATE_PANEL_1"                onclick="UPDATE_PANEL()">
+            <button type="button" class="btn btn-success btn-fill" id="BTN_UPDATE_PANEL_1" onclick="UPDATE_PANEL()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
-            <button type="button" class="btn btn-info btn-fill"      id="BTN_POP_START"                        onclick="js_min_clavesesissan()" style="displaY:none">
+            <button type="button" class="btn btn-info btn-fill" id="BTN_POP_START" onclick="js_min_clavesesissan()" style="displaY:none">
                 <i class="fa fa-users" aria-hidden="true"></i>&nbsp;PERFIL CLINICA LIBRE
             </button>
-            <button type="button" class="btn btn-warning btn-fill"      id="BTN_POP_START"                     onclick="js_gestion_html()" style="displaY:none">
+            <button type="button" class="btn btn-warning btn-fill" id="BTN_POP_START" onclick="js_gestion_html()" style="displaY:none">
                 <i class="fa fa-address-card" aria-hidden="true"></i>&nbsp; 2.- PRESTADORES 
             </button>
-            <button type="button" class="btn btn-primary btn-fill"      id="btn_gestion_tomademuestraxuser"     onclick="js_gestion_tomademuestraxuser()">
+            <button type="button" class="btn btn-primary btn-fill" id="btn_gestion_tomademuestraxuser" onclick="js_gestion_tomademuestraxuser()">
                 <i class="fa fa-users" aria-hidden="true"></i>&nbsp;USUARIOS POR TOMA DE MUESTRA
             </button>
         </div>
@@ -43,7 +43,6 @@
 <!--
     <hr style="margin:0px 0px 0px 0px;">
 -->
-
 
 <div class="dv_derivar" id="" style="margin-top:-5px;"> 
     <div class="GRID_LIBRO_MAIN_SOLICITUD">

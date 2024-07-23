@@ -136,9 +136,6 @@ $(document).ready(function(){
         console.log("star ws -> RECEPCION DE MUESTRAS <- ");
         //load_envio_a_recepcion_ws(1);
     }
-    
-    //console.log("-----------------------------------------------");
-    //console.log("       cambios para victoria 12.01.2023        ");
 
     $('#modal_gestion_tomamuestraxuser').on('show.bs.modal',function(e){ 
         $('.class_gestion_tomamuestraxuser .modal-body').css('overflow-y','auto'); 
@@ -146,7 +143,6 @@ $(document).ready(function(){
         $('.class_gestion_tomamuestraxuser .modal-body').css('max-height',_height);
         $('.class_gestion_tomamuestraxuser .modal-body').css('min-height',_height);
     });
-
     $('#modal_clave_esissan_ap').on('show.bs.modal',function(e){ 
         $('.class_gestion_tomamuestraxuser .modal-body').css('overflow-y','auto'); 
         var _height = $(window).height()*0.8;

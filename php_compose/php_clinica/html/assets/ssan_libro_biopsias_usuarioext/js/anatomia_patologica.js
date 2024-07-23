@@ -191,24 +191,21 @@ function busqueda_numero_disponible(tipo_biopsia){
         type : "POST",
         url : "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible",
         dataType : "json",
-        beforeSend : function(xhr) {   
-                                        console.log("xhr->",xhr);
-                                    },
-        data : {   tipo_biopsia : tipo_biopsia },
-        error :   function(errro) { 
-                                        console.log(errro);  
-                                        console.log(errro.responseText); 
-                                        $('#loadFade').modal('hide');    
-                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    },
-        success :   function(aData) { 
-                                        console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
-                                        $('#loadFade').modal('hide'); 
-                                        $("#num_interno").val('');
-                                        var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
-                                        showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
-                                        $("#num_interno").val(num_last);
-                                    }, 
+        beforeSend : function(xhr) {    console.log("xhr->",xhr);  },
+        data : { tipo_biopsia : tipo_biopsia },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    $('#loadFade').modal('hide');    
+                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                },
+        success : function(aData){ 
+                                    //console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
+                                    $('#loadFade').modal('hide'); 
+                                    $("#num_interno").val('');
+                                    let num_last = aData.data_numero.V_LAST_NUMERO;
+                                    showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
+                                    $("#num_interno").val(num_last);
+                                }, 
     });
 }
 
@@ -216,25 +213,25 @@ function busqueda_numero_disponible(tipo_biopsia){
 function busqueda_numero_disponible_citologia(tipo_biopsia){
     console.log("tipo_biopsia   ->  ",tipo_biopsia);
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("xhr->",xhr);
-                                                },
-        data                :                   {   tipo_biopsia : tipo_biopsia },
-        error		    :   function(errro)     { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                },
-        success             :   function(aData) { 
-                                                    console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
-                                                    $("#num_interno_cito").val('');
-                                                    var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
-                                                    showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
-                                                    $("#num_interno_cito").val(num_last);
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
+        dataType : "json",
+        beforeSend : function(xhr) {   
+                                        console.log("xhr->",xhr);
+                                    },
+        data : {   tipo_biopsia : tipo_biopsia },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    console.log(errro.responseText);    
+                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                },
+        success : function(aData) { 
+                                        console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
+                                        $("#num_interno_cito").val('');
+                                        let num_last = aData.data_numero.V_LAST_NUMERO;
+                                        showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
+                                        $("#num_interno_cito").val(num_last);
+                                    }, 
     });
 }
 
@@ -2043,54 +2040,52 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                 var pass                    =   new Array({"pass1":r});
                 $('#loadFade').modal('show'); 
                 $.ajax({ 
-                        type                :   "POST",
-                        url                 :   post==0 ?   "ssan_libro_biopsias_usuarioext/fn_confirma_custodia":
-                                                post==1 ?   "ssan_libro_biopsias_usuarioext/confirma_trasporte":"",
-                                                            //"ssan_spab_gestionlistaquirurgica/confirma_recepcion",
-                        dataType            :   "json",
-                        beforeSend          :   function(xhr)   {   
-                                                                    console.log("xhr->",xhr);   
-                                                                },
-                        data                :                   {
-                                                                    id_anatomia     :   id_anatomia,
-                                                                    array_muestras  :   LISTA_ANATOMIA, 
-                                                                    password        :   r,
-                                                                    pass            :   pass,
-                                                                },
-                        error		        :   function(errro)     { 
-                                                                    console.log(errro);  
-                                                                    console.log(errro.responseText); 
-                                                                    $('#loadFade').modal('hide');    
-                                                                    jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                                },
-                        success             :   function(aData) { 
-                                                                    $('#loadFade').modal('hide');    
-                                                                    if(aData.STATUS){
-                                                                        aData.GET_BD.HISTO_OK.forEach(function(idhisto){
-                                                                            $(".li_histo_"+idhisto).remove();
-                                                                            $(".tab_histo_"+idhisto).remove();
-                                                                        });
-                                                                        if( $('#UL_TABS_MUESTRA li').size()===0){
-                                                                            $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
-                                                                        } else {
-                                                                            $('#UL_TABS_MUESTRA').tab();
-                                                                            $('#UL_TABS_MUESTRA li:last-child a').tab('show');
-                                                                        }
-                                                                        jAlert("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha cambiado de estado","Clinica Libre");
-                                                                        //distintas cookie
-                                                                        if( $("#IND_FROM").val() == 'GESPAB' ){
-                                                                            UPDATE_MAIN();
-                                                                        } else {
-                                                                            update_main();
-                                                                        }
-                                                                        if(post==1){
-                                                                            console.log(" load_confirma_envio_recepcion ");
-                                                                            $("#load_confirma_envio_recepcion").submit();
-                                                                        }
-                                                                    } else {
-                                                                        jError(aData['TXT_ERROR'],"Clinica Libre");
-                                                                    }
-                                                                }, 
+                        type :   "POST",
+                        url :   post==0 ?   "ssan_libro_biopsias_usuarioext/fn_confirma_custodia":
+                                post==1 ?   "ssan_libro_biopsias_usuarioext/confirma_trasporte":"",
+                                            //"ssan_spab_gestionlistaquirurgica/confirma_recepcion",
+                        dataType :   "json",
+                        beforeSend :   function(xhr) { console.log("xhr->",xhr); },
+                        data : {
+                                    id_anatomia     :   id_anatomia,
+                                    array_muestras  :   LISTA_ANATOMIA, 
+                                    password        :   r,
+                                    pass            :   pass,
+                                },
+                        error : function(errro) { 
+                                                    console.log(errro);  
+                                                    console.log(errro.responseText); 
+                                                    $('#loadFade').modal('hide');    
+                                                    jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                                },
+                        success : function(aData)   { 
+                                                        $('#loadFade').modal('hide');    
+                                                        if(aData.STATUS){
+                                                            aData.GET_BD.HISTO_OK.forEach(function(idhisto){
+                                                                $(".li_histo_"+idhisto).remove();
+                                                                $(".tab_histo_"+idhisto).remove();
+                                                            });
+                                                            if( $('#UL_TABS_MUESTRA li').size()===0){
+                                                                $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
+                                                            } else {
+                                                                $('#UL_TABS_MUESTRA').tab();
+                                                                $('#UL_TABS_MUESTRA li:last-child a').tab('show');
+                                                            }
+                                                            jAlert("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha cambiado de estado","Clinica Libre");
+                                                            //distintas cookie
+                                                            if( $("#IND_FROM").val() == 'GESPAB' ){
+                                                                UPDATE_MAIN();
+                                                            } else {
+                                                                update_main();
+                                                            }
+                                                            if(post==1){
+                                                                console.log(" load_confirma_envio_recepcion ");
+                                                                $("#load_confirma_envio_recepcion").submit();
+                                                            }
+                                                        } else {
+                                                            jError(aData['TXT_ERROR'],"Clinica Libre");
+                                                        }
+                                                    }, 
                     });
             }
         });

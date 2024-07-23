@@ -5,8 +5,10 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('session');
+        
         $this->load->model("Ssan_libro_biopsias_listaexterno1_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
+
     }
     
     public function index(){
@@ -18,7 +20,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $pto_entrega = 0;  #listado de origen puntos de entrega descrita en la solicitud de anatomia - (DEFAULT 0 - ALL) 
         $ind_opcion = 0;  #0-MASTER | 1-PB_PROFESIONALXROTULO
 
-        
         $return_data = $this->Ssan_libro_biopsias_usuarioext_model->model_busquedasolicitudes([
             "data_inicio" => date("d-m-Y"),
             "data_final" => date("d-m-Y"),
@@ -313,16 +314,16 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     ########################################################################
     public function ultimo_numero_disponible(){
         if(!$this->input->is_ajax_request()){   show_404(); }
-        $status                         =   true;
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $ind_tipo_biopsia               =   $this->input->post('tipo_biopsia'); 
-        $data_number                    =   $this->Ssan_libro_biopsias_usuarioext_model->model_ultimo_numero_disponible(array(
-            "val_empresa"               =>  $empresa,
-            "ind_tipo_biopsia"          =>  $ind_tipo_biopsia,
+        $status = true;
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $ind_tipo_biopsia = $this->input->post('tipo_biopsia'); 
+        $data_number = $this->Ssan_libro_biopsias_usuarioext_model->model_ultimo_numero_disponible(array(
+            "val_empresa" => $empresa,
+            "ind_tipo_biopsia" => $ind_tipo_biopsia,
         ));
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'data_numero'               =>  $data_number,
+            'status' => $status,
+            'data_numero' => $data_number,
         )));
     }
     
