@@ -36,25 +36,21 @@ function changeviwes_punto_entrega(_this){
 
 function consulta_(value){
     $.ajax({ 
-        type		:   "POST",
-        url		    :   "ssan_spab_gestionlistaquirurgica/consulta_hoja_faph",
-        dataType	:   "json",
-	    beforeSend  :   function(xhr)   { 
-                                            //console.log(xhr);
-                                        },
-	    data		:                   { 
-                                            value :value
-                                        },
-        error		:   function(errro)	{  
-                                            console.log(errro); 
-                                            console.log(errro.responseText);
-                                            jError("Error del aplicativo","CLinica Libre"); 
-                                        },
-        success		:   function(aData)	{   
-                                            console.log("---------our update_main ------");
-                                            console.log("       ->",aData,"<-           ");
-                                            console.log("-------------------------------");
-                                        }, 
+        type : "POST",
+        url : "ssan_spab_gestionlistaquirurgica/consulta_hoja_faph",
+        dataType : "json",
+	    beforeSend : function(xhr) { },
+	    data : { value :value },
+        error : function(errro)	{  
+                                    console.log(errro); 
+                                    console.log(errro.responseText);
+                                    jError("Error del aplicativo","CLinica Libre"); 
+                                },
+        success : function(aData) {   
+                                    console.log("---------our update_main ------");
+                                    console.log("       ->",aData,"<-           ");
+                                    console.log("-------------------------------");
+                                }, 
     });
 }
 

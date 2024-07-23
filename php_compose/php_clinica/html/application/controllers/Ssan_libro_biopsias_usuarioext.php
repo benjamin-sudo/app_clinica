@@ -342,36 +342,37 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     #CUSTODIA EN 
     public function fn_confirma_custodia(){
         if(!$this->input->is_ajax_request()){  show_404(); }
-        $empresa                            =   $this->session->userdata('COD_ESTAB');
-        $DATA                               =   '';
-        $id_anatomia                        =   $this->input->post('id_anatomia');
-        $array_muestras                     =   $this->input->post('array_muestras');
-        $usuarioh                           =   explode("-",$this->session->userdata("USERNAME"));
-        $TXT_ERROR                          =   '';
-        $STATUS                             =   true;
-        $password                           =   $this->input->post('password');
-        $valida                             =	$this->Ssan_libro_biopsias_usuarioext_model->validaClave($password);
+        $empresa = $this->session->userdata('COD_ESTAB');
+        $DATA = '';
+        $id_anatomia = $this->input->post('id_anatomia');
+        $array_muestras = $this->input->post('array_muestras');
+        $usuarioh = explode("-",$this->session->userdata("USERNAME"));
+        $TXT_ERROR = '';
+        $STATUS = true;
+        $password = $this->input->post('password');
+        $valida = $this->Ssan_libro_biopsias_usuarioext_model->validaClave($password);
         if(count($valida)>0){
-            $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_custodia(array(
-                                                    "COD_EMPRESA"   =>  $empresa,
-                                                    "SESSION"       =>  $usuarioh[0], 
-                                                    "ID_ANATOMIA"   =>  $id_anatomia,
-                                                    "ARRAY"         =>  $array_muestras,
-                                                    "DATA_FIRMA"    =>  $valida,
-                                                ));
+            $DATA = $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_custodia(array(
+                        "COD_EMPRESA"   =>  $empresa,
+                        "SESSION"       =>  $usuarioh[0], 
+                        "ID_ANATOMIA"   =>  $id_anatomia,
+                        "ARRAY"         =>  $array_muestras,
+                        "DATA_FIRMA"    =>  $valida,
+                    ));
         } else {
-            $TXT_ERROR                      =   'Error en firma simple';
-            $STATUS                         =   false;
+            $TXT_ERROR = 'Error en firma simple';
+            $STATUS = false;
         }
         $this->output->set_output(json_encode([
-            'PASS'          =>  $password,
-            'GET_BD'        =>  $DATA,
-            'DATA_FIRMA'    =>  $valida,
-            'RETURN'        =>  $STATUS,
-            'TXT_ERROR'     =>  $TXT_ERROR,
-            'STATUS'        =>  $STATUS,
+            'PASS' => $password,
+            'GET_BD' => $DATA,
+            'DATA_FIRMA' => $valida,
+            'RETURN' => $STATUS,
+            'TXT_ERROR' => $TXT_ERROR,
+            'STATUS' => $STATUS,
         ]));
     }
+
 
     #################################
     #GESTOR UNICO DE PDF DE ANATOMIA#

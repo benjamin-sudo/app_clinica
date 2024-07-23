@@ -104,37 +104,36 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $array_data = $this->input->post('array_data');
         #LEYENDA
         $data_return = '';
-        
-        
         #editando         
         $ARR_DATA = 'null';
         if (isset($array_data["array_anatomia"]) && is_array($array_data["array_anatomia"]) && count($array_data["array_anatomia"]) > 0) {
             $ARR_DATA = implode(",", $array_data["array_anatomia"]);
         }
-        
         $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_INFOXMUESTRAANATOMIACA(array(
             "COD_EMPRESA" =>  $empresa,
             "TXTMUESTRA" =>  $get_etiqueta,
             "NUM_FASE" =>  $NUM_FASE,
             "ARR_DATA" =>  $ARR_DATA,
         ));
-
         ###
-        $ARR_GENTIONMSJ                                                         =   [];
+        $ARR_GENTIONMSJ = [];
         if (count($DATA["P_ANATOMIA_PATOLOGICA_MAIN"])>0){
-            $arr_muestra_muestras                                               =   [];
-            $arr_muestras_citologia                                             =   [];
-            $arr_info_linea_tiempo                                              =   [];
+            $arr_muestra_muestras = [];
+            $arr_muestras_citologia = [];
+            $arr_info_linea_tiempo = [];
+            
             if (count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){
                 foreach ($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $arr_muestras_anatomica_row)  {
-                    $arr_muestra_muestras[$arr_muestras_anatomica_row['ID_SOLICITUD_HISTO']][]          =   $arr_muestras_anatomica_row;
+                    $arr_muestra_muestras[$arr_muestras_anatomica_row['ID_SOLICITUD_HISTO']][] =   $arr_muestras_anatomica_row;
                 }
             }
+            
             if (count($DATA["P_AP_MUESTRAS_CITOLOGIA"])>0){
-                foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $arr_muestras_citologica_row)        {
-                    $arr_muestras_citologia[$arr_muestras_citologica_row['ID_SOLICITUD_HISTO']][]       =   $arr_muestras_citologica_row;
+                foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $arr_muestras_citologica_row) {
+                    $arr_muestras_citologia[$arr_muestras_citologica_row['ID_SOLICITUD_HISTO']][] =   $arr_muestras_citologica_row;
                 } 
             }
+
             #ordena data para templetate template_logs_anatomia
             $log_adverso                                                                                =   [];
             if (count($DATA['P_INFO_LOG_ADVERSOS'])>0){
@@ -142,6 +141,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                     $log_adverso[$log_adv['ID_NUM_CARGA'].'_'.$log_adv['ID_NMUESTRA']]                  =   $log_adv;
                 }
             }
+
             if(count($DATA["P_AP_INFORMACION_ADICIONAL"])>0){
                 foreach ($DATA["P_AP_INFORMACION_ADICIONAL"] as $i => $arr_linea_tiempo_logs_row)       {
                     $ID_SOLICITUD_HISTO                                                                 =   $arr_linea_tiempo_logs_row['ID_SOLICITUD_HISTO'];
@@ -157,8 +157,8 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             }
             #falta los log 
             foreach($DATA["P_ANATOMIA_PATOLOGICA_MAIN"] as $i => $row){
-                $id_anatomia                =   $row["ID_SOLICITUD"];
-                $html                       =   $this->load->view("Ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
+                $id_anatomia =   $row["ID_SOLICITUD"];
+                $html =   $this->load->view("Ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
                                                     "VIEWS"                             =>  $vista,
                                                     "DATA"                              =>  $row,
                                                     "FIRST"                             =>  $get_etiqueta,
@@ -166,8 +166,8 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                                                     "P_ANATOMIA_PATOLOGICA_MUESTRAS"    =>  empty($arr_muestra_muestras[$id_anatomia])?[]:$arr_muestra_muestras[$id_anatomia],
                                                     "P_AP_MUESTRAS_CITOLOGIA"           =>  empty($arr_muestras_citologia[$id_anatomia])?[]:$arr_muestras_citologia[$id_anatomia],
                                                     //"P_AP_INFORMACION_ADICIONAL"      =>  empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia],
-                                                    #"HTML_LOGS"                         =>  $this->load->view("Ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
-                                                    "HTML_LOGS" => '',
+                                                    #"HTML_LOGS"                        =>  $this->load->view("Ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
+                                                    "HTML_LOGS"                         => '',
                                                 ),true);
                 
                 $ARR_GENTIONMSJ[]           =   array(
@@ -281,13 +281,14 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         
         #out json 
         $this->output->set_output(json_encode(array(
-            'STATUS' =>  true,
-            'NUM_ANAT' =>  $NUM_ANATOMIA,
+            'STATUS' => true,
+            'DATA' =>  $DATA,
+
+            'NUM_ANAT' => $NUM_ANATOMIA,
             'IND_MODAL' =>  $IND_MODAL,
             'RETURN' =>  $data_return,
             'BUSQ' =>  $get_etiqueta,
             'EMPRESA' =>  $empresa,
-            'DATA' =>  $DATA,
             'HTML_VIWE' =>  $html,
             'HTML_OUT' =>  $TABS_HTML,
             'DATA_GET' =>  $array_data,
@@ -296,6 +297,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             'P_AP_INFORMACION_ADICIONAL' =>  $DATA["P_AP_INFORMACION_ADICIONAL"],
         )));
     }
+
 
     ########################################################################
     #LEYENDA
@@ -309,7 +311,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     ########################################################################
     #PAP                    :   6   =   NUM_CO_PAP 
     ########################################################################
-
     public function ultimo_numero_disponible(){
         if(!$this->input->is_ajax_request()){   show_404(); }
         $status                         =   true;

@@ -1320,37 +1320,37 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
 
     public function sqlValidaClave_doble($arr_password){
-        $this->dbSession = $this->load->database('session', true); 
-        $clave1	        =   strtolower($arr_password[0]["pass1"]);
-        $SQL1           =   "  SELECT 
-                                ID_UID,
-                                USERNAME,
-                                NAME,
-                                MIDDLE_NAME,
-                                LAST_NAME 
-                            FROM 
-                                $this->own.FE_USERS 
-                            WHERE 
-                            TX_INTRANETSSAN_CLAVEUNICA IN ('$clave1') ";
-        $clave2	    =   strtolower($arr_password[0]["pass2"]);
-        $SQL2       =   "SELECT 
-                                ID_UID,
-                                USERNAME,
-                                NAME,
-                                MIDDLE_NAME,
-                                LAST_NAME 
-                            FROM 
-                                $this->own.FE_USERS 
-                            WHERE 
-                            TX_INTRANETSSAN_CLAVEUNICA IN ('$clave2') ";
+        #$this->dbSession = $this->load->database('session', true); 
+        $clave1 = strtolower($arr_password[0]["pass1"]);
+        $SQL1 = " SELECT 
+                    ID_UID,
+                    USERNAME,
+                    NAME,
+                    MIDDLE_NAME,
+                    LAST_NAME 
+                FROM 
+                    $this->own.FE_USERS 
+                WHERE 
+                TX_INTRANETSSAN_CLAVEUNICA IN ('$clave1') ";
+        $clave2 =   strtolower($arr_password[0]["pass2"]);
+        $SQL2 = "SELECT 
+                    ID_UID,
+                    USERNAME,
+                    NAME,
+                    MIDDLE_NAME,
+                    LAST_NAME 
+                FROM 
+                    $this->own.FE_USERS 
+                WHERE 
+                TX_INTRANETSSAN_CLAVEUNICA IN ('$clave2') ";
         return array(
-            'user_1'    =>  $this->dbSession->query($SQL1)->row(),
-            'user_2'    =>  $this->dbSession->query($SQL2)->row(),
+            'user_1' => $this->db->query($SQL1)->row(),
+            'user_2' => $this->db->query($SQL2)->row(),
         );
     }
 
     public function validaClave($clave){
-        $this->dbSession = $this->load->database('session', true); 
+        #$this->dbSession = $this->load->database('session', true); 
         $sql = "SELECT
                     ID_UID,
                     USERNAME,
@@ -1363,11 +1363,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     ADMIN.FE_USERS
                 WHERE 
                     TX_INTRANETSSAN_CLAVEUNICA = ? AND DISABLE = 0";
-        $query = $this->dbSession->query($sql,array($clave));
+        $query = $this->db->query($sql,array($clave));
         return $query->result_array();
     }
-
-    
 
     #########################################
     #   ssan_libro_biopsias_ii_fase         #
@@ -1653,9 +1651,48 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     }
     
     public function LOAD_INFOXMUESTRAANATOMIACA($DATA){
-        $arr_anatomia_busq = $DATA['ARR_DATA']; 
         $result = [];
-
+        $V_ID_HISTO = $this->db->escape($DATA['ARR_DATA']);
+        $V_COD_EMPRESA = $this->db->escape($DATA['COD_EMPRESA']);
+        $P_ANATOMIA_PATOLOGICA_MAIN = [];
+        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
+        if ($multi_query) {
+            do {
+                if ($result = $this->db->conn_id->store_result()) {
+                    $P_ANATOMIA_PATOLOGICA_MAIN = $result->fetch_all(MYSQLI_ASSOC);
+                    $result->free();
+                }
+            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+        } else {
+            $error = $this->db->conn_id->error;
+        }
+        $this->db->reconnect();
+        $P_ANATOMIA_PATOLOGICA_MUESTRAS = [];
+        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_HISTO($V_COD_EMPRESA,$V_ID_HISTO)");
+        if ($multi_query) {
+            do {
+                if ($result = $this->db->conn_id->store_result()) {
+                    $P_ANATOMIA_PATOLOGICA_MUESTRAS = $result->fetch_all(MYSQLI_ASSOC);
+                    $result->free();
+                }
+            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+        } else {
+            $error = $this->db->conn_id->error;
+        }
+        $this->db->reconnect();
+        $P_AP_MUESTRAS_CITOLOGIA = [];
+        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_CITO($V_COD_EMPRESA,$V_ID_HISTO)");
+        if ($multi_query) {
+        do {
+        if ($result = $this->db->conn_id->store_result()) {
+            $P_AP_MUESTRAS_CITOLOGIA = $result->fetch_all(MYSQLI_ASSOC);
+            $result->free();
+        }
+        } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+        } else {
+            $error = $this->db->conn_id->error;
+        }
+        $this->db->reconnect();
         $sql_adversos = "SELECT 
                             P.ID_NMUESTRA,
                             P.ID_ANTECEDENTES_HISTO,  
@@ -1670,263 +1707,255 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             ADMIN.PB_ANTECEDENTES_HISTO P,
                             ADMIN.MOTIVOS_DESACTIVAR_M M
                         WHERE
-                            P.ID_SOLICITUD_HISTO IN ($arr_anatomia_busq) 
+                            P.ID_SOLICITUD_HISTO IN ($V_ID_HISTO) 
                         AND 
                             P.ID_MOTIVO_DESAC =  M.ID_MOTIVO_DESAC 
                         AND
                             P.IND_ESTADO IN (1)";
         $query = $this->db->query($sql_adversos);
-        $results['P_INFO_LOG_ADVERSOS'] = $query->result_array();
-
+        $results[':P_INFO_LOG_ADVERSOS'] = $query->result_array();
 
         return [
             'STATUS' =>	true,
             'DATA' => $DATA,
             'P_STATUS' => empty($result[':P_STATUS'])?null:$result[':P_STATUS'],
             'P_ERROR' => empty($result[':P_ERROR'])?null:$result[':P_ERROR'],
-            /*
-                'P_ANATOMIA_PATOLOGICA_MAIN' =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
-                'P_ANATOMIA_PATOLOGICA_MUESTRAS' =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
-                'P_AP_MUESTRAS_CITOLOGIA' => empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
-                'P_AP_INFORMACION_ADICIONAL' =>	empty($result[':P_AP_INFORMACION_ADICIONAL'])?null:$result[':P_AP_INFORMACION_ADICIONAL'],
-            */
-            'P_ANATOMIA_PATOLOGICA_MAIN' => [],
-            'P_ANATOMIA_PATOLOGICA_MUESTRAS' => [],
-            'P_AP_MUESTRAS_CITOLOGIA' => [],
+            #'P_AP_INFORMACION_ADICIONAL' =>	empty($result[':P_AP_INFORMACION_ADICIONAL'])?null:$result[':P_AP_INFORMACION_ADICIONAL'],
+            'P_ANATOMIA_PATOLOGICA_MAIN' =>	$P_ANATOMIA_PATOLOGICA_MAIN,
+            'P_ANATOMIA_PATOLOGICA_MUESTRAS' =>	$P_ANATOMIA_PATOLOGICA_MUESTRAS,
+            'P_AP_MUESTRAS_CITOLOGIA' => $P_AP_MUESTRAS_CITOLOGIA,
             'P_AP_INFORMACION_ADICIONAL' => [],
             'P_INFO_LOG_ADVERSOS' => empty($result[':P_INFO_LOG_ADVERSOS'])?null:$result[':P_INFO_LOG_ADVERSOS'],
             //'sql_adversos' => $sql_adversos
         ];
     }
+
+
+
+
+
     #############################################
     #FALTA LOGICA
     #IND_ESTADO = 1 | 0
     #ID_HISTO_ESTADO = 1 | NUEVA SOLICITUD | 2 = EN CUSTODIA | 3 = TRASPORTE | 4 = RECEPCIONADA 
-    public function get_confirma_custodia($DATA){
+    public function get_confirma_custodia($DATA) {
         $this->db->trans_start();
-        $mivariable                 =   true;
-        $arr_histo_ok               =   [];
-        if(count($DATA['ARRAY'])>0){
-            foreach($DATA['ARRAY'] as $i => $fila){
-                foreach($fila as $x => $row){
-                    //NUMERO DE CARGA
-                    $ID_CARGA_AP                            =   $this->db->sequence($this->ownPab,'SEQ_NUM_CARGA_AP');
-                    if(count($row["ARRAY_NMUESTRAS"])>0){
-                        foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus){
-                            $ID_LINETIME_HISTO              =   $this->db->sequence($this->ownPab,'SEQ_NUM_LINETIME_HISTO');
-                            $ID_ANATOMIA                    =   $DATA["ID_ANATOMIA"];
-                            $IND_CASETE                     =   $mus['IND_CASETE'];
-                            $ID_MUESTRA                     =   $mus['ID_NMUESTRA'];
-                            $arr_linea_tiempo               =   array(
-                                "ID_LINETIMEHISTO"          =>  $ID_LINETIME_HISTO,
-                                "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                                "ID_SOLICITUD_HISTO"        =>  $row["NUM_HISTO"],
-                                //"ID_NMUESTRA"             =>  substr($mus['ID_NMUESTRA'],1),
-                                "TXT_BACODE"                =>  $mus['ID_NMUESTRA'],
-                                "NUM_FASE"                  =>  1,//EN CUSTODIA
-                                "IND_CHECKED"               =>  $mus['IN_CHECKED'],
-                                "USR_CREA"                  =>  $DATA["SESSION"],
-                                "FEC_CREA"                  =>  'SYSDATE',
-                                "IND_ESTADO"                =>  1,
-                                "ID_UID"                    =>  $DATA["DATA_FIRMA"]->ID_UID,
-                                "TXT_MUESTRA"               =>  $mus['TXT_MUESTRA']==''?'NO INFORMADO':$mus['TXT_MUESTRA'],
-                            );
-                            $arr_linea_tiempo               =   array_merge($arr_linea_tiempo,array($IND_CASETE==1?"ID_CASETE":"ID_NMUESTRA"=>$ID_MUESTRA)); 
-                            $this->db->insert($this->ownPab.'.PB_LINETIME_HISTO',$arr_linea_tiempo);
-                            //**************************************************
+        $mivariable = true;
+        $arr_histo_ok = [];
+    
+        if (count($DATA['ARRAY']) > 0) {
+            foreach ($DATA['ARRAY'] as $i => $fila) {
+                foreach ($fila as $x => $row) {
+                    // NUMERO DE CARGA
+                    $ID_CARGA_AP = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); 
+                    
+                    if (count($row["ARRAY_NMUESTRAS"]) > 0) {
+                        foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus) {
+                            $ID_LINETIME_HISTO = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); 
+                            $ID_ANATOMIA = $DATA["ID_ANATOMIA"];
+                            $IND_CASETE = $mus['IND_CASETE'];
+                            $ID_MUESTRA = $mus['ID_NMUESTRA'];
                             
-                            //*****************************************************
-                            //ACTUALIZA ESTADO DE LA MUESTRA CON EL ULTIMO LINETIME
-                            $this->db->where($IND_CASETE==1?'ID_CASETE':'ID_NMUESTRA',$ID_MUESTRA);
-                            $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array(
-                                "IND_ESTADO_CU"             =>  $mus['IN_CHECKED'],
-                                "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                                "USR_AUDITA"                =>  $DATA["SESSION"],
-                                "DATE_AUDITA"               =>  'SYSDATE'
+                            $arr_linea_tiempo = array(
+                                "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO,
+                                "ID_NUM_CARGA" => $ID_CARGA_AP,
+                                "ID_SOLICITUD_HISTO" => $row["NUM_HISTO"],
+                                //"ID_NMUESTRA" => substr($mus['ID_NMUESTRA'], 1),
+                                "TXT_BACODE" => $mus['ID_NMUESTRA'],
+                                "NUM_FASE" => 1, // EN CUSTODIA
+                                "IND_CHECKED" => $mus['IN_CHECKED'],
+                                "USR_CREA" => $DATA["SESSION"],
+                                "FEC_CREA" => date('Y-m-d H:i:s'),
+                                "IND_ESTADO" => 1,
+                                "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
+                                "TXT_MUESTRA" => $mus['TXT_MUESTRA'] == '' ? 'NO INFORMADO' : $mus['TXT_MUESTRA'],
+                            );
+                            $arr_linea_tiempo[$IND_CASETE == 1 ? "ID_CASETE" : "ID_NMUESTRA"] = $ID_MUESTRA;
+                            
+                            $this->db->insert($this->ownPab . '.PB_LINETIME_HISTO', $arr_linea_tiempo);
+    
+                            // ACTUALIZA ESTADO DE LA MUESTRA CON EL ULTIMO LINETIME
+                            $this->db->where($IND_CASETE == 1 ? 'ID_CASETE' : 'ID_NMUESTRA', $ID_MUESTRA);
+                            $this->db->update($this->ownPab . '.PB_HISTO_NMUESTRAS', array(
+                                "IND_ESTADO_CU" => $mus['IN_CHECKED'],
+                                "ID_NUM_CARGA" => $ID_CARGA_AP,
+                                "USR_AUDITA" => $DATA["SESSION"],
+                                "DATE_AUDITA" => date('Y-m-d H:i:s')
                             ));
-                            //***************************
-                            //ARRAY ANTECEDENTES ADVERSOS
-                            if(isset($mus["ARR_EVENTOS_ADVERSOS"])){
-                                foreach($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv){
-                                    $this->db->insert($this->ownPab.'.PB_ANTECEDENTES_HISTO',array(
-                                        "ID_ANTECEDENTES_HISTO"     =>  $this->db->sequence($this->own,'SEQ_NUM_ANTECEDENTE_HISTO'),
-                                        "ID_LINETIMEHISTO"          =>  $ID_LINETIME_HISTO,
-                                        "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                                        "ID_SOLICITUD_HISTO"        =>  $ID_ANATOMIA,
-                                        "ID_NMUESTRA"               =>  $ID_MUESTRA,
-                                        "ID_MOTIVO_DESAC"           =>  $adv["IND_MOTIVO"],
-                                        "TXT_EVENTO_OBSERVACION"    =>  $adv["TXT_OBSERVACION"],
-                                        "IND_ESTADO"                =>  1
+    
+                            // ARRAY ANTECEDENTES ADVERSOS
+                            if (isset($mus["ARR_EVENTOS_ADVERSOS"])) {
+                                foreach ($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv) {
+                                    $this->db->insert($this->ownPab . '.PB_ANTECEDENTES_HISTO', array(
+                                        "ID_ANTECEDENTES_HISTO" => $this->generate_unique_id($this->ownPab.'.PB_ANTECEDENTES_HISTO'), // Función para generar IDs únicos en MySQL
+                                        "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO,
+                                        "ID_NUM_CARGA" => $ID_CARGA_AP,
+                                        "ID_SOLICITUD_HISTO" => $ID_ANATOMIA,
+                                        "ID_NMUESTRA" => $ID_MUESTRA,
+                                        "ID_MOTIVO_DESAC" => $adv["IND_MOTIVO"],
+                                        "TXT_EVENTO_OBSERVACION" => $adv["TXT_OBSERVACION"],
+                                        "IND_ESTADO" => 1
                                     ));
                                 }
                             }
                         }
                     }
-                    
-                    //**********************************************************
-                    //ACTUALIZA EL ESTADO DE LA SOLCIITUD PRINCIPAL
-                    array_push($arr_histo_ok,$row["NUM_HISTO"]);
-                    $this->db->where('ID_SOLICITUD_HISTO',$row["NUM_HISTO"]); 
-                    $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',
-                    array(  
-                        "ID_HISTO_ESTADO"               =>  2,
-                        "IND_ESTADO_MUESTRAS"           =>  $row["NUM_OK_SAMPLES"],
-                        "ID_NUM_CARGA"                  =>  $ID_CARGA_AP,
-                        "LAST_USR_AUDITA"               =>  $DATA["DATA_FIRMA"]->USERNAME,
-                        "LAST_DATE_AUDITA"              =>  'SYSDATE',
-                        
-                        "ID_UID_CUSTODIA"               =>  $DATA["DATA_FIRMA"]->ID_UID,
-                        "DATE_LAST_CUSTODIA"            =>  'SYSDATE',
-                        
-                        "ID_UID"                        =>  $DATA["DATA_FIRMA"]->ID_UID,
-                        "TXT_NAMEAUDITA"                =>  $DATA["DATA_FIRMA"]->NAME." ".$DATA["DATA_FIRMA"]->MIDDLE_NAME
+    
+                    // ACTUALIZA EL ESTADO DE LA SOLICITUD PRINCIPAL
+                    array_push($arr_histo_ok, $row["NUM_HISTO"]);
+                    $this->db->where('ID_SOLICITUD_HISTO', $row["NUM_HISTO"]);
+                    $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
+                        "ID_HISTO_ESTADO" => 2,
+                        "IND_ESTADO_MUESTRAS" => $row["NUM_OK_SAMPLES"],
+                        "ID_NUM_CARGA" => $ID_CARGA_AP,
+                        "LAST_USR_AUDITA" => $DATA["DATA_FIRMA"]->USERNAME,
+                        "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'),
+                        "ID_UID_CUSTODIA" => $DATA["DATA_FIRMA"]->ID_UID,
+                        "DATE_LAST_CUSTODIA" => date('Y-m-d H:i:s'),
+                        "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
+                        "TXT_NAMEAUDITA" => $DATA["DATA_FIRMA"]->NAME . " " . $DATA["DATA_FIRMA"]->MIDDLE_NAME
                     ));
-                    //**********************************************************
                 }
             }
         }
         return array(
-            'STATUS'        =>  $mivariable,
-            'HISTO_OK'      =>  $arr_histo_ok,
-            'STATUS_BD'     =>  $this->db->trans_complete(),  
+            'STATUS' => $mivariable,
+            'HISTO_OK' => $arr_histo_ok,
+            'STATUS_BD' => $this->db->trans_complete(),
         );
     }
-    
+
+    /*            
+    #HOSPITAL ANGOL             –   RECIBE SOLICITUD DE:
+        CSF ALEMANIA            -   303
+        CSF HUEQUEN             -   301
+        PIEDRA DE AGUILA        -   304
+        CSF RENAICO             -   300 
+        H COLLIPULLI            -   103
+        H PUREN                 -   101
+        CSF LOS SAUCES          -   102
+        CSF LUMACO              -   105
+    #HOSPITAL VICTORIA
+        CSF VICTORIA            -   318
+        H TRAGUIEN              -   104
+        H LONQUIMAY             -   108
+        H CURACAUTÍN            -   107
+        CSF ERCILLA             –   302
+    */
+    #$_arr_establecimiento_referencia = $this->db->query(" SELECT P.COD_ESTABLREF FROM PABELLON.PB_RED_MAPA_AP P WHERE P.COD_EMPRESA IN ($v_cod_empresa)  AND P.IND_ESTADO IN (1) ")->result_array();
+    #$_val_establecimiento_referencia = $_arr_establecimiento_referencia[0]["COD_ESTABLREF"];
+
     #SOLO TRASPORTE + DERIVACION POR CODIGO
-    public function get_confirma_trasporte($DATA){
-        ########################################################################
+    public function get_confirma_trasporte($DATA) {
         $this->db->trans_start();
-        $mivariable                                 =   true;
-        $arr_histo_ok                               =   [];
-        #DERIVACION ENTRE EMPRESAS
-        $_val_establecimiento_referencia            =   '';
-        if($DATA['COD_EMPRESA'] == '100' || $DATA['COD_EMPRESA'] == '106' || $DATA['COD_EMPRESA'] == '029'){
-            $_val_establecimiento_referencia        =   ''; 
+        $mivariable = true;
+        $arr_histo_ok = [];
+        
+        // DERIVACION ENTRE EMPRESAS
+        $_val_establecimiento_referencia = '';
+        if($DATA['COD_EMPRESA'] == '100' || $DATA['COD_EMPRESA'] == '106' || $DATA['COD_EMPRESA'] == '029' || $DATA['COD_EMPRESA'] == '800') {
+            $_val_establecimiento_referencia = ''; 
         } else {
-            $v_cod_empresa                          =   $DATA['COD_EMPRESA'];
-        /*            
-        #HOSPITAL ANGOL             –   RECIBE SOLICITUD DE:
-            CSF ALEMANIA            -   303
-            CSF HUEQUEN             -   301
-            PIEDRA DE AGUILA        -   304
-            CSF RENAICO             -   300 
-            H COLLIPULLI            -   103
-            H PUREN                 -   101
-            CSF LOS SAUCES          -   102
-            CSF LUMACO              -   105
-        #HOSPITAL VICTORIA
-            CSF VICTORIA            -   318
-            H TRAGUIEN              -   104
-            H LONQUIMAY             -   108
-            H CURACAUTÍN            -   107
-            CSF ERCILLA             –   302
-        */
-            #$_arr_establecimiento_referencia       =   $this->db->query(" SELECT P.COD_ESTABLREF FROM PABELLON.PB_RED_MAPA_AP P WHERE P.COD_EMPRESA IN ($v_cod_empresa)  AND P.IND_ESTADO IN (1) ")->result_array();
-            #$_val_establecimiento_referencia       =   $_arr_establecimiento_referencia[0]["COD_ESTABLREF"];
-            
-            if  (   $v_cod_empresa  == '303'   || 
-                    $v_cod_empresa  == '301'   || 
-                    $v_cod_empresa  == '304'   || 
-                    $v_cod_empresa  == '300'   || 
-                    $v_cod_empresa  == '103'   || 
-                    $v_cod_empresa  == '101'   || 
-                    $v_cod_empresa  == '102'   ||
-                    $v_cod_empresa  == '105'   
-                ){
-                $_val_establecimiento_referencia    =   '100';
+            $v_cod_empresa = $DATA['COD_EMPRESA'];
+            if ($v_cod_empresa == '303' || $v_cod_empresa == '301' || $v_cod_empresa == '304' || $v_cod_empresa == '300' || 
+                $v_cod_empresa == '103' || $v_cod_empresa == '101' || $v_cod_empresa == '102' || $v_cod_empresa == '105') {
+                $_val_establecimiento_referencia = '100';
             }
-            if  (   $v_cod_empresa  == '318'   || 
-                    $v_cod_empresa  == '104'   || 
-                    $v_cod_empresa  == '108'   || 
-                    $v_cod_empresa  == '107'   || 
-                    $v_cod_empresa  == '302'    
-                ){
-                $_val_establecimiento_referencia    =   '106';
+            if ($v_cod_empresa == '318' || $v_cod_empresa == '104' || $v_cod_empresa == '108' || $v_cod_empresa == '107' || $v_cod_empresa == '302') {
+                $_val_establecimiento_referencia = '106';
             }
         }
         
-        if(count($DATA['ARRAY'])>0){
-            foreach($DATA['ARRAY'] as $i => $fila){
-                foreach($fila as $x => $row){
-                    //NUMERO DE CARGA
-                    $ID_CARGA_AP                            =   $this->db->sequence($this->ownPab,'SEQ_NUM_CARGA_AP');
-                    if(count($row["ARRAY_NMUESTRAS"])>0){
-                        foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus){
-                            $ID_LINETIME_HISTO              =   $this->db->sequence($this->ownPab,'SEQ_NUM_LINETIME_HISTO');
-                            $ID_ANATOMIA                    =   $DATA["ID_ANATOMIA"];
-                            $IND_CASETE                     =   $mus['IND_CASETE'];
-                            $ID_MUESTRA                     =   $mus['ID_NMUESTRA'];
-                            $arr_linea_tiempo               =   array(
-                                "ID_LINETIMEHISTO"          =>  $ID_LINETIME_HISTO,
-                                "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                                "ID_SOLICITUD_HISTO"        =>  $row["NUM_HISTO"],
-                                //"ID_NMUESTRA"             =>  substr($mus['ID_NMUESTRA'],1),
-                                "TXT_BACODE"                =>  $mus['ID_NMUESTRA'],
-                                "NUM_FASE"                  =>  2,//EN TRASPORTE
-                                "IND_CHECKED"               =>  $mus['IN_CHECKED'],
-                                "USR_CREA"                  =>  $DATA["SESSION"],
-                                "FEC_CREA"                  =>  'SYSDATE',
-                                "IND_ESTADO"                =>  1,
-                                "ID_UID"                    =>  $DATA["DATA_FIRMA"]->ID_UID,
-                                "TXT_MUESTRA"               =>  $mus['TXT_MUESTRA']==''?'NO INFORMADO':$mus['TXT_MUESTRA'],
+        if (count($DATA['ARRAY']) > 0) {
+            foreach ($DATA['ARRAY'] as $i => $fila) {
+                foreach ($fila as $x => $row) {
+                    // NUMERO DE CARGA
+                    // Ya no necesitamos generar manualmente $ID_CARGA_AP
+                    // Este se generará automáticamente en MySQL con AUTO_INCREMENT
+    
+                    if (count($row["ARRAY_NMUESTRAS"]) > 0) {
+                        foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus) {
+                            // Ya no necesitamos generar manualmente $ID_LINETIME_HISTO
+                            // Este se generará automáticamente en MySQL con AUTO_INCREMENT
+                            
+                            $ID_ANATOMIA = $DATA["ID_ANATOMIA"];
+                            $IND_CASETE = $mus['IND_CASETE'];
+                            $ID_MUESTRA = $mus['ID_NMUESTRA'];
+                            
+                            $arr_linea_tiempo = array(
+                                // "ID_LINETIMEHISTO" => el ID se generará automáticamente,
+                                "ID_NUM_CARGA" => $ID_CARGA_AP,
+                                "ID_SOLICITUD_HISTO" => $row["NUM_HISTO"],
+                                "TXT_BACODE" => $mus['ID_NMUESTRA'],
+                                "NUM_FASE" => 2, // EN TRASPORTE
+                                "IND_CHECKED" => $mus['IN_CHECKED'],
+                                "USR_CREA" => $DATA["SESSION"],
+                                "FEC_CREA" => date('Y-m-d H:i:s'),
+                                "IND_ESTADO" => 1,
+                                "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
+                                "TXT_MUESTRA" => $mus['TXT_MUESTRA'] == '' ? 'NO INFORMADO' : $mus['TXT_MUESTRA'],
                             );
                             
-                            $arr_linea_tiempo               =   array_merge($arr_linea_tiempo,array($IND_CASETE==1?"ID_CASETE":"ID_NMUESTRA"=>$ID_MUESTRA)); 
-                            $this->db->insert($this->ownPab.'.PB_LINETIME_HISTO',$arr_linea_tiempo);
-                            //CAMBIA ESTADO DE MUESTRAS
-                            $this->db->where($IND_CASETE==1?'ID_CASETE':'ID_NMUESTRA',$ID_MUESTRA);
-                            $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array(
-                                "IND_ESTADO_CU"             =>  $mus['IN_CHECKED'],
-                                "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                                "USR_AUDITA"                =>  $DATA["SESSION"],
-                                "DATE_AUDITA"               =>  'SYSDATE'
+                            $arr_linea_tiempo[$IND_CASETE == 1 ? "ID_CASETE" : "ID_NMUESTRA"] = $ID_MUESTRA;
+                            $this->db->insert($this->ownPab . '.PB_LINETIME_HISTO', $arr_linea_tiempo);
+                            // CAMBIA ESTADO DE MUESTRAS
+                            $this->db->where($IND_CASETE == 1 ? 'ID_CASETE' : 'ID_NMUESTRA', $ID_MUESTRA);
+                            $this->db->update($this->ownPab . '.PB_HISTO_NMUESTRAS', array(
+                                "IND_ESTADO_CU" => $mus['IN_CHECKED'],
+                                "ID_NUM_CARGA" => $ID_CARGA_AP,
+                                "USR_AUDITA" => $DATA["SESSION"],
+                                "DATE_AUDITA" => date('Y-m-d H:i:s')
                             ));
-                            if(isset($mus["ARR_EVENTOS_ADVERSOS"])){
-                                foreach($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv){
-                                    $this->db->insert($this->ownPab.'.PB_ANTECEDENTES_HISTO',array(
-                                        "ID_ANTECEDENTES_HISTO"     =>  $this->db->sequence($this->own,'SEQ_NUM_ANTECEDENTE_HISTO'),
-                                        "ID_LINETIMEHISTO"          =>  $ID_LINETIME_HISTO,
-                                        "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                                        "ID_SOLICITUD_HISTO"        =>  $ID_ANATOMIA,
-                                        "ID_NMUESTRA"               =>  $ID_MUESTRA,
-                                        "ID_MOTIVO_DESAC"           =>  $adv["IND_MOTIVO"],
-                                        "TXT_EVENTO_OBSERVACION"    =>  $adv["TXT_OBSERVACION"],
-                                        "IND_ESTADO"                =>  1
+                            if (isset($mus["ARR_EVENTOS_ADVERSOS"])) {
+                                foreach ($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv) {
+                                    $this->db->insert($this->ownPab . '.PB_ANTECEDENTES_HISTO', array(
+                                        // "ID_ANTECEDENTES_HISTO" => el ID se generará automáticamente,
+                                        "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO,
+                                        "ID_NUM_CARGA" => $ID_CARGA_AP,
+                                        "ID_SOLICITUD_HISTO" => $ID_ANATOMIA,
+                                        "ID_NMUESTRA" => $ID_MUESTRA,
+                                        "ID_MOTIVO_DESAC" => $adv["IND_MOTIVO"],
+                                        "TXT_EVENTO_OBSERVACION" => $adv["TXT_OBSERVACION"],
+                                        "IND_ESTADO" => 1
                                     ));
                                 }
                             }
-                            
                         }
                     }
-                    
-                    ############################################################
-                    array_push($arr_histo_ok,$row["NUM_HISTO"]);
-                    $this->db->where('ID_SOLICITUD_HISTO',$row["NUM_HISTO"]);
-                    $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
-                        "ID_HISTO_ESTADO"           =>  3,
-                        "DATE_TRASLADO"             =>  'SYSDATE',
-                        "ID_UID_TRASLADO"           =>  $DATA["DATA_FIRMA"]->ID_UID,
-                        "ID_USER_TRASLADO"          =>  $DATA["SESSION"],
-                        "IND_ESTADO_MUESTRAS"       =>  $row["NUM_OK_SAMPLES"],
-                        "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                        "LAST_USR_AUDITA"           =>  $DATA["DATA_FIRMA"]->USERNAME,
-                        "LAST_DATE_AUDITA"          =>  'SYSDATE',
-                        "ID_UID"                    =>  $DATA["DATA_FIRMA"]->ID_UID,
-                        "TXT_NAMEAUDITA"            =>  $DATA["DATA_FIRMA"]->NAME." ".$DATA["DATA_FIRMA"]->MIDDLE_NAME,
-                        "COD_ESTABLREF"             =>  $_val_establecimiento_referencia
+                    array_push($arr_histo_ok, $row["NUM_HISTO"]);
+                    $this->db->where('ID_SOLICITUD_HISTO', $row["NUM_HISTO"]);
+                    $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
+                        "ID_HISTO_ESTADO" => 3,
+                        "DATE_TRASLADO" => date('Y-m-d H:i:s'),
+                        "ID_UID_TRASLADO" => $DATA["DATA_FIRMA"]->ID_UID,
+                        "ID_USER_TRASLADO" => $DATA["SESSION"],
+                        "IND_ESTADO_MUESTRAS" => $row["NUM_OK_SAMPLES"],
+                        "ID_NUM_CARGA" => $ID_CARGA_AP,
+                        "LAST_USR_AUDITA" => $DATA["DATA_FIRMA"]->USERNAME,
+                        "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'),
+                        "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
+                        "TXT_NAMEAUDITA" => $DATA["DATA_FIRMA"]->NAME . " " . $DATA["DATA_FIRMA"]->MIDDLE_NAME,
+                        "COD_ESTABLREF" => $_val_establecimiento_referencia
                     ));
                 }
             }
         }
-        
         return array(
-            'STATUS'        =>  $mivariable,
-            'HISTO_OK'      =>  $arr_histo_ok,
-            'STATUS_BD'     =>  $this->db->trans_complete(),  
-            ''
+            'STATUS' => $mivariable,
+            'HISTO_OK' => $arr_histo_ok,
+            'STATUS_BD' => $this->db->trans_complete(),
         );
     }
     
+    
+    // Función para generar IDs únicos en MySQL
+    private function generate_unique_id($table) {
+        $this->db->select_max('ID_LINETIMEHISTO');
+        $query = $this->db->get($table);
+        $row = $query->row_array();
+        return $row['id'] + 1;
+    }
+
     #RECEPCION
     public function get_confirma_recepcion($DATA){
         $this->db->trans_start();
@@ -2290,7 +2319,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->trans_start();
         $V_ID_HISTO = $this->db->escape($DATA["ID_HISTO"]);
         $V_COD_EMPRESA = $this->db->escape($DATA["COD_EMPRESA"]);
-
         $P_ANATOMIA_PATOLOGICA_MAIN = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
         if ($multi_query) {
@@ -2304,8 +2332,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             $error = $this->db->conn_id->error;
         }
         $this->db->reconnect();
-
-        ######################################
         $P_ANATOMIA_PATOLOGICA_MUESTRAS = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_HISTO($V_COD_EMPRESA,$V_ID_HISTO)");
         if ($multi_query) {
@@ -2319,9 +2345,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             $error = $this->db->conn_id->error;
         }
         $this->db->reconnect();
-
-
-        ######################################
         $P_AP_MUESTRAS_CITOLOGIA = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_CITO($V_COD_EMPRESA,$V_ID_HISTO)");
         if ($multi_query) {
@@ -2335,13 +2358,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $error = $this->db->conn_id->error;
         }
         $this->db->reconnect();
- 
 
-
-
-
-
-        // GESTOR DE IMAGENES
+        #GESTOR DE IMAGENES
         $C_IMAGENES_BLOB = $this->db->query("SELECT
                 I.ID_MAIN AS ID_UNICO_IMAGEN,
                 I.ID_HISTO_ZONA AS ID_HISTO_ZONA,
@@ -2392,7 +2410,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 AND I.IND_ESTADO = 1
             ORDER BY
                 I.DATE_CREA", array($V_ID_HISTO))->result_array();
-                
+
         $this->db->trans_complete();
         return array(
             'STATUS' => $this->db->trans_status(),
@@ -2406,6 +2424,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'C_IMAGENES_BLOB_MUESTRAS' => $C_IMAGENES_BLOB_MUESTRAS,
         );
     }
+
+
+
     
     #PDF RECHAZO
     public function load_info_rechazo($DATA){

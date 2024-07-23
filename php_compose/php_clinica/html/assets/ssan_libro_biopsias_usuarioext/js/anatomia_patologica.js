@@ -1646,11 +1646,9 @@ function BTN_MARCA_ALL(id){
 }
 
 function js_muestra_indivual(get_etiqueta_modal){
-        
-        console.log("---------------------------------------------------");
-        console.log(" js_muestra_indivual -> ",get_etiqueta_modal);
-        console.log("---------------------------------------------------");
-        
+        //console.log("---------------------------------------------------");
+        //console.log(" js_muestra_indivual -> ",get_etiqueta_modal);
+        //console.log("---------------------------------------------------");
         $("#"+get_etiqueta_modal).removeClass("list-group-item-danger");
     if( document.getElementById("CHEK_"+get_etiqueta_modal).checked ){
         $("#"+get_etiqueta_modal).addClass("list-group-item-success");
@@ -1825,9 +1823,9 @@ function confirma_custodia_all(fase){
 //************************ fase 2 a trasporte **********************************
 //TRASPORTE INDIVIAL
 function confirma_trasporte(id_anatomia){
-    var STATUS_MUESTRAS                 =   get_lista_activos(id_anatomia);
+    var STATUS_MUESTRAS = get_lista_activos(id_anatomia);
     if(STATUS_MUESTRAS.NUM_CHECKED  == 0){ jError("No se ha marcado muestras para trasporte","Clinica Libre");  return false;  }
-    var LISTA_ANATOMIA                  =   {  RESUL : [] };
+    var LISTA_ANATOMIA = {  RESUL : [] };
     LISTA_ANATOMIA.RESUL.push(STATUS_MUESTRAS);
     if(!STATUS_MUESTRAS.ALL_OK_SAMPLES){
         jConfirm('No todas las muestras fueron marcadas. la solicitud quedara en <b>estado incompleta</b> para trasporte. &iquest;Desea Agregar?','Clinica Libre',function(r){
@@ -2038,7 +2036,6 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
         });
         
     } else {
-        
         jPrompt('Con esta acci&oacute;n se proceder&aacute; a editar las solicitud de anatom&iacute;a patol&oacute;gica.<b>'+txt_accion+'</b><br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if((r == '') || (r == null)){
                 jError("Firma simple Vacia","Clinica Libre");
@@ -2846,13 +2843,11 @@ function recepcion_custodia_masiva(){
         jError("Debe marcar solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre");
         return false;
     } else if(aux==1 || NUM_FASE == 1){
-       
         /*
         console.log("-----------------------------------------------------------");
         console.log("aux                    ->  ",aux,"<-                       ");
         console.log("arr_solicitudes        ->  ",arr_solicitudes,"<-           ");
         */
-
         var num_fist                 =   arr_solicitudes[0];
         var return_val               =   busqueda_etiquera(3,num_fist,{array_anatomia:arr_solicitudes.length===0?{}:arr_solicitudes});
         //console.log("return_val      ->  ",return_val);
@@ -2889,28 +2884,23 @@ function busqueda_etiquera(from,solicitud,array){
         get_etiqueta                =   'S'+solicitud;
     }
     
-        console.log("   ----------------------------------------------------    ");
-        console.log("   ----------------    busqueda_etiquera   ------------    "); 
-        console.log("   from               =>  ",from,"                         ");
-        console.log("   solicitud          =>  ",solicitud,"                    ");
-        console.log("   get_etiqueta       =>  ",get_etiqueta,"                 ");
-        console.log("   array              =>  ",array,"                        ");
-        console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
-        console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
-        console.log("   ----------------------------------------------------    ");
-    
-
+    console.log("   ----------------------------------------------------    ");
+    console.log("   ----------------    busqueda_etiquera   ------------    "); 
+    console.log("   from               =>  ",from,"                         ");
+    console.log("   solicitud          =>  ",solicitud,"                    ");
+    console.log("   get_etiqueta       =>  ",get_etiqueta,"                 ");
+    console.log("   array              =>  ",array,"                        ");
+    console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
+    console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
+    console.log("   ----------------------------------------------------    ");
 
     //return false;
-
     $('#loadFade').modal('show');
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",
         dataType : "json",
-        beforeSend : function(xhr) {   
-                                        //console.log("load informacion_x_muestra_grupal ->",xhr);   
-                                    },
+        beforeSend : function(xhr){ },
         data : {
                     get_etiqueta    :   get_etiqueta,
                     from            :   from,
@@ -2926,19 +2916,22 @@ function busqueda_etiquera(from,solicitud,array){
                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
         success : function(aData) { 
-                                    $('#loadFade').modal('hide'); 
-                                    console.error(aData);
-                                    
                                     /*
-                                        console.log("------------   informacion_x_muestra_grupal    ----------------------------------");
-                                        console.log("                               ->  ",aData,"                                     ");
-                                        console.log(" data_main                     ->  ",aData.data_main,"                           ");
-                                        console.log(" logs                          ->  ",aData.logs,"                                ");
-                                        console.log(" P_AP_INFORMACION_ADICIONAL    ->  ",aData.P_AP_INFORMACION_ADICIONAL,"          ");
-                                        console.log(" ARR_CASETE_ORD                ->  ",aData.ARR_CASETE_ORD,"                      ");
-                                        console.log("---------------------------------------------------------------------------------");
+                                    console.log("------------   informacion_x_muestra_grupal    ----------------------------------");
+                                    console.log("                               ->  ",aData,"                                     ");
+                                    console.log(" data_main                     ->  ",aData.data_main,"                           ");
+                                    console.log(" logs                          ->  ",aData.logs,"                                ");
+                                    console.log(" P_AP_INFORMACION_ADICIONAL    ->  ",aData.P_AP_INFORMACION_ADICIONAL,"          ");
+                                    console.log(" ARR_CASETE_ORD                ->  ",aData.ARR_CASETE_ORD,"                      ");
+                                    console.log("---------------------------------------------------------------------------------");
                                     */ 
 
+                                    console.error("...................................................");
+                                    console.error("aData        ->  ",aData);
+                                    console.error("DATA         -> ",aData.DATA);
+                                    console.error("...................................................");
+
+                                    $('#loadFade').modal('hide'); 
                                     if(aData.STATUS){
                                         if ($('#UL_TABS_MUESTRA li').size()==0){
                                             $('#get_etiqueta,#get_etiqueta_modal').val('');
@@ -3206,7 +3199,7 @@ function js_validafirma(txt_firma_simple){
                                                 },
         success		:   function(aData)         {   
                                                     $('#loadFade').modal('hide');
-                                                    console.log("aData -> ",aData);
+                                                    //console.log("aData -> ",aData);
                                                     if (aData.status){
                                                         let data_user = aData.valida[0];
                                                         showNotification('top','center','<i class="fa fa-info"></i>&nbsp;Firma simple ->'+data_user.NAME+' - '+data_user.USERNAME,1,'');
