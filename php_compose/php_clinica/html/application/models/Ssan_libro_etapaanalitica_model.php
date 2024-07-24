@@ -1038,7 +1038,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
 
     public function load_informacion_rce_patologico_new($DATA){
         $arr_data = [];
-
+        $V_ID_HISTO = $this->db->escape($DATA['id_anatomia']);
+        $V_COD_EMPRESA = $this->db->escape($DATA['cod_empresa']);
         $P_ANATOMIA_PATOLOGICA_MAIN = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
         if ($multi_query) {
@@ -1051,7 +1052,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         } else {
             $error = $this->db->conn_id->error;
         }
-
         $this->db->reconnect();
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_HISTO($V_COD_EMPRESA,$V_ID_HISTO)");
         if ($multi_query) {
@@ -1065,7 +1065,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             $error = $this->db->conn_id->error;
         }
         $this->db->reconnect();
-        
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_CITO($V_COD_EMPRESA,$V_ID_HISTO)");
         if ($multi_query) {
         do {
@@ -1080,12 +1079,15 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->reconnect();
 
 
-
-
-
-
+        $arr_info_linea_tiempo = [];
         return [
-            'data_bd' =>  $arr_data,
+            'STATUS'        =>  true,
+            'num_anatomia'  =>  $DATA["id_anatomia"],
+            'linea_time'    =>  $arr_info_linea_tiempo,
+            'data_bd'       =>  $arr_data,
+            'html_log'      =>  $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$DATA["id_anatomia"],'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$DATA["id_anatomia"]])?[]:$arr_info_linea_tiempo[$DATA["id_anatomia"]]),true),
+            'html_main'     =>  '',
+            'get_sala'      =>  $DATA['get_sala'],
         ];
     }
 

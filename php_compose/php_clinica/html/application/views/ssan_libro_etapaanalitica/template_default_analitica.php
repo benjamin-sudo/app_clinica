@@ -113,7 +113,6 @@
     <div class="grid_body_form_analitica2">
 
 
-        <!--
         <?php if ($get_sala == 'salamacroscopia'){     ?>
             <?php echo $this->load->view("ssan_libro_etapaanalitica/html_salamacro_descmuestra",[],true); ?>
         <?php } else if ($get_sala == 'sala_tecnologo'){ ?> 
@@ -209,7 +208,7 @@
                 <br>
                 <?php echo $get_sala;?>
         <?php } ?>
-        -->
+      
 
 
     </div>
