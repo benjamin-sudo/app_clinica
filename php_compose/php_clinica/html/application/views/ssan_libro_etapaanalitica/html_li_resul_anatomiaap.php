@@ -7,9 +7,7 @@
     }
     #$n_image_views                 =   $row["N_IMAGE_VIEWS"]==0||$row["N_IMAGE_VIEWS_X_MUESTRA"]?'disabled':'onclick="ver_imagenes('.$row["ID_SOLICITUD"].')"';
     $txt_day                        =   $row["LAST_DATE_AUDITA_MOMENT"]===date("Ymd")?'hours':'day';
-
     $ID_SOLICITUD                   =   $row["ID_SOLICITUD"];
-    
 ?>
 
 <?php $v_border_star = $aux===1?'border-radius:4px 4px 0px 0px;':''; ?>
@@ -89,7 +87,7 @@
         <div class="grid_a_rce_anatomiapatologica4" style="text-align: end;">
             <b><?php echo $row["TIPO_DE_BIOPSIA"];?></b><br>
             <b>MUESTRAS:<?php echo $row["N_MUESTRAS_TOTAL"];?></b>
-            <?php if($row["TXT_USOCASSETTE"]=='SI'){ echo '<span class="label label-warning">CASETE</span>';}?><br>
+            <?php if($row["TXT_USOCASSETTE"]=='SI'){ echo '<span class="badge bg-light">CASETE</span>';}?><br>
             <b><?php echo $row["DATE_FECHA_REALIZACION"];?></b>
         </div>
         <div class="grid_a_rce_anatomiapatologica6" style="text-align: end;">

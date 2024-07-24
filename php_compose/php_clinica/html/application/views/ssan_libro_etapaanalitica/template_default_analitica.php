@@ -3,7 +3,9 @@
 <input type="hidden" id="NAMESESSION"       name="NAMESESSION"      value="<?php echo $this->session->userdata["NAMESESSION"];?>"/>
 <input type="hidden" id="USERNAME"          name="USERNAME"         value="<?php echo $this->session->userdata["USERNAME"];?>"/>
 <input type="hidden" id="unique"            name="unique"           value="<?php echo $this->session->userdata["unique"];?>"/>
+
 <div class="info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata));?>"></div>
+
 <div class="grid_body_form_analitica">
     <div class="grid_body_form_analitica1">
         <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
@@ -109,6 +111,9 @@
         </div>
     </div>
     <div class="grid_body_form_analitica2">
+
+
+        <!--
         <?php if ($get_sala == 'salamacroscopia'){     ?>
             <?php echo $this->load->view("ssan_libro_etapaanalitica/html_salamacro_descmuestra",[],true); ?>
         <?php } else if ($get_sala == 'sala_tecnologo'){ ?> 
@@ -143,9 +148,7 @@
                     </div>
                 </div>
                 <div class="grid_sala_de_procesos_tiempo2">
-                    <!--  
-                        <?php echo $data_bd[":P_SALA_PROCESO"][0]["VAL_HISTO_ZONA"];?>  
-                    -->
+                    
                 </div>
                 <div class="grid_sala_de_procesos_tiempo3">
                     <?php if ($data_bd[":P_SALA_PROCESO"][0]["VAL_HISTO_ZONA"] == 5) { ?> 
@@ -206,8 +209,10 @@
                 <br>
                 <?php echo $get_sala;?>
         <?php } ?>
+        -->
+
+
     </div>
-    
     <!-- display:none -->
     <div class="grid_body_form_analitica3">
         <div class="card" id="card_informacion_main_anatomia" style="margin-bottom:5px;">

@@ -1,17 +1,21 @@
-<div 
-    class               =   "info_userdata" 
-    data-fecha_inicio   =   "<?php echo date("m/d/Y",$date_inicio);?>"
-    data-fecha_final    =   "<?php echo date("m/d/Y",$date_final);?>"
-    data-getdata        =   "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
-    data-userdata       =   "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
-></div>
-<input type="hidden"    id="get_sala"           name="get_sala"     value="<?php echo $txt_sala;?>"/>
-<input type="hidden"    id="SERVER_NAME"        name="SERVER_NAME"  value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
+<?php
+    #var_dump($resultados['lista_anatomia']);
+    #echo "<hr>";
+    #var_dump($HTML_LI['return_html']);
+?>
 
-<form id="load_ingreso_etapa_analitica"         method="post"       action="#"></form>
-<form id="load_anuncios_anatomia_patologica"    method="post"       action="#"></form>
-<form id="get_termino_sala_macroscopia"         method="post"       action="#"></form>
-<form id="update_chat_x_hoja"                   method="post"       action="#"></form>
+<div class = "info_userdata" 
+    data-fecha_inicio = "<?php echo date("m/d/Y",$date_inicio);?>"
+    data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"
+    data-getdata = "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
+    data-userdata = "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
+></div>
+<input type="hidden" id="get_sala" name="get_sala" value="<?php echo $txt_sala;?>"/>
+<input type="hidden" id="SERVER_NAME" name="SERVER_NAME" value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
+<form id="load_ingreso_etapa_analitica" method="post" action="#"></form>
+<form id="load_anuncios_anatomia_patologica" method="post" action="#"></form>
+<form id="get_termino_sala_macroscopia" method="post" action="#"></form>
+<form id="update_chat_x_hoja" method="post" action="#"></form>
 
 <div class="grid_head_body">
     <div class="grid_head_body1">
@@ -184,7 +188,8 @@
             <div class="grid_titulo_panel_main3">
                 <!-- dropup -->
                 <div class="grid_filtro_panel_por_fecha">
-                    <select class="selectpicker show-tick " multiple data-selected-text-format="count" data-size="11" name="ind_filtro_busqueda_xfechas" id="ind_filtro_busqueda_xfechas" data-width="100%" tabindex="-98">
+                    <!-- selectpicker -->
+                    <select class=" show-tick " multiple data-selected-text-format="count" data-size="11" name="ind_filtro_busqueda_xfechas" id="ind_filtro_busqueda_xfechas" data-width="100%" tabindex="-98">
                         <optgroup label="LISTA COMPLETA" data-max-options="1">
                             <option value="0" >TODAS LAS CATEGORIAS</option>
                         </optgroup>
@@ -233,6 +238,7 @@
         <ul class="list-group lista_etapa_analitica busqueda_por_persona" id="busqueda_por_persona" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_persona"];?> 
         </ul>
+        
 
         <div class="grid_contenedo_paginado">
             <div class="grid_contenedo_paginado1">&nbsp;</div>

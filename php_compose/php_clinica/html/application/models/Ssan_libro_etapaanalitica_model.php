@@ -4,17 +4,279 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 
 class Ssan_libro_etapaanalitica_model extends CI_Model {
 
-    var $tableSpace     =   "ADMIN";
-    var $own            =   "ADMIN";
-    var $ownGu          =   "ADMIN";
-    var $ownPab         =   "ADMIN";
+    var $tableSpace = "ADMIN";
+    var $own = "ADMIN";
+    var $ownGu = "ADMIN";
+    var $ownPab = "ADMIN";
 
     public function __construct(){
         parent::__construct();
-        $this->db = $this->load->database('oracle_conteiner',true);
+        $this->db = $this->load->database('session',true);
     }
 
-    public function load_etapa_analiticaap_paginado($DATA) {
+    public function new_load_analitica_paginado($DATA) {
+        $cod_empresa = $DATA["cod_empresa"];
+        $usr_session = $DATA["usr_session"];
+        $opcion = $DATA["ind_order_by"];
+        $ind_first = $DATA["ind_first"];
+        $val_fecha_inicio =  $DATA["data_inicio"];
+        $val_fecha_final = $DATA["data_final"];
+        $arr_data = $DATA["ind_filtros_ap"];
+        $page_number = $DATA["v_page_num"];
+        $page_size = $DATA["v_page_size"];
+        $fecha_inicio = date('Y-m-d 00:00:00', strtotime($val_fecha_inicio));
+        $fecha_final = date('Y-m-d 23:59:59', strtotime($val_fecha_final));
+        $start_row = ($page_number - 1) * $page_size;
+        $end_row = $page_size;
+        // Filtrar estados
+        $lista_filtro_estados = [];
+        if ($arr_data == '0') {
+            for ($i = 0; $i <= 8; $i++) {
+                $lista_filtro_estados[] = $i;
+            }
+        } else {
+            $arr_data_items = explode(',', $arr_data);
+            foreach ($arr_data_items as $item) {
+                if ($item == '9') {
+                    $lista_filtro_estados[] = '0';
+                } else {
+                    $lista_filtro_estados[] = $item;
+                }
+            }
+        }
+
+        $this->db->select(['
+        P.ID_SOLICITUD_HISTO                                                                            AS ID_SOLICITUD,
+        DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d")                                                       AS LAST_DATE_AUDITA_MOMENT,
+        P.ID_HISTO_ZONA                                                                                 AS ID_HISTO_ZONA,
+        CASE
+            WHEN P.ID_HISTO_ZONA IN (0,"") THEN "callout_enproceso"
+            WHEN P.ID_HISTO_ZONA = "1" THEN "callout_macroscopia"      
+            WHEN P.ID_HISTO_ZONA = "2" THEN "callout_enproceso"
+            WHEN P.ID_HISTO_ZONA = "6" THEN "callout_sala_tecnicas"
+            WHEN P.ID_HISTO_ZONA = "7" THEN "callout_sala_patologo"
+            WHEN P.ID_HISTO_ZONA = "8" THEN "callout_sala_reporte_finalizado"
+            ELSE "callout_default"
+        END                                                                                             AS STYLE_HISTO_ZONA,
+        CASE
+            WHEN P.ID_HISTO_ZONA IN (0,"") THEN "SALA DE RECEPCIÓN | MACROSCÓPICA"
+            WHEN P.ID_HISTO_ZONA = "1" THEN "SALA MACROSCOPICA"      
+            WHEN P.ID_HISTO_ZONA = "2" THEN "SALA PROCESO"
+            WHEN P.ID_HISTO_ZONA = "4" THEN "SALA INCLUSIÓN"
+            WHEN P.ID_HISTO_ZONA = "5" THEN "PROCESAMIENTO - SALA PROCESO" 
+            WHEN P.ID_HISTO_ZONA = "6" THEN "SALA DE TECNICAS (TECNOLOGO)" 
+            WHEN P.ID_HISTO_ZONA = "7" THEN "OFICINA PATOLOGO" 
+            WHEN P.ID_HISTO_ZONA = "8" THEN "FINALIZADO" 
+            ELSE "NO INFORMADO"  
+        END                                                                                             AS TXT_HISTO_ZONA,
+        CASE P.IND_TIPO_BIOPSIA
+            WHEN "1" THEN "SI"
+            WHEN "2" THEN "CONTEMPORANEA"
+            WHEN "3" THEN "DIFERIDA"
+            WHEN "4" THEN "BIOPSIA + CITOLOGÍA"
+            WHEN "6" THEN "CITOLOGÍA PAP"
+            WHEN "5" THEN "SOLO CITOLOGÍA"
+            ELSE "NO INFORMADO"
+        END                                                                                             AS TIPO_DE_BIOPSIA,
+
+        (SELECT COUNT(M.ID_NMUESTRA) 
+            FROM ADMIN.PB_HISTO_NMUESTRAS M
+            WHERE M.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO)                                          AS N_MUESTRAS_TOTAL,
+        CASE 
+            WHEN P.IND_USOCASSETTE = "1" THEN "SI"
+            WHEN P.IND_USOCASSETTE = "0" THEN "NO"
+            ELSE "--"
+        END                                                                                             AS TXT_USOCASSETTE,
+        DATE_FORMAT(P.DATE_INICIOREGISTRO, "%d-%m-%Y %H:%i")                                            AS DATE_FECHA_REALIZACION,
+        P.IND_SALA_PROCESO                                                                              AS IND_SALA_PROCESO,
+        DATE_FORMAT(P.LAST_DATE_AUDITA, "%d-%m-%Y %H:%i")                                               AS LAST_DATE_AUDITA,
+        P.COD_ESTABLREF                                                                                 AS COD_ESTABLREF,
+        P.NUM_INTERNO_AP                                                                                AS NUM_INTERNO_AP,
+        P.NUM_CO_CITOLOGIA                                                                              AS NUM_CO_CITOLOGIA,
+        P.NUM_CO_PAP                                                                                    AS NUM_CO_PAP,
+        P.IND_TIPO_BIOPSIA                                                                              AS IND_TIPO_BIOPSIA,
+        CONCAT(L.COD_RUTPAC, "-", L.COD_DIGVER)                                                         AS RUTPACIENTE,
+        CONCAT(UPPER(L.NOM_NOMBRE), " ", UPPER(L.NOM_APEPAT), " ", UPPER(L.NOM_APEMAT))                 AS NOMBRE_COMPLETO,
+        DATE_FORMAT(L.FEC_NACIMI, "%d-%m-%Y")                                                           AS NACIMIENTO,
+        G.COD_RUTPRO                                                                                    AS COD_RUTPRO,
+        G.COD_DIGVER                                                                                    AS DV,
+        CONCAT(SUBSTR(UPPER(A.NOM_NOMBRE), 1, 1), ".", UPPER(A.NOM_APEPAT), " ", UPPER(A.NOM_APEMAT))   AS NOM_PROFE_CORTO,
+        CASE WHEN P.IND_TIPO_BIOPSIA IN (5,6) THEN 0 ELSE 1 END                                         AS INF_PDF_MACRO,
+        CASE
+            WHEN P.COD_ESTABLREF = ' . $this->db->escape($cod_empresa) . ' THEN (
+                SELECT G.NOM_RAZSOC
+                FROM ADMIN.SS_TEMPRESAS G
+                WHERE G.COD_EMPRESA = P.COD_EMPRESA
+                LIMIT 1
+            )
+            ELSE ""
+        END AS TXT_EMPRESA_DERIVADO,
+
+
+        
+        (SELECT COUNT(M.ID_SOLICITUD_HISTO) FROM
+            ADMIN.PB_MAIN_BLG_ANATOMIA M
+            WHERE
+            M.ID_SOLICITUD_HISTO IN (P.ID_SOLICITUD_HISTO) 
+            AND 
+            M.IND_ESTADO IN (1))                            AS N_IMAGE_VIEWS
+
+        
+        
+        ']);
+        $this->db->from('ADMIN.PB_SOLICITUD_HISTO P');
+        $this->db->join('ADMIN.GG_TPROFESIONAL A', 'A.COD_RUTPRO = P.COD_RUTPRO');
+        $this->db->join('ADMIN.GG_TGPACTE L', 'L.NUM_FICHAE = P.NUM_FICHAE');
+        $this->db->join('ADMIN.GG_TPROFESIONAL G', 'G.COD_RUTPRO = P.COD_RUTPRO');
+        $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
+        $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
+        $this->db->where_in('P.ID_HISTO_ZONA', $lista_filtro_estados);
+        $this->db->where('P.ID_HISTO_ESTADO', 4);
+        $this->db->where('P.IND_ESTADO', 1);
+        $this->db->group_start();
+        $this->db->where_in('P.COD_EMPRESA', $cod_empresa);
+        $this->db->or_where_in('P.COD_ESTABLREF', $cod_empresa);
+        $this->db->group_end();
+        // Ordenar según la opción
+        switch ($opcion) {
+            case '0':
+                $this->db->order_by('P.NUM_INTERNO_AP', 'ASC');
+                break;
+            case '1':
+                $this->db->order_by('P.NUM_CO_CITOLOGIA', 'ASC');
+                break;
+            case '2':
+                $this->db->order_by('P.NUM_CO_PAP', 'ASC');
+                break;
+            default:
+                $this->db->order_by('P.NUM_INTERNO_AP', 'ASC');
+                break;
+        }
+        $this->db->limit($page_size, $start_row);
+        $query_lista_anatomia = $this->db->get();
+        $lista_anatomia = $query_lista_anatomia->result_array();
+        // Query para contar el total de resultados
+        $this->db->select('COUNT(*) AS total_count');
+        $this->db->from('ADMIN.PB_SOLICITUD_HISTO P');
+        $this->db->join('ADMIN.GG_TPROFESIONAL A', 'A.COD_RUTPRO = P.COD_RUTPRO');
+        $this->db->join('ADMIN.GG_TGPACTE L', 'L.NUM_FICHAE = P.NUM_FICHAE');
+        $this->db->join('ADMIN.GG_TPROFESIONAL G', 'G.COD_RUTPRO = P.COD_RUTPRO');
+        $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
+        $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
+        $this->db->where_in('P.ID_HISTO_ZONA', $lista_filtro_estados);
+        $this->db->where('P.ID_HISTO_ESTADO', 4);
+        $this->db->where('P.IND_ESTADO', 1);
+        $this->db->group_start();
+        $this->db->where_in('P.COD_EMPRESA', $cod_empresa);
+        $this->db->or_where_in('P.COD_ESTABLREF', $cod_empresa);
+        $this->db->group_end();
+
+        
+        $query_total_count = $this->db->get();
+        $total_count = $query_total_count->row()->total_count;
+        $num_paginas = ceil($total_count / $page_size);
+        // Resultados
+        $resultados = [
+            'lista_anatomia' => $lista_anatomia,
+            'num_resultados' => [
+                'total_count' => $total_count,
+                'num_paginas' => $num_paginas
+            ],
+            'status' => [
+                'page_number' => $page_number,
+                'page_size' => $page_size,
+                'start_row' => $start_row,
+                'end_row' => $start_row + count($lista_anatomia),
+                'fecha_inicio' => $fecha_inicio,
+                'fecha_final' => $fecha_final
+            ]
+        ];
+
+        //$BD = [];
+        //$BD[':C_LISTA_ANATOMIA'] = $lista_anatomia;
+        return [
+            'BD' =>  null,
+            'resultados' => $resultados,
+            'STATUS' => true,
+            'status_bd' => true,
+            'HTML_LI' =>  $this->li_lista_estapaanalitica_paginado($lista_anatomia, $DATA["ind_opcion"], $DATA["ind_first"], $DATA["get_sala"]),
+            'n_resultado' => $DATA["ind_opcion"] == '#_panel_por_gestion' ? 1 : $result[":C_NUM_RESULTADOS"][0]["V_TOTAL_COUNT"],
+            'n_pagina' =>  $DATA["ind_opcion"] == '#_panel_por_gestion' ? 2 : $result[":C_NUM_RESULTADOS"][0]["V_NUM_PAGINAS"],
+            'ind_opcion' =>  $DATA["ind_opcion"],
+            'date_inicio' => strtotime($DATA["data_inicio"]),
+            'date_final' => strtotime($DATA["data_final"]),
+            'cookie' => isset($_COOKIE['target']) ? '<span class="badge bg-dark">CON COOKIE</span>' : '<span class="badge bg-primary">SIN COOKIE</span>',
+            'ind_busqueda' =>  isset($_COOKIE['target']) ? '<span class="badge badge-warning" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="badge badge-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+            'fechas' =>  isset($_COOKIE['data']) ? $_COOKIE['data'] : 'null',
+            'ids_anatomia' =>  isset($_COOKIE['id_anatomia']) ? json_decode($_COOKIE['id_anatomia']) : 'null',
+            'txt_sala' =>  $DATA["get_sala"],
+            'txt_titulo' =>  $DATA["txt_titulo"],
+            '_cookie' =>  $_COOKIE,
+            'V_DATA' =>  $DATA,
+        ];
+    }
+    
+    public function li_lista_estapaanalitica_paginado($lista_anatomia, $ind_opcion, $ind_first, $get_sala) {
+        #var_dump($lista_anatomia);
+        #var_dump($ind_opcion);
+        #var_dump($ind_first);
+        #var_dump($get_sala);
+        $html = '';
+        $v_num_registro = 0;
+        if (isset($lista_anatomia)) {
+            if(count($lista_anatomia) > 0) {
+                foreach ($lista_anatomia as $i => $row) {
+                    //var_dump($i);
+                    $html .= $this->load->view("ssan_libro_etapaanalitica/html_li_resul_anatomiaap", array(
+                        'aux' => ($i + 1),
+                        'row' => $row,
+                        'ind_opcion' => $ind_opcion,
+                        'ind_first' => $ind_first,
+                        'get_sala' => $get_sala
+                    ), true);
+                }
+            } else {
+                $html .= $this->sin_resultados2(substr($ind_opcion, 1));
+            }
+
+            if ($ind_first == 1) {
+                return array(
+                    'return_html' => $ind_opcion === '#_panel_por_fecha' ? $html : $this->sin_resultados2('_panel_por_fecha'),
+                    'return_por_gestion' => $ind_opcion === '#_panel_por_gestion' ? $html : $this->sin_resultados2('_panel_por_gestion'),
+                    'return_por_codigo' => $ind_opcion === '#_busqueda_bacode' ? $html : $this->sin_resultados2('_busqueda_bacode'),
+                    'return_por_persona' => $ind_opcion === '#_busqueda_xpersona' ? $html : $this->sin_resultados2('_busqueda_xpersona'),
+                );
+            } else {
+                return array(
+                    'return_html' => $html
+                );
+            }
+        } else {
+            return array(
+                'return_html' => $this->sin_resultados2('_panel_por_fecha'),
+                'return_por_gestion' => $this->sin_resultados2('_panel_por_gestion'),
+                'return_por_codigo' => $this->sin_resultados2('_busqueda_bacode'),
+                'return_por_persona' => $this->sin_resultados2('_busqueda_xpersona'),
+            );
+        }
+    }
+
+    public function sin_resultados2($txt_li){
+        $html           =   '
+                                <li class="list-group-item lista_analitica sin_resultados'.$txt_li.'"> 
+                                    <div class="grid_sin_informacion">
+                                        <div class="grid_sin_informacion1"></div>
+                                        <div class="grid_sin_informacion2"><b>SIN INFORMACI&Oacute;N</b> - '.$txt_li.'</div>
+                                        <div class="grid_sin_informacion3"></div>
+                                    </div>
+                                </li>
+                            ';
+        return          $html;
+    }
+
+    
+    #apuntando a oracle
+    public function old_etapa_analiticaap_paginado($DATA) {
         $this->db->trans_start();
         $_boreano_out = true;
         if ($DATA["ind_opcion"] == '#_panel_por_gestion') {
@@ -72,6 +334,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             array('name' => ':C_NUM_RESULTADOS', 'value' => $this->db->get_cursor(), 'length' => -1, 'type' => OCI_B_CURSOR),
             array('name' => ':C_STATUS', 'value' => $this->db->get_cursor(), 'length' => -1, 'type' => OCI_B_CURSOR),
         );
+
         $_txt_proce_anatomia = $DATA["ind_opcion"] == '#_panel_por_gestion' ? 'LOAD_ETAPA_ANALITICA_IDSAP' : 'LOAD_ANALITICA_PAGINADO';
         $result = $this->db->stored_procedure_multicursor($this->own . '.PROCE_ANATOMIA_PATOLOGIA', $_txt_proce_anatomia, $param);
         $this->db->trans_complete();
@@ -94,48 +357,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             '_cookie' =>  $_COOKIE,
             'V_DATA' =>  $DATA,
         );
-    }
-
-    public function li_lista_estapaanalitica_paginado($result, $ind_opcion, $ind_first, $get_sala) {
-        $html = '';
-        $v_num_registro = 0;
-        if (isset($result[":C_LISTA_ANATOMIA"])) {
-            if(count($result[":C_LISTA_ANATOMIA"]) > 0) {
-                foreach ($result[":C_LISTA_ANATOMIA"] as $i => $row) {
-                    $html .=    $this->load->view("ssan_libro_etapaanalitica/html_li_resul_anatomiaap", array(
-                                    'aux'           =>  ($i + 1),
-                                    'row'           =>  $row,
-                                    'ind_opcion'    =>  $ind_opcion,
-                                    'ind_first'     =>  $ind_first,
-                                    'get_sala'      =>  $get_sala
-                                ), true);
-                    
-                    //$html .= '<li class="list-group-item">And a fifth one -> <b>'.$row['RNUM'].'/'.$row['TOTAL_COUNT'].'</b> </li>';     
-                }
-            } else {
-                $html .= $this->sin_resultados(substr($ind_opcion, 1));
-            }
-
-            if ($ind_first == 1) {
-                return array(
-                    'return_html' => $ind_opcion === '#_panel_por_fecha' ? $html : $this->sin_resultados('_panel_por_fecha'),
-                    'return_por_gestion' => $ind_opcion === '#_panel_por_gestion' ? $html : $this->sin_resultados('_panel_por_gestion'),
-                    'return_por_codigo' => $ind_opcion === '#_busqueda_bacode' ? $html : $this->sin_resultados('_busqueda_bacode'),
-                    'return_por_persona' => $ind_opcion === '#_busqueda_xpersona' ? $html : $this->sin_resultados('_busqueda_xpersona'),
-                );
-            } else {
-                return array(
-                    'return_html' => $html // se encarga el js de agregar
-                );
-            }
-        } else {
-            return array(
-                'return_html' => $this->sin_resultados('_panel_por_fecha'),
-                'return_por_gestion' => $this->sin_resultados('_panel_por_gestion'),
-                'return_por_codigo' => $this->sin_resultados('_busqueda_bacode'),
-                'return_por_persona' => $this->sin_resultados('_busqueda_xpersona'),
-            );
-        }
     }
 
     public function load_etapa_analiticaap($DATA){
@@ -551,18 +772,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         }
     }
     
-    public function sin_resultados($txt_li){
-        $html           =   '
-                                <li class="list-group-item lista_analitica sin_resultados'.$txt_li.'"> 
-                                    <div class="grid_sin_informacion">
-                                        <div class="grid_sin_informacion1"></div>
-                                        <div class="grid_sin_informacion2"><b>SIN INFORMACI&Oacute;N</b></div>
-                                        <div class="grid_sin_informacion3"></div>
-                                    </div>
-                                </li>
-                            ';
-        return          $html;
-    }
+   
     
     public function busqueda_img_clob($id_anatomia){
         $this->db->trans_start();
@@ -614,6 +824,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     public function load_informacion_rce_patologico($DATA){
         $this->db->trans_start();
         $param              =   array(
+
                                     #DATA IN
                                     array( 
                                         'name'      =>  ':V_COD_EMPRESA',
@@ -651,6 +862,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                                         'length'    =>  20,
                                         'type'      =>  SQLT_CHR 
                                     ),
+
                                     #CURSORES OUT
                                     array( 
                                         'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
@@ -794,6 +1006,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $log_adverso[$log_adv['ID_NUM_CARGA'].'_'.$log_adv['ID_NMUESTRA']]              =   $log_adv;
             }
         }
+
         if(count($result[":P_AP_INFORMACION_ADICIONAL"])>0){
             foreach ($result[":P_AP_INFORMACION_ADICIONAL"] as $i => $arr_linea_tiempo_logs_row){
                 $ID_SOLICITUD_HISTO                                                             =   $arr_linea_tiempo_logs_row['ID_SOLICITUD_HISTO'];
@@ -801,11 +1014,12 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $ID_NMUESTRA                                                                    =   $arr_linea_tiempo_logs_row['ID_CASETE']==''?$arr_linea_tiempo_logs_row['TXT_BACODE']:$arr_linea_tiempo_logs_row['ID_CASETE'];
                 $id_compuesta                                                                   =   $ID_NUM_CARGA.'_'.$ID_NMUESTRA;
                 $arr_info_linea_tiempo[$ID_SOLICITUD_HISTO][$ID_NUM_CARGA][$ID_NMUESTRA][]      =   array(
-                                                                                                        'MAIN'          =>  $arr_linea_tiempo_logs_row ,
-                                                                                                        'ERROR_LOG'     =>  array_key_exists($id_compuesta,$log_adverso)?$log_adverso[$id_compuesta]:[]
+                                                                                                        'MAIN' =>  $arr_linea_tiempo_logs_row ,
+                                                                                                        'ERROR_LOG' =>  array_key_exists($id_compuesta,$log_adverso)?$log_adverso[$id_compuesta]:[]
                                                                                                     );
             }
         }
+
         return array(
             'STATUS'        =>  true,
             'num_anatomia'  =>  $DATA["id_anatomia"],
@@ -816,6 +1030,69 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'get_sala'      =>  $DATA['get_sala'],
         );
     }
+
+
+
+   
+
+
+    public function load_informacion_rce_patologico_new($DATA){
+        $arr_data = [];
+
+        $P_ANATOMIA_PATOLOGICA_MAIN = [];
+        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
+        if ($multi_query) {
+            do {
+                if ($result = $this->db->conn_id->store_result()) {
+                    $arr_data[':P_ANATOMIA_PATOLOGICA_MAIN'] = $result->fetch_all(MYSQLI_ASSOC);
+                    $result->free();
+                }
+            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+        } else {
+            $error = $this->db->conn_id->error;
+        }
+
+        $this->db->reconnect();
+        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_HISTO($V_COD_EMPRESA,$V_ID_HISTO)");
+        if ($multi_query) {
+            do {
+                if ($result = $this->db->conn_id->store_result()) {
+                    $arr_data[':P_ANATOMIA_PATOLOGICA_MUESTRAS'] = $result->fetch_all(MYSQLI_ASSOC);
+                    $result->free();
+                }
+            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+        } else {
+            $error = $this->db->conn_id->error;
+        }
+        $this->db->reconnect();
+        
+        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_CITO($V_COD_EMPRESA,$V_ID_HISTO)");
+        if ($multi_query) {
+        do {
+        if ($result = $this->db->conn_id->store_result()) {
+            $arr_data[':P_AP_MUESTRAS_CITOLOGIA'] = $result->fetch_all(MYSQLI_ASSOC);
+            $result->free();
+        }
+        } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+        } else {
+            $error = $this->db->conn_id->error;
+        }
+        $this->db->reconnect();
+
+
+
+
+
+
+        return [
+            'data_bd' =>  $arr_data,
+        ];
+    }
+
+
+
+
+
     
     ####################
     #BUSQUEDA DE FAMILIA
@@ -912,7 +1189,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->update($this->ownPab.'.PB_MAIN_BLG_ANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$aData['session'],"DATE_AUDITA"=>"SYSDATE"));
         $this->db->trans_complete();
         return array(
-            'STATUS'                            =>  true,
+            'STATUS' =>  true,
         );
     }
     

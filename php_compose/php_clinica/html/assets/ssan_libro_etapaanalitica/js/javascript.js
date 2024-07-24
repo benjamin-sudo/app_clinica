@@ -1,13 +1,13 @@
 $(document).ready(function(){
-    var today			=   new Date();
-    var dd              =   today.getDate();
-    var mm              =   today.getMonth()+1; 
-    var yyyy			=   today.getFullYear();
-    if (dd<10)			{   dd='0'+dd; } 
-    if (mm<10)			{   mm='0'+mm; } 
-    var today			=   dd+'-'+mm+'-'+yyyy;
-    var todayDate       =   new Date().getDate();
-    
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if (dd<10) { dd='0'+dd; } 
+    if (mm<10) { mm='0'+mm; } 
+    var today = dd+'-'+mm+'-'+yyyy;
+    var todayDate = new Date().getDate();
     $('#fecha_out').datetimepicker({
         useCurrent              :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
         inline			        :   true,
@@ -19,15 +19,15 @@ $(document).ready(function(){
         //minDate		        :   new Date(new Date().setDate((todayDate)-(5))), 
         defaultDate             :   moment($(".info_userdata").data("fecha_inicio"))._d,
         icons			        :   {
-                                        time        :   "fa fa-clock-o"         ,
-                                        date        :   "fa fa-calendar"        ,
-                                        up          :   "fa fa-chevron-up"      ,
-                                        down        :   "fa fa-chevron-down"    ,
-                                        previous    :   'fa fa-chevron-left'    ,
-                                        next        :   'fa fa-chevron-right'   ,
-                                        today       :   'fa fa-screenshot'      ,
-                                        clear       :   'fa fa-trash'           ,
-                                        close       :   'fa fa-remove'          ,
+                                        time : "fa fa-clock-o" ,
+                                        date : "fa fa-calendar" ,
+                                        up : "fa fa-chevron-up" ,
+                                        down : "fa fa-chevron-down" ,
+                                        previous : 'fa fa-chevron-left' ,
+                                        next : 'fa fa-chevron-right',
+                                        today : 'fa fa-screenshot',
+                                        clear : 'fa fa-trash' ,
+                                        close : 'fa fa-remove' ,
                                     }
     });
     $(".timepicker").remove();
@@ -38,27 +38,27 @@ $(document).ready(function(){
     });
 
     $('#fecha_out2').datetimepicker({
-        useCurrent              :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
-        inline			        :   true,
-        sideBySide              :   true,
-        format			        :   'DD-MM-YYYY',
-        locale			        :   'es-us',
-        //daysOfWeekDisabled	:   [0,6],
+        useCurrent : false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
+        inline : true,
+        sideBySide : true,
+        format : 'DD-MM-YYYY',
+        locale : 'es-us',
+        //daysOfWeekDisabled :   [0,6],
         //minDate               :   new Date(new Date().setDate((todayDate)-(5))), 
-        minDate                 :   moment($(".info_userdata").data("fecha_inicio"))._d,
-        maxDate                 :   new Date(),
-        defaultDate             :   moment($(".info_userdata").data("fecha_final"))._d, 
-        icons			        :   {
-                                        time        :   "fa fa-clock-o"         ,
-                                        date        :   "fa fa-calendar"        ,
-                                        up          :   "fa fa-chevron-up"      ,
-                                        down        :   "fa fa-chevron-down"    ,
-                                        previous    :   'fa fa-chevron-left'    ,
-                                        next        :   'fa fa-chevron-right'   ,
-                                        today       :   'fa fa-screenshot'      ,
-                                        clear       :   'fa fa-trash'           ,
-                                        close       :   'fa fa-remove'          ,
-                                    }
+        minDate : moment($(".info_userdata").data("fecha_inicio"))._d,
+        maxDate : new Date(),
+        defaultDate : moment($(".info_userdata").data("fecha_final"))._d, 
+        icons : {
+                    time : "fa fa-clock-o" ,
+                    date : "fa fa-calendar" ,
+                    up : "fa fa-chevron-up" ,
+                    down : "fa fa-chevron-down" ,
+                    previous : 'fa fa-chevron-left' ,
+                    next : 'fa fa-chevron-right',
+                    today : 'fa fa-screenshot',
+                    clear : 'fa fa-trash' ,
+                    close : 'fa fa-remove' ,
+                }
     });
     
     $('#fecha_out2').on('dp.change',function(e){
@@ -156,54 +156,6 @@ $(document).ready(function(){
         $("#PDF_VERDOC").html(''); 
     });
 
-    //console.log("   *******************************************************************     ");
-    //console.log("   *********** tabs busqueda principal *******************************     ");
-    //console.log("   storange_tabs_main  ->  ",localStorage.getItem("storange_tabs_main"),"  ");
-    //console.log("   *******************************************************************     ");
-
-    //localStorage.getItem("storange_tabs_main")===null?null_tabs():js_gestion();
-    null_tabs();
-    var tabElements = document.querySelectorAll('.tabs_main_analitica .nav-link');
-    tabElements.forEach(function(tab) {
-        tab.addEventListener('shown.bs.tab', function(event) {
-            var target = event.target.getAttribute('data-bs-target') || event.target.getAttribute('href');
-            //console.log("   **************************  ");
-            //console.log(" -> ",target);
-            $("#span_tipo_busqueda").html(target);
-            /*
-            $(".n_resultados_panel").html('0'); 
-            $.ajax({ 
-                type                :   "POST",
-                url                 :   "ssan_libro_etapaanalitica/gestion_cookie",
-                dataType            :   "json",
-                beforeSend          :   function(xhr)   {   
-                                                            console.log("ssan_libro_etapaanalitica/gestion_cookie   ->    ",xhr);   
-                                                        },
-                data                :                   { 
-                                                            target          :   target,
-                                                            date_inicio     :   $('#fecha_out').data().date,
-                                                            date_final      :   $('#fecha_out2').data().date,
-                                                        },
-                error               :   function(errro) { 
-                                                            console.log(errro);  
-                                                            console.log(errro.responseText);    
-                                                            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                        },
-                success             :   function(aData) { 
-                                                            //console.log("return aData->",aData);
-                                                            let txt_titulo = $("."+target.slice(1)).data().titulo;
-                                                            //console.log("txt_titulo ->  ",txt_titulo);
-                                                            $("#txt_busqueda_titulo").html('null');
-                                                            li_busqueda_ver_oculta($("."+target.slice(1)).data().zona_li);
-                                                            localStorage.setItem("storange_tabs_main",target);
-                                                            js_visualizacion_menu_principal(target);
-                                                            update_etapaanalitica(1);
-                                                        }, 
-            });
-            */
-        });
-    });
-
     $("#panel_bacode_1").click(function(){setTimeout(function(){$(".focus_etiqueta").focus();},500);});
     $(".focus_etiqueta").keypress(function(e){ if(e.which==13){ busqueda_etiquera_analitica(0,'',{}); } });
     SetFocus();
@@ -216,7 +168,6 @@ $(document).ready(function(){
         e.target.id == 'panel_etiquetas'            ?   $("#header_menu_etiquetas").css('border-radius','0px 0px 0px 0px'):'';
         $("#icono_"+e.target.id).removeClass("fa fa-sort-asc").addClass("fa fa-sort-desc");
     });
-    
     $('#panel_altrapriopidad,#panel_casos,#panel_archivar,#panel_etiquetas').on('hidden.bs.collapse',function(e){
         e.target.id == 'panel_altrapriopidad'       ?   localStorage.setItem("memoria_altrapriopidad",false):'';
         e.target.id == 'panel_casos'                ?   localStorage.setItem("memoria_casos",false):'';
@@ -229,7 +180,12 @@ $(document).ready(function(){
     localStorage.getItem("memoria_casos")           ===     null?localStorage.setItem("memoria_casos",true)         :   js_gestion_panel("casos");
     localStorage.getItem("memoria_archivar")        ===     null?localStorage.setItem("memoria_archivar",true)      :   js_gestion_panel("archivar");
     localStorage.getItem("memoria_etiquetas")       ===     null?localStorage.setItem("memoria_etiquetas",true)     :   js_gestion_panel("etiquetas");
+    
+    
+    
+    
     //busqueda rapida
+    
     $('.radio_busqueda').click(function (){
         //console.log("$(this).val() radio_busqueda -> ",$(this).val());
         if($(this).val() == 1){
@@ -240,13 +196,15 @@ $(document).ready(function(){
             $(".opcion_bsq_etiqueta").hide();
         }
     });
+    
+
     localStorage.getItem("html_busqueda_bacode")?$(".ul_lista_cod_encontrados").html('').append(localStorage.getItem("html_busqueda_bacode")):'';
     //boton de filtro // cambios
     $('#ind_filtro_busqueda_xfechas').on('changed.bs.select',function(e,clickedIndex,isSelected,previousValue){
         /*
-        var ind_filtro                      =   $('#ind_filtro_busqueda_xfechas').val();
-        var count_filtro                    =   $('#ind_filtro_busqueda_xfechas').val() == null ? 0 : $('#ind_filtro_busqueda_xfechas').val().length;
-        console.log("ind_filtro     ->",ind_filtro);
+        var ind_filtro = $('#ind_filtro_busqueda_xfechas').val();
+        var count_filtro = $('#ind_filtro_busqueda_xfechas').val() == null ? 0 : $('#ind_filtro_busqueda_xfechas').val().length;
+        console.log("ind_filtro ->",ind_filtro);
         if (ind_filtro == null){
             js_desabilita_filtro_busqueda();
             localStorage.setItem("strorage_filtro_categorias","0");
@@ -262,8 +220,8 @@ $(document).ready(function(){
     //console.log("-----------------------");
     //console.log("localStorage.getIte    ->  " , localStorage.getItem("strorage_filtro_categorias") );
     if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='0'){
-        //console.log("SI");
-        js_opt_todas_las_categorias(false);
+        console.log("SI");
+        //js_opt_todas_las_categorias(false);
     }  else {
         console.log("NO");
         $('#ind_filtro_busqueda_xfechas').selectpicker('val',localStorage.getItem("strorage_filtro_categorias").split(','));
@@ -277,27 +235,25 @@ $(document).ready(function(){
     //star check de _panel_por_gestion -> tipo_busqueda
     var ind_star_busq       =   1;
     if(localStorage.getItem("storage_busqueda_por_n_biosia")===null){
-        document.getElementById("busqueda_por_paciente").checked    =   true;
+        document.getElementById("busqueda_por_paciente").checked = true;
     }  else  {
-        var txt_busq        =   localStorage.getItem("storage_busqueda_por_n_biosia");
+        var txt_busq = localStorage.getItem("storage_busqueda_por_n_biosia");
         document.getElementById(txt_busq).checked                   =   true;
-        ind_star_busq       =   txt_busq == 'busqueda_por_n_biosia' ? 2 : 1;
+        ind_star_busq = txt_busq == 'busqueda_por_n_biosia' ? 2 : 1;
     }
+
     //elimina la localStorage
     localStorage.removeItem("storange_ids_anatomia");
     //sessionStorage la localStorage
     sessionStorage.removeItem("arr_storange_ids_anatomia");
     sessionStorage.clear();
     //star buscador 
-    star_automplete(ind_star_busq);
+    //star_automplete(ind_star_busq);
     //ws etapa analitica
     //desabilitado
     //ws_etapa_analitica();
-    //console.log("Señor carcelero");
-
     let V_PAGE_NUMBER = $("#V_PAGE_NUMBER").val();
     let V_NUM_PAGINAS = $("#V_NUM_PAGINAS").val();
-
     $('.anatomia_pagination').bootpag({
         page : 1,  //pagina posicionado
         total : V_NUM_PAGINAS,  //paginas disponibles
@@ -309,8 +265,45 @@ $(document).ready(function(){
     }).on('page', function(event, num){
         update_etapaanalitica(num);
     });
-
+    //null_tabs();
+    star_defatult();
 });
+
+function star_defatult(){
+    $("#busqueda_por_fecha").show();
+    $("#busqueda_por_gestion").hide();
+    $("#busqueda_por_codigo").hide();
+    $("#busqueda_por_persona").hide();
+}
+
+function null_tabs(){
+    console.log("null_tabs -> txt_busqueda_titulo");
+    localStorage.setItem("storange_tabs_main","#_panel_por_fecha");
+    js_visualizacion_menu_principal2("#_panel_por_fecha");
+    //localStorage.setItem("html_busqueda_bacode",null);
+    localStorage.removeItem('html_busqueda_bacode');
+    //$('.tabs_main_analitica a[href="#_panel_por_fecha"]').tab('show');
+    //$("#busqueda_por_fecha").show(); 
+    //$("#anatomia_pagination").hide();
+    $(".n_resultados_panel").html('0');
+    var data_tabs = $("._panel_por_fecha").data();
+    $("#txt_busqueda_titulo").html(data_tabs.titulo);
+    li_busqueda_ver_oculta(data_tabs.zona_li);
+    return true;
+}
+
+function js_visualizacion_menu_principal2(target){
+    console.error("target ->  ",target);
+    $("#busqueda_por_fecha").hide();
+    $("#busqueda_por_gestion").hide();
+    $("#busqueda_por_codigo").hide();
+    $("#busqueda_por_persona").hide();
+    if (target == '#_panel_por_fecha'){   $("#busqueda_por_fecha").show(); }
+    if (target == '#_panel_por_gestion'){   $("#busqueda_por_persona").hide();   }
+    return true;
+}
+
+
 
 
 function js_gestion(){
@@ -951,13 +944,13 @@ function star_descrpcion_muestras(id_anatomia){
                         },
         error		:   function(errro)     { 
                                                 console.log("quisas->",errro); 
-                                                $('#loadFade').modal('hide');
+                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 $('#html_descipcion_muestras').html('');
                                                 jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                             },
         success		:   function(aData)     { 
                                                 console.log("aData  ->  ",aData);
-                                                $('#loadFade').modal('hide');
+                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 if(aData.status_session){
                                                     $("#btn_graba_descipcion_muestras").attr('onclick','js_guarda_descripcion_muestras('+id_anatomia+')');
                                                     $("#html_descipcion_muestras").html(aData.out_html);
@@ -1100,20 +1093,7 @@ function SetFocus(){
     }
 }
 
-function null_tabs(){
-    console.log("null_tabs      ->  txt_busqueda_titulo");
-    localStorage.setItem("storange_tabs_main","#_panel_por_fecha");
-    js_visualizacion_menu_principal("#_panel_por_fecha");
-    //localStorage.setItem("html_busqueda_bacode",null);
-    localStorage.removeItem('html_busqueda_bacode');
-    $('.tabs_main_analitica a[href="#_panel_por_fecha"]').tab('show');
-    $("#anatomia_pagination").hide();
-    $(".n_resultados_panel").html('0');
-    var data_tabs               =   $("._panel_por_fecha").data();
-    $("#txt_busqueda_titulo").html(data_tabs.titulo);
-    li_busqueda_ver_oculta(data_tabs.zona_li);
-    return true;
-}
+
 
 function delete_cookie(){
     $.ajax({ 

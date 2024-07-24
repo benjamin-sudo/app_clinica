@@ -1225,3 +1225,130 @@ DELIMITER ;
 
 
 
+
+
+
+
+ PROCEDURE   LOAD_ANALITICA_PAGINADO (
+    V_COD_EMPRESA                              IN VARCHAR2,
+    V_USR_SESSION                               IN VARCHAR2,
+    V_OPCION                                        IN VARCHAR2,
+    V_IND_FIRST                                   IN VARCHAR2,
+    VAL_FECHA_INICIO                           IN VARCHAR2,
+    VAL_FECHA_FINAL                            IN VARCHAR2,
+    V_ARR_DATA                                    IN VARCHAR2,
+    V_PAGE_NUMBER                              IN NUMBER,
+    V_PAGE_SIZE                                   IN NUMBER,
+    C_LISTA_ANATOMIA                         OUT SYS_REFCURSOR,
+    C_NUM_RESULTADOS                        OUT SYS_REFCURSOR,
+    C_STATUS                                       OUT SYS_REFCURSOR
+) IS
+    V_AUX NUMBER :=  1;
+    V_FECHA_INICIO DATE :=  TO_DATE(VAL_FECHA_INICIO||' 00:00:00','DD-MM-YYYY hh24:mi:ss');
+    V_FECHA_FINAL DATE :=  TO_DATE(VAL_FECHA_FINAL||' 23:59:59','DD-MM-YYYY hh24:mi:ss');
+    VAR_LISTA_ID_ANATOMIA LIST_OF_NAMES_T := LIST_OF_NAMES_T(); 
+    VAR_LISTA_FILTRO_ESTADOS LIST_OF_NAMES_T       :=   LIST_OF_NAMES_T(); 
+    RETURN_LIST COL_LIS_ANATOMIAP    :=   COL_LIS_ANATOMIAP();
+    V_START_ROW NUMBER;
+    V_END_ROW NUMBER;
+    V_TOTAL_COUNT NUMBER;
+    V_NUM_PAGINAS NUMBER;
+    
+BEGIN
+    -- filtos segun estado 
+   IF V_ARR_DATA = '0' THEN
+        FOR V_ROW IN 0..8 LOOP
+            VAR_LISTA_FILTRO_ESTADOS.EXTEND();
+            VAR_LISTA_FILTRO_ESTADOS(V_ROW + 1) := V_ROW;
+        END LOOP;
+    ELSE
+        FOR FOO IN (SELECT REGEXP_SUBSTR(V_ARR_DATA, '[^,]+', 1, LEVEL) TXT
+                    FROM DUAL
+                    CONNECT BY REGEXP_SUBSTR(V_ARR_DATA, '[^,]+', 1, LEVEL) IS NOT NULL) LOOP
+            VAR_LISTA_FILTRO_ESTADOS.EXTEND();
+            IF FOO.TXT = '9' THEN
+                VAR_LISTA_FILTRO_ESTADOS(V_AUX) := '0';
+            ELSE
+                VAR_LISTA_FILTRO_ESTADOS(V_AUX) := FOO.TXT;
+            END IF;
+            V_AUX := V_AUX + 1;
+        END LOOP;
+    END IF;
+    
+    V_START_ROW := (V_PAGE_NUMBER - 1) * V_PAGE_SIZE + 1;
+    V_END_ROW := V_PAGE_NUMBER * V_PAGE_SIZE;
+
+    OPEN C_LISTA_ANATOMIA FOR
+        SELECT SOL_ANATOMIA.*, TOTAL_COUNT
+        FROM (
+            SELECT 
+               ROW_NUMBER() OVER (ORDER BY ID_SOLICITUD_HISTO) AS RNUM,
+               COUNT(*) OVER () AS TOTAL_COUNT,
+               P.*  
+            FROM 
+                PABELLON.PB_SOLICITUD_HISTO P,
+                ADMIN.GG_TPROFESIONAL A,
+                ADMIN.GG_TGPACTE L,
+                ADMIN.GG_TPROFESIONAL G
+            WHERE
+                P.DATE_INICIOREGISTRO BETWEEN V_FECHA_INICIO AND V_FECHA_FINAL AND
+                A.COD_RUTPRO = P.COD_RUTPRO AND
+                P.NUM_FICHAE =  L.NUM_FICHAE AND
+                P.COD_RUTPRO =  G.COD_RUTPRO AND
+                P.ID_HISTO_ZONA IN  (SELECT * FROM TABLE(VAR_LISTA_FILTRO_ESTADOS)) AND 
+                P.ID_HISTO_ESTADO IN  (4) AND 
+                P.IND_ESTADO IN  (1) AND
+                (P.COD_EMPRESA IN (V_COD_EMPRESA) OR P.COD_ESTABLREF IN (V_COD_EMPRESA) )
+            ORDER BY  
+                CASE
+                    WHEN V_OPCION = '0' THEN P.NUM_INTERNO_AP 
+                    WHEN V_OPCION = '1' THEN P.NUM_CO_CITOLOGIA
+                    WHEN V_OPCION = '2' THEN P.NUM_CO_PAP
+                    ELSE P.NUM_INTERNO_AP
+                END ASC
+                       
+    ) SOL_ANATOMIA WHERE RNUM BETWEEN V_START_ROW AND V_END_ROW;
+
+        
+        SELECT  
+            COUNT(*) INTO V_TOTAL_COUNT
+        FROM 
+            PABELLON.PB_SOLICITUD_HISTO P,
+            ADMIN.GG_TPROFESIONAL A,
+            ADMIN.GG_TGPACTE L,
+            ADMIN.GG_TPROFESIONAL G
+        WHERE
+            P.DATE_INICIOREGISTRO BETWEEN V_FECHA_INICIO AND V_FECHA_FINAL AND
+            A.COD_RUTPRO = P.COD_RUTPRO AND
+            P.NUM_FICHAE =  L.NUM_FICHAE AND
+            P.COD_RUTPRO =  G.COD_RUTPRO AND
+            P.ID_HISTO_ZONA IN  (SELECT * FROM TABLE(VAR_LISTA_FILTRO_ESTADOS)) AND 
+            P.ID_HISTO_ESTADO IN  (4) AND 
+            P.IND_ESTADO IN  (1) AND
+            (P.COD_EMPRESA IN (V_COD_EMPRESA) OR P.COD_ESTABLREF IN (V_COD_EMPRESA) )
+        ORDER BY  
+            P.DATE_INICIOREGISTRO ASC,
+            CASE
+            WHEN V_OPCION = '0' THEN P.NUM_INTERNO_AP 
+            WHEN V_OPCION = '1' THEN P.NUM_CO_CITOLOGIA
+            WHEN V_OPCION = '2' THEN P.NUM_CO_PAP
+           ELSE P.NUM_INTERNO_AP
+        END ASC;
+
+    V_NUM_PAGINAS := CEIL(V_TOTAL_COUNT / V_PAGE_SIZE);
+    OPEN C_NUM_RESULTADOS FOR  SELECT V_TOTAL_COUNT AS V_TOTAL_COUNT, V_NUM_PAGINAS AS V_NUM_PAGINAS FROM DUAL;
+    OPEN C_STATUS FOR  SELECT 
+        V_PAGE_NUMBER AS V_PAGE_NUMBER,
+        V_PAGE_SIZE AS V_PAGE_SIZE,
+        V_START_ROW AS V_START_ROW,
+        V_END_ROW AS V_END_ROW,
+        VAL_FECHA_INICIO AS VAL_FECHA_INICIO,
+        VAL_FECHA_FINAL AS VAL_FECHA_FINAL
+    FROM DUAL;
+
+END;
+
+
+
+
+

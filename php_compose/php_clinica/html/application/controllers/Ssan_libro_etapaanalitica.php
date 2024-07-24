@@ -1086,7 +1086,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $_issesion                  =   false;
         } else {
             #PROCE                      =  LOAD_RCE_ANATOMIA_PATOLOGICA
-            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(array(
+            $DATA_CURSOR                =   $this->Ssan_libro_etapaanalitica_model->load_informacion_rce_patologico_new(array(
                 "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
                 "usr_session"           =>  explode("-",$this->session->userdata("USERNAME"))[0],
                 "ind_opcion"            =>  0,
@@ -1104,6 +1104,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             'out_html'                  =>  $html
         )));
     }
+    
     
     public function update_li_chat(){
         if(!$this->input->is_ajax_request()){ show_404(); }  

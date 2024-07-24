@@ -1658,6 +1658,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $result = [];
         $V_ID_HISTO = $this->db->escape($DATA['ARR_DATA']);
         $V_COD_EMPRESA = $this->db->escape($DATA['COD_EMPRESA']);
+
+        
         $P_ANATOMIA_PATOLOGICA_MAIN = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
         if ($multi_query) {
@@ -1670,6 +1672,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         } else {
             $error = $this->db->conn_id->error;
         }
+
         $this->db->reconnect();
         $P_ANATOMIA_PATOLOGICA_MUESTRAS = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_HISTO($V_COD_EMPRESA,$V_ID_HISTO)");
