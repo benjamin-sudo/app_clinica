@@ -1,9 +1,11 @@
 $(document).ready(function(){
-    console.log("-----------------------------------------------------------");
-    console.log("   e                   ->  ssan_libro_biopsias_i_fase      ");
-    console.log("   f                   ->  ssan_libro_biopsias_ii_fase     ");
-    console.error("NUM_FASE->",$("#NUM_FASE").val());
-    console.log("-----------------------------------------------------------");
+    /*
+        console.log("-----------------------------------------------------------");
+        console.log("   e                   ->  ssan_libro_biopsias_i_fase      ");
+        console.log("   f                   ->  ssan_libro_biopsias_ii_fase     ");
+        console.error("NUM_FASE->",$("#NUM_FASE").val());
+        console.log("-----------------------------------------------------------");
+    */
     //console.log("     RESOLUCION DE PANTALLA                              ");
     //console.log("     width       ->  ",screen.width,"                    ");
     //console.log("     height      ->  ",screen.height,"                   ");
@@ -40,16 +42,16 @@ $(document).ready(function(){
             UPDATE_PANEL();
         });
         var date_final                  =   $("#date_final").val();
-        console.log("date_final         ->  ",date_final);
+        //console.log("date_final         ->  ",date_final);
         $('#fecha_out2').datetimepicker({
-            useCurrent                  :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
-            inline			:   true,
-            sideBySide                  :   true,
-            format			:   'DD-MM-YYYY',
-            locale			:   'es-us',
-            defaultDate                 :   moment(date_final)._d,
-            maxDate                     :   new Date(),
-            minDate                     :   moment(date_inicio)._d,
+            useCurrent : false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
+            inline : true,
+            sideBySide : true,
+            format : 'DD-MM-YYYY',
+            locale : 'es-us',
+            defaultDate : moment(date_final)._d,
+            maxDate : new Date(),
+            minDate : moment(date_inicio)._d,
             icons			: 
                                         {
                                             time        :   "fa fa-clock-o"         ,
@@ -133,7 +135,7 @@ $(document).ready(function(){
         //$("#LOAD_CALENDARIO").hide();
         $(".LOAD_CALENDARIO").hide();
         $('#MAIN_NAV a[href="#tabs_listado"]').tab('show');
-        console.log("star ws -> RECEPCION DE MUESTRAS <- ");
+        //console.log("star ws -> RECEPCION DE MUESTRAS <- ");
         //load_envio_a_recepcion_ws(1);
     }
 
@@ -161,7 +163,8 @@ function js_ws_test(){
 function UPDATE_PANEL(){
     var fecha_form          =   $("#NUM_FASE").val()==1?$("#txt_fec_inicio").val():fecha_cale('fecha_out');
     var fecha_to            =   $("#NUM_FASE").val()==1?$("#txt_fec_fin").val():fecha_cale('fecha_out2');
-    console.log("NUM_FASE   ->  ",$("#NUM_FASE").val());
+    //console.log("NUM_FASE   ->  ",$("#NUM_FASE").val());
+
     $('#loadFade').modal('show');
     /*
         console.log("-------------------------------------------------------");
@@ -200,7 +203,7 @@ function UPDATE_PANEL(){
                                                         }, 
         });
     } else {
-        console.log("ssan_libro_biopsias_ii_fase");
+        //console.log("ssan_libro_biopsias_ii_fase");
         $.ajax({ 
             type            :   "POST",
             url             :   "ssan_libro_biopsias_listaexterno1/update_main",
@@ -224,18 +227,22 @@ function UPDATE_PANEL(){
                                                         $('#loadFade').modal('hide');
                                                     },
             success		:   function(aData) {   
-                                                        console.log("-------------------------------");
-                                                        console.log("---------our update_main ------");
-                                                        console.log(aData);
-                                                        console.log("-------------------------------");
-                                                        
-                                                        $('#loadFade').modal('hide');
-                                                        $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
-                                                        $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
-                                                        $("[data-toggle='tooltip']").tooltip();
-                                                    }, 
+                                                /*
+                                                console.log("-------------------------------");
+                                                console.log("---------our update_main ------");
+                                                console.log(aData);
+                                                console.log("-------------------------------");
+                                                */
+                                                $('#loadFade').modal('hide');
+                                                $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
+                                                $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
+                                                $("[data-toggle='tooltip']").tooltip();
+                                            }, 
         });
     }
+
+    $('#loadFade').modal('hide');
+
 }
 
 function js_encustodia(){

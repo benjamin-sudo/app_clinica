@@ -1963,97 +1963,96 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     #RECEPCION
     public function get_confirma_recepcion($DATA){
         $this->db->trans_start();
-        $status                                     =   true;
-        $arr_histo_ok                               =   [];
-        $arr_linea_tiempo                           =   [];
-        $num_interno                                =   $DATA["n_interno"];
-        $n_interno_2                                =   $DATA["n_interno_2"];
-        $cod_empresa                                =   $DATA["COD_EMPRESA"];
-        $ID_ANATOMIA                                =   $DATA["ID_ANATOMIA"];
-        $IND_TIPO_BIOPSIA                           =   $DATA["ind_tipo_biopsia"];
+        $status =   true;
+        $arr_histo_ok =   [];
+        $arr_linea_tiempo =   [];
+        $num_interno =   $DATA["n_interno"];
+        $n_interno_2 =   $DATA["n_interno_2"];
+        $cod_empresa =   $DATA["COD_EMPRESA"];
+        $ID_ANATOMIA =   $DATA["ID_ANATOMIA"];
+        $IND_TIPO_BIOPSIA =   $DATA["ind_tipo_biopsia"];
         #LOAD
         #BIOPSIA - CITOLOGIA
         if ($IND_TIPO_BIOPSIA == 4){
-            $data_num_interno                       =   $this->db->query(" SELECT P.NUM_INTERNO_AP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
-            $data_num_citologia                     =   $this->db->query(" SELECT P.NUM_CO_CITOLOGIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($n_interno_2)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (4,5)")->result_array();
-            if(count($data_num_interno)>0 || count($data_num_citologia)>0){
+            $data_num_interno =   $this->db->query("SELECT P.NUM_INTERNO_AP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno) AND P.COD_EMPRESA IN ($cod_empresa) AND YEAR(P.DATE_INICIOREGISTRO) = YEAR(CURDATE()) AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
+            $data_num_citologia =   $this->db->query("SELECT P.NUM_CO_CITOLOGIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($n_interno_2) AND P.COD_EMPRESA IN ($cod_empresa) AND YEAR(P.DATE_INICIOREGISTRO) = YEAR(CURDATE()) AND P.IND_TIPO_BIOPSIA IN (4,5)")->result_array();
+            if(count($data_num_interno) > 0 || count($data_num_citologia) > 0){
                 return array(
-                    'STATUS'                        =>  false,
-                    'TXT_ERROR'                     =>  'N&deg; meno notificaci&oacute;n ya existe',
-                    'HISTO_OK'                      =>  null,
-                    'STATUS_BD'                     =>  false,
-                    'error_memo'                    =>  1,
-                    'close_modal'                   =>  0,
-                    'count_interno'                 =>  count($data_num_interno),
-                    'count_cotologia'               =>  count($data_num_citologia),
+                    'STATUS' =>  false,
+                    'TXT_ERROR' =>  'N&deg; meno notificaci&oacute;n ya existe',
+                    'HISTO_OK' =>  null,
+                    'STATUS_BD' =>  false,
+                    'error_memo' =>  1,
+                    'close_modal' =>  0,
+                    'count_interno' =>  count($data_num_interno),
+                    'count_cotologia' =>  count($data_num_citologia),
                 );
             }
         } else {
-            if( $IND_TIPO_BIOPSIA == 2 || $IND_TIPO_BIOPSIA == 3 ){  #CONTEMPORANEA Y DIFERIDA
-                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_INTERNO_AP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
-            } else if ($IND_TIPO_BIOPSIA == 5)      {   #SOLO CITOLOGIA
-                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_CO_CITOLOGIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (5)")->result_array();
-            } else if ($IND_TIPO_BIOPSIA == 6)      {   #PAP
-                $data_num_interno                   =   $this->db->query(" SELECT P.NUM_CO_PAP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_PAP IN ($num_interno)  AND P.COD_EMPRESA IN ($cod_empresa)  AND TO_CHAR(P.DATE_INICIOREGISTRO,'YYYY') = TO_CHAR(SYSDATE,'YYYY') AND P.IND_TIPO_BIOPSIA IN (6)")->result_array();
+            if ($IND_TIPO_BIOPSIA == 2 || $IND_TIPO_BIOPSIA == 3){  #CONTEMPORANEA Y DIFERIDA
+                $data_num_interno =   $this->db->query("SELECT P.NUM_INTERNO_AP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_INTERNO_AP IN ($num_interno) AND P.COD_EMPRESA IN ($cod_empresa) AND YEAR(P.DATE_INICIOREGISTRO) = YEAR(CURDATE()) AND P.IND_TIPO_BIOPSIA IN (2,3,4)")->result_array();
+            } else if ($IND_TIPO_BIOPSIA == 5) {   #SOLO CITOLOGIA
+                $data_num_interno =   $this->db->query("SELECT P.NUM_CO_CITOLOGIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_CITOLOGIA IN ($num_interno) AND P.COD_EMPRESA IN ($cod_empresa) AND YEAR(P.DATE_INICIOREGISTRO) = YEAR(CURDATE()) AND P.IND_TIPO_BIOPSIA IN (5)")->result_array();
+            } else if ($IND_TIPO_BIOPSIA == 6) {   #PAP
+                $data_num_interno =   $this->db->query("SELECT P.NUM_CO_PAP FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.NUM_CO_PAP IN ($num_interno) AND P.COD_EMPRESA IN ($cod_empresa) AND YEAR(P.DATE_INICIOREGISTRO) = YEAR(CURDATE()) AND P.IND_TIPO_BIOPSIA IN (6)")->result_array();
             }
-            if(count($data_num_interno)>0){
+            if(count($data_num_interno) > 0){
                 return array(
-                    'STATUS'                        =>  false,
-                    'TXT_ERROR'                     =>  'N&deg; meno notificaci&oacute;n ya existe',
-                    'HISTO_OK'                      =>  null,
-                    'STATUS_BD'                     =>  false,
-                    'error_memo'                    =>  1,
-                    'close_modal'                   =>  0,
-                    'count_interno'                 =>  count($data_num_interno),
-                    'count_cotologia'               =>  0,
+                    'STATUS' =>  false,
+                    'TXT_ERROR' =>  'N&deg; meno notificaci&oacute;n ya existe',
+                    'HISTO_OK' =>  null,
+                    'STATUS_BD' =>  false,
+                    'error_memo' =>  1,
+                    'close_modal' =>  0,
+                    'count_interno' =>  count($data_num_interno),
+                    'count_cotologia' =>  0,
                 );
             }
         }
-        #######################################################################
-        $data_identifica_estado                     =   $this->db->query("SELECT P.ID_HISTO_ESTADO FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN ($ID_ANATOMIA) AND P.IND_ESTADO IN (1) AND P.ID_HISTO_ESTADO IN (3)")->result_array();
-        if (count($data_identifica_estado)>0){
-            if(count($DATA['ARRAY'])>0){
+        $data_identifica_estado = $this->db->query("SELECT P.ID_HISTO_ESTADO FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN ($ID_ANATOMIA) AND P.IND_ESTADO IN (1) AND P.ID_HISTO_ESTADO IN (3)")->result_array();
+        if (count($data_identifica_estado) > 0){
+            if(count($DATA['ARRAY']) > 0){
                 foreach($DATA['ARRAY'] as $i => $fila){
                     foreach($fila as $x => $row){
                         #NUMERO DE CARGA DE LA TIME LINE
-                        $ID_CARGA_AP                                    =   $this->db->sequence($this->ownPab,'SEQ_NUM_CARGA_AP');
+                        $ID_CARGA_AP                                    =   $this->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'DATABASE_NAME' AND TABLE_NAME = 'PB_LINETIME_HISTO'")->row()->AUTO_INCREMENT;
                         #GESTION DE LAS MUESTAS Y CASET DE ANATOMIA
-                        if(count($row["ARRAY_NMUESTRAS"])>0){
+                        if(count($row["ARRAY_NMUESTRAS"]) > 0){
                             foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus){
                                 #AGREGA AL HISTORIAL DE LA MUESTRA
-                                $ID_LINETIME_HISTO                      =   $this->db->sequence($this->ownPab,'SEQ_NUM_LINETIME_HISTO');
-                                $ID_ANATOMIA                            =   $DATA["ID_ANATOMIA"];
-                                $IND_CASETE                             =   $mus['IND_CASETE'];
-                                $ID_MUESTRA                             =   $mus['ID_NMUESTRA'];
-                                $arr_linea_tiempo                       =   array(
-                                    "ID_LINETIMEHISTO"                  =>  $ID_LINETIME_HISTO,
-                                    "ID_NUM_CARGA"                      =>  $ID_CARGA_AP,
-                                    "ID_SOLICITUD_HISTO"                =>  $row["NUM_HISTO"],
+                                $ID_LINETIME_HISTO =   $this->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'DATABASE_NAME' AND TABLE_NAME = 'PB_LINETIME_HISTO'")->row()->AUTO_INCREMENT;
+                                $ID_ANATOMIA =   $DATA["ID_ANATOMIA"];
+                                $IND_CASETE =   $mus['IND_CASETE'];
+                                $ID_MUESTRA =   $mus['ID_NMUESTRA'];
+                                $arr_linea_tiempo =   array(
+                                    "ID_LINETIMEHISTO" =>  $ID_LINETIME_HISTO,
+                                    "ID_NUM_CARGA" =>  $ID_CARGA_AP,
+                                    "ID_SOLICITUD_HISTO" =>  $row["NUM_HISTO"],
                                     //"ID_NMUESTRA"                     =>  substr($mus['ID_NMUESTRA'],1),
-                                    "TXT_BACODE"                        =>  $mus['ID_NMUESTRA'],
-                                    "NUM_FASE"                          =>  3,//RECEPCION
-                                    "IND_CHECKED"                       =>  $mus['IN_CHECKED'],
-                                    "USR_CREA"                          =>  $DATA["SESSION"],
-                                    "FEC_CREA"                          =>  'SYSDATE',
-                                    "IND_ESTADO"                        =>  1,
-                                    "ID_UID"                            =>  $DATA["DATA_FIRMA"]["user_1"]->ID_UID,
-                                    "TXT_MUESTRA"                       =>  $mus['TXT_MUESTRA']==''?'NO INFORMADO':$mus['TXT_MUESTRA'],
+                                    "TXT_BACODE" =>  $mus['ID_NMUESTRA'],
+                                    "NUM_FASE" =>  3,//RECEPCION
+                                    "IND_CHECKED" =>  $mus['IN_CHECKED'],
+                                    "USR_CREA" =>  $DATA["SESSION"],
+                                    "FEC_CREA" =>  date('Y-m-d H:i:s'),
+                                    "IND_ESTADO" =>  1,
+                                    "ID_UID" =>  $DATA["DATA_FIRMA"]["user_1"]->ID_UID,
+                                    "TXT_MUESTRA" =>  $mus['TXT_MUESTRA']==''?'NO INFORMADO':$mus['TXT_MUESTRA'],
                                 );
                                 array_merge($arr_linea_tiempo,array($IND_CASETE==1?"ID_CASETE":"ID_NMUESTRA"=>$ID_MUESTRA)); 
-                                $this->db->insert($this->ownPab.'.PB_LINETIME_HISTO',$arr_linea_tiempo);
+                                $this->db->insert('PB_LINETIME_HISTO',$arr_linea_tiempo);
                                 #CAMBIA ESTADO DE MUESTRAS
                                 $this->db->where($IND_CASETE==1?'ID_CASETE':'ID_NMUESTRA',$ID_MUESTRA);
-                                $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array(
-                                    "IND_ESTADO_CU"                     =>  $mus['IN_CHECKED'],
-                                    "ID_NUM_CARGA"                      =>  $ID_CARGA_AP,
-                                    "USR_AUDITA"                        =>  $DATA["SESSION"],
-                                    "DATE_AUDITA"                       =>  'SYSDATE',
+                                $this->db->update('PB_HISTO_NMUESTRAS',array(
+                                    "IND_ESTADO_CU" =>  $mus['IN_CHECKED'],
+                                    "ID_NUM_CARGA" =>  $ID_CARGA_AP,
+                                    "USR_AUDITA" =>  $DATA["SESSION"],
+                                    "DATE_AUDITA" =>  date('Y-m-d H:i:s'),
                                 ));
                                 #ADD EVENTOS ADVERSOS
                                 if(isset($mus["ARR_EVENTOS_ADVERSOS"])){
                                     foreach($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv){
-                                        $this->db->insert($this->ownPab.'.PB_ANTECEDENTES_HISTO',array(
-                                            "ID_ANTECEDENTES_HISTO"     =>  $this->db->sequence($this->own,'SEQ_NUM_ANTECEDENTE_HISTO'),
+                                        $this->db->insert('PB_ANTECEDENTES_HISTO',array(
+                                            "ID_ANTECEDENTES_HISTO"     =>  $this->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'DATABASE_NAME' AND TABLE_NAME = 'PB_ANTECEDENTES_HISTO'")->row()->AUTO_INCREMENT,
                                             "ID_LINETIMEHISTO"          =>  $ID_LINETIME_HISTO,
                                             "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
                                             "ID_SOLICITUD_HISTO"        =>  $ID_ANATOMIA,
@@ -2066,7 +2065,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 }
                             }
                         }
-
                         #CONSULTA SI ESTA EN PABELLON
                         #CITOLOGIA Y CITOLOGIA PAP -> GO TO 
                         $result                         =   $this->db->query("SELECT P.IND_TIPO_BIOPSIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN (".$row['NUM_HISTO'].")")->result_array();
@@ -2080,17 +2078,13 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             "ID_HISTO_ZONA"             =>  $ind_zona,
                             "IND_ESTADO_MUESTRAS"       =>  $row["NUM_OK_SAMPLES"],
                             "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                            //"LAST_USR_AUDITA"         =>  $DATA["DATA_FIRMA"]["user_1"]->USERNAME,
-                            //"LAST_DATE_AUDITA"        =>  'SYSDATE',
-                            //"ID_UID"                  =>  $DATA["DATA_FIRMA"]["user_1"]->ID_UID,
-                            //"TXT_NAMEAUDITA"          =>  $DATA["DATA_FIRMA"]["user_1"]->NAME." ".$DATA["DATA_FIRMA"]["user_1"]->MIDDLE_NAME." ".$DATA["DATA_FIRMA"]["user_1"]->LAST_NAME,
-                            "FEC_USRCREA_RECEP"         =>  'SYSDATE',
+                            "FEC_USRCREA_RECEP"         =>  date('Y-m-d H:i:s'),
                             "COD_USRCREA_RECEP"         =>  $DATA["SESSION"],
                             "COD_SESSION_RECEPCIONA"    =>  $DATA["SESSION"],
                             "ID_UID_TRASPORTE_OK"       =>  $DATA["DATA_FIRMA"]["user_1"]->ID_UID,
                             "ID_UID_RECEPCIONA_OK"      =>  $DATA["DATA_FIRMA"]["user_2"]->ID_UID,
                             "LAST_USR_AUDITA"           =>  $DATA["SESSION"],
-                            "LAST_DATE_AUDITA"          =>  "SYSDATE",
+                            "LAST_DATE_AUDITA"          =>  date('Y-m-d H:i:s'),
                             //"NUM_INTERNO_AP"          =>  $DATA["n_interno"],
                         ); 
                         
@@ -2105,10 +2099,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 $arr_update             =   array_merge($arr_update, array('NUM_CO_CITOLOGIA'       => $DATA["n_interno"]));
                             } else if ($IND_TIPO_BIOPSIA    == 6 ){
                                 $arr_update             =   array_merge($arr_update, array('NUM_CO_PAP'             => $DATA["n_interno"]));
-
                             } 
                         }
-                        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',$arr_update);
+                        $this->db->update('PB_SOLICITUD_HISTO',$arr_update);
                     }
                 }
             }
@@ -2130,6 +2123,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         }
     }
     
+    
+
+
     #rechazo
     public function model_confirma_rechazo_muestras($DATA){
         $this->db->trans_start();

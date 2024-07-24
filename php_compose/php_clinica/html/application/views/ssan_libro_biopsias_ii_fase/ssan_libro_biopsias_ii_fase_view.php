@@ -34,16 +34,11 @@
         </div>
     </div>
 </div>
-
 <!--
     <button type="button" class="btn btn-info btn-fill"         id="BTN_recepcion_custodia_masiva"      onclick="recepcion_custodia_masiva()">
         <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;RECEPCI&Oacute;N
     </button>
 -->
-<!--
-    <hr style="margin:0px 0px 0px 0px;">
--->
-
 <div class="dv_derivar" id="" style="margin-top:-5px;"> 
     <div class="GRID_LIBRO_MAIN_SOLICITUD">
         <div class="GRID_LIBRO_MAIN_SOLICITUD1">

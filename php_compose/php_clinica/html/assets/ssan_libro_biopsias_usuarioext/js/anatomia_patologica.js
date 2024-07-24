@@ -1,10 +1,8 @@
 $(document).ready(function(){
-
     $('#modal_new_subrotulo').on('hidden.bs.modal',function(e){ 
         $("#html_new_subrotulo").html('');
         $("#btn_subrotulo").attr('onclick','');
     });
-
     //MODAL GLOBAL DE ETIQUETAS
     $("#MODAL_INFORMACION_ETIQUETA").on('show.bs.modal',function(e){ 
 	    //$('.modal .modal-body').css('overflow-y','auto'); 
@@ -15,14 +13,12 @@ $(document).ready(function(){
         //$('#get_etiqueta_modal').focus();
         //document.getElementById("get_etiqueta_modal").focus();
     });
-
     $('#MODAL_INFORMACION_ETIQUETA').on('hidden.bs.modal',function(e){ 
         console.log("e  ->  ",e);
         //document.getElementById("get_etiqueta").disabled    =   false;
         //$('.popover').popover('hide');
         $("#HTML_INFORMACION_ETIQUETA").html(''); 
     });
-
     $('#MODAL_INFORMACION_HISTORIAL').on('hidden.bs.modal',function(e){ 
         $("#HTML_INFORMACION_HISTORIAL").html(''); 
     });
@@ -120,6 +116,7 @@ $(document).ready(function(){
     //console.log("$.fn.tooltip.Constructor.VERSION ->",$.fn.tooltip.Constructor.VERSION);
     //console.log("-------------------------------------------------------------");
     //console.log("CONFIG_FRASCO    ->  ",localStorage.getItem("confi_frasco"));
+    //console.log("-------------------------------------------------------------");
     var ind_conf_frasco = localStorage.getItem("confi_frasco")===null?star_etiqueta():localStorage.getItem("confi_frasco");
     //console.log("CONFIG_FRASCO    ->  ",ind_conf_frasco);
     $("#CONFIG_FRASCO").val(ind_conf_frasco);
@@ -177,8 +174,8 @@ function js_cambio_punto_entrega(){
 function remove_lista_usuario(id){
     //console.log("value      ->  ",id);
     $(".ptn_muestra_"+id).remove();
-    var arr_organos            =   $("#ind_servicios").val();
-    var indice                 =   arr_organos.indexOf(id);
+    var arr_organos = $("#ind_servicios").val();
+    var indice = arr_organos.indexOf(id);
     arr_organos.splice(indice,1);
     $("#ind_servicios").selectpicker('val',arr_organos);
     js_cambio_punto_entrega();
@@ -200,18 +197,19 @@ function busqueda_numero_disponible(tipo_biopsia){
                                 },
         success : function(aData){ 
                                     //console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
-                                    $('#loadFade').modal('hide'); 
                                     $("#num_interno").val('');
                                     let num_last = aData.data_numero.V_LAST_NUMERO;
                                     showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
                                     $("#num_interno").val(num_last);
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                 }, 
     });
 }
 
 //SOLO BUSCA UN SEGUNDO CORRELATIVO
 function busqueda_numero_disponible_citologia(tipo_biopsia){
-    console.log("tipo_biopsia   ->  ",tipo_biopsia);
+    //console.log("tipo_biopsia   ->  ",tipo_biopsia);
+    $('#loadFade').modal('show'); 
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
@@ -226,11 +224,12 @@ function busqueda_numero_disponible_citologia(tipo_biopsia){
                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
         success : function(aData) { 
-                                        console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
+                                        //console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
                                         $("#num_interno_cito").val('');
                                         let num_last = aData.data_numero.V_LAST_NUMERO;
                                         showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
                                         $("#num_interno_cito").val(num_last);
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     }, 
     });
 }
@@ -1951,10 +1950,10 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
 
                 $('#loadFade').modal('show'); 
                 $.ajax({ 
-                        type                :   "POST",
-                        url                 :   "ssan_libro_biopsias_listaexterno1/confirma_recepcion",
-                        dataType            :   "json",
-                        beforeSend          :   function(xhr)   {   
+                        type : "POST",
+                        url : "ssan_libro_biopsias_listaexterno1/confirma_recepcion",
+                        dataType : "json",
+                        beforeSend : function(xhr)   {   
                                                                    
                                                                 },
                         data                :                   {
@@ -2236,46 +2235,44 @@ function pdf_rechazomuestra(id_anatomia){
 function GET_PDF_ANATOMIA_PANEL(id){
     $('#loadFade').modal('show'); 
     $.ajax({ 
-       type		    :   "POST",
-       url 		    :   "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
-       dataType     :   "json",
-       beforeSend	:   function(xhr)       {   
-                                                console.log(xhr);
-                                                console.log("generando PDF");
-                                                $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
-                                            },
-       data 		:                       { 
-                                                id  :   id,
-                                            },
-       error		:   function(errro)     { 
-                                                console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                $('#loadFade').modal('hide'); 
-                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                            },
-       success		:   function(aData)     { 
-                                                console.log(aData);
-                                                if(!aData["STATUS"]){
-                                                    jError("error al cargar protocolo PDF","e-SISSAN");
-                                                    return false;
-                                                } else {
-                                                    var base64str           =   aData["PDF_MODEL"];
-                                                    var binary              =   atob(base64str.replace(/\s/g,''));
-                                                    var len                 =   binary.length;
-                                                    var buffer              =   new ArrayBuffer(len);
-                                                    var view                =   new Uint8Array(buffer);
-                                                    for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                    var blob                =   new Blob([view],{type:"application/pdf"});
-                                                    var blobURL             =   URL.createObjectURL(blob);
-                                                    Objpdf                  =   document.createElement('object');
-                                                    Objpdf.setAttribute('data',blobURL);
-                                                    Objpdf.setAttribute('width','100%');
-                                                    Objpdf.setAttribute('style','height:700px;');
-                                                    Objpdf.setAttribute('title','PDF');
-                                                    $('#PDF_VERDOC').html(Objpdf);
-                                                }
-                                                $('#loadFade').modal('hide'); 
-                                                $("#Dv_verdocumentos").modal("show");
-                                            }, 
+       type : "POST",
+       url : "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
+       dataType : "json",
+       beforeSend : function(xhr) {   
+                                    console.log(xhr);
+                                    console.log("generando PDF");
+                                    $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
+                                },
+       data : { id : id },
+       error :   function(errro) { 
+                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                    $('#loadFade').modal('hide'); 
+                                    jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                },
+       success : function(aData){ 
+                                    console.log(aData);
+                                    if(!aData["STATUS"]){
+                                        jError("error al cargar protocolo PDF","e-SISSAN");
+                                        return false;
+                                    } else {
+                                        var base64str = aData["PDF_MODEL"];
+                                        var binary = atob(base64str.replace(/\s/g,''));
+                                        var len = binary.length;
+                                        var buffer = new ArrayBuffer(len);
+                                        var view = new Uint8Array(buffer);
+                                        for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                                        var blob = new Blob([view],{type:"application/pdf"});
+                                        var blobURL = URL.createObjectURL(blob);
+                                        Objpdf = document.createElement('object');
+                                        Objpdf.setAttribute('data',blobURL);
+                                        Objpdf.setAttribute('width','100%');
+                                        Objpdf.setAttribute('style','height:700px;');
+                                        Objpdf.setAttribute('title','PDF');
+                                        $('#PDF_VERDOC').html(Objpdf);
+                                    }
+                                    $('#loadFade').modal('hide'); 
+                                    $("#Dv_verdocumentos").modal("show");
+                                }, 
    });
 }
 
@@ -2318,7 +2315,7 @@ function viws_historial(id_anatomia){
 }
 
 function fecha_cale(name){
-    console.log("name->",name);
+    //console.log("name->",name);
     var date_array = $("#"+name).find(".active").data("day").split('/');
     return date_array[1]+'-'+date_array[0]+'-'+date_array[2];
 }
@@ -2878,7 +2875,7 @@ function busqueda_etiquera(from,solicitud,array){
     } else if(from                  === 3){
         get_etiqueta                =   'S'+solicitud;
     }
-    
+    /*
     console.log("   ----------------------------------------------------    ");
     console.log("   ----------------    busqueda_etiquera   ------------    "); 
     console.log("   from               =>  ",from,"                         ");
@@ -2888,7 +2885,7 @@ function busqueda_etiquera(from,solicitud,array){
     console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
     console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
     console.log("   ----------------------------------------------------    ");
-
+    */
     //return false;
     $('#loadFade').modal('show');
     $.ajax({ 
@@ -2921,11 +2918,12 @@ function busqueda_etiquera(from,solicitud,array){
                                     console.log("---------------------------------------------------------------------------------");
                                     */ 
 
+                                    /*
                                     console.error("...................................................");
                                     console.error("aData        ->  ",aData);
                                     console.error("DATA         -> ",aData.DATA);
                                     console.error("...................................................");
-
+                                    */
                                     $('#loadFade').modal('hide'); 
                                     if(aData.STATUS){
                                         if ($('#UL_TABS_MUESTRA li').size()==0){
@@ -2943,6 +2941,8 @@ function busqueda_etiquera(from,solicitud,array){
                                     } else {
                                         jError(aData['DATA']['P_ERROR'][0].TXT_ERROR,"Clinica Libre");
                                     }
+
+
                                 }, 
     });
     return true;
