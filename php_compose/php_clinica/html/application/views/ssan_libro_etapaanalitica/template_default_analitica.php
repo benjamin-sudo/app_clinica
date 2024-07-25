@@ -25,7 +25,7 @@
                             <tr>
                                 <td>
                                     <small><b style="color:#888888;">RUN</b></small><br>
-                                    <small class="text-muted" id="rutLabel"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["RUTPACIENTE"];?></small>
+                                    <small class="text-muted" id="rutLabel"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_RUTPAC"]."-".$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_DIGVER"]." ".$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_IDENTIFICACION"];?> </small>
                                 </td>
                                 <td>
                                     <small><b style="color:#888888;">SEXO</b></small><br>
@@ -112,6 +112,7 @@
     </div>
     <div class="grid_body_form_analitica2">
 
+        <?php #echo $get_sala;?>
 
         <?php if ($get_sala == 'salamacroscopia'){     ?>
             <?php echo $this->load->view("ssan_libro_etapaanalitica/html_salamacro_descmuestra",[],true); ?>
@@ -134,13 +135,13 @@
                                     <small><b style="color:#888888;">FECHA</b></small>
                                     <br>
                                     <div id="calendar_inicio_sala_proceso" class="input-group row_calendar" style="width:140px;margin-right:10px;">
-                                        <input id="date_fecha_inicio_sala_proceso" name="date_fecha_inicio_sala_proceso" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_DIA"];?>">
+                                        <input id="date_fecha_inicio_sala_proceso" name="date_fecha_inicio_sala_proceso" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TIME_DIA"];?>">
                                         <span class="input-group-addon" style="cursor:pointer;cursor:pointer;margin-top:6px;margin-left:15px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                     </div>
                                 </td>
                                 <td>
                                     <small><b style="color:#888888;">HORA</b></small><br>
-                                    <input style="width:100px;" type="time" class="form-control input-sm" id="hrs_star_sala_proceso" name="hrs_star_sala_proceso" maxlength="5" size="5"  value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_HORA"];?>">
+                                    <input style="width:100px;" type="time" class="form-control input-sm" id="hrs_star_sala_proceso" name="hrs_star_sala_proceso" maxlength="5" size="5"  value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TIME_HORA"];?>">
                                 </td>
                             </tr>
                         </table>
@@ -150,7 +151,7 @@
                     
                 </div>
                 <div class="grid_sala_de_procesos_tiempo3">
-                    <?php if ($data_bd[":P_SALA_PROCESO"][0]["VAL_HISTO_ZONA"] == 5) { ?> 
+                    <?php if ($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["VAL_HISTO_ZONA"] == 5) { ?> 
                         <div class="card" id="card_registro_medico4" style="margin-bottom:5px;padding:8px;">
                             <h6 class="title" style="margin: 8px 0px 12px 0px;">
                                 <i style="color:#888888;" class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
@@ -163,13 +164,13 @@
                                         <small><b style="color:#888888;">FECHA</b></small>
                                         <br>
                                         <div id="calendar_final_sala_proceso" class="input-group row_calendar" style="width:140px;margin-right:10px;">
-                                            <input id="date_fecha_final_sala_proceso" name="date_fecha_final_sala_proceso" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_DIA_FINAL"];?>">
+                                            <input id="date_fecha_final_sala_proceso" name="date_fecha_final_sala_proceso" type="text" class="form-control input-sm" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TIME_DIA_FINAL"];?>">
                                             <span class="input-group-addon" style="cursor:pointer;margin-top: 6px;margin-left:15px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                                         </div>
                                     </td>
                                     <td>
                                         <small><b style="color:#888888;">HORA</b></small><br>
-                                        <input style="width:100px;" type="time" class="form-control input-sm" id="hrs_end_sala_proceso" name="hrs_end_sala_proceso" maxlength="5" size="5" value="<?php echo $data_bd[":P_SALA_PROCESO"][0]["TIME_HORA_FINAL"];?>">
+                                        <input style="width:100px;" type="time" class="form-control input-sm" id="hrs_end_sala_proceso" name="hrs_end_sala_proceso" maxlength="5" size="5" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TIME_HORA_FINAL"];?>">
                                     </td>
                                 </tr>
                             </table>
@@ -407,18 +408,22 @@ $(document).ready(function(){
                                         close       :   "fa fa-remove"          ,
                                     }
         }).on('dp.change',function(e){  
-            console.log("e  ->      ",e,"   <-  ");
+            console.log("e  -> ",e," <-  ");
         });
-        var arr_tecnicas                    =   $("#tecnicas_realizadas").data("prestacion");
+    
+        /*
+        let arr_tecnicas = $("#tecnicas_realizadas").data("prestacion");
         if(arr_tecnicas.length>0){
-            var arr_x_muestra               =   [];
-            let json                        =   arr_tecnicas.reduce((acc,fila)=>{ !acc[fila.ID_NMUESTRA]?acc[fila.ID_NMUESTRA]=[]:'';acc[fila.ID_NMUESTRA].push(fila); return acc; },{});
+            let arr_x_muestra = [];
+            let json = arr_tecnicas.reduce((acc,fila)=>{ !acc[fila.ID_NMUESTRA]?acc[fila.ID_NMUESTRA]=[]:'';acc[fila.ID_NMUESTRA].push(fila); return acc; },{});
             for(let i in json) {
-                var arr_tecnicas            =   [];
+                let arr_tecnicas = [];
                 json[i].forEach(function(fila,indice,array){ arr_tecnicas.push(fila.ID_TECNICA_AP);});
                 $('#prestaciones_'+i).selectpicker('val',arr_tecnicas);
             }
         }
+        */
+       
     <?php   }   ?>
     <?php   if ($get_sala == 'sala_proceso'){ ?>
         $("#calendar_inicio_sala_proceso,#calendar_final_sala_proceso").datetimepicker({

@@ -74,33 +74,22 @@ $(document).ready(function(){
     });
     $('#MODAL_FORMULARIO_ANALITICA').on('show.bs.modal',function(e){ 
         $('.modal .modal-body').css('overflow-y','auto'); 
-        //var _height = $(window).height()*0.8;
-        //$('.modal .modal-body').css('max-height',_height);
-        //$('.modal .modal-body').css('min-height',_height);
     });
     
     $('#MODAL_FORMULARIO_ANALITICA').on('hidden.bs.modal',function(e){ 
         $("#HTML_FORMULARIO_ANALITICA").html(''); 
         $("#btn_finaliza_rce_anatomia").attr('onclick','');
-        //document.getElementById('btn_finaliza_rce_anatomia').disabled      =   true;
     });
     
     $('#modal_descipcion_muestras').on('show.bs.modal',function(e){ 
         $("#html_pdf_fullscreen").html(''); 
-        //$('.modal .modal-body').css('overflow-y','auto'); 
-        //var _height = $(window).height()*0.8;
-        //$('.modal .modal-body').css('max-height',_height);
-        //$('.modal .modal-body').css('min-height',_height);
     });
+    
     $('#modal_descipcion_muestras').on('hidden.bs.modal',function(e){ 
         $("#html_descipcion_muestras").html(''); 
     });
     $('#modal_pdf_fullscreen').on('show.bs.modal',function(e){ 
-        //$("#html_pdf_fullscreen").html(''); 
-        //$('.modal .modal-body').css('overflow-y','auto'); 
-        //var _height = $(window).height()*0.8;
-        //$('.modal .modal-body').css('max-height',_height);
-        //$('.modal .modal-body').css('min-height',_height);
+        
     });
     $('#modal_pdf_fullscreen').on('hidden.bs.modal',function(e){ 
         $("#html_pdf_fullscreen").html(''); 
@@ -108,20 +97,13 @@ $(document).ready(function(){
     $('#modal_star_sala_proceso').on('show.bs.modal',function(e){ 
         $("#html_sala_tecnicas").html('');
         $("#btn_star_sala_proceso").attr('onclick','');
-        //$('.modal .modal-body').css('overflow-y','auto'); 
-        //var _height = $(window).height()*0.8;
-        //$('.modal .modal-body').css('max-height',_height);
-        //$('.modal .modal-body').css('min-height',_height);
     });
     $('#modal_star_sala_proceso').on('hidden.bs.modal',function(e){ 
         $("#html_sala_tecnicas").html(''); 
         $("#btn_star_sala_proceso").attr('onclick','');
     });
     $('#modal_sala_tecnicas').on('show.bs.modal',function(e){ 
-        //$('.modal .modal-body').css('overflow-y','auto'); 
-        //var _height = $(window).height()*0.8;
-        //$('.modal .modal-body').css('max-height',_height);
-        //$('.modal .modal-body').css('min-height',_height);
+       
     });
     $('#modal_sala_tecnicas').on('hidden.bs.modal',function(e){ 
         $("#html_sala_tecnicas").html(''); 
@@ -129,10 +111,7 @@ $(document).ready(function(){
         $("#btn_previo_sala_tecnicas").attr('onclick','');
     });
     $('#modal_perfil_administrativo').on('show.bs.modal',function(e){ 
-        //$('.modal .modal-body').css('overflow-y','auto'); 
-        //var _height = $(window).height()*0.8;
-        //$('.modal .modal-body').css('max-height',_height);
-        //$('.modal .modal-body').css('min-height',_height);
+        
     });
     $('#modal_perfil_administrativo').on('hidden.bs.modal',function(e){ 
         $("#html_perfil_administrativo").html(''); 
@@ -142,12 +121,9 @@ $(document).ready(function(){
         $("#html_plantillas_macro_micro").html('');
         $("#btn_nueva_plantilla").attr('onclick','');
         $("#btn_guarda_descripcion").attr('onclick','');
-        //$(".main-panel").perfectScrollbar("destroy");
-        //document.getElementById("modal_plantillas_macro_micro").style.overflowY = 'auto';
     });
     $('#modal_nueva_plantilla').on('hidden.bs.modal',function(e){ 
         $(".main-panel").perfectScrollbar("destroy");
-        //document.getElementById("modal_nueva_plantilla").style.overflowY = 'auto';
     });
     $('#modal_gestion_firma_patologo').on('hidden.bs.modal',function(e){ 
         $("#html_gestion_firma_patologo").html(''); 
@@ -158,8 +134,10 @@ $(document).ready(function(){
 
     $("#panel_bacode_1").click(function(){setTimeout(function(){$(".focus_etiqueta").focus();},500);});
     $(".focus_etiqueta").keypress(function(e){ if(e.which==13){ busqueda_etiquera_analitica(0,'',{}); } });
+
     SetFocus();
-   //panel de busqueda
+    
+    //panel de busqueda
     $('#panel_altrapriopidad,#panel_casos,#panel_archivar,#panel_etiquetas').on('show.bs.collapse',function(e){
         e.target.id == 'panel_altrapriopidad'       ?   localStorage.setItem("memoria_altrapriopidad",true):'';
         e.target.id == 'panel_casos'                ?   localStorage.setItem("memoria_casos",true):'';
@@ -176,16 +154,13 @@ $(document).ready(function(){
         e.target.id == 'panel_etiquetas'            ?   $("#header_menu_etiquetas").css('border-radius','0px 0px 4px 4px'):'';
         $("#icono_"+e.target.id).removeClass("fa fa-sort-desc").addClass("fa fa-sort-asc"); 
     });
+
     localStorage.getItem("memoria_altrapriopidad")  ===     null?localStorage.setItem("memoria_altrapriopidad",true):   js_gestion_panel("altrapriopidad");
     localStorage.getItem("memoria_casos")           ===     null?localStorage.setItem("memoria_casos",true)         :   js_gestion_panel("casos");
     localStorage.getItem("memoria_archivar")        ===     null?localStorage.setItem("memoria_archivar",true)      :   js_gestion_panel("archivar");
     localStorage.getItem("memoria_etiquetas")       ===     null?localStorage.setItem("memoria_etiquetas",true)     :   js_gestion_panel("etiquetas");
     
-    
-    
-    
     //busqueda rapida
-    
     $('.radio_busqueda').click(function (){
         //console.log("$(this).val() radio_busqueda -> ",$(this).val());
         if($(this).val() == 1){
@@ -220,18 +195,16 @@ $(document).ready(function(){
     //console.log("-----------------------");
     //console.log("localStorage.getIte    ->  " , localStorage.getItem("strorage_filtro_categorias") );
     if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='0'){
-        console.log("SI");
+        //console.log("SI");
         //js_opt_todas_las_categorias(false);
     }  else {
         console.log("NO");
         $('#ind_filtro_busqueda_xfechas').selectpicker('val',localStorage.getItem("strorage_filtro_categorias").split(','));
     }
-    
     //console.log("---------------------------------------------------------------------------------------------------------");
     //console.log("star storage_busqueda_por_n_biosia     ->  ",localStorage.getItem("storage_busqueda_por_n_biosia"));
     //console.log("star storange_ids_anatomia             ->  ",localStorage.getItem("storange_ids_anatomia"));
     //console.log("---------------------------------------------------------------------------------------------------------");
-    
     //star check de _panel_por_gestion -> tipo_busqueda
     var ind_star_busq       =   1;
     if(localStorage.getItem("storage_busqueda_por_n_biosia")===null){
@@ -241,7 +214,6 @@ $(document).ready(function(){
         document.getElementById(txt_busq).checked                   =   true;
         ind_star_busq = txt_busq == 'busqueda_por_n_biosia' ? 2 : 1;
     }
-
     //elimina la localStorage
     localStorage.removeItem("storange_ids_anatomia");
     //sessionStorage la localStorage
@@ -265,6 +237,8 @@ $(document).ready(function(){
     }).on('page', function(event, num){
         update_etapaanalitica(num);
     });
+
+
     //null_tabs();
     star_defatult();
 });
@@ -540,55 +514,78 @@ function update_etapaanalitica(v_num_page){
     var date_inicio             =   $('#fecha_out').data().date;
     var date_final              =   $('#fecha_out2').data().date;
     var v_storange_tabs_main    =   localStorage.getItem("storange_tabs_main");
+    var v_html_vista            =   v_storange_tabs_main.replace("#", "");
+
     var v_get_sala              =   $("#get_sala").val();
-    var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val().join(",");
+    var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val()===null?0:$("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     let ind_orden               =   $("#ind_order_by").val();
     let v_num_page2             =   typeof v_num_page === 'undefined' ? 1 : v_num_page;
 
-    
-    $('#loadFade').modal('show');
+    /*
+        console.log("   ######################################################  ");
+        console.log("v_storange_tabs_main   ->  ",v_storange_tabs_main);
+        console.log("v_get_sala             ->  ",v_get_sala);
+        console.log("v_filtro_fechas        ->  ",v_filtro_fechas);
+        console.log("v_ids_anatomia         ->  ",v_ids_anatomia);
+        console.log("ind_orden              ->  ",ind_orden);
+        console.log("v_num_page2            ->  ",v_num_page2);
+        console.log("   ######################################################  ");
+        return false;
+    */
+
     $.ajax({ 
-        type        :   "POST",
-        url         :   "ssan_libro_etapaanalitica/update_lista_etapaanalitica_pagina",
-        dataType    :   "json",
-        beforeSend  :   function(xhr)   { },
-        data        :                   { 
-                                            tabs : v_storange_tabs_main,
-                                            date_inicio : date_inicio,
-                                            date_final : date_final,
-                                            txt_sala : v_get_sala, //to_string
-                                            ind_filtro_busqueda_xfechas : v_filtro_fechas, //to_string
-                                            txt_ids_anatomia : v_ids_anatomia, //string
-                                            ind_order_by : ind_orden,
-                                            v_page_num : v_num_page2, //int 
-                                            v_page_size : 10  //int 
-                                        },
-        error       :   function(errro) { 
-                                            console.log(errro);  
-                                            //console.log(errro.responseText);
-                                            jAlert("Error en el aplicativo, Consulte Al Administrador","e-SISSAN"); 
-                                            $('#loadFade').modal('hide'); 
-                                        },
-        success     :   function(aData) { 
-                                            console.log(aData);
-                                            let html_li = $("."+aData.id_html_out).data().zona_li;
-                                            let html_out = aData.out_html.return_html;
-                                            if(v_storange_tabs_main == '#_panel_por_fecha'){
-                                                $("#V_ULTIMA_PAGE").val(v_num_page);
-                                                if (aData.return.n_resultado == '0'){
-                                                    $("#anatomia_pagination").hide();
-                                                } else {
-                                                    $("#anatomia_pagination").show();
-                                                    $('.anatomia_pagination').bootpag({page : v_num_page, total : aData.return.n_pagina});
-                                                }
-                                            } else {
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/update_lista_etapaanalitica_pagina",
+        dataType : "json",
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+        data : { 
+                    tabs : v_storange_tabs_main,
+                    date_inicio : date_inicio,
+                    date_final : date_final,
+                    txt_sala : v_get_sala, //to_string
+                    ind_filtro_busqueda_xfechas : v_filtro_fechas, //to_string
+                    txt_ids_anatomia : v_ids_anatomia, //string
+                    ind_order_by : ind_orden,
+                    v_page_num : v_num_page2, //int 
+                    v_page_size : 10  //int 
+                },
+        error : function(errro)     { 
+                                        console.log(errro);  
+                                        jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                    },
+        success : function(aData)   { 
+                                        let html_out = aData.out_html.return_html;
+                                        
+                                        //console.error(aData);
+                                        //console.error("return               ->  ",aData.return);
+                                        //console.error("resultados           ->  ",aData.return.resultados);
+                                        //console.error("v_storange_tabs_main ->  ",v_storange_tabs_main);
+                                        //let html_li = $("."+aData.id_html_out).data().zona_li;
+                                        //let html_li = v_html_vista;
+                                        /*
+                                        console.error("v_storange_tabs_main     ->  ",v_storange_tabs_main);
+                                        console.error("v_html_vista             ->  ",v_html_vista);
+                                        console.error("html_li                  ->  ",html_out);
+                                        */
+
+                                        $(".html"+v_html_vista).html('').html(html_out);
+                                        if(v_storange_tabs_main == '#_panel_por_fecha'){
+                                            $("#V_ULTIMA_PAGE").val(v_num_page);
+                                            if (aData.return.n_resultado == '0'){
                                                 $("#anatomia_pagination").hide();
+                                            } else {
+                                                $("#anatomia_pagination").show();
+                                                $('.anatomia_pagination').bootpag({page : v_num_page, total : aData.return.n_pagina});
                                             }
-                                            $(".n_resultados_panel").html(aData.return.n_resultado);
-                                            $("."+html_li).html('').html(html_out);
-                                            $('#loadFade').modal('hide');
-                                        }, 
+                                        } else {
+                                            $("#anatomia_pagination").hide();
+                                        }
+                                        $(".n_resultados_panel").html(aData.return.n_resultado);
+
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                    }, 
     });
 }
 
@@ -944,13 +941,13 @@ function star_descrpcion_muestras(id_anatomia){
                         },
         error		:   function(errro)     { 
                                                 console.log("quisas->",errro); 
-                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 $('#html_descipcion_muestras').html('');
                                                 jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                             },
         success		:   function(aData)     { 
                                                 console.log("aData  ->  ",aData);
-                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                                 if(aData.status_session){
                                                     $("#btn_graba_descipcion_muestras").attr('onclick','js_guarda_descripcion_muestras('+id_anatomia+')');
                                                     $("#html_descipcion_muestras").html(aData.out_html);
@@ -2278,7 +2275,7 @@ function js_adjunto_ap_multiple(id, archivos) {
     var archivo = archivos[0];
 
     if (archivo.size > 1024 * 1024) { // 1MB
-        jError("El archivo " + archivo.name + " supera el máximo permitido de 1MB", "e-SISSAN - ANATOMÍA PATOLÓGICA");
+        jError("El archivo " + archivo.name + " supera el máximo permitido de 1MB", "Clinica Libre - ANATOMÍA PATOLÓGICA");
         return false;
     } else if (!['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(archivo.type)) {
         jAlert("El archivo " + archivo.name + " no es del tipo de imagen permitida.", "LISTA DE ERRORES");
@@ -2319,7 +2316,7 @@ function js_adjunto_ap_multiple(id, archivos) {
             $("#" + config.return_div).html(html);
         }).catch(err => {
             console.error('Error:', err);
-            jError("error al subir imagen", "e-SISSAN");
+            jError("error al subir imagen", "Clinica Libre");
         });
     };
     reader.readAsDataURL(archivo); // base64
@@ -2494,12 +2491,10 @@ function star_microfono_1(){
 }
 
 function js_guarda_descripcion_muestras(id_anatomia){
-    //console.log("               ->  ", get_numeros_asociados(id_anatomia).join(","));
-    var array_main              =   new Array();
-    var array_nmuestras         =   new Array();
-    var error                   =   new Array();
-    //alert("Cafe");
-    $('.error_macroscopica').each(function(i,obj){  /*   console.log("  ->  ",obj.id);   */ $("#"+obj.id).removeClass("error_macroscopica"); });
+    var array_main = new Array();
+    var array_nmuestras = new Array();
+    var error = new Array();
+    $('.error_macroscopica').each(function(i,obj){ $("#"+obj.id).removeClass("error_macroscopica"); });
     if($("#txt_descipcion_general").val() == '' && !document.getElementById('txt_descipcion_general').disabled ){
         error.push({txt:"Descripci&oacute;n Macrosc&oacute;pica general vac&iacute;a",value:"#txt_descipcion_general"});
     } else {
@@ -2540,6 +2535,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
     //console.log("---------------------------------");
     //console.log("array_nmuestras->",array_nmuestras);
     if(error.length === 0 ){
+       
         /*
         jFirmaUnica('Con esta acc&oacute;n se proceder&aacute; a ingresar nuevo paciente al cupo designado <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(obj_salida){
             let v_error     =   [];                     //array validador
@@ -2555,6 +2551,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
             }
         });
         */
+
         jPrompt('Con esta acci&oacute;n se proceder&aacute; agregar informe macrosc&oacute;pica.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r){
                     $('#loadFade').modal('show'); 
@@ -2571,12 +2568,12 @@ function js_guarda_descripcion_muestras(id_anatomia){
                         error		:   function(errro)     {  
                                                                 console.log(error);
                                                                 console.log(errro.responseText); 
-                                                                $('#loadFade').modal('hide'); 
                                                                 jError("Error en el aplicativo","Clinica Libre"); 
+                                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             },
                         success     :   function(aData)     { 
-                                                                $('#loadFade').modal('hide');
                                                                 console.log("   aData   ->  ",aData);
+
                                                                 if(aData.status){
                                                                     $("#modal_descipcion_muestras").modal("hide");
                                                                     localStorage.setItem("ind_tipo_mensaje",2);
@@ -2588,6 +2585,7 @@ function js_guarda_descripcion_muestras(id_anatomia){
                                                                     //$("#load_anuncios_anatomia_patologica").submit();
                                                                     let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
                                                                     update_etapaanalitica(V_ULTIMA_PAGE);
+                                                                    
                                                                     jConfirm('Se ha grabado con &eacute;xito - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                                                         if(r){
                                                                             //js_pdf_macroscopia(0,id_anatomia);
@@ -2595,9 +2593,11 @@ function js_guarda_descripcion_muestras(id_anatomia){
                                                                             //console.log("-> DIJO NO PDF <-");
                                                                         }
                                                                     });
+
                                                                 } else {
                                                                     jError("Error en la firma simple","Clinica Libre");
                                                                 }
+                                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             }, 
                      });
             } else {
@@ -2767,60 +2767,48 @@ function js_pdf_macroscopia(option,id_anatomia){
 }
 
 function js_star_sala_proceso(id_anatomia){
-    $('#loadFade').modal('show'); 
     $.ajax({ 
-        type		:   "POST",
-        url 		:   "ssan_libro_etapaanalitica/get_star_sala_proceso",
-        dataType        :   "json",
-        data            :   {
-                                id_anatomia     :   id_anatomia,
-                                get_sala        :   $("#get_sala").val(),
-                                opcion          :   1,
-                            },
-        error		:   function(errro)     {  
-                                                    console.log(errro.responseText); 
-                                                    $("#modal_star_sala_proceso").modal("hide");
-                                                    $('#loadFade').modal('hide'); 
-                                                    jError("Error en el aplicativo","Clinica Libre"); 
-                                                },
-        success		:   function(aData)     { 
-                                                    console.log("---------------------------------------------------------");
-                                                    console.log(" -> ",aData);
-                                                    //console.log("out_cursores -> ",aData.out_cursores);
-                                                    //console.log("aData.id_zona ------------------->  ",aData.id_zona,"<-     ");
-                                                    $('#loadFade').modal('hide'); 
-                                                    $("#modal_star_sala_proceso").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                    $("#html_star_sala_proceso").html(aData.html);
-                                                    $("#btn_star_sala_proceso").attr('onclick',aData.id_zona==1?'js_inicia_sala_procesos('+id_anatomia+')':'js_inicia_final_procesos('+id_anatomia+')');
-                                                    /*
-                                                    console.error("---------------------------------------");
-                                                    console.error(" ind_proceso     ->  ",aData.ind_proceso);
-                                                    console.error("---------------------------------------");
-                                                    */
-                                                    if(aData.ind_proceso!=0){
-                                                        $("#ind_tipo_proceso").val(aData.ind_proceso).selectpicker('refresh');
-                                                    }
-                                                    if(aData.id_zona==5){
-                                                        document.getElementById('date_fecha_inicio_sala_proceso').disabled      =   true;
-                                                        document.getElementById('hrs_star_sala_proceso').disabled               =   true;
-                                                        document.getElementById('ind_tipo_proceso').disabled                    =   true;
-                                                    }
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/get_star_sala_proceso",
+        dataType : "json",
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+        data : { id_anatomia : id_anatomia,  get_sala : $("#get_sala").val(),   opcion : 1  },
+        error : function(errro) {  
+                                    console.log(errro.responseText); 
+                                    $("#modal_star_sala_proceso").modal("hide");
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                    jError("Error en el aplicativo","Clinica Libre"); 
+                                },
+        success : function(aData) { 
+                                    //console.error(" -> ",aData);
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                    $("#html_star_sala_proceso").html(aData.html);
+                                    $("#modal_star_sala_proceso").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    $("#btn_star_sala_proceso").attr('onclick',aData.id_zona==1?'js_inicia_sala_procesos('+id_anatomia+')':'js_inicia_final_procesos('+id_anatomia+')');
+                                    if(aData.ind_proceso!=0){
+                                        $("#ind_tipo_proceso").val(aData.ind_proceso).selectpicker('refresh');
+                                    }
+                                    if(aData.id_zona==5){
+                                        document.getElementById('ind_tipo_proceso').disabled = true;
+                                        document.getElementById('hrs_star_sala_proceso').disabled = true;
+                                        document.getElementById('date_fecha_inicio_sala_proceso').disabled = true;
+                                    }
+                                }, 
     });
 }
 
 function js_inicia_sala_procesos(id_anatomia){
-    var errores                                     =   [];
-    if ($("#date_fecha_inicio_sala_proceso").val()  === '') {   errores.push("&#8226;&nbsp;Fecha de inicio vac&iacute;a");     }
-    if ($("#hrs_star_sala_proceso").val()           === '') {   errores.push("&#8226;&nbsp;Hora vac&iacute;a");                }
-    if ($("#ind_tipo_proceso").val()                === '') {   errores.push("&#8226;&nbsp;Falta tipo de proceso");            }
+    var errores = [];
+    if ($("#date_fecha_inicio_sala_proceso").val() === '') { errores.push("&#8226;&nbsp;Fecha de inicio vac&iacute;a"); }
+    if ($("#hrs_star_sala_proceso").val() === '') { errores.push("&#8226;&nbsp;Hora vac&iacute;a"); }
+    if ($("#ind_tipo_proceso").val() === '') { errores.push("&#8226;&nbsp;Falta tipo de proceso"); }
     if (errores.length === 0 ){
-        var obj_rce_anatomia                        =   { 
-            form_star_sala_proceso                  :   [],
+        var obj_rce_anatomia =   { 
+            form_star_sala_proceso : [],
         };
         obj_rce_anatomia.form_star_sala_proceso.push({
-            date_fecha_star_salaproceso             :   $("#date_fecha_inicio_sala_proceso").val()+" "+$("#hrs_star_sala_proceso").val(),
-            ind_proceso_sala                        :   $("#ind_tipo_proceso").val(),
+            date_fecha_star_salaproceso : $("#date_fecha_inicio_sala_proceso").val()+" "+$("#hrs_star_sala_proceso").val(),
+            ind_proceso_sala : $("#ind_tipo_proceso").val(),
         });
         //console.log("---------------------------------------------------------------------------");
         //console.log("obj_rce_anatomia           -> ",obj_rce_anatomia,"<-                       ");
@@ -2876,19 +2864,16 @@ function js_inicia_sala_procesos(id_anatomia){
 }
 
 function js_inicia_final_procesos(id_anatomia){
-    var errores                                 =   [];
-    if ($("#date_fecha_final_sala_proceso").val()  ==='')  {   errores.push("&#8226;&nbsp;Fecha de final vacia");   }
-    if ($("#hrs_end_sala_proceso").val()           ==='')  {   errores.push("&#8226;&nbsp;Hora final vacia");       }
-    if(errores.length === 0 )                   {
-        var obj_rce_anatomia                    =   { 
-            form_star_sala_proceso              :   [],
-        };
+    var errores = [];
+    if ($("#date_fecha_final_sala_proceso").val() ==='')  { errores.push("&#8226;&nbsp;Fecha de final vacia");   }
+    if ($("#hrs_end_sala_proceso").val() ==='') { errores.push("&#8226;&nbsp;Hora final vacia");       }
+    if(errores.length === 0 ) {
+        var obj_rce_anatomia = { form_star_sala_proceso : [] };
         //TIME UNIX
-        var date_inicio                         =   $("#date_fecha_inicio_sala_proceso").val()+" "+$("#hrs_star_sala_proceso").val();
-        var date_final                          =   $("#date_fecha_final_sala_proceso").val()+" "+$("#hrs_end_sala_proceso").val();
-        var v_date_inicio                       =   time_unix($("#date_fecha_inicio_sala_proceso").val(),$("#hrs_star_sala_proceso").val());
-        var v_date_final                        =   time_unix($("#date_fecha_final_sala_proceso").val(),$("#hrs_end_sala_proceso").val());
-        
+        var date_inicio = $("#date_fecha_inicio_sala_proceso").val()+" "+$("#hrs_star_sala_proceso").val();
+        var date_final = $("#date_fecha_final_sala_proceso").val()+" "+$("#hrs_end_sala_proceso").val();
+        var v_date_inicio = time_unix($("#date_fecha_inicio_sala_proceso").val(),$("#hrs_star_sala_proceso").val());
+        var v_date_final = time_unix($("#date_fecha_final_sala_proceso").val(),$("#hrs_end_sala_proceso").val());
         /*
         console.log("v_date_inicio   UNIX       ->  ",v_date_inicio.UNIX,"   <_        ");
         console.log("v_date_final    UNIX       ->  ",v_date_final.UNIX,"    <-        ");
@@ -2896,7 +2881,6 @@ function js_inicia_final_procesos(id_anatomia){
         console.log(">",v_date_inicio.UNIX > v_date_final.UNIX);
         console.log("<",v_date_inicio.UNIX < v_date_final.UNIX);
         */
-
         if (v_date_inicio.UNIX === v_date_final.UNIX)     {
             showNotification('bottom','right','Fecha y hora de la sala de proceso son iguales',4,'fa fa-ban');  
             return false;
@@ -2927,10 +2911,10 @@ function js_inicia_final_procesos(id_anatomia){
                      error		:   function(errro) {  
                                                         console.log(errro.responseText); 
                                                         jError("Error en el aplicativo","Clinica Libre");
-                                                        $('#loadFade').modal('hide'); 
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     },
                      success    :   function(aData) { 
-                                                        $('#loadFade').modal('hide'); 
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         console.log("aData  ->  ",aData);
                                                         if(aData.status_fecha){
                                                             if(aData.status){
@@ -2976,33 +2960,33 @@ function time_unix(TXTFECHA,TXTHORA){
 function js_sala_tecnicas(id_anatomia){
     $('#loadFade').modal('show'); 
     let v_get_sala = $("#get_sala").val();
-    console.log("   --------------------------------------- ");
-    console.log("   v_get_sala     ->  ",v_get_sala);
-    console.log("   id_anatomia    ->  ",id_anatomia);
     $.ajax({ 
          type : "POST",
          url : "ssan_libro_etapaanalitica/gestion_sala_tecnicas",
          dataType : "json",
          data : {   
-                            id_anatomia : id_anatomia,
-                            get_sala : v_get_sala,
-                        },
-         error      :   function(errro) {  
-                                            console.log(errro.responseText); 
-                                            jError("Error en el aplicativo","Clinica Libre");
-                                            $('#loadFade').modal('hide'); 
-                                        },
-         success    :   function(aData) { 
-                                            console.log("aData  ->  ",aData);
-                                            $('#loadFade').modal('hide'); 
-                                            if(aData.status){
-                                                $("#btn_previo_sala_tecnicas").attr('onclick','js_guarda_sala_tecnicas(1,'+id_anatomia+')');
-                                                //$("#btn_previo_sala_tecnicas").prop("disabled",true);
-                                                $("#btn_graba_tecnicas").attr('onclick','js_guarda_sala_tecnicas(2,'+id_anatomia+')');
-                                                $("#html_sala_tecnicas").html(aData.out_html);
-                                                $("#modal_sala_tecnicas").modal({backdrop:'static',keyboard:false}).modal("show");
-                                            }
-                                        }, 
+                    id_anatomia : id_anatomia,
+                    get_sala : v_get_sala,
+                },
+         error : function(errro){  
+                                    console.log(errro.responseText); 
+                                    jError("Error en el aplicativo","Clinica Libre");
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                },
+         success : function(aData){ 
+
+                                    console.error("aData  ->  ",aData);
+                                    console.error("aData  ->  ",aData.bd);
+            
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                    if(aData.status){
+                                        $("#btn_previo_sala_tecnicas").attr('onclick','js_guarda_sala_tecnicas(1,'+id_anatomia+')');
+                                        //$("#btn_previo_sala_tecnicas").prop("disabled",true);
+                                        $("#btn_graba_tecnicas").attr('onclick','js_guarda_sala_tecnicas(2,'+id_anatomia+')');
+                                        $("#html_sala_tecnicas").html(aData.out_html);
+                                        $("#modal_sala_tecnicas").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    }
+                                }, 
     });
 }
 
@@ -3394,12 +3378,12 @@ function GET_PDF_ANATOMIA_PANEL(id){
        error		:   function(errro)     { 
                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
                                                 $('#loadFade').modal('hide'); 
-                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                             },
        success		:   function(aData)     { 
                                                 console.log(aData);
                                                 if(!aData["STATUS"]){
-                                                    jError("error al cargar protocolo PDF","e-SISSAN");
+                                                    jError("error al cargar protocolo PDF","Clinica Libre");
                                                     return false;
                                                 } else {
                                                     var base64str           =   aData["PDF_MODEL"];

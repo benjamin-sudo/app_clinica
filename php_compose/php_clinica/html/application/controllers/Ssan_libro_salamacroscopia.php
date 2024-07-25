@@ -42,6 +42,8 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
            
         }
         */
+        
+        
         $arr_ids_anatomia = [];
         $tipo_busqueda = '#_panel_por_fecha';
         $return_data = $this->ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(

@@ -45,6 +45,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
 
+        $arr_datos = [0,1,5,6];
+
         $this->db->select(['
         P.ID_SOLICITUD_HISTO                                                                            AS ID_SOLICITUD,
         DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d")                                                       AS LAST_DATE_AUDITA_MOMENT,
@@ -111,18 +113,12 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             )
             ELSE ""
         END AS TXT_EMPRESA_DERIVADO,
-
-
-        
         (SELECT COUNT(M.ID_SOLICITUD_HISTO) FROM
             ADMIN.PB_MAIN_BLG_ANATOMIA M
             WHERE
             M.ID_SOLICITUD_HISTO IN (P.ID_SOLICITUD_HISTO) 
             AND 
-            M.IND_ESTADO IN (1))                            AS N_IMAGE_VIEWS
-
-        
-        
+            M.IND_ESTADO IN (1))                                                                        AS N_IMAGE_VIEWS
         ']);
         $this->db->from('ADMIN.PB_SOLICITUD_HISTO P');
         $this->db->join('ADMIN.GG_TPROFESIONAL A', 'A.COD_RUTPRO = P.COD_RUTPRO');
@@ -130,7 +126,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->join('ADMIN.GG_TPROFESIONAL G', 'G.COD_RUTPRO = P.COD_RUTPRO');
         $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
         $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
-        $this->db->where_in('P.ID_HISTO_ZONA', $lista_filtro_estados);
+        $this->db->where_in('P.ID_HISTO_ZONA', $arr_datos );
+        //$lista_filtro_estados
         $this->db->where('P.ID_HISTO_ESTADO', 4);
         $this->db->where('P.IND_ESTADO', 1);
         $this->db->group_start();
@@ -163,7 +160,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->join('ADMIN.GG_TPROFESIONAL G', 'G.COD_RUTPRO = P.COD_RUTPRO');
         $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
         $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
-        $this->db->where_in('P.ID_HISTO_ZONA', $lista_filtro_estados);
+        $this->db->where_in('P.ID_HISTO_ZONA', $arr_datos);
+        //$lista_filtro_estados
         $this->db->where('P.ID_HISTO_ESTADO', 4);
         $this->db->where('P.IND_ESTADO', 1);
         $this->db->group_start();
@@ -171,7 +169,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->or_where_in('P.COD_ESTABLREF', $cod_empresa);
         $this->db->group_end();
 
-        
         $query_total_count = $this->db->get();
         $total_count = $query_total_count->row()->total_count;
         $num_paginas = ceil($total_count / $page_size);
@@ -217,10 +214,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
     
     public function li_lista_estapaanalitica_paginado($lista_anatomia, $ind_opcion, $ind_first, $get_sala) {
-        #var_dump($lista_anatomia);
-        #var_dump($ind_opcion);
-        #var_dump($ind_first);
-        #var_dump($get_sala);
         $html = '';
         $v_num_registro = 0;
         if (isset($lista_anatomia)) {
@@ -238,7 +231,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             } else {
                 $html .= $this->sin_resultados2(substr($ind_opcion, 1));
             }
-
             if ($ind_first == 1) {
                 return array(
                     'return_html' => $ind_opcion === '#_panel_por_fecha' ? $html : $this->sin_resultados2('_panel_por_fecha'),
@@ -262,19 +254,18 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
 
     public function sin_resultados2($txt_li){
-        $html           =   '
-                                <li class="list-group-item lista_analitica sin_resultados'.$txt_li.'"> 
-                                    <div class="grid_sin_informacion">
-                                        <div class="grid_sin_informacion1"></div>
-                                        <div class="grid_sin_informacion2"><b>SIN INFORMACI&Oacute;N</b> - '.$txt_li.'</div>
-                                        <div class="grid_sin_informacion3"></div>
-                                    </div>
-                                </li>
-                            ';
-        return          $html;
+        $v_sysdate = date("d-m-Y H:i:s");
+        $html = ' <li class="list-group-item lista_analitica sin_resultados'.$txt_li.'"> 
+                    <div class="grid_sin_informacion">
+                        <div class="grid_sin_informacion1"></div>
+                        <div class="grid_sin_informacion2"><b>SIN RESULTADOS</b> - ('.$txt_li.') -  <i><b>'.$v_sysdate.'</b></i></div>
+                        <div class="grid_sin_informacion3"></div>
+                    </div>
+                </li>';
+        return $html;
     }
 
-    
+    ###################
     #apuntando a oracle
     public function old_etapa_analiticaap_paginado($DATA) {
         $this->db->trans_start();
@@ -383,23 +374,23 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         #$DATA["arr_ids_anatomia"]
         if(!$_boreano_out){
             return array(
-                'HTML_LI'                        =>  $this->li_lista_estapaanalitica([],$DATA["ind_opcion"],$DATA["ind_first"],$DATA["get_sala"]),
-                'n_resultado'                    =>  '0',
-                'STATUS'                         =>  false,
-                'BD'                             =>  null,
-                'STATUS'                         =>  false,
-                'ind_opcion'                     =>  $DATA["ind_opcion"],
-                'date_inicio'                    =>  strtotime(date("d-m-Y")),
-                'date_final'                     =>  strtotime(date("d-m-Y")),
-                'cookie'                         =>  isset($_COOKIE['target'])?'<span class="label label-success">CON COOKIE</span>':'<span class="label label-warning">SIN COOKIE</span>',
-                'ind_busqueda'                   =>  isset($_COOKIE['target'])?'<span class="label label-warning" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
-                'fechas'                         =>  isset($_COOKIE['data'])?$_COOKIE['data']:'null',
-                'ids_anatomia'                   =>  isset($_COOKIE['id_anatomia'])?json_decode($_COOKIE['id_anatomia']):'null',
-                'txt_sala'                       =>  $DATA["get_sala"],
-                'txt_titulo'                     =>  $DATA["txt_titulo"],
-                '_cookie'                        =>  $_COOKIE,
-                'ind_estados'                    =>  $DATA["ind_filtros_ap"],
-                'V_DATA'                         =>  [],
+                'HTML_LI' => $this->li_lista_estapaanalitica([],$DATA["ind_opcion"],$DATA["ind_first"],$DATA["get_sala"]),
+                'n_resultado' => '0',
+                'STATUS' => false,
+                'BD' => null,
+                'STATUS' => false,
+                'ind_opcion' => $DATA["ind_opcion"],
+                'date_inicio' => strtotime(date("d-m-Y")),
+                'date_final' => strtotime(date("d-m-Y")),
+                'cookie' => isset($_COOKIE['target'])?'<span class="label label-success">CON COOKIE</span>':'<span class="label label-warning">SIN COOKIE</span>',
+                'ind_busqueda' => isset($_COOKIE['target'])?'<span class="label label-warning" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+                'fechas' => isset($_COOKIE['data'])?$_COOKIE['data']:'null',
+                'ids_anatomia' => isset($_COOKIE['id_anatomia'])?json_decode($_COOKIE['id_anatomia']):'null',
+                'txt_sala' => $DATA["get_sala"],
+                'txt_titulo' => $DATA["txt_titulo"],
+                '_cookie' => $_COOKIE,
+                'ind_estados' => $DATA["ind_filtros_ap"],
+                'V_DATA' => [],
             ); 
         }
         
@@ -821,6 +812,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
 
     #main principal de las hojas de anatomia
+    /*
     public function load_informacion_rce_patologico($DATA){
         $this->db->trans_start();
         $param              =   array(
@@ -1019,27 +1011,28 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                                                                                                     );
             }
         }
-
         return array(
-            'STATUS'        =>  true,
-            'num_anatomia'  =>  $DATA["id_anatomia"],
-            'linea_time'    =>  $arr_info_linea_tiempo,
-            'data_bd'       =>  $result,
-            'html_log'      =>  $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$DATA["id_anatomia"],'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$DATA["id_anatomia"]])?[]:$arr_info_linea_tiempo[$DATA["id_anatomia"]]),true),
-            'html_main'     =>  '',
-            'get_sala'      =>  $DATA['get_sala'],
+            'STATUS' => true,
+            'num_anatomia' => $DATA["id_anatomia"],
+            'linea_time' => $arr_info_linea_tiempo,
+            'data_bd' => $result,
+            'html_log' => $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$DATA["id_anatomia"],'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$DATA["id_anatomia"]])?[]:$arr_info_linea_tiempo[$DATA["id_anatomia"]]),true),
+            'html_main' => '',
+            'get_sala' => $DATA['get_sala'],
         );
     }
-
-
-
-   
-
+    */
 
     public function load_informacion_rce_patologico_new($DATA){
+
+        # GO -> LOAD_RCE_ANATOMIA_PATOLOGICA
+
         $arr_data = [];
+        $v_get_sala = $DATA['get_sala']; 
         $V_ID_HISTO = $this->db->escape($DATA['id_anatomia']);
         $V_COD_EMPRESA = $this->db->escape($DATA['cod_empresa']);
+
+        #MAIN PRINCIPAL
         $P_ANATOMIA_PATOLOGICA_MAIN = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
         if ($multi_query) {
@@ -1053,6 +1046,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             $error = $this->db->conn_id->error;
         }
         $this->db->reconnect();
+
+        #MUESTRA HISPATOLOGICA
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_HISTO($V_COD_EMPRESA,$V_ID_HISTO)");
         if ($multi_query) {
             do {
@@ -1065,29 +1060,64 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             $error = $this->db->conn_id->error;
         }
         $this->db->reconnect();
+
+        #MUESTRAS CITOLOGICAS
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_MUESTRAS_CITO($V_COD_EMPRESA,$V_ID_HISTO)");
         if ($multi_query) {
-        do {
-        if ($result = $this->db->conn_id->store_result()) {
-            $arr_data[':P_AP_MUESTRAS_CITOLOGIA'] = $result->fetch_all(MYSQLI_ASSOC);
-            $result->free();
-        }
-        } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            do {
+                if ($result = $this->db->conn_id->store_result()) {
+                    $arr_data[':P_AP_MUESTRAS_CITOLOGIA'] = $result->fetch_all(MYSQLI_ASSOC);
+                    $result->free();
+                }
+            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
         } else {
             $error = $this->db->conn_id->error;
         }
         $this->db->reconnect();
 
 
+        if ( $v_get_sala == 'sala_tecnologo'){
+
+            $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.GETACTIVETECHNIQUES()");
+            if ($multi_query) {
+            do {
+                if ($result = $this->db->conn_id->store_result()) {
+                    $arr_data[':P_TECNICAS_APLICADAS'] = $result->fetch_all(MYSQLI_ASSOC);
+                    $result->free();
+                }
+            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            } else {
+                $error = $this->db->conn_id->error;
+            }
+            $this->db->reconnect();
+    
+            $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.GETTECHNIQUESBYREQUEST($V_ID_HISTO)");
+            if ($multi_query) {
+            do {
+                if ($result = $this->db->conn_id->store_result()) {
+                    $arr_data[':P_TECNICAS_APLICADASXMUESTRA'] = $result->fetch_all(MYSQLI_ASSOC);
+                    $result->free();
+                }
+            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            } else {
+                $error = $this->db->conn_id->error;
+            }
+            $this->db->reconnect();
+
+        }
+
+
+
         $arr_info_linea_tiempo = [];
+        
         return [
-            'STATUS'        =>  true,
-            'num_anatomia'  =>  $DATA["id_anatomia"],
-            'linea_time'    =>  $arr_info_linea_tiempo,
-            'data_bd'       =>  $arr_data,
-            'html_log'      =>  $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$DATA["id_anatomia"],'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$DATA["id_anatomia"]])?[]:$arr_info_linea_tiempo[$DATA["id_anatomia"]]),true),
-            'html_main'     =>  '',
-            'get_sala'      =>  $DATA['get_sala'],
+            'STATUS' =>  true,
+            'num_anatomia' =>  $DATA["id_anatomia"],
+            'linea_time' =>  $arr_info_linea_tiempo,
+            'data_bd' =>  $arr_data,
+            'html_log' =>  $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$DATA["id_anatomia"],'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$DATA["id_anatomia"]])?[]:$arr_info_linea_tiempo[$DATA["id_anatomia"]]),true),
+            'html_main' =>  '',
+            'get_sala' =>  $DATA['get_sala'],
         ];
     }
 
@@ -1941,26 +1971,27 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 #$this->db->where($row['tipo']=='muestra'?'ID_NMUESTRA':'ID_CASETE',$row['id']); 
                 $this->db->where('ID_NMUESTRA',$row['id']); 
                 $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array(
-                    "IND_ESTADO"            =>  1,
-                    "USR_AUDITA"            =>  $DATA['session'],
-                    "DATE_AUDITA"           =>  "SYSDATE",
-                    "TXT_DESC_MACROSCOPICA" =>  $row['txt'],
-                    "DATE_MACROSCOPIA"      =>  "SYSDATE",
-                    "USER_MACROSCOPICA"     =>  $DATA['session']
+                    "IND_ESTADO" => 1,
+                    "USR_AUDITA" => $DATA['session'],
+                    "DATE_AUDITA" => date('Y-m-d H:i:s'), 
+                    "TXT_DESC_MACROSCOPICA" => $row['txt'],
+                    "DATE_MACROSCOPIA" => date('Y-m-d H:i:s'), 
+                    "USER_MACROSCOPICA" => $DATA['session']
                 ));
             }
             #PASA A SALA DE PROCESO = ID_HISTO_ZONA = 1
             $this->db->where('ID_SOLICITUD_HISTO',$DATA["id_anatomia"]); 
             $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
-                "ID_HISTO_ZONA"             =>  1,#AVANZA DE ZONA
-                "TXT_DESC_MACROSCOPICA"     =>  $DATA["array_main"][0]["txt"],
-                "DATE_MACROSCOPIA"          =>  "SYSDATE",
-                "USER_MACROSCOPICA"         =>  $DATA['session']
+                "ID_HISTO_ZONA" => 1, #AVANZA DE ZONA
+                "TXT_DESC_MACROSCOPICA" => $DATA["array_main"][0]["txt"],
+                "DATE_MACROSCOPIA" => date('Y-m-d H:i:s'), 
+                "USER_MACROSCOPICA" => $DATA['session']
             ));
         }
         $this->db->trans_complete();
         return array('status' => true);
     }
+
     
     public function get_elimina_imagen($DATA){
         $this->db->trans_start();
@@ -2046,46 +2077,48 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     
     public function get_star_sala_proceso($data){
         $this->db->trans_start();
-        $date                           =   $data["accesdata"]["form_star_sala_proceso"][0]["date_fecha_star_salaproceso"];
-        $ind_tipo_proceso               =   $data["accesdata"]["form_star_sala_proceso"][0]["ind_proceso_sala"];
-        $this->db->where('ID_SOLICITUD_HISTO',$data["id_anatomia"]); 
-        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
-            "ID_HISTO_ZONA"             =>  5,#EN SALA DE PROCESO
-            "IND_ESTADO"                =>  1,
-            "ID_UID_INICIO_SPROCESO"    =>  $data["user_firma"][0]["ID_UID"],
-            "DATE_STAR_SALA_PROCESO"    =>  "TO_DATE('".$date."','DD-MM-YYYY hh24:mi')",
-            "LAST_USR_AUDITA"           =>  $data["session"],
-            "LAST_DATE_AUDITA"          =>  "SYSDATE",
-            "IND_TIPO_PROCESO"          =>  $ind_tipo_proceso,
+        $date = $data["accesdata"]["form_star_sala_proceso"][0]["date_fecha_star_salaproceso"];
+        $ind_tipo_proceso = $data["accesdata"]["form_star_sala_proceso"][0]["ind_proceso_sala"];
+        $this->db->where('ID_SOLICITUD_HISTO', $data["id_anatomia"]);
+        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO', array(
+            "ID_HISTO_ZONA" => 5,
+            "IND_ESTADO" => 1,
+            "ID_UID_INICIO_SPROCESO" => $data["user_firma"][0]["ID_UID"],
+            "DATE_STAR_SALA_PROCESO" => date('Y-m-d H:i:s', strtotime($date)), 
+            "LAST_USR_AUDITA" => $data["session"],
+            "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'), 
+            "IND_TIPO_PROCESO" => $ind_tipo_proceso,
         ));
         $this->db->trans_complete();
         $this->db->trans_status();
-        return array(
-            'status'                    =>  true,
-            'return_bd'                 =>  $data["user_firma"][0]["ID_UID"],
-        );
+        return [
+            'status' => true,
+            'return_bd' => $data["user_firma"][0]["ID_UID"],
+        ];
     }
+    
      
-    public function get_final_sala_proceso($data){
+    public function get_final_sala_proceso($data) {
         $this->db->trans_start();
-        $date                           =   $data["accesdata"]["form_star_sala_proceso"][0]["date_fecha_final_salaproceso"];
-        $this->db->where('ID_SOLICITUD_HISTO',$data["id_anatomia"]); 
-        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
-            "ID_HISTO_ZONA"             =>  6,#SALA DE TECNICAS
-            "IND_ESTADO"                =>  1,
-            "LAST_USR_AUDITA"           =>  $data["session"],
-            "LAST_DATE_AUDITA"          =>  "SYSDATE",
-            "ID_UID_FINAL_SPROCESO"     =>  $data["user_firma"][0]["ID_UID"],
-            "DATE_END_SALA_PROCESO"     =>  "TO_DATE('".$date."','DD-MM-YYYY hh24:mi')",
-            "IND_SALA_PROCESO"          =>  1,
+        $date = $data["accesdata"]["form_star_sala_proceso"][0]["date_fecha_final_salaproceso"];
+        $this->db->where('ID_SOLICITUD_HISTO', $data["id_anatomia"]); 
+        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO', array(
+            "ID_HISTO_ZONA" => 6, 
+            "IND_ESTADO" => 1,
+            "LAST_USR_AUDITA" => $data["session"],
+            "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'), 
+            "ID_UID_FINAL_SPROCESO" => $data["user_firma"][0]["ID_UID"],
+            "DATE_END_SALA_PROCESO" => date('Y-m-d H:i:s', strtotime($date)),
+            "IND_SALA_PROCESO" => 1,
         ));
         $this->db->trans_complete();
-        $this->db->trans_status();
+        $status = $this->db->trans_status();
         return array(
-            'status'                    =>  true,
-            'return_bd'                 =>  $data["user_firma"][0]["ID_UID"],
+            'status'    => $status,
+            'return_bd' => $data["user_firma"][0]["ID_UID"],
         );
     }
+    
     
     public function load_sala_inclusion($data){
         $this->db->trans_start();
@@ -2164,129 +2197,154 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         );
     }
     
-    public function get_record_tec_tecnologo($data){
+
+    
+    public function get_record_tec_tecnologo($data) {
         $this->db->trans_start();
-        $status                                     =   true;
-        if(count($data["lis_checked"])>0){
-            $this->db->where('ID_SOLICITUD_HISTO',$data["id_anatomia"]); 
-            $this->db->update($this->ownPab.'.PB_MUESTRAXTECNICA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$data["session"],"DATE_AUDITA"=>"SYSDATE"));
-            foreach($data["lis_checked"] as $i => $row){
-                $id_anatomia                        =   $row["ap"];
-                $id_muestra                         =   $row["id"];
-                foreach($row["txt"] as $x => $id_tecnica){
-                    $arr_return                     =   $this->db->query("SELECT A.ID_TECNICAXMUES FROM $this->ownPab.PB_MUESTRAXTECNICA A WHERE A.ID_NMUESTRA IN($id_muestra) AND A.ID_TECNICA_AP IN ($id_tecnica)")->result_array();
-                    if(count($arr_return)>0){
-                        $this->db->where('ID_TECNICAXMUES',$arr_return[0]['ID_TECNICAXMUES']); 
-                        $this->db->update($this->ownPab.'.PB_MUESTRAXTECNICA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$data["session"],"DATE_AUDITA"=>"SYSDATE"));
-                    } else {
-                        $new_tecnica                =   array(
-                            'ID_TECNICAXMUES'       =>  $this->db->sequence($this->ownPab,'SEQ_TECNICAXMUESTRA'),
-                            'ID_TECNICA_AP'         =>  $id_tecnica,
-                            'ID_NMUESTRA'           =>  $id_muestra,
-                            'DATE_CREA'             =>  'SYSDATE',
-                            'USR_CREA'              =>  $data["session"],
-                            'IND_ESTADO'            =>  '1',
-                            'ID_SOLICITUD_HISTO'    =>  $id_anatomia,
-                        );
-                        $this->db->insert($this->ownPab.'.PB_MUESTRAXTECNICA',$new_tecnica); 
-                    }
-                }
-            }
-        }
-        #UPDATE MAIN DE ANATOMIA PATOLOGICA
-        $dataSolicitud      =   array(
-                                //"IND_ALL_TECNICAS"    =>  1,
-                                "LAST_USR_AUDITA"       =>  $data["session"],
-                                "LAST_DATE_AUDITA"      =>  "SYSDATE",
-                            );
-        $hispatologico                                  =   $data["accesdata"];
-        if(count($hispatologico)>0)                     {
-            if(count($hispatologico["formulario_sala_tecnica"][0])>0){
-                foreach($hispatologico["formulario_sala_tecnica"][0] as $i => $datos){
-                    #INFORMACION DE TECNOLOGO MEDICO
-                    if(isset($datos["date_fecha_macro"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_FECHA_MACRO"               =>  "TO_DATE('".$datos["date_fecha_macro"]."','DD-MM-YYYY')"));
-                    }
-                    if(isset($datos["date_fecha_corte"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_FECHA_CORTE"               =>  "TO_DATE('".$datos["date_fecha_corte"]."','DD-MM-YYYY')"));
-                    }
-                    if(isset($datos["ind_color_taco"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_COLOR_TACO"                 =>  $datos["ind_color_taco"]));
-                    }
-                    if(isset($datos["ind_estado_olga"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_ESTADO_OLGA"                =>  $datos["ind_estado_olga"]));
-                        #$dataSolicitud                 =     array_merge($dataSolicitud,array("IND_ESTADO_OLGA_TEC"            =>  $datos["ind_estado_olga"]));
-                    }
-                    if(isset($datos["date_interconsulta_ap"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_INTERCONSULTA"             =>  "TO_DATE('".$datos["date_fecha_corte"]."','DD-MM-YYYY')"));
-                    }
-                    if(isset($datos["num_copia_inerconsulta"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_CP_INTERCONSULTA"           =>  $datos["num_copia_inerconsulta"]));
-                    }
-                    if(isset($datos["num_fragmentos"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_FRAGMENTOS"                 =>  $datos["num_fragmentos"]));
-                    }
-                    if(isset($datos["num_tacos_cortados"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_TACOS_CORTADOS"             =>  $datos["num_tacos_cortados"]));
-                    }
-                    if(isset($datos["num_extendidos"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_EXTENDIDOS"                 =>  $datos["num_extendidos"]));
-                    }
+        $status = true;
+        
+        if(count($data["lis_checked"]) > 0) {
+            $this->db->where('ID_SOLICITUD_HISTO', $data["id_anatomia"]); 
+            $this->db->update($this->ownPab.'.PB_MUESTRAXTECNICA', array(
+                "IND_ESTADO" => 0,
+                "USR_AUDITA" => $data["session"],
+                "DATE_AUDITA" => date('Y-m-d H:i:s')  // Usar la fecha y hora actual en formato MySQL
+            ));
+            
+            foreach($data["lis_checked"] as $i => $row) {
+                $id_anatomia = $row["ap"];
+                $id_muestra = $row["id"];
+                
+                foreach($row["txt"] as $x => $id_tecnica) {
+                    $arr_return = $this->db->query("SELECT A.ID_TECNICAXMUES FROM {$this->ownPab}.PB_MUESTRAXTECNICA A WHERE A.ID_NMUESTRA IN($id_muestra) AND A.ID_TECNICA_AP IN ($id_tecnica)")->result_array();
                     
-                    #TECNICAS DEL TECNOLOGO -> INFO PASO A RCE PATOLOGIA -> 
-                    #TECNICA INCLUSION
-                    if(isset($datos["checked_inclusion"])){
-                        if ($datos["checked_tincion"] === 'true'){
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_INCLUCION"              =>1));
-                        } else {
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_INCLUCION"              =>0));
-                        }
-                    }
-                    #TECNICA INCLUSION
-                    if(isset($datos["checked_corte"])){
-                        if ($datos["checked_tincion"] === 'true'){
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_CORTE"                  =>1));
-                        } else {
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_CORTE"                  =>0));
-                        }
-                    }
-                    #TECNICA TINCION
-                    if(isset($datos["checked_tincion"])){
-                        if ($datos["checked_tincion"] === 'true'){
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_TINCION"                =>1));
-                        } else {
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_TINCION"                =>0));
-                        }
-                    }
-                    #FINALIZACION
-                    if(isset($datos["checked_tenicas_all"])){
-                        //$dataSolicitud                      =     array_merge($dataSolicitud,array("IND_ALL_TECNICAS"               =>  $datos["checked_tenicas_all"]?1:0));
-                        if ($datos["checked_tincion"] === 'true'){
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_TINCION"                    =>1));
-                        } else {
-                            $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_TEC_TINCION"                    =>0));
-                        }
+                    if(count($arr_return) > 0) {
+                        $this->db->where('ID_TECNICAXMUES', $arr_return[0]['ID_TECNICAXMUES']); 
+                        $this->db->update($this->ownPab.'.PB_MUESTRAXTECNICA', array(
+                            "IND_ESTADO" => 1,
+                            "USR_AUDITA" => $data["session"],
+                            "DATE_AUDITA" => date('Y-m-d H:i:s')  // Usar la fecha y hora actual en formato MySQL
+                        ));
+                    } else {
+                        // Generar un nuevo ID para la nueva técnica (secuencia manual)
+                        $new_id_tecnica = $this->db->query("SELECT IFNULL(MAX(ID_TECNICAXMUES), 0) + 1 AS new_id FROM {$this->ownPab}.PB_MUESTRAXTECNICA")->row()->new_id;
+                        
+                        $new_tecnica = array(
+                            'ID_TECNICAXMUES' => $new_id_tecnica,
+                            'ID_TECNICA_AP' => $id_tecnica,
+                            'ID_NMUESTRA' => $id_muestra,
+                            'DATE_CREA' => date('Y-m-d H:i:s'),  // Usar la fecha y hora actual en formato MySQL
+                            'USR_CREA' => $data["session"],
+                            'IND_ESTADO' => 1,
+                            'ID_SOLICITUD_HISTO' => $id_anatomia,
+                        );
+                        $this->db->insert($this->ownPab.'.PB_MUESTRAXTECNICA', $new_tecnica); 
                     }
                 }
             }
         }
         
-        #AVANZA DE ZONA - PATOLOGO 
-        if($data["val_cierre"]      ==  1){
-            $dataSolicitud          =   array_merge($dataSolicitud,array(
-                "ID_HISTO_ZONA"     =>  '7',
-                "ID_UID_TECNICAS"   =>  $this->session->userdata["ID_UID"],
-                "USR_TECNICAS"      =>  $data["session"],
-                "DATE_TECNICAS"     =>  "SYSDATE",
+        // Actualización principal de ANATOMIA PATOLOGICA
+        $dataSolicitud = array(
+            "LAST_USR_AUDITA" => $data["session"],
+            "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'),  // Usar la fecha y hora actual en formato MySQL
+        );
+        
+        $hispatologico = $data["accesdata"];
+        if(count($hispatologico) > 0) {
+            if(count($hispatologico["formulario_sala_tecnica"][0]) > 0) {
+                foreach($hispatologico["formulario_sala_tecnica"][0] as $i => $datos) {
+                    // Información de TECNOLOGO MEDICO
+                    if(isset($datos["date_fecha_macro"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "DATE_FECHA_MACRO" => date('Y-m-d', strtotime($datos["date_fecha_macro"]))  // Convertir la fecha al formato MySQL
+                        ));
+                    }
+                    if(isset($datos["date_fecha_corte"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "DATE_FECHA_CORTE" => date('Y-m-d', strtotime($datos["date_fecha_corte"]))  // Convertir la fecha al formato MySQL
+                        ));
+                    }
+                    if(isset($datos["ind_color_taco"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "IND_COLOR_TACO" => $datos["ind_color_taco"]
+                        ));
+                    }
+                    if(isset($datos["ind_estado_olga"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "IND_ESTADO_OLGA" => $datos["ind_estado_olga"]
+                        ));
+                    }
+                    if(isset($datos["date_interconsulta_ap"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "DATE_INTERCONSULTA" => date('Y-m-d', strtotime($datos["date_interconsulta_ap"]))  // Convertir la fecha al formato MySQL
+                        ));
+                    }
+                    if(isset($datos["num_copia_inerconsulta"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "NUM_CP_INTERCONSULTA" => $datos["num_copia_inerconsulta"]
+                        ));
+                    }
+                    if(isset($datos["num_fragmentos"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "NUM_FRAGMENTOS" => $datos["num_fragmentos"]
+                        ));
+                    }
+                    if(isset($datos["num_tacos_cortados"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "NUM_TACOS_CORTADOS" => $datos["num_tacos_cortados"]
+                        ));
+                    }
+                    if(isset($datos["num_extendidos"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "NUM_EXTENDIDOS" => $datos["num_extendidos"]
+                        ));
+                    }
+                    
+                    // Técnicas del Tecnólogo
+                    if(isset($datos["checked_inclusion"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "IND_TEC_INCLUCION" => ($datos["checked_inclusion"] === 'true') ? 1 : 0
+                        ));
+                    }
+                    if(isset($datos["checked_corte"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "IND_TEC_CORTE" => ($datos["checked_corte"] === 'true') ? 1 : 0
+                        ));
+                    }
+                    if(isset($datos["checked_tincion"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "IND_TEC_TINCION" => ($datos["checked_tincion"] === 'true') ? 1 : 0
+                        ));
+                    }
+                    if(isset($datos["checked_tenicas_all"])) {
+                        $dataSolicitud = array_merge($dataSolicitud, array(
+                            "IND_ALL_TECNICAS" => ($datos["checked_tenicas_all"] === 'true') ? 1 : 0
+                        ));
+                    }
+                }
+            }
+        }
+        
+        // Avanza de zona - Patólogo
+        if($data["val_cierre"] == 1) {
+            $dataSolicitud = array_merge($dataSolicitud, array(
+                "ID_HISTO_ZONA" => 7,
+                "ID_UID_TECNICAS" => $this->session->userdata["ID_UID"],
+                "USR_TECNICAS" => $data["session"],
+                "DATE_TECNICAS" => date('Y-m-d H:i:s')  // Usar la fecha y hora actual en formato MySQL
             ));
         }
         
-        $this->db->where('ID_SOLICITUD_HISTO',$data["id_anatomia"]);
-        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',$dataSolicitud);
+        $this->db->where('ID_SOLICITUD_HISTO', $data["id_anatomia"]);
+        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO', $dataSolicitud);
         $this->db->trans_complete();
         $this->db->trans_commit();
-        return array('status'=>$status);
+        return array('status' => $status);
     }
+    
+
+
     
     public function load_gestion_cancer($DATA){
         $this->db->trans_start();

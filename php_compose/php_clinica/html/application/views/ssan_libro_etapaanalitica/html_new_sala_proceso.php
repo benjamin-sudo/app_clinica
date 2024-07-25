@@ -1,5 +1,9 @@
 <?php $ID_SOLICITUD = $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>
 
+
+
+
+
 <div class="lista_gestion_tecnologo">
     <ul class="nav nav-tabs" id="myTab">
         <?php if (count($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){ ?>
@@ -39,6 +43,9 @@
             <div id="line_pdf_microscopia"></div>
         </div>
         <div id="tabs_lista_citologia" class="tab-pane margin_panel_tabs">
+
+
+
             <?php if(count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0){  ?>
                 <h5 style="margin-bottom: 9px;margin-top: 16px;">
                     <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">LISTADO DE MUESTRAS CITOL&Oacute;GICAS</b>
@@ -90,15 +97,14 @@
                     <h5 style="margin-bottom: 9px;margin-top: 16px;">
                         <i class="fa fa-align-justify" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">LISTADO DE MUESTRAS</b>
                     </h5>
-                    
                 <?php
                     if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]['IND_USOCASSETTE'] == 1){?>
                         <?php 
-                            $ARR_CASETE_ORD    =   [];
+                            $ARR_CASETE_ORD = [];
                             foreach($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row){ $ARR_CASETE_ORD[$row['NUM_CASSETTE']][] = $row; }   //ordenando x casete
-                            $arr_li_casete      =   [];
-                            $arr_div_content    =   [];
-                            $aux                =   0;
+                            $arr_li_casete = [];
+                            $arr_div_content = [];
+                            $aux = 0;
                             foreach ($ARR_CASETE_ORD as $_num => $row_all){
                                 $html_muestra_casete        =   '<ul class="list-group" id="ul_muestras_'.$_num.'" style="margin-bottom:0px;">';
                                 $active                     =   $aux == 0 ? 'active':'';
@@ -119,7 +125,7 @@
                                             </div>
                                             <div id="nuestra_x_casete_'.$row_muestras['ID_NMUESTRA'].'" class="collapse" style="margin: 0px 10px 25px 10px;">
                                                 <div class="card" id="card_informacio_paciente" style="margin-bottom: 5px">
-                                                    <div class="header">
+                                                    <div class="header" style="margin-top: 7px;margin-left: 17px;">
                                                         <h5 class="title"><i class="fa fa-cog" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">T&Eacute;CNICAS APLICADAS</b></h5>
                                                     </div>
                                                     <div class="content card-body">
@@ -139,17 +145,16 @@
                                             </div>
                                         </li>
                                     ';
-
                                 }
                                 $html_muestra_casete.='</ul>';
-                                array_push($arr_li_casete,"<li role='presentation' class='$active'><a href='#casete_$_num' data-toggle='tab'><i class='fa fa-file' aria-hidden='true'></i>&nbsp;CASETE $_num </a></li>");
-                                array_push($arr_div_content,"<div id='casete_$_num' ' class='tab-pane margin_panel_tabs $active'>$html_muestra_casete</div>");
+                                array_push($arr_li_casete,'<li class="nav-item"><a class="nav-link '.$active.'" data-bs-toggle="tab" href="#home_'.$aux.'"><i class="fa fa-file" aria-hidden="true"></i> CASETE '.($aux+1).'</a></li>');
+                                array_push($arr_div_content,'<div class="tab-pane container '.$active.'" id="home_'.$aux.'">'.$html_muestra_casete.'</div>');
                                 $aux++;
                             }
                         ?>
-                        <div class="lista_ordenada_casete">
-                            <ul role="tablist" class="nav nav-tabs"><?php echo implode(" ",$arr_li_casete);?></ul>
-                            <div class="tab-content"><?php echo implode("",$arr_div_content);?></div>
+                        <div class=" lista_ordenada_casete">
+                            <ul class="nav nav-tabs" style=""><?php echo implode(" ",$arr_li_casete);?></ul>
+                            <div class="tab-content" style="margin-top: 5px;"><?php echo implode(" ",$arr_div_content);?></div>
                         </div>
                     <?php } else { ?>
                         <ul class="list-group" id="ul_muestras" style="margin-bottom:0px;">
@@ -169,7 +174,7 @@
                                     </div>
                                     <div class="collapse" id="muestrabiopsia<?php echo $row['ID_NMUESTRA'];?>"  style="margin: 0px 5px 5px 5px;">
                                         <div class="card" id="card_informacio_paciente" style="margin-bottom:5px;padding:10px;">
-                                            <div class="header">
+                                            <div class="header" >
                                                 <h5 class="title">
                                                     <i class="fa fa-cog" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">T&Eacute;CNICAS APLICADAS - N&deg; <?php echo $row['ID_NMUESTRA'];?></b>
                                                 </h5>

@@ -226,16 +226,16 @@
         
         <hr style="margin: 8px 0px 10px 0px">
 
-        <ul class="list-group lista_etapa_analitica busqueda_por_fecha" id="busqueda_por_fecha" style="padding-right:5px;">
+        <ul class="list-group lista_etapa_analitica busqueda_por_fecha html_panel_por_fecha" id="busqueda_por_fecha" style="padding-right:5px;">
             <?php echo $HTML_LI["return_html"];?> 
         </ul>
-        <ul class="list-group lista_etapa_analitica busqueda_por_gestion" id="busqueda_por_gestion" style="padding-right:5px;">
+        <ul class="list-group lista_etapa_analitica busqueda_por_gestion html_busqueda_por_gestion" id="busqueda_por_gestion" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_gestion"];?> 
         </ul>
-        <ul class="list-group lista_etapa_analitica busqueda_por_codigo" id="busqueda_por_codigo" style="padding-right:5px;">
+        <ul class="list-group lista_etapa_analitica busqueda_por_codigo html_busqueda_por_codigo" id="busqueda_por_codigo" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_codigo"];?> 
         </ul>
-        <ul class="list-group lista_etapa_analitica busqueda_por_persona" id="busqueda_por_persona" style="padding-right:5px;">
+        <ul class="list-group lista_etapa_analitica busqueda_por_persona html_busqueda_por_persona" id="busqueda_por_persona" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_persona"];?> 
         </ul>
         
@@ -280,7 +280,7 @@
     </div>
 
     <div class="modal fade" id="modal_star_sala_proceso">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 95%; width: 95%;">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">
@@ -325,10 +325,9 @@
             </div>
         </div>
     </div>
-   
 
     <div class="modal fade" id="modal_sala_tecnicas">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 95%; width: 95%;">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">

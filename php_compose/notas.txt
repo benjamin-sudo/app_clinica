@@ -900,10 +900,10 @@ WHERE
                
        OPEN P_LISTA_PATOLOGOS  FOR 
        SELECT 
-       G.ID_PROFESIONAL                                                                                AS ID_PROFESIONAL,
-       UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT)     AS TXT_PROFESIONAL,
-       G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE                  AS PROFESIONAL_2,
-       G.COD_RUTPRO||'-'|| G.COD_DIGVER                                                      AS RUT_PROFESIONAL
+       G.ID_PROFESIONAL AS ID_PROFESIONAL,
+       UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT) AS TXT_PROFESIONAL,
+       G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE AS PROFESIONAL_2,
+       G.COD_RUTPRO||'-'|| G.COD_DIGVER AS RUT_PROFESIONAL
        FROM ADMIN.GG_TPROFESIONAL G
        WHERE
        G.COD_RUTPRO IN (14528409,26756634,16098500);
@@ -913,10 +913,10 @@ WHERE
        
        OPEN P_LISTA_PATOLOGOS  FOR 
        SELECT 
-       G.ID_PROFESIONAL                                                                                AS ID_PROFESIONAL,
-       UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT)     AS TXT_PROFESIONAL,
-       G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE                  AS PROFESIONAL_2,
-       G.COD_RUTPRO||'-'|| G.COD_DIGVER                                                      AS RUT_PROFESIONAL
+       G.ID_PROFESIONAL AS ID_PROFESIONAL,
+       UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT) AS TXT_PROFESIONAL,
+       G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE AS PROFESIONAL_2,
+       G.COD_RUTPRO||'-'|| G.COD_DIGVER AS RUT_PROFESIONAL
        FROM ADMIN.GG_TPROFESIONAL G
        WHERE
        G.COD_RUTPRO IN (25787917,14528409);
@@ -925,10 +925,10 @@ WHERE
        
        OPEN P_LISTA_PATOLOGOS  FOR 
        SELECT 
-       G.ID_PROFESIONAL                                                                                AS ID_PROFESIONAL,
-       UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT)     AS TXT_PROFESIONAL,
-       G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE                  AS PROFESIONAL_2,
-       G.COD_RUTPRO||'-'|| G.COD_DIGVER                                                      AS RUT_PROFESIONAL
+       G.ID_PROFESIONAL AS ID_PROFESIONAL,
+       UPPER (G.NOM_NOMBRE||' '|| G.NOM_APEPAT ||' '|| G.NOM_APEMAT) AS TXT_PROFESIONAL,
+       G.NOM_APEPAT||' '|| G.NOM_APEMAT ||' '|| G.NOM_NOMBRE AS PROFESIONAL_2,
+       G.COD_RUTPRO||'-'|| G.COD_DIGVER AS RUT_PROFESIONAL
        FROM ADMIN.GG_TPROFESIONAL G
        WHERE
        G.COD_RUTPRO IN (16869726,14528409);
