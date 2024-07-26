@@ -219,46 +219,45 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         if (isset($lista_anatomia)) {
             if(count($lista_anatomia) > 0) {
                 foreach ($lista_anatomia as $i => $row) {
-                    //var_dump($i);
-                    $html .= $this->load->view("ssan_libro_etapaanalitica/html_li_resul_anatomiaap", array(
+                    $html .= $this->load->view("ssan_libro_etapaanalitica/html_li_resul_anatomiaap", [
                         'aux' => ($i + 1),
                         'row' => $row,
                         'ind_opcion' => $ind_opcion,
                         'ind_first' => $ind_first,
                         'get_sala' => $get_sala
-                    ), true);
+                    ] , true);
                 }
             } else {
                 $html .= $this->sin_resultados2(substr($ind_opcion, 1));
             }
             if ($ind_first == 1) {
-                return array(
+                return [
                     'return_html' => $ind_opcion === '#_panel_por_fecha' ? $html : $this->sin_resultados2('_panel_por_fecha'),
                     'return_por_gestion' => $ind_opcion === '#_panel_por_gestion' ? $html : $this->sin_resultados2('_panel_por_gestion'),
                     'return_por_codigo' => $ind_opcion === '#_busqueda_bacode' ? $html : $this->sin_resultados2('_busqueda_bacode'),
                     'return_por_persona' => $ind_opcion === '#_busqueda_xpersona' ? $html : $this->sin_resultados2('_busqueda_xpersona'),
-                );
+                ]
             } else {
-                return array(
+                return [
                     'return_html' => $html
-                );
+                ];
             }
         } else {
-            return array(
+            return [
                 'return_html' => $this->sin_resultados2('_panel_por_fecha'),
                 'return_por_gestion' => $this->sin_resultados2('_panel_por_gestion'),
                 'return_por_codigo' => $this->sin_resultados2('_busqueda_bacode'),
                 'return_por_persona' => $this->sin_resultados2('_busqueda_xpersona'),
-            );
+            ];
         }
     }
 
     public function sin_resultados2($txt_li){
         $v_sysdate = date("d-m-Y H:i:s");
-        $html = ' <li class="list-group-item lista_analitica sin_resultados'.$txt_li.'"> 
+        $html = '<li class="list-group-item lista_analitica sin_resultados'.$txt_li.'"> 
                     <div class="grid_sin_informacion">
                         <div class="grid_sin_informacion1"></div>
-                        <div class="grid_sin_informacion2"><b>SIN RESULTADOS</b> - ('.$txt_li.') -  <i><b>'.$v_sysdate.'</b></i></div>
+                        <div class="grid_sin_informacion2"><b>SIN RESULTADOS</b> - <i><b>'.$v_sysdate.'</b></i></div>
                         <div class="grid_sin_informacion3"></div>
                     </div>
                 </li>';
@@ -2337,7 +2336,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         }
         
         $this->db->where('ID_SOLICITUD_HISTO', $data["id_anatomia"]);
-        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO', $dataSolicitud);
+        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO_', $dataSolicitud);
         $this->db->trans_complete();
         $this->db->trans_commit();
         return array('status' => $status);
