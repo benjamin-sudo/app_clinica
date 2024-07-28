@@ -2887,12 +2887,12 @@ function busqueda_etiquera(from,solicitud,array){
     console.log("   ----------------------------------------------------    ");
     */
     //return false;
-    $('#loadFade').modal('show');
+    
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",
         dataType : "json",
-        beforeSend : function(xhr){ },
+        beforeSend : function(xhr){  $('#loadFade').modal('show');},
         data : {
                     get_etiqueta    :   get_etiqueta,
                     from            :   from,
@@ -2908,23 +2908,9 @@ function busqueda_etiquera(from,solicitud,array){
                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
         success : function(aData) { 
-                                    /*
-                                    console.log("------------   informacion_x_muestra_grupal    ----------------------------------");
-                                    console.log("                               ->  ",aData,"                                     ");
-                                    console.log(" data_main                     ->  ",aData.data_main,"                           ");
-                                    console.log(" logs                          ->  ",aData.logs,"                                ");
-                                    console.log(" P_AP_INFORMACION_ADICIONAL    ->  ",aData.P_AP_INFORMACION_ADICIONAL,"          ");
-                                    console.log(" ARR_CASETE_ORD                ->  ",aData.ARR_CASETE_ORD,"                      ");
-                                    console.log("---------------------------------------------------------------------------------");
-                                    */ 
-
-                                    /*
-                                    console.error("...................................................");
-                                    console.error("aData        ->  ",aData);
-                                    console.error("DATA         -> ",aData.DATA);
-                                    console.error("...................................................");
-                                    */
+                                    
                                     $('#loadFade').modal('hide'); 
+
                                     if(aData.STATUS){
                                         if ($('#UL_TABS_MUESTRA li').size()==0){
                                             $('#get_etiqueta,#get_etiqueta_modal').val('');
@@ -2936,13 +2922,9 @@ function busqueda_etiquera(from,solicitud,array){
                                             $('#UL_TABS_MUESTRA').tab();
                                             $('#UL_TABS_MUESTRA li:last-child a').tab('show');
                                         }
-                                        //txt_busq_muestra?busqueda_etiquera_modal(get_etiqueta):'';
-                                        //js_viwes_btn_masivo();
                                     } else {
                                         jError(aData['DATA']['P_ERROR'][0].TXT_ERROR,"Clinica Libre");
                                     }
-
-
                                 }, 
     });
     return true;
