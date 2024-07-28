@@ -72,15 +72,15 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
                     },
         error   :    function(errro) { 
                         console.log(errro);
-                        $("#loadFade").modal('hide');  
+                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                         jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
                     },
         success :   function(aData) { 
                                         console.log("aData , ",aData);
-                                        $("#loadFade").modal('hide'); 
                                         $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
                                         $("#PA_ID_PROCARCH").val('65');
                                         $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show");
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     }, 
     });
 }
