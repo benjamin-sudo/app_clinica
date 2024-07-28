@@ -106,6 +106,7 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_spanish_ci
       - --init-connect=SET NAMES utf8mb4 COLLATE utf8mb4_spanish_ci
+      - --explicit_defaults_for_timestamp=1
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ssprueba.210
