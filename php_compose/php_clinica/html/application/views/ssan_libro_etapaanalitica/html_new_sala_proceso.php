@@ -1,9 +1,5 @@
 <?php $ID_SOLICITUD = $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>
 
-
-
-
-
 <div class="lista_gestion_tecnologo">
     <ul class="nav nav-tabs" id="myTab">
         <?php if (count($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){ ?>
@@ -43,8 +39,6 @@
             <div id="line_pdf_microscopia"></div>
         </div>
         <div id="tabs_lista_citologia" class="tab-pane margin_panel_tabs">
-
-
 
             <?php if(count($data_bd[":P_AP_MUESTRAS_CITOLOGIA"])>0){  ?>
                 <h5 style="margin-bottom: 9px;margin-top: 16px;">

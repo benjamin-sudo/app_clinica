@@ -1932,36 +1932,36 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     
     public function get_record_tec_tecnologo(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $data_produccion                =   [];
-        $status                         =   true;
-        $status_firma                   =   true;
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $id_anatomia                    =   $this->input->post('id_anatomia');
-        $lis_checked                    =   $this->input->post('lis_checked'); 
-        $val_cierre                     =   $this->input->post('val_cierre'); 
-        $accesdata                      =   $this->input->post('accesdata');
-        $contrasena                     =   $this->input->post('contrasena');
-        $op                             =   $this->input->post('op'); 
-        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
-        if(count($arr_user)>0)          {
-            $data_produccion            =   $this->Ssan_libro_etapaanalitica_model->get_record_tec_tecnologo(array(
-                "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
-                "session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
-                "id_anatomia"           =>  $id_anatomia,
-                "lis_checked"           =>  $lis_checked,
-                "val_cierre"            =>  $val_cierre,
-                "accesdata"             =>  $accesdata,
-                "empresa"               =>  $empresa,
-                "op"                    =>  $op,
+        $data_produccion = [];
+        $status = true;
+        $status_firma = true;
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $id_anatomia = $this->input->post('id_anatomia');
+        $lis_checked = $this->input->post('lis_checked'); 
+        $val_cierre = $this->input->post('val_cierre'); 
+        $accesdata = $this->input->post('accesdata');
+        $contrasena = $this->input->post('contrasena');
+        $op = $this->input->post('op'); 
+        $arr_user = $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        if(count($arr_user)>0) {
+            $data_produccion = $this->Ssan_libro_etapaanalitica_model->get_record_tec_tecnologo(array(
+                "cod_empresa" => $this->session->userdata("COD_ESTAB"),
+                "session" =>  explode("-",$this->session->userdata("USERNAME"))[0],
+                "id_anatomia" => $id_anatomia,
+                "lis_checked" => $lis_checked,
+                "val_cierre" => $val_cierre,
+                "accesdata" => $accesdata,
+                "empresa" => $empresa,
+                "op" =>  $op,
             ));
         } else {
-            $status_firma               =   false;
+            $status_firma = false;
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'return_bd'                 =>  $data_produccion,
-            'id_anatomia'               =>  $id_anatomia,
-            'status_firma'              =>  $status_firma,
+            'status' => $status,
+            'return_bd' => $data_produccion,
+            'id_anatomia' => $id_anatomia,
+            'status_firma' => $status_firma,
         )));
     }
     
@@ -1976,8 +1976,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $val_cierre = $this->input->post('val_cierre'); 
         $accesdata = $this->input->post('accesdata');
         $op = $this->input->post('op'); 
-
-        //volvimos el 27-04-2022
         $data_produccion = $this->Ssan_libro_etapaanalitica_model->get_record_tec_tecnologo(array(
             "cod_empresa" => $this->session->userdata("COD_ESTAB"),
             "session" =>  explode("-",$this->session->userdata("USERNAME"))[0],
@@ -1988,7 +1986,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "empresa" => $empresa,
             "op" => $op,
         ));
-
         $this->output->set_output(json_encode(array(
             'status' => $status,
             'return_bd' => $data_produccion,

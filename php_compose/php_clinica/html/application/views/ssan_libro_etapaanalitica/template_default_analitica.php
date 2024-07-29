@@ -378,40 +378,39 @@
 $(document).ready(function(){
     star_collapse();
     //star_mictrofono();
-    <?php   if(count($data_bd[":C_CHAT_ANATOMIA"])>0){  ?>
+    <?php   if(count($data_bd[":C_CHAT_ANATOMIA"])>0){ ?>
         //update_mensajes_chat();
     <?php   }   ?> 
-    <?php   if ($get_sala == 'analitica'){              ?>
+    <?php   if ($get_sala == 'analitica'){ ?>
         //console.error("etapa analitica ->   ",500);
     <?php   }   ?>
-    <?php   if($get_sala == 'sala_tecnologo'){          ?>
-        //load_sala_tecnicas();
-        //$('.lista_gestion_tecnologo a[href="#tabs_lista_muestras"]').tab('show');
+
+    <?php   if ($get_sala == 'sala_tecnologo'){ ?>
+
         $('.lista_gestion_tecnologo a:first').tab('show')
         $("#ind_estado_olga").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_ESTADIO_OLGA_TEC"];?>');
         $("#ind_color_taco").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_COLOR_TACO"];?>');
         $(".selectpicker").selectpicker();
         $(".star_calendar").datetimepicker({
-            format              :   'DD-MM-YYYY',
-            //minDate           :   new Date(new Date().setDate((new Date().getDate())-(30))),
-            //maxDate           :   new Date(),
-            locale              :   'es-us',
-            icons               :   {
-                                        time        :   "fa fa-clock-o"         ,
-                                        date        :   "fa fa-calendar"        ,
-                                        up          :   "fa fa-chevron-up"      ,
-                                        down        :   "fa fa-chevron-down"    ,
-                                        previous    :   "fa fa-chevron-left"    ,
-                                        next        :   "fa fa-chevron-right"   ,
-                                        today       :   "fa fa-screenshot"      ,
-                                        clear       :   "fa fa-trash"           ,
-                                        close       :   "fa fa-remove"          ,
-                                    }
+            format : 'DD-MM-YYYY',
+            //minDate : new Date(new Date().setDate((new Date().getDate())-(30))),
+            //maxDate : new Date(),
+            locale : 'es-us',
+            icons : {
+                        time : "fa fa-clock-o" ,
+                        date : "fa fa-calendar" ,
+                        up : "fa fa-chevron-up" ,
+                        down : "fa fa-chevron-down" ,
+                        previous : "fa fa-chevron-left" ,
+                        next : "fa fa-chevron-right" , 
+                        today : "fa fa-screenshot" ,
+                        clear : "fa fa-trash" ,
+                        close : "fa fa-remove",
+                    }
         }).on('dp.change',function(e){  
             console.log("e  -> ",e," <-  ");
         });
     
-        /*
         let arr_tecnicas = $("#tecnicas_realizadas").data("prestacion");
         if(arr_tecnicas.length>0){
             let arr_x_muestra = [];
@@ -422,9 +421,9 @@ $(document).ready(function(){
                 $('#prestaciones_'+i).selectpicker('val',arr_tecnicas);
             }
         }
-        */
-       
+
     <?php   }   ?>
+
     <?php   if ($get_sala == 'sala_proceso'){ ?>
         $("#calendar_inicio_sala_proceso,#calendar_final_sala_proceso").datetimepicker({
             format              :   'DD-MM-YYYY',

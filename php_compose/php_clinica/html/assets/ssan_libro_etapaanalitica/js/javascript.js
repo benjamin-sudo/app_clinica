@@ -2958,11 +2958,11 @@ function time_unix(TXTFECHA,TXTHORA){
 }
 
 function js_sala_tecnicas(id_anatomia){
-    $('#loadFade').modal('show'); 
     let v_get_sala = $("#get_sala").val();
     $.ajax({ 
          type : "POST",
          url : "ssan_libro_etapaanalitica/gestion_sala_tecnicas",
+         beforeSend : function(xhr) { $('#loadFade').modal('show'); },
          dataType : "json",
          data : {   
                     id_anatomia : id_anatomia,
@@ -2974,10 +2974,9 @@ function js_sala_tecnicas(id_anatomia){
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                 },
          success : function(aData){ 
-
-                                    console.error("aData  ->  ",aData);
-                                    console.error("aData  ->  ",aData.bd);
-            
+                                    console.error("###############################");
+                                    console.error("aData    -> ",aData);
+                                    console.error("bd       -> ",aData.bd);
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     if(aData.status){
                                         $("#btn_previo_sala_tecnicas").attr('onclick','js_guarda_sala_tecnicas(1,'+id_anatomia+')');
@@ -2993,94 +2992,96 @@ function js_sala_tecnicas(id_anatomia){
 function js_guarda_sala_tecnicas(op,id_anatomia){
     //op=1 //guardado previo
     //op=2 //finaliza reporte
-    var val_cierre                          =   document.getElementById("ind_inclusion").checked&&document.getElementById("ind_corte").checked&&document.getElementById("ind_tincion").checked?true:false;
-    var errores                             =   [];
-    var lis_checked                         =   [];
-    var obj_rce_anatomia                    =   { 
-        formulario_sala_tecnica             :   [],
-        check_tecnicas_tecnologo            :   [],
-        valida_cambio                       :   [],
+    var val_cierre = document.getElementById("ind_inclusion").checked&&document.getElementById("ind_corte").checked&&document.getElementById("ind_tincion").checked?true:false;
+    var errores = [];
+    var lis_checked = [];
+    var obj_rce_anatomia = { 
+        formulario_sala_tecnica : [],
+        check_tecnicas_tecnologo : [],
+        valida_cambio : [],
     };
+
     //--------------------------------------------------------------------------
-    var data_form_registro                  =   [];
-    data_form_registro.push({
-        date_fecha_macro                    :   $("#date_fecha_macro").val(),   
-        date_fecha_corte                    :   $("#date_fecha_corte").val(), 
-        ind_color_taco                      :   $("#ind_color_taco").val(),
-        ind_estado_olga                     :   $("#ind_estado_olga").val(), 
-        date_interconsulta_ap               :   $("#date_interconsulta_ap").val(), 
-        num_copia_inerconsulta              :   $("#num_copia_inerconsulta").val(),
-        num_fragmentos                      :   $("#num_fragmentos").val(), 
-        num_tacos_cortados                  :   $("#num_tacos_cortados").val(), 
-        num_extendidos                      :   $("#num_extendidos").val(),
-        //num_azul_alcian_seriada           :   $("#num_azul_alcian_seriada").val(),
-        //num_pas_seriada                   :   $("#num_pas_seriada").val() ,
-        //num_diff_seriada                  :   $("#num_diff_seriada").val(),
-        //num_he_seriada                    :   $("#num_he_seriada").val(),
-        //num_all_laminas_seriadas          :   $("#num_all_laminas_seriadas").val(),
-        //num_he_rapida                     :   $("#num_he_rapida").val(),
-        checked_inclusion                   :   document.getElementById("ind_inclusion").checked,
-        checked_corte                       :   document.getElementById("ind_corte").checked,
-        checked_tincion                     :   document.getElementById("ind_tincion").checked,
-        checked_tenicas_all                 :   val_cierre,
+    var data_form_registro = [];
+    data_form_registro.push({ 
+        date_fecha_macro : $("#date_fecha_macro").val(),   
+        date_fecha_corte : $("#date_fecha_corte").val(), 
+        ind_color_taco : $("#ind_color_taco").val(),
+        ind_estado_olga : $("#ind_estado_olga").val(), 
+        date_interconsulta_ap : $("#date_interconsulta_ap").val(), 
+        num_copia_inerconsulta : $("#num_copia_inerconsulta").val(),
+        num_fragmentos : $("#num_fragmentos").val(), 
+        num_tacos_cortados : $("#num_tacos_cortados").val(), 
+        num_extendidos : $("#num_extendidos").val(),
+        //num_azul_alcian_seriada : $("#num_azul_alcian_seriada").val(),
+        //num_pas_seriada : $("#num_pas_seriada").val() ,
+        //num_diff_seriada : $("#num_diff_seriada").val(),
+        //num_he_seriada : $("#num_he_seriada").val(),
+        //num_all_laminas_seriadas : $("#num_all_laminas_seriadas").val(),
+        //num_he_rapida : $("#num_he_rapida").val(),
+        checked_inclusion : document.getElementById("ind_inclusion").checked,
+        checked_corte : document.getElementById("ind_corte").checked,
+        checked_tincion : document.getElementById("ind_tincion").checked,
+        checked_tenicas_all : val_cierre,
     });
     obj_rce_anatomia.formulario_sala_tecnica.push(data_form_registro);
-    console.table(obj_rce_anatomia)
+    //console.table(obj_rce_anatomia)
     //MUESTAS X TECNICAS APLICADAS
-    var aux                 =    0;
+    let aux = 0;
     $('.arr_muestras').each(function(){
         if(this.id != ''){
             //console.log("-------------------------------------------------------------------");
-            //console.log("this.id            ->  ",this.id,"                     <-          ");
-            //console.log("this.id val        ->  ",$("#"+this.id).val(),"        <-          ");
-            $("#"+this.id).val()===null?
-                errores.push($("#"+this.id).data('id_muestra')):
-                lis_checked.push({
-                    'ap'    :   $("#"+this.id).data('id_ap'),
-                    'id'    :   $("#"+this.id).data('id_muestra'),
-                    'txt'   :   $("#"+this.id).val()
-                });
+            //console.log("this.id -> ",this.id," <- ");
+            //console.log("this.id val -> ",$("#"+this.id).val()," <- ");
+            $("#"+this.id).val()===null?errores.push($("#"+this.id).data('id_muestra')):
+            lis_checked.push({
+                'ap' : $("#"+this.id).data('id_ap'),
+                'id' : $("#"+this.id).data('id_muestra'),
+                'txt' : $("#"+this.id).val()
+            });
             aux++;
         }
     });
-    /*
-    console.log("---------------------------------------------------------------");
-    console.log("   lis_checked         ->  ",lis_checked,"         <-          ");
-    console.log("   obj_rce_anatomia    ->  ",obj_rce_anatomia,"    <-          ");
-    console.log("   val_cierre          ->  ",val_cierre,"          <-          ");
-    console.log("   errores             ->  ",errores,"             <-          ");
-    console.log("   aux                 ->  ",aux,"                             ");
-    console.log("---------------------------------------------------------------");
-    */
+
+    console.error("---------------------------------------------------------------");
+    console.error("   lis_checked       ->  ",lis_checked," <- ");
+    console.error("   obj_rce_anatomia  ->  ",obj_rce_anatomia," <- ");
+    console.error("   val_cierre        ->  ",val_cierre," <- ");
+    console.error("   errores           ->  ",errores," <- ");
+    console.error("   aux               ->  ",aux," ");
+    console.error("---------------------------------------------------------------");
+    //return false;
+
     if (op  ==  1){
         var r = '';
-        $('#loadFade').modal('show'); 
         $.ajax({ 
             type : "POST",
             url : "ssan_libro_etapaanalitica/get_guardadoprevio_tec_tecnologo",
+            beforeSend : function(xhr) { $('#loadFade').modal('show'); },
             dataType : "json",
-            data :   {
-                                op              :   op,
-                                contrasena      :   r,
-                                id_anatomia     :   id_anatomia,
-                                lis_checked     :   lis_checked,
-                                val_cierre      :   val_cierre?1:0,
-                                accesdata       :   obj_rce_anatomia,
-                            },
-            error : function(errro)    {  
-                                                    console.log(errro);
-                                                    $('#loadFade').modal('hide'); 
-                                                    jError("Error en el aplicativo","Clinica Libre");
-                                                },
-            success : function(aData)    { 
-                                                    console.table("aData->",aData);
-                                                    $('#loadFade').modal('hide');
-                                                    if(aData.status){
-                                                         jAlert("Se ha realizado el guardado previo.","Clinica Libre");
-                                                    } else {
-                                                        jError("Error en la firma simple","Clinica Libre");  
-                                                    }
-                                                }, 
+            data :  {
+                        op : op,
+                        contrasena : r,
+                        id_anatomia : id_anatomia,
+                        lis_checked : lis_checked,
+                        val_cierre : val_cierre?1:0,
+                        accesdata : obj_rce_anatomia,
+                    },
+            error : function(errro) {  
+                                        console.log(errro);
+                                        console.log(errro.responseText); 
+                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                        jError("Error en el aplicativo","Clinica Libre");
+                                    },
+            success : function(aData) { 
+                                            console.table("aData->",aData);
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                            if(aData.status){
+                                                jAlert("Se ha realizado el guardado previo","Clinica Libre");
+                                            } else {
+                                                jError("Error en la firma simple","Clinica Libre");  
+                                            }
+                                        }, 
         });
         
     } else {
@@ -3095,46 +3096,45 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
             jPrompt('Con esta acci&oacute;n agregara informaci&oacute;n a solicitud histopatol&oacute;gico <br>Estado:'+txt_estado+'<br>&iquest;Desea continuar?','','Confirmaci\u00f3n',function (r) {
                 //console.log("password       ->  ",r);
                 if(r){
-                    $('#loadFade').modal('show'); 
                     $.ajax({ 
-                        type        :   "POST",
-                        url         :   "ssan_libro_etapaanalitica/get_record_tec_tecnologo",
-                        dataType    :   "json",
-                        data        :   {
-                                            op              :   op,
-                                            contrasena      :   r,
-                                            id_anatomia     :   id_anatomia,
-                                            lis_checked     :   lis_checked,
-                                            val_cierre      :   val_cierre?1:0,
-                                            accesdata       :   obj_rce_anatomia,
-                                        },
-                        error       :    function(errro)    {  
-                                                                console.log(errro.responseText);
-                                                                jError("Error en el aplicativo","Clinica Libre");
-                                                                $('#loadFade').modal('hide'); 
-                                                            },
-                        success     :    function(aData)     { 
-                                                                
-                                                                console.log("aData->",aData);
-                                                                $('#loadFade').modal('hide'); 
-                                                                if(aData.status_firma){
-                                                                    if(aData.status){
-                                                                        localStorage.setItem("ind_tipo_mensaje",5);
-                                                                        localStorage.setItem("ind_estapa_analitica",0);
-                                                                        localStorage.setItem("num_fichae",null);
-                                                                        localStorage.setItem("id_anatomia",id_anatomia);
-                                                                        //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
-                                                                        localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                        //$("#load_anuncios_anatomia_patologica").submit();
-                                                                        jAlert("T&eacute;cnicas agregadas a la solicitud","Clinica Libre");
-                                                                        let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
-                                                                        update_etapaanalitica(V_ULTIMA_PAGE);
-                                                                        $("#modal_sala_tecnicas").modal('hide');
-                                                                    }
-                                                                } else {
-                                                                    jError("Error en la firma simple","Clinica Libre");  
-                                                                }
-                                                            }, 
+                        type : "POST",
+                        url : "ssan_libro_etapaanalitica/get_record_tec_tecnologo",
+                        dataType : "json",
+                        data : {
+                                    op : op,
+                                    contrasena : r,
+                                    id_anatomia : id_anatomia,
+                                    lis_checked : lis_checked,
+                                    val_cierre : val_cierre?1:0,
+                                    accesdata : obj_rce_anatomia,
+                                },
+                        beforeSend : function(xhr) {   $('#loadFade').modal('show'); },                
+                        error : function(errro) {  
+                                                    console.log(errro.responseText);
+                                                    jError("Error en el aplicativo","Clinica Libre");
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                },
+                        success : function(aData) { 
+                                                        console.log("aData->",aData);
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                        if(aData.status_firma){
+                                                            if(aData.status){
+                                                                localStorage.setItem("ind_tipo_mensaje",5);
+                                                                localStorage.setItem("ind_estapa_analitica",0);
+                                                                localStorage.setItem("num_fichae",null);
+                                                                localStorage.setItem("id_anatomia",id_anatomia);
+                                                                //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                                                                localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
+                                                                //$("#load_anuncios_anatomia_patologica").submit();
+                                                                jAlert("T&eacute;cnicas agregadas a la solicitud","Clinica Libre");
+                                                                let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
+                                                                update_etapaanalitica(V_ULTIMA_PAGE);
+                                                                $("#modal_sala_tecnicas").modal('hide');
+                                                            }
+                                                        } else {
+                                                            jError("Error en la firma simple","Clinica Libre");  
+                                                        }
+                                                    }, 
                     });
                 } else {
                     showNotification('top','left','Firma simple vac&iacute;a',4,'fa fa-times');
