@@ -45,7 +45,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
 
-        $arr_datos = [0,1,5,6];
+        $arr_datos = [0,1,5,6,7];
 
         $this->db->select(['
         P.ID_SOLICITUD_HISTO                                                                            AS ID_SOLICITUD,
@@ -1386,25 +1386,24 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         return array('status'=>true);
     }
     
+
+
     public function guardado_anatomia_patologica($aData){
         $this->db->trans_start();
-        $id_anatomia        =   $aData["id_anatomia"];    
-        $session            =   $aData["session"];
-        $dataSolicitud      =   array('FEC_AUDITA'=>'SYSDATE','USR_AUDITA'=>$session);
-        $hispatologico      =   $aData["accesdata"];
-        
+        $id_anatomia = $aData["id_anatomia"];    
+        $session = $aData["session"];
+        $dataSolicitud = array('FEC_AUDITA'=> date('Y-m-d H:i:s'),'USR_AUDITA'=>$session);
+        $hispatologico = $aData["accesdata"];
         #DESC PATOLOGO
         if(isset($hispatologico["arr_info_microscopia"])){
             if(count($hispatologico["arr_info_microscopia"])>0){
-                foreach( $hispatologico["arr_info_microscopia"] as $aux_m  => $row_muestra){
+                foreach( $hispatologico["arr_info_microscopia"] as $aux_m => $row_muestra){
                     $this->db->where('ID_NMUESTRA',$row_muestra["num"]); 
                     $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array(
-                        "IND_ESTADO"                =>  1,
-                        #"USR_AUDITA"               =>  $aData['session'],
-                        #"DATE_AUDITA"              =>  "SYSDATE",
-                        "USR_AUDITA_ANALITICO"      =>  $aData['session'],
-                        "DATE_AUDITA_ANALITICO"     =>  "SYSDATE",
-                        "TXT_DESC_MICROSCOPICA"     =>  quotes_to_entities($row_muestra["txt"])
+                        "IND_ESTADO" => 1,
+                        "USR_AUDITA_ANALITICO" => $aData['session'],
+                        "DATE_AUDITA_ANALITICO" => date('Y-m-d H:i:s'),
+                        "TXT_DESC_MICROSCOPICA" => quotes_to_entities($row_muestra["txt"])
                     ));
                 }
             }
@@ -1415,100 +1414,100 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             if(count($hispatologico["arr_data_img"][0])>0){
                 foreach($hispatologico["arr_data_img"][0] as $i => $datos){
                     $this->db->where('ID_MAIN',$datos['id']); 
-                    $this->db->update($this->ownPab.'.PB_MAIN_BLG_ANATOMIA',array("TXT_OBSERVACIONES"=>$datos['txt'],"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+                    $this->db->update($this->ownPab.'.PB_MAIN_BLG_ANATOMIA',array(
+                        "TXT_OBSERVACIONES"=>$datos['txt'],
+                        "USR_AUDITA"=>$session,
+                        "DATE_AUDITA"=>date('Y-m-d H:i:s')
+                    ));
                 }
             }
         }
+        
         #FORMULARIO PRINCIPAL
         if(count($hispatologico["formulario_main"][0])>0){
-           foreach($hispatologico["formulario_main"][0] as $i => $datos){
+            foreach($hispatologico["formulario_main"][0] as $i => $datos){
                 if(isset($datos["num_plazo_biopsias"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_PLAZO_BIOPSIA"              =>  $datos["num_plazo_biopsias"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("NUM_PLAZO_BIOPSIA" => $datos["num_plazo_biopsias"]));
                 }
                 if(isset($datos["num_entrega_cancercritico"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_DIAS_ENTCANCER"             =>  $datos["num_entrega_cancercritico"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("NUM_DIAS_ENTCANCER" => $datos["num_entrega_cancercritico"]));
                 }
-                
                 if(isset($datos["ind_asignadas96horas"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_ASIGNACION96HRS"            =>  $datos["ind_asignadas96horas"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("NUM_ASIGNACION96HRS" => $datos["ind_asignadas96horas"]));
                 }
-                
                 if(isset($datos["date_hora_fecha_inicio_cancer"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_INICIO_CANCER"             =>  "TO_DATE('".$datos["date_hora_fecha_inicio_cancer"]."','DD-MM-YYYY hh24:mi')"));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_INICIO_CANCER" => date('Y-m-d H:i:s', strtotime($datos["date_hora_fecha_inicio_cancer"]))));
                 }
-                
                 if(isset($datos["date_hora_fecha_final_cancer"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_FINAL_CANCER"              =>  "TO_DATE('".$datos["date_hora_fecha_final_cancer"]."','DD-MM-YYYY hh24:mi')"));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_FINAL_CANCER" => date('Y-m-d H:i:s', strtotime($datos["date_hora_fecha_final_cancer"]))));
                 }
                 if(isset($datos["ind_estado_olga"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_ESTADIO_OLGA"               =>  $datos["ind_estado_olga"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("IND_ESTADIO_OLGA" => $datos["ind_estado_olga"]));
                 }
                 if(isset($datos["txt_diagnostico_ap"])){
-                    //$dataSolicitud                =     array_merge($dataSolicitud,array("TXT_DIADNOSTICO_AP_"            =>  quotes_to_entities(substr(0,1000,trim($datos["txt_diagnostico_ap"])))));//DEFINIR LIMITE
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("TXT_DIADNOSTICO_AP"             =>  trim($datos["txt_diagnostico_ap"]) ));
+                    $dataSolicitud = array_merge($dataSolicitud, array("TXT_DIADNOSTICO_AP" => trim($datos["txt_diagnostico_ap"])));
                 }
                 if(isset($datos["ind_cancer"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_CONF_CANCER"                =>  $datos["ind_cancer"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("IND_CONF_CANCER" => $datos["ind_cancer"]));
                 }
-                
                 if(isset($datos["num_ind_cancer"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_NOF_CANCER"                 =>  $datos["num_ind_cancer"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("NUM_NOF_CANCER" => $datos["num_ind_cancer"]));
                 }
                 if(isset($datos["ind_conf_informepdf"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_CONF_PAG"                   =>  $datos["ind_conf_informepdf"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("IND_CONF_PAG" => $datos["ind_conf_informepdf"]));
                 }
                 if(isset($datos["txt_macroscopia"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("TXT_DESC_MACROSCOPICA"          =>  trim($datos["txt_macroscopia"]) )); 
+                    $dataSolicitud = array_merge($dataSolicitud, array("TXT_DESC_MACROSCOPICA" => trim($datos["txt_macroscopia"])));
                 }
                 if(isset($datos["txt_citologico"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("TXT_CITOLOGICO"                 =>  trim($datos["txt_citologico"]) )); 
+                    $dataSolicitud = array_merge($dataSolicitud, array("TXT_CITOLOGICO" => trim($datos["txt_citologico"])));
                 }
-                if(isset($datos["txt_citologico"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("TXT_DIAG_CITOLOGIA"             =>  trim($datos["txt_diagnostico_citologico"]) )); 
+                if(isset($datos["txt_diagnostico_citologico"])){
+                    $dataSolicitud = array_merge($dataSolicitud, array("TXT_DIAG_CITOLOGIA" => trim($datos["txt_diagnostico_citologico"])));
                 }
             }
         }
         
         if(count($hispatologico["formulario_administrativo"])>0){
-           foreach ($hispatologico["formulario_administrativo"] as $i => $datos){
+            foreach ($hispatologico["formulario_administrativo"] as $i => $datos){
                 if(isset($datos["ind_profesional_acargo"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("ID_PROFESIONAL"                 =>  $datos["ind_profesional_acargo"] ) );
+                    $dataSolicitud = array_merge($dataSolicitud, array("ID_PROFESIONAL" => $datos["ind_profesional_acargo"]));
                 }
                 if(isset($datos["ind_profesional_acargo_citologico"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("ID_PROFESIONAL_CITOLOGICO"      =>  $datos["ind_profesional_acargo_citologico"] ) );
+                    $dataSolicitud = array_merge($dataSolicitud, array("ID_PROFESIONAL_CITOLOGICO" => $datos["ind_profesional_acargo_citologico"]));
                 }
                 if(isset($datos["num_beneficiarios"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_BENEFICIARIOS"              =>  $datos["num_beneficiarios"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("NUM_BENEFICIARIOS" => $datos["num_beneficiarios"]));
                 }
                 if(isset($datos["ind_mes_critico"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_MES_CRITICO"                =>  $datos["ind_mes_critico"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("IND_MES_CRITICO" => $datos["ind_mes_critico"]));
                 }
                 if(isset($datos["date_impresion_informe"]) && $datos["date_impresion_informe"]!=''){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_IMPRESION_INFORME"         =>  "TO_DATE('".$datos["date_impresion_informe"]."','DD-MM-YYYY hh24:mi')"));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_IMPRESION_INFORME" => date('Y-m-d H:i:s', strtotime($datos["date_impresion_informe"]))));
                 }
-                if(isset($datos["date_hora_fecha_entrga_informe"]) && $datos["date_hora_fecha_entrga_informe"]!=' '){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_ENTREGA_INFORME"           =>  "TO_DATE('".$datos["date_hora_fecha_entrga_informe"]."','DD-MM-YYYY hh24:mi')"));
+                if(isset($datos["date_hora_fecha_entrga_informe"]) && $datos["date_hora_fecha_entrga_informe"]!=''){
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_ENTREGA_INFORME" => date('Y-m-d H:i:s', strtotime($datos["date_hora_fecha_entrga_informe"]))));
                 }
                 if(isset($datos["ind_profesional_entrega_informe"]) && $datos["ind_profesional_entrega_informe"]!=''){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("ID_PROFESIONAL_ENTREGA_INFO"    =>  $datos["ind_profesional_entrega_informe"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("ID_PROFESIONAL_ENTREGA_INFO" => $datos["ind_profesional_entrega_informe"]));
                 }
                 if(isset($datos["ind_profesional_recibe_informe"]) && $datos["ind_profesional_recibe_informe"]!=''){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("ID_PROFESIONAL_RECIBE_INFO"     =>  $datos["ind_profesional_recibe_informe"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("ID_PROFESIONAL_RECIBE_INFO" => $datos["ind_profesional_recibe_informe"]));
                 }
-                if(isset($datos["n_notificacion"    ])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_NOTIFICACION"               =>  $datos["n_notificacion"]));
+                if(isset($datos["n_notificacion"])){
+                    $dataSolicitud = array_merge($dataSolicitud, array("NUM_NOTIFICACION" => $datos["n_notificacion"]));
                 }
                 if(isset($datos["date_chequeo_some"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_CHEQUEO_SOME"              =>  "TO_DATE('".$datos["date_chequeo_some"]."','DD-MM-YYYY hh24:mi')"));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_CHEQUEO_SOME" => date('Y-m-d H:i:s', strtotime($datos["date_chequeo_some"]))));
                 }
                 if(isset($datos["date_revision_bd"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_REVISION_BD"               =>  "TO_DATE('".$datos["date_revision_bd"]."','DD-MM-YYYY hh24:mi')"));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_REVISION_BD" => date('Y-m-d H:i:s', strtotime($datos["date_revision_bd"]))));
                 }
                 if(isset($datos["date_revision_informe"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_REVISION_INFORME"          =>  "TO_DATE('".$datos["date_revision_informe"]."','DD-MM-YYYY hh24:mi')"));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_REVISION_INFORME" => date('Y-m-d H:i:s', strtotime($datos["date_revision_informe"]))));
                 }
                 if(isset($datos["date_archivada_en_ficha"])){
-                    $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_ARCHIVADA_EN_FICHA"        =>  "TO_DATE('".$datos["date_archivada_en_ficha"]."','DD-MM-YYYY hh24:mi')"));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_ARCHIVADA_EN_FICHA" => date('Y-m-d H:i:s', strtotime($datos["date_archivada_en_ficha"]))));
                 }
             }
             
@@ -1516,50 +1515,50 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 foreach ($hispatologico["formulario_tecnologo_med"] as $i => $datos){
                     # INFORMACION COMPLEMENTARIA
                     if(isset($datos["date_fecha_macro"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_FECHA_MACRO"               =>  "TO_DATE('".$datos["date_fecha_macro"]."','DD-MM-YYYY')"));
+                        $dataSolicitud = array_merge($dataSolicitud, array("DATE_FECHA_MACRO" => date('Y-m-d', strtotime($datos["date_fecha_macro"]))));
                     }
                     if(isset($datos["date_fecha_corte"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_FECHA_CORTE"               =>  "TO_DATE('".$datos["date_fecha_corte"]."','DD-MM-YYYY')"));
+                        $dataSolicitud = array_merge($dataSolicitud, array("DATE_FECHA_CORTE" => date('Y-m-d', strtotime($datos["date_fecha_corte"]))));
                     }
                     if(isset($datos["ind_color_taco"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_COLOR_TACO"                 =>  $datos["ind_color_taco"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("IND_COLOR_TACO" => $datos["ind_color_taco"]));
                     }
                     if(isset($datos["ind_estado_olga"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_ESTADO_OLGA"                =>  $datos["ind_estado_olga"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("IND_ESTADO_OLGA" => $datos["ind_estado_olga"]));
                     }
                     if(isset($datos["date_interconsulta_ap"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_INTERCONSULTA"             =>  "TO_DATE('".$datos["date_fecha_corte"]."','DD-MM-YYYY')"));
+                        $dataSolicitud = array_merge($dataSolicitud, array("DATE_INTERCONSULTA" => date('Y-m-d', strtotime($datos["date_interconsulta_ap"]))));
                     }
                     if(isset($datos["num_copia_inerconsulta"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_CP_INTERCONSULTA"           =>  $datos["num_copia_inerconsulta"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_CP_INTERCONSULTA" => $datos["num_copia_inerconsulta"]));
                     }
                     if(isset($datos["num_fragmentos"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_FRAGMENTOS"                 =>  $datos["num_fragmentos"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_FRAGMENTOS" => $datos["num_fragmentos"]));
                     }
                     if(isset($datos["num_tacos_cortados"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_TACOS_CORTADOS"             =>  $datos["num_tacos_cortados"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_TACOS_CORTADOS" => $datos["num_tacos_cortados"]));
                     }
                     if(isset($datos["num_extendidos"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_EXTENDIDOS"                 =>  $datos["num_extendidos"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_EXTENDIDOS" => $datos["num_extendidos"]));
                     }
                     # INFORMACION ADICIONAL
                     if(isset($datos["num_azul_alcian_seriada"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_AZUK_ALCIAN_S"              =>  $datos["num_azul_alcian_seriada"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_AZUL_ALCIAN_S" => $datos["num_azul_alcian_seriada"]));
                     }
                     if(isset($datos["num_pas_seriada"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_PAS_SERIADA"                =>  $datos["num_pas_seriada"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_PAS_SERIADA" => $datos["num_pas_seriada"]));
                     }
                     if(isset($datos["num_diff_seriada"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_DIFF_SERIADA"               =>  $datos["num_diff_seriada"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_DIFF_SERIADA" => $datos["num_diff_seriada"]));
                     }
                     if(isset($datos["num_he_seriada"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_HE_SERIADA"                 =>  $datos["num_he_seriada"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_HE_SERIADA" => $datos["num_he_seriada"]));
                     }
                     if(isset($datos["num_all_laminas_seriadas"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_LAMINAS_SERIADAS"           =>  $datos["num_all_laminas_seriadas"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_LAMINAS_SERIADAS" => $datos["num_all_laminas_seriadas"]));
                     }
                     if(isset($datos["num_he_rapida"])){
-                        $dataSolicitud                  =     array_merge($dataSolicitud,array("NUM_HE_RAPIDA"                  =>  $datos["num_he_rapida"]));
+                        $dataSolicitud = array_merge($dataSolicitud, array("NUM_HE_RAPIDA" => $datos["num_he_rapida"]));
                     }
                 }
             }
@@ -1567,107 +1566,135 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         
         #VULVE A CERO
         $this->db->where('ID_SOLICITUD_HISTO',$id_anatomia); 
-        $this->db->update($this->ownPab.'.PB_TPRESTAXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+        $this->db->update($this->ownPab.'.PB_TPRESTAXANATOMIA',array(
+            "IND_ESTADO"=>0,
+            "USR_AUDITA"=>$session,
+            "DATE_AUDITA"=>date('Y-m-d H:i:s')
+        ));
         if(isset($hispatologico["arr_prestaciones"])){
             foreach($hispatologico["arr_prestaciones"][0] as $i => $row_prestaciones){
-                $arr_return      =   $this->db->query("SELECT A.ID_TPRESTAXANATOMIA FROM $this->ownPab.PB_TPRESTAXANATOMIA A WHERE A.COD_PRESTA IN('".$row_prestaciones."') AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return = $this->db->query("SELECT A.ID_TPRESTAXANATOMIA FROM $this->ownPab.PB_TPRESTAXANATOMIA A WHERE A.COD_PRESTA IN('".$row_prestaciones."') AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TPRESTAXANATOMIA',$arr_return[0]["ID_TPRESTAXANATOMIA"]); 
-                    $this->db->update($this->ownPab.'.PB_TPRESTAXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+                    $this->db->update($this->ownPab.'.PB_TPRESTAXANATOMIA',array(
+                        "IND_ESTADO"=>1,
+                        "USR_AUDITA"=>$session,
+                        "DATE_AUDITA"=>date('Y-m-d H:i:s')
+                    ));
                 } else {
-                    $id_tprestacionesxanatomia     =    $this->db->sequence($this->ownPab,'SEQ_TPRESTAXANATOMIA');
-                    $new_pestacion                 =    array(
-                                                            'DATE_CREA'             =>  'SYSDATE',
-                                                            'USR_CREA'              =>  $session,
-                                                            'IND_ESTADO'            =>  '1',
-                                                            'COD_PRESTA'            =>  $row_prestaciones,
-                                                            'ID_SOLICITUD_HISTO'    =>  $id_anatomia,
-                                                            'ID_TPRESTAXANATOMIA'   =>  $id_tprestacionesxanatomia,
-                                                        );
-                    $this->db->insert($this->ownPab.'.PB_TPRESTAXANATOMIA',$new_pestacion); 
+                    $new_prestacion = array(
+                        'DATE_CREA' => date('Y-m-d H:i:s'),
+                        'USR_CREA' => $session,
+                        'IND_ESTADO' => '1',
+                        'COD_PRESTA' => $row_prestaciones,
+                        'ID_SOLICITUD_HISTO' => $id_anatomia,
+                        'ID_TPRESTAXANATOMIA' => $this->db->insert_id() // Reemplaza la secuencia de Oracle
+                    );
+                    $this->db->insert($this->ownPab.'.PB_TPRESTAXANATOMIA',$new_prestacion); 
                 }
             }
         }
+        
         #
         $this->db->where('ID_SOLICITUD_HISTO',$id_anatomia); 
-        $this->db->update($this->ownPab.'.PB_TORGANOXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+        $this->db->update($this->ownPab.'.PB_TORGANOXANATOMIA',array(
+            "IND_ESTADO"=>0,
+            "USR_AUDITA"=>$session,
+            "DATE_AUDITA"=>date('Y-m-d H:i:s')
+        ));
         if(isset($hispatologico["arr_organos"])){
             foreach($hispatologico["arr_organos"][0] as $i => $arr_organos){
-                $arr_return                         =   $this->db->query("SELECT A.ID_TORGANOXANATOMIA FROM $this->ownPab.PB_TORGANOXANATOMIA A WHERE A.ID_ORGANO_AP IN($arr_organos) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return = $this->db->query("SELECT A.ID_TORGANOXANATOMIA FROM $this->ownPab.PB_TORGANOXANATOMIA A WHERE A.ID_ORGANO_AP IN($arr_organos) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TORGANOXANATOMIA',$arr_return[0]["ID_TORGANOXANATOMIA"]); 
-                    $this->db->update($this->ownPab.'.PB_TORGANOXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+                    $this->db->update($this->ownPab.'.PB_TORGANOXANATOMIA',array(
+                        "IND_ESTADO"=>1,
+                        "USR_AUDITA"=>$session,
+                        "DATE_AUDITA"=>date('Y-m-d H:i:s')
+                    ));
                 } else {
-                    $new_pestacion                  =   array(
-                                                            'DATE_CREA'             =>  'SYSDATE',
-                                                            'USR_CREA'              =>  $session,
-                                                            'IND_ESTADO'            =>  '1',
-                                                            'ID_ORGANO_AP'          =>  $arr_organos,
-                                                            'ID_SOLICITUD_HISTO'    =>  $id_anatomia,
-                                                            'ID_TORGANOXANATOMIA'   =>  $this->db->sequence($this->ownPab,'SEQ_TORGANOXANATOMIA'),
-                                                        );
-                    $this->db->insert($this->ownPab.'.PB_TORGANOXANATOMIA',$new_pestacion); 
+                    $new_prestacion = array(
+                        'DATE_CREA' => date('Y-m-d H:i:s'),
+                        'USR_CREA' => $session,
+                        'IND_ESTADO' => '1',
+                        'ID_ORGANO_AP' => $arr_organos,
+                        'ID_SOLICITUD_HISTO' => $id_anatomia,
+                        'ID_TORGANOXANATOMIA' => $this->db->insert_id() // Reemplaza la secuencia de Oracle
+                    );
+                    $this->db->insert($this->ownPab.'.PB_TORGANOXANATOMIA',$new_prestacion); 
                 }
             }
         }
+        
         #
         $this->db->where('ID_SOLICITUD_HISTO',$id_anatomia); 
-        $this->db->update($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+        $this->db->update($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',array(
+            "IND_ESTADO"=>0,
+            "USR_AUDITA"=>$session,
+            "DATE_AUDITA"=>date('Y-m-d H:i:s')
+        ));
         if(isset($hispatologico["arr_patologias"])){
             foreach($hispatologico["arr_patologias"][0] as $i => $arr_patologia){
-                $arr_return                         =   $this->db->query("SELECT A.ID_TPATOLOGIAXANATOMIA FROM $this->ownPab.PB_TPATOLOGIAXANATOMIA A WHERE A.ID_PATOLOGIA_AP IN ($arr_patologia) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return = $this->db->query("SELECT A.ID_TPATOLOGIAXANATOMIA FROM $this->ownPab.PB_TPATOLOGIAXANATOMIA A WHERE A.ID_PATOLOGIA_AP IN ($arr_patologia) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TPATOLOGIAXANATOMIA',$arr_return[0]["ID_TPATOLOGIAXANATOMIA"]); 
-                    $this->db->update($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+                    $this->db->update($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',array(
+                        "IND_ESTADO"=>1,
+                        "USR_AUDITA"=>$session,
+                        "DATE_AUDITA"=>date('Y-m-d H:i:s')
+                    ));
                 } else {
-                    $new_pestacion          =   array(
-                                                    'DATE_CREA'             =>  'SYSDATE',
-                                                    'USR_CREA'              =>  $session,
-                                                    'IND_ESTADO'            =>  '1',
-                                                    'ID_PATOLOGIA_AP'       =>  $arr_patologia,
-                                                    'ID_SOLICITUD_HISTO'    =>  $id_anatomia,
-                                                    'ID_TPATOLOGIAXANATOMIA'=>  $this->db->sequence($this->ownPab,'SEQ_TPATOLOGIAXANATOMIA'),
-                                                );
-                    $this->db->insert($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',$new_pestacion); 
+                    $new_prestacion = array(
+                        'DATE_CREA' => date('Y-m-d H:i:s'),
+                        'USR_CREA' => $session,
+                        'IND_ESTADO' => '1',
+                        'ID_PATOLOGIA_AP' => $arr_patologia,
+                        'ID_SOLICITUD_HISTO' => $id_anatomia,
+                        'ID_TPATOLOGIAXANATOMIA' => $this->db->insert_id() // Reemplaza la secuencia de Oracle
+                    );
+                    $this->db->insert($this->ownPab.'.PB_TPATOLOGIAXANATOMIA',$new_prestacion); 
                 }
             }
         }
         
         #FONASA MAI
         $this->db->where('ID_SOLICITUD_HISTO',$id_anatomia); 
-        $this->db->update($this->ownPab.'.PB_TPRESTACIONXANATOMIA',array("IND_ESTADO"=>0,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+        $this->db->update($this->ownPab.'.PB_TPRESTACIONXANATOMIA',array(
+            "IND_ESTADO"=>0,
+            "USR_AUDITA"=>$session,
+            "DATE_AUDITA"=>date('Y-m-d H:i:s')
+        ));
         if(isset($hispatologico["arr_fonasa"])){
             foreach($hispatologico["arr_fonasa"][0] as $i => $arr_fonasa){
-                $arr_return     =   $this->db->query("SELECT A.ID_TPRESTACIONXANATOMIA FROM $this->ownPab.PB_TPRESTACIONXANATOMIA A WHERE A.COD_PRESTACION IN ($arr_fonasa) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
+                $arr_return = $this->db->query("SELECT A.ID_TPRESTACIONXANATOMIA FROM $this->ownPab.PB_TPRESTACIONXANATOMIA A WHERE A.COD_PRESTACION IN ($arr_fonasa) AND A.ID_SOLICITUD_HISTO IN ($id_anatomia)")->result_array();
                 if(count($arr_return)>0){
                     $this->db->where('ID_TPRESTACIONXANATOMIA',$arr_return[0]["ID_TPRESTACIONXANATOMIA"]); 
-                    $this->db->update($this->ownPab.'.PB_TPRESTACIONXANATOMIA',array("IND_ESTADO"=>1,"USR_AUDITA"=>$session,"DATE_AUDITA"=>"SYSDATE"));
+                    $this->db->update($this->ownPab.'.PB_TPRESTACIONXANATOMIA',array(
+                        "IND_ESTADO"=>1,
+                        "USR_AUDITA"=>$session,
+                        "DATE_AUDITA"=>date('Y-m-d H:i:s')
+                    ));
                 } else {
-                    $new_pestacion          =   array(
-                                                    'ID_TPRESTACIONXANATOMIA'   =>  $this->db->sequence($this->ownPab,'SEQ_TPRESTACIONXANATOMIA'),
-                                                    'COD_PRESTACION'            =>  $arr_fonasa,
-                                                    'DATE_CREA'                 =>  'SYSDATE',
-                                                    'USR_CREA'                  =>  $session,
-                                                    'IND_ESTADO'                =>  '1',
-                                                    'ID_SOLICITUD_HISTO'        =>  $id_anatomia,
-                                                );
-                    $this->db->insert($this->ownPab.'.PB_TPRESTACIONXANATOMIA',$new_pestacion); 
+                    $new_prestacion = array(
+                        'ID_TPRESTACIONXANATOMIA' => $this->db->insert_id(), // Reemplaza la secuencia de Oracle
+                        'COD_PRESTACION' => $arr_fonasa,
+                        'DATE_CREA' => date('Y-m-d H:i:s'),
+                        'USR_CREA' => $session,
+                        'IND_ESTADO' => '1',
+                        'ID_SOLICITUD_HISTO' => $id_anatomia
+                    );
+                    $this->db->insert($this->ownPab.'.PB_TPRESTACIONXANATOMIA',$new_prestacion); 
                 }
             }
         }
         
-        
-        
-        $date_hoy                           =   date("d-m-Y");
-        if($aData['id_salida']  ==  2){
-            $dataSolicitud                  =   array_merge($dataSolicitud,array(
-                "ID_HISTO_ZONA"             =>  8,#EN SALA DE PROCESO
-                "DATE_FECHA_DIAGNOSTICO"    =>  "SYSDATE",
-                #"DATE_IMPRESION_INFORME"   =>  "TO_DATE('".$date_hoy."','DD-MM-YYYY hh24:mi')", 
-                "LAST_USR_AUDITA"           =>  $aData["session"],
-                "LAST_DATE_AUDITA"          =>  "SYSDATE",
-                #"USR_AUDITA"               =>  $aData["session"],
-                #"DATE_AUDITA"              =>  "SYSDATE",
+        $date_hoy = date("Y-m-d H:i:s");
+        if($aData['id_salida'] == 2){
+            $dataSolicitud = array_merge($dataSolicitud, array(
+                "ID_HISTO_ZONA" => 8,
+                "DATE_FECHA_DIAGNOSTICO" => date('Y-m-d H:i:s'),
+                "LAST_USR_AUDITA" => $aData["session"],
+                "LAST_DATE_AUDITA" => date('Y-m-d H:i:s')
             ));
         }
         $this->db->where('ID_SOLICITUD_HISTO',$id_anatomia); 
@@ -1677,6 +1704,15 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         return array('status'=>true,'date_cierre'=>$date_hoy);
     }
     
+    
+
+
+
+
+
+
+
+
     public function update_li_chat($aData){
         $this->db->trans_start();
         $arr_return      =   $this->db->query("
@@ -2231,10 +2267,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         
         #Actualización principal de ANATOMIA PATOLOGICA
         $dataSolicitud = [
-            "LAST_USR_AUDITA" => $data["session"],
-            "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'), 
-        ];
-        
+                            "LAST_USR_AUDITA" => $data["session"],
+                            "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'), 
+                        ];
         $hispatologico = $data["accesdata"];
         if(count($hispatologico) > 0) {
             if(count($hispatologico["formulario_sala_tecnica"][0]) > 0) {
@@ -2287,8 +2322,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                             "NUM_EXTENDIDOS" => $datos["num_extendidos"]
                         ));
                     }
-                    
-
 
                     // Técnicas del Tecnólogo
                     if(isset($datos["checked_inclusion"])) {
@@ -2317,9 +2350,13 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
         
+        ############################
         #Avanza de zona - Patologo
-        if($data["val_cierre"] == 1) {
-            array_merge($dataSolicitud, [
+        #var_dump($data["val_cierre"]);
+        ############################
+        
+        if($data["val_cierre"] == "1") {
+            $dataSolicitud = array_merge($dataSolicitud, [
                 "ID_HISTO_ZONA" => 7,
                 "ID_UID_TECNICAS" => $this->session->userdata["ID_UID"],
                 "USR_TECNICAS" => $data["session"],

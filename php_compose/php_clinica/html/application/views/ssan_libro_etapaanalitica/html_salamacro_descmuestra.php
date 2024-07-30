@@ -444,14 +444,14 @@
                                 <div class="grid_opcion_descripcion_muestra" style="">
                                     <div class="grid_opcion_descripcion_muestra1">
                                         <textarea 
-                                            class       =   "form-control input-sm grupo_macro_textarea_citologia" 
-                                            name        =   "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
-                                            id          =   "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
-                                            cols        =   "65" 
-                                            rows        =   "5" 
-                                            style       =   "width:100%;" 
-                                            maxlength   =   "4000" 
-                                            onkeyup     =   ""><?php echo $row['TXT_DESC_MACROSCOPICA'];?></textarea>
+                                            class = "form-control input-sm grupo_macro_textarea_citologia" 
+                                            name = "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
+                                            id = "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
+                                            cols = "65" 
+                                            rows = "5" 
+                                            style = "width:100%;" 
+                                            maxlength = "4000" 
+                                            onkeyup =   ""><?php echo $row['TXT_DESC_MACROSCOPICA'];?></textarea>
                                         <div class="grid_texto_main_macroscopia">
                                             <div class="grid_texto_main_macroscopia1">&nbsp;</div>
                                             <div class="grid_texto_main_macroscopia2"></div>
@@ -564,7 +564,7 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function(){
         var firstTabEl = document.querySelector('#tabs_muestras_macroscopica .nav-link');
         var firstTab = new bootstrap.Tab(firstTabEl);
         firstTab.show();

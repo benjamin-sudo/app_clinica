@@ -410,7 +410,7 @@
                     </div>
                     <?php   if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_INCLUCION"] == 1){ ?>
                         <!--
-                            IND_TEC_INCLUCION = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_INCLUCION"];?>
+                        IND_TEC_INCLUCION = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_INCLUCION"];?>
                         -->
                         <script>document.getElementById("ind_inclusion").checked = true;</script>
                     <?php   }   ?>
@@ -426,7 +426,7 @@
                     </div>
                     <?php   if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_CORTE"] == 1){ ?>
                         <!--
-                            IND_TEC_CORTE = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_CORTE"];?>
+                        IND_TEC_CORTE = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_CORTE"];?>
                         -->
                         <script>document.getElementById("ind_corte").checked = true;</script>
                     <?php   }   ?>
@@ -442,7 +442,7 @@
                     </div>
                     <?php   if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_TINCION"] == 1){ ?>
                         <!--
-                            IND_TEC_TINCION = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_TINCION"];?>
+                        IND_TEC_TINCION = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_TINCION"];?>
                         -->
                         <script>document.getElementById("ind_tincion").checked = true;</script>
                     <?php   }   ?>

@@ -41,9 +41,8 @@
     <div id="pabel_principal" class="tab-pane margin_panel_tabs active">
         <div class="panel_info_geneal">
             <div class="panel_info_geneal1_left">
-                
+            
                 <div class="card" id="card_registro_medico" style="margin-bottom:5px;padding:8px;">
-                    
                     <div class="panel_header_cancer" data-ind_caner="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_NOTIF_CANCER"];?>">
                         <div class="panel_header_cancer1">
                             <h6 class="title">
@@ -69,8 +68,7 @@
                                         <select class="form-control input-sm group_input_cancer" data-selected-text-format="count" data-size="8" data-live-search="true" name="num_entrega_cancercritico" id="num_entrega_cancercritico" data-width="98%" tabindex="-98">
                                             <option value=""> -- </option>
                                             <?php   for($i = 1; $i < 21; ++$i) { 
-                                                $selected   =   $i == $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_DIAS_ENTCANCER"]?'selected ':'';
-                                                echo '<option value="'.$i.'" '.$selected.'>'.$i.' D&Iacute;AS</option>';  
+                                                echo '<option value="'.$i.'">'.$i.' D&Iacute;AS</option>';  
                                             }  ?>
                                         </select>
                                     </td>
@@ -112,7 +110,7 @@
                                         <small><b style="color:#888888;">INICIO BP DG CL&Iacute;NICO DE C&Aacute;NCER</b></small>
                                         <br>
                                         <div id="calendar_inicio_cancer" class="input-group row_calendar" style="width:140px;">
-                                            <input id="date_inicio_cancer" name="date_inicio_cancer" type="text" class="form-control input-sm group_input_cancer" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION2"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION2"];?>">
+                                            <input id="date_inicio_cancer" name="date_inicio_cancer" type="text" class="form-control input-sm group_input_cancer" value="">
                                             <span class="input-group-addon" style="cursor:pointer;padding:6px;margin-left:6px;">
                                                 <span class="fa fa-calendar" aria-hidden="true"></span>
                                             </span>
@@ -121,7 +119,7 @@
                                     <td>
                                         <small><b style="color:#888888;">HORA BP DG CL&Iacute;NICO DE C&Aacute;NCER</b></small>
                                         <br>
-                                        <input style="width: 90px;" type="time" class="form-control input-sm input_cancer" id="hrs_inicio_cancer" name="hrs_inicio_cancer" style="couse" maxlength="5" size="5" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION21"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION21"];?>">
+                                        <input style="width: 110px;" type="time" class="form-control input-sm input_cancer" id="hrs_inicio_cancer" name="hrs_inicio_cancer" style="couse" maxlength="5" size="5" value="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -129,7 +127,7 @@
                                         <small><b style="color:#888888;">TERMINO BP CRITICAS</b></small>
                                         <br>
                                         <div id="calendar_termino_cancer" class="input-group row_calendar" style="width:140px;">
-                                            <input id="date_termino_cancer" name="date_termino_cancer" type="text" class="form-control input-sm group_input_cancer" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION3"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION3"];?>">
+                                            <input id="date_termino_cancer" name="date_termino_cancer" type="text" class="form-control input-sm group_input_cancer" value="">
                                             <span class="input-group-addon" style="cursor:pointer;padding:6px;margin-left:6px;">
                                                 <span class="fa fa-calendar" aria-hidden="true"></span>
                                             </span>
@@ -138,7 +136,7 @@
                                     <td>
                                         <small><b style="color:#888888;">HORA TERMINO BP CRITICAS</b></small>
                                         <br>
-                                        <input style="width: 90px;" type="time" class="form-control input-sm group_input_cancer" id="hrs_termino_cancer" name="hrs_termino_cancer" style="couse" maxlength="5" size="5"  value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION32"]==''?'':$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION32"];?>">
+                                        <input style="width: 110px;" type="time" class="form-control input-sm group_input_cancer" id="hrs_termino_cancer" name="hrs_termino_cancer" style="couse" maxlength="5" size="5"  value="">
                                     </td>
                                 </tr>
                             </tbody>    
@@ -158,7 +156,7 @@
                                     <small><b style="color:#888888;">INDICACI&Oacute;N DE CANCER</b></small>
                                 </td>
                                 <td style="width: 50%">
-                                    <select class="selectpicker" data-title="Elige una opción" onchange="js_busqueda_num_cancer(this.value)"  name="ind_confirma_cancer" id="ind_confirma_cancer" data-width="98%" tabindex="-98" >
+                                    <select class="selectpicker" data-title="--" onchange="js_busqueda_num_cancer(this.value)"  name="ind_confirma_cancer" id="ind_confirma_cancer" data-width="98%" tabindex="-98" >
                                         <option value="0">NO</option>
                                         <option value="1">SI</option>
                                     </select>
@@ -1291,24 +1289,22 @@
 <script>
 $(document).ready(function(){
     $('.style_panel_micro').click(function(){
-        var panel_select                =   $(this).val();
-        //console.log("panel_select     ->  ",panel_select);
-        //console.log("name             ->  ",this.name);
-        //console.log("id               ->  ",this.id);
-        var arr_muestra                 =   this.id.split('_');
-        //console.log("arr_muestra      ->  ",arr_muestra);
+        var panel_select =   $(this).val();
+        //console.log("panel_select ->  ",panel_select);
+        //console.log("name ->  ",this.name);
+        //console.log("id ->  ",this.id);
+        var arr_muestra =   this.id.split('_');
+        //console.log("arr_muestra ->  ",arr_muestra);
         if  (panel_select == 1){
             $(".class_descripcion_micro_"+arr_muestra[2]).show();
             $(".class_descripcion_macro_"+arr_muestra[2]).hide();
             $(".class_descripcion_img_"+arr_muestra[2]).hide();
         }
-
         if  (panel_select == 2){
             $(".class_descripcion_micro_"+arr_muestra[2]).hide();
             $(".class_descripcion_macro_"+arr_muestra[2]).show();
             $(".class_descripcion_img_"+arr_muestra[2]).hide();
         }
-
         if  (panel_select == 3){
             $(".class_descripcion_micro_"+arr_muestra[2]).hide();
             $(".class_descripcion_macro_"+arr_muestra[2]).hide();
@@ -1316,27 +1312,32 @@ $(document).ready(function(){
         }
     });
     
+    
     $(".row_calendar").datetimepicker({
-        format              :   'DD-MM-YYYY',
-        //minDate           :   new Date(new Date().setDate((new Date().getDate())-(30))),
-        maxDate             :   new Date(),
-        locale              :   'es-us',
-        icons               :   {
-                                    time        :   "fa fa-clock-o"         ,
-                                    date        :   "fa fa-calendar"        ,
-                                    up          :   "fa fa-chevron-up"      ,
-                                    down        :   "fa fa-chevron-down"    ,
-                                    previous    :   "fa fa-chevron-left"    ,
-                                    next        :   "fa fa-chevron-right"   ,
-                                    today       :   "fa fa-screenshot"      ,
-                                    clear       :   "fa fa-trash"           ,
-                                    close       :   "fa fa-remove"          ,
-                                }
+        format : 'DD-MM-YYYY',
+        //minDate : new Date(new Date().setDate((new Date().getDate())-(30))),
+        maxDate : new Date(),
+        locale : 'es-us',
+        icons : {
+                    time : "fa fa-clock-o" ,
+                    date : "fa fa-calendar" ,
+                    up : "fa fa-chevron-up" ,
+                    down : "fa fa-chevron-down" ,
+                    previous : 'fa fa-chevron-left' ,
+                    next : 'fa fa-chevron-right',
+                    today : 'fa fa-screenshot',
+                    clear : 'fa fa-trash' ,
+                    close : 'fa fa-remove' ,
+                }
     }).on('dp.change',function(e){  
         console.log("e  -> ",e);  
     });
-    $("#ind_confirma_cancer").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_CANCER"];?>');
-    $("#ind_conf_informepdf").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_PAG"];?>');
+
+    $('#ind_confirma_cancer,#num_tacos_cortados,#num_extendidos,#num_pas_seriada,#num_he_rapida,#num_all_laminas_seriadas,#num_he_seriada,#num_diff_seriada,#pas_seriada,#num_azul_alcian_seriada,#num_fragmentos,#num_copia_inerconsulta,#ind_profesional_acargo,#ind_mes_critico,#ind_profesional_entrega_informe,#ind_profesional_entrega_informe,#ind_profesional_recibe_informe,#num_plazo_biopsias,#ind_asignadas96horas,#ind_estado_olga,#ind_color_taco').selectpicker({title:'--'});
+
+    $('#ind_confirma_cancer').selectpicker('val','<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_CANCER"];?>');
+    $('#ind_conf_informepdf').selectpicker('val','<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_PAG"];?>');
+   
     <?php if ( $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_CANCER"] == 1) { ?>
         <?php if ($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_NOF_CANCER"] == '' ){ ?>
             js_busqueda_num_cancer('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_CONF_CANCER"];?>');
@@ -1345,14 +1346,13 @@ $(document).ready(function(){
             $("#n_notificacion_cancer").val(<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_NOF_CANCER"];?>);
         <?php } ?>
     <?php }?>
+
     <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_NOTIF_CANCER"]=='SI'?'star_data_cancer();':'deshabilita_input_cancer();'?>
         
     $("#ind_mes_critico").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_MES_CRITICO"];?>');
     $("#ind_asignadas96horas").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_ASIGNACION96HRS"];?>');
     $("#ind_estado_olga").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_ESTADIO_OLGA_TEC"];?>');
     $("#ind_color_taco").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_COLOR_TACO"];?>');
-    
-    $('#ind_confirma_cancer,#num_tacos_cortados,#num_extendidos,#num_pas_seriada,#num_he_rapida,#num_all_laminas_seriadas,#num_he_seriada,#num_diff_seriada,#pas_seriada,#num_azul_alcian_seriada,#num_fragmentos,#num_copia_inerconsulta,#ind_profesional_acargo,#ind_mes_critico,#ind_profesional_entrega_informe,#ind_profesional_entrega_informe,#ind_profesional_recibe_informe,#num_plazo_biopsias,#ind_asignadas96horas,#ind_estado_olga,#ind_color_taco').selectpicker({title:'--'});
 
     //------------
     //selectpicker
@@ -1387,6 +1387,28 @@ $(document).ready(function(){
     var myTab = document.getElementById('tabs_rce_analitica');
     var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
     firstTab.show();
+
+
+    //panel  REGISTRO DE CANCER
+    <?php if ($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_NOTIF_CANCER"] == 1){  ?>
+        js_registrocancer_habilitado();
+        $("#num_entrega_cancercritico").val(<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_DIAS_ENTCANCER"];?>);
+        <?php  $arr_time = conversorSegundosHoras($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_ASIGNACION96HRS"]);  ?>
+        $("#seg_horas_cancer").val(<?php echo 3600*$arr_time["horas"];?>);
+        $("#seg_minutos_cancer").val(<?php echo 60*$arr_time["minutos"];?>);
+        $("#seg_segundos_cancer").val(<?php echo $arr_time["segundos"];?>);
+        $("#date_inicio_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION2"];?>");
+        $("#hrs_inicio_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION21"];?>");
+        $("#date_termino_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION3"];?>");
+        $("#hrs_termino_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION32"];?>");
+    <?php } ?> 
+
+    
+   //HITO 
+
+
+    
+
 
     setTimeout(function(){ 
         autosize($('#txt_diagnostico_ap'));

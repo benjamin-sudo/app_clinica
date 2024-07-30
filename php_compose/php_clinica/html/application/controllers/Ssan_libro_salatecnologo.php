@@ -20,7 +20,6 @@ class Ssan_libro_salatecnologo extends CI_Controller {
         $arr_estados_filtro = '0';
         $var_fecha_inicio = date("d-m-Y");
         $var_fecha_final = date("d-m-Y");
-
         /*
         if(isset($_COOKIE['target']))   {
             $tipo_busqueda              =   $_COOKIE['target'];
@@ -55,7 +54,6 @@ class Ssan_libro_salatecnologo extends CI_Controller {
             $var_fecha_final            =   date("d-m-Y");
         }
         */
-
         $tipo_busqueda = '#_panel_por_fecha';
         $arr_ids_anatomia = [];
         #var_dump($arr_ids_anatomia);

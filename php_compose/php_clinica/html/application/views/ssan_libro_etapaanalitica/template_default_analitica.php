@@ -111,9 +111,7 @@
         </div>
     </div>
     <div class="grid_body_form_analitica2">
-
         <?php #echo $get_sala;?>
-
         <?php if ($get_sala == 'salamacroscopia'){     ?>
             <?php echo $this->load->view("ssan_libro_etapaanalitica/html_salamacro_descmuestra",[],true); ?>
         <?php } else if ($get_sala == 'sala_tecnologo'){ ?> 
@@ -209,8 +207,6 @@
                 <br>
                 <?php echo $get_sala;?>
         <?php } ?>
-      
-
 
     </div>
     <!-- display:none -->
@@ -410,7 +406,6 @@ $(document).ready(function(){
         }).on('dp.change',function(e){  
             console.log("e  -> ",e," <-  ");
         });
-    
         let arr_tecnicas = $("#tecnicas_realizadas").data("prestacion");
         if(arr_tecnicas.length>0){
             let arr_x_muestra = [];
@@ -426,21 +421,21 @@ $(document).ready(function(){
 
     <?php   if ($get_sala == 'sala_proceso'){ ?>
         $("#calendar_inicio_sala_proceso,#calendar_final_sala_proceso").datetimepicker({
-            format              :   'DD-MM-YYYY',
-            //minDate           :   new Date(new Date().setDate((new Date().getDate())-(30))),
-            maxDate             :   new Date(),
-            locale              :   'es-us',
-            icons               :   {
-                                        time        :   "fa fa-clock-o"         ,
-                                        date        :   "fa fa-calendar"        ,
-                                        up          :   "fa fa-chevron-up"      ,
-                                        down        :   "fa fa-chevron-down"    ,
-                                        previous    :   "fa fa-chevron-left"    ,
-                                        next        :   "fa fa-chevron-right"   ,
-                                        today       :   "fa fa-screenshot"      ,
-                                        clear       :   "fa fa-trash"           ,
-                                        close       :   "fa fa-remove"          ,
-                                    }
+            format : 'DD-MM-YYYY',
+            //minDate : new Date(new Date().setDate((new Date().getDate())-(30))),
+            maxDate : new Date(),
+            locale : 'es-us',
+            icons : {
+                        time : "fa fa-clock-o" ,
+                        date : "fa fa-calendar" ,
+                        up : "fa fa-chevron-up" ,
+                        down : "fa fa-chevron-down" ,
+                        previous : "fa fa-chevron-left" ,
+                        next : "fa fa-chevron-right" , 
+                        today : "fa fa-screenshot" ,
+                        clear : "fa fa-trash" ,
+                        close : "fa fa-remove",
+                    }
         }).on('dp.change',function(e){  
             console.log("e=>",e);  
         });
@@ -455,15 +450,15 @@ $(document).ready(function(){
             maxDate             :   new Date(),
             locale              :   'es-us',
             icons               :   {
-                                        time        :   "fa fa-clock-o"         ,
-                                        date        :   "fa fa-calendar"        ,
-                                        up          :   "fa fa-chevron-up"      ,
-                                        down        :   "fa fa-chevron-down"    ,
-                                        previous    :   "fa fa-chevron-left"    ,
-                                        next        :   "fa fa-chevron-right"   ,
-                                        today       :   "fa fa-screenshot"      ,
-                                        clear       :   "fa fa-trash"           ,
-                                        close       :   "fa fa-remove"          ,
+                                        time : "fa fa-clock-o" ,
+                                        date : "fa fa-calendar" ,
+                                        up : "fa fa-chevron-up" ,
+                                        down : "fa fa-chevron-down" ,
+                                        previous : "fa fa-chevron-left" ,
+                                        next : "fa fa-chevron-right" , 
+                                        today : "fa fa-screenshot" ,
+                                        clear : "fa fa-trash" ,
+                                        close : "fa fa-remove",
                                     }
         }).on('dp.change',function(e){  
             console.log("e=>",e);  

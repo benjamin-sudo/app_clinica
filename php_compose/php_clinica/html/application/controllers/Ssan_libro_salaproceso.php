@@ -82,5 +82,7 @@ class Ssan_libro_salaproceso extends CI_Controller {
         #HTML OUT
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
+
+    
 }
 ?>
