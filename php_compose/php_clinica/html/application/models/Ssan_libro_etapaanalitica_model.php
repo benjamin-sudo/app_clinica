@@ -1030,8 +1030,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $V_COD_EMPRESA = $this->db->escape($DATA['cod_empresa']);
 
         #MAIN PRINCIPAL
-        $P_ANATOMIA_PATOLOGICA_MAIN = [];
-        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
+        $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO,$V_COD_EMPRESA)");
         if ($multi_query) {
             do {
                 if ($result = $this->db->conn_id->store_result()) {
@@ -1073,6 +1072,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->reconnect();
 
         if ($v_get_sala == 'sala_tecnologo'){
+            
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.GETACTIVETECHNIQUES()");
             if ($multi_query) {
                 do {
@@ -1085,6 +1085,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $error = $this->db->conn_id->error;
             }
             $this->db->reconnect();
+
+
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.GETTECHNIQUESBYREQUEST($V_ID_HISTO)");
             if ($multi_query) {
                 do {
@@ -1099,6 +1101,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             $this->db->reconnect();
         }
 
+
+        /*
         if ($v_get_sala == 'analitica'){
 
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BUSQUEDA_CODIFICACION_FONASA($V_ID_HISTO)");
@@ -1140,7 +1144,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
             $this->db->reconnect();
 
-            
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.P_LIS_CODPATOLOGIA($V_ID_HISTO)");
             if ($multi_query) {
                 do {
@@ -1153,8 +1156,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $error = $this->db->conn_id->error;
             }
             $this->db->reconnect();
-
-
 
             #LISTA DE PATOLOGOS
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.LISTA_PATOLOGOS($V_COD_EMPRESA)");
@@ -1169,12 +1170,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $error = $this->db->conn_id->error;
             }
             $this->db->reconnect();
-
-
-
         }
-
-
+        */
 
 
 
@@ -1454,9 +1451,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
         #ADD CAMPOS EN PERFIL
-        $dataSolicitud                  =     array_merge($dataSolicitud,array("IND_GEST_ADMINISTRATIVO"            =>  1));
-        $dataSolicitud                  =     array_merge($dataSolicitud,array("ID_UID_ADMINISTRATIVO"              =>  $aData['data_firma'][0]['ID_UID']));
-        $dataSolicitud                  =     array_merge($dataSolicitud,array("DATE_AUDITA_ADMINISTRATIVO"         =>  'SYSDATE'));
+        $dataSolicitud = array_merge($dataSolicitud,array("IND_GEST_ADMINISTRATIVO" => 1));
+        $dataSolicitud = array_merge($dataSolicitud,array("ID_UID_ADMINISTRATIVO" =>  $aData['data_firma'][0]['ID_UID']));
+        $dataSolicitud = array_merge($dataSolicitud,array("DATE_AUDITA_ADMINISTRATIVO" => 'SYSDATE'));
         $this->db->where('ID_SOLICITUD_HISTO',$id_anatomia); 
         $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',$dataSolicitud);
         $this->db->trans_complete();

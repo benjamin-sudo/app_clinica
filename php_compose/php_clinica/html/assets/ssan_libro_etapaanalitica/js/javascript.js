@@ -1815,7 +1815,9 @@ function js_gestion_patologo(id_salida,id_anatomia){
         var num = $("#"+this.id).data('muestra');
         obj_rce_anatomia.arr_info_microscopia.push({'txt':txt,'num':num});
     });
-    
+
+    //console.log("id_salida  ->  ",id_salida);
+    //console.log("obj_rce_anatomia   ->  ",obj_rce_anatomia);
     /*
         console.log("---------------------------------------------------------------------------------------");
         console.log("   add txt_macroscopia     ");
