@@ -1295,7 +1295,7 @@ function star_analitica(id_anatomia){
         url : "ssan_libro_etapaanalitica/formulario_main_analitico",
         dataType : "json",
         beforeSend : function(xhr) {    $('#HTML_INFORMACION_HISTORIAL').html(''); },
-        data :  {   id_anatomia : id_anatomia, get_sala : $("#get_sala").val() },
+        data : { id_anatomia : id_anatomia, get_sala : $("#get_sala").val() },
         error : function(errro) { 
                                     console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
@@ -3246,32 +3246,30 @@ function edita_txt_macroscopica(num_muestra){
 
 
 function js_busqueda_num_cancer(ind_nof_cancer){
-    console.log("ind_nof_cancer -> ",ind_nof_cancer);
+    //console.log("ind_nof_cancer -> ",ind_nof_cancer);
     if (ind_nof_cancer == 1){
         $("#tr_num_cancer").show();
         $('#loadFade').modal('show');
         $.ajax({ 
-            type                :   "POST",
-            url                 :   "ssan_libro_etapaanalitica/ultimo_numero_disponible_cancer",
-            dataType            :   "json",
-            beforeSend          :   function(xhr)   {   
-                                                        console.log("xhr->",xhr);
-                                                    },
-            data                :                   {   id_biopsia : $("#id_anatomia").val() },
-            error		    :   function(errro) { 
-                                                        console.log(errro);  
-                                                        console.log(errro.responseText);    
-                                                        $('#loadFade').modal('hide');
-                                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    },
-            success             :   function(aData) { 
-                                                        
-                                                        $('#loadFade').modal('hide');
-                                                        $("#num_interno").val('');
-                                                        var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
-                                                        showNotification('top','center','Ultimo N&deg; disponible notificaci&oacute;n cancer <b>'+num_last+'</b>',1,'fa fa-info');
-                                                        $("#n_notificacion_cancer").val(num_last);
-                                                    }, 
+            type : "POST",
+            url : "ssan_libro_etapaanalitica/ultimo_numero_disponible_cancer",
+            dataType : "json",
+            beforeSend : function(xhr) { console.log("xhr->",xhr); },
+            data : { id_biopsia : $("#id_anatomia").val() },
+            error : function(errro) { 
+                                        console.log(errro);  
+                                        console.log(errro.responseText);    
+                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    },
+            success : function(aData) { 
+                                        console.log("aData  ->  ",aData);
+                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                        $("#num_interno").val('');
+                                        let num_last = aData.data_numero.DATA.P_ULTIMO_NUMERO;
+                                        showNotification('top','center','Ultimo N&deg; disponible notificaci&oacute;n cancer <b>'+num_last+'</b>',1,'fa fa-info');
+                                        $("#n_notificacion_cancer").val(num_last);
+                                    }, 
         });
     } else {
         $("#tr_num_cancer").hide();

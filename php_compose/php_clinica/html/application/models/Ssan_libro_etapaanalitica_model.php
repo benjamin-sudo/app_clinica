@@ -1072,36 +1072,113 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         }
         $this->db->reconnect();
 
-
-        if ( $v_get_sala == 'sala_tecnologo'){
-
+        if ($v_get_sala == 'sala_tecnologo'){
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.GETACTIVETECHNIQUES()");
             if ($multi_query) {
-            do {
-                if ($result = $this->db->conn_id->store_result()) {
-                    $arr_data[':P_TECNICAS_APLICADAS'] = $result->fetch_all(MYSQLI_ASSOC);
-                    $result->free();
-                }
-            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+                do {
+                    if ($result = $this->db->conn_id->store_result()) {
+                        $arr_data[':P_TECNICAS_APLICADAS'] = $result->fetch_all(MYSQLI_ASSOC);
+                        $result->free();
+                    }
+                } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
             } else {
                 $error = $this->db->conn_id->error;
             }
             $this->db->reconnect();
-    
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.GETTECHNIQUESBYREQUEST($V_ID_HISTO)");
             if ($multi_query) {
-            do {
-                if ($result = $this->db->conn_id->store_result()) {
-                    $arr_data[':P_TECNICAS_APLICADASXMUESTRA'] = $result->fetch_all(MYSQLI_ASSOC);
-                    $result->free();
-                }
-            } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+                do {
+                    if ($result = $this->db->conn_id->store_result()) {
+                        $arr_data[':P_TECNICAS_APLICADASXMUESTRA'] = $result->fetch_all(MYSQLI_ASSOC);
+                        $result->free();
+                    }
+                } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            } else {
+                $error = $this->db->conn_id->error;
+            }
+            $this->db->reconnect();
+        }
+
+        if ($v_get_sala == 'analitica'){
+
+            $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BUSQUEDA_CODIFICACION_FONASA($V_ID_HISTO)");
+            if ($multi_query) {
+                do {
+                    if ($result = $this->db->conn_id->store_result()) {
+                        $arr_data[':P_LIS_COD_MAI'] = $result->fetch_all(MYSQLI_ASSOC);
+                        $result->free();
+                    }
+                } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
             } else {
                 $error = $this->db->conn_id->error;
             }
             $this->db->reconnect();
 
+            $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BUSQUEDA_PRESTACIONES($V_COD_EMPRESA,$V_ID_HISTO)");
+            if ($multi_query) {
+                do {
+                    if ($result = $this->db->conn_id->store_result()) {
+                        $arr_data[':P_LISTA_PRESTACIONES'] = $result->fetch_all(MYSQLI_ASSOC);
+                        $result->free();
+                    }
+                } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            } else {
+                $error = $this->db->conn_id->error;
+            }
+            $this->db->reconnect();
+
+            $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BD_PRESTACIONES($V_ID_HISTO)");
+            if ($multi_query) {
+                do {
+                    if ($result = $this->db->conn_id->store_result()){
+                        $arr_data[':P_LIS_CODORGANO'] = $result->fetch_all(MYSQLI_ASSOC);
+                        $result->free();
+                    }
+                } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            } else {
+                $error = $this->db->conn_id->error;
+            }
+            $this->db->reconnect();
+
+            
+            $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.P_LIS_CODPATOLOGIA($V_ID_HISTO)");
+            if ($multi_query) {
+                do {
+                    if ($result = $this->db->conn_id->store_result()){
+                        $arr_data[':P_LIS_CODPATOLOGIA'] = $result->fetch_all(MYSQLI_ASSOC);
+                        $result->free();
+                    }
+                } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            } else {
+                $error = $this->db->conn_id->error;
+            }
+            $this->db->reconnect();
+
+
+
+            #LISTA DE PATOLOGOS
+            $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.LISTA_PATOLOGOS($V_COD_EMPRESA)");
+            if ($multi_query) {
+                do {
+                    if ($result = $this->db->conn_id->store_result()){
+                        $arr_data[':P_LISTA_PATOLOGOS'] = $result->fetch_all(MYSQLI_ASSOC);
+                        $result->free();
+                    }
+                } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
+            } else {
+                $error = $this->db->conn_id->error;
+            }
+            $this->db->reconnect();
+
+
+
         }
+
+
+
+
+
+        
 
 
 
@@ -2404,43 +2481,116 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         return array('status'=>true);
     }
     
+
+
+    /*
     public function ultimo_numero_disponible_cancer($valiable){
         $this->db->trans_start();
-        $param              =   array(
-                                    array( 
-                                        'name'      =>  ':V_COD_EMPRESA',
-                                        'value'     =>  $valiable["val_empresa"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_ID_ANATOMIA',
-                                        'value'     =>  $valiable["ind_tipo_biopsia"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_ULTIMO_NUMERO',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_STATUS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                );
-        $result             =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','DATA_LAST_NUMERO_CANCER',$param);
+        $param = array(
+                    array( 
+                        'name'      =>  ':V_COD_EMPRESA',
+                        'value'     =>  $valiable["val_empresa"],
+                        'length'    =>  20,
+                        'type'      =>  SQLT_CHR 
+                    ),
+                    array( 
+                        'name'      =>  ':V_ID_ANATOMIA',
+                        'value'     =>  $valiable["ind_tipo_biopsia"],
+                        'length'    =>  20,
+                        'type'      =>  SQLT_CHR 
+                    ),
+                    array( 
+                        'name'      =>  ':P_ULTIMO_NUMERO',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                    array( 
+                        'name'      =>  ':P_STATUS',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                );
+        $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','DATA_LAST_NUMERO_CANCER',$param);
         $this->db->trans_complete();
         return array(
-            'STATUS'	    =>	$this->db->trans_status(),
-            'DATA'          =>  $result,
-            'DATA_NUMBER'   =>  $result[':P_ULTIMO_NUMERO'],
-            'P_STATUS'      =>  $result[':P_STATUS'],
+            'STATUS' =>	$this->db->trans_status(),
+            'DATA' =>  $result,
+            'DATA_NUMBER' => $result[':P_ULTIMO_NUMERO'],
+            'P_STATUS' => $result[':P_STATUS'],
         );
     }
+    */
 
+
+/*
+   DELIMITER $$
+
+CREATE PROCEDURE DATA_LAST_NUMERO_CANCER (
+    IN V_COD_EMPRESA VARCHAR(10),
+    IN V_ID_ANATOMIA VARCHAR(10),
+    OUT P_ULTIMO_NUMERO INT,
+    OUT P_STATUS VARCHAR(50)
+)
+BEGIN
+    DECLARE V_LAST_NUMERO INT DEFAULT 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    BEGIN
+        SET P_STATUS = 'Error occurred';
+        ROLLBACK;
+    END;
+    
+    START TRANSACTION;
+    
+    -- Variables temporales para almacenar las empresas derivadas
+    DROP TEMPORARY TABLE IF EXISTS TEMP_EMPRESAS_DERIVADAS;
+    CREATE TEMPORARY TABLE TEMP_EMPRESAS_DERIVADAS (EMPRESA VARCHAR(10));
+
+    IF V_COD_EMPRESA = '100' THEN   
+        INSERT INTO TEMP_EMPRESAS_DERIVADAS (EMPRESA) VALUES 
+            ('303'), ('301'), ('304'), ('300'), 
+            ('103'), ('101'), ('102'), ('105'), (V_COD_EMPRESA);
+    ELSEIF V_COD_EMPRESA = '106' THEN 
+        INSERT INTO TEMP_EMPRESAS_DERIVADAS (EMPRESA) VALUES 
+            ('318'), ('104'), ('108'), ('107'), ('302'), (V_COD_EMPRESA);
+    ELSE    
+        INSERT INTO TEMP_EMPRESAS_DERIVADAS (EMPRESA) VALUES (V_COD_EMPRESA);
+    END IF;
+
+    -- Obtener el último número
+    SELECT IFNULL(MAX(NUM_NOF_CANCER), 0) + 1 INTO V_LAST_NUMERO
+    FROM PB_SOLICITUD_HISTO
+    WHERE COD_EMPRESA IN (SELECT EMPRESA FROM TEMP_EMPRESAS_DERIVADAS)
+      AND YEAR(DATE_FECHA_DIAGNOSTICO) = YEAR(CURDATE())
+      AND NUM_FICHAE IS NOT NULL;
+      
+    -- Asignar el resultado a la variable de salida
+    SET P_ULTIMO_NUMERO = V_LAST_NUMERO;
+    SET P_STATUS = 'Success';
+
+    COMMIT;
+END$$
+
+DELIMITER ;
+
+*/
+
+
+
+    public function ultimo_numero_disponible_cancer($variable) {
+        $this->db->trans_start();
+        $sql = "CALL ADMIN.DATA_LAST_NUMERO_CANCER(?, ?, @P_ULTIMO_NUMERO, @P_STATUS)";
+        $this->db->query($sql, array($variable['V_COD_EMPRESA'], $variable['V_ID_ANATOMIA']));
+        $query = $this->db->query("SELECT @P_ULTIMO_NUMERO AS P_ULTIMO_NUMERO, @P_STATUS AS P_STATUS");
+        $result = $query->row_array();
+        $this->db->trans_complete();
+        return array(
+            'STATUS' => $this->db->trans_status(),
+            'DATA' => $result,
+            'DATA_NUMBER' => isset($result['P_ULTIMO_NUMERO']) ? $result['P_ULTIMO_NUMERO'] : null,
+            'P_STATUS' => isset($result['P_STATUS']) ? $result['P_STATUS'] : null,
+        );
+    }
     
 }

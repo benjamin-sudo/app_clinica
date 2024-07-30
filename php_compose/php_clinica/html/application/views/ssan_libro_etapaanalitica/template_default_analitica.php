@@ -382,7 +382,6 @@ $(document).ready(function(){
     <?php   }   ?>
 
     <?php   if ($get_sala == 'sala_tecnologo'){ ?>
-
         $('.lista_gestion_tecnologo a:first').tab('show')
         $("#ind_estado_olga").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_ESTADIO_OLGA_TEC"];?>');
         $("#ind_color_taco").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_COLOR_TACO"];?>');

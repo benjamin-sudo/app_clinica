@@ -931,16 +931,16 @@
                                         ';
                                     }
                                     $html_muestra_casete.='</ul>';
-                                    array_push($arr_li_casete,"<li role='presentation' class='$active'><a href='#casete_$_num' data-toggle='tab'><i class='fa fa-file' aria-hidden='true'></i>&nbsp;CASETE $_num/".$row_muestras["ID_CASETE"]."</a></li>");
-                                    array_push($arr_div_content,"<div id='casete_$_num' ' class='tab-pane margin_panel_tabs $active' style='margin-bottom:-13px;'>$html_muestra_casete</div>");
+                                    array_push($arr_li_casete,'<li class="nav-item"><a class="nav-link '.$active.'" data-bs-toggle="tab" href="#home_'.$aux.'"><i class="fa fa-file" aria-hidden="true"></i> CASETE '.($aux+1).'</a></li>');
+                                    array_push($arr_div_content,'<div class="tab-pane container '.$active.'" id="home_'.$aux.'">'.$html_muestra_casete.'</div>');
                                     $aux++;
                                 }
                             ?>
                             <div class="lista_ordenada_casete">
-                                <ul role="tablist" class="nav nav-tabs"><?php echo implode("",$arr_li_casete);?></ul>
-                                <div class="tab-content"><?php echo implode("",$arr_div_content);?></div>
+                                <ul class="nav nav-tabs" style=""><?php echo implode(" ",$arr_li_casete);?></ul>
+                                <div class="tab-content" style="margin-top: 5px;"><?php echo implode(" ",$arr_div_content);?></div>
                             </div>
-                    <?php   }   else    {   ?>
+                            <?php   }   else    {   ?>
                     
                             <ul class="list-group" id="ul_muestras" style="margin-bottom:0px;">
                                 <?php foreach($data_bd[":P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row){ ?>
@@ -971,7 +971,6 @@
                                                 
                                             </div>
                                         </div>
-
 
                                         <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>" style="margin: 0px 10px 25px 10px;">
                                             <div class="grid_body_heard_microcospica">

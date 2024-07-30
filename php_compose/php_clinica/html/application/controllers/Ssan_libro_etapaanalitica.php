@@ -102,7 +102,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $_post_filtro_xfechas = $this->input->post('ind_filtro_busqueda_xfechas');
         $v_page_num = $this->input->post('v_page_num');
         $v_page_size = $this->input->post('v_page_size');
-
         #TIENE QUE SABER QUE target 
         #_INICIO BUSCADOR DEL FILTRO
         /*

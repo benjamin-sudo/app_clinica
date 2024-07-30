@@ -3,13 +3,13 @@
     #echo "<hr>";
     #var_dump($HTML_LI['return_html']);
 ?>
-
 <div class = "info_userdata" 
     data-fecha_inicio = "<?php echo date("m/d/Y",$date_inicio);?>"
     data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"
     data-getdata = "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
     data-userdata = "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
 ></div>
+
 <input type="hidden" id="get_sala" name="get_sala" value="<?php echo $txt_sala;?>"/>
 <input type="hidden" id="SERVER_NAME" name="SERVER_NAME" value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
 <form id="load_ingreso_etapa_analitica" method="post" action="#"></form>
@@ -238,7 +238,6 @@
         <ul class="list-group lista_etapa_analitica busqueda_por_persona html_busqueda_por_persona" id="busqueda_por_persona" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_persona"];?> 
         </ul>
-        
 
         <div class="grid_contenedo_paginado">
             <div class="grid_contenedo_paginado1">&nbsp;</div>

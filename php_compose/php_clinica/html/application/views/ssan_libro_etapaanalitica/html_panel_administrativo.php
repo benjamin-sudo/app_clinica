@@ -174,3 +174,15 @@
         </div>
     </div>
 </div>
+
+
+<hr>
+
+    <b>cambio</b> 
+
+<hr>
+
+<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_PROFESIONAL"];?>
+
+
+<hr>
