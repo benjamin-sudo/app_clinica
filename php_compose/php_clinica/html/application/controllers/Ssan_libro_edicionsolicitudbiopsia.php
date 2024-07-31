@@ -26,13 +26,13 @@ class Ssan_libro_edicionsolicitudbiopsia extends CI_Controller {
         $id_biopsia = $this->input->post('id_biopsia');
         $return_data = [];
         $return_data = $this->Ssan_libro_edicionsolicitudbiopsia_model->load_tiempo_macrocopica(array(
-            'cod_empresa' =>  $this->session->userdata("COD_ESTAB"),
-            'id_biopsia' =>  $id_biopsia,
+            'cod_empresa' => $this->session->userdata("COD_ESTAB"),
+            'id_biopsia' => $id_biopsia,
         ));
         $this->output->set_output(json_encode(array(
             'return_data' => $return_data,
             'status' =>  $status,
-            'id_biopsia' =>  $id_biopsia
+            'id_biopsia' => $id_biopsia
         )));
     }
     

@@ -25,8 +25,8 @@ $(function(){
 
 
 function star_automplete(ind_value,_name_template){
-    var _value = ind_value;
-    var opciones = {
+    let _value = ind_value;
+    let opciones = {
         adjustWidth         :   false,
         url                 :   function(phrase){
                                     var ind_ruta = _name_template == "notificacancer"?
@@ -69,25 +69,22 @@ function star_automplete(ind_value,_name_template){
                                 },
         placeholder         :   _value == 1 ? "Ingrese paciente":"Numero Biopsia/citologico/pap",
         requestDelay        :   400,
-        //theme             :   "round",
-        //theme               :   "square",
         list                :   {
-                                  
-            onClickEvent        :   function(){
-                                    var v_new_id_anatomia                           =   $("#slc_automplete_biopsia").getSelectedItemData().id_anatomia;
-                                    var v_not_cancer                                =   $("#slc_automplete_biopsia").getSelectedItemData().not_cancer;
-                                    //var v_cod_establref                           =   $("#slc_automplete_biopsia").getSelectedItemData().cod_establref;
-                                    var arr_storange_ids_anatomia                   =   [];
-                                    arr_storange_ids_anatomia                       =   localStorage.getItem("storange_ids_anatomia");
+        onClickEvent        :   function(){
+                                    var v_new_id_anatomia = $("#slc_automplete_biopsia").getSelectedItemData().id_anatomia;
+                                    var v_not_cancer = $("#slc_automplete_biopsia").getSelectedItemData().not_cancer;
+                                    //var v_cod_establref = $("#slc_automplete_biopsia").getSelectedItemData().cod_establref;
+                                    var arr_storange_ids_anatomia = [];
+                                    arr_storange_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
                                     //filtro si tiene notificacion de cancer
                                     if(v_not_cancer == null && $("#ind_pagina").val() == "notificacancer"){
                                         showNotification('top','center',"Solicitud n&uacute;mero "+v_new_id_anatomia+" no cuenta con notificaci&oacute;n de c&aacute;ncer",4,'fa fa-ban');
                                         return false;
                                     }
-                                    if(arr_storange_ids_anatomia                    ==  null){
+                                    if(arr_storange_ids_anatomia ==  null){
                                         localStorage.setItem("storange_ids_anatomia",v_new_id_anatomia);
                                     } else {
-                                        var arr_storange_ids_anatomia_mod           =   localStorage.getItem("storange_ids_anatomia").split(',');
+                                        var arr_storange_ids_anatomia_mod = localStorage.getItem("storange_ids_anatomia").split(',');
                                         if(arr_storange_ids_anatomia_mod.indexOf(v_new_id_anatomia) == -1){
                                             arr_storange_ids_anatomia_mod.push(v_new_id_anatomia);
                                             localStorage.removeItem('storange_ids_anatomia');

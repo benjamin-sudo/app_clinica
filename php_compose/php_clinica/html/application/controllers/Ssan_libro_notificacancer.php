@@ -21,18 +21,18 @@ class Ssan_libro_notificacancer extends CI_Controller {
     }
 
     public function get_busqueda_solicitudes_ap_cancer(){
-        if(!$this->input->is_ajax_request()){  show_404(); }
-        $busq                           =   $this->input->post('tipo_busqueda');
-        $txt_busqueda                   =   $this->input->post('phrase');
-        $ind_template                   =   $this->input->post('template');
-        $arr_data_out                   =   [];
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
-                                                'arr_ids_anatomia'  =>  '',
-                                                'txt_bus'           =>  $txt_busqueda,
-                                                'busq'              =>  $busq,
-                                                'cod_empresa'       =>  $this->session->userdata("COD_ESTAB"),
-                                                'ind_template'      =>  $ind_template,
-                                            ));
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $arr_data_out = [];
+        $busq = $this->input->post('tipo_busqueda');
+        $txt_busqueda = $this->input->post('phrase');
+        $ind_template = $this->input->post('template');
+        $return_data = $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap([
+            'arr_ids_anatomia' => '',
+            'txt_bus' => $txt_busqueda,
+            'busq' => $busq,
+            'cod_empresa' => $this->session->userdata("COD_ESTAB"),
+            'ind_template' => $ind_template,
+        ]);
         if(count($return_data['C_LISTA_ANATOMIA_BUS'])>0){
             $aux                            =   0;
             foreach ($return_data['C_LISTA_ANATOMIA_BUS'] as $i => $row){
@@ -69,14 +69,14 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $txt_busqueda = $this->input->post('phrase');
         $ind_template = $this->input->post('template');
         $arr_data_out = [];
-        $return_data = $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap(array(
+        $return_data = $this->Ssan_libro_notificacancer_model->get_histo_data(array(
             'arr_ids_anatomia' => '',
             'txt_bus' => $txt_busqueda,
             'busq' => $busq,
             'cod_empresa' => $this->session->userdata("COD_ESTAB"),
             'ind_template' => $ind_template,
         ));
-        #var_dump($return_data["C_HISTORIAL_M_BUSQUEDA"]);
+        //var_dump($return_data);
         if(count($return_data['C_LISTA_ANATOMIA_BUS'])>0){
             $aux = 0;
             foreach ($return_data['C_LISTA_ANATOMIA_BUS'] as $i => $row){
