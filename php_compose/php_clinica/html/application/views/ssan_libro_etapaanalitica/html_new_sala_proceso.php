@@ -410,7 +410,7 @@
                     </div>
                     <?php   if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_INCLUCION"] == 1){ ?>
                         <!--
-                        IND_TEC_INCLUCION = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_INCLUCION"];?>
+                            IND_TEC_INCLUCION = <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TEC_INCLUCION"];?>
                         -->
                         <script>document.getElementById("ind_inclusion").checked = true;</script>
                     <?php   }   ?>

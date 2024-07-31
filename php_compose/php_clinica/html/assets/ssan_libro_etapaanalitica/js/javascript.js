@@ -1289,12 +1289,11 @@ function ver_imagenes_min(){
 }
 
 function star_analitica(id_anatomia){
-    $('#loadFade').modal('show');
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/formulario_main_analitico",
         dataType : "json",
-        beforeSend : function(xhr) {    $('#HTML_INFORMACION_HISTORIAL').html(''); },
+        beforeSend : function(xhr) {  $('#loadFade').modal('show'); $('#HTML_INFORMACION_HISTORIAL').html(''); },
         data : { id_anatomia : id_anatomia, get_sala : $("#get_sala").val() },
         error : function(errro) { 
                                     console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
@@ -1303,7 +1302,7 @@ function star_analitica(id_anatomia){
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                 },
         success : function(aData){ 
-                                    console.log("   salida star_analitica   ->  ",aData);
+                                    console.log("aData  ->  ",aData);
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     if(aData.status_session){
                                         $("#btn_guardado_previo").attr('onclick','js_guardado_previo('+id_anatomia+')');
@@ -1574,21 +1573,21 @@ function js_finaliza_rce(id_anatomia){
         $("#date_termino_cancer").val()         ==  ''?vacio_error.push(' - Fecha Final clinico cancer vac&iacute;o'):'';
         $("#hrs_termino_cancer").val()          ==  ''?vacio_error.push(' - Hora Final clinico cancer vac&iacute;o'):'';
     }
-    console.log("--------------- OBSERVACIONES ---------------------------------");
+    //console.log("--------------- OBSERVACIONES ---------------------------------");
     var IND_TIPO_BIOPSIA                        =   $("#IND_TIPO_BIOPSIA").val();
-    console.log("IND_TIPO_BIOPSIA               ->  ",IND_TIPO_BIOPSIA);
+    //console.log("IND_TIPO_BIOPSIA               ->  ",IND_TIPO_BIOPSIA);
     if (IND_TIPO_BIOPSIA == 4 || IND_TIPO_BIOPSIA == 5){
         $("#txt_diagnostico_citologico").val()  ==  ''?vacio_error.push(' - Sin Diagn&oacute;stico citol&oacute;gico'):'';
     }
     if (IND_TIPO_BIOPSIA == 2 || IND_TIPO_BIOPSIA == 3 || IND_TIPO_BIOPSIA == 4 ){
         $("#txt_diagnostico_ap").val()          ==  ''?vacio_error.push(' - Sin Diagn&oacute;stico histol&oacute;gico'):'';
     }
-    console.log("--------------- PRESTACIONES  ---------------------------------");
+    //console.log("--------------- PRESTACIONES  ---------------------------------");
     $("#select_lista_prestaciones").val()       ==  null?vacio_error.push(' - Sin prestaciones cargadas'):'';
     $("#select_lista_cod_main").val()           ==  null?vacio_error.push(' - Sin prestaciones fonasa cargadas'):'';
     $("#select_lista_organos").val()            ==  null?vacio_error.push(' - Sin selecci&oacute;n de tipo de muestras cargadas'):'';
     $("#select_lista_patologia").val()          ==  null?vacio_error.push(' - Sin patolog&iacute;a cargadas'):'';
-    console.log("--------------- ADMINISTRATIVO --------------------------------");
+    //console.log("--------------- ADMINISTRATIVO --------------------------------");
     $("#ind_profesional_acargo").val()          ==  ''?vacio_error.push(' - Informar quien realiza informe'):'';
     $("#n_beneficiarios").val()                 ==  ''?vacio_error.push(' - Indicar N&deg; de beneficiarios'):'';
     $("#ind_mes_critico").val()                 ==  ''?vacio_error.push(' - Indicar si es mes critico'):'';
@@ -1598,13 +1597,13 @@ function js_finaliza_rce(id_anatomia){
     $("#hrs_entrega_informe").val()             ==  ''?vacio_error.push(' - Indicar hora entega de informe'):'';
     $("#ind_profesional_entrega_informe").val() ==  ''?vacio_error.push(' - Informar funcionario que entrega informe'):'';
     $("#ind_profesional_recibe_informe").val()  ==  ''?vacio_error.push(' - Informar funcionario quien recibe informe'):'';
-    console.log("-------- DESCRIPCION MICROSCOPICA -----------------------------");
+    //console.log("-------- DESCRIPCION MICROSCOPICA -----------------------------");
     $('.value_microscopia').each(function(){ 
         //console.log("DESCRIPCION MICROSCOPICA  -> ",this.id);
         var txt                                 =   $("#"+this.id).val();
         var num_muestas                         =   this.id.split("_");  
         var b_sin_descripcion                   =   !$('#ind_sin_descripcion_'+num_muestas[2]).is(':checked');
-        console.log("Muestras -> ",num_muestas[2],' -> ',b_sin_descripcion);
+        //console.log("Muestras -> ",num_muestas[2],' -> ',b_sin_descripcion);
         txt===''&&b_sin_descripcion?vacio_error.push(' - Indicar observaci&oacute;n microsc&oacute;pica N&deg;'+num_muestas[2]):'';
     }); 
     //console.log("-------- TECNOLOGO MEDICO -------------------------------------");
@@ -1630,13 +1629,6 @@ function js_finaliza_rce(id_anatomia){
 }
     
 function js_gestion_patologo(id_salida,id_anatomia){
-    /*
-        console.log("---------------------------------------------------");
-        console.log("id_salida                  ->",id_salida,"     <-  ");
-        console.log("id_anatomia                ->",id_anatomia,"   <-  ");
-        console.log("---------------------------------------------------");
-    */
-    //return false;
     var obj_rce_anatomia = { 
         formulario_main : [],
         formulario_administrativo : [],
@@ -1792,19 +1784,19 @@ function js_gestion_patologo(id_salida,id_anatomia){
     //console.log("lista_observaciones_img    ->",obj_rce_anatomia);
     //return false;
     //**************************************************************************
-    var arr_prestaciones                    =   $("#select_lista_prestaciones").val();
+    var arr_prestaciones = $("#select_lista_prestaciones").val();
     if(arr_prestaciones!=null){
         obj_rce_anatomia.arr_prestaciones.push(arr_prestaciones);
     }
-    var arr_fonasa_mai                      =   $("#select_lista_cod_main").val();
+    var arr_fonasa_mai = $("#select_lista_cod_main").val();
     if(arr_fonasa_mai!=null){
         obj_rce_anatomia.arr_fonasa.push(arr_fonasa_mai);
     }
-    var arr_organos                         =   $("#select_lista_organos").val();
+    var arr_organos = $("#select_lista_organos").val();
     if(arr_organos!=null){
         obj_rce_anatomia.arr_organos.push(arr_organos);
     }
-    var arr_patologias                      =   $("#select_lista_patologia").val();
+    var arr_patologias = $("#select_lista_patologia").val();
     if(arr_patologias!=null){
         obj_rce_anatomia.arr_patologias.push(arr_patologias);
     }
@@ -1816,8 +1808,6 @@ function js_gestion_patologo(id_salida,id_anatomia){
         obj_rce_anatomia.arr_info_microscopia.push({'txt':txt,'num':num});
     });
 
-    //console.log("id_salida  ->  ",id_salida);
-    //console.log("obj_rce_anatomia   ->  ",obj_rce_anatomia);
     /*
         console.log("---------------------------------------------------------------------------------------");
         console.log("   add txt_macroscopia     ");
@@ -1845,13 +1835,11 @@ function js_gestion_patologo(id_salida,id_anatomia){
                     },
             success : function(aData) { 
                                         console.log("guardado_previo_anatomiapatologica ->  ",aData);
-                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                        jAlert(id_salida==1?"Guardado previo grabado con &eacute;xito":"Se ha finalizado reporte","Clinica Libre");
                                         console.log("id_salida  ->  ",id_salida);
-                                        if(id_salida==2){
-                                            update_etapaanalitica();
-                                            $("#MODAL_FORMULARIO_ANALITICA").modal("hide");
-                                        }
+                                        setTimeout(function(){ 
+                                            jAlert(id_salida==1?"Guardado previo grabado con &eacute;xito":"Se ha finalizado reporte","Clinica Libre");
+                                            $('#loadFade').modal('hide'); 
+                                        }, 1000);
                                     }, 
         });
     } else {
@@ -1892,12 +1880,11 @@ function js_gestion_patologo(id_salida,id_anatomia){
                                             update_etapaanalitica(V_ULTIMA_PAGE);
                                             $("#MODAL_FORMULARIO_ANALITICA").modal("hide");
                                         } 
-
                                         jConfirm('Se ha finalizado reporte - &iquest;desea Impimir informe?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r) {
                                             if(r){
                                                 js_pdf_microscopica(id_anatomia);
                                             } else {
-                                                //console.log("-> DIJO NO PDF <-");
+                                               
                                             }
                                         });
                                     } else {

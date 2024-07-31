@@ -30,6 +30,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $end_row = $page_size;
         // Filtrar estados
         $lista_filtro_estados = [];
+        
         if ($arr_data == '0') {
             for ($i = 0; $i <= 8; $i++) {
                 $lista_filtro_estados[] = $i;
@@ -45,7 +46,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
 
-        $arr_datos = [0,1,5,6,7];
+        $arr_datos = [0,1,5,6,7,8];
 
         $this->db->select(['
         P.ID_SOLICITUD_HISTO                                                                            AS ID_SOLICITUD,
@@ -126,7 +127,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->join('ADMIN.GG_TPROFESIONAL G', 'G.COD_RUTPRO = P.COD_RUTPRO');
         $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
         $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
-        $this->db->where_in('P.ID_HISTO_ZONA', $arr_datos );
+        $this->db->where_in('P.ID_HISTO_ZONA', $arr_datos);
         //$lista_filtro_estados
         $this->db->where('P.ID_HISTO_ESTADO', 4);
         $this->db->where('P.IND_ESTADO', 1);
@@ -1073,6 +1074,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
 
         if ($v_get_sala == 'sala_tecnologo'){
             
+            #ACTIVIDADES DE TECNOLOGO
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.GETACTIVETECHNIQUES()");
             if ($multi_query) {
                 do {
@@ -1101,10 +1103,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             $this->db->reconnect();
         }
 
-
-        /*
         if ($v_get_sala == 'analitica'){
-
+         
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BUSQUEDA_CODIFICACION_FONASA($V_ID_HISTO)");
             if ($multi_query) {
                 do {
@@ -1115,6 +1115,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 } while ($this->db->conn_id->more_results() && $this->db->conn_id->next_result());
             } else {
                 $error = $this->db->conn_id->error;
+
             }
             $this->db->reconnect();
 
@@ -1171,14 +1172,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
             $this->db->reconnect();
         }
-        */
-
-
-
         
-
-
-
         $arr_info_linea_tiempo = [];
         return [
             'STATUS' => true,
@@ -1190,10 +1184,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'get_sala' => $DATA['get_sala'],
         ];
     }
-
-
-
-
 
     
     ####################
@@ -1491,7 +1481,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                     $this->db->update($this->ownPab.'.PB_MAIN_BLG_ANATOMIA',array(
                         "TXT_OBSERVACIONES"=>$datos['txt'],
                         "USR_AUDITA"=>$session,
-                        "DATE_AUDITA"=>date('Y-m-d H:i:s')
+                        "DATE_AUDITA"=>date('Y-m-d H:i:s'),
                     ));
                 }
             }
@@ -1557,7 +1547,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                     $dataSolicitud = array_merge($dataSolicitud, array("IND_MES_CRITICO" => $datos["ind_mes_critico"]));
                 }
                 if(isset($datos["date_impresion_informe"]) && $datos["date_impresion_informe"]!=''){
-                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_IMPRESION_INFORME" => date('Y-m-d H:i:s', strtotime($datos["date_impresion_informe"]))));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_IMPRESION_INFORME" => date('Y-m-d', strtotime($datos["date_impresion_informe"]))));
                 }
                 if(isset($datos["date_hora_fecha_entrga_informe"]) && $datos["date_hora_fecha_entrga_informe"]!=''){
                     $dataSolicitud = array_merge($dataSolicitud, array("DATE_ENTREGA_INFORME" => date('Y-m-d H:i:s', strtotime($datos["date_hora_fecha_entrga_informe"]))));
@@ -1572,16 +1562,16 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                     $dataSolicitud = array_merge($dataSolicitud, array("NUM_NOTIFICACION" => $datos["n_notificacion"]));
                 }
                 if(isset($datos["date_chequeo_some"])){
-                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_CHEQUEO_SOME" => date('Y-m-d H:i:s', strtotime($datos["date_chequeo_some"]))));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_CHEQUEO_SOME" => date('Y-m-d', strtotime($datos["date_chequeo_some"]))));
                 }
                 if(isset($datos["date_revision_bd"])){
-                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_REVISION_BD" => date('Y-m-d H:i:s', strtotime($datos["date_revision_bd"]))));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_REVISION_BD" => date('Y-m-d', strtotime($datos["date_revision_bd"]))));
                 }
                 if(isset($datos["date_revision_informe"])){
-                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_REVISION_INFORME" => date('Y-m-d H:i:s', strtotime($datos["date_revision_informe"]))));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_REVISION_INFORME" => date('Y-m-d', strtotime($datos["date_revision_informe"]))));
                 }
                 if(isset($datos["date_archivada_en_ficha"])){
-                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_ARCHIVADA_EN_FICHA" => date('Y-m-d H:i:s', strtotime($datos["date_archivada_en_ficha"]))));
+                    $dataSolicitud = array_merge($dataSolicitud, array("DATE_ARCHIVADA_EN_FICHA" => date('Y-m-d', strtotime($datos["date_archivada_en_ficha"]))));
                 }
             }
             
@@ -1761,7 +1751,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 }
             }
         }
-        
         $date_hoy = date("Y-m-d H:i:s");
         if($aData['id_salida'] == 2){
             $dataSolicitud = array_merge($dataSolicitud, array(
@@ -1773,18 +1762,10 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         }
         $this->db->where('ID_SOLICITUD_HISTO',$id_anatomia); 
         $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',$dataSolicitud);
-        
         $this->db->trans_complete();
         return array('status'=>true,'date_cierre'=>$date_hoy);
     }
     
-    
-
-
-
-
-
-
 
 
     public function update_li_chat($aData){

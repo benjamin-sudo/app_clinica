@@ -14,7 +14,7 @@
                                 <option value="">Seleccione .... </option>
                                 <?php
                                     foreach ($data_bd[":P_LISTA_PATOLOGOS"] as $num => $row_prof){
-                                        $selected   =   $row_prof["ID_PROFESIONAL"] == $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_PROFESIONAL"]?'selected ':'';
+                                        $selected = $row_prof["ID_PROFESIONAL"] == $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_PROFESIONAL"]?'selected ':'';
                                         echo '<option value="'.$row_prof["ID_PROFESIONAL"].'" '.$selected.' data-subtext="'.$row_prof["RUT_PROFESIONAL"].'">'.$row_prof["TXT_PROFESIONAL"].'</option>';
                                     }
                                 ?>
@@ -176,13 +176,10 @@
 </div>
 
 
-<hr>
-
-    <b>cambio</b> 
-
-<hr>
-
-<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_PROFESIONAL"];?>
-
-
-<hr>
+<script>
+$(document).ready(function(){
+    $('#ind_mes_critico').selectpicker('val','<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_MES_CRITICO"];?>');
+    $('#num_plazo_biopsias').selectpicker('val','<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_PLAZO_BIOPSIA"];?>');
+    $('#n_notificacion').selectpicker('val','<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_NOTIFICACION"];?>');
+});
+</script>

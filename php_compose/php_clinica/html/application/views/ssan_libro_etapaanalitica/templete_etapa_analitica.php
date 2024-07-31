@@ -770,11 +770,11 @@
                                                         <div class="grid_sin_descripcion1"><b class="color_muestra">SIN DESCRIPCI&Oacute;N</b></div>
                                                         <div class="grid_sin_descripcion2">
                                                             <input 
-                                                                type    =   "checkbox" 
-                                                                class   =   "form-check-input" 
-                                                                id      =   "ind_sin_descripcion_'.$row_muestras['ID_NMUESTRA'].'" 
-                                                                onclick =   "con_descripciom_num(this.value)" 
-                                                                value   =   "'.$row_muestras['ID_NMUESTRA'].'">
+                                                                type = "checkbox" 
+                                                                class = "form-check-input" 
+                                                                id = "ind_sin_descripcion_'.$row_muestras['ID_NMUESTRA'].'" 
+                                                                onclick = "con_descripciom_num(this.value)" 
+                                                                value = "'.$row_muestras['ID_NMUESTRA'].'">
                                                         </div>
                                                     </div>
                                                     
@@ -881,10 +881,10 @@
                                                             </div>
                                                             <div class="grid_div_microfono_plantillas2">
                                                                 <button 
-                                                                    type                =   "button" 
-                                                                    class               =   "btn btn-warning btn-xs btn-fill" 
-                                                                    id                  =   "btn_termina_mic_'.$row_muestras['ID_NMUESTRA'].'" 
-                                                                    onclick             =   "js_star_plantillas(1,'.$row_muestras['ID_NMUESTRA'].')"
+                                                                    type = "button" 
+                                                                    class =   "btn btn-warning btn-xs btn-fill" 
+                                                                    id =   "btn_termina_mic_'.$row_muestras['ID_NMUESTRA'].'" 
+                                                                    onclick =   "js_star_plantillas(1,'.$row_muestras['ID_NMUESTRA'].')"
                                                                     >
                                                                     <i class="fa fa-comment" aria-hidden="true"></i>
                                                                 </button>
@@ -896,20 +896,20 @@
                                                     <div class="grid_informacion_microscopia">
                                                         <div class="grid_informacion_microscopia1">
                                                             <textarea 
-                                                                class           =   "form-control input-sm" 
-                                                                id              =   "txt_muestra_macroscopica_'.$row_muestras['ID_NMUESTRA'].'" 
-                                                                cols            =   "65" 
-                                                                rows            =   "5" 
-                                                                style           =   "width:100%;" 
-                                                                maxlength       =   "4000" 
+                                                                class = "form-control input-sm" 
+                                                                id = "txt_muestra_macroscopica_'.$row_muestras['ID_NMUESTRA'].'" 
+                                                                cols = "65" 
+                                                                rows = "5" 
+                                                                style = "width:100%;" 
+                                                                maxlength = "4000" 
                                                                 >'.$row_muestras['TXT_DESC_MACROSCOPICA'].'</textarea>
                                                         </div>
                                                         <div class="grid_informacion_microscopia2">
                                                             <button 
-                                                                type            =   "button" 
-                                                                class           =   "btn btn-danger btn-xs btn-fill" 
-                                                                id              =   "btn_edita_macroscopica'.$row_muestras['ID_NMUESTRA'].'" 
-                                                                onclick         =   "edita_txt_macroscopica('.$row_muestras['ID_NMUESTRA'].')"
+                                                                type = "button" 
+                                                                class = "btn btn-danger btn-xs btn-fill" 
+                                                                id = "btn_edita_macroscopica'.$row_muestras['ID_NMUESTRA'].'" 
+                                                                onclick = "edita_txt_macroscopica('.$row_muestras['ID_NMUESTRA'].')"
                                                                 >
                                                                 <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                                             </button>
@@ -1006,15 +1006,15 @@
                                             <div class="grid_informacion_microscopia class_descripcion_micro_<?php echo $row['ID_NMUESTRA'];?>">
                                                 <div class="grid_informacion_microscopia1">
                                                     <textarea 
-                                                        class               =   "form-control input-sm value_microscopia" 
-                                                        name                =   "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
-                                                        id                  =   "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
-                                                        data-muestra        =   "<?php echo $row['ID_NMUESTRA'];?>" 
-                                                        cols                =   "65" 
-                                                        rows                =   "5" 
-                                                        style               =   "width:100%;" 
-                                                        maxlength           =   "4000" 
-                                                        onkeyup             =   ""><?php echo $row['TXT_DESC_MICROSCOPICA'];?></textarea>
+                                                        class = "form-control input-sm value_microscopia" 
+                                                        name = "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
+                                                        id = "txt_descipcion_<?php echo $row['ID_NMUESTRA'];?>" 
+                                                        data-muestra = "<?php echo $row['ID_NMUESTRA'];?>" 
+                                                        cols = "65" 
+                                                        rows = "5" 
+                                                        style = "width:100%;" 
+                                                        maxlength = "4000" 
+                                                        onkeyup = ""><?php echo $row['TXT_DESC_MICROSCOPICA'];?></textarea>
                                                     <div class="grid_texto_main_macroscopia">
                                                         <div class="grid_texto_main_macroscopia1">&nbsp;</div>
                                                         <div class="grid_texto_main_macroscopia2"></div>
@@ -1288,29 +1288,28 @@
 <script>
 $(document).ready(function(){
     $('.style_panel_micro').click(function(){
-        var panel_select =   $(this).val();
+        var panel_select = $(this).val();
         //console.log("panel_select ->  ",panel_select);
         //console.log("name ->  ",this.name);
         //console.log("id ->  ",this.id);
-        var arr_muestra =   this.id.split('_');
+        var arr_muestra = this.id.split('_');
         //console.log("arr_muestra ->  ",arr_muestra);
-        if  (panel_select == 1){
+        if (panel_select == 1){
             $(".class_descripcion_micro_"+arr_muestra[2]).show();
             $(".class_descripcion_macro_"+arr_muestra[2]).hide();
             $(".class_descripcion_img_"+arr_muestra[2]).hide();
         }
-        if  (panel_select == 2){
+        if (panel_select == 2){
             $(".class_descripcion_micro_"+arr_muestra[2]).hide();
             $(".class_descripcion_macro_"+arr_muestra[2]).show();
             $(".class_descripcion_img_"+arr_muestra[2]).hide();
         }
-        if  (panel_select == 3){
+        if (panel_select == 3){
             $(".class_descripcion_micro_"+arr_muestra[2]).hide();
             $(".class_descripcion_macro_"+arr_muestra[2]).hide();
             $(".class_descripcion_img_"+arr_muestra[2]).show();
         }
     });
-    
     
     $(".row_calendar").datetimepicker({
         format : 'DD-MM-YYYY',
@@ -1347,8 +1346,9 @@ $(document).ready(function(){
     <?php }?>
 
     <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_NOTIF_CANCER"]=='SI'?'star_data_cancer();':'deshabilita_input_cancer();'?>
-        
-    $("#ind_mes_critico").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_MES_CRITICO"];?>');
+    
+ 
+
     $("#ind_asignadas96horas").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_ASIGNACION96HRS"];?>');
     $("#ind_estado_olga").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_ESTADIO_OLGA_TEC"];?>');
     $("#ind_color_taco").val('<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_COLOR_TACO"];?>');
@@ -1382,15 +1382,16 @@ $(document).ready(function(){
     //$('.tabs_main_rce_patologo a[href="#add_archivos_ap"]').tab('show');
     js_sin_descripcion();
     //js_collapse_muestras();
-
     var myTab = document.getElementById('tabs_rce_analitica');
     var firstTab = new bootstrap.Tab(myTab.querySelector('.nav-link'));
     firstTab.show();
-
-
     //panel  REGISTRO DE CANCER
     <?php if ($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_NOTIF_CANCER"] == 1){  ?>
         js_registrocancer_habilitado();
+        //let v_NUM_DIAS_ENTCANCER = '<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_DIAS_ENTCANCER"];?>';
+        //console.log("****************************************************");
+        //console.log("   v_NUM_DIAS_ENTCANCER -> ",v_NUM_DIAS_ENTCANCER);
+        //console.log("****************************************************");
         $("#num_entrega_cancercritico").val(<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_DIAS_ENTCANCER"];?>);
         <?php  $arr_time = conversorSegundosHoras($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_ASIGNACION96HRS"]);  ?>
         $("#seg_horas_cancer").val(<?php echo 3600*$arr_time["horas"];?>);
@@ -1401,14 +1402,6 @@ $(document).ready(function(){
         $("#date_termino_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION3"];?>");
         $("#hrs_termino_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION32"];?>");
     <?php } ?> 
-
-    
-   //HITO 
-
-
-    
-
-
     setTimeout(function(){ 
         autosize($('#txt_diagnostico_ap'));
         autosize($('#txt_macroscopia'));
