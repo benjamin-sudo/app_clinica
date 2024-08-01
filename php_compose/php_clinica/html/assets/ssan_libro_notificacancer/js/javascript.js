@@ -25,81 +25,115 @@ $(function(){
 
 
 function star_automplete(ind_value,_name_template){
+
+    console.log("   ------------------------------------    ");
+    console.log("   ind_value          ->  ",ind_value);
+    console.log("   _name_template     ->  ",_name_template);
+
     let _value = ind_value;
     let opciones = {
-        adjustWidth         :   false,
-        url                 :   function(phrase){
-                                    var ind_ruta = _name_template == "notificacancer"?
+        adjustWidth : false,
+        url : function(phrase){
+                                    let ind_ruta = _name_template == "notificacancer"?
                                         "ssan_libro_notificacancer/get_busqueda_solicitudes_ap_cancer":
                                         "ssan_libro_notificacancer/get_busqueda_solicitudes_ap_edicion";
-                                    console.log("-----------------------------------------------");
-                                    console.log("phrase ->  ",phrase," | ind_ruta ->",ind_ruta);
-                                    return  phrase!=="" ?  ind_ruta :   ind_ruta;
+                                    //console.log("-----------------------------------------------");
+                                    //console.log("phrase ->  ",phrase," | ind_ruta ->",ind_ruta);
+                                    return phrase!==""? ind_ruta : ind_ruta;
                                 },
-        preparePostData     :   function(data){
-                                    data.phrase             =   $("#slc_automplete_biopsia").val();
-                                    data.tipo_busqueda      =   $("input[name='ind_tipo_busqueda']:checked").val();
-                                    data.template           =   $("#ind_pagina").val();
-                                    console.log("data  ->  ",data);
-                                    return data;
+        preparePostData : function(data){
+                                data.phrase = $("#slc_automplete_biopsia").val();
+                                data.tipo_busqueda = $("input[name='ind_tipo_busqueda']:checked").val();
+                                data.template = $("#ind_pagina").val();
+                                console.log("data -> ",data);
+                                return data;
+                            },
+        getValue : "name",
+        template : {   
+                        type : "description",  
+                        fields : {   
+                                    description     :   "type" , 
+                                    iconSrc         :   "icon"
                                 },
-        getValue            :   "name",
-        template            :   {   
-                                    type        :   "description",  
-                                    fields      :   {   
-                                                        description     :   "type" , 
-                                                        iconSrc         :   "icon"
-                                                    },
-                                    method      :   function(value,item) {
-                                                        console.log("->",value,item);
-                                                        return "<span class='fa fa-battery-empty'></span>" + value;
-                                                    }
-                                },                
-        ajaxSettings        :   {
-                                    dataType    :   "json",
-                                    method      :   "POST",
-                                    error       :   function(errro) { 
-                                                        console.log("errro              |   ->  ",errro);
-                                                        console.log("responseText       |   ->  ",errro.responseText);    
-                                                        jError("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                    },
-                                    data        :   {
-                                                        dataType        :   "json",
-                                                    }
-                                },
-        placeholder         :   _value == 1 ? "Ingrese paciente":"Numero Biopsia/citologico/pap",
-        requestDelay        :   400,
-        list                :   {
-        onClickEvent        :   function(){
-                                    var v_new_id_anatomia = $("#slc_automplete_biopsia").getSelectedItemData().id_anatomia;
-                                    var v_not_cancer = $("#slc_automplete_biopsia").getSelectedItemData().not_cancer;
-                                    //var v_cod_establref = $("#slc_automplete_biopsia").getSelectedItemData().cod_establref;
-                                    var arr_storange_ids_anatomia = [];
-                                    arr_storange_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
-                                    //filtro si tiene notificacion de cancer
-                                    if(v_not_cancer == null && $("#ind_pagina").val() == "notificacancer"){
-                                        showNotification('top','center',"Solicitud n&uacute;mero "+v_new_id_anatomia+" no cuenta con notificaci&oacute;n de c&aacute;ncer",4,'fa fa-ban');
-                                        return false;
+                        method : function(value,item) {
+                                    console.log("->",value,item);
+                                    return "<span class='fa fa-battery-empty'></span>" + value;
+                                }
+                    },                
+        ajaxSettings : {
+                            dataType : "json",
+                            method : "POST",
+                            error : function(errro) { 
+                                console.log("errro | -> ",errro);
+                                console.log("responseText | -> ",errro.responseText);    
+                                jError("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                            },
+                            data : {
+                                        dataType : "json",
                                     }
-                                    if(arr_storange_ids_anatomia ==  null){
-                                        localStorage.setItem("storange_ids_anatomia",v_new_id_anatomia);
-                                    } else {
-                                        var arr_storange_ids_anatomia_mod = localStorage.getItem("storange_ids_anatomia").split(',');
-                                        if(arr_storange_ids_anatomia_mod.indexOf(v_new_id_anatomia) == -1){
-                                            arr_storange_ids_anatomia_mod.push(v_new_id_anatomia);
-                                            localStorage.removeItem('storange_ids_anatomia');
-                                            localStorage.setItem("storange_ids_anatomia",arr_storange_ids_anatomia_mod.join(","));
-                                        } else {
-                                            showNotification('top','center','La busqueda ya se encuentra en la lista;',1,'fa fa-ban');
-                                        }
-                                    }
-                                    update_etapaanalitica_cancer_edicion();
-                                },       
-                },
-            //http://easyautocomplete.com/guide
+                        },
+        placeholder : _value == 1 ? "Ingrese paciente":"Numero Biopsia/citologico/pap",
+        requestDelay :   400,
+        list : {
+            onClickEvent : function(){
+                let v_new_id_anatomia = $("#slc_automplete_biopsia").getSelectedItemData().id_anatomia;
+                let v_not_cancer = $("#slc_automplete_biopsia").getSelectedItemData().not_cancer;
+                //var v_cod_establref = $("#slc_automplete_biopsia").getSelectedItemData().cod_establref;
+                let arr_storange_ids_anatomia = [];
+                arr_storange_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
+                //filtro si tiene notificacion de cancer
+                if(v_not_cancer == null && $("#ind_pagina").val() == "notificacancer"){
+                    showNotification('top','center',"Solicitud n&uacute;mero "+v_new_id_anatomia+" no cuenta con notificaci&oacute;n de c&aacute;ncer",4,'fa fa-ban');
+                    return false;
+                }
+                if(arr_storange_ids_anatomia ==  null){
+                    localStorage.setItem("storange_ids_anatomia",v_new_id_anatomia);
+                } else {
+                    var arr_storange_ids_anatomia_mod = localStorage.getItem("storange_ids_anatomia").split(',');
+                    if(arr_storange_ids_anatomia_mod.indexOf(v_new_id_anatomia) == -1){
+                        arr_storange_ids_anatomia_mod.push(v_new_id_anatomia);
+                        localStorage.removeItem('storange_ids_anatomia');
+                        localStorage.setItem("storange_ids_anatomia",arr_storange_ids_anatomia_mod.join(","));
+                    } else {
+                        showNotification('top','center','La busqueda ya se encuentra en la lista;',1,'fa fa-ban');
+                    }
+                }
+                update_etapaanalitica_cancer_edicion();
+            },       
+        },
+        //http://easyautocomplete.com/guide
     };
     document.getElementById('slc_automplete_biopsia').type = _value == 1 ? 'text':'number';
     $("#slc_automplete_biopsia").val('').prop('disabled',false).easyAutocomplete(opciones);
+}
+
+function update_etapaanalitica_cancer_edicion(){
+    let v_tipo_de_busqueda = "#_panel_por_gestion";
+    let v_get_sala = $("#ind_pagina").val();
+    let v_filtro_consulta = '0';
+    let v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
+    $.ajax({ 
+        type : "POST",
+        url : "ssan_libro_notificacancer/load_lista_anatomiapatologica",
+        dataType : "json",
+        beforeSend : function(xhr){ $('#loadFade').modal('show'); },
+        data : { 
+                    v_ids_anatomia : v_ids_anatomia,         
+                    v_tipo_de_busqueda : v_tipo_de_busqueda,
+                    v_get_sala : v_get_sala,             
+                    v_filtro_consulta : v_filtro_consulta,     
+                },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                },
+        success : function(aData){ 
+                                    console.log("aData -> ",aData);
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                    $(".get_table_gestion").html('').html(aData.return_data.HTML_LI);
+                                }, 
+    });
 }
 
 function js_vista_opcion_busqueda(_value){
@@ -107,40 +141,6 @@ function js_vista_opcion_busqueda(_value){
     localStorage.setItem("storage_busqueda_por_n_biosia_cancer",_value);
     var num_value = _value == 'busqueda_por_paciente'?1:2;
     star_automplete(num_value,$("#ind_pagina").val());
-}
-
-function update_etapaanalitica_cancer_edicion(){
-    var v_tipo_de_busqueda = "#_panel_por_gestion";
-    var v_get_sala = $("#ind_pagina").val();
-    var v_filtro_consulta = '0';
-    var v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
-    $('#loadFade').modal('show');
-    $.ajax({ 
-        type : "POST",
-        url : "ssan_libro_notificacancer/load_lista_anatomiapatologica",
-        dataType : "json",
-        beforeSend : function(xhr)   {   
-                                        //console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
-                                        //setTimeout($('#loadFade').modal('show'),1000);
-                                    },
-        data : { 
-                    v_ids_anatomia      :   v_ids_anatomia,         
-                    v_tipo_de_busqueda  :   v_tipo_de_busqueda,
-                    v_get_sala          :   v_get_sala,             
-                    v_filtro_consulta   :   v_filtro_consulta,     
-                },
-        error : function(errro) { 
-                                    console.log(errro);  
-                                    console.log(errro.responseText);
-                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#loadFade').modal('hide'); 
-                                },
-        success : function(aData) { 
-                                        console.log("aData -> ",aData);
-                                        $('#loadFade').modal('hide');
-                                        $(".get_table_gestion").html('').html(aData.return_data.HTML_LI);
-                                    }, 
-    });
 }
 
 function js_limpia_regustros(){
@@ -966,36 +966,33 @@ function js_update_macrocopica(id_biopsia){
                 //console.log("v_newfecha ->",v_newfecha);
                 $('#loadFade').modal('show');
                 $.ajax({ 
-                    type                :   "POST",
-                    url                 :   "ssan_libro_edicionsolicitudbiopsia/record_macrocopica",
-                    dataType            :   "json",
-                    beforeSend          :   function(xhr)   {   
-                                                                console.log("xhr->",xhr);
-                                                            },
-                    data                :                   {   
-                                                                constrasena         :   r,
-                                                                id_biopsia          :   id_biopsia,
-                                                                v_date_fecha_hora   :   v_newfecha+' '+v_hora_macrocopica,
-                                                            },
-                    error		    :   function(errro)     { 
-                                                                console.log(errro);  
-                                                                console.log(errro.responseText);    
-                                                                jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                                $('#loadFade').modal('hide');
-                                                            },
-                    success             :   function(aData) { 
-                                                                $('#loadFade').modal('hide');
-                                                                console.log("record_elimina_definitivamente  -> ",aData,"  <-  ");
-                                                                if (aData.status){
-                                                                    jAlert('Se ha editado la biopsia', "Confirmac\u00f3on", function (r) {
-                                                                        if (r) {
-                                                                            location.reload(true);
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    jError(aData.txt_error,"Clinica Libre");
-                                                                }
-                                                            }, 
+                    type : "POST",
+                    url : "ssan_libro_edicionsolicitudbiopsia/record_macrocopica",
+                    dataType : "json",
+                    beforeSend : function(xhr) { console.log("xhr->",xhr);   },
+                    data : {   
+                                constrasena : r,
+                                id_biopsia : id_biopsia,
+                                v_date_fecha_hora : v_newfecha+' '+v_hora_macrocopica,
+                            },
+                    error : function(errro) { 
+                                                console.log(errro);  
+                                                jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                            },
+                    success : function(aData) { 
+                                                console.log("record_elimina_definitivamente  -> ",aData,"  <-  ");
+                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                if (aData.status){
+                                                    jAlert('Se ha editado la biopsia', "Confirmac\u00f3on", function (r) {
+                                                        if (r) {
+                                                            location.reload(true);
+                                                        }
+                                                    });
+                                                } else {
+                                                    jError(aData.txt_error,"Clinica Libre");
+                                                }
+                                            }, 
                 });
             } else {
                 jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
@@ -1006,13 +1003,10 @@ function js_update_macrocopica(id_biopsia){
     }
 }
 
-
 function convertDateFormat(dateString) {
-    // Dividir la cadena en partes
     let parts = dateString.split('-');
     let year = parts[0];
     let month = parts[1];
     let day = parts[2];
-    // Formatear la fecha en DD-MM-YYYY
     return `${day}-${month}-${year}`;
 }

@@ -107,30 +107,31 @@ class Ssan_libro_notificacancer extends CI_Controller {
     
     public function load_lista_anatomiapatologica(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $v_ids_anatomia                     =   $this->input->post('v_ids_anatomia');
-        $v_tipo_de_busqueda                 =   $this->input->post('v_tipo_de_busqueda');
-        $v_get_sala                         =   $this->input->post('v_get_sala');
-        $v_filtro_consulta                  =   $this->input->post('v_filtro_consulta');
-        $return_data                        =   $this->Ssan_libro_notificacancer_model->load_lista_anatomiapatologica_model(array(
-            'cod_empresa'                   =>  $this->session->userdata("COD_ESTAB"),
-            'usr_session'                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
-            'v_ids_anatomia'                =>  $v_ids_anatomia,
-            'v_tipo_de_busqueda'            =>  $v_tipo_de_busqueda,
-            'v_get_sala'                    =>  $v_get_sala,
-            'v_filtro_consulta'             =>  $v_filtro_consulta,
+        $v_ids_anatomia = $this->input->post('v_ids_anatomia');
+        $v_tipo_de_busqueda = $this->input->post('v_tipo_de_busqueda');
+        $v_get_sala = $this->input->post('v_get_sala');
+        $v_filtro_consulta = $this->input->post('v_filtro_consulta');
+        $return_data = $this->Ssan_libro_notificacancer_model->load_lista_anatomiapatologica_model(array(
+            'cod_empresa' => $this->session->userdata("COD_ESTAB"),
+            'usr_session' => explode("-",$this->session->userdata("USERNAME"))[0],
+            'v_ids_anatomia' => $v_ids_anatomia,
+            'v_tipo_de_busqueda' => $v_tipo_de_busqueda,
+            'v_get_sala' => $v_get_sala,
+            'v_filtro_consulta' => $v_filtro_consulta,
         ));
         #OUT VIEWS
         $this->output->set_output(json_encode(array(
             #'arr_ids_anatomia'             =>  $arr_ids_anatomia,
-            'userdata'                      =>  $this->session->userdata,
-            'return_data'                   =>  $return_data,
-            'v_ids_anatomia'                =>  $v_ids_anatomia,
-            'v_tipo_de_busqueda'            =>  $v_tipo_de_busqueda,
-            'v_get_sala'                    =>  $v_get_sala,
-            'v_filtro_consulta'             =>  $v_filtro_consulta,
+            'userdata' => $this->session->userdata,
+            'return_data' => $return_data,
+            'v_ids_anatomia' => $v_ids_anatomia,
+            'v_tipo_de_busqueda' => $v_tipo_de_busqueda,
+            'v_get_sala' => $v_get_sala,
+            'v_filtro_consulta' => $v_filtro_consulta,
         )));
     }
- 
+
+    
     public function html_notificar_a_ususario(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $status                             =   true;

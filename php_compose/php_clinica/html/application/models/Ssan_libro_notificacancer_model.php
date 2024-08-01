@@ -144,7 +144,6 @@ class ssan_libro_notificacancer_model extends CI_Model {
             'DATA' => $DATA,
         ];
     }
-    
 
     #CONSULTA_MAIN
     public function load_lista_anatomiapatologica_model($DATA){
@@ -198,20 +197,18 @@ class ssan_libro_notificacancer_model extends CI_Model {
                                     'type'      =>  OCI_B_CURSOR
                                 ),
                             );
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_BUSQ_EDICION_POST',$param);
+        $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_BUSQ_EDICION_POST',$param);
         $this->db->trans_complete();
         return array (
-            'HTML_LI'                           =>  $this->load->view($DATA["v_get_sala"] == "edicionsolicitudbiopsia" ? 
-                                                        "ssan_libro_notificacancer/html_tabla_edicion_solicitud": 
-                                                        "ssan_libro_notificacancer/html_tabla_panel_cancer",
-                                                    array('cursor'=>$result,'info_post'=>$DATA),true),
-            'n_resultado'                       =>  count($result[":C_LISTA_ANATOMIA"]),
-            'BD'                                =>  $result,
-            'STATUS'                            =>  true,
-            'status_bd'                         =>  true,
-            'V_DATA'                            =>  $DATA,
+            'HTML_LI' =>  $this->load->view($DATA["v_get_sala"] == "edicionsolicitudbiopsia" ? 
+                "ssan_libro_notificacancer/html_tabla_edicion_solicitud": 
+                "ssan_libro_notificacancer/html_tabla_panel_cancer",['cursor'=>$result,'info_post'=>$DATA],true),
+            'n_resultado' => count($result[":C_LISTA_ANATOMIA"]),
+            'BD' =>  $result,
+            'STATUS' =>  true,
+            'status_bd' =>  true,
+            'V_DATA' =>  $DATA,
         );
-        //$this->load->view(,array('cursor'=>$result,'info_post'=>$DATA),true),
     }
     
     public function load_gestion_notificacion_cancer($DATA){
