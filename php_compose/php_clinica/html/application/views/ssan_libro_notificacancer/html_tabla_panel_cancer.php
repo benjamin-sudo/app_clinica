@@ -10,8 +10,8 @@
         </tr>
         <tr>
             <th scope="col" style="height: 40px;">#</th>
-            <th scope="col" >Informaci&oacute;n del paciente</th>
-            <th scope="col" >Informaci&oacute;n solicitante</th>
+            <th scope="col" >Paciente</th>
+            <th scope="col" >Profesional</th>
             <th scope="col" >Estado notificaci&oacute;n cancer</th>
             <th scope="col" ><i class="fa fa-cog" aria-hidden="true"></i></th>
         </tr>
@@ -66,7 +66,7 @@
     <?php }  ?>
     <?php } else { ?>
         <tr>
-            <th scope="row" colspan="5" style="text-align:center;height:40px;">SIN INFORMACI&Oacute;N</th>
+            <th scope="row" colspan="7" style="text-align:center;height:40px;">SIN INFORMACI&Oacute;N</th>
         </tr>
     <?php  } ?>
     </tbody>

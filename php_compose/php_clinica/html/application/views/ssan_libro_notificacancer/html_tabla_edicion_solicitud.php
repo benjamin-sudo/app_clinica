@@ -11,10 +11,10 @@
             </tr>
             <tr>
                 <th scope="col" style="height: 40px;">#</th>
-                <th scope="col">Informaci&oacute;n del paciente</th>
-                <th scope="col">Informaci&oacute;n solicitante</th>
-                <th scope="col">Tipo biopsia</th>
-                <th scope="col">N&deg; Biopsia</th>
+                <th scope="col" >Paciente</th>
+                <th scope="col" >Profesional</th>
+                <th scope="col" >Tipo biopsia</th>
+                <th scope="col" >N&deg; Biopsia</th>
                 <th scope="col" style="text-align:center"><i class="fa fa-info-circle" aria-hidden="true"></i></th>
                 <th scope="col" style="text-align:center"><i class="fa fa-cog" aria-hidden="true"></i></th>
             </tr>
@@ -31,7 +31,7 @@
                     <div style="display: none" id="biopsia_<?php echo $row['ID_SOLICITUD'];?>" data-info="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"></div>
                 </th>
                 <td><?php echo $row["NOMBRE_COMPLETO"];?></td>
-                <td><?php echo $row["PROFESIONAL"];?></td>
+                <td><?php echo $row["PROFESIONAL2"];?></td>
                 <td><?php echo $row["TIPO_DE_BIOPSIA"];?></td>
                 <td>
                     <?php echo $row['NUM_INTERNO_AP']   =='0' ? '':'N&deg; BIOPSIA: '.$row['NUM_INTERNO_AP'];?> 
@@ -118,7 +118,7 @@
         <?php }  ?>
         <?php } else { ?>
             <tr>
-                <th scope="row" colspan="5" style="text-align:center;height:40px;">SIN INFORMACI&Oacute;N</th>
+                <th scope="row" colspan="7" style="text-align:center;height:40px;">SIN INFORMACI&Oacute;N</th>
             </tr>
         <?php  } ?>
         </tbody>

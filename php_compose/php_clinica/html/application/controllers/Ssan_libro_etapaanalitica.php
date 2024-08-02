@@ -529,8 +529,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $dompdf->AddPage();
             $dompdf->WriteHTML($this->load->view("ssan_libro_biopsias_listagespab/pdf_info_img_x_main",array('DATA'=>$DATA,"empresa"=>$empresa),true));
         }
-
-
         $base64_pdf                     =   base64_encode($dompdf->Output($txt_name_pdf,'S'));
         $TABLA["OUT_HTML"]              =   '';
         $TABLA["EMPRESA"]               =   $empresa;
@@ -774,19 +772,19 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         }
         #out json
         $this->output->set_output(json_encode(array(
-            'status'                        =>  $status,
-            'P_ANATOMIA_PATOLOGICA_MAIN'    =>  $DATA["P_ANATOMIA_PATOLOGICA_MAIN"],
-            'txt_error'                     =>  $txt_error,
-            'HTML_VIWE'                     =>  $html,
-            'arr_li_html'                   =>  $arr_li_html,
-            'arr_waring'                    =>  $arr_waring,
-            'ids_x_bacode'                  =>  $ids_anatomia,
-            'RETURN'                        =>  $data_return,
-            'BUSQ'                          =>  $get_etiqueta,
-            'EMPRESA'                       =>  $empresa,
-            'DATA_GET'                      =>  $array_data,
-            'data_main'                     =>  $data_main,
-            'ARR_CASETE_ORD'                =>  $ARR_CASETE_ORD,
+            'status' =>  $status,
+            'P_ANATOMIA_PATOLOGICA_MAIN' =>  $DATA["P_ANATOMIA_PATOLOGICA_MAIN"],
+            'txt_error' =>  $txt_error,
+            'HTML_VIWE' =>  $html,
+            'arr_li_html' =>  $arr_li_html,
+            'arr_waring' =>  $arr_waring,
+            'ids_x_bacode' =>  $ids_anatomia,
+            'RETURN' =>  $data_return,
+            'BUSQ' =>  $get_etiqueta,
+            'EMPRESA' =>  $empresa,
+            'DATA_GET' =>  $array_data,
+            'data_main' =>  $data_main,
+            'ARR_CASETE_ORD' =>  $ARR_CASETE_ORD,
         )));
     }
     

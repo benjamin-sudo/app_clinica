@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1; 
@@ -237,8 +236,6 @@ $(document).ready(function(){
     }).on('page', function(event, num){
         update_etapaanalitica(num);
     });
-
-
     //null_tabs();
     star_defatult();
 });
@@ -277,13 +274,10 @@ function js_visualizacion_menu_principal2(target){
     return true;
 }
 
-
-
-
 function js_gestion(){
     //console.error("js_gestion     ->  localStorage   ->  ",localStorage.getItem("storange_tabs_main"));
-    var tabs_active             =   localStorage.getItem("storange_tabs_main");
-    var data_tabs               =   $("."+tabs_active.slice(1)).data();
+    var tabs_active = localStorage.getItem("storange_tabs_main");
+    var data_tabs = $("."+tabs_active.slice(1)).data();
     js_visualizacion_menu_principal(tabs_active);
     $("#txt_busqueda_titulo").html(data_tabs.titulo);
     li_busqueda_ver_oculta(data_tabs.zona_li);
@@ -364,11 +358,10 @@ function js_test_ap(){
 }
 
 function js_adjunto_firma(archivos){
-    //ingreso de la imagen 
-    var navegador       =   window.URL || window.webkitURL;
-    var size            =   archivos[0].size;
-    var type            =   archivos[0].type;
-    var name            =   archivos[0].name;
+    var navegador = window.URL || window.webkitURL;
+    var size = archivos[0].size;
+    var type = archivos[0].type;
+    var name = archivos[0].name;
     if(size>1024*1024){
             jAlert("El archivo "+name+" supera el m&aacute;ximo permitido 1MB","LISTA DE ERRORES");
             return false;
@@ -1366,23 +1359,23 @@ function js_data_administrativo(id_anatomia){
         showNotification('top','left',vacio_error.join("<br>"),4,'fa fa-ban');
         return false;
     } else {
-        var obj_rce_anatomia                    =   { 
-            formulario_administrativo           :   [],
+        var obj_rce_anatomia =   { 
+            formulario_administrativo :   [],
         }; 
-        var data_main_administrativo            =   {
-            ind_profesional_acargo              :   $("#ind_profesional_acargo").val(),
-            ind_profesional_acargo_citologico   :   $("#ind_profesional_acargo_citologico").val(),
-            num_beneficiarios                   :   $("#n_beneficiarios").val(),
-            ind_mes_critico                     :   $("#ind_mes_critico").val(),
-            date_impresion_informe              :   $("#date_impresion_informe").val(),
-            date_hora_fecha_entrga_informe      :   $("#date_fecha_entrga_informe").val()+" "+$("#hrs_entrega_informe").val(),
-            ind_profesional_entrega_informe     :   $("#ind_profesional_entrega_informe").val(), 
-            ind_profesional_recibe_informe      :   $("#ind_profesional_recibe_informe").val(),
-            n_notificacion                      :   $("#n_notificacion").val(),
-            date_revision_informe               :   $("#date_revision_informe").val(),  
-            date_revision_bd                    :   $("#date_revision_bd").val(),  
-            date_chequeo_some                   :   $("#date_chequeo_some").val(),
-            date_archivada_en_ficha             :   $("#date_archivada_en_ficha").val(), 
+        var data_main_administrativo =   {
+            ind_profesional_acargo : $("#ind_profesional_acargo").val(),
+            ind_profesional_acargo_citologico :   $("#ind_profesional_acargo_citologico").val(),
+            num_beneficiarios : $("#n_beneficiarios").val(),
+            ind_mes_critico : $("#ind_mes_critico").val(),
+            date_impresion_informe :   $("#date_impresion_informe").val(),
+            date_hora_fecha_entrga_informe : $("#date_fecha_entrga_informe").val()+" "+$("#hrs_entrega_informe").val(),
+            ind_profesional_entrega_informe : $("#ind_profesional_entrega_informe").val(), 
+            ind_profesional_recibe_informe : $("#ind_profesional_recibe_informe").val(),
+            n_notificacion : $("#n_notificacion").val(),
+            date_revision_informe : $("#date_revision_informe").val(),  
+            date_revision_bd : $("#date_revision_bd").val(),  
+            date_chequeo_some : $("#date_chequeo_some").val(),
+            date_archivada_en_ficha : $("#date_archivada_en_ficha").val(), 
         };
         obj_rce_anatomia.formulario_administrativo.push(data_main_administrativo);
         console.table("obj_rce_anatomia                 ->  ",obj_rce_anatomia);

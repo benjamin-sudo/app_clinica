@@ -24,13 +24,14 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $arr_data = $DATA["ind_filtros_ap"];
         $page_number = $DATA["v_page_num"];
         $page_size = $DATA["v_page_size"];
+        
         $fecha_inicio = date('Y-m-d 00:00:00', strtotime($val_fecha_inicio));
         $fecha_final = date('Y-m-d 23:59:59', strtotime($val_fecha_final));
+        
         $start_row = ($page_number - 1) * $page_size;
         $end_row = $page_size;
-        // Filtrar estados
+        # Filtrar estados
         $lista_filtro_estados = [];
-        
         if ($arr_data == '0') {
             for ($i = 0; $i <= 8; $i++) {
                 $lista_filtro_estados[] = $i;
@@ -46,8 +47,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
 
-        $arr_datos = [0,1,5,6,7,8];
 
+        $arr_datos = [0,1,5,6,7,8];
         $this->db->select(['
         P.ID_SOLICITUD_HISTO                                                                            AS ID_SOLICITUD,
         DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d")                                                       AS LAST_DATE_AUDITA_MOMENT,
@@ -127,8 +128,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->join('ADMIN.GG_TPROFESIONAL G', 'G.COD_RUTPRO = P.COD_RUTPRO');
         $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
         $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
+        #$lista_filtro_estados
         $this->db->where_in('P.ID_HISTO_ZONA', $arr_datos);
-        //$lista_filtro_estados
         $this->db->where('P.ID_HISTO_ESTADO', 4);
         $this->db->where('P.IND_ESTADO', 1);
         $this->db->group_start();
@@ -153,7 +154,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->limit($page_size, $start_row);
         $query_lista_anatomia = $this->db->get();
         $lista_anatomia = $query_lista_anatomia->result_array();
-        // Query para contar el total de resultados
+        #Query para contar el total de resultados
         $this->db->select('COUNT(*) AS total_count');
         $this->db->from('ADMIN.PB_SOLICITUD_HISTO P');
         $this->db->join('ADMIN.GG_TPROFESIONAL A', 'A.COD_RUTPRO = P.COD_RUTPRO');
@@ -161,8 +162,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->join('ADMIN.GG_TPROFESIONAL G', 'G.COD_RUTPRO = P.COD_RUTPRO');
         $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
         $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
+        #$lista_filtro_estados
         $this->db->where_in('P.ID_HISTO_ZONA', $arr_datos);
-        //$lista_filtro_estados
         $this->db->where('P.ID_HISTO_ESTADO', 4);
         $this->db->where('P.IND_ESTADO', 1);
         $this->db->group_start();
@@ -173,7 +174,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $query_total_count = $this->db->get();
         $total_count = $query_total_count->row()->total_count;
         $num_paginas = ceil($total_count / $page_size);
-        // Resultados
+        #Resultados
         $resultados = [
             'lista_anatomia' => $lista_anatomia,
             'num_resultados' => [
@@ -189,9 +190,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 'fecha_final' => $fecha_final
             ]
         ];
-
-        //$BD = [];
-        //$BD[':C_LISTA_ANATOMIA'] = $lista_anatomia;
+        
         return [
             'BD' =>  null,
             'resultados' => $resultados,
@@ -265,6 +264,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         return $html;
     }
 
+    
     ###################
     #apuntando a oracle
     public function old_etapa_analiticaap_paginado($DATA) {

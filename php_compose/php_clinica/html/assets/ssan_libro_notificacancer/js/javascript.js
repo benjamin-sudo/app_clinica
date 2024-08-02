@@ -23,24 +23,21 @@ $(function(){
     star_automplete(1,$("#ind_pagina").val());
 });
 
-
 function star_automplete(ind_value,_name_template){
-
-    console.log("   ------------------------------------    ");
-    console.log("   ind_value          ->  ",ind_value);
-    console.log("   _name_template     ->  ",_name_template);
-
+    //console.log("   ------------------------------------    ");
+    //console.log("   ind_value          ->  ",ind_value);
+    //console.log("   _name_template     ->  ",_name_template);
     let _value = ind_value;
     let opciones = {
         adjustWidth : false,
         url : function(phrase){
-                                    let ind_ruta = _name_template == "notificacancer"?
-                                        "ssan_libro_notificacancer/get_busqueda_solicitudes_ap_cancer":
-                                        "ssan_libro_notificacancer/get_busqueda_solicitudes_ap_edicion";
-                                    //console.log("-----------------------------------------------");
-                                    //console.log("phrase ->  ",phrase," | ind_ruta ->",ind_ruta);
-                                    return phrase!==""? ind_ruta : ind_ruta;
-                                },
+            let ind_ruta = _name_template == "notificacancer"?
+                "ssan_libro_notificacancer/get_busqueda_solicitudes_ap_cancer":
+                "ssan_libro_notificacancer/get_busqueda_solicitudes_ap_edicion";
+            //console.log("-----------------------------------------------");
+            //console.log("phrase ->  ",phrase," | ind_ruta ->",ind_ruta);
+            return phrase!==""? ind_ruta : ind_ruta;
+        },
         preparePostData : function(data){
                                 data.phrase = $("#slc_automplete_biopsia").val();
                                 data.tipo_busqueda = $("input[name='ind_tipo_busqueda']:checked").val();
@@ -98,6 +95,7 @@ function star_automplete(ind_value,_name_template){
                         showNotification('top','center','La busqueda ya se encuentra en la lista;',1,'fa fa-ban');
                     }
                 }
+                $("#slc_automplete_biopsia").val('');
                 update_etapaanalitica_cancer_edicion();
             },       
         },
@@ -107,6 +105,7 @@ function star_automplete(ind_value,_name_template){
     $("#slc_automplete_biopsia").val('').prop('disabled',false).easyAutocomplete(opciones);
 }
 
+//
 function update_etapaanalitica_cancer_edicion(){
     let v_tipo_de_busqueda = "#_panel_por_gestion";
     let v_get_sala = $("#ind_pagina").val();
@@ -129,12 +128,13 @@ function update_etapaanalitica_cancer_edicion(){
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                 },
         success : function(aData){ 
-                                    console.log("aData -> ",aData);
+                                    //console.error(aData);
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     $(".get_table_gestion").html('').html(aData.return_data.HTML_LI);
                                 }, 
     });
 }
+
 
 function js_vista_opcion_busqueda(_value){
     $("#slc_automplete_biopsia").val('');
@@ -165,12 +165,12 @@ function js_notificar_cancer(id_anatomia){
                                             console.log(errro);  
                                             //console.log(errro.responseText);
                                             jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                            $('#loadFade').modal('hide'); 
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                         },
         success     :   function(aData) { 
                                             console.log("aData -> ",aData);
                                             $("#btn_envia_correo").attr('onclick','js_confirma_notificacion_cancer('+id_anatomia+')');
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                             $("#html_notificacion_cancer").html(aData.return_data.HTML_LI);
                                             $("#modal_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
                                         }, 
@@ -212,11 +212,11 @@ function js_confirma_notificacion_cancer(id_anatomia){
                                             console.log(errro);  
                                             console.log(errro.responseText);    
                                             jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                            $('#loadFade').modal('hide'); 
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                         },
             success :   function(aData) { 
                                             console.log(" return aData -> ",aData,);
-                                            $('#loadFade').modal('hide'); 
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                             if(aData.STATUS){
                                                 var var_status_bd = aData["GET_BD"].STATUS;
                                                 if(var_status_bd === false){
@@ -258,10 +258,10 @@ function js_confirma_envio(id_anatomia){
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
                                                         jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     },
         success		:   function(aData)         { 
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         console.log("aData      ->",aData);
                                                         showNotification('top','center','Se ha enviado correo '+aData.IND_MAIL,1,'fa fa-info');
                                                     }, 
@@ -288,10 +288,10 @@ function js_validafirma(txt_firma_simple){
                                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                                     $("#protocoloPabellon").css("z-index","1500"); 
                                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 },
         success		:   function(aData)         {   
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     if (aData.status){
                                                         let data_user = aData.valida[0];
                                                         showNotification('top','center','<i class="fa fa-info"></i>&nbsp;Firma simple ->'+data_user.NAME+' - '+data_user.USERNAME,1,'');
@@ -313,11 +313,11 @@ function pdf_notificacion_cancer_ok(id_anatomia){
         error : function(errro) { 
                                     console.log("quisas->",errro); 
                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                 },
         success : function(aData) { 
                                         console.log(" aData -> ",aData);
-                                        $('#loadFade').modal('hide'); 
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                         if(!aData["STATUS"]){
                                             jError("error al cargar protocolo PDF","Clinica Libre");
                                         } else {
@@ -355,10 +355,10 @@ function js_edita_numero_biopsia(id_biopsia){
                                             console.log("quisas->",errro,"-error->",errro.responseText); 
                                             $("#protocoloPabellon").css("z-index","1500"); 
                                             jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                         },
         success		:   function(aData){   
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                             console.log("aData -> ",aData);
                                             //$("#btn_confirma_edicion_biopsia").attr('onclick','js_confirma_notificacion_cancer('+id_biopsia+')');
                                             $("#html_edicion_numero_biopsia").html(aData.html_out);
@@ -380,13 +380,13 @@ function busqueda_numero_disponible(tipo_biopsia){
                                         console.log(errro);  
                                         console.log(errro.responseText);    
                                         jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                        $('#loadFade').modal('hide'); 
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     },
         success : function(aData) { 
                                         console.log("ultimo_numero_disponible -> ",aData,"  <-  ");
                                         $("#num_interno").val('');
-                                        $('#loadFade').modal('hide'); 
-                                        var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                        let num_last = aData.data_numero.V_LAST_NUMERO;
                                         showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
                                         $("#num_interno").val(num_last);
                                     }, 
@@ -407,13 +407,13 @@ function busqueda_numero_disponible_citologia(tipo_biopsia){
         error : function(errro) { 
                                     console.log(errro);  
                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre");
-                                    $('#loadFade').modal('hide');  
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                 },
         success : function(aData) { 
                                     console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
                                     $("#num_interno_cito").val('');
-                                    $('#loadFade').modal('hide'); 
-                                    var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                    let num_last = aData.data_numero.V_LAST_NUMERO;
                                     showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
                                     $("#num_interno_cito").val(num_last);
                                 }, 
@@ -489,12 +489,12 @@ function GET_PDF_ANATOMIA_PANEL(id){
        error		:   function(errro)         { 
                                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide'); 
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 },
        success		:   function(aData)         { 
                                                         console.log("---------------------------------------------");
                                                         console.log(aData);
-                                                        $('#loadFade').modal('hide'); 
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('');
                                                         if(!aData["STATUS"]){
                                                            jError("error al cargar protocolo PDF","Clinica Libre");
@@ -540,11 +540,11 @@ function js_pdf_informe_final(id_anatomia){
         error : function(errro) { 
                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                 },
         success : function(aData) { 
                                     console.log("aData -> ",aData);
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     if(!aData["STATUS"]){
                                         jError("error al cargar protocolo PDF","Clinica Libre");
                                         return false;
@@ -615,15 +615,20 @@ function load_cambio_numero_biopsia(datasend){
                 error : function(errro) { 
                                             console.log(errro);  
                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                         },
                 success : function(aData) { 
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                             console.log("retun -> ",aData);
                                             if (aData.status){
-                                                showNotification('top','center','El cambio de numero de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
-                                                $(aData.ind_cambio == 1 ? "#old_num_interno": "#old_num_interno_cito").val(aData.nun_biopsia) ;
-                                                update_etapaanalitica_cancer_edicion();
+                                                if (aData.return.status){
+                                                    showNotification('top','center','El cambio de numero de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
+                                                    $(aData.ind_cambio == 1 ? "#old_num_interno": "#old_num_interno_cito").val(aData.nun_biopsia) ;
+                                                    update_etapaanalitica_cancer_edicion();
+                                                } else {
+                                                    jError("El número de biopsia pertenece a otra solicitud  ","Clinica Libre");
+                                                    update_etapaanalitica_cancer_edicion();
+                                                }
                                             } else {
                                                 jError(aData.txt_error ,"Clinica Libre");
                                             }
@@ -673,10 +678,10 @@ function listado_notifica_cancer(ind_year){
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
                                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 },
         success             :   function(aData) { 
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     console.log("aData      ->  ",aData);
                                                     $("#html_listado_notificado").html(aData.html);
                                                     !$("#modal_listado_notificado").is(":visible") ? $("#modal_listado_notificado").modal({backdrop:'static',keyboard:false}).modal("show") : '' ;
@@ -688,14 +693,16 @@ function listado_notifica_cancer(ind_year){
 
 //new
 //solo en estado:8
+//
 function js_edita_fecha_notificacion(ind_opcion,id_biopsia){
-    var arr_info                        =   $("#biopsia_"+id_biopsia).data('info');
-    $('#loadFade').modal('show'); 
+    var arr_info = $("#biopsia_"+id_biopsia).data('info');
+    //console.error("   arr_info    ->  ",arr_info);
+    //return false;
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_notificacancer/load_edicion_fechas",
-        dataType :   "json",
-        beforeSend :   function(xhr) {  console.log("xhr->",xhr);   },
+        dataType : "json",
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
         data : {   
                                     id_biopsia : id_biopsia,
                                     ind_opcion : ind_opcion,
@@ -706,29 +713,31 @@ function js_edita_fecha_notificacion(ind_opcion,id_biopsia){
         error : function(errro) { 
                                     console.log(errro);  
                                     console.log(errro.responseText);   
-                                    $('#loadFade').modal('hide');  
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
         success : function(aData) { 
-                                        console.log("load_edicion_fechas citologia -> ",aData,"  <-  ");
-                                        $('#loadFade').modal('hide'); 
-                                        $("#html_modifica_fechas").html(aData.html);
-                                        $("#modal_modifica_fechas").modal({backdrop:'static',keyboard:false}).modal("show");
-                                    }, 
+                                    console.log("load_edicion_fechas -> ",aData,"  <-  ");
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                    $("#html_modifica_fechas").html(aData.html);
+                                    $("#modal_modifica_fechas").modal({backdrop:'static',keyboard:false}).modal("show");
+                                }, 
     });
 }
 
 function js_edita_fecha_emision_informe(id_biopsia){
-   var new_fecha_diagnostico                =   $("#new_fecha_diagnostico").val();
-   var new_hora_diagnostico                 =   $("#new_hora_diagnostico").val();
-   console.log("    --------------------------------------------------------    ");
-   console.log("    id_biopsia              ->  ",id_biopsia);
-   console.log("    new_fecha_diagnostico   ->  ",new_fecha_diagnostico);
-   console.log("    new_hora_diagnostico    ->  ",new_hora_diagnostico);
-   if (new_fecha_diagnostico == '' || new_hora_diagnostico == ''){
+    let new_fecha_diagnostico = $("#new_fecha_diagnostico").val();
+    let new_hora_diagnostico = $("#new_hora_diagnostico").val();
+    /*
+    console.log("    --------------------------------------------------------    ");
+    console.log("    id_biopsia              ->  ",id_biopsia);
+    console.log("    new_fecha_diagnostico   ->  ",new_fecha_diagnostico);
+    console.log("    new_hora_diagnostico    ->  ",new_hora_diagnostico);
+    */
+    if (new_fecha_diagnostico == '' || new_hora_diagnostico == ''){
        jAlert("Fecha/hora vacia","Clinica Libre");
        return false;
-   }
+    }
     jPrompt('Con esta acci&oacute;n se proceder&aacute; editar fecha de diagnostico.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
         if(r){
             $('#loadFade').modal('show');
@@ -749,10 +758,10 @@ function js_edita_fecha_emision_informe(id_biopsia){
                 error		    :   function(errro) { 
                                                             console.log(errro);  
                                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         },
                 success             :   function(aData) { 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             //console.log("lrecord_fecha_diagnostico -> ",aData,"  <-  ");
                                                             if (aData.status){
                                                                 showNotification('top','center','Se ha modificado la fecha de diagnostico',1,'fa fa-info');
@@ -802,10 +811,10 @@ function js_edita_fecha_notificacion_cancar(id_biopsia){
                                                             console.log(errro);  
                                                             console.log(errro.responseText);    
                                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         },
                 success             :   function(aData) { 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             console.log("lrecord_fecha_diagnostico -> ",aData,"  <-  ");
                                                             if (aData.status){
                                                                 //jError("Exito","Clinica Libre");
@@ -828,27 +837,19 @@ function elimina_biopsia_desde_anatomia(id_biopsia){
         if(r){
             $('#loadFade').modal('show');
             $.ajax({ 
-                type                :   "POST",
-                url                 :   "ssan_libro_notificacancer/record_elimina_definitivamente",
-                dataType            :   "json",
-                beforeSend          :   function(xhr)   {   
-                                                            console.log("xhr->",xhr);
-                                                        },
-                data                :                   {   
-                                                            constrasena             :   r,
-                                                            id_biopsia              :   id_biopsia,
-
-                                                        },
-                error		    :   function(errro)     { 
+                type : "POST",
+                url : "ssan_libro_notificacancer/record_elimina_definitivamente",
+                dataType : "json",
+                beforeSend : function(xhr) { console.log("xhr->",xhr);   },
+                data : { constrasena : r, id_biopsia : id_biopsia },
+                error : function(errro)     { 
                                                             console.log(errro);  
                                                             console.log(errro.responseText);    
                                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         },
                 success             :   function(aData) { 
-                                                            $('#loadFade').modal('hide');
-                                                            
-                                                        
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             console.log("record_elimina_definitivamente  -> ",aData,"  <-  ");
                                                             if (aData.status){
                                                                 jAlert('Con esta acci&oacute;n se proceder&aacute; a archivar la biopsia por alg&uacute;n error. quedar&aacute; libre n&uacute;mero de recepci&oacute;n asignados a esta biopsia para otorgar seg&uacute;n lo estime conveniente.<br /><br />&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
@@ -877,8 +878,7 @@ function elimina_biopsia_desde_anatomia(id_biopsia){
 function js_edicion_fecha_informe(id_biopsia){
     var fecha_solicitud = $("#fecha_solicitud").val();
     var hora_solicitud = $("#hora_solicitud").val();
-   
-    if (fecha_solicitud == '' || hora_solicitud == ''){
+    if (fecha_solicitud == '' || hora_solicitud == '' ){
        jAlert("Fecha/hora vac&iacute;a","Clinica Libre");
        return false;
     }
@@ -903,10 +903,10 @@ function js_edicion_fecha_informe(id_biopsia){
                                                             console.log(errro);  
                                                             console.log(errro.responseText);    
                                                             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         },
                 success             :   function(aData) { 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             console.log("record_fecha_toma_muestra -> ",aData,"  <-  ");
                                                             if (aData.status){
                                                                 showNotification('top','center','Se ha modificado fecha',1,'fa fa-info');
@@ -929,27 +929,29 @@ function js_edita_macrocopica(id_biopsia){
         type : "POST",
         url : "ssan_libro_edicionsolicitudbiopsia/html_edicion_macrocopica",
         dataType : "json",
-        beforeSend	: function(xhr) {   
-                                        console.log(xhr);
-                                        $('#loadFade').modal('show');
-                                    },
-        data :   {  
-                            id_biopsia      :   id_biopsia,
-                        },
+        beforeSend	: function(xhr) { $('#loadFade').modal('show'); },
+        data : { id_biopsia : id_biopsia },
         error : function(errro) { 
                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                     $("#protocoloPabellon").css("z-index","1500"); 
                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#loadFade').modal('hide');
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 },
         success : function(aData)   {   
-                                        $('#loadFade').modal('hide');
-                                        console.error("aData -> ",aData);
-                                        $("#new_fecha_macrocopica").val('');
-                                        $("#new_hora_macrocopica").val('');
-                                        $("#btn_update_macrocopica").attr('onclick','js_update_macrocopica('+id_biopsia+')');
-                                        $("#modal_edita_macro").modal({backdrop:'static',keyboard:false}).modal("show");
-                                    }, 
+                                    //console.error(" --------------  ");
+                                    console.error(" aData -> ",aData);
+                                    //console.error(" --------------  ");
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                    let all_fecha = aData.return_data.arr_main[0].FECHA_MACRO;
+                                    let all_hora = aData.return_data.arr_main[0].HORA_MACRO;
+                                    $("#new_fecha_macrocopica").val('');
+                                    $("#new_hora_macrocopica").val('');
+                                    $("#new_fecha_macrocopica").val(all_fecha);
+                                    $("#new_hora_macrocopica").val(all_hora);
+                                    $("#btn_update_macrocopica").attr('onclick','js_update_macrocopica('+id_biopsia+')');
+                                    $("#modal_edita_macro").modal({backdrop:'static',keyboard:false}).modal("show");
+                                   
+                                }, 
     });
 }
 
@@ -978,15 +980,18 @@ function js_update_macrocopica(id_biopsia){
                     error : function(errro) { 
                                                 console.log(errro);  
                                                 jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                setTimeout(function(){  setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);  }, 1000);
                                             },
                     success : function(aData) { 
                                                 console.log("record_elimina_definitivamente  -> ",aData,"  <-  ");
-                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                setTimeout(function(){  
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000); 
+                                                    update_etapaanalitica_cancer_edicion();
+                                                }, 1000);
                                                 if (aData.status){
                                                     jAlert('Se ha editado la biopsia', "Confirmac\u00f3on", function (r) {
                                                         if (r) {
-                                                            location.reload(true);
+                                                            //location.reload(true);
                                                         }
                                                     });
                                                 } else {

@@ -214,23 +214,21 @@ function busqueda_numero_disponible_citologia(tipo_biopsia){
         type : "POST",
         url : "ssan_libro_biopsias_listaexterno1/ultimo_numero_disponible_citologia",
         dataType : "json",
-        beforeSend : function(xhr) {   
-                                        console.log("xhr->",xhr);
-                                    },
+        beforeSend : function(xhr) { console.log("xhr->",xhr);  },
         data : {   tipo_biopsia : tipo_biopsia },
         error : function(errro) { 
                                     console.log(errro);  
                                     console.log(errro.responseText);    
                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
-        success : function(aData) { 
-                                        //console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
-                                        $("#num_interno_cito").val('');
-                                        let num_last = aData.data_numero.V_LAST_NUMERO;
-                                        showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
-                                        $("#num_interno_cito").val(num_last);
-                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                    }, 
+        success : function(aData){ 
+                                    //console.log("ultimo_numero_disponible citologia -> ",aData,"  <-  ");
+                                    $("#num_interno_cito").val('');
+                                    let num_last = aData.data_numero.V_LAST_NUMERO;
+                                    showNotification('top','center','N&deg; asignado:<b>'+num_last+'</b>',1,'fa fa-info');
+                                    $("#num_interno_cito").val(num_last);
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                }, 
     });
 }
 

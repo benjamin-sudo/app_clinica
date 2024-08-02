@@ -6,12 +6,12 @@
         <div class="grid_fecha_hora">
             <div class="grid_fecha_hora1">
                 <div class="input-group row_calendar" style="width: 125px;" id="fec_ingresopab">
-                    <input type="text" class="form-control input-sm grupo_time_pab" id="new_fecha_diagnostico" name="new_fecha_diagnostico"  value="<?php echo $txt_fecha_diag;?>">
+                    <input type="text" class="form-control input-sm grupo_time_pab" id="new_fecha_diagnostico" name="new_fecha_diagnostico"  value="<?php echo $arr_info['FECHA_DIAGNOSTICO'];?>">
                     <span class="input-group-addon" style="cursor:pointer; padding:4px;margin-left: 3px;"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                 </div>
             </div>
             <div class="grid_fecha_hora2">
-                <input type="time" class="form-control input-sm" style="width: 115px;" id="new_hora_diagnostico" name="new_hora_diagnostico" maxlength="5" size="5"  value="<?php echo $txt_hora_diagnostico;?>">
+                <input type="time" class="form-control input-sm" style="width: 115px;" id="new_hora_diagnostico" name="new_hora_diagnostico" maxlength="5" size="5"  value="<?php echo $arr_info['HORA_DIAGNOSTICO'];?>">
             </div>
             <div class="grid_fecha_hora3">
                 <button type="button" class="btn btn-success btn-fill" id="btn_update_analitica" onclick="js_edita_fecha_emision_informe(<?php echo $id_biopsia;?>)">
@@ -67,9 +67,9 @@
                                         close       :   "fa fa-remove"          ,
                                     }
         }).on('dp.change',function(e){
-            console.log("-----------change------------>",e.currentTarget.id);
+            //console.log("-----------change------------>",e.currentTarget.id);
         }).on('dp.show',function(e) { 
-            console.log("-----------show-------------->",e.currentTarget.id);
+            //console.log("-----------show-------------->",e.currentTarget.id);
         });
     });
 </script>

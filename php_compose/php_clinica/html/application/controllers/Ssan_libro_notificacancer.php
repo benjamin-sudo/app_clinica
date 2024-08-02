@@ -26,7 +26,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $busq = $this->input->post('tipo_busqueda');
         $txt_busqueda = $this->input->post('phrase');
         $ind_template = $this->input->post('template');
-        $return_data = $this->Ssan_libro_notificacancer_model->busqueda_solicitudes_ap([
+        $return_data = $this->Ssan_libro_notificacancer_model->get_histo_data([
             'arr_ids_anatomia' => '',
             'txt_bus' => $txt_busqueda,
             'busq' => $busq,
@@ -36,27 +36,25 @@ class Ssan_libro_notificacancer extends CI_Controller {
         if(count($return_data['C_LISTA_ANATOMIA_BUS'])>0){
             $aux                            =   0;
             foreach ($return_data['C_LISTA_ANATOMIA_BUS'] as $i => $row){
-                $arr_n_biosia               =  [];
-                $row['NUM_INTERNO_AP']      == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_INTERNO_AP']."-".$row['YEAR_TOMA_MUESTRA']);
-                $row['NUM_CO_CITOLOGIA']    == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_CITOLOGIA']."-".$row['YEAR_TOMA_MUESTRA']);
-                $row['NUM_CO_PAP']          == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_PAP']."-".$row['YEAR_TOMA_MUESTRA']);
+                $arr_n_biosia = [];
+                $row['NUM_INTERNO_AP'] == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_INTERNO_AP']."-".$row['YEAR_TOMA_MUESTRA']);
+                $row['NUM_CO_CITOLOGIA'] == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_CITOLOGIA']."-".$row['YEAR_TOMA_MUESTRA']);
+                $row['NUM_CO_PAP'] == '' ? '' : array_push($arr_n_biosia,'N&deg;&nbsp;'.$row['NUM_CO_PAP']."-".$row['YEAR_TOMA_MUESTRA']);
                 $aux++;
-                //$row["TXT_ESTADO_CANCER"]
-                $txt_nbiopsias              =   implode(",",$arr_n_biosia);
-                $txt_estado_cancer          =   $row['TXT_ESTADO_CANCER'];
-                //$txt_color                =   $txt_estado_cancer == 'SIN DIAGNOSTICO DE CANCER' ? '#FF0000' : $txt_estado_cancer == 'NOTIFICADO' ? '#87CB16' : '#f0ad4e' ;
+                $txt_nbiopsias = implode(", ",$arr_n_biosia);
+                $txt_estado_cancer = $row['TXT_ESTADO_CANCER'];
                 array_push($arr_data_out,array(
-                    'html'              =>  '',
-                    'id_anatomia'       =>  $row['ID_ANATOMIA'],
-                    'name'              =>  $row['TXTPRIMERNOMBREAPELLIDO'],
-                    'type'              =>  '<br>'.$row['TIPO_DE_BIOPSIA'].'<br>'.$txt_nbiopsias .'<br><font size=2 color="'.$row['COLOR_ESTADO_CANCER'].'"><b>'.$txt_estado_cancer.'</b></font>',
-                    'tipo_biosia'       =>  $txt_nbiopsias,
-                    'icon'              =>  '<i class="fas fa-edit"></i>',
-                    '_busqueda'         =>  $busq,
-                    'n_muestras'        =>  $row['N_MUESTRAS_TOTAL'],
-                    'not_cancer'        =>  $row['NUM_NOF_CANCER'],
-                    'cod_establref'     =>  $row['COD_ESTABLREF'],
-                    'ind_notificado'    =>  $row['TXT_ESTADO_CANCER'],
+                    'html' => '',
+                    'id_anatomia' => $row['ID_ANATOMIA'],
+                    'name' => $row['TXTPRIMERNOMBREAPELLIDO'],
+                    'type' => '<br>'.$row['TIPO_DE_BIOPSIA'].'<br>'.$txt_nbiopsias .'<br><font size=2 color="'.$row['COLOR_ESTADO_CANCER'].'"><b>'.$txt_estado_cancer.'</b></font>',
+                    'tipo_biosia' => $txt_nbiopsias,
+                    'icon' => '<i class="fas fa-edit"></i>',
+                    '_busqueda' => $busq,
+                    'n_muestras' => $row['N_MUESTRAS_TOTAL'],
+                    'not_cancer' => $row['NUM_NOF_CANCER'],
+                    'cod_establref' => $row['COD_ESTABLREF'],
+                    'ind_notificado' => $row['TXT_ESTADO_CANCER'],
                 ));
             }
         }
@@ -69,14 +67,13 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $txt_busqueda = $this->input->post('phrase');
         $ind_template = $this->input->post('template');
         $arr_data_out = [];
-        $return_data = $this->Ssan_libro_notificacancer_model->get_histo_data(array(
+        $return_data = $this->Ssan_libro_notificacancer_model->get_histo_data([
             'arr_ids_anatomia' => '',
             'txt_bus' => $txt_busqueda,
             'busq' => $busq,
             'cod_empresa' => $this->session->userdata("COD_ESTAB"),
             'ind_template' => $ind_template,
-        ));
-        //var_dump($return_data);
+        ]);
         if(count($return_data['C_LISTA_ANATOMIA_BUS'])>0){
             $aux = 0;
             foreach ($return_data['C_LISTA_ANATOMIA_BUS'] as $i => $row){
@@ -131,7 +128,6 @@ class Ssan_libro_notificacancer extends CI_Controller {
         )));
     }
 
-    
     public function html_notificar_a_ususario(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $status                             =   true;
@@ -294,10 +290,6 @@ class Ssan_libro_notificacancer extends CI_Controller {
                 'new_num_interno' => $new_num_interno,
                 'ind_cambio' => $ind_cambio,
             ]);
-            if (count($return_data['data_bd'][':C_STATUS'])>0){
-                $status = false;
-                $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
-            }
         } else {
             $status = false;
             $txt_error = 'Error en la firma simple';
@@ -421,13 +413,8 @@ class Ssan_libro_notificacancer extends CI_Controller {
                 'cod_empresa' => $this->session->userdata("COD_ESTAB"),
                 'constrasena' => $this->input->post('constrasena'),
                 'id_biopsia' => $this->input->post('id_biopsia'),
-                'new_fecha_diagnostico' => $this->input->post('new_fecha_diagnostico'), 
-                'new_hora_diagnostico' => $this->input->post('new_hora_diagnostico'),  
+                'arr_user' => $arr_user
             ));
-            if(count($return_data['data_bd'][':C_STATUS'])>0){
-                $status = false;
-                $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
-            }
         } else {
             $status = false;
             $txt_error = 'Error en la firma &uacute;nica digital';
@@ -454,10 +441,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
                 'fecha_solicitud' => $this->input->post('fecha_solicitud'), 
                 'hora_solicitud' => $this->input->post('hora_solicitud'),  
             ));
-            if(count($return_data['data_bd'][':C_STATUS'])>0){
-                $status = false;
-                $txt_error = $return_data['data_bd'][':C_STATUS'][0]['TXT_ERROR'];
-            }
+            
         } else {
             $status = false;
             $txt_error = 'Error en la firme &uacute;nica digital';
