@@ -31,6 +31,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $start_row = ($page_number - 1) * $page_size;
         $end_row = $page_size;
         # Filtrar estados
+
         $lista_filtro_estados = [];
         if ($arr_data == '0') {
             for ($i = 0; $i <= 8; $i++) {
@@ -46,7 +47,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 }
             }
         }
-
 
         $arr_datos = [0,1,5,6,7,8];
         $this->db->select(['
@@ -212,6 +212,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'V_DATA' =>  $DATA,
         ];
     }
+    
     
     public function li_lista_estapaanalitica_paginado($lista_anatomia, $ind_opcion, $ind_first, $get_sala) {
         $html = '';
@@ -1740,7 +1741,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                     ));
                 } else {
                     $new_prestacion = array(
-                        'ID_TPRESTACIONXANATOMIA' => $this->db->insert_id(), // Reemplaza la secuencia de Oracle
+                        'ID_TPRESTACIONXANATOMIA' => $this->db->insert_id(),
                         'COD_PRESTACION' => $arr_fonasa,
                         'DATE_CREA' => date('Y-m-d H:i:s'),
                         'USR_CREA' => $session,

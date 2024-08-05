@@ -21,7 +21,7 @@
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs_tecnicas">&nbsp;T&Eacute;CNICAS</button>
         </li>
         <?php if($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] != 6 && $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_TIPO_BIOPSIA"] != 5){ ?>
-            <li class="nav-item" onclick="js_load_line_pdf(0,<?php echo $ID_SOLICITUD;?>)">
+            <li class="nav-item" onclick="js_load_line_pdf(0,<?php echo $ID_SOLICITUD;?>)" style="display:none">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs_pdf">
                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
@@ -269,8 +269,7 @@
                                     </tr> 
                                     <tr>
                                         <td>
-                                            <small><b style="color:#888888;">NUMERO DE FRAGMENTOS</b></small>
-                                            <br>
+                                            <small><b style="color:#888888;">NUMERO DE FRAGMENTOS</b></small><br>
                                             <select class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true" name="num_fragmentos" id="num_fragmentos" data-width="98%" tabindex="-98">
                                                 <option value=""> -- </option>
                                                 <?php for($i = 1; $i < 21; ++$i) { 
@@ -280,8 +279,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <small><b style="color:#888888;">N&deg; TACOS CORTADOS</b></small>
-                                            <br>
+                                            <small><b style="color:#888888;">N&deg; TACOS CORTADOS</b></small><br>
                                             <select class="selectpicker" data-selected-text-format="count" data-size="8" data-live-search="true" name="num_tacos_cortados" id="num_tacos_cortados" data-width="98%" tabindex="-98">
                                                 <option value=""> -- </option>
                                                 <?php for($i = 1; $i < 51; ++$i) { 

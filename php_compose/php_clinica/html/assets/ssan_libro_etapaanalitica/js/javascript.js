@@ -2976,7 +2976,6 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
         check_tecnicas_tecnologo : [],
         valida_cambio : [],
     };
-
     //--------------------------------------------------------------------------
     var data_form_registro = [];
     data_form_registro.push({ 
@@ -3001,11 +3000,8 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
         checked_tenicas_all : val_cierre,
     });
     obj_rce_anatomia.formulario_sala_tecnica.push(data_form_registro);
-    
-
     //console.table("val_cierre   ->  ",val_cierre)
     //MUESTAS X TECNICAS APLICADAS
-
     let aux = 0;
     $('.arr_muestras').each(function(){
         if(this.id != ''){
@@ -3030,8 +3026,6 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
     console.error("   errores -> ",errores," <- ");
     console.error("   aux ->  ",aux," ");
     */
-    //return false;
-
     if (op  ==  1){
         var r = '';
         $.ajax({ 
@@ -3047,28 +3041,30 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
                         val_cierre : val_cierre?1:0,
                         accesdata : obj_rce_anatomia,
                     },
-            error : function(errro) {  
+            error : function(errro){  
                                         console.log(errro);
                                         console.log(errro.responseText); 
                                         setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                         jError("Error en el aplicativo","Clinica Libre");
                                     },
-            success : function(aData) { 
-                                            console.table("aData->",aData);
-                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                            if(aData.status){
-                                                jAlert("Se ha realizado el guardado previo","Clinica Libre");
-                                            } else {
-                                                jError("Error en la firma simple","Clinica Libre");  
-                                            }
-                                        }, 
+            success : function(aData){ 
+                                        console.table("aData->",aData);
+                                        let v_txt_salida = "";
+                                        if(aData.status){
+                                            v_txt_salida = "Se ha realizado el guardado previo";
+                                        } else {
+                                            v_txt_salida = "Error en la firma simple";
+                                        }
+                                        setTimeout(function(){ $('#loadFade').modal('hide'); jAlert(v_txt_salida,"Clinica Libre"); }, 1000);
+                                    }, 
         });
         
     } else {
+
         if((errores.length>0)||(lis_checked>0)){
             var txt =   'Sin tecnicas  aplicadas a muestras '+errores.length>0?errores.join("<br>"):'Sin Datos';
             showNotification('top','left',txt,4,'fa fa-ban');
-        }   else  {
+        } else {
             //ind cierre
             //console.log("val_cierre     ->  ",val_cierre);
             var txt_estado = val_cierre?'&nbsp;<b>CERRADO</b>':'&nbsp;<b>NO CERRADO</b>';

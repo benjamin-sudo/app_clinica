@@ -145,9 +145,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="grid_sala_de_procesos_tiempo2">
-                    
-                </div>
+                <div class="grid_sala_de_procesos_tiempo2"> </div>
                 <div class="grid_sala_de_procesos_tiempo3">
                     <?php if ($data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["VAL_HISTO_ZONA"] == 5) { ?> 
                         <div class="card" id="card_registro_medico4" style="margin-bottom:5px;padding:8px;">
