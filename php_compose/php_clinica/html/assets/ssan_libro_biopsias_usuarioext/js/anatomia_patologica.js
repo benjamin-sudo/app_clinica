@@ -1965,7 +1965,7 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                         error		:   function(errro)     { 
                                                                     console.log(errro);  
                                                                     console.log(errro.responseText);    
-                                                                    $('#loadFade').modal('hide');
+                                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                                     jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                                 },
                         success             :   function(aData) { 
@@ -1979,7 +1979,7 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                                                     console.log("   close_modal         ->  ",aData["GET_BD"].close_modal,"<-   ");
                                                                     console.log("   --------------------------------------------------------    ");
 
-                                                                    $('#loadFade').modal('hide');
+                                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                                     if(aData.STATUS){
                                                                         var var_status_bd               =   aData["GET_BD"].STATUS;
                                                                         if(var_status_bd === false){
@@ -2003,11 +2003,11 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                                                             
                                                                             UPDATE_PANEL();
                                                                             /*
-                                                                            localStorage.setItem("ind_tipo_mensaje",1);
-                                                                            localStorage.setItem("ind_estapa_analitica",0);
-                                                                            localStorage.setItem("num_fichae",null);
-                                                                            localStorage.setItem("id_anatomia",id_anatomia);
-                                                                            $("#load_anuncios_anatomia_patologica").submit();
+                                                                                localStorage.setItem("ind_tipo_mensaje",1);
+                                                                                localStorage.setItem("ind_estapa_analitica",0);
+                                                                                localStorage.setItem("num_fichae",null);
+                                                                                localStorage.setItem("id_anatomia",id_anatomia);
+                                                                                $("#load_anuncios_anatomia_patologica").submit();
                                                                             */
                                                                             jConfirm("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha sido recepcionada con &eacute;xito &iquest;Desea ver pdf de recepcion?",'Clinica Libre',function(r) {
                                                                                 if(r){ 
@@ -2052,37 +2052,37 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                         error : function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText); 
-                                                    $('#loadFade').modal('hide');    
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                 },
-                        success : function(aData)   { 
-                                                        $('#loadFade').modal('hide');    
-                                                        if(aData.STATUS){
-                                                            aData.GET_BD.HISTO_OK.forEach(function(idhisto){
-                                                                $(".li_histo_"+idhisto).remove();
-                                                                $(".tab_histo_"+idhisto).remove();
-                                                            });
-                                                            if( $('#UL_TABS_MUESTRA li').size()===0){
-                                                                $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
-                                                            } else {
-                                                                $('#UL_TABS_MUESTRA').tab();
-                                                                $('#UL_TABS_MUESTRA li:last-child a').tab('show');
-                                                            }
-                                                            jAlert("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha cambiado de estado","Clinica Libre");
-                                                            //distintas cookie
-                                                            if( $("#IND_FROM").val() == 'GESPAB' ){
-                                                                UPDATE_MAIN();
-                                                            } else {
-                                                                update_main();
-                                                            }
-                                                            if(post==1){
-                                                                console.log(" load_confirma_envio_recepcion ");
-                                                                $("#load_confirma_envio_recepcion").submit();
-                                                            }
+                        success : function(aData){ 
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                    if(aData.STATUS){
+                                                        aData.GET_BD.HISTO_OK.forEach(function(idhisto){
+                                                            $(".li_histo_"+idhisto).remove();
+                                                            $(".tab_histo_"+idhisto).remove();
+                                                        });
+                                                        if( $('#UL_TABS_MUESTRA li').size()===0){
+                                                            $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
                                                         } else {
-                                                            jError(aData['TXT_ERROR'],"Clinica Libre");
+                                                            $('#UL_TABS_MUESTRA').tab();
+                                                            $('#UL_TABS_MUESTRA li:last-child a').tab('show');
                                                         }
-                                                    }, 
+                                                        jAlert("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha cambiado de estado","Clinica Libre");
+                                                        //distintas cookie
+                                                        if( $("#IND_FROM").val() == 'GESPAB' ){
+                                                            UPDATE_MAIN();
+                                                        } else {
+                                                            update_main();
+                                                        }
+                                                        if(post==1){
+                                                            console.log(" load_confirma_envio_recepcion ");
+                                                            $("#load_confirma_envio_recepcion").submit();
+                                                        }
+                                                    } else {
+                                                        jError(aData['TXT_ERROR'],"Clinica Libre");
+                                                    }
+                                                }, 
                     });
             }
         });
@@ -2244,7 +2244,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
        data : { id : id },
        error :   function(errro) { 
                                     console.log("quisas->",errro,"-error->",errro.responseText); 
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     jError("Error General, Consulte Al Administrador","e-SISSAN"); 
                                 },
        success : function(aData){ 
@@ -2268,7 +2268,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                         Objpdf.setAttribute('title','PDF');
                                         $('#PDF_VERDOC').html(Objpdf);
                                     }
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     $("#Dv_verdocumentos").modal("show");
                                 }, 
    });
@@ -2902,13 +2902,11 @@ function busqueda_etiquera(from,solicitud,array){
                 },
         error : function(errro) { 
                                     console.log(errro);  
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
         success : function(aData) { 
-                                    
-                                    $('#loadFade').modal('hide'); 
-
+                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     if(aData.STATUS){
                                         if ($('#UL_TABS_MUESTRA li').size()==0){
                                             $('#get_etiqueta,#get_etiqueta_modal').val('');
@@ -2946,10 +2944,10 @@ function informar_x_correo(id_anatomia){
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
                                                         jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     },
         success		:   function(aData)         { 
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         console.log("aData      ->",aData);
                                                         showNotification('top','center','Se ha enviado correo '+aData.IND_MAIL,1,'fa fa-info');
                                                    }, 
@@ -2971,11 +2969,11 @@ function js_gestion_tomademuestraxuser(){
                                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                                     $("#protocoloPabellon").css("z-index","1500"); 
                                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 },
       success		:   function(aData)         { 
                                                     //console.log("aData ->",aData);
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     $("#html_gestion_tomamuestraxuser").html(aData.html_out);
                                                     $("#modal_gestion_tomamuestraxuser").modal({backdrop:'static',keyboard:false}).modal("show");
                                                 }, 
@@ -3044,22 +3042,22 @@ function valida_profesional(){
         url 		:   "ssan_spab_gestionlistaquirurgica/fn_valida_profesional",
         dataType    :   "json",
         beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        $('#loadFade').modal('show');
-                                                    },
+                                                    console.log(xhr);
+                                                    $('#loadFade').modal('show');
+                                                },
         data 		:                           {  
-                                                        run :   rut,
-                                                        dv  :   dv,
-                                                    },
+                                                    run :   rut,
+                                                    dv  :   dv,
+                                                },
         error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        $("#protocoloPabellon").css("z-index","1500"); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
-                                                    },
+                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                    $("#protocoloPabellon").css("z-index","1500"); 
+                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                                },
         success		:   function(aData)         {   
                                                         console.log("aData  =   ",aData);
-                                                        $("#loadFade").modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         if(aData.info_prof.length  == 0){
                                                             showNotification('top','center','RUN ingresado no existe como prestador en su establecimiento',4,'fa fa-times')
                                                             js_limpia_panel();
@@ -3115,10 +3113,10 @@ function js_guarda_usuarioxrotulo(){
                                                             console.log("quisas->",errro,"-error->",errro.responseText); 
                                                             $("#protocoloPabellon").css("z-index","1500"); 
                                                             jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         },
                 success		:   function(aData)         {   
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             console.log("aData -> ",aData);
                                                             if(aData.status_firma){
                                                                 showNotification('top','center','Se actualizo permisos',1,'fa fa-info');
@@ -3170,10 +3168,10 @@ function js_validafirma(txt_firma_simple){
                                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                                     $("#protocoloPabellon").css("z-index","1500"); 
                                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 },
         success		:   function(aData)         {   
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     //console.log("aData -> ",aData);
                                                     if (aData.status){
                                                         let data_user = aData.valida[0];
@@ -3250,11 +3248,11 @@ function js_min_clavesesissan(){
                                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                                     $("#protocoloPabellon").css("z-index","1500"); 
                                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 },
         success		:   function(aData)         { 
                                                     console.log("aData ->",aData);
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     $("#html_clave_esissan_ap").html(aData.html_out);
                                                     $("#modal_clave_esissan_ap").modal({backdrop:'static',keyboard:false}).modal("show");
                                                 }, 
@@ -3305,7 +3303,7 @@ function valida_run_esissan()   {
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
                                                         jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         
                                                     },
         success		    :   function(aData)         {   
@@ -3672,11 +3670,11 @@ function grabarUsu() {
                                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
                                                                 $("#protocoloPabellon").css("z-index","1500"); 
                                                                 jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                                $('#loadFade').modal('hide');
+                                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             },
                     success		:   function(aData)         { 
                                                                 console.log("return  ->",aData);
-                                                                $('#loadFade').modal('hide');
+                                                                setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                                 if (aData.status_firma){
                                                                     showNotification('top','center','Se ha modificado perfil :<b>'+user+'</b>',1,'fa fa-info');
                                                                 } else {
@@ -3710,11 +3708,11 @@ function js_add_hijo_tomamuestra(ID_ROTULADO){
                                                         console.log("quisas->",errro,"-error->",errro.responseText); 
                                                         $("#protocoloPabellon").css("z-index","1500"); 
                                                         jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     },
             success		:   function(aData)         { 
-                                                        $('#loadFade').modal('hide');
                                                         console.log("aData      ->",aData);
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         if(aData.return_bd.length>0){
                                                             aData.return_bd.forEach(function(row,index){
                                                                 let num = index+1;
@@ -3783,11 +3781,11 @@ function js_guardaanatomia(ID_ROTULADO){
                                                    console.log(errro);
                                                    console.log(errro.responseText);  
                                                    jAlert("Error General, Consulte Al Administrador"); 
-                                                   $('#loadFade').modal('hide');
+                                                   setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                 },
             success		   :   function(aData)  {  
                                                     console.error("aData -> ",aData);
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     if (aData.esissan){
                                                         showNotification('top','left',"Se creo sub-grupo a punto de rotulado",2,'fa fa-check-square');
                                                         $("#modal_new_subrotulo").modal('hide');
@@ -3808,35 +3806,35 @@ function delete_muestra(id_sub_grupo){
         if(r){      
            $('#loadFade').modal('show');
            $.ajax({ 
-              type           :  "POST",
-              url            :  "ssan_spab_gestionlistaquirurgica/delete_sub_punto",
-              dataType       :  "json",
-              beforeSend     :  function(xhr)     {     },
-              data		      :  { 
-                                   clave              :   r,
-                                   id_sub_grupo  :   id_sub_grupo,
-                                },
-              error		      :  function(errro)  {  
-                                                     console.log(errro);
-                                                     console.log(errro.responseText);  
-                                                     jAlert("Error General, Consulte Al Administrador"); 
-                                                     $('#loadFade').modal('hide');
-                                                  },
-              success		   :   function(aData)  {  
-                                                      console.error("aData -> ",aData);
-                                                      $('#loadFade').modal('hide');
-                                                      if (aData.esissan){
-                                                        showNotification('top','left',"Se elimino sub-grupo a punto de rotulado",2,'fa fa-check-square');
-                                                        $("#modal_gestion_tomamuestraxuser").modal('hide');
-                                                        setTimeout(function() {
-                                                            // CÃ³digo que se ejecutarÃ¡ despuÃ©s de 3 segundos
-                                                            console.log("Han pasado 3 segundos!");
-                                                            js_gestion_tomademuestraxuser();
-                                                        }, 2000);
-                                                    } else {
-                                                        jError("Error en la firma simple","Clinica Libre");
-                                                    }
-                                                  }, 
+              type :  "POST",
+              url :  "ssan_spab_gestionlistaquirurgica/delete_sub_punto",
+              dataType :  "json",
+              beforeSend :  function(xhr)     {     },
+              data :   { 
+                            clave : r,
+                            id_sub_grupo : id_sub_grupo,
+                        },
+              error : function(errro)  {  
+                                        console.log(errro);
+                                        console.log(errro.responseText);  
+                                        jAlert("Error General, Consulte Al Administrador"); 
+                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                        },
+              success : function(aData){  
+                                            console.error("aData -> ",aData);
+                                            $('#loadFade').modal('hide');
+                                            if (aData.esissan){
+                                                showNotification('top','left',"Se elimino sub-grupo a punto de rotulado",2,'fa fa-check-square');
+                                                $("#modal_gestion_tomamuestraxuser").modal('hide');
+                                                setTimeout(function() {
+                                                    // CÃ³digo que se ejecutarÃ¡ despuÃ©s de 3 segundos
+                                                    console.log("Han pasado 3 segundos!");
+                                                    js_gestion_tomademuestraxuser();
+                                                }, 2000);
+                                            } else {
+                                                jError("Error en la firma simple","Clinica Libre");
+                                            }
+                                        }, 
            });
         } else {  
            //console.log("No Confirmado");   
@@ -3876,11 +3874,11 @@ function js_marcaestadistica(_id){
                                                        console.log(errro);
                                                        console.log(errro.responseText);  
                                                        jAlert("Error General, Consulte Al Administrador"); 
-                                                       $('#loadFade').modal('hide');
+                                                       setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     },
                 success		   :   function(aData)  {  
                                                         console.error("aData -> ",aData);
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         if (aData.esissan){
                                                           showNotification('top','left',"Se modifico marcado de estadistica",4,'fa fa-check-square');
 
