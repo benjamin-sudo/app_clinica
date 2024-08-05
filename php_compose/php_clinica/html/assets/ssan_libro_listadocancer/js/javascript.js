@@ -18,7 +18,6 @@ $(function(){
                                     setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 },
         success : function(aData) { 
-
                                     console.log("aData  ->",aData );    
                                     $(".return_table").html(aData.html);
                                     $(".lista_notificacion_cancer").hide();
@@ -31,33 +30,26 @@ $(function(){
     $("#modal_listado_notificado").modal('hide');
     $('#loadFade').modal('show');
     $.ajax({ 
-        type        :   "POST",
-        url         :   "ssan_libro_notificacancer/html_notificar_a_ususario",
-        dataType    :   "json",
-        beforeSend  :   function(xhr)   {   
-                                            console.log("load load_etapa_analitica - update_lista_etapaanalitica -> ",xhr);  
-                                            //setTimeout($('#loadFade').modal('show'),1000);
-                                        },
-        data        :                   { 
-                                            id_anatomia      :   id_anatomia,         //to string
-                                        },
-        error       :   function(errro) { 
-                                            console.log(errro);  
-                                            console.log(errro.responseText);
-                                            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                        },
-        success     :   function(aData) { 
-                                            console.log("aData                  ->  ",aData);
-                                            //$("#btn_envia_correo").attr('onclick','js_confirma_envio('+id_anatomia+')');
-                                            $("#btn_envia_correo").attr('onclick','js_confirma_notificacion_cancer('+id_anatomia+')');
-                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                            $("#html_notificacion_cancer").html(aData.return_data.HTML_LI);
-                                            $("#modal_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
-                                        }, 
+        type : "POST",
+        url : "ssan_libro_notificacancer/html_notificar_a_ususario",
+        dataType : "json",
+        data : {  id_anatomia : id_anatomia },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    console.log(errro.responseText);
+                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                },
+        success : function(aData) { 
+                                    console.log("aData                  ->  ",aData);
+                                    //$("#btn_envia_correo").attr('onclick','js_confirma_envio('+id_anatomia+')');
+                                    $("#btn_envia_correo").attr('onclick','js_confirma_notificacion_cancer('+id_anatomia+')');
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                    $("#html_notificacion_cancer").html(aData.return_data.HTML_LI);
+                                    $("#modal_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
+                                }, 
     });
  }
- 
  
  function GET_PDF_ANATOMIA_PANEL(id){
     $('#loadFade').modal('show'); 
