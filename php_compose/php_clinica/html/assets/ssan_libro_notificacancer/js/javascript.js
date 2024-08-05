@@ -178,10 +178,9 @@ function js_notificar_cancer(id_anatomia){
 }
 
 function js_confirma_notificacion_cancer(id_anatomia){
-    //ARREGLANDO EN LA TARDE
-    var errores =   [];
-    var firma_simple_trasporte = $("#firma_simple_trasporte").val();
-    var firma_simple_recepcion = $("#firma_simple_recepcion").val();
+    let errores =   [];
+    let firma_simple_trasporte = $("#firma_simple_trasporte").val();
+    let firma_simple_recepcion = $("#firma_simple_recepcion").val();
     firma_simple_trasporte  === ''?errores.push({"txt":"Falta firma simple de quien trasporto muestras","id":"#firma_simple_trasporte"}):$("#firma_simple_trasporte").css("border-color","");
     firma_simple_recepcion  === ''?errores.push({"txt":"Falta firma simple de quien recepciona las muestras","id":"#firma_simple_recepcion"}):$("#firma_simple_recepcion").css("border-color","");
     errores.length>0 ? '' : firma_simple_trasporte === firma_simple_recepcion ? errores.push({"txt":"Firmas Iguales","id":"#firma_simple_trasporte,#firma_simple_recepcion"}) : $("#firma_simple_trasporte,#firma_simple_recepcion").css("border-color","");
@@ -193,7 +192,7 @@ function js_confirma_notificacion_cancer(id_anatomia){
         });
         return false;
     } else {
-        var pass = new Array({
+        let pass = new Array({
             "pass1" : $("#firma_simple_trasporte").val(),
             "pass2" : $("#firma_simple_recepcion").val()
         });
@@ -212,11 +211,11 @@ function js_confirma_notificacion_cancer(id_anatomia){
                                             console.log(errro);  
                                             console.log(errro.responseText);    
                                             jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                         },
             success :   function(aData) { 
                                             console.log(" return aData -> ",aData,);
-                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                             if(aData.STATUS){
                                                 var var_status_bd = aData["GET_BD"].STATUS;
                                                 if(var_status_bd === false){

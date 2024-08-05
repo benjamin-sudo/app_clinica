@@ -4,22 +4,20 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 
 class ssan_libro_notificacancer_model extends CI_Model {
 
-    var $own        =   "ADMIN";
-    var $ownGu      =   "GUADMIN";
-    var $ownPab     =   "ADMIN";
+    var $own = "ADMIN";
+    var $ownGu = "GUADMIN";
+    var $ownPab = "ADMIN";
 
     public function __construct(){
         parent::__construct();
         $this->db = $this->load->database('session',true);
     }
-
     /*
         $DATA["cod_empresa"],
         $DATA["busq"],
         $DATA["txt_bus"],
         $DATA["arr_ids_anatomia"]
     */
-
     public function get_histo_data($DATA) {
         $search_term = $DATA["txt_bus"];
         $cod_empresa = $DATA["cod_empresa"];
@@ -151,6 +149,17 @@ class ssan_libro_notificacancer_model extends CI_Model {
         $this->db->trans_start();
         $this->db->select(['
 
+
+        P.IND_CONF_CANCER,
+        P.IND_NOTIFICACANCER,
+
+        CASE WHEN P.IND_CONF_CANCER = 1 THEN 
+            CASE WHEN P.IND_NOTIFICACANCER = "" THEN "NO NOTIFICADO"
+                WHEN P.IND_NOTIFICACANCER = "0" THEN "NO NOTIFICADO" 
+                WHEN P.IND_NOTIFICACANCER = "1" THEN "NOTIFICADO"
+                ELSE "NO INFORMADA" END
+        ELSE "SIN DIAGNOSTICO DE CANCER" END AS TXT_ESTADO_CANCER,
+
         DATE_FORMAT(P.DATE_FECHA_DIAGNOSTICO,"%d-%m-%Y %H:%i") AS DATE_FECHA_DIAGNOSTICO,
         DATE_FORMAT(P.DATE_FECHA_DIAGNOSTICO,"%d-%m-%Y") AS FECHA_DIAGNOSTICO,
         DATE_FORMAT(P.DATE_FECHA_DIAGNOSTICO,"%H:%i") AS HORA_DIAGNOSTICO,
@@ -265,25 +274,23 @@ class ssan_libro_notificacancer_model extends CI_Model {
     
     public function get_valida_notificacion_conjunta($DATA){
         $this->db->trans_start();
-        $this->db->where('ID_SOLICITUD_HISTO',$DATA['ID_ANATOMIA']);
-        $arr_update                         =   array(  
-            #ROW NEW 24.10.2022
-            "IND_NOTIFICACANCER"            =>  1,
-            "DATE_NOTIFICACANCER"           =>  'SYSDATE',
-            "IND_TIPO_NOTIFICACION"         =>  1,
-            "ID_UID_NOTIFICA_CANCER"        =>  $DATA["DATA_FIRMA"]["user_1"]->ID_UID,
-            "ID_UID_RC_NOTIFICA_CANCER"     =>  $DATA["DATA_FIRMA"]["user_2"]->ID_UID,
-            "LAST_USR_AUDITA"               =>  $DATA["SESSION"],
-            "LAST_DATE_AUDITA"              =>  "SYSDATE",
+        $this->db->where('ID_SOLICITUD_HISTO', $DATA['ID_ANATOMIA']);
+        $arr_update = array(  
+            "IND_NOTIFICACANCER" => 1,
+            "DATE_NOTIFICACANCER" => 'NOW()', 
+            "IND_TIPO_NOTIFICACION" => 1,
+            "ID_UID_NOTIFICA_CANCER" => $DATA["DATA_FIRMA"]["user_1"]->ID_UID,
+            "ID_UID_RC_NOTIFICA_CANCER" => $DATA["DATA_FIRMA"]["user_2"]->ID_UID,
+            "LAST_USR_AUDITA" => $DATA["SESSION"],
+            "LAST_DATE_AUDITA" => 'NOW()',
         ); 
-        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',$arr_update);
+        $this->db->set($arr_update, '', false);
+        $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO');
         $this->db->trans_complete();
-        return array(
+        return [
             'statuts' => true,  
-        );
+        ];
     }
-    
-    
     
     public function load_edicion_solicitud($DATA){
         $this->db->trans_start();

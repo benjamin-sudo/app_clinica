@@ -11,10 +11,10 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $this->load->model("Ssan_libro_etapaanalitica_model");
     }
 
+    #$this->load->js("assets/ssan_libro_notificacancer/js/liberia_qr/qrcode.js");
     public function index(){
         $this->output->set_template('blank');
         $data = [];
-        #$this->load->js("assets/ssan_libro_notificacancer/js/liberia_qr/qrcode.js");
         $this->load->css("assets/Ssan_libro_notificacancer/css/styles.css");
         $this->load->js("assets/ssan_libro_notificacancer/js/javascript.js");
         $this->load->view('ssan_libro_notificacancer/ssan_libro_notificacancer_view',$data);
@@ -144,38 +144,38 @@ class Ssan_libro_notificacancer extends CI_Controller {
     #CONFIRMA NOTIFICACION 
     public function confirma_notificacion_cancer(){
         if(!$this->input->is_ajax_request()){  show_404(); }
-        $empresa                            =   $this->session->userdata('COD_ESTAB');
-        $id_anatomia                        =   $this->input->post('id_anatomia');
-        $usuarioh                           =   explode("-",$this->session->userdata("USERNAME"));
+        $empresa = $this->session->userdata('COD_ESTAB');
+        $id_anatomia = $this->input->post('id_anatomia');
+        $usuarioh = explode("-",$this->session->userdata("USERNAME"));
         #$num_memo_notificacion             =   true;
-        $TXT_ERROR                          =   '';
-        $DATA                               =   '';
+        $TXT_ERROR =   '';
+        $DATA = '';
         #$valida                            =   '';
-        $STATUS                             =   true;
-        $arr_errores                        =   array();
-        $arr_password                       =   $this->input->post('pass');
-        $valida                             =	$this->Ssan_libro_biopsias_usuarioext_model->sqlValidaClave_doble($arr_password);
+        $STATUS = true;
+        $arr_errores = array();
+        $arr_password = $this->input->post('pass');
+        $valida = $this->Ssan_libro_biopsias_usuarioext_model->sqlValidaClave_doble($arr_password);
         count($valida['user_1'])>0?'':array_push($arr_errores,"Error en la firma del funcionario que notifica");
         count($valida['user_2'])>0?'':array_push($arr_errores,"Error en la firma del funcionario que recibe notificaci&oacute;n");
         if(count($arr_errores)>0){
-            $TXT_ERROR                      =   implode("<br>",$arr_errores);
-            $STATUS                         =   false;
+            $TXT_ERROR = implode("<br>",$arr_errores);
+            $STATUS = false; 
         } else {
-            $DATA                           =   $this->Ssan_libro_notificacancer_model->get_valida_notificacion_conjunta([ 
-                                                    "COD_EMPRESA"   => $empresa,
-                                                    "SESSION"       => $usuarioh[0], 
-                                                    "ID_ANATOMIA"   => $id_anatomia,
-                                                    "DATA_FIRMA"    => $valida
-                                                ]);
+            $DATA = $this->Ssan_libro_notificacancer_model->get_valida_notificacion_conjunta([ 
+                "COD_EMPRESA" => $empresa,
+                "SESSION" => $usuarioh[0], 
+                "ID_ANATOMIA" => $id_anatomia,
+                "DATA_FIRMA" => $valida
+            ]);
         }
         $this->output->set_output(json_encode(array(
-            'ERRORES'       =>  $arr_errores,
-            'PASS'          =>  $arr_password,
-            'GET_BD'        =>  $DATA,
-            'DATA_FIRMA'    =>  $valida,
-            'RETURN'        =>  $STATUS,
-            'TXT_ERROR'     =>  $TXT_ERROR,
-            'STATUS'        =>  $STATUS,
+            'ERRORES' => $arr_errores,
+            'PASS' => $arr_password,
+            'GET_BD' => $DATA,
+            'DATA_FIRMA' => $valida,
+            'RETURN' => $STATUS,
+            'TXT_ERROR' => $TXT_ERROR,
+            'STATUS' => $STATUS,
         )));
     }
     

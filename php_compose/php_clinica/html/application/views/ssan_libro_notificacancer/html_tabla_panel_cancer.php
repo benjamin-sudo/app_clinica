@@ -13,7 +13,7 @@
             <th scope="col" >Paciente</th>
             <th scope="col" >Profesional</th>
             <th scope="col" >Estado notificaci&oacute;n cancer</th>
-            <th scope="col" ><i class="fa fa-cog" aria-hidden="true"></i></th>
+            <th scope="col" style="text-align:center;"><i class="fa fa-cog" aria-hidden="true"></i></th>
         </tr>
     </thead>
     <tbody>
@@ -25,45 +25,32 @@
                 <div style="display: none" id="qrcode_<?php echo $row["ID_SOLICITUD"];?>" ></div>
             </th>
             <td><?php echo $row["NOMBRE_COMPLETO"];?></td>
-            <td><?php echo $row["PROFESIONAL"];?></td>
+            <td><?php echo $row["PROFESIONAL2"];?></td>
             <td>
                 <?php echo $row["TXT_ESTADO_CANCER"]=='NOTIFICADO'?'<span class="badge bg-success"><i class="fa fa-check" aria-hidden="true"></i> NOTIFICADO</span>':$row["TXT_ESTADO_CANCER"];?>
             </td>
             <td style="text-align:center">
                 <div class="btn-group">
-                    <?php if ($row["IND_CONF_CANCER"] == 1 && $row["IND_NOTIFICACANCER"] == 0  ){ ?>
-                        <button type="button" class="btn btn-primary btn-fill" id="btn_exel_closew" onclick="js_notificar_cancer(<?php echo $ID_SOLICITUD;?>)">
-                            <i class="fa fa-users" aria-hidden="true"></i>
+                    <?php if ($row["IND_CONF_CANCER"] == 1 && $row["IND_NOTIFICACANCER"] == 0 ){ ?>
+                        <button type="button" class="btn btn-primary" id="btn_exel_closew" onclick="js_notificar_cancer(<?php echo $ID_SOLICITUD;?>)">
+                            <i class="fa fa-users" aria-hidden="true"></i>&nbsp;NOTIFICACI&Oacute;N DE CANCER
                         </button>
-                    <?php }  ?>
-                    <?php if ($row["IND_NOTIFICACANCER"] == 1  ){ ?>
-                        <button type="button" class="btn btn-danger btn-fill" id="btn_exel_closew" onclick="pdf_notificacion_cancer_ok(<?php echo $ID_SOLICITUD;?>)">
+                    <?php } ?>
+                    <?php if ($row["IND_NOTIFICACANCER"] == 1 ){ ?>
+                        <button type="button" class="btn btn-danger" id="btn_exel_closew" onclick="pdf_notificacion_cancer_ok(<?php echo $ID_SOLICITUD;?>)">
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
-                    <?php }  ?>
+                    <?php } ?>
                 </div>
             </td>
         </tr>
         <?php 
-        $array_post     =   [];
+        $array_post = [];
         array_push($array_post,"id_anatomia=".$row["ID_SOLICITUD"]);
         array_push($array_post,"empresa=".$this->session->userdata("COD_ESTAB"));
-        $rul_for_qr     =   (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://".$_SERVER['HTTP_HOST']."/ssan_libro_notificacancer?ind_externo=true&".join("&",$array_post);
-        //echo $rul_for_qr;
+        $rul_for_qr = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://".$_SERVER['HTTP_HOST']."/ssan_libro_notificacancer?ind_externo=true&".join("&",$array_post);
         ?>
-        <script>
-            /*
-            var qrcodjs = new QRCode("qrcode_<?php echo $row["ID_SOLICITUD"];?>", {
-                text: "<?php echo $rul_for_qr;?>",
-                width: 128,
-                height: 128,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-            */
-        </script>
-    <?php }  ?>
+    <?php } ?>
     <?php } else { ?>
         <tr>
             <th scope="row" colspan="7" style="text-align:center;height:40px;">SIN INFORMACI&Oacute;N</th>

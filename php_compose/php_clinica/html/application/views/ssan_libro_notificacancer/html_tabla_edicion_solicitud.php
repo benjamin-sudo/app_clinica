@@ -106,14 +106,14 @@
                             <?php } ?>
                         </ul>
                     </div>
+                    
                 </td>
             </tr>
             <?php 
-                $array_post     =   [];
+                $array_post = [];
                 array_push($array_post,"id_anatomia=".$row["ID_SOLICITUD"]);
                 array_push($array_post,"empresa=".$this->session->userdata("COD_ESTAB"));
-                $rul_for_qr     =   (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://".$_SERVER['HTTP_HOST']."/ssan_libro_notificacancer?ind_externo=true&".join("&",$array_post);
-                //echo $rul_for_qr;
+                $rul_for_qr = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://".$_SERVER['HTTP_HOST']."/ssan_libro_notificacancer?ind_externo=true&".join("&",$array_post);
             ?>
         <?php }  ?>
         <?php } else { ?>
