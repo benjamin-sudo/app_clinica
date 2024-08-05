@@ -229,7 +229,7 @@
         <table tabindex="2" width="100%" align="center" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
             <thead>
                 <tr class="subtitulo_formulario2">
-                    <td class="subtitulo_formulario2"   colspan="2" bgcolor="#ECF1F1"><b>DETALLE DE LA SOLICITUD:</b></td>
+                    <td class="subtitulo_formulario2" colspan="2" bgcolor="#ECF1F1"><b>DETALLE DE LA SOLICITUD:</b></td>
                 </tr>
                 <tr>
                     <td class="subtitulo_formulario2"               >
@@ -239,20 +239,20 @@
                 </tr>
                 <?php #falta especialidad desde el sql;?>
                 <tr>
-                    <td class="subtitulo_formulario2"   width="50%" >PROCEDENCIA SOLICITUD:</td>
-                    <td class="subtitulo_formulario2"   width="50%" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA'];?></td>
+                    <td class="subtitulo_formulario2" width="50%" >PROCEDENCIA SOLICITUD:</td>
+                    <td class="subtitulo_formulario2" width="50%" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA'];?></td>
                 </tr>
                 <tr>
-                    <td class="subtitulo_formulario2"               >SERVICIO/UNIDAD PROCEDENCIA:</td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NOMBRE_SERVICIO'];?> <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_SUBDIVISION'];?></td>
+                    <td class="subtitulo_formulario2" >SERVICIO/UNIDAD PROCEDENCIA:</td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NOMBRE_SERVICIO'];?> <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_SUBDIVISION'];?></td>
                 </tr>
                 <tr>
-                    <td class="subtitulo_formulario2"               >TIPO DE BIOPSIA:</td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TIPO_DE_BIOPSIA'];?></td>
+                    <td class="subtitulo_formulario2" >TIPO DE BIOPSIA:</td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TIPO_DE_BIOPSIA'];?></td>
                 </tr>
                 <tr>
-                    <td class="subtitulo_formulario2"               >DIAGN&Oacute;STICO CL&Iacute;NICO:</td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_DIAGNOSTICO'];?></td>
+                    <td class="subtitulo_formulario2" >DIAGN&Oacute;STICO CL&Iacute;NICO:</td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_DIAGNOSTICO'];?></td>
                 </tr>
             </thead>
         </table>

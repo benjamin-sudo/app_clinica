@@ -53,10 +53,10 @@
         <td style="width:35%;" valign="top">
             <p>
                 <?php  
-                    $fechaHD                        =   explode("-",$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['FECHA_RECEPCION']); 
-                    $dias                           =   array("DOMINGO","LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO");
-                    $meses                          =   array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
-                    echo $this->session->userdata["nomestab"].",".$dias[date("w",mktime(0,0,0,$fechaHD[1],$fechaHD[0],$fechaHD[2]))]." ".$fechaHD[0]." DE ".$meses[$fechaHD[1]-1]. " DEL ".$fechaHD[2];
+                    $fechaHD = explode("-",$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['FECHA_RECEPCION']); 
+                    $dias = array("DOMINGO","LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO");
+                    $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+                    echo $dias[date("w",mktime(0,0,0,$fechaHD[1],$fechaHD[0],$fechaHD[2]))]." ".$fechaHD[0]." DE ".$meses[$fechaHD[1]-1]. " DEL ".$fechaHD[2];
                 ?>
                 <br>
                 <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_INTERNO_AP']=='0'?'':'N&deg; BIOPSIA: '.$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_INTERNO_AP'];?> 

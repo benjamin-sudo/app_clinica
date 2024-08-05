@@ -1641,13 +1641,13 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     ';
             }
         } else {
-                $HTML  =            '<tr style="text-align: center;">
-                                        <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
-                                    </tr>';
-        }
-        $HTML2          =           '<tr style="text-align: center;">
-                                        <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
-                                    </tr>';
+                $HTML  = '<tr style="text-align: center;">
+                            <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
+                        </tr>';
+}
+        $HTML2          = '<tr style="text-align: center;">
+                            <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
+                        </tr>';
         return array(
             'NUEVAS_SOLICITUDES'    =>  $HTML,
             'VISTA_SOLICITUDES'     =>  $HTML2,
@@ -1658,8 +1658,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $result = [];
         $V_ID_HISTO = $this->db->escape($DATA['ARR_DATA']);
         $V_COD_EMPRESA = $this->db->escape($DATA['COD_EMPRESA']);
-
-
         $P_ANATOMIA_PATOLOGICA_MAIN = [];
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO, $V_COD_EMPRESA)");
         if ($multi_query) {
@@ -1749,25 +1747,21 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->trans_start();
         $mivariable = true;
         $arr_histo_ok = [];
-    
         if (count($DATA['ARRAY']) > 0) {
             foreach ($DATA['ARRAY'] as $i => $fila) {
                 foreach ($fila as $x => $row) {
                     // NUMERO DE CARGA
                     $ID_CARGA_AP = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); 
-                    
                     if (count($row["ARRAY_NMUESTRAS"]) > 0) {
                         foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus) {
-                            $ID_LINETIME_HISTO = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); 
+                            // $ID_LINETIME_HISTO = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); // No es necesario
                             $ID_ANATOMIA = $DATA["ID_ANATOMIA"];
                             $IND_CASETE = $mus['IND_CASETE'];
                             $ID_MUESTRA = $mus['ID_NMUESTRA'];
-                            
                             $arr_linea_tiempo = array(
-                                "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO,
+                                // "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO, // No es necesario
                                 "ID_NUM_CARGA" => $ID_CARGA_AP,
                                 "ID_SOLICITUD_HISTO" => $row["NUM_HISTO"],
-                                //"ID_NMUESTRA" => substr($mus['ID_NMUESTRA'], 1),
                                 "TXT_BACODE" => $mus['ID_NMUESTRA'],
                                 "NUM_FASE" => 1, // EN CUSTODIA
                                 "IND_CHECKED" => $mus['IN_CHECKED'],
@@ -1780,7 +1774,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             $arr_linea_tiempo[$IND_CASETE == 1 ? "ID_CASETE" : "ID_NMUESTRA"] = $ID_MUESTRA;
                             
                             $this->db->insert($this->ownPab . '.PB_LINETIME_HISTO', $arr_linea_tiempo);
-    
+                            $ID_LINETIME_HISTO = $this->db->insert_id(); // Obtener el ID autogenerado
+        
                             // ACTUALIZA ESTADO DE LA MUESTRA CON EL ULTIMO LINETIME
                             $this->db->where($IND_CASETE == 1 ? 'ID_CASETE' : 'ID_NMUESTRA', $ID_MUESTRA);
                             $this->db->update($this->ownPab . '.PB_HISTO_NMUESTRAS', array(
@@ -1789,7 +1784,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 "USR_AUDITA" => $DATA["SESSION"],
                                 "DATE_AUDITA" => date('Y-m-d H:i:s')
                             ));
-    
+        
                             // ARRAY ANTECEDENTES ADVERSOS
                             if (isset($mus["ARR_EVENTOS_ADVERSOS"])) {
                                 foreach ($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv) {
@@ -1807,7 +1802,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             }
                         }
                     }
-    
                     // ACTUALIZA EL ESTADO DE LA SOLICITUD PRINCIPAL
                     array_push($arr_histo_ok, $row["NUM_HISTO"]);
                     $this->db->where('ID_SOLICITUD_HISTO', $row["NUM_HISTO"]);
@@ -1831,6 +1825,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'STATUS_BD' => $this->db->trans_complete(),
         );
     }
+    
 
     /*            
     #HOSPITAL ANGOL             –   RECIBE SOLICITUD DE:
@@ -2315,8 +2310,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 P.ID_SOLICITUD_HISTO IN (".$DATA['NUM_HISTO'].") ")->result_array();
     }
 
-
-    #HITO
     #PDF_GLOBAL
     public function LOAD_ANATOMIAPATOLOGICA_PDF($DATA) {
         $this->db->trans_start();

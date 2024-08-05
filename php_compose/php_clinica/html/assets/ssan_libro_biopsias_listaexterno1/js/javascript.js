@@ -58,8 +58,7 @@ function update_main(value){
     $('.popover').popover('hide');
     let IND_TEMPLETE    =   $("#IND_TEMPLETE").val();
     let ind_ruta        =   IND_TEMPLETE === "ssan_libro_biopsias_listaxusuarios"
-                                ?   "ssan_libro_biopsias_listaxusuarios/update_main_ususarios"
-                                :   "ssan_libro_biopsias_listaexterno1/update_main";
+                                ?   "ssan_libro_biopsias_listaxusuarios/update_main_ususarios" : "ssan_libro_biopsias_listaexterno1/update_main";
     /*
         console.log("   ---------------------------------------------------------------------------     ");
         console.log("   ind_ruta                   ->  ",ind_ruta);
@@ -83,13 +82,13 @@ function update_main(value){
                     ind_template : "ssan_libro_biopsias_listaexterno1",
                 },
         error : function(errro)	{  
-                                    $('#loadFade').modal('hide');
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                     console.log("errro   ->  ",errro); 
                                     jError("Error en el listado de anatom&iacute;a patol&oacute;gica","CLinica Libre");
                                 },
         success : function(aData) {   
                                     console.log("   aData -> ",aData," ");
-                                    $('#loadFade').modal('hide');
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                     $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
                                     $("#LI_LISTA_MAIN").append(aData.STATUS_OUT.html_exteno);
                                     //$("[data-toggle='tooltip']").tooltip();
