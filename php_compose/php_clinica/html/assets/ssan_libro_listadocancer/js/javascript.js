@@ -13,14 +13,16 @@ $(function(){
         beforeSend : function(xhr) { },
         data : { ind_year : ind_year },
         error : function(errro) { 
-                                    console.log(errro);  
-                                    $('#loadFade').modal('hide');
-                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    console.log(errro);
+                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre");   
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 },
         success : function(aData) { 
-                                    $('#loadFade').modal('hide');
+
+                                    console.log("aData  ->",aData );    
                                     $(".return_table").html(aData.html);
                                     $(".lista_notificacion_cancer").hide();
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 }, 
     });
  }
@@ -43,14 +45,13 @@ $(function(){
                                             console.log(errro);  
                                             console.log(errro.responseText);
                                             jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                            $('#loadFade').modal('hide'); 
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                         },
         success     :   function(aData) { 
                                             console.log("aData                  ->  ",aData);
-                                            
                                             //$("#btn_envia_correo").attr('onclick','js_confirma_envio('+id_anatomia+')');
                                             $("#btn_envia_correo").attr('onclick','js_confirma_notificacion_cancer('+id_anatomia+')');
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                             $("#html_notificacion_cancer").html(aData.return_data.HTML_LI);
                                             $("#modal_notificacion_cancer").modal({backdrop:'static',keyboard:false}).modal("show");
                                         }, 
@@ -71,11 +72,11 @@ $(function(){
        error : function(errro) { 
                                     console.log("quisas->",errro,"-error->",errro.responseText); 
                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 },
        success : function(aData) { 
                                         console.log(aData);
-                                        $('#loadFade').modal('hide'); 
+                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                         $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('');
                                         if(!aData["STATUS"]){
                                             jError("error al cargar protocolo PDF","Clinica Libre");
@@ -130,12 +131,12 @@ $(function(){
         data :   { id : id_anatomia  },
         error :   function(errro) { 
                                         jError("Error General, Consulte Al Administrador","Clinica Libre");
-                                        $('#loadFade').modal('hide'); 
+                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                         $("#html_pdf_notificacion_cancer").html('');
                                         $("#modal_pdf_notificacion_cancer").modal('hide');
                                     },
         success : function(aData) { 
-                                    $('#loadFade').modal('hide'); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                     $("#modal_pdf_notificacion_cancer").css("z-index","1500").modal({backdrop:'static',keyboard:false}).modal("show");
                                     $('#html_pdf_notificacion_cancer').html('');
                                     if(!aData["STATUS"]){

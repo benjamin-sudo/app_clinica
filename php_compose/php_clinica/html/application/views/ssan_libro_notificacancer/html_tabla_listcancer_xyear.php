@@ -1,6 +1,6 @@
 <?php
-    $v_year_star    = 2021;
-    $v_year_actual  = date('Y');
+    $v_year_star = 2023;
+    $v_year_actual = date('Y');
 ?>
 <table class="table table-striped">
     <thead>
@@ -8,7 +8,7 @@
             <th scope="row" style="height: 40px;" colspan="4">
                 <h5 style="margin: 0px 0px 0px 0px;">
                     <b style="color:#888888;">LISTADO NOTIFICADO</b>
-                    <span class="badge n_resultados_panel" style="background-color:dodgerblue;margin-bottom: 2PX;"><?php echo count($cursor['data_bd'][':C_LISTADO_CANCER']);?></span>
+                    <span class="badge n_resultados_panel" style="background-color:dodgerblue;margin-bottom: 2PX;"><?php echo count($cursor[':C_LISTADO_CANCER']);?></span>
                 </h5> 
             </th>
             <th scope="row" style="height: 40px;" colspan="3">
@@ -31,18 +31,23 @@
         </tr>
     </thead>
     <tbody>
-        <?php if (count($cursor['data_bd'][':C_LISTADO_CANCER']>0)){  
-                foreach($cursor['data_bd'][':C_LISTADO_CANCER'] as $i => $row){ $aux = $i +1; ?>
+        <?php if (count($cursor[':C_LISTADO_CANCER']>0)){  
+                foreach($cursor[':C_LISTADO_CANCER'] as $i => $row){ $aux = $i +1; ?>
                 <tr>
                     <td style="height: 40px"><?php echo $aux;?></td> 
                     <td><?php echo $row['NOMBRE_COMPLETO'];?></td> 
                     <td><?php echo $row['PROFESIONAL'];?></td> 
-                    <td><?php echo $row['TIPO_DE_BIOPSIA'];?><br>N&deg;: <?php echo $row['NUM_NOF_CANCER'];?>  </td> 
-                    <td style="text-align:center"><?php 
-                        echo $row['IND_NOTIFICACANCER'] == 1 ? 
+                    <td>
+                        <?php echo $row['TIPO_DE_BIOPSIA'];?>
+                        <br>
+                        N&deg; correlativo :<b><?php echo $row['NUM_NOF_CANCER'];?></b>
+                    </td> 
+                    <td style="text-align:center">
+                        <?php echo $row['IND_NOTIFICACANCER'] == 1 ? 
                             '<span class="badge bg-success" style="padding: 5px;"><i class="fa fa-check" aria-hidden="true"></i></span>':
                             '<span class="badge bg-danger" style="padding: 5px;"><i class="fa fa-times" aria-hidden="true"></i></span>';
-                    ?></td> 
+                        ?>
+                    </td> 
                     <td style="text-align:center">
                         <div class="btn-group">
                             <a class="btn btn-fill btn-primary dropdown-toggle dropdown-menu-end" data-bs-toggle="dropdown" href="#" aria-expanded="false">
@@ -86,8 +91,6 @@
         <?php   }   ?>
     </tbody>
 </table>
-
-
 
 <script>
     $("#ind_year_cancer").val(<?php echo $ind_year?>);

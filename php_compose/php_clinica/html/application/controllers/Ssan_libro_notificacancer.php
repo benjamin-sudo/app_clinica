@@ -305,26 +305,26 @@ class Ssan_libro_notificacancer extends CI_Controller {
     
     public function load_notificacion_cancer_por_year(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $ind_year                       =   $this->input->post('ind_year');
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $v_date_inicio                  =   '01-01-'.$ind_year;
-        $v_date_final                   =   '31-12-'.$ind_year;
-        $return_data                    =   $this->Ssan_libro_notificacancer_model->listado_notificado_cancer(array(
-            'cod_empresa'               =>  $empresa,
-            'ind_year'                  =>  $ind_year,
-            'ind_opcion'                =>  1,
-            'date_fecha_inicio'         =>  $v_date_inicio,
-            'date_fecha_final'          =>  $v_date_final,
+        $status = true;
+        $ind_year = $this->input->post('ind_year');
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $v_date_inicio = '01-01-'.$ind_year;
+        $v_date_final = '31-12-'.$ind_year;
+        $return_data = $this->Ssan_libro_notificacancer_model->listado_notificado_cancer(array(
+            'cod_empresa' => $empresa,
+            'ind_year' => $ind_year,
+            'ind_opcion' =>  1,
+            'date_fecha_inicio' => $v_date_inicio,
+            'date_fecha_final' => $v_date_final,
         ));
-        $v_html                         =   $this->load->view("ssan_libro_notificacancer/html_tabla_listcancer_xyear",array(
-                                                'cursor'    =>  $return_data,
-                                                'ind_year'  =>  $ind_year
-                                            ),true);
+        $v_html = $this->load->view("ssan_libro_notificacancer/html_tabla_listcancer_xyear",array(
+                        'cursor' => $return_data,
+                        'ind_year' => $ind_year
+                    ),true);
         $this->output->set_output(json_encode(array(
-            'html'                      =>  $v_html,
-            'status'                    =>  $status,
-            'data_bd'                   =>  $return_data,
+            'html' => $v_html,
+            'status' => $status,
+            'data_bd' => $return_data,
         )));
     }
     

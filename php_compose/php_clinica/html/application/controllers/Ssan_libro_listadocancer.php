@@ -15,5 +15,6 @@ class Ssan_libro_listadocancer extends CI_Controller {
         $this->load->js("assets/ssan_libro_listadocancer/js/javascript.js");
         $this->load->view('ssan_libro_listadocancer/ssan_libro_listadocancer_view',$data);
     }
+    
 }
 ?>

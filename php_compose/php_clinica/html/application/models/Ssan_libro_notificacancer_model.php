@@ -18,6 +18,7 @@ class ssan_libro_notificacancer_model extends CI_Model {
         $DATA["txt_bus"],
         $DATA["arr_ids_anatomia"]
     */
+
     public function get_histo_data($DATA) {
         $search_term = $DATA["txt_bus"];
         $cod_empresa = $DATA["cod_empresa"];
@@ -148,11 +149,8 @@ class ssan_libro_notificacancer_model extends CI_Model {
         $cod_empresa = $DATA['cod_empresa']; 
         $this->db->trans_start();
         $this->db->select(['
-
-
         P.IND_CONF_CANCER,
         P.IND_NOTIFICACANCER,
-
         CASE WHEN P.IND_CONF_CANCER = 1 THEN 
             CASE WHEN P.IND_NOTIFICACANCER = "" THEN "NO NOTIFICADO"
                 WHEN P.IND_NOTIFICACANCER = "0" THEN "NO NOTIFICADO" 
@@ -197,7 +195,6 @@ class ssan_libro_notificacancer_model extends CI_Model {
             WHEN "5" THEN "SOLO CITOLOGÍA"
             ELSE "NO INFORMADO"
         END AS TIPO_DE_BIOPSIA,
-
         (SELECT COUNT(M.ID_NMUESTRA) 
             FROM ADMIN.PB_HISTO_NMUESTRAS M
             WHERE M.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO) AS N_MUESTRAS_TOTAL,
@@ -347,7 +344,6 @@ class ssan_libro_notificacancer_model extends CI_Model {
         $v_ind_cambio = $DATA["ind_cambio"];    
         $V_NUM_INTERNO_OUT = 0;
         $V_TIPO_EDICION = 0;
-
         # BIOPSIA + CITOLOGIA
         if ($v_ind_tipo_biopsia == '4') {
             if ($v_ind_cambio == '1') {
@@ -458,64 +454,6 @@ class ssan_libro_notificacancer_model extends CI_Model {
         ];
     }
 
-    
-    public function listado_notificado_cancer($DATA){
-        $this->db->trans_start();
-        $param          =   array(
-                                #DATA IN
-                                array( 
-                                    'name'      =>  ':V_COD_EMPRESA',
-                                    'value'     =>  $DATA["cod_empresa"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_IND_OPCION',
-                                    'value'     =>  $DATA["ind_opcion"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_IND_YEAR',
-                                    'value'     =>  $DATA["ind_year"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_DATE_INICIO',
-                                    'value'     =>  $DATA["date_fecha_inicio"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                array( 
-                                    'name'      =>  ':V_DATE_FINAL',
-                                    'value'     =>  $DATA["date_fecha_final"],
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                #CURSORES OUT
-                                array( 
-                                    'name'      =>  ':C_LISTADO_CANCER',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_STATUS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                            );
-        $result =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LISTADO_NOTF_CANCER',$param);
-        $this->db->trans_complete();
-        return array(
-            'status'                            =>  true,
-            'data_bd'                           =>  $result,
-            'get'                               =>  $DATA,
-        );
-    }
-    
     public function model_update_fecha_diagnostico($DATA){
         $this->db->trans_start();
         $date_fecha_diagnostico = date('Y-m-d H:i:s', strtotime($DATA['new_fecha_diagnostico'] . ' ' . $DATA['new_hora_diagnostico'] . ':00'));
@@ -663,6 +601,17 @@ class ssan_libro_notificacancer_model extends CI_Model {
         }
     }
     
-
-
+    public function listado_notificado_cancer($DATA) {
+        $this->db->trans_start();
+        $v_date_inicio = date('Y-m-d', strtotime($DATA["date_fecha_inicio"]));
+        $v_date_final = date('Y-m-d', strtotime($DATA["date_fecha_final"]));
+        $sql = "CALL ADMIN.LIS_CANCER_NOTIFICADO(?, ?, ?)";
+        $arr_resul = $this->db->query($sql,[$DATA["cod_empresa"],$v_date_inicio,$v_date_final])->result_array();
+        $this->db->trans_complete();
+        return [
+            'get' => $DATA,
+            'status' => true,
+            ':C_LISTADO_CANCER' => $arr_resul,
+        ];
+    }
 }

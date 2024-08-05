@@ -6,7 +6,6 @@
     <div class="grid_listado_cancer2 return_table"></div>
     <div class="grid_listado_cancer3"></div>
 </div>
-
 <section>
     <div class="modal fade" id="modal_pdf_notificacion_cancer">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
