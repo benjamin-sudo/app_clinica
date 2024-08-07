@@ -173,7 +173,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
 
         $query_total_count = $this->db->get();
         $total_count = $query_total_count->row()->total_count;
+        $page_size = ($page_size == 0) ? 1 : $page_size;
         $num_paginas = ceil($total_count / $page_size);
+
         #Resultados
         $resultados = [
             'lista_anatomia' => $lista_anatomia,
@@ -2185,7 +2187,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         ];
     }
     
-     
     public function get_final_sala_proceso($data) {
         $this->db->trans_start();
         $date = $data["accesdata"]["form_star_sala_proceso"][0]["date_fecha_final_salaproceso"];
@@ -2210,71 +2211,70 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     
     public function load_sala_inclusion($data){
         $this->db->trans_start();
-        $param          =   
-                    array(
-                        #IN
-                        array( 
-                            'name'      =>  ':V_COD_EMPRESA',
-                            'value'     =>  $data["empresa"],
-                            'length'    =>  20,
-                            'type'      =>  SQLT_CHR 
-                        ),
-                        array( 
-                            'name'      =>  ':VAL_OPCION',
-                            'value'     =>  $data["opcion"],
-                            'length'    =>  20,
-                            'type'      =>  SQLT_CHR 
-                        ),
-                        array( 
-                            'name'      =>  ':VAL_ID_ANATOMIA',
-                            'value'     =>  $data["id_anatomia"],
-                            'length'    =>  20,
-                            'type'      =>  SQLT_CHR 
-                        ),
-                        #OUT
-                        array( 
-                            'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
-                            'value'     =>  $this->db->get_cursor(),
-                            'length'    =>  -1,
-                            'type'      =>  OCI_B_CURSOR
-                        ),
-                        array( 
-                            'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
-                            'value'     =>  $this->db->get_cursor(),
-                            'length'    =>  -1,
-                            'type'      =>  OCI_B_CURSOR
-                        ),
-                        array( 
-                            'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
-                            'value'     =>  $this->db->get_cursor(),
-                            'length'    =>  -1,
-                            'type'      =>  OCI_B_CURSOR
-                        ),
-                        array( 
-                            'name'      =>  ':P_TECNICAS_APLICADAS',
-                            'value'     =>  $this->db->get_cursor(),
-                            'length'    =>  -1,
-                            'type'      =>  OCI_B_CURSOR
-                        ),
-                        array( 
-                            'name'      =>  ':P_TECNICAS_APLICADASXMUESTRA',
-                            'value'     =>  $this->db->get_cursor(),
-                            'length'    =>  -1,
-                            'type'      =>  OCI_B_CURSOR
-                        ),
-                        array( 
-                            'name'      =>  ':P_LOGS',
-                            'value'     =>  $this->db->get_cursor(),
-                            'length'    =>  -1,
-                            'type'      =>  OCI_B_CURSOR
-                        ),
-                        array( 
-                            'name'      =>  ':P_STATUS',
-                            'value'     =>  $this->db->get_cursor(),
-                            'length'    =>  -1,
-                            'type'      =>  OCI_B_CURSOR
-                        ),
-                    );
+        $param = array( 
+                    #IN
+                    array( 
+                        'name'      =>  ':V_COD_EMPRESA',
+                        'value'     =>  $data["empresa"],
+                        'length'    =>  20,
+                        'type'      =>  SQLT_CHR 
+                    ),
+                    array( 
+                        'name'      =>  ':VAL_OPCION',
+                        'value'     =>  $data["opcion"],
+                        'length'    =>  20,
+                        'type'      =>  SQLT_CHR 
+                    ),
+                    array( 
+                        'name'      =>  ':VAL_ID_ANATOMIA',
+                        'value'     =>  $data["id_anatomia"],
+                        'length'    =>  20,
+                        'type'      =>  SQLT_CHR 
+                    ),
+                    #OUT
+                    array( 
+                        'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                    array( 
+                        'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                    array( 
+                        'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                    array( 
+                        'name'      =>  ':P_TECNICAS_APLICADAS',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                    array( 
+                        'name'      =>  ':P_TECNICAS_APLICADASXMUESTRA',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                    array( 
+                        'name'      =>  ':P_LOGS',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                    array( 
+                        'name'      =>  ':P_STATUS',
+                        'value'     =>  $this->db->get_cursor(),
+                        'length'    =>  -1,
+                        'type'      =>  OCI_B_CURSOR
+                    ),
+                );
         $result                         =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_SALA_INCLUSION',$param);
         $this->db->trans_complete();
         $this->db->trans_commit();
@@ -2319,7 +2319,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 }
             }
         }
-        
         
         #Actualización principal de ANATOMIA PATOLOGICA
         $dataSolicitud = [
@@ -2396,7 +2395,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                         ));
                     }
 
-
                     if(isset($datos["checked_tenicas_all"])) {
                         $dataSolicitud = array_merge($dataSolicitud, array(
                             "IND_ALL_TECNICAS" => ($datos["checked_tenicas_all"] === 'true') ? 1 : 0
@@ -2408,9 +2406,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         
         ############################
         #Avanza de zona - Patologo
-        #var_dump($data["val_cierre"]);
-        ############################
-        
         if($data["val_cierre"] == "1") {
             $dataSolicitud = array_merge($dataSolicitud, [
                 "ID_HISTO_ZONA" => 7,
@@ -2419,30 +2414,20 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 "DATE_TECNICAS" => date('Y-m-d H:i:s') 
             ]);
         }
-        
         $this->db->where('ID_SOLICITUD_HISTO', $data["id_anatomia"]);
         $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO', $dataSolicitud);
         $this->db->trans_complete();
         $this->db->trans_commit();
-        return [
-            'status' => $status
-        ];
+        return ['status' => $status ];
     }
-    
-
-
     
     public function load_gestion_cancer($DATA){
         $this->db->trans_start();
         $this->db->where('ID_SOLICITUD_HISTO',$DATA["id_anatomia"]); 
         if($DATA["opcion"] == 1 ){
-            $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
-                "IND_NOTIF_CANCER"          =>  0,
-            ));
+            $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array("IND_NOTIF_CANCER"=>0));
         } else {
-            $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
-                "IND_NOTIF_CANCER"          =>  1,
-            ));
+            $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array("IND_NOTIF_CANCER"=>1));
         }
         $this->db->trans_complete();
         $this->db->trans_commit();
@@ -2452,15 +2437,11 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     public function get_update_txt_macroscopica($DATA){
         $this->db->trans_start();
         $this->db->where('ID_NMUESTRA',$DATA['num_muestra']); 
-        $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array(
-            "TXT_DESC_MACROSCOPICA"=>$DATA['txt_update']
-        ));
+        $this->db->update($this->ownPab.'.PB_HISTO_NMUESTRAS',array("TXT_DESC_MACROSCOPICA"=>$DATA['txt_update']));
         $this->db->trans_complete();
         $this->db->trans_commit();
         return array('status'=>true);
     }
-    
-
 
     public function ultimo_numero_disponible_cancer($variable) {
         $this->db->trans_start();

@@ -13,10 +13,12 @@ class Ssan_histo_monitoriosolicitudes extends CI_Controller {
 
     public function index(){
         $this->output->set_template('blank');
-        $arr_ids_anatomia               =   '';
-        $arr_estados_filtro             =   '0';
-        $var_fecha_inicio               =   date("d-m-Y");
-        $var_fecha_final                =   date("d-m-Y");
+        $arr_ids_anatomia = '';
+        $arr_estados_filtro = '0';
+        $var_fecha_inicio = date("d-m-Y");
+        $var_fecha_final = date("d-m-Y");
+
+        /*
         if(isset($_COOKIE['target']))   {
             $tipo_busqueda              =   $_COOKIE['target'];
             if($tipo_busqueda           === '#_panel_por_fecha'){
@@ -49,26 +51,28 @@ class Ssan_histo_monitoriosolicitudes extends CI_Controller {
             $var_fecha_inicio           =   date("d-m-Y");
             $var_fecha_final            =   date("d-m-Y");
         }
+        */
         #var_dump($arr_ids_anatomia);
         #LOAD_ETAPA_ANALITICA
-        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->load_etapa_analiticaap_paginado(array(
-            "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
-            "usr_session"               =>  explode("-",$this->session->userdata("USERNAME"))[0],
-            "ind_opcion"                =>  $tipo_busqueda,
-            "ind_first"                 =>  1,
-            "data_inicio"               =>  $var_fecha_inicio,
-            "data_final"                =>  $var_fecha_final,
-            "num_fase"                  =>  4,
-            "ind_template"              =>  "ssan_libro_etapaanalitica",
-            "arr_ids_anatomia"          =>  $arr_ids_anatomia,
-            "get_sala"                  =>  $this->get_sala,
-            "txt_titulo"                =>  $this->txt_titulo,
-            "ind_filtros_ap"            =>  $arr_estados_filtro,
-            "ind_order_by"              =>  "0",
-            "v_page_num"                =>  1,      
-            "v_page_size"               =>  10,     
+        $arr_ids_anatomia = [];
+        $tipo_busqueda = '#_panel_por_fecha';
+        $return_data = $this->Ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(
+            "cod_empresa" => $this->session->userdata("COD_ESTAB"),
+            "usr_session" => explode("-",$this->session->userdata("USERNAME"))[0],
+            "ind_opcion" => $tipo_busqueda,
+            "ind_first" => 1,
+            "data_inicio" => $var_fecha_inicio,
+            "data_final" => $var_fecha_final,
+            "num_fase" => 4,
+            "ind_template" => "ssan_libro_etapaanalitica",
+            "arr_ids_anatomia" => $arr_ids_anatomia,
+            "get_sala" => $this->get_sala,
+            "txt_titulo" => $this->txt_titulo,
+            "ind_filtros_ap" => $arr_estados_filtro,
+            "ind_order_by" => "0",
+            "v_page_num" => 1,      
+            "v_page_size" => 10,     
         ));
-        
         #API VOZ
         #$this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES

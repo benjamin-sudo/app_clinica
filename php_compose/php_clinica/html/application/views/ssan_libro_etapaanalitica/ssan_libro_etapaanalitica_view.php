@@ -1,26 +1,21 @@
-<?php
-    #var_dump($resultados['lista_anatomia']);
-    #echo "<hr>";
-    #var_dump($HTML_LI['return_html']);
-?>
 <div class = "info_userdata" 
-    data-fecha_inicio = "<?php echo date("m/d/Y",$date_inicio);?>"
-    data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"
     data-getdata = "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
     data-userdata = "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
-></div>
-
+    data-fecha_inicio = "<?php echo date("m/d/Y",$date_inicio);?>"
+    data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
 <input type="hidden" id="get_sala" name="get_sala" value="<?php echo $txt_sala;?>"/>
 <input type="hidden" id="SERVER_NAME" name="SERVER_NAME" value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
 <form id="load_ingreso_etapa_analitica" method="post" action="#"></form>
 <form id="load_anuncios_anatomia_patologica" method="post" action="#"></form>
 <form id="get_termino_sala_macroscopia" method="post" action="#"></form>
 <form id="update_chat_x_hoja" method="post" action="#"></form>
-
 <div class="grid_head_body">
     <div class="grid_head_body1">
         <div class="GRID_LIBRO_BIOPSIAS_II_MAIN1">
-            <h4 class="title" style="color:#e34f49;margin-left:13px;"><b id="txt_titulo_general"><?php echo $txt_titulo;?></b></h4>
+            <h4 class="title" style="color:#e34f49;margin-left:13px;"><b id="txt_titulo_general">
+                <?php echo $txt_sala == 'analitica' ? '<i class="fa fa-user-md" aria-hidden="true"></i>' : '';?> 
+                <?php echo $txt_titulo;?></b>
+            </h4>
         </div>
     </div>
     <div class="grid_head_body2">
@@ -51,28 +46,28 @@
     </div>
     <div class="grid_head_body4" style="text-align: end;">
         <div class="btn-group" style="padding-right:24px;">
-            <button type="button" class="btn btn-success btn-fill"          id="btn_update_analitica"   onclick="update_etapaanalitica(1)">
+            <button type="button" class="btn btn-success btn-fill" id="btn_update_analitica" onclick="update_etapaanalitica(1)">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
-            <?php if($txt_sala == 'analitica'){?>
-                <!-- firma del patologo -->
-                <button type="button" class="btn btn-danger btn-fill"       id="btn_update_analitica"    onclick="js_gestion_firma()">
-                    <i class="fa fa-id-card-o" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="btn btn-active btn-fill"       id="btn_test_anatomia"       onclick="js_test_ap()" style="display: none">
-                    <i class="fa fa-archive" aria-hidden="true"></i>
-                </button>
-            <?php } ?>
-            <?php if($txt_sala == 'analitica' || $txt_sala == 'salamacroscopia'){?>
-            <button type="button" class="btn btn-primary btn-fill"          id="btn_update_analitica"   onclick="js_star_plantillas(0,'')">
-                <i class="fa fa-comment" aria-hidden="true"></i>
+        <?php if($txt_sala == 'analitica') { ?>
+            <!-- v_firma_del_patologo -->
+            <button type="button" class="btn btn-danger btn-fill" id="btn_update_analitica" onclick="js_gestion_firma()">
+                <i class="fa fa-id-card-o" aria-hidden="true"></i>
             </button>
-            <?php } ?>
-            <button type="button" class="btn btn-info btn-fill"             id="btn_exel_final"         onclick="get_excel()">
-                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+            <button type="button" class="btn btn-active btn-fill" id="btn_test_anatomia" onclick="js_test_ap()" style="display: none">
+                <i class="fa fa-archive" aria-hidden="true"></i>
             </button>
-            <button type="button" class="btn btn-warning btn-fill"          id="btn_exel_closew"        onclick="ver_imagenes_min()">
-                <i class="fa fa-arrows-h" aria-hidden="true"></i>
+        <?php } ?>
+        <?php if($txt_sala == 'analitica' || $txt_sala == 'salamacroscopia'){?>
+            <button type="button" class="btn btn-primary btn-fill" id="btn_update_analitica" onclick="js_star_plantillas(0,'')">
+                <i class="fa fa-comment" aria-hidden="true"></i> 
+            </button>
+        <?php } ?>
+            <button type="button" class="btn btn-info btn-fill" id="btn_exel_final" onclick="get_excel()">
+                <i class="fa fa-file-excel-o" aria-hidden="true"></i> 
+            </button> 
+            <button type="button" class="btn btn-warning btn-fill" id="btn_exel_closew" onclick="ver_imagenes_min()"> 
+                <i class="fa fa-arrows-h" aria-hidden="true"></i> 
             </button>
         </div>
     </div>  

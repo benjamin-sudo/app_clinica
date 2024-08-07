@@ -10,7 +10,7 @@ class Ssan_histo_monitoriosolicitudes_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->db = $this->load->database('oracle_conteiner',true);
+        $this->db = $this->load->database('session',true);
     }
     
 }

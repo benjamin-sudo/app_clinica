@@ -3017,14 +3017,14 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
             aux++;
         }
     });
-
     /*
-    console.error("---------------------------------------------------------------");
-    console.error("   lis_checked -> ",lis_checked," <- ");
-    console.error("   obj_rce_anatomia -> ",obj_rce_anatomia," <- ");
-    console.error("   val_cierre -> ",val_cierre," <- ");
-    console.error("   errores -> ",errores," <- ");
-    console.error("   aux ->  ",aux," ");
+        console.error("---------------------------------------------------------------");
+        console.error("   lis_checked       -> ",lis_checked," <- ");
+        console.error("   obj_rce_anatomia  -> ",obj_rce_anatomia," <- ");
+        console.error("   val_cierre        -> ",val_cierre," <- ");
+        console.error("   errores           -> ",errores," <- ");
+        console.error("   aux               -> ",aux," ");
+        console.error("---------------------------------------------------------------");
     */
     if (op  ==  1){
         var r = '';
@@ -3033,7 +3033,7 @@ function js_guarda_sala_tecnicas(op,id_anatomia){
             url : "ssan_libro_etapaanalitica/get_guardadoprevio_tec_tecnologo",
             beforeSend : function(xhr) { $('#loadFade').modal('show'); },
             dataType : "json",
-            data :  {
+            data : {
                         op : op,
                         contrasena : r,
                         id_anatomia : id_anatomia,

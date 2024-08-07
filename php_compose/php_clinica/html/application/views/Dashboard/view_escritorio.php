@@ -8,32 +8,32 @@
   <meta name="robots" content="all, index, follow"/>
   <meta name="googlebot" content="all, index, follow">
   <title>Clinica Libre</title>
-  <link rel="icon" href="assets/dist/img/anatomia/logo.ico" type="image/x-icon">
+  <link rel="icon" href="Assets/dist/img/anatomia/logo.ico" type="image/x-icon">
   <!-- Bootstrap 5.2 -->
-  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap.min.css" >
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/bootstrap_5/css/bootstrap.min.css" >
   <!-- Bootstrap Icons v1.11.2 -->
   <!--
-    <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
+    <link type="text/css" rel="stylesheet" href="Assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   -->
   <!-- Bootstrap Icons v1.11.2 -->
-  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/icon/bootstrap-icons.css">
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/bootstrap_5/icon/bootstrap-icons.css">
   <!-- FontAwesome Icons -->
-  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/font-awesome.min.css">
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/bootstrap_5/css/font-awesome.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="Assets/dist/css/adminlte.min.css">
   <!-- jalert css -->
-  <link type="text/css" rel="stylesheet" media="screen" href="assets/recursos/jalert/jquery.alerts.css"/>
+  <link type="text/css" rel="stylesheet" media="screen" href="Assets/recursos/jalert/jquery.alerts.css"/>
   <!-- select min  -->
   <!-- ui | 1.12.1 --> 
-  <link rel="stylesheet" href="assets/recursos/css/jquery-ui.css">
+  <link rel="stylesheet" href="Assets/recursos/css/jquery-ui.css">
   <!--  bootstrap-select.min.css -->
-  <link type="text/css" rel="stylesheet" href="assets/recursos/css/bootstrap-select.min.css">
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/css/bootstrap-select.min.css">
   <!-- autocomplete -->
-  <link type="text/css" rel="stylesheet" href="assets/recursos/css/autocomplete.css"  />
-  <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.css"  />
-  <link type="text/css" rel="stylesheet" href="assets/recursos/css/easy-autocomplete.min.css"  />
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/css/autocomplete.css"  />
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/css/easy-autocomplete.css"  />
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/css/easy-autocomplete.min.css"  />
   <!-- css datetimepicker -->
-  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
+  <link type="text/css" rel="stylesheet" href="Assets/recursos/bootstrap_5/css/css_style.css">
   <style>
     #loadFade .modal-content { background-color: #fff; }
     #loadFade .modal-body { text-align: center; min-height: 100px; max-height:200px }
@@ -73,7 +73,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
+      <img src="Assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
       <span class="brand-text font-weight-light">Anatom&iacute;a cl&iacute;nica</span>
     </a>
     <!-- Sidebar -->
@@ -81,7 +81,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="assets/dist/img/anatomia/logo.webp" class="img-circle elevation-2" alt="Imagen Anatomia Patologica">
+          <img src="Assets/dist/img/anatomia/logo.webp" class="img-circle elevation-2" alt="Imagen Anatomia Patologica">
         </div>
         <div class="info">
           <a href="#" class="d-block">Clinica&nbsp;Anatomia (<?php echo $this->session->userdata("COD_ESTAB");?>)</a>
@@ -180,6 +180,7 @@
   <div id="respuesta"></div>
   
   <section>
+    
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -213,6 +214,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="modal_perfil_usuario">
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
@@ -231,49 +233,45 @@
             </div>
         </div>
     </div>
+    
   </section>
-
-  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/jquery.min.js"></script>
-  <!-- jQuery UI - v1.12.0-rc.2  -->
-  <script type="text/javascript" src="assets/recursos/js/jquery-ui.js"></script>
-  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/popper.min.js"></script>
-  <!-- Bootstrap 5.0.1 -->
-  <script type="text/javascript" src="assets/recursos/bootstrap_5/js/bootstrap.min.js"></script>
-  <!-- AdminLTE App -->
-  <script type="text/javascript" src="assets/dist/js/adminlte.min.js"></script>
-  <!-- Validador rut -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js" ></script>
-  <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
-  <!-- jalert y otro -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.alerts.mod.js"></script>
-  <!-- shownotificacion -->
-  <script type="text/javascript" src="assets/recursos/js/bootstrap-notify.js"></script>
-  <!-- web socket -->
-  <script type="text/javascript" src="assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
-  <!-- personalizable --> 
-  <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
-  <!-- moment.min.js -->
-  <!-- moment.js -->
-  <!-- bootstrap-datetimejs -->  
-  <script type="text/javascript" src="assets/recursos/js/moment.min.js"></script>
-  <script type="text/javascript" src="assets/recursos/js/moment.js"></script>
-  <!--  bootstrap-datetimepicker.js -->
-  <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
-  <!-- bootstrap-select.min.js -->
-  <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
-  <!-- Wizard Plugin    -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
-  <!--paginacion bootpage-->
-  <script type="text/javascript" src="assets/recursos/js/jquery.bootpag.min.js"></script>
-  <!-- easy-autocomplete -->
-  <script type="text/javascript" src="assets/recursos/js/jquery.easy-autocomplete.min.js"></script>
-  <!-- PerfectScrollbar  -->
-  <!--
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
-  -->
-
-
-
-
+    <script type="text/javascript" src="Assets/recursos/bootstrap_5/js/jquery.min.js"></script>
+    <!-- jQuery UI - v1.12.0-rc.2  -->
+    <script type="text/javascript" src="Assets/recursos/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="Assets/recursos/bootstrap_5/js/popper.min.js"></script>
+    <!-- Bootstrap 5.0.1 -->
+    <script type="text/javascript" src="Assets/recursos/bootstrap_5/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script type="text/javascript" src="Assets/dist/js/adminlte.min.js"></script>
+    <!-- Validador rut -->
+    <script type="text/javascript" src="Assets/recursos/js/jquery.Rut.js" ></script>
+    <script type="text/javascript" src="Assets/recursos/js/jquery.Rut.min.js"></script>
+    <!-- jalert y otro -->
+    <script type="text/javascript" src="Assets/recursos/js/jquery.alerts.mod.js"></script>
+    <!-- shownotificacion -->
+    <script type="text/javascript" src="Assets/recursos/js/bootstrap-notify.js"></script>
+    <!-- web socket -->
+    <script type="text/javascript" src="Assets/recursos/wsocket_io/4_6_0/socket.io.min.js" ></script>
+    <!-- moment.min.js -->
+    <!-- moment.js -->
+    <!-- bootstrap-datetimejs -->  
+    <script type="text/javascript" src="Assets/recursos/js/moment.min.js"></script>
+    <script type="text/javascript" src="Assets/recursos/js/moment.js"></script>
+    <!--  bootstrap-datetimepicker.js -->
+    <script type="text/javascript" src="Assets/recursos/js/bootstrap-datetimepicker.js"></script>
+    <!-- bootstrap-select.min.js -->
+    <script type="text/javascript" src="Assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
+    <!-- Wizard Plugin    -->
+    <script type="text/javascript" src="Assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
+    <!--paginacion bootpage-->
+    <script type="text/javascript" src="Assets/recursos/js/jquery.bootpag.min.js"></script>
+    <!-- easy-autocomplete -->
+    <script type="text/javascript" src="Assets/recursos/js/jquery.easy-autocomplete.min.js"></script>
+    <!-- PerfectScrollbar  -->
+    <!--
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
+    -->
+    <!-- personalizable --> 
+    <script type="text/javascript" src="Assets/recursos/js/funciones.js" ></script>
   </body>
 </html>

@@ -922,77 +922,77 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     
     public function get_graba_nueva_plantilla(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status_contrasena              =   true;
-        $html                           =   '';
-        $return                         =   [];
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $get_sala                       =   $this->input->post('get_sala');
-        $txt_titulo                     =   $this->input->post('txt_titulo'); 
-        $txt_cuerpo                     =   $this->input->post('txt_cuerpo');  
-        $contrasena                     =   $this->input->post('contrasena');  
-        $arr_user                       =   $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $status_contrasena = true;
+        $html = '';
+        $return = [];
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $get_sala = $this->input->post('get_sala');
+        $txt_titulo = $this->input->post('txt_titulo'); 
+        $txt_cuerpo = $this->input->post('txt_cuerpo');  
+        $contrasena = $this->input->post('contrasena');  
+        $arr_user = $this->Ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0){
-            $return                     =   $this->Ssan_libro_etapaanalitica_model->graba_nueva_plantilla(array( 
-                'empresa'               =>  $empresa,
-                'get_sala'              =>  $get_sala,
-                'txt_titulo'            =>  $txt_titulo,
-                'txt_cuerpo'            =>  $txt_cuerpo,
-                'data_firma'            =>  $arr_user,
-                'session'               =>  $this->session->userdata("USERNAME"),
+            $return = $this->Ssan_libro_etapaanalitica_model->graba_nueva_plantilla(array( 
+                'empresa' => $empresa,
+                'get_sala' => $get_sala,
+                'txt_titulo' => $txt_titulo,
+                'txt_cuerpo' => $txt_cuerpo,
+                'data_firma' => $arr_user,
+                'session' => $this->session->userdata("USERNAME"),
             ));
         } else {
-            $status_contrasena          =  false;
+            $status_contrasena = false;
         }
         $this->output->set_output(json_encode(array(
-            "status_contrasena"         =>  $status_contrasena,
-            "status_session"            =>  true,
-            "html"                      =>  $html,
-            "return"                    =>  $return,
+            "status_contrasena" => $status_contrasena,
+            "status_session" => true,
+            "html" => $html,
+            "return" => $return,
         )));
     }
     
     #up 
     public function new_gestiondeimagenes_fetch_json(){
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $return_data                    =   [];
-        $ID_ANATOMIA                    =   $this->input->post('ID_ANATOMIA');
-        $get_sala                       =   $this->input->post('get_sala');
-        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->ap_subir_imagenprotoclo_ap($empresa,$ID_ANATOMIA,$get_sala);
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $return_data = [];
+        $ID_ANATOMIA = $this->input->post('ID_ANATOMIA');
+        $get_sala = $this->input->post('get_sala');
+        $return_data = $this->Ssan_libro_etapaanalitica_model->ap_subir_imagenprotoclo_ap($empresa,$ID_ANATOMIA,$get_sala);
         $this->output->set_output(json_encode(array(
-            "ID_IMAGEN"                 =>  $return_data,
-            "FILES"                     =>  $_FILES,
-            "ID_AP"                     =>  $ID_ANATOMIA,
-            "txt_sala"                  =>  $get_sala,
+            "ID_IMAGEN" =>  $return_data,
+            "FILES" =>  $_FILES,
+            "ID_AP" =>  $ID_ANATOMIA,
+            "txt_sala" =>  $get_sala,
         )));
     }
 
     public function gestor_imagenes_x_muestras(){
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $ID_ANATOMIA                    =   $this->input->post('ID_ANATOMIA');
-        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->subir_imagenprotoclo_ap_x_muestra([
-            'empresa'                   =>  $empresa,
-            'id_anatomia'               =>  $ID_ANATOMIA,
-            'id_muestra'                =>  $this->input->post('id_muestra'),  
-            'id_casete'                 =>  $this->input->post('id_casete'),
-            'ind_zona'                  =>  $this->input->post('ind_zona'),
-            'tipo_muestra'              =>  $this->input->post('tipo_muestra'),
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $ID_ANATOMIA = $this->input->post('ID_ANATOMIA');
+        $return_data = $this->Ssan_libro_etapaanalitica_model->subir_imagenprotoclo_ap_x_muestra([
+            'empresa' => $empresa,
+            'id_anatomia' => $ID_ANATOMIA,
+            'id_muestra' =>  $this->input->post('id_muestra'),  
+            'id_casete' =>  $this->input->post('id_casete'),
+            'ind_zona' =>  $this->input->post('ind_zona'),
+            'tipo_muestra' =>  $this->input->post('tipo_muestra'),
         ]);
-        $RETURN["ID_IMAGEN"]            =   $return_data;
-        $RETURN["FILES"]                =   $_FILES;
-        $RETURN["ID_AP"]                =   $ID_ANATOMIA;
+        $RETURN["ID_IMAGEN"] = $return_data;
+        $RETURN["FILES"] = $_FILES;
+        $RETURN["ID_AP"] = $ID_ANATOMIA;
         $this->output->set_output(json_encode($RETURN));
     }
     
     public function actualiza_chat_all(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $option                         =   $this->input->post('option'); 
-        $id_anatomia                    =   $this->input->post('id_anatomia');
-        $txt_mensaje                    =   $this->input->post('txt_mensaje');
-        $return_data                    =   $this->Ssan_libro_etapaanalitica_model->graba_chat_anatomia(
+        $option = $this->input->post('option'); 
+        $id_anatomia = $this->input->post('id_anatomia');
+        $txt_mensaje = $this->input->post('txt_mensaje');
+        $return_data = $this->Ssan_libro_etapaanalitica_model->graba_chat_anatomia(
         array(
-            "id_anatomia"               =>  $id_anatomia,
-            "txt_mensaje"               =>  $txt_mensaje,
-            "option"                    =>  $option,
+            "id_anatomia" => $id_anatomia,
+            "txt_mensaje" => $txt_mensaje,
+            "option" => $option,
         ));
         $this->output->set_output(json_encode(array(
             'txt_anatomia' => $this->input->post('txt_mensaje'),
@@ -1003,7 +1003,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             'ip' =>  $this->session->userdata["IP"],
         )));
     }
-    
     
     #rce patologo
     public function formulario_main_analitico(){

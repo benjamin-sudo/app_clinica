@@ -3289,27 +3289,24 @@ function js_busqueda_num_cancer(ind_nof_cancer){
         $("#tr_num_cancer").show();
         $('#loadFade').modal('show');
         $.ajax({ 
-            type                :   "POST",
-            url                 :   "ssan_libro_etapaanalitica/ultimo_numero_disponible_cancer",
-            dataType            :   "json",
-            beforeSend          :   function(xhr)   {   
-                                                        console.log("xhr->",xhr);
-                                                    },
-            data                :                   {   id_biopsia : $("#id_anatomia").val() },
-            error		    :   function(errro) { 
-                                                        console.log(errro);  
-                                                        console.log(errro.responseText);    
-                                                        $('#loadFade').modal('hide');
-                                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    },
-            success             :   function(aData) { 
+            type : "POST",
+            url : "ssan_libro_etapaanalitica/ultimo_numero_disponible_cancer",
+            dataType : "json",
+            data : { id_biopsia : $("#id_anatomia").val() },
+            error : function(errro) { 
+                                        console.log(errro);  
+                                        console.log(errro.responseText);    
+                                        $('#loadFade').modal('hide');
+                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    },
+            success : function(aData){ 
                                                         
-                                                        $('#loadFade').modal('hide');
-                                                        $("#num_interno").val('');
-                                                        var num_last    =   aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
-                                                        showNotification('top','center','Ultimo N&deg; disponible notificaci&oacute;n cancer <b>'+num_last+'</b>',1,'fa fa-info');
-                                                        $("#n_notificacion_cancer").val(num_last);
-                                                    }, 
+                                        $('#loadFade').modal('hide');
+                                        $("#num_interno").val('');
+                                        let num_last = aData.data_numero.DATA_NUMBER[0]['V_LAST_NUMERO'];
+                                        showNotification('top','center','Ultimo N&deg; disponible notificaci&oacute;n cancer <b>'+num_last+'</b>',1,'fa fa-info');
+                                        $("#n_notificacion_cancer").val(num_last);
+                                    }, 
         });
     } else {
         $("#tr_num_cancer").hide();
