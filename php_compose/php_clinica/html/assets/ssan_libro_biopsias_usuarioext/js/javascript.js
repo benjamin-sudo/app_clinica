@@ -9,15 +9,15 @@ $(document).ready(function(){
         maxDate                 :   new Date(),
         defaultDate		        :   new Date(new Date().setDate((todayDate)-(0))), 
         icons			        :   {
-                                        time        :   'fa fa-clock-o',
-                                        date        :   'fa fa-calendar',
-                                        up          :   'fa fa-chevron-up',
-                                        down        :   'fa fa-chevron-down',
-                                        previous    :   'fa fa-chevron-left',
-                                        next        :   'fa fa-chevron-right',
-                                        today       :   'fa fa-screenshot',
-                                        clear       :   'fa fa-trash',
-                                        close       :   'fa fa-remove',
+                                        time : 'fa fa-clock-o',
+                                        date : 'fa fa-calendar',
+                                        up : 'fa fa-chevron-up',
+                                        down : 'fa fa-chevron-down',
+                                        previous : 'fa fa-chevron-left',
+                                        next : 'fa fa-chevron-right',
+                                        today : 'fa fa-screenshot',
+                                        clear : 'fa fa-trash',
+                                        close : 'fa fa-remove',
                                     }
     }).on('dp.change',function(e){ 
         ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
@@ -55,9 +55,24 @@ $(document).ready(function(){
     });
     $("#modal_nuevo_paciente").on("hidden.bs.modal",function(e){ 
         js_deshabilitarInputs();
+        $("#txt_new_run").val('');
+        habilitarInputPorId('btn_nuevo_paciente');
+        $("#btn_nuevo_paciente").attr("onclick","js_agregapaciente()");
+        deshabilitarInputPorId('btn_confirmanuevopaciente');
+        $("#btn_confirmanuevopaciente").attr("onclick","");
+        ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
+        $("#txtNombre").val('');
+        $('#txtApellidoPaterno').val('');
+        $('#txtApellidoMaterno').val('');
+        $('#txtFechaNacimineto').val('');
+        $("#estado_civil").val('');
+        $('#txtDireccion').val('');
+        $('#t_celular').val('');
+        $("#txtNum_dire").val('');
+        $('#cboTippac').val('T');
+        $("#trRutTitular").hide();
     });
 });
-
 
 function js_deshabilitarInputs() {
     let elements = document.querySelectorAll('.table input, .table select, .table button');
@@ -87,6 +102,9 @@ function habilitarInputPorId(id) {
 }
 
 function js_agregapaciente(){
+    let v_busq_rut = $("#busq_rut").val();
+    console.log("v_busq_rut -> ",v_busq_rut);
+    if (v_busq_rut != ''){  }
     $('#txt_new_run').Rut({
         format_on : 'keyup',
         on_error : function() {   
@@ -99,8 +117,9 @@ function js_agregapaciente(){
         },
         on_success : function() { 
             $("#txt_new_run").css('border-color',''); 
-            $("#btn_nuevo_paciente").attr("onclick","js_buscarpacientesiexiste()");
             js_buscarpacientesiexiste();
+            //habilitarInputPorId("btn_nuevo_paciente");
+            //$("#btn_nuevo_paciente").attr("onclick","js_buscarpacientesiexiste()");
         },
     });
     js_deshabilitarInputs();
@@ -123,19 +142,20 @@ function js_buscarpacientesiexiste(){
                                     setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 },
         success : function(aData) {  
-                                        console.error(" success -> ",aData);
-                                        let arr_datos = aData.return_data.arr;
-                                        if(aData.status){
-                                            if (arr_datos.length>0){
-                                                jError("El Paciente ya existe","Clinica Libre");
-                                                $("#modal_nuevo_paciente").modal('hide');
-                                            } else {
-                                                js_habilitarInputs();
-                                                $("#btn_nuevo_paciente").attr("onclick","js_nuevopaciente()");
-                                            }
+                                    console.error(" success -> ",aData);
+                                    let arr_datos = aData.return_data.arr;
+                                    if(aData.status){
+                                        if (arr_datos.length>0){
+                                            jError("El Paciente ya existe","Clinica Libre");
+                                            $("#modal_nuevo_paciente").modal('hide');
+                                        } else {
+                                            js_habilitarInputs();
+                                            habilitarInputPorId('btn_confirmanuevopaciente');
+                                            $("#btn_confirmanuevopaciente").attr("onclick","js_nuevopaciente()");
                                         }
-                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                    }, 
+                                    }
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                }, 
      });
 }
 
@@ -144,127 +164,139 @@ function js_nuevopaciente(){
     var strMsg='';
     var prevision = 'V';
     var num_ficha = '0000';
-    
-    $("#txtNombre").css( "border-color","" );
+        $("#txtNombre").css( "border-color","" );
     if($("#txtNombre").val()==''){
-    strMsg += '\n - Nombres Vacio';
-    $("#txtNombre" ).css( "border-color","red" );
+        strMsg += '\n - Nombres Vacio';
+        $("#txtNombre" ).css( "border-color","red" );
     }
 
     $("#txtApellidoPaterno").css( "border-color","" );
     if($("#txtApellidoPaterno" ).val()==''){
-    strMsg += '\n - Apellido Paterno Vacio';
-    $("#txtApellidoPaterno" ).css( "border-color","red" );
+        strMsg += '\n - Apellido Paterno Vacio';
+        $("#txtApellidoPaterno" ).css( "border-color","red" );
     }
 
     $("#txtApellidoMaterno").css( "border-color","" );
     if($("#txtApellidoMaterno").val()=='') {
-    strMsg += '\n - Apellido Materno Vacio';
-    $("#txtApellidoMaterno" ).css( "border-color","red" );
+        strMsg += '\n - Apellido Materno Vacio';
+        $("#txtApellidoMaterno" ).css( "border-color","red" );
     }
 
     $("#txtFechaNacimineto").css( "border-color","" );
     if($("#txtFechaNacimineto").val()=='') {
-    strMsg += '\n - Fecha De Nacimiento Vacia';
-    $("#txtFechaNacimineto" ).css( "border-color","red" );
+        strMsg += '\n - Fecha De Nacimiento Vacia';
+        $("#txtFechaNacimineto" ).css( "border-color","red" );
     }
 
     $("#estado_civil").css( "border-color","" );
     if($("#estado_civil").val()=='0'){
-    strMsg += '\n - Seleccione Estado Civil';
-    $("#estado_civil" ).css( "border-color","red" );
+        strMsg += '\n - Seleccione Estado Civil';
+        $("#estado_civil" ).css( "border-color","red" );
     }
 
     $("#txtDireccion").css( "border-color","" );
     if($("#txtDireccion").val()==''){
-    strMsg += '\n - Direccion Vacia';
-    $("#txtDireccion" ).css( "border-color","red" );
+        strMsg += '\n - Direccion Vacia';
+        $("#txtDireccion" ).css( "border-color","red" );
     }
 
     $("#t_celular").css( "border-color","" );
     if($("#t_celular").val()=='') {
-    strMsg += '\n - Describir Telefono Movil';
-    $("#t_celular").css( "border-color","red");
+        strMsg += '\n - Describir Telefono Movil';
+        $("#t_celular").css( "border-color","red");
     }
 
     $("#txtNum_dire").css( "border-color","" );
     if($("#txtNum_dire").val()=='') {
-    strMsg += '\n - Describir Numero de Direccion';
-    $("#txtNum_dire" ).css( "border-color","red");
+        strMsg += '\n - Describir Numero de Direccion';
+        $("#txtNum_dire" ).css( "border-color","red");
     }
 
     $("#txtRuttit").css( "border-color","");
     $("#txtDvtit").css( "border-color","");
     if($("#cboTippac").val()=='D') {
     if ($("#txtRuttit" ).val()=='' || $("#txtDvtit" ).val()==''){
-            strMsg += '\n - Dependiente O Carga';
+        strMsg += '\n - Dependiente O Carga';
             $("#txtRuttit" ).css( "border-color","red");
             $("#txtDvtit").css( "border-color","red");
-            }
+        }
     }
             
-if(strMsg!= ''){
-        jError(strMsg,"Error");   return;
-  } else {
-    
+    if(strMsg!= ''){
+        jError(strMsg,"Error");   
+        return false;
+    } else {
+
+        let txt_new_run = $("#txt_new_run").val();
+        let textoSinPuntos = txt_new_run.replace(/\./g, '');
+        let arrayDividido = textoSinPuntos.split('-');
+
         var rut_titul='';	
         var dv_titul='';
-    
         if($("#cboTippac").val()=='D') {
             rut_titul = $("#txtRuttit").val();
             dv_titul = $("#txtDvtit").val();
         } else {
-            rut_titul = RUT;
-            dv_titul = DV;	
+            rut_titul =  arrayDividido[0];
+            dv_titul =  arrayDividido[1];
         }
-        
-        jPrompt('Con esta acci&oacute;n se proceder&aacute; a crear nuevo paciente en la red SSAN.<br /><br />&iquest;Est&aacute; seguro de continuar?', '', 'Confirmaci\u00f3n', function (r) {
-            if (r) {
-                   $.ajax({ 
-                        type : "POST",
-                        url : "ssan_spab_gjefepabellon/creanuevoPacienteSSAN",
-                        dataType : "json",
-                        data : {
-                                    contrasena          : r,
-                                    rut_pac             : RUT,
-                                    rut_dv              : DV,
-                                    txtNombre           : $("#txtNombre").val(),
-                                    txtApellidoPaterno  : $('#txtApellidoPaterno').val(),
-                                    txtApellidoMaterno  : $('#txtApellidoMaterno').val(),
-                                    txtFechaNacimineto  : $('#txtFechaNacimineto').val(),
-                                    estado_civil        : $("#estado_civil").val(),
-                                    txtDireccion        : $('#txtDireccion').val(),
-                                    t_celular           : $('#t_celular').val(),
-                                    txtNum_dire         : $("#txtNum_dire").val(),
-                                    rdosexo             : $('input:radio[name=rdosexo]:checked').val(),
-                                    cboTippac           : $('#cboTippac').val(),
-                                    txtRuttit           : rut_titul,
-                                    dv_titul            : dv_titul,
-                                },
-                     
-                        error : function(errro){  console.log(errro.responseText); alert(errro.responseText); },
-                        success : function(aData){ 
-                                    if (aData[0]['validez']){
-                                        $('#creanuevopaciente').modal('hide');
-                                        jAlert('Su solicitud ha sido Creada',"Confirmac\u00f3on",function (r){
-                                            if(r){ busqueda_parametros(2); }
-                                        });
-                                    } else { 
-                                        jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
-                                    }
-                                }, 
-                    });
-        } else {
-            jError("Contraseña Vacia","Error - ESSISAN"); 
-        }
-    });
+       
+        console.log("arrayDividido  ->  ",arrayDividido);
+        $('#loadFade').modal('show'); 
+        $.ajax({ 
+            type : "POST",
+            url : "ssan_bdu_creareditarpaciente/creanuevoPacienteSSAN",
+            dataType : "json",
+            data : {
+                //contrasena : r,
+                rut_pac : arrayDividido[0],
+                rut_dv : arrayDividido[1],
+                txtNombre : $("#txtNombre").val(),
+                txtApellidoPaterno : $('#txtApellidoPaterno').val(),
+                txtApellidoMaterno : $('#txtApellidoMaterno').val(),
+                txtFechaNacimineto : $('#txtFechaNacimineto').val(),
+                estado_civil : $("#estado_civil").val(),
+                txtDireccion : $('#txtDireccion').val(),
+                t_celular : $('#t_celular').val(),
+                txtNum_dire : $("#txtNum_dire").val(),
+                rdosexo : $('input:radio[name=rdosexo]:checked').val(),
+                cboTippac : $('#cboTippac').val(),
+                txtRuttit : rut_titul,
+                dv_titul : dv_titul,
+            },
+            error : function(errro){  
+                console.log("errro  ->",errro);
+                jError("Error en la transaccion ","Clinica Libre"); 
+                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            },
+            success : function(aData){
+                        console.log("aData  ->  ",aData);
+                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                        /*
+                        if (aData[0]['validez']){
+                            $('#creanuevopaciente').modal('hide');
+                            jAlert('Su solicitud ha sido Creada',"Confirmac\u00f3on",function (r){
+                                if(r){ 
+                                    busqueda_parametros(2); 
+                                }
+                            });
+                        } else { 
+                            jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
+                        }
+                        */
+            }, 
+        });
+    }
 }
+
+function revisaTitular(){
+    if (document.getElementById("cboTippac").value=='D'){
+        $('#trRutTitular').show();
+    } else {
+        $('#trRutTitular').hide();
+    }
 }
-
-
-
-
-
+	
 function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
     $.ajax({ 
         type : "POST",

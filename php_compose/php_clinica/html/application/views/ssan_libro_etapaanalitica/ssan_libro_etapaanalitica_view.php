@@ -233,13 +233,11 @@
         <ul class="list-group lista_etapa_analitica busqueda_por_persona html_busqueda_por_persona" id="busqueda_por_persona" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_persona"];?> 
         </ul>
-
         <div class="grid_contenedo_paginado">
             <div class="grid_contenedo_paginado1">&nbsp;</div>
             <div class="grid_contenedo_paginado1"><div class="btn-group anatomia_pagination" id="anatomia_pagination"></div></div>
             <div class="grid_contenedo_paginado1">&nbsp;</div>
         </div>
-
     </div>
     <div class="grid_etapaanalitica_3" style="display:none"> 
         <div class="card" style="margin-bottom: 6px;">

@@ -1,44 +1,44 @@
 <style>
-    .PANEL_BUSQUEDAPACIENTE         {
-        display                     :   grid;
-        grid-template-columns       :   60% 40%;
-        grid-column-gap             :   5px;
-        justify-items               :   stretch;
-        align-items                 :   center;
-        margin-bottom               :   30px;
-        margin-top                  :   10px;
+    .PANEL_BUSQUEDAPACIENTE {
+        display : grid;
+        grid-template-columns : 60% 40%;
+        grid-column-gap : 5px;
+        justify-items : stretch;
+        align-items : center;
+        margin-bottom : 30px;
+        margin-top : 10px;
     }
 
-    .grid_center_paginacion         {
-        display                     :   grid;
-        grid-template-columns       :   1fr auto 1fr;
-        gap                         :   8px;
-        justify-items               :   center;
-        align-items                 :   center;
+    .grid_center_paginacion {
+        display : grid;
+        grid-template-columns : 1fr auto 1fr;
+        gap : 8px;
+        justify-items : center;
+        align-items : center;
     }
 
-    .pagination                     {
-        margin                      :   12px 0px;
+    .pagination {
+        margin : 12px 0px;
     }
 
-    .grid_footer_button             {
-        display                     :   grid;
-        grid-template-columns       :   1fr auto;
-        margin-top                  :   10px;
+    .grid_footer_button {
+        display : grid;
+        grid-template-columns : 1fr auto;
+        margin-top : 10px;
     }
 
-    .grid_radio_tipopaciente        {
-        display                     :   grid;
-        grid-template-columns       :   1fr 1fr;
-        margin-left                 :   23px;
+    .grid_radio_tipopaciente {
+        display :   grid;
+        grid-template-columns : 1fr 1fr;
+        margin-left : 23px;
     }
 
-    .border-red                     {
-        border                      :   1px solid red;
+    .border-red {
+        border : 1px solid red;
     }
 
-    .control-label                  {
-        margin-bottom               :   2px;
+    .control-label {
+        margin-bottom : 2px;
     }
 </style>
 
@@ -380,42 +380,42 @@
 
 
 <script>
-$(document).ready(function () {
+$(document).ready(function(){
     $('#busq_rut').Rut({
-        format_on   :   'keyup',
-        on_error    :   function()  {   
-                                        jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
-                                        console.log(this);
-                                        $("#busq_rut").val('');
-                                    },
-        on_success  :   function()  { 
-                                        console.log("  this -> ",this);
-                                        console.log(this.id);
-                                    },
+        format_on : 'keyup',
+        on_error : function() {   
+                                    jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
+                                    console.log(this);
+                                    $("#busq_rut").val('');
+                                },
+        on_success : function()  { 
+                                    console.log("  this -> ",this);
+                                    console.log(this.id);
+                                },
     });
     $('#busq_rutfonasa').Rut({
-        format_on   :   'keyup',
-        on_error    :   function()  {   
-                                        jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
-                                        console.log(this);
-                                        $("#busq_rutfonasa").val('');
-                                    },
-        on_success  :   function()  { 
-                                        console.log("  this -> ",this);
-                                        console.log(this.id);
-                                    },
+        format_on : 'keyup',
+        on_error : function()  {   
+                                    jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
+                                    console.log(this);
+                                    $("#busq_rutfonasa").val('');
+                                },
+        on_success  : function()  { 
+                                    console.log("  this -> ",this);
+                                    console.log(this.id);
+                                },
     });
 
     $('#myWizard').bootstrapWizard({
         'nextSelector'      :   '.next-step',
         'previousSelector'  :   '.prev-step',
         'onNext'            :   function(tab, navigation, index) {
-            
-            console.log("   ##############################      ");
-            console.log("   tab         ->  ",tab,"             ");
-            console.log("   navigation  ->  ",navigation,"      ");
-            console.log("   index       ->  ",index,"           ");
-            console.log("   ##############################      ");
+
+            console.log("   ############################## ");
+            console.log("   tab -> ",tab," ");
+            console.log("   navigation -> ",navigation," ");
+            console.log("   index -> ",index," ");
+            console.log("   ############################## ");
             
             if (index == 1){
                 let PACIENTE_SEL    =   $("input[name='SELECCIONA_PACIENTE']:checked").val();
@@ -520,12 +520,12 @@ $(document).ready(function () {
             $('#myWizard').find('.progress-bar').css({width:$percent+'%'});
         }
     });
+    localStorage.setItem("ind_tipo_busqueda_paciente","home-tab");
+    $('#myTab li').on('shown.bs.tab', function (event) {
+        var activeTab = $(event.target).attr('id');
+        localStorage.setItem("ind_tipo_busqueda_paciente",activeTab);
+    });
 });
-
-
-
-
-
 
 function validarPasoActual(index) {
     // Simplemente devuelve true en este ejemplo. Aquí debes implementar tu lógica de validación.
@@ -552,8 +552,8 @@ function cambiaTip(tipo){
 }
 
 function cambiaDoc(tipoDoc){
-    //1   -	DNI / PASAPORTE
-    //2   -	ID FONASA
+    //1 - DNI / PASAPORTE
+    //2 - ID FONASA
     console.log("tipoDoc->",tipoDoc);
     $("#iden_idfonasa").hide();
     $("#iden_dni").hide();
@@ -573,15 +573,15 @@ function limpiar_card_busqueda(){
 }
 
 function selecionapaciente(this_){
-    var DATA_PACIENTE                                   =   $("#"+this_.id).data().bloque;
+    var DATA_PACIENTE = $("#"+this_.id).data().bloque;
     //console.log("--------------------------------------------");
-    console.log("DATA_PACIENTE  ->",DATA_PACIENTE);
-    console.log("this_          ->",this_);
-    console.log("this_id        ->",this_.id);
+    //console.log("DATA_PACIENTE ->",DATA_PACIENTE);
+    //console.log("this_ ->",this_);
+    //console.log("this_id ->",this_.id);
     //console.log("--------------------------------------------");
     $("#DATA_PACIENTE_TEMPLATE").removeData();
     $("#DATA_PACIENTE_TEMPLATE").data(DATA_PACIENTE);
-    document.getElementById("btn-next").disabled        =   false;
+    document.getElementById("btn-next").disabled = false;
 }
 
 function buscar(OP,LIM_INI){
@@ -591,33 +591,35 @@ function buscar(OP,LIM_INI){
     $("#busq_name").css("border-color","");
     $("#busq_apellidoP").css("border-color","");
     $("#busq_apellidoM").css("border-color","");
-    
     $("#resultados_busquedapac,#new_paginacion").hide();
     $("#msj_busqueda").show();
-
+    
     document.getElementById("BTN_BUSQ_PAC_1").disabled = true;
     document.getElementById("BTN_DELETE_PAC_1").disabled = true;
     document.getElementById("BTN_BUSQ_PAC_2").disabled = true;
     document.getElementById("BTN_DELETE_PAC_2").disabled = true;
     
-    var tipoEx		    =   $("input[name='tipoEx']:checked").val();
-    var tipoPac		    =   $("input[name='tipPac']:checked").val();
-    var rut             =   tipoPac=='0'?$("#busq_rut").val():$("#busq_rutfonasa").val();
-    var pasaporte       =   $("#busq_dni").val();
-    var nombre		    =   $("#busq_name").val();
-    var apellidoP       =   $("#busq_apellidoP").val();
-    var apellidoM       =   $("#busq_apellidoM").val();
-    var numxpag		    =   10;
+    let tipoEx = $("input[name='tipoEx']:checked").val();
+    let tipoPac = $("input[name='tipPac']:checked").val();
+    let rut = tipoPac=='0'?$("#busq_rut").val():$("#busq_rutfonasa").val();
+    let pasaporte = $("#busq_dni").val();
+    let nombre = $("#busq_name").val();
+    let apellidoP = $("#busq_apellidoP").val();
+    let apellidoM = $("#busq_apellidoM").val();
+    let numxpag = 10;
+    let tabs_activado = localStorage.getItem("ind_tipo_busqueda_paciente"); 
+
     /*
-        console.log("-------------------------------------------------------");
-        console.log(" --------> rut         -----> ",rut);
-        console.log(" --------> nombre      -----> ",nombre);
-        console.log(" --------> apellidoP   -----> ",apellidoP);
-        console.log(" --------> apellidoM   -----> ",apellidoM);
-        console.log(" --------> tipoPac     -----> ",tipoPac);
-        console.log(" --------> tipoEx      -----> ",tipoEx);
-        console.log(" --------> pasaporte   -----> ",pasaporte);
-        console.log("-------------------------------------------------------");
+        console.error("######################################################");
+        console.error(" --------> tabs_activado -----> ",tabs_activado);
+        console.error(" --------> rut           -----> ",rut);
+        console.error(" --------> nombre        -----> ",nombre);
+        console.error(" --------> apellidoP     -----> ",apellidoP);
+        console.error(" --------> apellidoM     -----> ",apellidoM);
+        console.error(" --------> tipoPac       -----> ",tipoPac);
+        console.error(" --------> tipoEx        -----> ",tipoEx);
+        console.error(" --------> pasaporte     -----> ",pasaporte);
+        console.error("-------------------------------------------------------");
     */
     //FORMATEO RUT PUNTOS EN INPUT
     if(rut!=''){
@@ -625,17 +627,13 @@ function buscar(OP,LIM_INI){
         rut = rut.split('-');
         rut = rut[0];
     }
-    var tabs_activado = localStorage.getItem("ind_tipo_busqueda_paciente"); 
-    //console.log("-----------------------------------------------------------");
-    //console.log("tabs     ->  ",tabs_activado);
-    //console.log("-----------------------------------------------------------");
-    var valida =   0;
-    if(tabs_activado ==  '#DIV_BUSQUEDA_PARAMETROS'){
+    var valida = 0;
+    if(tabs_activado == 'profile-tab'){
         if (nombre != '' || apellidoP != '' || apellidoM != '') {
-            valida          =   1;
+            valida = 1;
         } 
-        rut =   '';
-        pasaporte =   '';
+        rut = '';
+        pasaporte = '';
     } else {
         if (rut != '' || pasaporte != '') {
             valida = 1;
@@ -644,13 +642,6 @@ function buscar(OP,LIM_INI){
         apellidoP = '';
         apellidoM = '';
     }
-    /*
-    if ((rut!= '' || nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 0)) {
-        valida              =   1;
-    } else if ((rut != '' || pasaporte != '' || nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 1)){
-        valida              =   1;
-    }
-    */
     if (valida === 0) {
         jError("Debe Ingresar a lo menos un par&aacute;metro para la b&uacute;squeda","Restricci\u00f3n");
         $("#busq_rut").css("border-color","red");
@@ -661,20 +652,15 @@ function buscar(OP,LIM_INI){
         $("#busq_apellidoM").css("border-color","red");
         $("#resultados_bdu").html('');
         $("#msj_load_body,#result").hide();
-        $("#msj_load").remove();
         $("#resultados_busquedapac").show();
+        $("#msj_load").remove();
         $("#resultados").html('');
-        document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
-        document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
-        document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
-        document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
+        document.getElementById("BTN_BUSQ_PAC_1").disabled = false;
+        document.getElementById("BTN_DELETE_PAC_1").disabled = false;
+        document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
+        document.getElementById("BTN_DELETE_PAC_2").disabled = false;
     } else {
-        $("#msj_busqueda").html(`<tr id="msj_load_body">
-                <td style="text-align:center" colspan="11">
-                    <i class="fa fa-cog fa-spin fa-2x fa-fw"></i>
-                    <span class="sr-only"></span><b> BUSCANDO...</b>
-                </td>
-            </tr>`);
+        $("#msj_busqueda").html(`<tr id="msj_load_body"><td style="text-align:center" colspan="11"><i class="fa fa-cog fa-spin fa-2x fa-fw"></i><span class="sr-only"></span><b> BUSCANDO...</b></td></tr>`);
         $.ajax({ 
             type : "POST",
             url : "ssan_bdu_creareditarpaciente/buscarPac_resumido",
@@ -687,7 +673,7 @@ function buscar(OP,LIM_INI){
                         pasaporte : pasaporte,
                         nombre : nombre,
                         apellidoP : apellidoP,
-                        apellidoM :   apellidoM,
+                        apellidoM : apellidoM,
                         LIM_INI : LIM_INI,
                         numxpag : numxpag,
                         OP : OP,
@@ -703,12 +689,9 @@ function buscar(OP,LIM_INI){
                                         document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
                                         document.getElementById("BTN_DELETE_PAC_2").disabled = false;
                                         jAlert("Error General, Consulte Al Administrador"); 
-                                        //("#resultados_busquedapac")
                                     },
             success : function(aData) {
-                                        console.error("##########################################");
                                         console.error("aData -> ",aData);
-                                        console.error("##########################################");
                                         $("#msj_busqueda").html('');
                                         $("#msj_load").remove();
                                         $("#resultados").html('');
@@ -718,9 +701,12 @@ function buscar(OP,LIM_INI){
                                         document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
                                         document.getElementById("BTN_DELETE_PAC_2").disabled = false;
                                         if(AjaxExtJsonAll(aData.json)){   
-                                            if (aData.count == 0){
+                                            if (aData.count === 0){
                                                 $("#resultados_busquedapac").show();
                                                 $("#btn_nuevo_paciente").show();
+                                            } else {
+                                                $("#resultados_busquedapac").hide();
+                                                $("#btn_nuevo_paciente").hide();
                                             }
                                         }
                                     }, 
@@ -729,8 +715,5 @@ function buscar(OP,LIM_INI){
     }
 }
 
-function limpiar_card_busqueda(){
-    localStorage.setItem("ind_tipo_busqueda_paciente","#DIV_BUSQUEDA_PAC_NUMERO");
-    $('.main_busqueda_paciente a[href="#DIV_BUSQUEDA_PAC_NUMERO"]').tab('show');
-}
+
 </script>

@@ -3707,12 +3707,9 @@ OBS_RECHAZO,
         }
         
         public function busquedaLastNumfichae(){  
-                $sql= "SELECT NUM_CORREL
-                        FROM ADMIN.GG_TCORREL
-                        WHERE id_correl = 'NUM_FICHAE'
-                        FOR UPDATE
-                        ";
-                return $sql;
+            #$sql= "SELECT NUM_CORREL FROM ADMIN.GG_TCORREL WHERE id_correl = 'NUM_FICHAE' FOR UPDATE ";
+            $sql = "SELECT MAX(NUM_FICHAE) AS NUM_CORREL FROM ADMIN.GG_TGPACTE";
+            return $sql;
         }
                             
         public function UpdateLastNumfichae($num_fichae){

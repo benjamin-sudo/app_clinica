@@ -74,8 +74,8 @@
                         <thead>
                             <tr>
                                 <th width="2%"  scope="col" style="height: 40px;">#</th>
-                                <th width="20%" scope="col">INFO. PACIENTE</th>
-                                <th width="20%" scope="col">INFO. MEDICO</th>
+                                <th width="20%" scope="col">INFO PACIENTE</th>
+                                <th width="20%" scope="col">INFO MEDICO</th>
                                 <th width="20%" scope="col">DATOS SOLICITUD</th>
                                 <th width="15%" scope="col" style="text-align: center">ESTADO</th>
                                 <th width="15%" scope="col" style="text-align: center">FECHA</th>
@@ -97,7 +97,7 @@
 <section>
 
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">
@@ -310,7 +310,7 @@
                                 <b>Fecha de nacimiento</b>
                             </td>
                             <td>
-                                <input type="text" class="form-control input-sm" onKeyUp="javascript:mascara(this,'/',patron,true)"   id="txtFechaNacimineto" name="txtFechaNacimineto" style="TEXT-TRANSFORM: uppercase;width: 20%;"   maxlength="10" onBlur="validaFechaDDMMAAAA($(this).val());">
+                                <input type="date" class="form-control input-sm" id="txtFechaNacimineto" name="txtFechaNacimineto" max="<?php echo date('Y-m-d');?>" min="<?php echo date('Y-m-d', strtotime('-120 years'));?>" style="width: 132px;">
                             </td>
                         </tr>
                         <tr class="formulario">
@@ -407,8 +407,17 @@
                                 <b>RUN Titular</b>
                             </td>
                             <td>
-                                <input name="txtRuttit" type="text" id="txtRuttit" onKeyPress="return IsNumber(event);" size="8" maxlength="8"> - 
-                                <input name="txtDvtit" type="text" id="txtDvtit" onKeyPress="return IsDigitoVerificador(event);" value="" size="1" maxlength="1"> 
+                                <div class="grid_run_titular">
+                                    <div class="grid_run_titular1">
+                                        <label for="txtRuttit">RUT:</label>
+                                        <input type="text" class="form-control input-sm" name="txtRuttit" id="txtRuttit" onKeyPress="return IsNumber(event);" size="8" maxlength="8" style="width: 120px;">
+                                    </div>
+                                    <div class="grid_run_titular2"><b>-</b></div>
+                                    <div class="grid_run_titular3"> 
+                                        <label for="txtDvtit">DV:</label>
+                                        <input type="text" class="form-control input-sm" name="txtDvtit" id="txtDvtit" onKeyPress="return IsDigitoVerificador(event);" size="1" maxlength="1" style="width: 55px;">
+                                    </div>
+                                </div>
                                 <input type="button" name="btnConsultarPacientePrevisionales" id="btnConsultarPacientePrevisionales" onClick="buscaTitular();" value="Buscar" style="display:none">
                             </td>
                         </tr>
@@ -419,7 +428,7 @@
                     <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
                         <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
                     </button>
-                    <button type="button" class="btn btn-small btn-success btn-fill" id="btn_nuevo_paciente" disabled>
+                    <button type="button" class="btn btn-small btn-success btn-fill" id="btn_confirmanuevopaciente" disabled>
                         <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;NUEVO&nbsp;PACIENTE
                     </button>
                 </div>

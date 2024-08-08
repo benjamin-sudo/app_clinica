@@ -1,26 +1,21 @@
 $(document).ready(function(){
-
     $('#rut').Rut({
         on_error : function(){ jAlert('El Rut ingresado es Incorrecto. '+$("#rut").val(), 'Rut Incorrecto'); console.log($("#rut").val());  $("#rut").css('border-color','red'); $("#rut").val('') },
         on_success : function(){  $("#rut").css('border-color','red'); console.log($("#rut").val()); },
         format_on : 'keyup'
     });
-    
     $('#txRutTit').Rut({
         on_error    :	function(){ jAlert('El Rut ingresado es Incorrecto. '+$("#txRutTit").val(),'Rut Incorrecto'); console.log($("#txRutTit").val()); $("#txRutTit").css('border-color','red');  $("#txRutTit").val('')},
         on_success  :	function(){ console.log($("#txRutTit").val()); $("#txRutTit").css('border-color',''); },
         format_on   :	'keyup'
     });
-    
     $("input[name=tipPac]:radio").change(function(){ 
         $("#result").hide(); 
         $("#formUser").hide();   
     });
-    
     $("#modalExtranjero").on('hidden.bs.modal',function(e){ 
         $("#HTML_PDF").html(""); 
     });
-
     $("#modalPaciente").on('hidden.bs.modal',function(e){ 
         $("#HTML_DIALOGO").html(""); 
         $('#Btn_bdu').attr('onClick','');
@@ -32,11 +27,9 @@ $(document).ready(function(){
         //$('#Btn_bdu').hide();
         //$("#Btn_bdu").removeClass("btn btn-primary btn-sm");
     });
-    
     $("#new_paginacion").on('click','li',function (){
         if(!isNaN($(this).text())){ buscar(1,$(this).text()); }
     });
-    
     //console.log(" -------------- TEMPLETE -> "+$("#indTemplateNum").val() +" <--------------");
     //ocMen();
     $('#modal_percapita').on('show.bs.modal',function(e){
@@ -44,43 +37,40 @@ $(document).ready(function(){
         $("#modalPaciente").css("z-index","1000"); 
         $("#modal_percapita").css("z-index","11500");
     });
-
     $('#modal_percapita').on('hidden.bs.modal',function(e){
         $("#modal_percapita").css("z-index","100");
         $("#modalPaciente").css("z-index","1500"); 
         $("#HTML_PERCAPITA").html('');
     });
-
-    console.log("   ---------------------------------------------------------------     ");
-    console.log("                       Codeigniter 3                                   ");
-    console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
-    console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
-    console.log("   ---------------------------------------------------------------     ");
+    console.log("   ----------------------------------------    ");
+    console.log(" Codeigniter 3 ");
+    console.log(" bootstrap -> ", bootstrap.Tooltip.VERSION," ");
+    console.log(" jQuery -> ", jQuery.fn.jquery," ");
+    console.log("   ----------------------------------------    ");
     $('.dropdown-toggle').dropdown();
 });
 
 function js_test(){
     $.ajax({ 
-        type        :	"POST",
-        url         :	"ssan_bdu_creareditarpaciente/function_test",
-        beforeSend  :   function(xhr){ $('#loadFade').modal('show'); },
-        dataType    :	"json",
-        data        :	{ },
-        error       :	function(errro,error2,error3)	{ 
+        type : "POST",
+        url : "ssan_bdu_creareditarpaciente/function_test",
+        beforeSend : function(xhr){ $('#loadFade').modal('show'); },
+        dataType : "json",
+        data : { },
+        error :	function(errro,error2,error3) { 
 
-                                                            console.log("--------------------------------"); 
-                                                            console.log(errro.responseText); 
-                                                            console.log(errro); 
-                                                            console.log(error2);
-                                                            console.log(error3);
-
-                                                            jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
-                                                            $('#loadFade').modal('hide');
-                                                        },
-        success     :	function(aData)	    {	
-                                                console.log(aData);
-                                                $('#loadFade').modal('hide');
-					                        }, 
+                                                    console.log("--------------------------------"); 
+                                                    console.log(errro.responseText); 
+                                                    console.log(errro); 
+                                                    console.log(error2);
+                                                    console.log(error3);
+                                                    jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+                                                    $('#loadFade').modal('hide');
+                                                },
+        success : function(aData)   {	
+                                        console.log(aData);
+                                        $('#loadFade').modal('hide');
+                                    }, 
     });
 }
 
@@ -121,24 +111,38 @@ function buscar(OP,LIM_INI){
     $("#resultados").append('<tr id="msj_load"><td style="text-align:center" colspan="11"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i> <span class="sr-only"></span><b>BUSCANDO...</b></td></tr>');
     if(OP==0){ $("#paginacion_bdu").html(''); }
     document.getElementById("btn_buscageneral").disabled = true;
-    var rut         =	$("#rut").val();
-    var pasaporte   =	$("#dni").val();
-    var nombre      =	$("#name").val();
-    var apellidoP   =	$("#apellidoP").val();
-    var apellidoM   =	$("#apellidoM").val();
-    var tipoPac     =	$('input:radio[name=tipPac]:checked').val();
-    var tipoEx      =	$("#tipoEx").val();
-    var numxpag     =	10;
+
+    console.log("   ##############################  ");
+    console.log("   OP ->",OP);
+    console.log("   LIM_INI ->",LIM_INI);
+
+    var rut = $("#rut").val();
+    var pasaporte =	$("#dni").val();
+    var nombre = $("#name").val();
+    var apellidoP = $("#apellidoP").val();
+    var apellidoM =	$("#apellidoM").val();
+    var tipoPac = $('input:radio[name=tipPac]:checked').val();
+    var tipoEx = $("#tipoEx").val();
+    var numxpag = 10;
+    
     if (rut!=''){
-        rut         =	rut.replace(/\./g, '');
-        rut         =	rut.split('-');
-        rut         =	rut[0];
+        rut = rut.replace(/\./g, '');
+        rut = rut.split('-');
+        rut = rut[0];
     }
-    var valida      = 0;
-    if ((rut!= '' ||	nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 0)) {
-        valida      = 1;
+
+    let valida = 0;
+
+    console.error(" ##############################################");
+    console.error(" nombre       ->  ",nombre);
+    console.error(" apellidoP    ->  ",apellidoP);
+    console.error(" apellidoM    ->  ",apellidoM);
+    console.error(" ##############################################");
+
+    if ((rut!= '' || nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 0)) {
+        valida = 1;
     } else if ((rut != '' || pasaporte != '' || nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 1)){
-        valida      =	1;
+        valida = 1;
     }
     
     if (valida == 0){
@@ -149,72 +153,84 @@ function buscar(OP,LIM_INI){
         $("#apellidoP").css("border-color","red");
         $("#apellidoM").css("border-color","red");
         $("#resultados").html('');
-        //$("#result").hide();
+        $("#new_paginacion").hide();
         document.getElementById("btn_buscageneral").disabled = false;
     } else {
         $("#icoSe").hide();
         $("#respuesta").hide();
         $("#icoLoa").css('display','inline-block');
         $("#txBusc").html('Buscando');
-        $.ajax({ 
-            type            :	"POST",
-            url             :	"ssan_bdu_creareditarpaciente/buscarPac",
-            dataType        :	"json",
-            data            :   { 
-                                    numFichae   :   '',
-                                    rut         :   rut,
-                                    tipoEx      :   tipoEx,
-                                    tipoPac     :   tipoPac,
-                                    pasaporte   :   pasaporte,
-                                    nombre      :   nombre,
-                                    apellidoP   :   apellidoP,
-                                    apellidoM   :   apellidoM,
-                                    LIM_INI     :   LIM_INI,
-                                    numxpag     :   numxpag,
-                                    OP          :   OP,
-                                    templete    :   $("#indTemplateNum").val(),
-				                    USERNAME    :   $("#USERNAME").val(),
-                                    COD_ESTAB   :   $("#COD_ESTAB").val(),
-                                },
-            error           :	function(errro) {  
-                                                    console.log(errro); 
-                                                    $("#resultados").html(''); 
-                                                    document.getElementById("btn_buscageneral").disabled = false; 
-                                                    jAlert("Error General, Consulte Al Administrador"); 
-                                                },
-            success         :	function(aData){ 
-                                                    $("#resultados").html(''); 
-                                                    document.getElementById("btn_buscageneral").disabled = false; 
-                                                    if(AjaxExtJsonAll(aData)){
-
-                                                        console.log("dropdown-toggle");
-                                                        $('.dropdown-toggle').dropdown();
-
-                                                    }
-                                                }, 
-        });
-
         $("#resultados").html('');
+        $("#new_paginacion").hide();   
+        $.ajax({ 
+            type : "POST",
+            url : "ssan_bdu_creareditarpaciente/buscarPac",
+            dataType : "json",
+            data : { 
+                        numFichae : '',
+                        rut : rut,
+                        tipoEx : tipoEx,
+                        tipoPac : tipoPac,
+                        pasaporte : pasaporte,
+                        nombre : nombre,
+                        apellidoP : apellidoP,
+                        apellidoM : apellidoM,
+                        LIM_INI : LIM_INI,
+                        numxpag : numxpag,
+                        OP : OP,
+                        templete : $("#indTemplateNum").val(),
+                        USERNAME : $("#USERNAME").val(),
+                        COD_ESTAB : $("#COD_ESTAB").val(),
+                    },
+            error :	function(errro) {  
+                                        console.log(errro); 
+                                        $("#resultados").html(''); 
+                                        document.getElementById("btn_buscageneral").disabled = false; 
+                                        jAlert("Error General, Consulte Al Administrador"); 
+                                    },
+            success : function(aData){ 
+                                        $("#resultados").html(''); 
+                                        console.error("salida de busqueda ->  ",aData);
+                                        document.getElementById("btn_buscageneral").disabled = false; 
+                                        if(AjaxExtJsonAll(aData.json)){
+                                            //console.log("dropdown-toggle");
+                                            let NUM_COUNT = aData.count; 
+                                            let itemsPerPage = 10;
+                                            let PageN = Math.ceil(NUM_COUNT/itemsPerPage);
+                                            console.log("Num :", PageN);
+                                            if (PageN != 0){
+                                                if (OP == 0){
+                                                    $('.dropdown-toggle').dropdown();
+                                                    $("#new_paginacion").bootpag({total:PageN,page:1,maxVisible:itemsPerPage});
+                                                    $("#new_paginacion").show("fast");
+                                                } else {
+                                                    if (PageN > 0){
+                                                        $("#new_paginacion").show("fast");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }, 
+        });
     }
 }
 
 function nuevo_reciennacido(value){
     $.ajax({ 
-        type        :	"POST",
-        url         :	"ssan_bdu_creareditarpaciente/new_paciente_rn",
-        dataType    :	"json",
-        data        :	{   },
-        error       :	function(errro)	    { 
-                            console.log(errro.responseText); 
-                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-					    },
-        success     :	function(aData)	    {	
-                                                console.log("-------------");
-                                                console.log(aData);
-                                                if(AjaxExtJsonAll(aData)){
-                                                    $("#MODAL_RECIEN_NACIDO").modal("show");
-                                                } 
-                			                }, 
+        type : "POST",
+        url : "ssan_bdu_creareditarpaciente/new_paciente_rn",
+        dataType : "json",
+        data : { },
+        error :	function(errro) { 
+                    console.log(errro.responseText); 
+                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                },
+        success : function(aData) {	
+            console.log(aData);
+            if(AjaxExtJsonAll(aData)){
+                $("#MODAL_RECIEN_NACIDO").modal("show");
+            } 
+        }, 
     });
 }
 
@@ -1209,15 +1225,13 @@ function editor_extranjero(numfichae){
 
 
 function agregar_rut_ext(numfichae){
-    
-    var rut         =   $("#new_busq_rut").val();
-    var dv          =   rut.split('-')[1];
-    
+    var rut = $("#new_busq_rut").val();
+    var dv = rut.split('-')[1];
     if (rut!=''){
-        rut         =	rut.replace(/\./g, '');
-        rut         =	rut.split('-');
-        rut         =	rut[0];
-        //dv          =   $("#new_busq_rut").val().split('-')[1];
+        rut = rut.replace(/\./g, '');
+        rut = rut.split('-');
+        rut =	 [0];
+        //dv = $("#new_busq_rut").val().split('-')[1];
     } else {
         jAlert("RUN Vacio","e-SISSAN ");
         return false;
@@ -1225,34 +1239,28 @@ function agregar_rut_ext(numfichae){
     
     //console.log("rut->",rut);
     //console.log("dv->",dv);
-    
+
     jPrompt('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir o actualizar informaci&oacute;n paciente en BDU SSAN. <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
         if(r){
             $.ajax({ 
-                type        :	"POST",
-                url         :	"ssan_bdu_creareditarpaciente/get_editaextranjero",
-                dataType    :	"json",
-                cache       :	false,
-                data        :                   
-						    { 
-                                                            numfichae       :   numfichae,
-                                                            rut             :   rut,
-                                                            dv              :   dv,
-                                                  
-                                                          
-						    },
-                error       :	function(errro)	    {	$('#Btn_bdu').attr("disabled",false); console.log(errro); console.log(errro.responseText); jError("Error General, Consulte Al Administrador"); },
-                success     :	function(aData)	    {   
-						
-							console.log(aData);
-							//console.log(num_fichae);
-							
-                                                        jAlert("Se ha creado/Editado el usuario","e-SISSAN");
-                                                        $("#modalExtranjero").modal("hide");
-                                                        buscar(0,1);
-                                                        
-						    }, 
-                });
+                type : "POST",
+                url : "ssan_bdu_creareditarpaciente/get_editaextranjero",
+                dataType : "json",
+                cache : false,
+                data :  { 
+                            numfichae : numfichae,
+                            rut : rut,
+                            dv : dv,
+                        },
+                error :	function(errro) { $('#Btn_bdu').attr("disabled",false); console.log(errro); console.log(errro.responseText); jError("Error General, Consulte Al Administrador"); },
+                success : function(aData) {   
+                            console.log(aData);
+                            //console.log(num_fichae);
+                            jAlert("Se ha creado/Editado el usuario","e-SISSAN");
+                            $("#modalExtranjero").modal("hide");
+                            buscar(0,1);
+                }, 
+            });
         } else {
 	    //$("#Btn_bdu").attr("disabled",false);
             jAlert("Se espera confirmacion para a&ntilde;adir/editar paciente","Informaci&oacute;n - SSAN - e-SISAN");

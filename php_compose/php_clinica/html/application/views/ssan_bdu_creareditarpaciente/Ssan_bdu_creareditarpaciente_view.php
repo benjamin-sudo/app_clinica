@@ -84,37 +84,42 @@
     </div>
     <div class="card grid_body_bdu2">
         <div id="result" style="">
-            <table class="table table-striped" width="100%">
+
+            <table class="table table-striped custom-padding" width="100%">
                 <thead>
                     <tr>
-                        <td colspan="6" > Informaci&oacute;n de Pacientes</td>
-                        <td colspan="4"> Total Resultados <span class="badge" id="nresultados"></span></td>
+                        <td colspan="6" style="height:50px;"><b>Informaci&oacute;n de Pacientes</b></td>
+                        <td colspan="4">Total Resultados <span class="badge" id="nresultados"></span></td>
                     </tr>
                 </thead>
                 <thead>
                     <tr>
-                        <td width="1%"      >N&deg;</td>
-                        <td width="15%"     >Run/ID Fonasa</td>
-                        <td width="10%"     >DNI/Pasaporte</td>
-                        <td width="8%"      >F.Local</td>
-                        <td width="15%"     >Nombres</td>
-                        <td width="15%"     >Apellido Paterno</td>
-                        <td width="15%"     >Apellido Materno</td>
-                        <td width="9%"      >Nacimiento</td>
-                        <td width="5%"      >PAIS</td>
-                        <td width="7%"      style="width:10%;text-align:center">Opci&oacute;n</td>
+                        <td width="1%" style="height:50px;">N&deg;</td>
+                        <td width="15%" >Run/ID Fonasa</td>
+                        <td width="10%" >DNI/Pasaporte</td>
+                        <td width="8%" >F.Local</td>
+                        <td width="15%" >Nombres</td>
+                        <td width="15%" >Apellido Paterno</td>
+                        <td width="15%" >Apellido Materno</td>
+                        <td width="9%" >Nacimiento</td>
+                        <td width="5%" >PAIS</td>
+                        <td width="7%" style="width:10%;text-align:center">Opci&oacute;n</td>
                     </tr>
                 </thead>    
                 <tbody id="resultados"></tbody>
             </table>
+
             <div class="grid_contenedo_paginado">
                 <div class="grid_contenedo_paginado1">&nbsp;</div>
                 <div class="grid_contenedo_paginado1"><div class="btn-group anatomia_pagination" id="new_paginacion"></div></div>
                 <div class="grid_contenedo_paginado1">&nbsp;</div>
             </div>
+
         </div>
     </div>
 </div>
+
+
 
 <section>
     <div class="modal fade" id="modalPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

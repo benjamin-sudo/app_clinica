@@ -14,7 +14,6 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         $this->load->model("sql_class/sql_class_pabellon");
     }
 
-
     public function funcion_buquedarun($data){
         $v_run = $data['v_run'];
         $v_dv = $data['v_dv'];
@@ -74,6 +73,32 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
 
     public function getPacientes($numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, $nombre, $apellidoP, $apellidoM, $LIM_INI, $templete) {
         if ($identifier == '' && $pasaporte == '') {
+            $this->db->select('COUNT(*) AS total_count');
+            $this->db->from($this->tableSpace . '.GG_TGPACTE A');
+            if ($templete == 1 || $templete == 4 || $templete == 5) {
+                $this->db->join($this->tableSpace . '.SO_TCPACTE F', 'F.NUM_FICHAE = A.NUM_FICHAE AND F.COD_EMPRESA = ' . $codEmpresa, 'LEFT');
+            } else {
+                $this->db->join($this->tableSpace . '.SO_TCPACTE F', 'F.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
+                $this->db->where('F.COD_EMPRESA', $codEmpresa);
+            }
+            $this->db->join($this->tableSpace . '.GG_TPACFALLECIDO G', 'G.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
+            $this->db->where('A.IND_ESTADO', 'V');
+            if (!empty($nombre) || !empty($apellidoP) || !empty($apellidoM)) {
+                if (!empty($nombre)) {
+                    $nombre = str_replace("'", "&#39;", $nombre);
+                    $this->db->like('A.NOM_NOMBRE', trim($nombre), 'both');
+                }
+                if (!empty($apellidoP)) {
+                    $apellidoP = str_replace("'", "&#39;", $apellidoP);
+                    $this->db->like('A.NOM_APEPAT', trim($apellidoP), 'both');
+                }
+                if (!empty($apellidoM)) {
+                    $apellidoM = str_replace("'", "&#39;", $apellidoM);
+                    $this->db->like('A.NOM_APEMAT', trim($apellidoM), 'both');
+                }
+            }
+            $totalQuery = $this->db->get();
+            $totalCount = $totalQuery->row()->total_count;
             // Realiza la cuenta en una subconsulta separada
             $this->db->select('
                 G.NUM_FICHAE AS FALLECIDO,
@@ -90,11 +115,10 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                 A.NUM_FICHAE,
                 A.IND_EXTRANJERO,
                 F.NUM_NFICHA,
-                (SELECT COUNT(*) FROM ' . $this->tableSpace . '.GG_TGPACTE WHERE IND_ESTADO = "V" AND COD_EMPRESA = "' . $codEmpresa . '") AS RESULT_COUNT
+                0 AS RESULT_COUNT
             ');
             $this->db->from($this->tableSpace . '.GG_TGPACTE A');
-        
-            if ($templete == 1 || $templete == 4 || $templete == 5) {
+            if ($templete == 1 || $templete == 4 || $templete == 5  || $templete == 6) {
                 $this->db->join($this->tableSpace . '.SO_TCPACTE F', 'F.NUM_FICHAE = A.NUM_FICHAE AND F.COD_EMPRESA = ' . $codEmpresa, 'LEFT');
             } else {
                 $this->db->join($this->tableSpace . '.SO_TCPACTE F', 'F.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
@@ -102,7 +126,6 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             }
             $this->db->join($this->tableSpace . '.GG_TPACFALLECIDO G', 'G.NUM_FICHAE = A.NUM_FICHAE', 'LEFT');
             $this->db->where('A.IND_ESTADO', 'V');
-            
             if (!empty($nombre) || !empty($apellidoP) || !empty($apellidoM)) {
                 if (!empty($nombre)) {
                     $nombre = str_replace("'", "&#39;", $nombre);
@@ -122,7 +145,10 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         } else {
             $query = $this->db->query($this->sql_class_ggpacientes->sqlConsultaPacienteNEW($this->tableSpace, $numFichaE, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx));
         }
-        return $query->result_array();
+        return [
+            'totalcount' => $totalCount,
+            'arr_pacientes' => $query->result_array(),
+        ];
     }
     
     public function getBusquedaDatosExtranjero($empresa, $numfichae) {
@@ -247,7 +273,6 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                 error_log("------------------------------------>Query failed Fichae<----------------------------");
                 ///$this->db->trans_rollback();
             }
-    
             $creaProtocolo = array(
                 'COD_USRCREA' => $session,
                 'FEC_USRCREA' => date('Y-m-d H:i:s'), // En lugar de SYSDATE
@@ -636,12 +661,41 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
         $this->db->trans_complete();
         return $this->db->trans_status() . "#" . $numFichae;
     }
-    
 
-   
+    public function ModelcreanuevoPacienteSSAN($session,$empresa,$rut_pac,$rut_dv,$txtNombre,$txtApellidoPaterno,$txtApellidoMaterno,$txtFechaNacimineto,$estado_civil,$txtDireccion,$t_celular,$txtNum_dire,$rdosexo,$cboTippac,$txtRuttit,$dv_titul){
+        $this->db->trans_start();
+        $query = $this->db->query($this->sql_class_pabellon->busquedaLastNumfichae());
+        $LastNumfichae = $query->result_array();
+        $RnumFichae = $LastNumfichae[0]['NUM_CORREL'];
+        $numFichae = ($RnumFichae + 1);
+        $TransResulta = $this->db->query($this->sql_class_pabellon->UpdateLastNumfichae($numFichae));
+        $dataSolicitud = [
+            'NUM_FICHAE' => $numFichae,
+            'COD_RUTPAC' => $rut_pac,
+            'COD_DIGVER' => $rut_dv,
+            'NOM_NOMBRE' => quotes_to_entities(mb_strtoupper($txtNombre)),
+            'NOM_APEPAT' => quotes_to_entities(mb_strtoupper($txtApellidoPaterno)),
+            'NOM_APEMAT' => quotes_to_entities(mb_strtoupper($txtApellidoMaterno)),
+            'FEC_NACIMI' => date('Y-m-d', strtotime($txtFechaNacimineto)),
+            'IND_ESTCIV' => $estado_civil,
+            'IND_TISEXO' => $rdosexo,
+            'NOM_DIRECC' => quotes_to_entities(mb_strtoupper($txtDireccion)),
+            'NUM_CELULAR' => quotes_to_entities($t_celular),
+            'NUM_CASA' => quotes_to_entities($txtNum_dire),
+            'IND_TIPPAC' => $cboTippac,
+            'COD_RUTTIT' => $txtRuttit,
+            'COD_USRCREA' => $session,
+            'FEC_USRCREA' => date('Y-m-d H:i:s'),
+            'IND_ESTADO' => 'V',
+            'IND_EXTRANJERO' => '0'
+        ];
+        $this->db->insert($this->own.'.GG_TGPACTE_', $dataSolicitud);
+        $this->db->trans_complete();
+        return $this->db->trans_status();
+    }
+
     //AQUi EMPIEZA LA MAGIA 
     public function getbusquedaCertificadoFONASA($elrut, $eldv) {
-
         $respuesta = "";
         $descr_error = "";
         $fecha_nacimiento = "";

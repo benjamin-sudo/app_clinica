@@ -13,18 +13,18 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     
     public function index(){
         $this->output->set_template('blank');
-        $empresa                    =   $this->session->userdata("COD_ESTAB");
-        $responde                   =   [];
-        $date_from                  =   date("d-m-Y");
-        $date_to                    =   date("d-m-Y");
-        $session                    =   explode("-",$this->session->userdata('USERNAME'))[0];
-        $responde                   =   [];
-        $responde                   =   $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA([
-            "COD_EMPRESA"           =>  $empresa,
-            "USR_SESSION"           =>  $session,
-            "DATE_FROM"             =>  $date_from,
-            "DATE_TO"               =>  $date_to,
-            "LODA_X_SISTEMAS"       =>  2, //SOLO USUARIO EXTERNO
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $responde = [];
+        $date_from = date("d-m-Y");
+        $date_to = date("d-m-Y");
+        $session = explode("-",$this->session->userdata('USERNAME'))[0];
+        $responde = [];
+        $responde = $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA([
+            "COD_EMPRESA" => $empresa,
+            "USR_SESSION" => $session,
+            "DATE_FROM" => $date_from,
+            "DATE_TO" => $date_to,
+            "LODA_X_SISTEMAS" => 2, //SOLO USUARIO EXTERNO
         ]);
         $responde['HTML_SOLICITUDEAP']  =  $responde['HTML_SOLICITUDEAP']['NUEVAS_SOLICITUDES'];
         $this->load->css("assets/Ssan_libro_biopsias_usuarioext/css/styles.css");
@@ -35,27 +35,27 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
 
     public function recarga_html_listaanatomiapatologica(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $date_from                      =   $this->input->post("fecha_from");
-        $date_to                        =   $this->input->post("fecha_to");
-        $idtabs                         =   $this->input->post('idtabs');
-        $value                          =   $this->input->post('value');
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $date_from = $this->input->post("fecha_from");
+        $date_to = $this->input->post("fecha_to");
+        $idtabs = $this->input->post('idtabs');
+        $value = $this->input->post('value');
         #SOLICITUDES DEL CLIENTE 
         #GET_LISTA_ANOTOMIAPATOLOGICA
-        $session_arr                    =   explode("-",$this->session->userdata('USERNAME'));
-	    $session                        =   $session_arr[0];
-        $responde                       =   $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA([
-            "COD_EMPRESA"               =>  $empresa,
-            "USR_SESSION"               =>  $session,
-            "DATE_FROM"                 =>  $date_from,
-            "DATE_TO"                   =>  $date_to,
-            "LODA_X_SISTEMAS"           =>  2, //SOLO USUARIO EXTERNO
+        $session_arr = explode("-",$this->session->userdata('USERNAME'));
+	    $session = $session_arr[0];
+        $responde = $this->Ssan_libro_biopsias_usuarioext_model->CARGA_LISTA_MISSOLICITUDES_ANATOMIA([
+            "COD_EMPRESA" => $empresa,
+            "USR_SESSION" => $session,
+            "DATE_FROM" => $date_from,
+            "DATE_TO" => $date_to,
+            "LODA_X_SISTEMAS" => 2, //SOLO USUARIO EXTERNO
         ]);
         #OUT TO VIWES
         $this->output->set_output(json_encode([
-            "DATE_FROM"                 =>  $date_from,
-            "DATE_TO"                   =>  $date_to,
-            "HTML_LISTAS"               =>  $responde,
+            "DATE_FROM" => $date_from,
+            "DATE_TO" => $date_to,
+            "HTML_LISTAS" => $responde,
         ]));
     }
 
