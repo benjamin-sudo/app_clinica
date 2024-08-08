@@ -17,7 +17,6 @@ class Ssan_histo_monitoriosolicitudes extends CI_Controller {
         $arr_estados_filtro = '0';
         $var_fecha_inicio = date("d-m-Y");
         $var_fecha_final = date("d-m-Y");
-
         /*
         if(isset($_COOKIE['target']))   {
             $tipo_busqueda              =   $_COOKIE['target'];

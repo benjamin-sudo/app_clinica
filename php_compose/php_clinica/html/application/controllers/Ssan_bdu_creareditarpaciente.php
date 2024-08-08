@@ -19,12 +19,24 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
         $this->load->view('ssan_bdu_creareditarpaciente/Ssan_bdu_creareditarpaciente_view',$data);
     }
 
+    public function busqueda_paciente_run(){
+        if (!$this->input->is_ajax_request()) { show_404(); }
+        $return_data = $this->ssan_bdu_creareditarpaciente_model->funcion_buquedarun([
+            'v_run' => $this->input->post("v_run"),
+            'v_dv' => $this->input->post("v_dv")
+        ]);
+        $this->output->set_output(json_encode([
+            'return_data' => $return_data,
+            'status' => true,
+        ]));
+    }
+    
     public function function_test(){
         if (!$this->input->is_ajax_request()) { show_404(); }
         $return_data = $this->ssan_bdu_creareditarpaciente_model->function_test();
         $this->output->set_output(json_encode([
-            'return_data' =>  $return_data,
-            'status' =>  true,
+            'return_data' => $return_data,
+            'status' => true,
         ]));
     }
     
@@ -293,8 +305,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                                     name        =   "txtFechaNacimineto" 
                                     maxlength   =   "10" 
                                     max         =   "'. date('Y-m-d').'"  
-                                    min         =   "'. date('Y-m-d',strtotime('-120 years')).'"
-                                    />
+                                    min         =   "'. date('Y-m-d',strtotime('-120 years')).'"/>
                                     <font color="#339999" class="Estilo2">*</font> (dd/mm/aaaa)
                                     <!-- disabled -->
                             </td>
@@ -1199,81 +1210,65 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
     
     public function buscarPac_resumido(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        //$codEmpresa       =    $this->session->userdata("COD_ESTAB");
-        $codEmpresa         =    $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
-        $html               =    '';
-        $NUM_COUNT          =    '';
-        $isNal              =    '';
-        $data               =    '';
-        $rut                =    $this->input->post("rut");
-        $numFichae          =    $this->input->post("numFichae");
-        $nombre             =    $this->input->post("nombre");
-        $apellidoP          =    $this->input->post("apellidoP");
-        $apellidoM          =    $this->input->post("apellidoM");
-        $tipoPac            =    $this->input->post("tipoPac");
-        $LIM_INI            =    $this->input->post("LIM_INI");
-        $OP                 =    $this->input->post("OP");
-        $templete           =    $this->input->post("templete");
-        if($tipoPac         ==   0){
-            $isnal          =    '1';
-            $identifier     =    $rut;
-            $pasaporte      =    '';
-            $tipoEx         =    '';
+        $codEmpresa = $this->session->userdata("COD_ESTAB")==''?$this->input->post("COD_ESTAB"):$this->session->userdata("COD_ESTAB");
+        $html = '';
+        $NUM_COUNT = '';
+        $isNal = '';
+        $data = '';
+        $v_count  =  0;
+        $rut = $this->input->post("rut");
+        $numFichae = $this->input->post("numFichae");
+        $nombre = $this->input->post("nombre");
+        $apellidoP = $this->input->post("apellidoP");
+        $apellidoM = $this->input->post("apellidoM");
+        $tipoPac = $this->input->post("tipoPac");
+        $LIM_INI = $this->input->post("LIM_INI");
+        $OP = $this->input->post("OP");
+        $templete = $this->input->post("templete");
+        if($tipoPac == 0){
+            $isnal = '1';
+            $identifier = $rut;
+            $pasaporte = '';
+            $tipoEx = '';
         } else {
-            $isnal          =    '0';
-            $identifier     =    $rut;
-            $pasaporte      =    $this->input->post("pasaporte");
-            $tipoEx         =    $this->input->post("tipoEx");
+            $isnal = '0';
+            $identifier = $rut;
+            $pasaporte = $this->input->post("pasaporte");
+            $tipoEx = $this->input->post("tipoEx");
         }
         if(is_null($codEmpresa)){
-            //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>"-------------------------------------");
-            //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>$codEmpresa);
-            //$aDatos[]	    =	array('id_html'=>'respuesta','opcion'=>'console','contenido'=>"-------------------------------------");
-            $script         =    '<script type="text/javascript">jAlert(" - SU SESI&Oacute;N A EXPIRADO", "Listado de Errores - e-Clinica libre", function(){';
-            if ($this->session->userdata("SISTYPO") != 1) {
-                //$script	    .=		'window.location = "../../inicio"';
-            }
-            $script        .=    '});</script>';
-            $aDatos[]       =    array('id_html' => 'respuesta', 'opcion' => 'append', 'contenido' => $script);
-            $this->output->set_output(json_encode($aDatos));
+            $script = '<script type="text/javascript">jAlert(" - SU SESI&Oacute;N A EXPIRADO", "Listado de Errores - Clinica libre", function(){';
+            $script .= '});</script>';
+            $aDatos[] = array('id_html' => 'respuesta', 'opcion' => 'append', 'contenido' => $script);
+            $this->output->set_output(json_encode([
+                'status' => false,
+                'count'=> $v_count,
+                'json' => $aDatos
+            ]));
             return false;
         }
-        //$aDatos[]         =   array(""=>"", "opcion" => "console", "contenido"  => "TYPO -> ".$this->session->userdata("SISTYPO"));
-        $aDataPaciente      =   $this->ssan_bdu_creareditarpaciente_model->getPacientes($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, strtoupper($nombre), strtoupper($apellidoP), strtoupper($apellidoM), $LIM_INI, $templete);
-        $aDatos[]           =   array('id_html' => 'result',        'opcion' => 'hide',     'contenido' => '');
-        $aDatos[]           =   array('id_html' => 'resultados',    'opcion' => 'html',     'contenido' => '');
+        
+        $aDataPaciente = $this->ssan_bdu_creareditarpaciente_model->getPacientes($numFichae, $identifier, $codEmpresa, $isnal, $pasaporte, $tipoEx, strtoupper($nombre), strtoupper($apellidoP), strtoupper($apellidoM), $LIM_INI, $templete);
+        $v_count = count($aDataPaciente);        
+        $aDatos[] = array('id_html' => 'result', 'opcion' => 'hide', 'contenido' => '');
+        $aDatos[] = array('id_html' => 'resultados', 'opcion' => 'html', 'contenido' => '');
+
         if (count($aDataPaciente) > 0) {
             foreach ($aDataPaciente as $i => $row) {
-                //$aDatos[]       =   array('id_html' => 'resultados', 'opcion' => 'console', 'contenido' => $aDataPaciente);
-                /*
-                    $p          = 0;
-                    $nFicha     = 'N/A';
-                    if(!empty($row['FLOCAL'])) {  $nFicha = $row['FLOCAL'];  }
-                    $pasport    = ' - ';
-                    if(!empty($row['NUM_IDENTIFICACION'])) {  $pasport = $row['NUM_IDENTIFICACION'];  $p++;  }
-                    if($p == 0) {  $extranjero = 'N/A';   } else {    $extranjero = $pasport;   }
-                    $rut        = 'N/A';
-                    if(!empty($row['RUTPAC'])) {  $rut = $row['RUTPAC'] . '-' . strtoupper($row['DIGVERPAC']);  }
-                    $row['ID_EXTRANJERO'];
-                    $row['IND_TIPOIDENTIFICA'];
-                    $row['IND_EXTRANJERO'];
-                    $row['IND_EXTRANJERO'];
-                    $row['NUM_IDENTIFICACION'];
-                    $row['FEC_VENCEPASPORT'];     
-                */
-                $IND_EXTRANJERO         =    $row['IND_EXTRANJERO'];
+                
+                $IND_EXTRANJERO = $row['IND_EXTRANJERO'];
                 if (($row['COD_PAIS'] == 'CL') || ($row['IND_EXTRANJERO'] == '0')) {
-                    $EXTRAN             =   '';
+                    $EXTRAN =   '';
                 } else if ($row['IND_EXTRANJERO'] == '1') {
-                    $EXTRAN             =   $row['NUM_IDENTIFICACION'] . " (" . $row['FEC_VENCEPASPORT'] . ")";
+                    $EXTRAN = $row['NUM_IDENTIFICACION'] . " (" . $row['FEC_VENCEPASPORT'] . ")";
                 } else {
-                    $EXTRAN             =   '';
+                    $EXTRAN = '';
                 }
 
                 if ($row['NUM_NFICHA'] == '') {
-                    $numFichaL           =  '<span class="label label-danger">N/A</span>';
+                    $numFichaL = '<span class="label label-danger">N/A</span>';
                 } else {
-                    $numFichaL           =  $row['NUM_NFICHA'];
+                    $numFichaL = $row['NUM_NFICHA'];
                 }
 
                 $html = '<tr>
@@ -1334,18 +1329,16 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 $html .= '</td>
                     </tr>
                     ';
-                
                 //$html.='<li role="presentation" class="divider"></li> <li><a href="javascript:solover('.$row['NUM_FICHAE'].','.$isNal.')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;VER</a></li>';
                 //$html.='<li><a href="javascript:Add_Agenda('.$row['NUM_FICHAE'].')"> <i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp;SELECIONE</a></li>';
-                
-                $aDatos[]       = array('id_html' => 'resultados', 'opcion' => 'append', 'contenido' => $html);
+                $aDatos[] = array('id_html' => 'resultados', 'opcion' => 'append', 'contenido' => $html);
                 if ($OP == 0 and $LIM_INI == '1') {
-                    $NUM_COUNT      =   (int) $row['RESULT_COUNT'];
-                    $PageN          =   ceil($NUM_COUNT / 10);
-                    $aDatos[]       =   array('id_html' => 'nresultados', 'opcion' => 'html', 'contenido' => $NUM_COUNT);
-                    $data           .=  '<script>$("#new_paginacion").bootpag({total:' . round($PageN) . ',page:1,maxVisible: 10});</script>';
-                    $data           .=  '<script>$("#new_paginacion").show("fast");</script>';
-                    $aDatos[]       =   array("id_html" => "respuesta", "opcion" => "append", "contenido"  => $data);
+                    $NUM_COUNT = (int) $row['RESULT_COUNT'];
+                    $PageN = ceil($NUM_COUNT / 10);
+                    $aDatos[] = array('id_html' => 'nresultados', 'opcion' => 'html', 'contenido' => $NUM_COUNT);
+                    $data .= '<script>$("#new_paginacion").bootpag({total:' . round($PageN) . ',page:1,maxVisible: 10});</script>';
+                    $data .= '<script>$("#new_paginacion").show("fast");</script>';
+                    $aDatos[] = array("id_html" => "respuesta", "opcion" => "append", "contenido"  => $data);
                 }
             }
         } else {
@@ -1371,25 +1364,29 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             } else if ($templete == '2') {
                 $html .= '<tr id="mensajeSinresultados_1"><td colspan="12" style="text-align:center"><b><i> NO SE HAN ENCONTRADO RESULTADOS.</i></b></td></tr>';
             }
-            $aDatos[]   = array('id_html' => 'resultados', 'opcion' => 'append', 'contenido' => $html);
+            $aDatos[] = array('id_html' => 'resultados', 'opcion' => 'append', 'contenido' => $html);
         }
         //**********************************************************************
-        $aDatos[]   = array('id_html' => 'result',    'opcion' => 'show',   'contenido' => '');
-        $this->output->set_output(json_encode($aDatos));
+        $aDatos[] = array('id_html' => 'result', 'opcion' => 'show', 'contenido' => '');
+        $this->output->set_output(json_encode([
+            'status' => true,
+            'count'=> $v_count,
+            'json' => $aDatos
+        ]));
     }
 
     public function validaPacienteBDU(){
         if (!$this->input->is_ajax_request()) {   show_404();  }
-        $codEmpresa                 =    $this->session->userdata("COD_ESTAB");
-        $isNal                      =    $this->input->post("isNal");
-        $numFichae                  =    $this->input->post("numFichae");
-        $rut                        =    $this->input->post("rut");
-        $dv                         =    $this->input->post("dv");
-        $templete                   =    $this->input->post("templete");
-        $pasaporte                  =    '';
-        $tipoEx                     =    '';
-        $isRN                       =    0;
-        $adataPersonas              =    $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $rut, $codEmpresa, $isNal, $pasaporte, $tipoEx);
+        $codEmpresa = $this->session->userdata("COD_ESTAB");
+        $isNal = $this->input->post("isNal");
+        $numFichae = $this->input->post("numFichae");
+        $rut = $this->input->post("rut");
+        $dv = $this->input->post("dv");
+        $templete = $this->input->post("templete");
+        $pasaporte = '';
+        $tipoEx = '';
+        $isRN = 0;
+        $adataPersonas =    $this->ssan_bdu_creareditarpaciente_model->getPacientesUnico($numFichae, $rut, $codEmpresa, $isNal, $pasaporte, $tipoEx);
         /*
             $aDatos[]   =	array(""=>"", "opcion"=>"console", "contenido"=>"------------------------------------");
             $aDatos[]   =	array(""=>"", "opcion"=>"console", "contenido"=>$adataPersonas);
@@ -1401,28 +1398,21 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
             if ($isNal == 0) {
                 $aDatos[]    =   array("id_html" => "cboNumIdentifica",  "opcion" => "val",    "contenido"  => $adataPersonas[0]["TIP_IDENTIFICACION"]); //cboviadireLocal  
                 if ($adataPersonas[0]["TIP_IDENTIFICACION"] == '2') {
-
                     $aDatos[]    =   array("id_html" => "txtBuscarFonasa",   "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_RUTPAC"]);
                     $aDatos[]    =   array("id_html" => "txtDvFoonasa",      "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_DIGVER"]);
-
-
-                    
                     //$aDatos[]    =   array("id_html" => "txtBuscarFonasa",   "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_RUTPAC"]);
                     //$aDatos[]    =   array("id_html" => "txtDvFoonasa",      "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_DIGVER"]);
-
                     $aDatos[]    =   array("id_html" => "numFonasa",         "opcion" => "show",   "contenido"  => "");
                     $aDatos[]    =   array("id_html" => "numExtranjero",     "opcion" => "hide",   "contenido"  => "");
                     $aDatos[]    =   array("id_html" => "txtMenjajefonasa",  "opcion" => "show",   "contenido"  => "");
                 } else {
                     $aDatos[]    =   array("id_html" => "txtNumIdentiExtra", "opcion" => "val",    "contenido"  => $adataPersonas[0]["NUM_IDENTIFICACION"]);
                 }
-
                 //************* INFORMACION ***************** 
                 //$adataPersonas[0]["TIP_IDENTIFICACION"]   = 1 //PASAPORTE
                 //$adataPersonas[0]["TIP_IDENTIFICACION"]   = 2 //DNI 
                 //$adataPersonas[0]["TIP_IDENTIFICACION"]   = 3 //ID FONASA
                 //$adataPersonas[0]["TIP_IDENTIFICACION"]   = 4 //SSANUNICO
-
             } else {
                 if ($numFichae != '') {
                     $aDatos[]    =   array("id_html" => "txtBuscar",                 "opcion" => "val",    "contenido"  => $adataPersonas[0]["COD_RUTPAC"]);

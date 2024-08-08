@@ -96,7 +96,7 @@
 
 <section>
 
-<div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
+    <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -257,6 +257,178 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="modal_nuevo_paciente">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><b style="color:#e34f49">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;NUEVO PACIENTE</b>
+                    </h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" id="html_nuevo_paciente">
+
+                    <table class="table" cellspacing="0" width="94%">
+                        <tr class="formulario">
+                            <td width="33%"><label class="control-label"><b>RUN</b>&nbsp;</td>
+                            <td width="67%">
+                                <div class="grid_inscribe_visitante">
+                                    <div class="grid_inscribe_visitante1"><input type="text" class="form-control input-sm" id="txt_new_run" name="txt_new_run" style="width:120px;"></div>
+                                    <div class="grid_inscribe_visitante2">
+                                        <button type="button" class="btn btn-info btn-fill" id="btn_incribe_visita" style="margin-bottom:2px;">
+                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td><b>Nombres</b></td>
+                            <td>
+                                <input type="text" class="form-control input-sm" id="txtNombre" name="txtNombre" value="" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="25">
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td><b>Apellido Paterno</b></td>
+                            <td>
+                                <input type="text" class="form-control input-sm" id="txtApellidoPaterno" value="" name="txtApellidoPaterno" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>
+                                <b>Apellido materno</b>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" id="txtApellidoMaterno" name="txtApellidoMaterno" value=""  style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="20">
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>
+                                <b>Fecha de nacimiento</b>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" onKeyUp="javascript:mascara(this,'/',patron,true)"   id="txtFechaNacimineto" name="txtFechaNacimineto" style="TEXT-TRANSFORM: uppercase;width: 20%;"   maxlength="10" onBlur="validaFechaDDMMAAAA($(this).val());">
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>
+                                <b>Sexo</b>
+                            </td>
+                            <td> 
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="rdosexo" id="rdosexo1" value="M" checked>
+                                    <label class="form-check-label" for="rdosexo1">Masculino</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="rdosexo" id="rdosexo0"  value="F">
+                                    <label class="form-check-label" for="rdosexo0">Femenino</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="rdosexo" id="rdosexo3"  value="N">
+                                    <label class="form-check-label" for="rdosexo3">No Determinado</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="rdosexo" id="rdosexo4"  value="D">
+                                    <label class="form-check-label" for="rdosexo4">Desconocido</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>
+                                <b>Estado Civil</b>
+                            </td>
+                            <td> 
+                                <select class="form-select" id="estado_civil" name="estado_civil" class="form-control">
+                                    <option value="0">Seleccione</option>
+                                    <option value="S">Soltero</option>
+                                    <option value="C">Casado</option>
+                                    <option value="V">Viudo</option>
+                                    <option value="O">Conviviente</option>
+                                    <option value="E">Separado</option>
+                                    <option value="E">Divorciado</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="formulario" >
+                            <td>
+                                <b>Direcci&oacute;n</b>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="txtDireccion" id="txtDireccion" style="TEXT-TRANSFORM: uppercase;width: 64%;" maxlength="100">
+                            </td>
+                        </tr>
+                        <tr class="formulario">
+                            <td>
+                                <b>N&deg;</b>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="txtNum_dire"  id="txtNum_dire" onKeyPress="return IsNumber(event);" style="width: 64%;" maxlength="6">
+                                0 Para "s/n". 
+                            </td>
+                        </tr>
+
+                        <tr class="formulario">
+                            <td><b>Celular</b></td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="t_celular" id="t_celular" onKeyPress="return IsNumber(event);" style="width: 64%;" maxlength="9">
+                            </td>
+                        </tr>
+                        <tr class="formulario" >
+                            <td>
+                                <b>Calidad Previsional</b>
+                            </td>
+                            <td>
+                                <select class="form-select" name="cboTippac" id="cboTippac" class="spetit" onChange="revisaTitular()" style="width: 70%;">
+                                    <option value="T">TITULAR</option>
+                                    <option value="D">DEPENDIENTE O CARGA</option>
+                                </select> 
+                            </td>
+                        </tr>
+                        <tr class="formulario" style="display:none">
+                            <td>
+                                <b>Condici&oacute;n PRAIS</b>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="rdoprais" id="rdoprais1" name="rdoprais" value="1">
+                                    <label class="form-check-label" for="rdoprais1">S&iacute;</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="rdoprais" id="rdoprais0"  value="0" checked>
+                                    <label class="form-check-label" for="rdoprais0">No</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="formulario" id="trRutTitular" style="display:none">
+                            <td>
+                                <b>RUN Titular</b>
+                            </td>
+                            <td>
+                                <input name="txtRuttit" type="text" id="txtRuttit" onKeyPress="return IsNumber(event);" size="8" maxlength="8"> - 
+                                <input name="txtDvtit" type="text" id="txtDvtit" onKeyPress="return IsDigitoVerificador(event);" value="" size="1" maxlength="1"> 
+                                <input type="button" name="btnConsultarPacientePrevisionales" id="btnConsultarPacientePrevisionales" onClick="buscaTitular();" value="Buscar" style="display:none">
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
+                    </button>
+                    <button type="button" class="btn btn-small btn-success btn-fill" id="btn_nuevo_paciente" disabled>
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;NUEVO&nbsp;PACIENTE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </section>
 
 <input type="hidden"  id="cod_empresa" name="cod_empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>"/>

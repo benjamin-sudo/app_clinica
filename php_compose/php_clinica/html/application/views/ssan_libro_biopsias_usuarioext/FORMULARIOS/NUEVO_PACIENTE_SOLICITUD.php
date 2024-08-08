@@ -192,15 +192,19 @@
                                     </tr>
                                 </thead>
                                 <tbody id="resultados_busquedapac">
-                                    <tr style="height:50px;">
-                                        <td colspan="10" style="text-align:center;"><b>SIN RESULTADO</b></td>
+                                    
+                                <tr style="height:50px;">
+                                        <td colspan="10" style="text-align:center;">
+                                            <b>SIN RESULTADO</b>
+                                            <br>
+                                            <button type="button" class="btn btn-success" id="btn_nuevo_paciente" onclick="js_agregapaciente()" style="display:none">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;AGREGAR&nbsp;PACIENTE
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 
-                                <tbody id="msj_busqueda" style="display: none">
-                                    
-                                </tbody>
-
+                                <tbody id="msj_busqueda" style="display: none"> </tbody>
                                 <tbody id="resultados"></tbody>
                                 <tbody id="mensajeSinresultados_1"></tbody>
                             </table>
@@ -459,43 +463,41 @@ $(document).ready(function () {
                     $('#loadFade').modal('show'); 
                     $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html('<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>');
                     $.ajax({ 
-                        type        :   "POST",
-                        url         :   "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
-                        dataType    :   "json",
-                        beforeSend  :   function(xhr)   {  },
-                        data        :           {
-                                                    NUM_FICHAE          :   $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
-                                                    RUT_PACIENTE        :   $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
-                                                    ID_MEDICO           :   null,
-                                                    RUT_MEDICO          :   $("#LISTADO_PROFESIONALES").val(),
-                                                    IND_TIPO_BIOPSIA    :   $("#IND_TIPO_BIOPSIA").val(),// 
-                                                    IND_ESPECIALIDAD    :   $("#LISTADO_ESPECIALIDAD").val(),
-                                                    PA_ID_PROCARCH      :   $("#PA_ID_PROCARCH").val(),
-                                                    AD_ID_ADMISION      :   null,
-                                                    TXT_BIOPSIA         :   $("#IND_TIPO_BIOPSIA option:selected").text(),
-                                                    CALL_FROM           :   0,
-                                                    IND_GESPAB          :   0
+                        type : "POST",
+                        url : "Ssan_libro_biopsias_usuarioext/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
+                        dataType : "json",
+                        beforeSend  : function(xhr) {  },
+                        data :  {
+                                    NUM_FICHAE : $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
+                                    RUT_PACIENTE : $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
+                                    ID_MEDICO : null,
+                                    RUT_MEDICO : $("#LISTADO_PROFESIONALES").val(),
+                                    IND_TIPO_BIOPSIA : $("#IND_TIPO_BIOPSIA").val(),// 
+                                    IND_ESPECIALIDAD : $("#LISTADO_ESPECIALIDAD").val(),
+                                    PA_ID_PROCARCH : $("#PA_ID_PROCARCH").val(),
+                                    AD_ID_ADMISION : null,
+                                    TXT_BIOPSIA : $("#IND_TIPO_BIOPSIA option:selected").text(),
+                                    CALL_FROM : 0,
+                                    IND_GESPAB : 0
+                                },
+                        error : function(errro) {  
+                                                    //console.log("   -------------------------   ");
+                                                    //console.log(errro);
+                                                    console.log(errro.responseText);
+                                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
+                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
+                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                 },
-                        error       :   function(errro) {  
-                            
-                                                            console.log("   -------------------------   ");
-                                                            console.log(errro);
-                                                            console.log(errro.responseText);
-
-                                                            $('#loadFade').modal('hide'); 
-                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
-                                                            $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
-                                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        },
-                        success     :   function(aData) {
-                                                            //console.log("aData  ->  ",aData);
-                                                            $('#loadFade').modal('hide'); 
-                                                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
-                                                            setTimeout(function() {
-                                                                $(".btn_envia_form").prop('disabled', false);
-                                                                document.getElementById("btn-finish").disabled = false;
-                                                            }, 1000); // 1000 milisegundos = 1 segundo
-                                                        }, 
+                        success : function(aData) {
+                                                    //console.log("aData  ->  ",aData);
+                                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
+                                                    setTimeout(function() {
+                                                        $(".btn_envia_form").prop('disabled', false);
+                                                        document.getElementById("btn-finish").disabled = false;
+                                                    }, 1000); // 1000 milisegundos = 1 segundo
+                                                }, 
                     });
                 }
             }
@@ -519,6 +521,11 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
+
+
 
 function validarPasoActual(index) {
     // Simplemente devuelve true en este ejemplo. Aquí debes implementar tu lógica de validación.
@@ -614,28 +621,28 @@ function buscar(OP,LIM_INI){
     */
     //FORMATEO RUT PUNTOS EN INPUT
     if(rut!=''){
-        rut                 =   rut.replace(/\./g,'');
-        rut                 =   rut.split('-');
-        rut                 =   rut[0];
+        rut = rut.replace(/\./g,'');
+        rut = rut.split('-');
+        rut = rut[0];
     }
-    var tabs_activado       =   localStorage.getItem("ind_tipo_busqueda_paciente"); 
+    var tabs_activado = localStorage.getItem("ind_tipo_busqueda_paciente"); 
     //console.log("-----------------------------------------------------------");
     //console.log("tabs     ->  ",tabs_activado);
     //console.log("-----------------------------------------------------------");
-    var valida              =   0;
-    if(tabs_activado        ==  '#DIV_BUSQUEDA_PARAMETROS'){
+    var valida =   0;
+    if(tabs_activado ==  '#DIV_BUSQUEDA_PARAMETROS'){
         if (nombre != '' || apellidoP != '' || apellidoM != '') {
             valida          =   1;
         } 
-        rut                 =   '';
-        pasaporte           =   '';
+        rut =   '';
+        pasaporte =   '';
     } else {
         if (rut != '' || pasaporte != '') {
-            valida          =   1;
+            valida = 1;
         }
-        nombre              =   '';
-        apellidoP           =   '';
-        apellidoM           =   '';
+        nombre = '';
+        apellidoP = '';
+        apellidoM = '';
     }
     /*
     if ((rut!= '' || nombre != '' || apellidoP != '' || apellidoM != '') && (tipoPac == 0)) {
@@ -644,11 +651,8 @@ function buscar(OP,LIM_INI){
         valida              =   1;
     }
     */
-
-    if (valida === 0)   {
-   
+    if (valida === 0) {
         jError("Debe Ingresar a lo menos un par&aacute;metro para la b&uacute;squeda","Restricci\u00f3n");
-   
         $("#busq_rut").css("border-color","red");
         $("#busq_rutfonasa").css("border-color","red");
         $("#busq_dni").css("border-color","red");
@@ -660,72 +664,73 @@ function buscar(OP,LIM_INI){
         $("#msj_load").remove();
         $("#resultados_busquedapac").show();
         $("#resultados").html('');
-
         document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
         document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
         document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
         document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
-
     } else {
         $("#msj_busqueda").html(`<tr id="msj_load_body">
-                                        <td style="text-align:center" colspan="11">
-                                            <i class="fa fa-cog fa-spin fa-2x fa-fw"></i>
-                                            <span class="sr-only"></span><b> BUSCANDO...</b>
-                                        </td>
-                                    </tr>`);
+                <td style="text-align:center" colspan="11">
+                    <i class="fa fa-cog fa-spin fa-2x fa-fw"></i>
+                    <span class="sr-only"></span><b> BUSCANDO...</b>
+                </td>
+            </tr>`);
         $.ajax({ 
-            type            :	"POST",
-            url             :	"ssan_bdu_creareditarpaciente/buscarPac_resumido",
-            dataType        :	"json",
-            data            : 
-                                                    { 
-                                                        numFichae   :   '',
-                                                        rut         :   rut,
-                                                        tipoEx      :   tipoEx,
-                                                        tipoPac     :   tipoPac,
-                                                        pasaporte   :   pasaporte,
-                                                        nombre      :   nombre,
-                                                        apellidoP   :   apellidoP,
-                                                        apellidoM   :   apellidoM,
-                                                        LIM_INI     :   LIM_INI,
-                                                        numxpag     :   numxpag,
-                                                        OP          :   OP,
-                                                        templete    :   6 //anatomia ext
-                                                    },
-            error           :	function(errro)     {  
-                                                        $("#msj_load").remove(); 
-                                                        $("#msj_busqueda").html('');
-                                                        console.log(errro.responseText); 
-                                                        console.log(errro); 
-                                                        //***********************************************************
-                                                        document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
-                                                        document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
-                                                        document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
-                                                        document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
-                                                        //***********************************************************
-                                                        jAlert("Error General, Consulte Al Administrador"); 
-                                                        //("#resultados_busquedapac")
-                                                    },
-            success         :	function(aData)     {
-                                                        console.log("----------------------------");
-                                                        console.log("aData -> ",aData);
-
-                                                        $("#msj_busqueda").html('');
-                                                        $("#msj_load").remove();
-                                                        $("#resultados").html('');
-                                                        $("#new_paginacion").show("slow");
-                                                        
-                                                        document.getElementById("BTN_BUSQ_PAC_1").disabled          =   false;
-                                                        document.getElementById("BTN_DELETE_PAC_1").disabled        =   false;
-                                                        document.getElementById("BTN_BUSQ_PAC_2").disabled          =   false;
-                                                        document.getElementById("BTN_DELETE_PAC_2").disabled        =   false;
-
-                                                        if(AjaxExtJsonAll(aData)){
-
-                                                        }
-                                                    }, 
+            type : "POST",
+            url : "ssan_bdu_creareditarpaciente/buscarPac_resumido",
+            dataType : "json",
+            data : { 
+                        numFichae : '',
+                        rut : rut,
+                        tipoEx : tipoEx,
+                        tipoPac : tipoPac,
+                        pasaporte : pasaporte,
+                        nombre : nombre,
+                        apellidoP : apellidoP,
+                        apellidoM :   apellidoM,
+                        LIM_INI : LIM_INI,
+                        numxpag : numxpag,
+                        OP : OP,
+                        templete : 6 //anatomia ext
+                    },
+            error :	function(errro) {  
+                                        $("#msj_load").remove(); 
+                                        $("#msj_busqueda").html('');
+                                        console.log(errro); 
+                                        console.log(errro.responseText); 
+                                        document.getElementById("BTN_BUSQ_PAC_1").disabled = false;
+                                        document.getElementById("BTN_DELETE_PAC_1").disabled = false;
+                                        document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
+                                        document.getElementById("BTN_DELETE_PAC_2").disabled = false;
+                                        jAlert("Error General, Consulte Al Administrador"); 
+                                        //("#resultados_busquedapac")
+                                    },
+            success : function(aData) {
+                                        console.error("##########################################");
+                                        console.error("aData -> ",aData);
+                                        console.error("##########################################");
+                                        $("#msj_busqueda").html('');
+                                        $("#msj_load").remove();
+                                        $("#resultados").html('');
+                                        $("#new_paginacion").show("slow");
+                                        document.getElementById("BTN_BUSQ_PAC_1").disabled = false;
+                                        document.getElementById("BTN_DELETE_PAC_1").disabled = false;
+                                        document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
+                                        document.getElementById("BTN_DELETE_PAC_2").disabled = false;
+                                        if(AjaxExtJsonAll(aData.json)){   
+                                            if (aData.count == 0){
+                                                $("#resultados_busquedapac").show();
+                                                $("#btn_nuevo_paciente").show();
+                                            }
+                                        }
+                                    }, 
         });
         $("#resultados").html('');
     }
+}
+
+function limpiar_card_busqueda(){
+    localStorage.setItem("ind_tipo_busqueda_paciente","#DIV_BUSQUEDA_PAC_NUMERO");
+    $('.main_busqueda_paciente a[href="#DIV_BUSQUEDA_PAC_NUMERO"]').tab('show');
 }
 </script>

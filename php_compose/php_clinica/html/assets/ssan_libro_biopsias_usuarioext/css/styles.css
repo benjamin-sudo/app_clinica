@@ -154,3 +154,10 @@
     }
 }
 
+.grid_inscribe_visitante                {
+    display : grid;
+    grid-template-columns : auto 1fr;
+    align-items : end;
+    gap : 15px;
+    margin-bottom : 0px;
+}

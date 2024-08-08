@@ -8,11 +8,21 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
     public function __construct(){
         parent::__construct();
         $this->db = $this->load->database('session',true);
-
         $this->load->helper('text');
         $this->load->model("sql_class/sql_class_ggpacientes");
         $this->load->model("sql_class/sqlclass_archivo");
         $this->load->model("sql_class/sql_class_pabellon");
+    }
+
+
+    public function funcion_buquedarun($data){
+        $v_run = $data['v_run'];
+        $v_dv = $data['v_dv'];
+        $arr_result = $this->db->query("SELECT * FROM $tableSpace.GG_TGPACTE P WHERE P.COD_RUTPAC = '$v_run' ")->result_array();
+        return [
+            'arr' => $arr_result,
+            'status' => $this->db->trans_status(),
+        ];
     }
 
     public function function_test(){
