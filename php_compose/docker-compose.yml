@@ -1,6 +1,6 @@
 version: '3'
 services:
-  #14528409-0
+  
   #administrador
   #http://localhost:9000/administrador
   codeigniter:
