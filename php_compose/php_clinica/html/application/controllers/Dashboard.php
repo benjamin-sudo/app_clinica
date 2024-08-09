@@ -5,25 +5,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Dashboard extends CI_Controller {
 
     function __construct(){
-        parent::__construct(); # Primero, llama al constructor del padre.
-        $this->load->library('session'); # Después, carga las bibliotecas y otros recursos.
-        $this->load->helper('url'); #
-        $this->load->model('modelinicio'); # Consultas MYSQL
+        parent::__construct();
+        $this->load->helper('url');
+        $this->load->library('session');
+        $this->load->model('modelinicio');
     }
 
     public function index(){
         $MENUARRFR = [];
-        if(!$this->session->userdata('ID_UID')){
-            #Asegúrate de reemplazar 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
-            redirect('/'); 
-        }
+        if(!$this->session->userdata('ID_UID')){ redirect('/'); }
         $MENUARRFR = $this->session->userdata('MENUARRFR');
         $this->load->view('Dashboard/view_escritorio',['menu'=>$MENUARRFR]);
     }
 
     public function logout(){
         $this->session->sess_destroy();
-        redirect('/'); // Reemplaza 'ruta/a/login' con la ruta real a tu página de inicio de sesión.
+        redirect('/');
     }
 
     public function configuracion_micuenta(){
@@ -116,22 +113,22 @@ class Dashboard extends CI_Controller {
         $iuid = $this->session->userdata('ID_UID');
         $consulta = $this->modelinicio->tradatos_usu($iuid);
         if(count($consulta)>0){
-            $passCla        =   $consulta[0]["TX_INTRANETSSAN_CLAVEUNICA"];
-            $userEmail      =   $consulta[0]["EMAIL"];
-            $subject        =   'Solicitud de recuperación de firma digital';
-            $subject        =   'RECUPERACIÓN FIRMA UNICA';
-            $config         =   [
-                'smtp_user'     =>  'clinicalibrechile@gmail.com',
-                'smtp_pass'     =>  'hdmbkfrxxrleunqu',
-                'protocol'      =>  'smtp',
-                'smtp_host'     =>  'smtp.gmail.com',
-                #'smtp_port'    =>  465,
-                #'smtp_crypto'  =>  'ssl', 
-                'smtp_port'     =>  587,
-                'smtp_crypto'   =>  'tls', 
-                'mailtype'      =>  'html',
-                'starttls'      =>  true,
-                'newline'       =>  "\r\n",
+            $passCla = $consulta[0]["TX_INTRANETSSAN_CLAVEUNICA"];
+            $userEmail = $consulta[0]["EMAIL"];
+            $subject = 'Solicitud de recuperación de firma digital';
+            $subject = 'RECUPERACIÓN FIRMA UNICA';
+            $config = [
+                'smtp_user' => 'clinicalibrechile@gmail.com',
+                'smtp_pass' => 'hdmbkfrxxrleunqu',
+                'protocol' => 'smtp',
+                'smtp_host' => 'smtp.gmail.com',
+                #'smtp_port' => 465,
+                #'smtp_crypto' => 'ssl', 
+                'smtp_port' => 587,
+                'smtp_crypto' => 'tls', 
+                'mailtype' => 'html',
+                'starttls' => true,
+                'newline' => "\r\n",
             ];
             $this->load->library('email',$config);
             $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
@@ -150,7 +147,7 @@ class Dashboard extends CI_Controller {
                             <br>
                             <b>Si usted no ha generado esta solicitud favor comunicarce con el Sub-Departamento de Clinica libre Chile.</b>
                             <br>
-                            correo: clinicalibrechile@gmail.com
+                                correo : clinicalibrechile@gmail.com
                             </div>
                             ';
             $this->email->message($body);
@@ -176,10 +173,8 @@ class Dashboard extends CI_Controller {
         $status = true;
         $passNew = $this->input->post('firma');
         $username = $this->input->post('username');
-        $valida = $this->modelinicio->Consultaexistefirma($passNew, $username);
-        if (count($valida)>0){
-            $status = false;
-        }
+        $valida = $this->modelinicio->Consultaexistefirma($passNew,$username);
+        if (count($valida)>0){ $status = false; }
         $this->output->set_output(json_encode([
             'status' => $status,
         ]));

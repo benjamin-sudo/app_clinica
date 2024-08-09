@@ -271,7 +271,7 @@
     <!--
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
     -->
-    <!-- personalizable --> 
+    <!-- Personalizaci&oacute;n de contenidos --> 
     <script type="text/javascript" src="Assets/recursos/js/funciones.js" ></script>
   </body>
 </html>

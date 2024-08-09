@@ -31,9 +31,7 @@ class modelinicio extends CI_Model {
         $menu = [];
         $ID_UID = '';
         $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
-        $query = $this->db->query($sql, array($user));
-
-        
+        $query = $this->db->query($sql,array($user));
         if ($query->num_rows() > 0) {
             $row = $query->row();
             if (password_verify($pass, $row->PASSWORD)) {
@@ -45,15 +43,14 @@ class modelinicio extends CI_Model {
             #activo 
             if ($status) {
                 $arr_empresa = $this->db->query("SELECT 
-                                                    A.*,
-                                                    'TEST' AS NOM_ESTAB 
-                                                    FROM 
-                                                    ADMIN.GU_TUSUXEMPRESA A 
-                                                    WHERE 
-                                                    A.IND_ESTADO = 1 
-                                                    AND 
-                                                    A.ID_UID = $ID_UID
-                ")->result_array();
+                        A.*,
+                        'TEST' AS NOM_ESTAB 
+                        FROM 
+                        ADMIN.GU_TUSUXEMPRESA A 
+                        WHERE 
+                        A.IND_ESTADO = 1 
+                        AND 
+                        A.ID_UID = $ID_UID ")->result_array();
                 if (count($arr_empresa)>0) {
                     $status_empresa = true;
                     $txt_empresa_default = $arr_empresa[0]['NOM_ESTAB'];
@@ -76,8 +73,10 @@ class modelinicio extends CI_Model {
     #carga de menu principal
     public function load_menuxuser($ID_UID){
         $sql = $this->arr_menu_default(); 
+        
         #pendiente
         #$sql = $this->nuevo_busqueda_menu($ID_UID);
+
         $menu = [];
         $menuData = $this->db->query($sql)->result_array();
         if(count($menuData)>0){
@@ -160,8 +159,6 @@ class modelinicio extends CI_Model {
                 ";
         return $sql;
     }
-
-
 
     public function nuevo_busqueda_menu($iuid){
         $own = "ADMIN";
@@ -391,4 +388,5 @@ class modelinicio extends CI_Model {
         $query = $this->db->query("SELECT USERNAME,FIRST_NAME,NAME,MIDDLE_NAME,LAST_NAME,TELEPHONE,EMAIL,TX_INTRANETSSAN_CLAVEUNICA,PASSWORD,TX_INTRANETSSAN_CLAVEUNICA,MAILHASH from $this->own.FE_USERS where ID_UID=$iuid");
         return $query->result_array();
     }
+
 }
