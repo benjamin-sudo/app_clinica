@@ -1223,7 +1223,6 @@ function editor_extranjero(numfichae){
     $("#modalExtranjero").modal("show"); 
 }
 
-
 function agregar_rut_ext(numfichae){
     var rut = $("#new_busq_rut").val();
     var dv = rut.split('-')[1];
@@ -1236,10 +1235,8 @@ function agregar_rut_ext(numfichae){
         jAlert("RUN Vacio","e-SISSAN ");
         return false;
     }
-    
     //console.log("rut->",rut);
     //console.log("dv->",dv);
-
     jPrompt('Con esta acci&oacute;n se proceder&aacute; a a&ntilde;adir o actualizar informaci&oacute;n paciente en BDU SSAN. <br/>&iquest;Est&aacute; seguro de continuar?<br />','','Confirmaci\u00F3n',function(r){
         if(r){
             $.ajax({ 

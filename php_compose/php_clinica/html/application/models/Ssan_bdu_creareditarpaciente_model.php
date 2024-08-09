@@ -657,7 +657,6 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
                 }
             }
         }
-        
         $this->db->trans_complete();
         return $this->db->trans_status() . "#" . $numFichae;
     }

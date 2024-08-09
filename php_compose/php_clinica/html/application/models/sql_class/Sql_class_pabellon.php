@@ -3738,20 +3738,20 @@ OBS_RECHAZO,
         
         public function getBusquedaListaxRut($rutPac , $empresa, $rutPro , $estados){
             
-            $where          = '';
+            $where = '';
             if ($estados!=''){
-                $where      .=" AND O.ID_ESTADO_TQ  IN ($estados)  ";
+                $where .=" AND O.ID_ESTADO_TQ  IN ($estados)  ";
             }
             if ($rutPac!=''){
-                $where      .=" AND L.COD_RUTPAC = '$rutPac' ";
+                $where .=" AND L.COD_RUTPAC = '$rutPac' ";
             }
             if ($rutPro!=''){
-                 $where     .=" AND PR.COD_TPROFE = '$rutPro' ";
+                 $where .=" AND PR.COD_TPROFE = '$rutPro' ";
             }
             if ($empresa=='100'){
-                $where      .="  AND  O.COD_TESTABL           IN (100,1000) ";
+                $where .="  AND  O.COD_TESTABL           IN (100,1000) ";
             }  else {
-                $where      .="  AND  O.COD_TESTABL           IN ($empresa) ";
+                $where .="  AND  O.COD_TESTABL           IN ($empresa) ";
             } 
             
             $sQuery ="  

@@ -108,18 +108,14 @@
                 </thead>    
                 <tbody id="resultados"></tbody>
             </table>
-
             <div class="grid_contenedo_paginado">
                 <div class="grid_contenedo_paginado1">&nbsp;</div>
                 <div class="grid_contenedo_paginado1"><div class="btn-group anatomia_pagination" id="new_paginacion"></div></div>
                 <div class="grid_contenedo_paginado1">&nbsp;</div>
             </div>
-
         </div>
     </div>
 </div>
-
-
 
 <section>
     <div class="modal fade" id="modalPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

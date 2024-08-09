@@ -35,7 +35,6 @@ docker image prune -f
 docker volume prune -f
 docker system prune -a -f
 ________________________________________________________________________________________
-
 ###############################################
 # Faltante antes de subir: ####################
 #   -   Menus por usuarios ####################
