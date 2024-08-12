@@ -665,6 +665,22 @@ class modelinicio extends CI_Model {
         return $this->db->query($sql)->result_array();
     }
 
+    public function busca_menu($iuid, $access = ''){
+        $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_ICON FROM (select unique D.MENP_ID, MENP_ICON,D.MENP_NOMBRE,D.MENP_RUTA,D.MENP_IDPADRE,D.MENP_TIPO,D.MENP_ESTADO, MENP_ORDER
+            from $this->ownGu.GU_TUSUTIENEPER a, $this->ownGu.GU_TPERMISOS b, $this->ownGu.GU_TMENPTIENEPER  c,$this->ownGu.GU_TMENUPRINCIPAL d
+            where a.per_id=b.per_id and
+            a.per_id=c.per_id and id_uid=$iuid and
+            C.MENP_ID=D.MENP_ID and a.ind_estado=1
+            and D.MENP_ESTADO=1 and c.ind_estado=1 AND MENP_TIPO= 1 AND b.PER_ESTADO = 3 AND MENP_FRAME = 3) ORDER BY MENP_NOMBRE ASC";
+
+        if ($access == 'decomiso') {
+            $query = $this->dbFac->query($sql);
+        } else {
+            $query = $this->db->query($sql);
+        }
+        return $query->result_array();
+    }
+
     public function creaCodigoFirma($username, $codigo, $firma, $datetime){
         $this->db->trans_start();
         $dataFun = array(
