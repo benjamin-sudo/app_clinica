@@ -73,17 +73,10 @@ class modelinicio extends CI_Model {
     
     public function load_menuxuser($ID_UID) {
         $menu = [];
-    
-        // Obtener los permisos del usuario
         $arr_user_permisos = $this->db->query($this->arr_menu_xuser($ID_UID))->result_array();
-    
-        // Crear un array para almacenar todos los MENP_ID, incluyendo padres y nietos
         $allPermissions = [];
-    
-        // Mapa para identificar los padres de cada MENP_ID
         $parentMap = [];
-    
-        // Llenar el array con todos los permisos y crear el mapa de padres
+        
         foreach ($arr_user_permisos as $permiso) {
             $allPermissions[] = $permiso['MENP_ID'];
             $parentMap[$permiso['MENP_ID']] = $permiso['MENP_IDPADRE'];
@@ -148,7 +141,6 @@ class modelinicio extends CI_Model {
                 }
             }
         }
-    
         return [
             'arr_menu' => $menu,
             'arr_user_permisos' => $arr_user_permisos
@@ -231,10 +223,6 @@ class modelinicio extends CI_Model {
                 ";
         return $sql;
     }
-
-
-    
-    
 
     public function arr_menuxuser($ID_UID) {
         $sql = "SELECT 

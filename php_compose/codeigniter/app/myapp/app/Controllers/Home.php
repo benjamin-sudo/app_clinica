@@ -302,9 +302,16 @@ class Home extends BaseController {
         $postData = $request->getPost();
         $result = $this->usersModel->editando_extension_old(['post' => $postData]);
         if ($result) {
-            return $this->response->setJSON(['status' => true, 'message' => 'Extensión editada correctamente']);
+            return $this->response->setJSON([
+                'status' => true, 
+                'message' => 'Extensión editada correctamente'
+            ]);
         } else {
-            return $this->response->setStatusCode(500)->setJSON(['status' => false, 'message' => 'Error al editar la extensión']);
+            return $this->response->setStatusCode(500)->setJSON([
+                'status' => false, 
+                'message' => 'Error al editar la extensión'
+            ]);
         }
     }
+
 }

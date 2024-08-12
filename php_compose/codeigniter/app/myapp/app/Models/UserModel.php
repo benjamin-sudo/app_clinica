@@ -978,9 +978,6 @@ class UserModel extends Model {
         }
     }
 
-
-
-
     public function editando_extension_old($aData) {
         $idExt = $aData['post']['idMen'];
         $nombre = $aData['post']['nombre'];
@@ -991,7 +988,6 @@ class UserModel extends Model {
         $bool_checked = $aData['post']['bool_checked'];
         $db = \Config\Database::connect();
         $logger = service('logger'); // Obtener la instancia del logger
-        
         $db->transStart();
         $arr_idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
         $listarMenup = $arr_idPadre['MENP_IDPADRE'];
@@ -1002,35 +998,32 @@ class UserModel extends Model {
             'MENP_IDPADRE'  => $listarMenup,
             'MENP_FRAME'    => 3
         ])->where('MENP_ID', $idExt)->update();
+        
         /*    
             $logger->info("**************************************************************************** ");
             $logger->info("*******************      editando_extension_old     ************************ ");
             $logger->info(" Extension:      =   {$idExt},       Nombre  = {$nombre},    Tipo = {$tip}   ");
             $logger->info(" Padre           =   {$listarMenup}, check   = {$check}                      ");
             $logger->info(" arrPrivilegios  =   " . json_encode($arrPrivilegios) . "                    ");
+            $logger->info("**************************************************************************** ");
         */
+
         $count = count($arrPrivilegios);
         if ($count > 0) {
             $sigMen = 0;
+
             while ($sigMen <= 2) {
                 if ($sigMen == 0) {
                     $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO', 0)->where('MENP_ID', $idExt)->update();
                 }
-                foreach ($arrPrivilegios as $aux => $idPer){
-                    /*
-                        $logger->info(" ---------------------------------   ");
-                        $logger->info(" aux     =   {$aux}");
-                        $logger->info(" sigMen  =   {$sigMen}");
-                        $logger->info(" idExt   =   {$idExt}");
-                        $logger->info(" idPer   =   {$idPer}");
-                    */
+                foreach ($arrPrivilegios as $aux => $idPer) {
                     $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
                     if (count($res) > 0) {
                         $db->table('ADMIN.GU_TMENPTIENEPER')
-                           ->set('IND_ESTADO', 1)
-                           ->where('PER_ID', $idPer)
-                           ->where('MENP_ID', $idExt)
-                           ->update();
+                        ->set('IND_ESTADO', 1)
+                        ->where('PER_ID', $idPer)
+                        ->where('MENP_ID', $idExt)
+                        ->update();
                     } else {
                         $data = [
                             'MENP_ID' => $idExt,
@@ -1040,12 +1033,14 @@ class UserModel extends Model {
                         $db->table('ADMIN.GU_TMENPTIENEPER')->insert($data);
                     }
                 }
+                
                 if ($listarMenup != 0 && $sigMen == 0) {
                     $idExt = $listarMenup;
-                } elseif ($sigMen == 1) {
+                } else if ($sigMen == 1) {
                     $idPadre1 = $db->query("SELECT MENP_IDPADRE FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getResultArray();
                     if ($idPadre1) {
                         $idExt = $idPadre1[0]['MENP_IDPADRE'];
+                        $listarMenup = $idExt;
                     } else {
                         break;
                     }
@@ -1054,6 +1049,7 @@ class UserModel extends Model {
                 }
                 $sigMen++;
             }
+
         }
         #$logger->info("*****************************************************************************");
         $db->transComplete();
@@ -1062,6 +1058,96 @@ class UserModel extends Model {
             "status" => $db->transStatus()
         ];
     }
+
+
+
+    /*
+
+    
+    public function editando_extension_old($aData) {
+        $idExt = $aData['post']['idMen'];
+        $nombre = $aData['post']['nombre'];
+        //$listarMenup = $aData['post']['ind_extension_padre'];
+        $tip = $aData['post']['tipo_de_extension'];
+        $check = $aData['post']['check'];
+        $arrPrivilegios = $aData['post']['arrPrivilegios'];
+        $bool_checked = $aData['post']['bool_checked'];
+        $db = \Config\Database::connect();
+        $logger = service('logger'); // Obtener la instancia del logger
+        $db->transStart();
+        $arr_idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
+        $listarMenup = $arr_idPadre['MENP_IDPADRE'];
+        $db->table('ADMIN.GU_TMENUPRINCIPAL')->set([
+            'MENP_NOMBRE'   => $nombre,
+            'MENP_ESTADO'   => $check,
+            'MENP_TIPO'     => $tip,
+            'MENP_IDPADRE'  => $listarMenup,
+            'MENP_FRAME'    => 3
+        ])->where('MENP_ID', $idExt)->update();
+           
+        #$logger->info("**************************************************************************** ");
+        #$logger->info("*******************      editando_extension_old     ************************ ");
+        #$logger->info(" Extension:      =   {$idExt},       Nombre  = {$nombre},    Tipo = {$tip}   ");
+        #$logger->info(" Padre           =   {$listarMenup}, check   = {$check}                      ");
+        #$logger->info(" arrPrivilegios  =   " . json_encode($arrPrivilegios) . "                    ");
+        #$logger->info("**************************************************************************** ");
+        
+        $count = count($arrPrivilegios);
+        if ($count > 0) {
+            $sigMen = 0;
+            while ($sigMen <= 2) {
+                if ($sigMen == 0) {
+                    $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO', 0)->where('MENP_ID', $idExt)->update();
+                }
+                foreach ($arrPrivilegios as $aux => $idPer) {
+                    $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
+                    if (count($res) > 0) {
+                        $db->table('ADMIN.GU_TMENPTIENEPER')
+                        ->set('IND_ESTADO', 1)
+                        ->where('PER_ID', $idPer)
+                        ->where('MENP_ID', $idExt)
+                        ->update();
+                    } else {
+                        $data = [
+                            'MENP_ID' => $idExt,
+                            'PER_ID' => $idPer,
+                            'IND_ESTADO' => 1
+                        ];
+                        $db->table('ADMIN.GU_TMENPTIENEPER')->insert($data);
+                    }
+                }
+                
+                if ($listarMenup != 0 && $sigMen == 0) {
+                    $idExt = $listarMenup;
+                } else if ($sigMen == 1) {
+                    $idPadre1 = $db->query("SELECT MENP_IDPADRE FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getResultArray();
+                    if ($idPadre1) {
+                        $idExt = $idPadre1[0]['MENP_IDPADRE'];
+                        $listarMenup = $idExt;
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+                $sigMen++;
+            }
+
+        }
+        $db->transComplete();
+        return [
+            "data" => $aData,
+            "status" => $db->transStatus()
+        ];
+    }
+    */
+
+
+
+
+
+
+
 
 }
 ?>
