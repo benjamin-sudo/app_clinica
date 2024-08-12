@@ -92,8 +92,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column menu_principal" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-header">Listado Sistema</li>
         <?php
-          if (count($menu)>0){
-            foreach ($menu as $mainId => $mainItem) {
+          if (count($menu['arr_menu'])>0){
+            foreach ($menu['arr_menu'] as $mainId => $mainItem) {
                 // Menú principal
                 echo '<li class="nav-item">';
                 echo '<a href="#" class="nav-link">';
@@ -139,6 +139,10 @@
           }
         ?>
         </nav>
+
+
+
+
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

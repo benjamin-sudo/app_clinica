@@ -503,24 +503,26 @@ class UserModel extends Model {
         );
 
         //**************************************************************
-        $last_id            =   0;
-        $arr_username       =   $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = '".$arr_run."'")->getResultArray();
+        $last_id = 0;
+        $arr_username = $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = '".$arr_run."'")->getResultArray();
         if(count($arr_username)>0){
-            $last_id        =   $arr_username[0]['ID_UID'];
-            $constructora   =   $db->table('ADMIN.FE_USERS');
+            $last_id = $arr_username[0]['ID_UID'];
+            $constructora = $db->table('ADMIN.FE_USERS');
             $constructora->set($dataUs);
             $constructora->where('ID_UID',$last_id);
-            $updated        =   $constructora->update();
+            $updated = $constructora->update();
         } else {
-            $constructora   =   $db->table('ADMIN.FE_USERS');
+            $constructora = $db->table('ADMIN.FE_USERS');
             $constructora->insert($dataUs);
-            $last_id        =   $db->insertID();
+            $last_id = $db->insertID();
         }
         
+
+
         //privilegios
-        $arrPrivilegios                 =   $aData['post']['arrPrivilegios'];
+        $arrPrivilegios = $aData['post']['arrPrivilegios'];
         if(count($arrPrivilegios)>0){
-            $constructora0              =   $db->table('ADMIN.GU_TUSUTIENEPER');
+            $constructora0 = $db->table('ADMIN.GU_TUSUTIENEPER');
             $constructora0->set(['IND_ESTADO' => 0]);
             $constructora0->where('ID_UID',$last_id);
             $constructora0->update();
@@ -719,10 +721,10 @@ class UserModel extends Model {
                                                 ADMIN.GU_TMENPTIENEPER A,
                                                 ADMIN.GU_TPERMISOS B 
                                             WHERE 
-                                                    A.MENP_ID =  ?
-                                                AND B.PER_ESTADO IN (1,2,3) 
-                                                AND A.PER_ID = B.PER_ID 
-                                                AND A.IND_ESTADO IN (1)",[$menuId])->getResultArray();
+                                                A.MENP_ID =  ?
+                                            AND B.PER_ESTADO IN (1,2,3) 
+                                            AND A.PER_ID = B.PER_ID 
+                                            AND A.IND_ESTADO IN (1)",[$menuId])->getResultArray();
 
             /*
             #Función para obtener permisos de un menú dado
@@ -980,7 +982,6 @@ class UserModel extends Model {
 
 
     public function editando_extension_old($aData) {
-        
         $idExt = $aData['post']['idMen'];
         $nombre = $aData['post']['nombre'];
         //$listarMenup = $aData['post']['ind_extension_padre'];
@@ -988,14 +989,12 @@ class UserModel extends Model {
         $check = $aData['post']['check'];
         $arrPrivilegios = $aData['post']['arrPrivilegios'];
         $bool_checked = $aData['post']['bool_checked'];
-
         $db = \Config\Database::connect();
         $logger = service('logger'); // Obtener la instancia del logger
+        
         $db->transStart();
-
         $arr_idPadre = $db->query("SELECT MENP_IDPADRE, MENP_TIPO FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getRowArray();
         $listarMenup = $arr_idPadre['MENP_IDPADRE'];
-
         $db->table('ADMIN.GU_TMENUPRINCIPAL')->set([
             'MENP_NOMBRE'   => $nombre,
             'MENP_ESTADO'   => $check,
@@ -1056,11 +1055,7 @@ class UserModel extends Model {
                 $sigMen++;
             }
         }
-
-
-        $logger->info("*****************************************************************************");
-
-
+        #$logger->info("*****************************************************************************");
         $db->transComplete();
         return [
             "data" => $aData,

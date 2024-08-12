@@ -114,13 +114,9 @@ function valida_run_esissan(val) {
                 showNotification('top', 'right', '<i class="bi bi-person-add"></i>&nbsp;Nuevo usuario', 1);
                 default_gestionuser(true);
             }
-
-            
             setTimeout(function() {
                 $("#loadFade").modal("hide");
             }, 1000);
-
-
             /*
             $('#loadFade').removeClass('show').hide()
             $('#loadFade').modal('hide'); // Método estándar
@@ -128,25 +124,8 @@ function valida_run_esissan(val) {
             $('#loadFade').hide(); // Esconde el elemento modal
             $('#loadFade').modal('dispose'); // Dispose si Bootstrap 4
             */
-
         },
     });
-}
-
-
-function default_gestionuser(bool_new){
-    $("#btn_creaedita_user").attr('onclick','grabarUsu()').attr("disabled",false);
-    $("#btn_valida_profesional").attr("disabled",true).attr('onclick','');
-    $("#run_esissan").attr("disabled",true);
-    $(".class_checkbox").attr("disabled",false);
-    if (bool_new){
-        $("#ind_id_uid").val('');
-        document.getElementById('CheckboxUsu').checked = true;
-        $("#establecimiento").selectpicker('val',[]);
-        js_reload_previlegios();
-        $("#destinoPriv").selectpicker('val',[]);
-        js_reload_establecimientos();
-    }
 }
 
 function js_cambio_pass(){
@@ -171,41 +150,49 @@ function btn_defaultuser(){
     js_reload_establecimientos();
 }
 
-function grabarUsu(){
-    var ok = 0;
-    var user = $('#run_esissan').val();
-    var nombres = $('#txtNombres').val();
-    var apepate = $('#txtApePate').val();
-    var apemate = $('#txtApeMate').val();
-    var email = $('#txtEmail').val();
-    var pass = $('#txtPass').val();
-    var pass2 = $('#txtPassRep').val();
-    var uID = $('#ind_id_uid').val();
+function default_gestionuser(bool_new){
+    $("#btn_creaedita_user").attr('onclick','grabarUsu()').attr("disabled",false);
+    $("#btn_valida_profesional").attr("disabled",true).attr('onclick','');
+    $("#run_esissan").attr("disabled",true);
+    $(".class_checkbox").attr("disabled",false);
+    if (bool_new){
+        $("#ind_id_uid").val('');
+        document.getElementById('CheckboxUsu').checked = true;
+        $("#establecimiento").selectpicker('val',[]);
+        js_reload_previlegios();
+        $("#destinoPriv").selectpicker('val',[]);
+        js_reload_establecimientos();
+    }
+}
 
+function grabarUsu(){
+    let ok = 0;
+    let user = $('#run_esissan').val();
+    let nombres = $('#txtNombres').val();
+    let apepate = $('#txtApePate').val();
+    let apemate = $('#txtApeMate').val();
+    let email = $('#txtEmail').val();
+    let pass = $('#txtPass').val();
+    let pass2 = $('#txtPassRep').val();
+    let uID = $('#ind_id_uid').val();
     //console.log("uID -> ",uID);
-    var actualiza_pass = document.getElementById("ind_actualiza_pass").checked ? true : false;
-    var errores = [];
-    
+    let actualiza_pass = document.getElementById("ind_actualiza_pass").checked ? true : false;
+    let errores = [];
     if (user == '') {
         errores.push("Debe Ingresar el RUN del Usuario");
     } 
-    
     if ($('#error').is(':visible')) {
         errores.push("  -   El RUN Ingresado no es Valido");
     }  
-    
     if (nombres == '') {
         errores.push("  -   Debe Ingresar el Nombre del Usuario");
     }  
-    
     if (apepate == '') {
        errores.push("   -   Debe Ingresar el Apellido Paterno del Usuario");
     } 
-    
     if (apemate == '') {
         errores.push("  -   Debe Ingresar el Apellido Materno");
     }  
-    
     if (email == '') {
         errores.push("  -   Debe Ingresar el Email del Usuario");
     }  else {
@@ -268,9 +255,11 @@ function grabarUsu(){
         }; 
         
         //Variables pasadas por ajax a la funcion
-        //console.log("       ------------------------    ");
-        //console.log("       pasa                        ");
-        //console.log("       enviando -> ",variables,"   ");
+        console.log("       ############################################    ");
+        console.log("       Variables pasadas por ajax a la funcion         ");
+        console.log("       arrPrivilegios -> ",arrPrivilegios,"            ");
+        console.log("       arrEmpresas -> ",arrEmpresas,"                  ");
+
 
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
@@ -299,15 +288,11 @@ function grabarUsu(){
                                                 console.log("quisas->",errro,"-error->",errro.responseText); 
                                                 $("#protocoloPabellon").css("z-index","1500"); 
                                                 jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                setTimeout(function() {
-                                                    $("#loadFade").modal("hide");
-                                                }, 1000);
+                                                setTimeout(function() { $("#loadFade").modal("hide");  }, 1000);
                                             },
                     success : function(aData){ 
                                                 console.log("return  ->",aData);
-                                                setTimeout(function() {
-                                                    $("#loadFade").modal("hide");
-                                                }, 1000);
+                                                setTimeout(function() {  $("#loadFade").modal("hide");  }, 1000);
                                                 showNotification('top','center','<i class="bi bi-check-square-fill"></i> Se ha modificado perfil :<b>'+user+'</b>, numero : '+aData.data_return.last_id+'</b>',2);
                                                 btn_defaultuser();
                                             }, 
@@ -827,7 +812,7 @@ function editarExt(idMen, ind_tipo_menu) {
     });
 }
 
-function js_editarextension(idMen, ind_tipo_menu){
+function js_editarextension(idMen,ind_tipo_menu){
     let const_error = [];
     let check = document.getElementById('habilitado').checked ? 1 : 0; // menu habilitado
     let nombreMenu = $("#nomExt").val().trim();
@@ -858,16 +843,17 @@ function js_editarextension(idMen, ind_tipo_menu){
     }
 
     /*
-        console.log("   *****************************************************   ");
-        console.log("   ************    js_editarextension  ********************");
-        console.log("   idMen               => ",idMen);
-        console.log("   ind_tipo_menu       => ",ind_tipo_menu);
-        console.log("   nombreMenu          => ",nombreMenu);
-        console.log("   ind_extension_padre => ",ind_extension_padre);
-        console.log("   tipo_de_extension   => ",tipo_de_extension);
-        console.log("   arr_permisos        => ",arr_permisos);
+        console.error("   *****************************************************   ");
+        console.error("   ************    js_editarextension  ********************");
+        console.error("   idMen               => ",idMen);
+        console.error("   ind_tipo_menu       => ",ind_tipo_menu);
+        console.error("   nombreMenu          => ",nombreMenu);
+        console.error("   ind_extension_padre => ",ind_extension_padre);
+        console.error("   tipo_de_extension   => ",tipo_de_extension);
+        console.error("   arr_permisos        => ",arr_permisos);
     */
     //return false;
+    
     jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'CLINICA LIBRE', function(r) {
         if (r) {
             $.ajax({ 
@@ -877,15 +863,15 @@ function js_editarextension(idMen, ind_tipo_menu){
                 dataType    :   "json",
                 beforeSend  :   function(xhr) { $('#loadFade').modal('show'); },
                 data        :   { 
-                                    idMen                   :   idMen,
-                                    nombre                  :   nombreMenu,
-                                    nomArch                 :   nombreMenu,
-                                    ind_tipo_menu           :   ind_tipo_menu,
-                                    ind_extension_padre     :   ind_extension_padre,
-                                    tipo_de_extension       :   tipo_de_extension,
-                                    check                   :   check,
-                                    arrPrivilegios          :   arr_permisos,
-                                    bool_checked            :   check,
+                                    idMen : idMen,
+                                    nombre : nombreMenu,
+                                    nomArch : nombreMenu,
+                                    ind_tipo_menu : ind_tipo_menu,
+                                    ind_extension_padre : ind_extension_padre,
+                                    tipo_de_extension : tipo_de_extension,
+                                    check :   check,
+                                    arrPrivilegios : arr_permisos,
+                                    bool_checked : check,
                                 },
                 error   :   function(error) {  
                                                 console.log(error);
@@ -893,13 +879,14 @@ function js_editarextension(idMen, ind_tipo_menu){
                                                 setTimeout(function(){  $("#loadFade").modal("hide");  }, 1000);
                                             },
                 success : function(aData)   {  
-                                                setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
+                                               
                                                 console.log("editando_estensiones_privilegios   -> ", aData);
                                                 if (aData.status){
                                                     showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
                                                 } else {
                                                     showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
                                                 }
+                                                setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
                                             }
             });
         }

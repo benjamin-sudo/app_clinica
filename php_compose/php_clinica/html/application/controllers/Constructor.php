@@ -41,7 +41,7 @@ class Constructor extends CI_Controller {
             $_SESSION["loginFr"] = 'si';
             $_SESSION["COD_ESTAB"] = $empresas;
             $_SESSION["NOM_ESTAB"] = $txt_empresa;
-            $this->session->set_userdata( [
+            $this->session->set_userdata([
                 'unique' => $unique,
                 'ID_UID' => $userL->ID_UID,
                 'USERNAME' => $userL->USERNAME,
