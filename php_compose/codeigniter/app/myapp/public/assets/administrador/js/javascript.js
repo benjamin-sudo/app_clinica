@@ -8,17 +8,17 @@ $(document).ready(function(){
     console.log("   ---------------------------------------------------------------     ");
 
     $('#run_esissan').Rut({
-        on_error    :   function()  { 
-                                        console.log($("#run_esissan").val());  
-                                        jAlert('El Rut ingresado es Incorrecto. '+$("#run_esissan").val(), 'RUN Incorrecto'); 
-                                        $("#run_esissan").css('border-color','red'); 
-                                        $("#run_esissan").val('') 
-                                    },
-        on_success  :   function()  {   
-                                        $("#run_esissan").css('border-color',''); 
-                                        valida_run_esissan(1); 
-                                    },
-        format_on   :   'keyup'
+        on_error : function(){ 
+                                console.log($("#run_esissan").val());  
+                                jAlert('El Rut ingresado es Incorrecto. '+$("#run_esissan").val(), 'RUN Incorrecto'); 
+                                $("#run_esissan").css('border-color','red'); 
+                                $("#run_esissan").val('') 
+                            },
+        on_success : function(){   
+                                    $("#run_esissan").css('border-color',''); 
+                                    valida_run_esissan(1); 
+                                },
+        format_on : 'keyup'
     });
 
     const triggerFirstTabEl = document.querySelector('#myTab li:first-child button');
@@ -26,7 +26,7 @@ $(document).ready(function(){
     if (triggerFirstTabEl) {
         let tab = bootstrap.Tab.getInstance(triggerFirstTabEl);
         if (!tab) {   
-            tab =   new bootstrap.Tab(triggerFirstTabEl);
+            tab = new bootstrap.Tab(triggerFirstTabEl);
         }
         tab.show();
     } else {
@@ -172,18 +172,19 @@ function btn_defaultuser(){
 }
 
 function grabarUsu(){
-    var ok              =   0;
-    var user            =   $('#run_esissan').val();
-    var nombres         =   $('#txtNombres').val();
-    var apepate         =   $('#txtApePate').val();
-    var apemate         =   $('#txtApeMate').val();
-    var email           =   $('#txtEmail').val();
-    var pass            =   $('#txtPass').val();
-    var pass2           =   $('#txtPassRep').val();
-    var uID             =   $('#ind_id_uid').val();
+    var ok = 0;
+    var user = $('#run_esissan').val();
+    var nombres = $('#txtNombres').val();
+    var apepate = $('#txtApePate').val();
+    var apemate = $('#txtApeMate').val();
+    var email = $('#txtEmail').val();
+    var pass = $('#txtPass').val();
+    var pass2 = $('#txtPassRep').val();
+    var uID = $('#ind_id_uid').val();
+
     //console.log("uID -> ",uID);
-    var actualiza_pass  =   document.getElementById("ind_actualiza_pass").checked ? true : false;
-    var errores         =   [];
+    var actualiza_pass = document.getElementById("ind_actualiza_pass").checked ? true : false;
+    var errores = [];
     
     if (user == '') {
         errores.push("Debe Ingresar el RUN del Usuario");
@@ -228,22 +229,22 @@ function grabarUsu(){
         errores.push("  -   Debe asignar a lo menos un privilegio para el usuario");
         ok = 0;
     }
-    let arrEmpresas         =   $("#establecimiento").val() || [];
+    let arrEmpresas = $("#establecimiento").val() || [];
     if (arrEmpresas.length == 0) {
         errores.push("  -   Debe asignar a lo menos una empresa al ususario");
         ok = 0;
     }
     var activo;
     if ($("#CheckboxUsu").is(':checked')){
-        activo              =   0;
+        activo =   0;
     } else {
-        activo              =   1;
+        activo =   1;
     }
     var superUser;
     if ($("#checkTipo").is(':checked')){
-        superUser           =   1;
+        superUser =   1;
     } else {
-        superUser           =   0;
+        superUser =   0;
     }
     if (errores.length > 0) {
         //console.log("---------------------------------------------");
@@ -252,67 +253,67 @@ function grabarUsu(){
     } else {
         //validar correo
         const variables = { 
-            "user"              :   user, 
-            "nombres"           :   nombres, 
-            "apepate"           :   apepate, 
-            "apemate"           :   apemate, 
-            "email"             :   email,
-            "pass"              :   pass, 
-            "arrPrivilegios"    :   arrPrivilegios, 
-            "arrEmpresas"       :   arrEmpresas, 
-            "uID"               :   uID, 
-            "activo"            :   activo, 
-            "superUser"         :   superUser,
-            "actualiza_pass"    :   document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
-        }; //Variables pasadas por ajax a la funcion
+            "user" : user, 
+            "nombres" : nombres, 
+            "apepate" : apepate, 
+            "apemate" : apemate, 
+            "email" : email,
+            "pass" : pass, 
+            "arrPrivilegios" : arrPrivilegios, 
+            "arrEmpresas" : arrEmpresas, 
+            "uID" : uID, 
+            "activo" : activo, 
+            "superUser" : superUser,
+            "actualiza_pass" : document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
+        }; 
+        
+        //Variables pasadas por ajax a la funcion
         //console.log("       ------------------------    ");
         //console.log("       pasa                        ");
         //console.log("       enviando -> ",variables,"   ");
-        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta CLINICA LIBRE <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
+
+        jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
                 console.log(" r -> ",r);
                 $.ajax({ 
-                    type        :   "POST",
-                    url         :   "Home/fn_gestion_perfil",
-                    dataType    :   "json",
-                    beforeSend  :   function(xhr)           {   
-                                                                console.log(xhr);
-                                                                $('#loadFade').modal('show');
-                                                            },
-                    data        :                            { 
-                                                                "contrasena"        :   r,
-                                                                "user"              :   user, 
-                                                                "nombres"           :   nombres, 
-                                                                "apepate"           :   apepate, 
-                                                                "apemate"           :   apemate, 
-                                                                "email"             :   email, 
-                                                                "pass"              :   pass, 
-                                                                "uID"               :   uID, 
-                                                                "activo"            :   activo, 
-                                                                "superUser"         :   superUser,
-                                                                "actualiza_pass"    :   document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
-                                                                "arrPrivilegios"    :   arrPrivilegios, 
-                                                                "arrEmpresas"       :   arrEmpresas, 
-                                                            },
-                    error       :   function(errro)         { 
-                                                                console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                                $("#protocoloPabellon").css("z-index","1500"); 
-                                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
-                                                                setTimeout(function() {
-                                                                    $("#loadFade").modal("hide");
-                                                                }, 1000);
-                                                            },
-                    success     :   function(aData)         { 
-                                                                console.log("return  ->",aData);
-                                                                setTimeout(function() {
-                                                                    $("#loadFade").modal("hide");
-                                                                }, 1000);
-                                                                showNotification('top','center','<i class="bi bi-check-square-fill"></i> Se ha modificado perfil :<b>'+user+'</b>, numero : '+aData.data_return.last_id+'</b>',2);
-                                                                btn_defaultuser();
-                                                            }, 
+                    type : "POST",
+                    url : "Home/fn_gestion_perfil",
+                    dataType : "json",
+                    beforeSend : function(xhr) {   $('#loadFade').modal('show');  },
+                    data : { 
+                                "contrasena" : r,
+                                "user" : user, 
+                                "nombres" : nombres, 
+                                "apepate" : apepate, 
+                                "apemate" : apemate, 
+                                "email" : email, 
+                                "pass" : pass, 
+                                "uID" : uID, 
+                                "activo" : activo, 
+                                "superUser" : superUser,
+                                "actualiza_pass" : document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
+                                "arrPrivilegios" : arrPrivilegios, 
+                                "arrEmpresas" : arrEmpresas, 
+                            },
+                    error : function(errro) { 
+                                                console.log("quisas->",errro,"-error->",errro.responseText); 
+                                                $("#protocoloPabellon").css("z-index","1500"); 
+                                                jError("Error General, Consulte Al Administrador","e-SISSAN"); 
+                                                setTimeout(function() {
+                                                    $("#loadFade").modal("hide");
+                                                }, 1000);
+                                            },
+                    success : function(aData){ 
+                                                console.log("return  ->",aData);
+                                                setTimeout(function() {
+                                                    $("#loadFade").modal("hide");
+                                                }, 1000);
+                                                showNotification('top','center','<i class="bi bi-check-square-fill"></i> Se ha modificado perfil :<b>'+user+'</b>, numero : '+aData.data_return.last_id+'</b>',2);
+                                                btn_defaultuser();
+                                            }, 
                 });
             } else {
-                //jError("Firma simple vac&iacute;a","Error - ESSISAN"); 
+                //jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
             }
         });
     }   

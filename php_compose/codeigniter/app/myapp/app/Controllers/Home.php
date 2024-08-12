@@ -148,16 +148,16 @@ class Home extends BaseController {
 
             //Crea Archivo de la Vista
             mkdir(APPPATH."Views/$rutaactual",0700);
-            $file3      =   APPPATH.'Views/' . $rutaactual . '/' . $rutaactual . '_view.php';
-            $fileView   =   fopen($file3, "w+");
-            $contView   =   ' Vista ' . $rutaactual . '.';
+            $file3 = APPPATH.'Views/' . $rutaactual . '/' . $rutaactual . '_view.php';
+            $fileView = fopen($file3, "w+");
+            $contView = ' Vista ' . $rutaactual . '.';
             fwrite($fileView,$contView);
             fclose($fileView);
             if (file_exists($file3)) {
                 $fileView = $file3;
             }
 
-            $parentPath     = dirname(APPPATH)."/public/";
+            $parentPath = dirname(APPPATH)."/public/";
             mkdir($parentPath."assets/$rutaactual", 0700);
             mkdir($parentPath."assets/$rutaactual/css", 0700);
             mkdir($parentPath."assets/$rutaactual/js", 0700);
@@ -202,12 +202,12 @@ class Home extends BaseController {
 
     public function creaPrivilegio() {
         if ($this->request->isAJAX()){  }
-        $status     =   true;
-        $nombre     =   $this->request->getPost("nombre");
-        $return     =   $this->usersModel->creaPrivilegio($nombre);
+        $status = true;
+        $nombre = $this->request->getPost("nombre");
+        $return = $this->usersModel->creaPrivilegio($nombre);
         echo json_encode(array(
-            'nombre'          =>  $nombre,
-            'status'          =>  $status,
+            'nombre' =>  $nombre,
+            'status' =>  $status,
         ));
     }
 
@@ -242,13 +242,13 @@ class Home extends BaseController {
 
     public function fn_gestion_perfil(){
         if ($this->request->isAJAX()){  }
-        $data_return =   [];    
-        $status =   true;
-        $data_return =   $this->usersModel->grabaUsu(['post'=>$this->request->getPost()]);
+        $data_return = [];    
+        $status = true;
+        $data_return = $this->usersModel->grabaUsu(['post'=>$this->request->getPost()]);
         echo json_encode([
-            'data_return' =>  $data_return,
-            'status' =>  $status,
-            'post' =>  $_POST,
+            'data_return' => $data_return,
+            'status' => $status,
+            'post' => $_POST,
         ]);   
     }
 

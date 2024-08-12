@@ -1,6 +1,6 @@
 version: '3'
-
 services:
+
   nginx-proxy:
     container_name: dtrafico_https
     image: jwilder/nginx-proxy

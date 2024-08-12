@@ -4,7 +4,7 @@
     <div class="grid_cabecera1">
         <h4 class="title" style="color:#e34f49;">
             <i class="fa fa-tag" aria-hidden="true"></i>&nbsp;
-            <b>ADMINISTRADOR&nbsp;APP&nbsp;CLINICA&nbsp;<?php echo date("d-m-Y");?></b> 
+            <b>ADMINISTRADOR&nbsp;APP&nbsp;CLINICA&nbsp; - <?php echo date("d-m-Y");?></b> 
             <br>
         </h4>
     </div>
@@ -227,11 +227,11 @@
                                         <div class="grid_info_usuarios1">Información del Usuario</div>
                                         <div class="grid_info_usuarios5 class_superusuario">&nbsp;Super Usuario&nbsp;</div>
                                         <div class="grid_info_usuarios4 class_superusuario">
-                                            <input type="checkbox" class="class_checkbox" id="checkTipo"    style="display: block;margin-top: 0px;" disabled>
+                                            <input type="checkbox" class="class_checkbox" id="checkTipo" style="display: block;margin-top: 0px;" disabled>
                                         </div>
                                         <div class="grid_info_usuarios3">&nbsp;Habilitado&nbsp;</div>
                                         <div class="grid_info_usuarios2">
-                                            <input type="checkbox" class="class_checkbox" id="CheckboxUsu"  style="display: block;margin-top: 0px;" disabled>
+                                            <input type="checkbox" class="class_checkbox" id="CheckboxUsu" style="display: block;margin-top: 0px;" disabled>
                                         </div>
                                     </div>
                                 </th>

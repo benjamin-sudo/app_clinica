@@ -30,18 +30,21 @@ df -h
 # Verificar el uso de espacio en el directorio de Docker
 sudo du -sh /var/lib/docker
 
+________________________________________________________________________________________
 docker container prune -f
 docker image prune -f
 docker volume prune -f
 docker system prune -a -f
 ________________________________________________________________________________________
+
 ###############################################
 # Faltante antes de subir: ####################
 #   -   Menus por usuarios ####################
 #   -   Secreto en las variables del docker ###
 #   -   Plan de respaldo de bd y recuperacion #
 #   -   Subir a produccion ####################
-###############################################    
+###############################################
+    
 ###############################################    
 #   DAVID RIOSECO MONTECINO
 #   13957520-2

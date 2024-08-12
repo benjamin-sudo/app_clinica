@@ -26,9 +26,9 @@ class UserModel extends Model {
         $menuData = $db->query($sql)->getResultArray();
         $menu = [];
         foreach($menuData as $row) {
-            $menuId         =   $row['main_id'];
-            $subMenuId      =   $row['sub_id'];
-            $extensionId    =   $row['ext_id'];
+            $menuId = $row['main_id'];
+            $subMenuId = $row['sub_id'];
+            $extensionId = $row['ext_id'];
             // Organizar en estructura jerárquica
             if (!isset($menu[$menuId])) {
                 $menu[$menuId] = [
@@ -485,26 +485,26 @@ class UserModel extends Model {
         $db->transStart();
         $hash =   password_hash($aData['post']['pass'],PASSWORD_BCRYPT);
         $dataUs =   array(
-            //'ID_UID'              =>  $uID,
-            'USERNAME'              =>  trim($arr_run),
-            'NAME'                  =>  $name, 
-            'FIRST_NAME'            =>  $aData['post']['nombres'],
-            'MIDDLE_NAME'           =>  $aData['post']['apepate'], 
-            'LAST_NAME'             =>  $aData['post']['apemate'],
-            'EMAIL'                 =>  $aData['post']['email'],
-            'TELEPHONE'             =>  0,
-            'PASSWORD'              =>  $hash,
-            'LOCKTODOMAIN'          =>  $hash,
-            'DISABLE'               =>  $aData['post']['activo'],       //activo
-            'STATUS'                =>  $aData['post']['superUser'],    //superUser 
-            'TX_INTRANETSSAN_RUN'   =>  trim(explode("-",$arr_run)[0]),
-            'TX_INTRANETSSAN_DV'    =>  trim(explode("-",$arr_run)[1]),
-            'DAYLIGHT'              =>  1
+            #'ID_UID' => $uID,
+            'USERNAME' => trim($arr_run),
+            'NAME' =>  $name, 
+            'FIRST_NAME' => $aData['post']['nombres'],
+            'MIDDLE_NAME' => $aData['post']['apepate'], 
+            'LAST_NAME' => $aData['post']['apemate'],
+            'EMAIL' => $aData['post']['email'],
+            'TELEPHONE' => 0,
+            'PASSWORD' => $hash,
+            'LOCKTODOMAIN' => $hash,
+            'DISABLE' => $aData['post']['activo'], //activo
+            'STATUS' => $aData['post']['superUser'], //superUser 
+            'TX_INTRANETSSAN_RUN' => trim(explode("-",$arr_run)[0]),
+            'TX_INTRANETSSAN_DV' => trim(explode("-",$arr_run)[1]),
+            'DAYLIGHT' =>  1
         );
+
         //**************************************************************
         $last_id            =   0;
         $arr_username       =   $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = '".$arr_run."'")->getResultArray();
-        
         if(count($arr_username)>0){
             $last_id        =   $arr_username[0]['ID_UID'];
             $constructora   =   $db->table('ADMIN.FE_USERS');

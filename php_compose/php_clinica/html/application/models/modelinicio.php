@@ -2,8 +2,8 @@
 
 class modelinicio extends CI_Model {
 
-    var $own    = 'ADMIN';
-    var $ownGu  = 'GUADMIN';
+    var $own = 'ADMIN';
+    var $ownGu = 'ADMIN';
 
     public function __construct(){
         parent::__construct();
@@ -21,7 +21,8 @@ class modelinicio extends CI_Model {
         }
     }
 
-    public function login_modelo($user, $pass) {
+    public function login_modelo($user,$pass) {
+        $ID_UID = '';
         $status = false;
         $status_empresa = false;
         $arr_empresa = [];
@@ -29,19 +30,18 @@ class modelinicio extends CI_Model {
         $cod_empresa_default = '';
         $row = [];
         $menu = [];
-        $ID_UID = '';
         $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
         $query = $this->db->query($sql,array($user));
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows()>0) {
             $row = $query->row();
-            if (password_verify($pass, $row->PASSWORD)) {
+            if (password_verify($pass,$row->PASSWORD)) {
                 $status = true;
                 $ID_UID = $row->ID_UID;
                 $row = $row;
                 $menu = $this->load_menuxuser($ID_UID);
             }
             #activo 
-            if ($status) {
+            if ($status){
                 $arr_empresa = $this->db->query("SELECT 
                         A.*,
                         'TEST' AS NOM_ESTAB 
@@ -68,15 +68,12 @@ class modelinicio extends CI_Model {
             'cod_empresa_default' => $cod_empresa_default
         ];
     }
-    
 
     #carga de menu principal
     public function load_menuxuser($ID_UID){
-        $sql = $this->arr_menu_default(); 
-        
         #pendiente
-        #$sql = $this->nuevo_busqueda_menu($ID_UID);
-
+        #$sql = $this->arr_menu_default(); 
+        $sql = $this->arr_menu_userid($ID_UID);
         $menu = [];
         $menuData = $this->db->query($sql)->result_array();
         if(count($menuData)>0){
@@ -105,6 +102,66 @@ class modelinicio extends CI_Model {
         return $menu;
     }
 
+    public function arr_menu_userid($user_id) {
+        $own = "ADMIN";
+        $sql = "SELECT 
+                    M.MENP_ID AS MAIN_ID, 
+                    M.MENP_NOMBRE AS MAIN_NOMBRE, 
+                    M.MENP_ESTADO AS MAIN_ESTADO, 
+                    M.MENP_RUTA AS MAIN_RUTA, 
+                    M.MENP_IDPADRE AS MAIN_IDPADRE, 
+                    M.MENP_TIPO AS MAIN_TIPO, 
+                    M.MENP_ORDER AS MAIN_ORDER, 
+                    M.MENP_FRAME AS MAIN_FRAME, 
+                    M.MENP_ICON AS MAIN_ICON, 
+                    M.MENP_THEME AS MAIN_THEME, 
+                    M.MENP_ISTOKEN AS MAIN_ISTOKEN, 
+                    M.MENP_PARAM AS MAIN_PARAM,
+                    SM.MENP_ID AS SUB_ID, 
+                    SM.MENP_NOMBRE AS SUB_NOMBRE, 
+                    SM.MENP_ESTADO AS SUB_ESTADO, 
+                    SM.MENP_RUTA AS SUB_RUTA, 
+                    SM.MENP_IDPADRE AS SUB_IDPADRE, 
+                    SM.MENP_TIPO AS SUB_TIPO, 
+                    SM.MENP_ORDER AS SUB_ORDER, 
+                    SM.MENP_FRAME AS SUB_FRAME, 
+                    SM.MENP_ICON AS SUB_ICON, 
+                    SM.MENP_THEME AS SUB_THEME, 
+                    SM.MENP_ISTOKEN AS SUB_ISTOKEN, 
+                    SM.MENP_PARAM AS SUB_PARAM,
+                    EX.MENP_ID AS EXT_ID, 
+                    EX.MENP_NOMBRE AS EXT_NOMBRE, 
+                    EX.MENP_ESTADO AS EXT_ESTADO, 
+                    EX.MENP_RUTA AS EXT_RUTA, 
+                    EX.MENP_IDPADRE AS EXT_IDPADRE, 
+                    EX.MENP_TIPO AS EXT_TIPO, 
+                    EX.MENP_ORDER AS EXT_ORDER, 
+                    EX.MENP_FRAME AS EXT_FRAME, 
+                    EX.MENP_ICON AS EXT_ICON, 
+                    EX.MENP_THEME AS EXT_THEME, 
+                    EX.MENP_ISTOKEN AS EXT_ISTOKEN, 
+                    EX.MENP_PARAM AS EXT_PARAM
+                FROM 
+                    $own.GU_TMENUPRINCIPAL M 
+                    LEFT JOIN $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
+                    LEFT JOIN $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
+                WHERE 
+                    M.MENP_ESTADO = 1 
+                    AND M.MENP_FRAME = 3 
+                    AND M.MENP_IDPADRE = 0
+                    AND EXISTS (
+                        SELECT 1 
+                        FROM $own.GU_TUSUTIENEPER P 
+                        WHERE P.ID_UID = $user_id 
+                        AND P.MENP_ID = M.MENP_ID 
+                        AND P.IND_ESTADO = 1
+                    )
+                ORDER BY M.MENP_ORDER ASC
+            ";
+        return $sql;
+    }
+
+    #bring everything
     public function arr_menu_default(){
         $own = "ADMIN";
         $sql = "SELECT 
@@ -160,64 +217,7 @@ class modelinicio extends CI_Model {
         return $sql;
     }
 
-    public function nuevo_busqueda_menu($iuid){
-        $own = "ADMIN";
-        $sql = "SELECT 
-                    M.MENP_ID AS MAIN_ID, 
-                    M.MENP_NOMBRE AS MAIN_NOMBRE, 
-                    M.MENP_ESTADO AS MAIN_ESTADO, 
-                    M.MENP_RUTA AS MAIN_RUTA, 
-                    M.MENP_IDPADRE AS MAIN_IDPADRE, 
-                    M.MENP_TIPO AS MAIN_TIPO, 
-                    M.MENP_ORDER AS MAIN_ORDER, 
-                    M.MENP_FRAME AS MAIN_FRAME, 
-                    M.MENP_ICON AS MAIN_ICON, 
-                    M.MENP_THEME AS MAIN_THEME, 
-                    M.MENP_ISTOKEN AS MAIN_ISTOKEN, 
-                    M.MENP_PARAM AS MAIN_PARAM,
-                    SM.MENP_ID AS SUB_ID, 
-                    SM.MENP_NOMBRE AS SUB_NOMBRE, 
-                    SM.MENP_ESTADO AS SUB_ESTADO, 
-                    SM.MENP_RUTA AS SUB_RUTA, 
-                    SM.MENP_IDPADRE AS SUB_IDPADRE, 
-                    SM.MENP_TIPO AS SUB_TIPO, 
-                    SM.MENP_ORDER AS SUB_ORDER, 
-                    SM.MENP_FRAME AS SUB_FRAME, 
-                    SM.MENP_ICON AS SUB_ICON, 
-                    SM.MENP_THEME AS SUB_THEME, 
-                    SM.MENP_ISTOKEN AS SUB_ISTOKEN, 
-                    SM.MENP_PARAM AS SUB_PARAM,
-                    EX.MENP_ID AS EXT_ID, 
-                    EX.MENP_NOMBRE AS EXT_NOMBRE, 
-                    EX.MENP_ESTADO AS EXT_ESTADO, 
-                    EX.MENP_RUTA AS EXT_RUTA, 
-                    EX.MENP_IDPADRE AS EXT_IDPADRE, 
-                    EX.MENP_TIPO AS EXT_TIPO, 
-                    EX.MENP_ORDER AS EXT_ORDER, 
-                    EX.MENP_FRAME AS EXT_FRAME, 
-                    EX.MENP_ICON AS EXT_ICON, 
-                    EX.MENP_THEME AS EXT_THEME, 
-                    EX.MENP_ISTOKEN AS EXT_ISTOKEN, 
-                    EX.MENP_PARAM AS EXT_PARAM
-                FROM 
-                    $own.GU_TMENUPRINCIPAL M 
-                    LEFT JOIN 
-                    $own.GU_TMENUPRINCIPAL SM ON SM.MENP_IDPADRE = M.MENP_ID AND SM.MENP_FRAME = 3
-                    LEFT JOIN 
-                    $own.GU_TMENUPRINCIPAL EX ON EX.MENP_IDPADRE = SM.MENP_ID AND EX.MENP_FRAME = 3
-                    LEFT JOIN 
-                    $own.GU_TUSUTIENEPER UP ON UP.PER_ID = M.MENP_ID
-                    LEFT JOIN
-                    $own.FE_USERS U ON U.ID_UID = UP.ID_UID
-                WHERE 
-                    U.ID_UID = $iuid AND 
-                    UP.IND_ESTADO = 1 AND 
-                    M.MENP_ESTADO = 1 AND 
-                    M.MENP_FRAME = 3 AND 
-                    M.MENP_IDPADRE = 0";
-        return $sql;
-    }
-    
+    #original
     public function busca_menu2($iuid){
         $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_IDPADRE , MENP_ICON, MENP_TIPO,MENP_RUTA,MENP_THEME,MENP_ISTOKEN,MENP_PARAM
                 FROM (
