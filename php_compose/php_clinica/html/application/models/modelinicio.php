@@ -571,7 +571,8 @@ class modelinicio extends CI_Model {
         return $query->result_array();
     }
 
-    public function busca_menu($iuid, $access = ''){
+
+    public function busca_menu_22($iuid, $access = ''){
         $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_ICON FROM (select unique D.MENP_ID, MENP_ICON,D.MENP_NOMBRE,D.MENP_RUTA,D.MENP_IDPADRE,D.MENP_TIPO,D.MENP_ESTADO, MENP_ORDER
             from $this->ownGu.GU_TUSUTIENEPER a, $this->ownGu.GU_TPERMISOS b, $this->ownGu.GU_TMENPTIENEPER  c,$this->ownGu.GU_TMENUPRINCIPAL d
             where a.per_id=b.per_id and
