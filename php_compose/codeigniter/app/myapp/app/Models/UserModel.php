@@ -1033,7 +1033,6 @@ class UserModel extends Model {
                         $db->table('ADMIN.GU_TMENPTIENEPER')->insert($data);
                     }
                 }
-                
                 if ($listarMenup != 0 && $sigMen == 0) {
                     $idExt = $listarMenup;
                 } else if ($sigMen == 1) {
@@ -1049,7 +1048,6 @@ class UserModel extends Model {
                 }
                 $sigMen++;
             }
-
         }
         #$logger->info("*****************************************************************************");
         $db->transComplete();
@@ -1059,11 +1057,7 @@ class UserModel extends Model {
         ];
     }
 
-
-
     /*
-
-    
     public function editando_extension_old($aData) {
         $idExt = $aData['post']['idMen'];
         $nombre = $aData['post']['nombre'];

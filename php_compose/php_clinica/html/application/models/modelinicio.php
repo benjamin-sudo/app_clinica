@@ -30,7 +30,6 @@ class modelinicio extends CI_Model {
         $cod_empresa_default = '';
         $row = [];
         $menu = [];
-
         $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
         $query = $this->db->query($sql,array($user));
         if ($query->num_rows()>0) {
@@ -70,105 +69,186 @@ class modelinicio extends CI_Model {
         ];
     }
 
-    
-    public function load_menuxuser($ID_UID) {
-        $menu = [];
-        $arr_user_permisos = $this->db->query($this->arr_menu_xuser($ID_UID))->result_array();
-        $allPermissions = [];
-        $parentMap = [];
-        
-        foreach ($arr_user_permisos as $permiso) {
-            $allPermissions[] = $permiso['MENP_ID'];
-            $parentMap[$permiso['MENP_ID']] = $permiso['MENP_IDPADRE'];
-        }
-    
-        // Recorrer el mapa de padres y agregar los padres faltantes
-        foreach ($arr_user_permisos as $permiso) {
-            $currentId = $permiso['MENP_ID'];
-            while ($parentMap[$currentId] != 0) {
-                $parentId = $parentMap[$currentId];
-                if (!in_array($parentId, $allPermissions)) {
-                    $allPermissions[] = $parentId;
-                }
-                $currentId = $parentId;
-            }
-        }
-        // Eliminar duplicados
-        $allPermissions = array_unique($allPermissions);
-        // Obtener todos los menús
-        $menuData = $this->db->query($this->arr_menu_default())->result_array();
-        if (count($menuData) > 0) {
-            foreach ($menuData as $row) {
-                $menuId = $row['MAIN_ID'];
-                $subMenuId = isset($row['SUB_ID']) ? $row['SUB_ID'] : null;
-                $extensionId = isset($row['EXT_ID']) ? $row['EXT_ID'] : null;
-    
-                // Verificar si el usuario tiene permiso para ver este menú principal o es padre de un elemento con permiso
-                if (in_array($menuId, $allPermissions)) {
-                    // Menú principal
-                    if (!isset($menu[$menuId])) {
-                        $menu[$menuId] = [
-                            'data' => [
-                                'MAIN_ID' => $row['MAIN_ID'],
-                                'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
-                                'MAIN_ICON' => $row['MAIN_ICON'],
-                                'MAIN_RUTA' => $row['MAIN_RUTA']
-                            ],
-                            'submenus' => []
-                        ];
-                    }
-    
-                    // Submenús
-                    if ($subMenuId && (!isset($menu[$menuId]['submenus'][$subMenuId]) || in_array($subMenuId, $allPermissions))) {
-                        $menu[$menuId]['submenus'][$subMenuId] = [
-                            'data' => [
-                                'SUB_ID' => $row['SUB_ID'],
-                                'SUB_NOMBRE' => $row['SUB_NOMBRE'],
-                                'SUB_RUTA' => $row['SUB_RUTA']
-                            ],
-                            'extensions' => []
-                        ];
-                    }
-    
-                    // Extensiones
-                    if ($subMenuId && $extensionId && (!isset($menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId]) || in_array($extensionId, $allPermissions))) {
-                        $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = [
-                            'EXT_ID' => $row['EXT_ID'],
-                            'EXT_NOMBRE' => $row['EXT_NOMBRE'],
-                            'EXT_RUTA' => $row['EXT_RUTA']
-                        ];
-                    }
-                }
-            }
-        }
-        return [
-            'arr_menu' => $menu,
-            'arr_user_permisos' => $arr_user_permisos
-        ];
-    }
-    
+
     public function arr_menu_xuser($ID_UID){
         $sql = "SELECT 
-                    M.MENP_ID, M.MENP_IDPADRE 
+                    M.MENP_ID, 
+                    M.MENP_IDPADRE 
                 FROM 
                     ADMIN.GU_TUSUTIENEPER A
-                JOIN 
-                    ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID
-                JOIN 
-                    ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID
-                JOIN 
-                    ADMIN.GU_TMENUPRINCIPAL M ON C.MENP_ID = M.MENP_ID
-                WHERE 
-                    A.ID_UID = $ID_UID
+                    JOIN ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID
+                    JOIN ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID
+                    JOIN ADMIN.GU_TMENUPRINCIPAL M ON C.MENP_ID = M.MENP_ID
+                WHERE A.ID_UID = $ID_UID
                     AND A.IND_ESTADO = 1
                     AND M.MENP_ESTADO = 1
                     AND C.IND_ESTADO = 1
-                    AND B.PER_ESTADO = 3
+                    AND B.PER_ESTADO IN (1,3)
                     AND M.MENP_FRAME = 3
-                ORDER BY 
-                    M.MENP_ID, M.MENP_ORDER ASC";
+                ORDER BY M.MENP_ID, M.MENP_ORDER ASC";
         return $sql;
     }
+    
+
+
+    public function load_menuxuser($ID_UID) {
+        $menu = [];
+        $allPermissions = [];
+        $parentMap = [];
+
+        # Búsqueda de los sistemas/abuelo/hijo/nieto
+        $sql = $this->arr_menu_xuser($ID_UID);
+        $arr_user_permisos = $this->db->query($sql)->result_array();
+
+        log_message('error', 'SQL');
+        log_message('error', $sql);
+        log_message('error', 'arr_user_permisos');
+        log_message('error', print_r($arr_user_permisos, TRUE));
+
+
+       
+
+
+        /*
+        log_message('error', '##############################');
+        log_message('error', 'SQL');
+        log_message('error', $sql);
+        log_message('error', 'arr_user_permisos');
+        log_message('error', print_r($arr_user_permisos, TRUE));
+        log_message('error', 'allPermissions');
+        log_message('error', print_r($allPermissions, TRUE));
+        log_message('error', 'parentMap');
+        log_message('error', print_r($parentMap, TRUE));
+        */
+        
+
+
+        /*
+        #consulta con todo el menu
+        $menuData = $this->db->query($this->arr_menu_default())->result_array();
+        foreach ($menuData as $row) {
+            $menuId = $row['MAIN_ID'];
+            $subMenuId = isset($row['SUB_ID']) ? $row['SUB_ID'] : null;
+            $extensionId = isset($row['EXT_ID']) ? $row['EXT_ID'] : null;
+    
+            # Verificar si el menú principal debe ser mostrado (permiso directo o heredado)
+            if (in_array($menuId, $allPermissions)) {
+                if (!isset($menu[$menuId])) {
+                    $menu[$menuId] = [
+                        'data' => [
+                            'MAIN_ID' => $row['MAIN_ID'],
+                            'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
+                            'MAIN_ICON' => $row['MAIN_ICON'],
+                            'MAIN_RUTA' => $row['MAIN_RUTA']
+                        ],
+                        'submenus' => []
+                    ];
+                }
+            }
+    
+            # Verificar si el submenú debe ser mostrado (permiso directo o heredado)
+            if ($subMenuId && in_array($subMenuId, $allPermissions)) {
+                # Asegurar que el menú principal exista
+                if (!isset($menu[$menuId])) {
+                    $menu[$menuId] = [
+                        'data' => [
+                            'MAIN_ID' => $row['MAIN_ID'],
+                            'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
+                            'MAIN_ICON' => $row['MAIN_ICON'],
+                            'MAIN_RUTA' => $row['MAIN_RUTA']
+                        ],
+                        'submenus' => []
+                    ];
+                }
+    
+                # Asegurar que el submenú exista
+                if (!isset($menu[$menuId]['submenus'][$subMenuId])) {
+                    $menu[$menuId]['submenus'][$subMenuId] = [
+                        'data' => [
+                            'SUB_ID' => $row['SUB_ID'],
+                            'SUB_NOMBRE' => $row['SUB_NOMBRE'],
+                            'SUB_RUTA' => $row['SUB_RUTA']
+                        ],
+                        'extensions' => []
+                    ];
+                }
+                
+            }
+    
+            # Verificar si la extensión debe ser mostrada (permiso directo o heredado)
+            if ($subMenuId && $extensionId && in_array($extensionId, $allPermissions)) {
+                # Asegurar que el menú principal y el submenú existan
+                if (!isset($menu[$menuId])) {
+                    $menu[$menuId] = [
+                        'data' => [
+                            'MAIN_ID' => $row['MAIN_ID'],
+                            'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
+                            'MAIN_ICON' => $row['MAIN_ICON'],
+                            'MAIN_RUTA' => $row['MAIN_RUTA']
+                        ],
+                        'submenus' => []
+                    ];
+                }
+    
+                if (!isset($menu[$menuId]['submenus'][$subMenuId])) {
+                    $menu[$menuId]['submenus'][$subMenuId] = [
+                        'data' => [
+                            'SUB_ID' => $row['SUB_ID'],
+                            'SUB_NOMBRE' => $row['SUB_NOMBRE'],
+                            'SUB_RUTA' => $row['SUB_RUTA']
+                        ],
+                        'extensions' => []
+                    ];
+                }
+    
+                # Añadir la extensión
+                $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = [
+                    'EXT_ID' => $row['EXT_ID'],
+                    'EXT_NOMBRE' => $row['EXT_NOMBRE'],
+                    'EXT_RUTA' => $row['EXT_RUTA']
+                ];
+            }
+        }
+        */
+
+        
+      
+        #log_message('error', 'menu');
+        #log_message('error', print_r($menu, TRUE));
+
+
+        return [
+            'sql' => $sql,
+            'arr_menu' => $menu,
+            'arr_user_permisos' => $arr_user_permisos,
+            'allPermissions' => $allPermissions,
+            'parentMap' => $parentMap
+        ];
+    }
+
+
+
+
+    
+    public function arr_menu_xuser($ID_UID){
+        $sql = "SELECT 
+                    M.MENP_ID, 
+                    M.MENP_IDPADRE 
+                FROM 
+                    ADMIN.GU_TUSUTIENEPER A
+                    JOIN ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID
+                    JOIN ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID
+                    JOIN ADMIN.GU_TMENUPRINCIPAL M ON C.MENP_ID = M.MENP_ID
+                WHERE A.ID_UID = $ID_UID
+                    AND A.IND_ESTADO = 1
+                    AND M.MENP_ESTADO = 1
+                    AND C.IND_ESTADO = 1
+                    AND B.PER_ESTADO IN (1,3)
+                    AND M.MENP_FRAME = 3
+                ORDER BY M.MENP_ID, M.MENP_ORDER ASC";
+        return $sql;
+    }
+    
   
     public function arr_menu_default(){
         $sql = "SELECT 
@@ -223,6 +303,47 @@ class modelinicio extends CI_Model {
                 ";
         return $sql;
     }
+
+
+    public function busca_menu2($iuid){
+        $sql = "SELECT 
+                    SUBQUERY.MENP_ID, 
+                    SUBQUERY.MENP_NOMBRE, 
+                    SUBQUERY.MENP_ICON 
+                FROM (
+                SELECT DISTINCT 
+                    D.MENP_ID, 
+                    D.MENP_ICON, 
+                    D.MENP_NOMBRE, 
+                    D.MENP_RUTA, 
+                    D.MENP_IDPADRE, 
+                    D.MENP_TIPO, 
+                    D.MENP_ESTADO, 
+                    D.MENP_ORDER
+                FROM 
+                    ADMIN.GU_TUSUTIENEPER A
+                    INNER JOIN ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID 
+                    INNER JOIN ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID 
+                    INNER JOIN ADMIN.GU_TMENUPRINCIPAL D ON C.MENP_ID = D.MENP_ID
+                WHERE 
+                    A.ID_UID = $iuid AND
+                    A.IND_ESTADO = 1 AND
+                    D.MENP_ESTADO = 1 AND
+                    C.IND_ESTADO = 1 AND
+                    D.MENP_TIPO = 1 AND
+                    B.PER_ESTADO IN (1,3) AND
+                    D.MENP_FRAME = 3
+                ) AS SUBQUERY 
+                ORDER BY SUBQUERY.MENP_NOMBRE ASC
+            ";
+        return $sql;
+    }
+
+
+     
+
+ 
+
 
     public function arr_menuxuser($ID_UID) {
         $sql = "SELECT 
@@ -534,51 +655,40 @@ class modelinicio extends CI_Model {
     #bring everything
     
     #original
-    public function busca_menu2($iuid){
-        $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_IDPADRE , MENP_ICON, MENP_TIPO,MENP_RUTA,MENP_THEME,MENP_ISTOKEN,MENP_PARAM
-                FROM (
-                        SELECT 
-                            UNIQUE 
-                            D.MENP_ID,
-                            MENP_ICON,
-                            D.MENP_NOMBRE,
-                            D.MENP_RUTA,
-                            D.MENP_IDPADRE,
-                            D.MENP_TIPO,
-                            D.MENP_ESTADO,
-                            MENP_ORDER,
-                            MENP_THEME,
-                            MENP_ISTOKEN,
-                            MENP_PARAM
-                        FROM 
-                            $this->ownGu.GU_TUSUTIENEPER a,
-                            $this->ownGu.GU_TPERMISOS b,
-                            $this->ownGu.GU_TMENPTIENEPER c,
-                            $this->ownGu.GU_TMENUPRINCIPAL d
-                        WHERE     
-                                a.per_id = b.per_id
-                             AND a.per_id = c.per_id
-                             AND id_uid = $iuid
-                             AND C.MENP_ID = D.MENP_ID
-                             AND a.ind_estado = 1
-                             AND D.MENP_ESTADO = 1
-                             AND c.ind_estado = 1
-                             AND b.PER_ESTADO = 3
-                             AND MENP_FRAME = 3
-                    )
-            ORDER BY MENP_ID, MENP_ORDER ASC";
-        $query = $this->db->query($sql);
-        return $query->result_array();
-    }
+    
 
 
     public function busca_menu_22($iuid, $access = ''){
-        $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_ICON FROM (select unique D.MENP_ID, MENP_ICON,D.MENP_NOMBRE,D.MENP_RUTA,D.MENP_IDPADRE,D.MENP_TIPO,D.MENP_ESTADO, MENP_ORDER
-            from $this->ownGu.GU_TUSUTIENEPER a, $this->ownGu.GU_TPERMISOS b, $this->ownGu.GU_TMENPTIENEPER  c,$this->ownGu.GU_TMENUPRINCIPAL d
-            where a.per_id=b.per_id and
-            a.per_id=c.per_id and id_uid=$iuid and
-            C.MENP_ID=D.MENP_ID and a.ind_estado=1
-            and D.MENP_ESTADO=1 and c.ind_estado=1 AND MENP_TIPO= 1 AND b.PER_ESTADO = 3 AND MENP_FRAME = 3) ORDER BY MENP_NOMBRE ASC";
+        $sql = "SELECT 
+                    MENP_ID, 
+                    MENP_NOMBRE, 
+                    MENP_ICON 
+                FROM (SELECT UNIQUE  
+                        D.MENP_ID, 
+                        MENP_ICON,
+                        D.MENP_NOMBRE,
+                        D.MENP_RUTA,
+                        D.MENP_IDPADRE,
+                        D.MENP_TIPO,
+                        D.MENP_ESTADO, 
+                        MENP_ORDER
+            FROM 
+                $this->ownGu.GU_TUSUTIENEPER a, 
+                $this->ownGu.GU_TPERMISOS b, 
+                $this->ownGu.GU_TMENPTIENEPER  c,
+                $this->ownGu.GU_TMENUPRINCIPAL d
+            WHERE 
+                a.per_id=b.per_id AND
+                a.per_id=c.per_id AND 
+                id_uid=$iuid AND
+                C.MENP_ID=D.MENP_ID AND 
+                a.ind_estado=1 AND 
+                D.MENP_ESTADO=1 AND 
+                c.ind_estado=1 AND 
+                MENP_TIPO= 1 AND 
+                b.PER_ESTADO = 3 AND 
+                MENP_FRAME = 3) 
+            ORDER BY MENP_NOMBRE ASC";
         if ($access == 'decomiso') {
             $query = $this->dbFac->query($sql);
         } else {
@@ -586,6 +696,25 @@ class modelinicio extends CI_Model {
         }
         return $query->result_array();
     }
+
+
+    public function busca_menu($iuid, $access = ''){
+        $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_ICON FROM (select unique D.MENP_ID, MENP_ICON,D.MENP_NOMBRE,D.MENP_RUTA,D.MENP_IDPADRE,D.MENP_TIPO,D.MENP_ESTADO, MENP_ORDER
+            from $this->ownGu.GU_TUSUTIENEPER a, $this->ownGu.GU_TPERMISOS b, $this->ownGu.GU_TMENPTIENEPER  c,$this->ownGu.GU_TMENUPRINCIPAL d
+            where a.per_id=b.per_id and
+            a.per_id=c.per_id and id_uid=$iuid and
+            C.MENP_ID=D.MENP_ID and a.ind_estado=1
+            and D.MENP_ESTADO=1 and c.ind_estado=1 AND MENP_TIPO= 1 AND b.PER_ESTADO = 3 AND MENP_FRAME = 3) ORDER BY MENP_NOMBRE ASC";
+
+        if ($access == 'decomiso') {
+            $query = $this->dbFac->query($sql);
+        } else {
+            $query = $this->db->query($sql);
+        }
+        return $query->result_array();
+    }
+
+    
 
     public function model_consultaporusuario($username){
         $status = true;
@@ -666,21 +795,7 @@ class modelinicio extends CI_Model {
         return $this->db->query($sql)->result_array();
     }
 
-    public function busca_menu($iuid, $access = ''){
-        $sql = "SELECT MENP_ID, MENP_NOMBRE, MENP_ICON FROM (select unique D.MENP_ID, MENP_ICON,D.MENP_NOMBRE,D.MENP_RUTA,D.MENP_IDPADRE,D.MENP_TIPO,D.MENP_ESTADO, MENP_ORDER
-            from $this->ownGu.GU_TUSUTIENEPER a, $this->ownGu.GU_TPERMISOS b, $this->ownGu.GU_TMENPTIENEPER  c,$this->ownGu.GU_TMENUPRINCIPAL d
-            where a.per_id=b.per_id and
-            a.per_id=c.per_id and id_uid=$iuid and
-            C.MENP_ID=D.MENP_ID and a.ind_estado=1
-            and D.MENP_ESTADO=1 and c.ind_estado=1 AND MENP_TIPO= 1 AND b.PER_ESTADO = 3 AND MENP_FRAME = 3) ORDER BY MENP_NOMBRE ASC";
-
-        if ($access == 'decomiso') {
-            $query = $this->dbFac->query($sql);
-        } else {
-            $query = $this->db->query($sql);
-        }
-        return $query->result_array();
-    }
+   
 
     public function creaCodigoFirma($username, $codigo, $firma, $datetime){
         $this->db->trans_start();

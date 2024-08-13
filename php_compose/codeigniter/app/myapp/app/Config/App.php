@@ -16,7 +16,6 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
-
       #Para producción
       #var_dump("CONFIG");
       public string $baseURL = 'http://localhost:9000/';

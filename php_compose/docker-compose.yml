@@ -133,22 +133,6 @@ services:
     networks:
       - mynetwork
 
-  #nginx:
-    #image: nginx:latest
-    #container_name: nginx
-    #ports:
-      #- "80:80"
-      #- "443:443"
-    #volumes:
-      #- ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      #- ./nginx/ssl/nginx.crt:/etc/nginx/ssl/nginx.crt
-      #- ./nginx/ssl/nginx.key:/etc/nginx/ssl/nginx.key
-    #networks:
-      #- mynetwork
-    #depends_on:
-      #- php_codeneiter_3
-    #restart: always  
-
 secrets:
   mysql_root_password:
     file: ./secrets/root_password.txt

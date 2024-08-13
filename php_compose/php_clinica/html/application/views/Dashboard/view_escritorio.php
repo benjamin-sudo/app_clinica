@@ -43,7 +43,6 @@
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
-  
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -88,6 +87,8 @@
         </div>
       </div>
       <!-- Sidebar Menu -->
+
+
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column menu_principal" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-header">Listado Sistema</li>
@@ -139,9 +140,6 @@
           }
         ?>
         </nav>
-
-
-
 
         <!-- /.sidebar-menu -->
     </div>

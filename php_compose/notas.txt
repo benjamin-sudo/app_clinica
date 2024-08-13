@@ -43,8 +43,6 @@ ________________________________________________________________________________
 #   -   Secreto en las variables del docker ###
 #   -   Plan de respaldo de bd y recuperacion #
 #   -   Subir a produccion ####################
-###############################################
-    
 ###############################################    
 #   DAVID RIOSECO MONTECINO
 #   13957520-2
@@ -52,7 +50,7 @@ ________________________________________________________________________________
 #   MACARIO ROJAS DI LORENZO
 #   26666862-7
 ###############################################
-
 docker-compose down
 docker-compose up -d
 echo "ssprueba.210" > C:/Users/Administrator/Documents/GitHub/app_clinica/php_compose/secrets/root_password.txt
+###############################################
