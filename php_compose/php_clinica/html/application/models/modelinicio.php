@@ -70,186 +70,153 @@ class modelinicio extends CI_Model {
     }
 
 
-    public function arr_menu_xuser($ID_UID){
-        $sql = "SELECT 
-                    M.MENP_ID, 
-                    M.MENP_IDPADRE 
-                FROM 
-                    ADMIN.GU_TUSUTIENEPER A
-                    JOIN ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID
-                    JOIN ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID
-                    JOIN ADMIN.GU_TMENUPRINCIPAL M ON C.MENP_ID = M.MENP_ID
-                WHERE A.ID_UID = $ID_UID
-                    AND A.IND_ESTADO = 1
-                    AND M.MENP_ESTADO = 1
-                    AND C.IND_ESTADO = 1
-                    AND B.PER_ESTADO IN (1,3)
-                    AND M.MENP_FRAME = 3
-                ORDER BY M.MENP_ID, M.MENP_ORDER ASC";
-        return $sql;
-    }
-    
 
-
+    #13957520-2
     public function load_menuxuser($ID_UID) {
         $menu = [];
         $allPermissions = [];
         $parentMap = [];
-
-        # Búsqueda de los sistemas/abuelo/hijo/nieto
-        $sql = $this->arr_menu_xuser($ID_UID);
-        $arr_user_permisos = $this->db->query($sql)->result_array();
-
-        log_message('error', 'SQL');
-        log_message('error', $sql);
-        log_message('error', 'arr_user_permisos');
-        log_message('error', print_r($arr_user_permisos, TRUE));
-
-
-       
-
-
-        /*
-        log_message('error', '##############################');
-        log_message('error', 'SQL');
-        log_message('error', $sql);
-        log_message('error', 'arr_user_permisos');
-        log_message('error', print_r($arr_user_permisos, TRUE));
-        log_message('error', 'allPermissions');
-        log_message('error', print_r($allPermissions, TRUE));
-        log_message('error', 'parentMap');
-        log_message('error', print_r($parentMap, TRUE));
-        */
-        
-
-
-        /*
-        #consulta con todo el menu
-        $menuData = $this->db->query($this->arr_menu_default())->result_array();
-        foreach ($menuData as $row) {
-            $menuId = $row['MAIN_ID'];
-            $subMenuId = isset($row['SUB_ID']) ? $row['SUB_ID'] : null;
-            $extensionId = isset($row['EXT_ID']) ? $row['EXT_ID'] : null;
     
-            # Verificar si el menú principal debe ser mostrado (permiso directo o heredado)
-            if (in_array($menuId, $allPermissions)) {
-                if (!isset($menu[$menuId])) {
-                    $menu[$menuId] = [
-                        'data' => [
-                            'MAIN_ID' => $row['MAIN_ID'],
-                            'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
-                            'MAIN_ICON' => $row['MAIN_ICON'],
-                            'MAIN_RUTA' => $row['MAIN_RUTA']
-                        ],
-                        'submenus' => []
-                    ];
+        // Obtén los permisos del usuario
+        $arr_user_permisos = $this->db->query($this->arr_menu_xuser($ID_UID))->result_array();
+        $menu_hierarchy = [];
+        $arr_abuelos_sistema  = [];
+        $arr_hijo_sub_menu  = [];
+        $arr_nieto_extension  = [];
+        $menu_hierarchy = [];
+    
+        if (count($arr_user_permisos) > 0) {
+            foreach ($arr_user_permisos as $row) {
+                switch ($row['NIVEL_MENU']) {
+                    case 'Abuelo':
+                        $allPermissions[] = $row['MENP_ID'];
+                        $arr_abuelos_sistema[$row['MENP_ID']] = $row;
+                        $menu_hierarchy[$row['MENP_ID']] = [
+                            'menu' => $row,
+                            'submenus' => []
+                        ];
+                        break;
+                    case 'Hijo':
+                        $arr_hijo_sub_menu[$row['MENP_ID']] = $row;
+                        if (isset($menu_hierarchy[$row['MENP_IDPADRE']])) {
+                            $menu_hierarchy[$row['MENP_IDPADRE']]['submenus'][$row['MENP_ID']] = [
+                                'menu' => $row,
+                                'extension' => []
+                            ];
+                        }
+                        break;
+                    case 'Nieto':
+                        $arr_nieto_extension[$row['MENP_ID']] = $row;
+                        foreach ($menu_hierarchy as &$abuelo) {
+                            if (isset($abuelo['submenus'][$row['MENP_IDPADRE']])) {
+                                $abuelo['submenus'][$row['MENP_IDPADRE']]['extension'][$row['MENP_ID']] = $row;
+                            }
+                        }
+                        break;
                 }
             }
     
-            # Verificar si el submenú debe ser mostrado (permiso directo o heredado)
-            if ($subMenuId && in_array($subMenuId, $allPermissions)) {
-                # Asegurar que el menú principal exista
-                if (!isset($menu[$menuId])) {
-                    $menu[$menuId] = [
-                        'data' => [
-                            'MAIN_ID' => $row['MAIN_ID'],
-                            'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
-                            'MAIN_ICON' => $row['MAIN_ICON'],
-                            'MAIN_RUTA' => $row['MAIN_RUTA']
-                        ],
-                        'submenus' => []
-                    ];
+            // Verificar abuelos sin submenús para otorgar acceso total
+            foreach ($menu_hierarchy as $id_abue => &$abuelo) {
+                if (empty($abuelo['submenus'])) {
+                    $abuelo['access_total'] = true; // Indicador de acceso total
                 }
-    
-                # Asegurar que el submenú exista
-                if (!isset($menu[$menuId]['submenus'][$subMenuId])) {
-                    $menu[$menuId]['submenus'][$subMenuId] = [
-                        'data' => [
-                            'SUB_ID' => $row['SUB_ID'],
-                            'SUB_NOMBRE' => $row['SUB_NOMBRE'],
-                            'SUB_RUTA' => $row['SUB_RUTA']
-                        ],
-                        'extensions' => []
-                    ];
-                }
-                
-            }
-    
-            # Verificar si la extensión debe ser mostrada (permiso directo o heredado)
-            if ($subMenuId && $extensionId && in_array($extensionId, $allPermissions)) {
-                # Asegurar que el menú principal y el submenú existan
-                if (!isset($menu[$menuId])) {
-                    $menu[$menuId] = [
-                        'data' => [
-                            'MAIN_ID' => $row['MAIN_ID'],
-                            'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
-                            'MAIN_ICON' => $row['MAIN_ICON'],
-                            'MAIN_RUTA' => $row['MAIN_RUTA']
-                        ],
-                        'submenus' => []
-                    ];
-                }
-    
-                if (!isset($menu[$menuId]['submenus'][$subMenuId])) {
-                    $menu[$menuId]['submenus'][$subMenuId] = [
-                        'data' => [
-                            'SUB_ID' => $row['SUB_ID'],
-                            'SUB_NOMBRE' => $row['SUB_NOMBRE'],
-                            'SUB_RUTA' => $row['SUB_RUTA']
-                        ],
-                        'extensions' => []
-                    ];
-                }
-    
-                # Añadir la extensión
-                $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = [
-                    'EXT_ID' => $row['EXT_ID'],
-                    'EXT_NOMBRE' => $row['EXT_NOMBRE'],
-                    'EXT_RUTA' => $row['EXT_RUTA']
-                ];
             }
         }
-        */
+    
+        //log_message('error', 'arr_user_permisos');
+        //log_message('error', print_r($arr_user_permisos, TRUE));
+        
+        log_message('error', 'menu_hierarchy');
+        log_message('error', print_r($menu_hierarchy, TRUE));
 
         
-      
-        #log_message('error', 'menu');
-        #log_message('error', print_r($menu, TRUE));
+        $menuData = $this->db->query($this->arr_menu_default())->result_array();
+        if (count($menuData) > 0) {
+            foreach ($menuData as $row) {
+                $menuId = $row['MAIN_ID'];
+                $subMenuId = isset($row['SUB_ID']) ? $row['SUB_ID'] : null;
+                $extensionId = isset($row['EXT_ID']) ? $row['EXT_ID'] : null;
+                // Verificar si el usuario tiene permiso para ver este menú principal o es padre de un elemento con permiso
 
+                if (in_array($menuId, $allPermissions)) {
+                    // Menú principal
+                    if (!isset($menu[$menuId])) {
+                        $menu[$menuId] = [
+                            'data' => [
+                                'MAIN_ID' => $row['MAIN_ID'],
+                                'MAIN_NOMBRE' => $row['MAIN_NOMBRE'],
+                                'MAIN_ICON' => $row['MAIN_ICON'],
+                                'MAIN_RUTA' => $row['MAIN_RUTA']
+                            ],
+                            'submenus' => []
+                        ];
+                    }
+                
+                    // Submenús
+                    if ($subMenuId && (!isset($menu[$menuId]['submenus'][$subMenuId]) || in_array($subMenuId, $allPermissions))) {
+                        $menu[$menuId]['submenus'][$subMenuId] = [
+                            'data' => [
+                                'SUB_ID' => $row['SUB_ID'],
+                                'SUB_NOMBRE' => $row['SUB_NOMBRE'],
+                                'SUB_RUTA' => $row['SUB_RUTA']
+                            ],
+                            'extensions' => []
+                        ];
+                    }
+                
+                    // Extensiones
+                    if ($subMenuId && $extensionId && (!isset($menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId]) || in_array($extensionId, $allPermissions))) {
+                        $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = [
+                            'EXT_ID' => $row['EXT_ID'],
+                            'EXT_NOMBRE' => $row['EXT_NOMBRE'],
+                            'EXT_RUTA' => $row['EXT_RUTA']
+                        ];
+                    }
+                }
 
+                
+
+            }
+        }
         return [
-            'sql' => $sql,
             'arr_menu' => $menu,
-            'arr_user_permisos' => $arr_user_permisos,
-            'allPermissions' => $allPermissions,
-            'parentMap' => $parentMap
+            'arr_user_permisos' => $arr_user_permisos
         ];
     }
-
-
-
-
     
+    
+
     public function arr_menu_xuser($ID_UID){
         $sql = "SELECT 
                     M.MENP_ID, 
-                    M.MENP_IDPADRE 
+                    M.MENP_IDPADRE,
+                    CASE 
+                        WHEN M.MENP_IDPADRE = 0 THEN 'Abuelo'
+                        WHEN (SELECT P.MENP_IDPADRE 
+                            FROM ADMIN.GU_TMENUPRINCIPAL P 
+                            WHERE P.MENP_ID = M.MENP_IDPADRE) = 0 THEN 'Hijo'
+                        ELSE 'Nieto'
+                    END AS NIVEL_MENU 
                 FROM 
                     ADMIN.GU_TUSUTIENEPER A
                     JOIN ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID
                     JOIN ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID
                     JOIN ADMIN.GU_TMENUPRINCIPAL M ON C.MENP_ID = M.MENP_ID
-                WHERE A.ID_UID = $ID_UID
+                WHERE 
+                    A.ID_UID = $ID_UID
                     AND A.IND_ESTADO = 1
                     AND M.MENP_ESTADO = 1
                     AND C.IND_ESTADO = 1
                     AND B.PER_ESTADO IN (1,3)
                     AND M.MENP_FRAME = 3
-                ORDER BY M.MENP_ID, M.MENP_ORDER ASC";
+                ORDER BY 
+                    M.MENP_ID, M.MENP_IDPADRE ASC;
+                ";
         return $sql;
     }
-    
-  
+
+   
     public function arr_menu_default(){
         $sql = "SELECT 
                     M.MENP_ID AS MAIN_ID, 
@@ -303,6 +270,29 @@ class modelinicio extends CI_Model {
                 ";
         return $sql;
     }
+
+
+
+    public function arr_menu_xuser2($ID_UID){
+        $sql = "SELECT 
+                    M.MENP_ID, 
+                    M.MENP_IDPADRE 
+                FROM 
+                    ADMIN.GU_TUSUTIENEPER A
+                    JOIN ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID
+                    JOIN ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID
+                    JOIN ADMIN.GU_TMENUPRINCIPAL M ON C.MENP_ID = M.MENP_ID
+                WHERE A.ID_UID = $ID_UID
+                    AND A.IND_ESTADO = 1
+                    AND M.MENP_ESTADO = 1
+                    AND C.IND_ESTADO = 1
+                    AND B.PER_ESTADO IN (1,3)
+                    AND M.MENP_FRAME = 3
+                ORDER BY M.MENP_ID, M.MENP_ORDER ASC";
+        return $sql;
+    }
+    
+  
 
 
     public function busca_menu2($iuid){
@@ -510,7 +500,99 @@ class modelinicio extends CI_Model {
     }
 
    
+/*
 
+
+    public function load_menuxuser_old($ID_UID) {
+        $menu = [];
+        $allPermissions = [];
+        $parentMap = [];
+        # Búsqueda de los sistemas/abuelo/hijo/nieto
+        $sql = $this->arr_menu_xuser($ID_UID);
+        $arr_user_permisos = $this->db->query($sql)->result_array();
+        #log_message('error', 'arr_user_permisos');
+        #log_message('error', print_r($arr_user_permisos, TRUE));
+        $menu_hierarchy = [];
+        
+        if (count($arr_user_permisos) > 0) {
+            foreach($arr_user_permisos as $row) {
+                if ($row['MENP_IDPADRE'] == 0) {
+                    $menu_hierarchy[$row['MENP_ID']] = [
+                        'menu' => $row,
+                        'children' => [],
+                        'acceso_total' => true 
+                    ];
+                } elseif (isset($menu_hierarchy[$row['MENP_IDPADRE']])) {
+                    $menu_hierarchy[$row['MENP_IDPADRE']]['children'][$row['MENP_ID']] = [
+                        'menu' => $row,
+                        'children' => []
+                    ];
+                    $menu_hierarchy[$row['MENP_IDPADRE']]['acceso_total'] = false;
+                } else {
+                    foreach ($menu_hierarchy as &$abuelo) {
+                        if (isset($abuelo['children'][$row['MENP_IDPADRE']])) {
+                            $abuelo['children'][$row['MENP_IDPADRE']]['children'][$row['MENP_ID']] = [
+                                'menu' => $row
+                            ];
+                            $abuelo['acceso_total'] = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    
+      
+        
+        log_message('error', 'Final menu_hierarchy');
+        log_message('error', print_r($menu_hierarchy, TRUE));
+        # Cargar todos los menús
+        $menuData = $this->db->query($this->arr_menu_default())->result_array();
+        if (count($menuData)>0){
+            foreach ($menuData as  $aux =>  $row){
+                $menuId = $row['MAIN_ID'];
+                $subMenuId = isset($row['SUB_ID']) ? $row['SUB_ID'] : null;
+                $extensionId = isset($row['EXT_ID']) ? $row['EXT_ID'] : null;
+                if (!isset($menu[$menuId])) {
+                    $menu[$menuId] = [
+                        'data' => $row, // Datos del menú principal
+                        'submenus' => []
+                    ];
+                }
+                if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
+                    $menu[$menuId]['submenus'][$subMenuId] = [
+                        'data' => $row, // Datos del submenu
+                        'extensions' => []
+                    ];
+                }
+                if ($extensionId) {
+                    $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = $row; // Datos de la extensión
+                }
+            }
+        }
+        
+
+
+        
+        
+
+       
+
+        
+
+
+
+        return [
+            'sql' => $sql,
+            'arr_menu' => $menu_hierarchy,
+            'arr_user_permisos' => $arr_user_permisos,
+            'allPermissions' => $allPermissions,
+            'parentMap' => $parentMap
+        ];
+    }
+    
+
+    */
 
     /*
     public function load_menuxuser_old3($ID_UID){
