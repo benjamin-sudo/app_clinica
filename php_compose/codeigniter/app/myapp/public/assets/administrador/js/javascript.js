@@ -182,43 +182,44 @@ function grabarUsu(){
         errores.push("Debe Ingresar el RUN del Usuario");
     } 
     if ($('#error').is(':visible')) {
-        errores.push("  -   El RUN Ingresado no es Valido");
+        errores.push(" - El RUN Ingresado no es Valido");
     }  
     if (nombres == '') {
-        errores.push("  -   Debe Ingresar el Nombre del Usuario");
+        errores.push(" - Debe Ingresar el Nombre del Usuario");
     }  
     if (apepate == '') {
-       errores.push("   -   Debe Ingresar el Apellido Paterno del Usuario");
+       errores.push(" - Debe Ingresar el Apellido Paterno del Usuario");
     } 
     if (apemate == '') {
-        errores.push("  -   Debe Ingresar el Apellido Materno");
+        errores.push(" - Debe Ingresar el Apellido Materno");
     }  
     if (email == '') {
-        errores.push("  -   Debe Ingresar el Email del Usuario");
+        errores.push(" - Debe Ingresar el Email del Usuario");
     }  else {
         if (!validarEmail()){
             errores.push("- Mail no valido");
         }
     }
-    //console.log("actualiza_pass -> ",actualiza_pass);
+    //console.log("   ######################################");
+    //console.log("   actualiza_pass  ->  ",actualiza_pass);
     if (actualiza_pass || uID == ''){
         if (pass == '' && pass2 == '') {
-            errores.push("  -   Contrase&ntilde;a del ususario vac&iacute;a");
+            errores.push(" - Contrase&ntilde;a del ususario vac&iacute;a");
         }   else {
             if (pass != pass2){
-                errores.push("  -   Contrase&ntilde;a no son iguales");
+                errores.push(" - Contrase&ntilde;a no son iguales");
             }
         }
     }
     let arrPrivilegios      =   $("#destinoPriv").val()  || [];
     //console.log("arrPrivilegios  -> ",arrPrivilegios);
     if (arrPrivilegios.length == 0) {
-        errores.push("  -   Debe asignar a lo menos un privilegio para el usuario");
+        errores.push(" - Debe asignar a lo menos un privilegio para el usuario");
         ok = 0;
     }
     let arrEmpresas = $("#establecimiento").val() || [];
     if (arrEmpresas.length == 0) {
-        errores.push("  -   Debe asignar a lo menos una empresa al ususario");
+        errores.push(" - Debe asignar a lo menos una empresa al ususario");
         ok = 0;
     }
     var activo;
@@ -239,28 +240,8 @@ function grabarUsu(){
         jError(errores.join("<br>"),"   CLINICA LIBRE - errores")
     } else {
         //validar correo
-        const variables = { 
-            "user" : user, 
-            "nombres" : nombres, 
-            "apepate" : apepate, 
-            "apemate" : apemate, 
-            "email" : email,
-            "pass" : pass, 
-            "arrPrivilegios" : arrPrivilegios, 
-            "arrEmpresas" : arrEmpresas, 
-            "uID" : uID, 
-            "activo" : activo, 
-            "superUser" : superUser,
-            "actualiza_pass" : document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
-        }; 
-        
-        //Variables pasadas por ajax a la funcion
-        console.log("       ############################################    ");
-        console.log("       Variables pasadas por ajax a la funcion         ");
-        console.log("       arrPrivilegios -> ",arrPrivilegios,"            ");
-        console.log("       arrEmpresas -> ",arrEmpresas,"                  ");
-
-
+        let v_txt_actualuzapass = document.getElementById("ind_actualiza_pass").checked?1:0;
+        //console.log("v_txt_actualuzapass    ->  ",v_txt_actualuzapass);
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
                 console.log(" r -> ",r);
@@ -280,7 +261,7 @@ function grabarUsu(){
                                 "uID" : uID, 
                                 "activo" : activo, 
                                 "superUser" : superUser,
-                                "actualiza_pass" : document.getElementById("ind_actualiza_pass").checked ? 1 : 0, 
+                                "actualiza_pass" : v_txt_actualuzapass,
                                 "arrPrivilegios" : arrPrivilegios, 
                                 "arrEmpresas" : arrEmpresas, 
                             },
@@ -842,52 +823,50 @@ function js_editarextension(idMen,ind_tipo_menu){
         tipo_de_extension = ind_tipo_menu;
     }
 
-    /*
-        console.error("   *****************************************************   ");
-        console.error("   ************    js_editarextension  ********************");
-        console.error("   idMen               => ",idMen);
-        console.error("   ind_tipo_menu       => ",ind_tipo_menu);
-        console.error("   nombreMenu          => ",nombreMenu);
-        console.error("   ind_extension_padre => ",ind_extension_padre);
-        console.error("   tipo_de_extension   => ",tipo_de_extension);
-        console.error("   arr_permisos        => ",arr_permisos);
-    */
+
+    console.error("   *****************************************************   ");
+    console.error("   ************    js_editarextension  ********************");
+    console.error("   idMen               => ",idMen);
+    console.error("   ind_tipo_menu       => ",ind_tipo_menu);
+    console.error("   nombreMenu          => ",nombreMenu);
+    console.error("   ind_extension_padre => ",ind_extension_padre);
+    console.error("   tipo_de_extension   => ",tipo_de_extension);
+    console.error("   arr_permisos        => ",arr_permisos);
     //return false;
     
     jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'CLINICA LIBRE', function(r) {
         if (r) {
             $.ajax({ 
-                type        :   "POST",
-                //url       :   "Home/editExtension",
-                url         :   "Home/editExtension_new",
-                dataType    :   "json",
-                beforeSend  :   function(xhr) { $('#loadFade').modal('show'); },
-                data        :   { 
-                                    idMen : idMen,
-                                    nombre : nombreMenu,
-                                    nomArch : nombreMenu,
-                                    ind_tipo_menu : ind_tipo_menu,
-                                    ind_extension_padre : ind_extension_padre,
-                                    tipo_de_extension : tipo_de_extension,
-                                    check :   check,
-                                    arrPrivilegios : arr_permisos,
-                                    bool_checked : check,
-                                },
-                error   :   function(error) {  
+                type : "POST",
+                //url : "Home/editExtension",
+                url : "Home/editExtension_new",
+                dataType : "json",
+                beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+                data : { 
+                            idMen : idMen,
+                            nombre : nombreMenu,
+                            nomArch : nombreMenu,
+                            ind_tipo_menu : ind_tipo_menu,
+                            ind_extension_padre : ind_extension_padre,
+                            tipo_de_extension : tipo_de_extension,
+                            check : check,
+                            arrPrivilegios : arr_permisos,
+                            bool_checked : check,
+                        },
+                error : function(error) {  
                                                 console.log(error);
                                                 jAlert("Error General, Consulte Al Administrador"); 
                                                 setTimeout(function(){  $("#loadFade").modal("hide");  }, 1000);
                                             },
-                success : function(aData)   {  
-                                               
-                                                console.log("editando_estensiones_privilegios   -> ", aData);
-                                                if (aData.status){
-                                                    showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
-                                                } else {
-                                                    showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
-                                                }
-                                                setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
+                success : function(aData) {  
+                                            console.log("editando_estensiones_privilegios   -> ", aData);
+                                            if (aData.status){
+                                                showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
+                                            } else {
+                                                showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
                                             }
+                                            setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
+                                        }
             });
         }
     });

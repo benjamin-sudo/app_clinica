@@ -69,35 +69,37 @@ class modelinicio extends CI_Model {
         ];
     }
 
-
-
     #13957520-2
     public function load_menuxuser($ID_UID) {
         $menu = [];
-        $allPermissions = [];
         $parentMap = [];
-    
-        // Obtén los permisos del usuario
-        $arr_user_permisos = $this->db->query($this->arr_menu_xuser($ID_UID))->result_array();
+        $allPermissions = [];
+        #id con permisos abuelos
+        $all_permisosabuelo = [];
+        $all_permisoshijo = [];
+        $all_permisosnieto = [];
+        # Obtén los permisos del usuario
         $menu_hierarchy = [];
-        $arr_abuelos_sistema  = [];
-        $arr_hijo_sub_menu  = [];
-        $arr_nieto_extension  = [];
+        $arr_abuelos_sistema = [];
+        $arr_hijo_sub_menu = [];
+        $arr_nieto_extension = [];
         $menu_hierarchy = [];
-    
-        if (count($arr_user_permisos) > 0) {
+        #acceso total
+        $arr_acceso_submenus = [];
+        $arr_user_permisos = $this->arr_menu_xuser($ID_UID);
+        
+        if(count($arr_user_permisos) > 0) {
             foreach ($arr_user_permisos as $row) {
                 switch ($row['NIVEL_MENU']) {
                     case 'Abuelo':
-                        $allPermissions[] = $row['MENP_ID'];
-                        $arr_abuelos_sistema[$row['MENP_ID']] = $row;
+                        $all_permisosabuelo[] = $row['MENP_ID'];
                         $menu_hierarchy[$row['MENP_ID']] = [
                             'menu' => $row,
                             'submenus' => []
                         ];
                         break;
                     case 'Hijo':
-                        $arr_hijo_sub_menu[$row['MENP_ID']] = $row;
+                        $arr_hijo_sub_menu[$row['MENP_ID']] = $row['MENP_ID'];
                         if (isset($menu_hierarchy[$row['MENP_IDPADRE']])) {
                             $menu_hierarchy[$row['MENP_IDPADRE']]['submenus'][$row['MENP_ID']] = [
                                 'menu' => $row,
@@ -106,7 +108,7 @@ class modelinicio extends CI_Model {
                         }
                         break;
                     case 'Nieto':
-                        $arr_nieto_extension[$row['MENP_ID']] = $row;
+                        $arr_nieto_extension[$row['MENP_ID']] = $row['MENP_ID'];
                         foreach ($menu_hierarchy as &$abuelo) {
                             if (isset($abuelo['submenus'][$row['MENP_IDPADRE']])) {
                                 $abuelo['submenus'][$row['MENP_IDPADRE']]['extension'][$row['MENP_ID']] = $row;
@@ -115,32 +117,29 @@ class modelinicio extends CI_Model {
                         break;
                 }
             }
-    
-            // Verificar abuelos sin submenús para otorgar acceso total
+            # Verificar abuelos sin submenus para otorgar acceso total
             foreach ($menu_hierarchy as $id_abue => &$abuelo) {
                 if (empty($abuelo['submenus'])) {
-                    $abuelo['access_total'] = true; // Indicador de acceso total
-                }
+                    $abuelo['access_total'] = true; 
+                    $arr_acceso_submenus[] = $id_abue;
+                } 
             }
         }
-    
-        //log_message('error', 'arr_user_permisos');
-        //log_message('error', print_r($arr_user_permisos, TRUE));
-        
-        log_message('error', 'menu_hierarchy');
-        log_message('error', print_r($menu_hierarchy, TRUE));
 
-        
+        log_message('error', 'arr_user_permisos');
+        log_message('error', print_r($arr_user_permisos,true));
+        log_message('error', 'menu_hierarchy');
+        log_message('error', print_r($menu_hierarchy,true));
+        //arr_hijo_sub_menu
         $menuData = $this->db->query($this->arr_menu_default())->result_array();
         if (count($menuData) > 0) {
-            foreach ($menuData as $row) {
+            foreach ($menuData as $aux => $row) {
                 $menuId = $row['MAIN_ID'];
                 $subMenuId = isset($row['SUB_ID']) ? $row['SUB_ID'] : null;
                 $extensionId = isset($row['EXT_ID']) ? $row['EXT_ID'] : null;
-                // Verificar si el usuario tiene permiso para ver este menú principal o es padre de un elemento con permiso
-
-                if (in_array($menuId, $allPermissions)) {
-                    // Menú principal
+                # Verificar si el usuario tiene permiso para ver este menú principal o es padre de un elemento con permiso
+                if (in_array($menuId,$all_permisosabuelo)){
+                    # Menú principal
                     if (!isset($menu[$menuId])) {
                         $menu[$menuId] = [
                             'data' => [
@@ -152,9 +151,8 @@ class modelinicio extends CI_Model {
                             'submenus' => []
                         ];
                     }
-                
-                    // Submenús
-                    if ($subMenuId && (!isset($menu[$menuId]['submenus'][$subMenuId]) || in_array($subMenuId, $allPermissions))) {
+                    # Submenús
+                    if ($subMenuId && (!isset($menu[$menuId]['submenus'][$subMenuId]) && (in_array($menuId,$arr_acceso_submenus) || in_array($subMenuId,$arr_hijo_sub_menu) ))) {
                         $menu[$menuId]['submenus'][$subMenuId] = [
                             'data' => [
                                 'SUB_ID' => $row['SUB_ID'],
@@ -164,19 +162,16 @@ class modelinicio extends CI_Model {
                             'extensions' => []
                         ];
                     }
-                
-                    // Extensiones
-                    if ($subMenuId && $extensionId && (!isset($menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId]) || in_array($extensionId, $allPermissions))) {
+                    # Extensiones
+                    if ($subMenuId && $extensionId && (!isset($menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId]) && (in_array($menuId,$arr_acceso_submenus)  || in_array($extensionId,$arr_nieto_extension)))) {
                         $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = [
                             'EXT_ID' => $row['EXT_ID'],
                             'EXT_NOMBRE' => $row['EXT_NOMBRE'],
                             'EXT_RUTA' => $row['EXT_RUTA']
                         ];
                     }
+
                 }
-
-                
-
             }
         }
         return [
@@ -184,8 +179,6 @@ class modelinicio extends CI_Model {
             'arr_user_permisos' => $arr_user_permisos
         ];
     }
-    
-    
 
     public function arr_menu_xuser($ID_UID){
         $sql = "SELECT 
@@ -199,12 +192,12 @@ class modelinicio extends CI_Model {
                         ELSE 'Nieto'
                     END AS NIVEL_MENU 
                 FROM 
-                    ADMIN.GU_TUSUTIENEPER A
+                        ADMIN.GU_TUSUTIENEPER A
                     JOIN ADMIN.GU_TPERMISOS B ON A.PER_ID = B.PER_ID
                     JOIN ADMIN.GU_TMENPTIENEPER C ON A.PER_ID = C.PER_ID
                     JOIN ADMIN.GU_TMENUPRINCIPAL M ON C.MENP_ID = M.MENP_ID
                 WHERE 
-                    A.ID_UID = $ID_UID
+                        A.ID_UID = $ID_UID
                     AND A.IND_ESTADO = 1
                     AND M.MENP_ESTADO = 1
                     AND C.IND_ESTADO = 1
@@ -213,7 +206,7 @@ class modelinicio extends CI_Model {
                 ORDER BY 
                     M.MENP_ID, M.MENP_IDPADRE ASC;
                 ";
-        return $sql;
+        return $this->db->query($sql)->result_array();;
     }
 
    
@@ -570,18 +563,6 @@ class modelinicio extends CI_Model {
                 }
             }
         }
-        
-
-
-        
-        
-
-       
-
-        
-
-
-
         return [
             'sql' => $sql,
             'arr_menu' => $menu_hierarchy,
@@ -590,8 +571,6 @@ class modelinicio extends CI_Model {
             'parentMap' => $parentMap
         ];
     }
-    
-
     */
 
     /*

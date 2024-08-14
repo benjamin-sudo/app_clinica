@@ -72,7 +72,7 @@ class UserModel extends Model {
                 $html   .=  "<ul class='no-bullet'>";
                 #Acceder a los datos de las extensiones
                 foreach ($subMenu['extensions'] as $extensionId => $extension) {
-                    $html   .=  "<li><h6 style='color:#888888;margin-left: 15px;'><a href='javascript:editarExt(".$subData['ext_id'].",2)'>";
+                    $html   .=  "<li><h6 style='color:#888888;margin-left: 15px;'><a href='javascript:editarExt(".$extension['ext_id'].",2)'>";
                     $html   .=  "<i class='bi bi-wrench-adjustable-circle-fill'></i></a>&nbsp;".htmlspecialchars($extension['ext_nombre'])."&nbsp;<b style='font-size: 10px;'>(".htmlspecialchars($extension['ext_id']).")</b></h6>";
                     $html   .=  "</li>";
                 }
@@ -381,15 +381,11 @@ class UserModel extends Model {
             'html'              =>  $html,
         ];
     }
-    
-
-
-
 
     public function buscaExtArch($aData){
         $db = db_connect();
         $rutaactual = $aData['rutaactual'];
-        return $db->query("select A.MENP_RUTA from ADMIN.GU_TMENUPRINCIPAL A WHERE A.MENP_RUTA='$rutaactual'")->getResult();
+        return $db->query("SELECT A.MENP_RUTA from ADMIN.GU_TMENUPRINCIPAL A WHERE A.MENP_RUTA='$rutaactual'")->getResult();
     }
 
     public function creaPrivilegio($nombre) {
@@ -480,11 +476,11 @@ class UserModel extends Model {
     public function grabaUsu($aData){
         $status = true;
         $name = $aData['post']['nombres']." ".$aData['post']['apepate']." ".$aData['post']['apemate'];
-        $arr_run =   str_replace('.','',$aData['post']['user']);
-        $db =   \Config\Database::connect();
+        $arr_run = str_replace('.','',$aData['post']['user']);
+        $logger = service('logger'); 
+        $db = \Config\Database::connect();
         $db->transStart();
-        $hash =   password_hash($aData['post']['pass'],PASSWORD_BCRYPT);
-        $dataUs =   array(
+        $dataUs = [
             #'ID_UID' => $uID,
             'USERNAME' => trim($arr_run),
             'NAME' =>  $name, 
@@ -493,16 +489,23 @@ class UserModel extends Model {
             'LAST_NAME' => $aData['post']['apemate'],
             'EMAIL' => $aData['post']['email'],
             'TELEPHONE' => 0,
-            'PASSWORD' => $hash,
-            'LOCKTODOMAIN' => $hash,
             'DISABLE' => $aData['post']['activo'], //activo
             'STATUS' => $aData['post']['superUser'], //superUser 
             'TX_INTRANETSSAN_RUN' => trim(explode("-",$arr_run)[0]),
             'TX_INTRANETSSAN_DV' => trim(explode("-",$arr_run)[1]),
             'DAYLIGHT' =>  1
-        );
-
-        //**************************************************************
+        ];
+        $v_actualiza_pass = $aData['post']['actualiza_pass'];
+        if ($v_actualiza_pass == 1) {
+            $hash = password_hash($aData['post']['pass'], PASSWORD_BCRYPT);
+            $dataUs['PASSWORD'] = $hash;
+            $dataUs['LOCKTODOMAIN'] = $hash;
+        }
+        #**************************************************************
+        #$logger->info("-------------------------------------------");
+        #$logger->info("v_actualiza_pass : {$v_actualiza_pass}  ");
+        #$logger->info(json_encode($dataUs));
+        #**************************************************************
         $last_id = 0;
         $arr_username = $db->query("SELECT ID_UID FROM ADMIN.FE_USERS WHERE USERNAME = '".$arr_run."'")->getResultArray();
         if(count($arr_username)>0){
@@ -516,9 +519,6 @@ class UserModel extends Model {
             $constructora->insert($dataUs);
             $last_id = $db->insertID();
         }
-        
-
-
         //privilegios
         $arrPrivilegios = $aData['post']['arrPrivilegios'];
         if(count($arrPrivilegios)>0){
@@ -527,11 +527,18 @@ class UserModel extends Model {
             $constructora0->where('ID_UID',$last_id);
             $constructora0->update();
             foreach($arrPrivilegios as $i => $row){
-                $get_tusutieneper = $db->query("SELECT ID_UTP FROM ADMIN.GU_TUSUTIENEPER WHERE PER_ID IN (".$row.") AND ID_UID  = ".$last_id)->getResultArray();
+                $get_tusutieneper = $db->query("SELECT ID_UTP FROM ADMIN.GU_TUSUTIENEPER WHERE PER_ID = $row AND ID_UID = ".$last_id)->getResultArray();
+                
+                $logger->info("-------------------------------------------");
+                $logger->info("get_tusutieneper ");
+                $logger->info(json_encode($get_tusutieneper));
+
                 if (count($get_tusutieneper)>0){
+                    $v_id_utp = $get_tusutieneper[0]['ID_UTP'];
+                    $logger->info("v_id_utp : {$v_id_utp}  ");
                     $constructora3 = $db->table('ADMIN.GU_TUSUTIENEPER');
-                    $constructora3->set(['IND_ESTADO' => 1]);
-                    $constructora3->where('ID_UTP',$get_tusutieneper[0]['ID_UTP']);
+                    $constructora3->set('IND_ESTADO',1);
+                    $constructora3->where('ID_UTP',$v_id_utp);
                     $constructora3->update();
                 } else {
                     $constructora2 = $db->table('ADMIN.GU_TUSUTIENEPER');
@@ -560,11 +567,11 @@ class UserModel extends Model {
             }
         }
         $db->transComplete();
-        return  [
-                    'last_id'   =>  $last_id,
-                    'user'      =>  $arr_run,
-                    'status'    =>  $status,
-                ];
+        return [
+            'last_id' =>  $last_id,
+            'user' =>  $arr_run,
+            'status' =>  $status,
+        ];
     }
 
 
@@ -681,15 +688,7 @@ class UserModel extends Model {
             'arr_permisos' => $query2,
         ];                    
     }
-    
   
-    
-
-
-    
-
-
-   
 
     public function get_obtenerPermisosHeredados($menuId) {
         $db = db_connect();
@@ -998,33 +997,46 @@ class UserModel extends Model {
             'MENP_IDPADRE'  => $listarMenup,
             'MENP_FRAME'    => 3
         ])->where('MENP_ID', $idExt)->update();
-        
-        /*    
-            $logger->info("**************************************************************************** ");
-            $logger->info("*******************      editando_extension_old     ************************ ");
-            $logger->info(" Extension:      =   {$idExt},       Nombre  = {$nombre},    Tipo = {$tip}   ");
-            $logger->info(" Padre           =   {$listarMenup}, check   = {$check}                      ");
-            $logger->info(" arrPrivilegios  =   " . json_encode($arrPrivilegios) . "                    ");
-            $logger->info("**************************************************************************** ");
+        /*
+        $logger->info("**************************************************************************** ");
+        $logger->info("*******************      editando_extension_old     ************************ ");
+        $logger->info(" Extension:      =   {$idExt},       Nombre  = {$nombre},    Tipo = {$tip}   ");
+        $logger->info(" Padre           =   {$listarMenup}, check   = {$check}                      ");
+        $logger->info(" arrPrivilegios  =   " . json_encode($arrPrivilegios) . "                    ");
+        $logger->info("**************************************************************************** ");
         */
-
         $count = count($arrPrivilegios);
+        #$logger->info("**************************************************************************** ");
+        #$logger->info("0 .- count(arrPrivilegios) = {$count} ");
         if ($count > 0) {
             $sigMen = 0;
-
             while ($sigMen <= 2) {
+                #$logger->info("1 .- sigMen = {$sigMen} ");
                 if ($sigMen == 0) {
+                    #$logger->info("2 .- update ADMIN.GU_TMENPTIENEPER a cero = {$sigMen} ");
                     $db->table('ADMIN.GU_TMENPTIENEPER')->set('IND_ESTADO', 0)->where('MENP_ID', $idExt)->update();
                 }
                 foreach ($arrPrivilegios as $aux => $idPer) {
-                    $res = $db->query("SELECT PER_ID FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
-                    if (count($res) > 0) {
+                    #$logger->info("3 .- idPer = {$idPer} ");
+                    #$logger->info("4 .- idExt = {$idExt} ");
+                    $res = $db->query("SELECT ID_MPTP FROM ADMIN.GU_TMENPTIENEPER WHERE PER_ID = ? AND MENP_ID = ?", [$idPer, $idExt])->getResultArray();
+                    #$logger->info("5 .- res = " . json_encode($res) . "  ");
+                    if (count($res)>0){
+                        #$logger->info("5.0 .- Update = {$v_id_mptp} ");
+                        $v_id_mptp = $res[0]['ID_MPTP'];
+                        $db->table('ADMIN.GU_TMENPTIENEPER')
+                        ->set('IND_ESTADO', 1)
+                        ->where('ID_MPTP', $v_id_mptp)
+                        ->update();
+                        /*
                         $db->table('ADMIN.GU_TMENPTIENEPER')
                         ->set('IND_ESTADO', 1)
                         ->where('PER_ID', $idPer)
                         ->where('MENP_ID', $idExt)
                         ->update();
+                        */
                     } else {
+                        #$logger->info("5.1 .- idExt = {$idExt} - idPer = {$idPer}  ");
                         $data = [
                             'MENP_ID' => $idExt,
                             'PER_ID' => $idPer,
@@ -1033,13 +1045,17 @@ class UserModel extends Model {
                         $db->table('ADMIN.GU_TMENPTIENEPER')->insert($data);
                     }
                 }
+
                 if ($listarMenup != 0 && $sigMen == 0) {
                     $idExt = $listarMenup;
+                    #$logger->info("6 .- cambio de .- idExt = {$idExt} x listarMenup = {$listarMenup}  ");
                 } else if ($sigMen == 1) {
                     $idPadre1 = $db->query("SELECT MENP_IDPADRE FROM ADMIN.GU_TMENUPRINCIPAL WHERE MENP_ID = ?", [$idExt])->getResultArray();
-                    if ($idPadre1) {
+                    #$logger->info("8 .- en segunda vuelta " . json_encode($idPadre1) . "  ");
+                    if (count($idPadre1)>0) {
                         $idExt = $idPadre1[0]['MENP_IDPADRE'];
-                        $listarMenup = $idExt;
+                        #$listarMenup = $idExt;
+                        #$logger->info("9 .-idPadre1  cambio de .- idExt = {$idExt}  ");
                     } else {
                         break;
                     }
@@ -1047,6 +1063,7 @@ class UserModel extends Model {
                     break;
                 }
                 $sigMen++;
+                #$logger->info("10 .- new sigMen {$sigMen}  ");
             }
         }
         #$logger->info("*****************************************************************************");
