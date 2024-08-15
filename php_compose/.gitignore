@@ -1,3 +1,4 @@
 # Ignorar archivos de secreto
 secrets/root_password.txt
 secrets/user_password.txt
+backup_service/backup

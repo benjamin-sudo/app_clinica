@@ -55,5 +55,15 @@ docker-compose up -d
 echo "ssprueba.210" > C:/Users/Administrator/Documents/GitHub/app_clinica/php_compose/secrets/root_password.txt
 ###############################################
 
+
+
+#si crontab esta corriendo
+
+docker exec -it php_compose-backup_service-1 /bin/bash
+
 /usr/local/bin/backup.sh
 
+######################################
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 2 * * * root /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1
