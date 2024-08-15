@@ -56,9 +56,8 @@ echo "ssprueba.210" > C:/Users/Administrator/Documents/GitHub/app_clinica/php_co
 ###############################################
 
 #si crontab esta corriendo
-
 docker exec -it php_compose-backup_service-1 /bin/bash
-
+ls -l /usr/local/bin/backup.sh
 /usr/local/bin/backup.sh
 
 ######################################
