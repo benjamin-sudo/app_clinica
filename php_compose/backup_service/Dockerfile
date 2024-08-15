@@ -1,4 +1,3 @@
-# Dockerfile
 FROM ubuntu:latest
 
 # Instalar cron
@@ -15,7 +14,8 @@ RUN chmod +x /usr/local/bin/backup.sh
 COPY crontab /etc/cron.d/backup-cron
 RUN chmod 0644 /etc/cron.d/backup-cron
 
+# Verificar que el archivo exista antes de ejecutarlo
+RUN if [ -f /usr/local/bin/backup.sh ]; then /usr/local/bin/backup.sh; else echo "backup.sh not found"; fi
 
 # Iniciar cron en modo foreground
 CMD ["cron", "-f"]
-
