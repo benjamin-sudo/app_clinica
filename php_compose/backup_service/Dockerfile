@@ -2,6 +2,8 @@
 FROM ubuntu:latest
 # Actualiza el repositorio de paquetes e instala cron, nano y otros paquetes necesarios
 RUN apt-get update && apt-get install -y cron nano
+# Crea el directorio de backup
+RUN mkdir -p /backup_service/backup
 # Copia el script de backup al directorio correcto
 COPY backup.sh /usr/local/bin/backup.sh
 # Otorga permisos de ejecución al script

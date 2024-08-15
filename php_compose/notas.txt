@@ -62,6 +62,8 @@ ls -l /usr/local/bin/backup.sh
 ps aux | grep cron
 service cron restart
 
+mkdir -p /backup_service/backup
+
 ######################################
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
