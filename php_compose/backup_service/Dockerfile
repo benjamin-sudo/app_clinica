@@ -16,7 +16,7 @@ COPY crontab /etc/cron.d/backup-cron
 RUN chmod 0644 /etc/cron.d/backup-cron
 
 # Ejecutar respaldo al inicio
-RUN /usr/local/bin/backup.sh
+#RUN /usr/local/bin/backup.sh
 
 # Iniciar cron en modo foreground
 CMD ["cron", "-f"]
