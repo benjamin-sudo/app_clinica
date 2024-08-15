@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   #administrador
   #http://localhost:9000/administrador
@@ -17,7 +17,7 @@ services:
       - APP_ENV=development # Modo de desarrollo
       - ALLOW_EMPTY_PASSWORD=yes # Permitir contraseñas vacías
     depends_on:
-      - oracle_slim
+      #- oracle_slim
       - mysql_6
     restart: always # Reiniciar_en_caso_de_fallo
     networks:
