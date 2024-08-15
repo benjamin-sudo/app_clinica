@@ -24,19 +24,19 @@ services:
       - mynetwork
 
   #codeneiter_3 - app ususario respal
-  php_codeneiter_3:
-    container_name: codeneite_3_app
-    build:
-      context: ./
-      dockerfile: ./php_codeneiter/Dockerfile
-    ports:
-      - "9015:80"
-      - "9014:443"
-    restart: always  
-    volumes:
-      - ./php_codeneiter/html:/var/www/html/
-    networks:
-      - mynetwork
+  #php_codeneiter_3:
+    #container_name: codeneite_3_app
+    #build:
+      #context: ./
+      #dockerfile: ./php_codeneiter/Dockerfile
+    #ports:
+      #- "9015:80"
+      #- "9014:443"
+    #restart: always  
+    #volumes:
+      #- ./php_codeneiter/html:/var/www/html/
+    #networks:
+      #- mynetwork
 
   php_clinica:
     container_name: php_clinica
@@ -68,31 +68,31 @@ services:
       #- mynetwork
       
   #https://hub.docker.com/r/gvenzl/oracle-free
-  oracle_slim:
-    image: gvenzl/oracle-free:23.3-full
+  #oracle_slim:
+    #image: gvenzl/oracle-free:23.3-full
     #image: gvenzl/oracle-free:23-slim
-    container_name: oracle_slim
-    environment:
-      APP_USER: ADMIN
-      APP_USER_PASSWORD: ssprueba.210
-      ORACLE_DATABASE: ADMIN
-      ORACLE_PASSWORD: ssprueba.210
-      TARGET_PDB: FREEPDB1
-      TZ: America/Santiago
-    ports:
-      - 6000:1521
-    volumes:
-      - oracle-data:/path/to/oracle/data
-      - ./oracle/init_scripts:/container-entrypoint-initdb.d
-      - ./oracle/init_sql:/container-entrypoint-startdb.d
-    restart: always
-    healthcheck:
-      test: ["CMD", "healthcheck.sh"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    networks:
-      - mynetwork
+    #container_name: oracle_slim
+    #environment:
+      #APP_USER: ADMIN
+      #APP_USER_PASSWORD: ssprueba.210
+      #ORACLE_DATABASE: ADMIN
+      #ORACLE_PASSWORD: ssprueba.210
+      #TARGET_PDB: FREEPDB1
+      #TZ: America/Santiago
+    #ports:
+      #- 6000:1521
+    #volumes:
+      #- oracle-data:/path/to/oracle/data
+      #- ./oracle/init_scripts:/container-entrypoint-initdb.d
+      #- ./oracle/init_sql:/container-entrypoint-startdb.d
+    #restart: always
+    #healthcheck:
+      #test: ["CMD", "healthcheck.sh"]
+      #interval: 10s
+      #timeout: 5s
+      #retries: 10
+    #networks:
+      #- mynetwork
 
   #bd_session_mysql    
   mysql_6:
