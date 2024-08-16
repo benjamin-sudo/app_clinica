@@ -125,7 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         'DSN'           =>  '',
         'hostname'      =>  'mysql_6',
         'username'      =>  'ADMIN',
-        'password'      =>  'ssprueba.210',
+        'password'      =>  'SafeProd2024!',
         'database'      =>  'ADMIN',
         'DBDriver'      =>  'MySQLi',
         'DBPrefix'      =>  '',
@@ -175,7 +175,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         'DSN'           =>  '',
         'hostname'      =>  'oracle', // O 'oracle' si está en otro contenedor Docker
         'username'      =>  'ADMIN',
-        'password'      =>  'ssprueba.210',
+        'password'      =>  'SafeProd2024!',
         'database'      =>  'FREEPDB1',
         'DBDriver'      =>  'OCI8',
         'DBPrefix'      =>  '', // Ajusta según necesidad
