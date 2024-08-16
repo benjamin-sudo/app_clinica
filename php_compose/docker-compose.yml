@@ -22,6 +22,21 @@ services:
     restart: always # Reiniciar_en_caso_de_fallo
     networks:
       - mynetwork
+  
+  php_clinica:
+    container_name: php_clinica
+    build:
+      context: ./
+      dockerfile: ./php_clinica/Dockerfile
+    ports:
+      - "9025:80"
+      - "9026:443"
+    restart: always  
+    volumes:
+      - ./php_clinica/html:/var/www/html/
+    networks:
+      - mynetwork
+
 
   #codeneiter_3 - app ususario respal
   #php_codeneiter_3:
@@ -37,20 +52,6 @@ services:
       #- ./php_codeneiter/html:/var/www/html/
     #networks:
       #- mynetwork
-
-  php_clinica:
-    container_name: php_clinica
-    build:
-      context: ./
-      dockerfile: ./php_clinica/Dockerfile
-    ports:
-      - "9025:80"
-      - "9026:443"
-    restart: always  
-    volumes:
-      - ./php_clinica/html:/var/www/html/
-    networks:
-      - mynetwork
 
   #codeneiter_4 - app ususario
   #codeneiter_4:
@@ -149,7 +150,7 @@ secrets:
     file: ./secrets/user_password.txt
 
 volumes:
-  oracle-data:
+  #oracle-data:
   db_data:
 
 networks:
