@@ -72,6 +72,12 @@ dos2unix /usr/local/bin/backup.sh
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 2 * * * root /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1
+###############################################################
+
+
+git pull origin main
+
+
 
 #########################################
 #!/bin/bash

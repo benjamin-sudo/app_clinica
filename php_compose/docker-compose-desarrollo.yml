@@ -85,10 +85,10 @@ services:
       - --init-connect=SET NAMES utf8mb4 COLLATE utf8mb4_spanish_ci
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ssprueba.210
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
       MYSQL_DATABASE: ADMIN
       MYSQL_USER: ADMIN
-      MYSQL_PASSWORD: ssprueba.210
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_user_password
       TZ: America/Santiago
     expose:
       - "9306"
@@ -107,6 +107,21 @@ services:
       - 9100:8080
     networks:
       - mynetwork
+
+  backup_service:
+    build:
+      context: ./backup_service
+      dockerfile: Dockerfile
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backup_service/backup:/backup_service/backup
+    restart: always
+
+secrets:
+  mysql_root_password:
+    file: ./secrets/root_password.txt
+  mysql_user_password:
+    file: ./secrets/user_password.txt
 
 volumes:
   db_data:
