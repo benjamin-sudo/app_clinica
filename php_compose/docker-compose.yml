@@ -16,6 +16,7 @@ services:
       - CODEIGNITER_DATABASE_PASSWORD=mypassword
       - APP_ENV=development # Modo de desarrollo
       - ALLOW_EMPTY_PASSWORD=yes # Permitir contraseñas vacías
+      - APP_BASE_URL=http://localhost:9025/
     depends_on:
       #- oracle_slim
       - mysql_6
@@ -28,6 +29,8 @@ services:
     build:
       context: ./
       dockerfile: ./php_clinica/Dockerfile
+    environment:
+      - APP_BASE_URL=http://localhost:9025/
     ports:
       - "9025:80"
       - "9026:443"
@@ -36,7 +39,6 @@ services:
       - ./php_clinica/html:/var/www/html/
     networks:
       - mynetwork
-
 
   #codeneiter_3 - app ususario respal
   #php_codeneiter_3:
