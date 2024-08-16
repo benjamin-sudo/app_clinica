@@ -64,6 +64,10 @@ service cron restart
 
 mkdir -p /backup_service/backup
 
+
+apt-get update && apt-get install -y dos2unix
+dos2unix /usr/local/bin/backup.sh
+
 ######################################
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin

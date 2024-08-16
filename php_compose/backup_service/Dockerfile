@@ -4,6 +4,7 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y cron nano
 # Crea el directorio de backup
 RUN mkdir -p /backup_service/backup
+RUN apt-get update && apt-get install -y dos2unix
 # Copia el script de backup al directorio correcto
 COPY backup.sh /usr/local/bin/backup.sh
 # Otorga permisos de ejecución al script
