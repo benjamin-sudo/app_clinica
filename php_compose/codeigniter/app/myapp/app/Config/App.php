@@ -18,8 +18,8 @@ class App extends BaseConfig
      */
       #Para producción
       #var_dump("CONFIG");
-      public string $baseURL = 'http://localhost:9000/';
-      #public $baseURL = 'https://panel.clinicalibre.cl/';
+      #public string $baseURL = 'http://localhost:9000/';
+      public string $baseURL = getenv('VIRTUAL_HOST') ?: 'http://localhost:9000/';
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
      * If you want to accept multiple Hostnames, set this.
