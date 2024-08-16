@@ -1,12 +1,13 @@
 # Usa la imagen base que estés utilizando
 FROM ubuntu:latest
-# Actualiza el repositorio de paquetes e instala cron, nano y otros paquetes necesarios
-RUN apt-get update && apt-get install -y cron nano
+# Actualiza el repositorio de paquetes e instala cron, nano, dos2unix y otros paquetes necesarios
+RUN apt-get update && apt-get install -y cron nano dos2unix
 # Crea el directorio de backup
 RUN mkdir -p /backup_service/backup
-RUN apt-get update && apt-get install -y dos2unix
 # Copia el script de backup al directorio correcto
 COPY backup.sh /usr/local/bin/backup.sh
+# Convierte el script a formato Unix
+RUN dos2unix /usr/local/bin/backup.sh
 # Otorga permisos de ejecución al script
 RUN chmod +x /usr/local/bin/backup.sh
 # Configura el crontab para el usuario root
