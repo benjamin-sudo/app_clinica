@@ -1,4 +1,5 @@
-version: '3'
+version: '3.9'
+
 services:
 
   nginx-proxy:
@@ -45,6 +46,7 @@ services:
       - CODEIGNITER_DATABASE_USER=myuser
       - CODEIGNITER_DATABASE_PASSWORD=mypassword
       - APP_ENV=production
+      - APP_BASE_URL=panel.clinicalibre.cl/
       - VIRTUAL_HOST=panel.clinicalibre.cl
       - LETSENCRYPT_HOST=panel.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
@@ -55,63 +57,25 @@ services:
     networks:
       - mynetwork
 
-  php_codeneiter_3:
-    container_name: codeneite_3_app
+  php_clinica:
+    container_name: php_clinica
     build:
       context: ./
-      dockerfile: ./php_codeneiter/Dockerfile
-    ports:
-      - "9015:80"
-      - "9014:443"
-    restart: always  
-    volumes:
-      - ./php_codeneiter/html:/var/www/html/
+      dockerfile: ./php_clinica/Dockerfile
     environment:
+      - APP_BASE_URL=http://localhost:9025/
       - VIRTUAL_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
-    networks:
-      - mynetwork
-
-  codeneiter_4:
-    container_name: codeneite_4_admin
-    build:
-      context: ./
-      dockerfile: ./php/Dockerfile
     ports:
-      - "9005:80"
-      - "9004:443"
+      - "9025:80"
+      - "9026:443"
     restart: always  
     volumes:
-      - ./php/html:/var/www/html/
+      - ./php_clinica/html:/var/www/html/
     networks:
       - mynetwork
-      
-  oracle_slim:
-    image: gvenzl/oracle-free:23.3-full
-    container_name: oracle_slim
-    environment:
-      APP_USER: ADMIN
-      APP_USER_PASSWORD: ssprueba.210
-      ORACLE_DATABASE: ADMIN
-      ORACLE_PASSWORD: ssprueba.210
-      TARGET_PDB: FREEPDB1
-      TZ: America/Santiago
-    ports:
-      - 6000:1521
-    volumes:
-      - oracle-data:/opt/oracle/oradata
-      - ./oracle/init_scripts:/container-entrypoint-initdb.d
-      - ./oracle/init_sql:/container-entrypoint-startdb.d
-    restart: always
-    healthcheck:
-      test: ["CMD", "healthcheck.sh"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    networks:
-      - mynetwork
-
+  
   mysql_6:
     container_name: mysql_6
     image: mysql:5.7
@@ -146,7 +110,6 @@ services:
       - mynetwork
 
 volumes:
-  oracle-data:
   db_data:
 
 networks:
