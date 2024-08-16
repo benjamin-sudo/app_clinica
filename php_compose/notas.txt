@@ -1,6 +1,8 @@
 
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 
 
+git pull origin main
+
 docker compose up -d --build
 
 dtrafico_https
@@ -64,7 +66,6 @@ service cron restart
 
 mkdir -p /backup_service/backup
 
-
 apt-get update && apt-get install -y dos2unix
 dos2unix /usr/local/bin/backup.sh
 
@@ -73,11 +74,6 @@ SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 2 * * * root /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1
 ###############################################################
-
-
-git pull origin main
-
-
 
 #########################################
 #!/bin/bash
