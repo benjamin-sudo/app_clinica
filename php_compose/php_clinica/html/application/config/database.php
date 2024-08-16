@@ -77,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'dsn'			=> 	'',
 		'hostname' 		=> 	'mysql_6:3306',
 		'username' 		=> 	'ADMIN',
-		'password' 		=> 	'ssprueba.210',
+		'password' 		=> 	'SafeProd2024!',
 		'database' 		=> 	'ADMIN',
 		'dbdriver' 		=> 	'MySQLi',
 		'dbprefix' 		=> 	'',
