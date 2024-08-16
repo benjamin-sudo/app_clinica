@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'dsn' 			=> '',
 		'hostname' 		=> 	$tsname_all,
 		'username' 		=> 	'admin',
-		'password' 		=> 	'ssprueba.210',
+		'password' 		=> 	'SafeProd2024!',
 		'database' 		=> 	'XEPDB1',
 		'dbdriver' 		=> 	'oci8',
 		'dbprefix' 		=> 	'',

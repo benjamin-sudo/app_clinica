@@ -25,7 +25,7 @@ class Database extends Config {
         'DSN'           =>  '',
         'hostname'      =>  'mysql_6',
         'username'      =>  'ADMIN',
-        'password'      =>  'ssprueba.210',
+        'password'      =>  'SafeProd2024!',
         'database'      =>  'ADMIN',
         'DBDriver'      =>  'MySQLi',
         'DBPrefix'      =>  '',
@@ -46,7 +46,7 @@ class Database extends Config {
         'DSN'           =>  '',
         'hostname'      =>  'oracle', // O 'oracle' si está en otro contenedor Docker
         'username'      =>  'ADMIN',
-        'password'      =>  'ssprueba.210',
+        'password'      =>  'SafeProd2024!',
         'database'      =>  'FREEPDB1',
         'DBDriver'      =>  'OCI8',
         'DBPrefix'      =>  '', // Ajusta según necesidad
@@ -61,7 +61,7 @@ class Database extends Config {
         'DSN'           =>  'oci:dbname=//oracle:6000/FREEPDB1;charset=utf8', // Ajusta el DSN según tus necesidades
         'hostname'      =>  '', // No necesario para PDO
         'username'      =>  'ADMIN',
-        'password'      =>  'ssprueba.210',
+        'password'      =>  'SafeProd2024!',
         'database'      =>  '', // No necesario para PDO, ya que está en DSN
         'DBDriver'      =>  'PDO',
         'DBPrefix'      =>  '', // Ajusta según necesidad
