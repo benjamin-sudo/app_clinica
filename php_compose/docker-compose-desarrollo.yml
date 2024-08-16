@@ -51,7 +51,6 @@ services:
       - LETSENCRYPT_HOST=panel.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
     depends_on:
-      - oracle_slim
       - mysql_6
     restart: always
     networks:
@@ -63,7 +62,7 @@ services:
       context: ./
       dockerfile: ./php_clinica/Dockerfile
     environment:
-      - APP_BASE_URL=http://localhost:9025/
+      - APP_BASE_URL=clinicalibre.cl
       - VIRTUAL_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
