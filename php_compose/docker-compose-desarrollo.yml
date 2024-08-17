@@ -87,10 +87,10 @@ services:
       - --init-connect=SET NAMES utf8mb4 COLLATE utf8mb4_spanish_ci
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "SafeProd2024!"
+      MYSQL_ROOT_PASSWORD: "ssprueba.210"
       MYSQL_DATABASE: ADMIN
       MYSQL_USER: ADMIN
-      MYSQL_PASSWORD: "SafeProd2024!"
+      MYSQL_PASSWORD: "ssprueba.210"
       TZ: America/Santiago
     expose:
       - "9306"
