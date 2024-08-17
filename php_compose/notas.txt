@@ -1,3 +1,4 @@
+13.58.178.246
 
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 
 
