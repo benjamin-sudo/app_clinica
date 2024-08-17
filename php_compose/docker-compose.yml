@@ -31,6 +31,8 @@ services:
       dockerfile: ./php_clinica/Dockerfile
     environment:
       - APP_BASE_URL=http://localhost:9025/
+      - APP_ENV=development # Modo de desarrollo
+      - ALLOW_EMPTY_PASSWORD=yes # Permitir contraseñas vacías
     ports:
       - "9025:80"
       - "9026:443"
