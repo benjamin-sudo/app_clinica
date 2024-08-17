@@ -46,7 +46,7 @@ services:
       - CODEIGNITER_DATABASE_USER=myuser
       - CODEIGNITER_DATABASE_PASSWORD=mypassword
       - APP_ENV=production
-      - APP_BASE_URL=panel.clinicalibre.cl/
+      - APP_BASE_URL=https://panel.clinicalibre.cl
       - VIRTUAL_HOST=panel.clinicalibre.cl
       - LETSENCRYPT_HOST=panel.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
@@ -62,14 +62,16 @@ services:
       context: ./
       dockerfile: ./php_clinica/Dockerfile
     environment:
-      - APP_BASE_URL=clinicalibre.cl
+      - APP_BASE_URL=https://clinicalibre.cl
       - VIRTUAL_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
     ports:
       - "9025:80"
       - "9026:443"
-    restart: always  
+    restart: always 
+    depends_on:
+      - mysql_6 
     volumes:
       - ./php_clinica/html:/var/www/html/
     networks:
