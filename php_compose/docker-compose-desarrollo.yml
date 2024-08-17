@@ -46,9 +46,9 @@ services:
       - CODEIGNITER_DATABASE_USER=myuser
       - CODEIGNITER_DATABASE_PASSWORD=mypassword
       - APP_ENV=production
-      - APP_BASE_URL=https://panel.clinicalibre.cl
-      - VIRTUAL_HOST=clinicalibre.cl,www.clinicalibre.cl
-      - LETSENCRYPT_HOST=clinicalibre.cl,www.clinicalibre.cl
+      - APP_BASE_URL=panel.clinicalibre.cl/
+      - VIRTUAL_HOST=panel.clinicalibre.cl
+      - LETSENCRYPT_HOST=panel.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
     depends_on:
       - mysql_6
@@ -65,9 +65,6 @@ services:
       - APP_BASE_URL=https://clinicalibre.cl
       - VIRTUAL_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_HOST=clinicalibre.cl,www.clinicalibre.cl
-      - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
-      - VIRTUAL_HOST=panel.clinicalibre.cl
-      - LETSENCRYPT_HOST=panel.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
     ports:
       - "9025:80"

@@ -71,8 +71,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | the query builder class.
 */
 
-	$active_group 		= 	'session';
-	$query_builder 		= 	TRUE;
+	$active_group = 	'session';
+	$query_builder = 	TRUE;
 	$db['session'] = array(
 		'dsn'      => '',
 		'hostname' => 'mysql_6',
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
-		'db_debug' => (ENVIRONMENT !== 'production'),
+		'db_debug' => TRUE,
 		'cache_on' => FALSE,
 		'cachedir' => '',
 		'char_set' => 'utf8',
@@ -93,30 +93,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'stricton' => FALSE,
 		'failover' => array(),
 		'save_queries' => TRUE,
-	);
-
-	$tsname_all 		= '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = oracle_slim)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = FREEPDB1)))';
-	$db['oracle_conteiner']	= array(
-		'dsn' 			=> '',
-		'hostname' 		=> 	$tsname_all,
-		'username' 		=> 	'admin',
-		'password' 		=> 	'SafeProd2024!',
-		'database' 		=> 	'XEPDB1',
-		'dbdriver' 		=> 	'oci8',
-		'dbprefix' 		=> 	'',
-		'pconnect' 		=> 	FALSE,
-		'db_debug' 		=> 	TRUE,
-		'cache_on' 		=> 	FALSE,
-		'cachedir' 		=> 	'',
-		'char_set' 		=> 	'utf8',
-		'dbcollat' 		=> 	'utf8_general_ci',
-		'swap_pre' 		=> 	'',
-		'encrypt' 		=> 	FALSE,
-		'compress' 		=> 	FALSE,
-		'autoinit' 		=> 	FALSE,
-		'stricton' 		=> 	FALSE,
-		'failover' 		=> 	array(),
-		'save_queries' 	=> 	FALSE
 	);
 
 	/*
