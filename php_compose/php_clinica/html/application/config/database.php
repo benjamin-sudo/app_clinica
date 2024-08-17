@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -71,13 +70,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | the query builder class.
 */
 
-	$active_group = 	'session';
-	$query_builder = 	TRUE;
+	$active_group = 'session';
+	$query_builder = TRUE;
 	$db['session'] = array(
 		'dsn'      => '',
 		'hostname' => 'mysql_6',
 		'username' => 'ADMIN',
-		'password' => 'SafeProd2024!',
+		'password' => 'ssprueba.210',
 		'database' => 'ADMIN',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',

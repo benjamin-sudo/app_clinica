@@ -1,0 +1,34 @@
+ERROR - 2024-08-17 02:58:12 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'ADMIN'@'172.21.0.7' (using password: YES) in /app/myapp/system/Database/MySQLi/Connection.php:185
+Stack trace:
+#0 /app/myapp/system/Database/MySQLi/Connection.php(185): mysqli->real_connect()
+#1 /app/myapp/system/Database/BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /app/myapp/system/Database/BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 /app/myapp/app/Models/UserModel.php(26): CodeIgniter\Database\BaseConnection->query()
+#4 /app/myapp/app/Controllers/Home.php(38): App\Models\UserModel->ini_contendido()
+#5 /app/myapp/system/CodeIgniter.php(919): App\Controllers\Home->administrador()
+#6 /app/myapp/system/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+#7 /app/myapp/system/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+#8 /app/myapp/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#9 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'172.21.0.7' (using password: YES) in /app/myapp/system/Database/MySQLi/Connection.php:229
+Stack trace:
+#0 /app/myapp/system/Database/BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /app/myapp/system/Database/BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 /app/myapp/app/Models/UserModel.php(26): CodeIgniter\Database\BaseConnection->query()
+#3 /app/myapp/app/Controllers/Home.php(38): App\Models\UserModel->ini_contendido()
+#4 /app/myapp/system/CodeIgniter.php(919): App\Controllers\Home->administrador()
+#5 /app/myapp/system/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+#6 /app/myapp/system/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+#7 /app/myapp/public/index.php(79): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2024-08-17 02:58:12 --> Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'172.21.0.7' (using password: YES)
+in SYSTEMPATH/Database/BaseConnection.php on line 427.
+ 1 SYSTEMPATH/Database/BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH/Models/UserModel.php(26): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH/Controllers/Home.php(38): App\Models\UserModel->ini_contendido()
+ 4 SYSTEMPATH/CodeIgniter.php(919): App\Controllers\Home->administrador()
+ 5 SYSTEMPATH/CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
