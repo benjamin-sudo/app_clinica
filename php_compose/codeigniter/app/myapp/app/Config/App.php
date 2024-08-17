@@ -18,8 +18,8 @@ class App extends BaseConfig
      */
       #Para producción
       #var_dump("CONFIG");
-      #public string $baseURL = 'http://localhost:9000/';
-      public string $baseURL = 'https://panel.clinicalibre.cl/';
+      public string $baseURL = 'http://localhost:9000/';
+      #public string $baseURL = 'https://panel.clinicalibre.cl/';
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
      * If you want to accept multiple Hostnames, set this.

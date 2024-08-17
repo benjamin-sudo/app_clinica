@@ -25,7 +25,7 @@ class Database extends Config {
         'DSN'           =>  '',
         'hostname'      =>  'mysql_6',
         'username'      =>  'ADMIN',
-        'password'      =>  'SafeProd2024!',
+        'password'      =>  'ssprueba.210',
         'database'      =>  'ADMIN',
         'DBDriver'      =>  'MySQLi',
         'DBPrefix'      =>  '',
@@ -41,39 +41,6 @@ class Database extends Config {
         'port'          =>  3306,
         'numberNative'  =>  false,
     ];
-
-    public $oracle      =   [
-        'DSN'           =>  '',
-        'hostname'      =>  'oracle', // O 'oracle' si está en otro contenedor Docker
-        'username'      =>  'ADMIN',
-        'password'      =>  'SafeProd2024!',
-        'database'      =>  'FREEPDB1',
-        'DBDriver'      =>  'OCI8',
-        'DBPrefix'      =>  '', // Ajusta según necesidad
-        'pConnect'      =>  false,
-        'DBDebug'       =>  (ENVIRONMENT !== 'production'),
-        'charset'       =>  'utf8',
-        'DBCollat'      =>  'utf8_general_ci',
-        'port'          =>  6000, // Puerto mapeado en Docker
-    ];
-
-    public $oraclePDO   = [
-        'DSN'           =>  'oci:dbname=//oracle:6000/FREEPDB1;charset=utf8', // Ajusta el DSN según tus necesidades
-        'hostname'      =>  '', // No necesario para PDO
-        'username'      =>  'ADMIN',
-        'password'      =>  'SafeProd2024!',
-        'database'      =>  '', // No necesario para PDO, ya que está en DSN
-        'DBDriver'      =>  'PDO',
-        'DBPrefix'      =>  '', // Ajusta según necesidad
-        'pConnect'      =>  false,
-        'DBDebug'       =>  (ENVIRONMENT !== 'production'),
-        'charset'       =>  'utf8',
-        'DBCollat'      =>  'utf8_general_ci',
-        'port'          =>  6000, // No siempre es necesario para PDO, depende del DSN
-    ];
-
-
-
     /**
      * This database connection is used when
      * running PHPUnit database tests.
