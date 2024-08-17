@@ -24,7 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 #$config['base_url'] = getenv('APP_BASE_URL') ?: 'https://clinicalibre.cl/';
+
 $config['base_url'] = 'https://clinicalibre.cl/';
+
 /*
 |--------------------------------------------------------------------------
 | Index File
