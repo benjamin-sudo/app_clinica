@@ -73,28 +73,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	$active_group 		= 	'session';
 	$query_builder 		= 	TRUE;
-	$db['session'] 		= 	array(
-		'dsn'			=> 	'',
-		'hostname' 		=> 	'mysql_6:3306',
-		'username' 		=> 	'ADMIN',
-		'password' 		=> 	'SafeProd2024!',
-		'database' 		=> 	'ADMIN',
-		'dbdriver' 		=> 	'MySQLi',
-		'dbprefix' 		=> 	'',
-		'pconnect' 		=> 	FALSE,
-		'db_debug' 		=> 	true,
-		'cache_on' 		=> 	FALSE,
-		'cachedir' 		=> 	'',
-		'char_set' 		=> 	'utf8',
-		'dbcollat' 		=> 	'utf8_general_ci',
-		'swap_pre' 		=> 	'',
-		'encrypt' 		=> 	FALSE,
-		'compress' 		=> 	FALSE,
-		'stricton'		=> 	FALSE,
-		'failover' 		=> 	array(),
-		'save_queries' 	=> 	TRUE,
-		#'port'          =>  3306,
+	$db['session'] = array(
+		'dsn'      => '',
+		'hostname' => 'mysql_6',
+		'username' => 'ADMIN',
+		'password' => 'SafeProd2024!',
+		'database' => 'ADMIN',
+		'dbdriver' => 'mysqli',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt'  => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE,
 	);
+	
 
 	$tsname_all 		= '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = oracle_slim)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = FREEPDB1)))';
 	$db['oracle_conteiner']	= array(
