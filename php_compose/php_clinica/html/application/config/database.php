@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'dbdriver' 		=> 	'MySQLi',
 		'dbprefix' 		=> 	'',
 		'pconnect' 		=> 	FALSE,
-		'db_debug' 		=> 	(ENVIRONMENT !== 'production'),
+		'db_debug' 		=> 	true,
 		'cache_on' 		=> 	FALSE,
 		'cachedir' 		=> 	'',
 		'char_set' 		=> 	'utf8',
@@ -93,7 +93,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		'stricton'		=> 	FALSE,
 		'failover' 		=> 	array(),
 		'save_queries' 	=> 	TRUE,
-		#'port'          =>  9306,
+		#'port'          =>  3306,
 	);
 
 	$tsname_all 		= '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = oracle_slim)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = FREEPDB1)))';
