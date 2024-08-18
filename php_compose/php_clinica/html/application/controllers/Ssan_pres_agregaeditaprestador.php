@@ -5,7 +5,7 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        #$this->load->model("Ssan_pres_agregaeditaprestador_model");
+        $this->load->model("Ssan_pres_agregaeditaprestador_model");
     }
 
     public function index(){
