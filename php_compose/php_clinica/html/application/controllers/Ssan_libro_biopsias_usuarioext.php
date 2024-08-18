@@ -30,7 +30,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $this->load->css("assets/ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/javascript.js");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js"); #js formulario anatomia
-        $this->load->view('Ssan_libro_biopsias_usuarioext/Ssan_libro_biopsias_usuarioext_view',$responde);
+        $this->load->view('ssan_libro_biopsias_usuarioext/ssan_libro_biopsias_usuarioext_view',$responde);
     }
 
     public function recarga_html_listaanatomiapatologica(){
