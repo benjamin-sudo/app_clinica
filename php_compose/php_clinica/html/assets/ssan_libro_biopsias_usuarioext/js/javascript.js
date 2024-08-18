@@ -367,14 +367,14 @@ function ver_calendario(val){
 
 //funcion que actualiza listado de mis solicitudes anatomia patologica
 function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
-    var fecha               =   fecha_cale("fecha_out");
-    var idtabs              =   1; 
+    var fecha = fecha_cale("fecha_out");
+    var idtabs = 1; 
     $.ajax({ 
         type                :   "POST",
         url                 :   "ssan_libro_biopsias_usuarioext/recarga_html_listaanatomiapatologica",
         dataType            :   "json",
         beforeSend          :   function(xhr)       {   
-                                                        $("#loadFade").modal('show');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                                     },
         data                :                       {
                                                         fecha           :   fecha,
@@ -387,7 +387,7 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
                                                         $("#GESTION_PASEAPENDIENTE").modal("hide"); 
                                                         console.log("----------------------------------------------------");
                                                         console.log("errro -> ",errro); 
-                                                        $("#loadFade").modal('hide'); 
+                                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                                         jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
                                                     },
         success             :   function(aData)     {
