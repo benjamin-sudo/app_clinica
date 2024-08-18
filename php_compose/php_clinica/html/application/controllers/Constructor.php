@@ -8,8 +8,7 @@ class Constructor extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('session');
         #$this->load->model('Modelinicio');
-        $this->load->model('Modelinicio');
-        //$this->load->model('Testmodel');
+        $this->load->model('Testmodel');
         //echo $this->Testmodel->test();
     }
 

@@ -10,7 +10,8 @@ class Modelinicio extends CI_Model {
         $this->load->database('session'); 
     }
 
-    public function _index(){
+    public function index(){
+        /*
         try {
             $this->db->select('1');
             $this->db->get();
@@ -19,6 +20,7 @@ class Modelinicio extends CI_Model {
             log_message('error', 'Database connection failed: ' . $e->getMessage());
             return false; // Connection failed
         }
+        *//
     }
 
     public function login_modelo($user,$pass) {
