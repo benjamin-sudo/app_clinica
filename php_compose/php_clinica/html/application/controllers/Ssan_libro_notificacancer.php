@@ -15,7 +15,7 @@ class Ssan_libro_notificacancer extends CI_Controller {
     public function index(){
         $this->output->set_template('blank');
         $data = [];
-        $this->load->css("assets/Ssan_libro_notificacancer/css/styles.css");
+        $this->load->css("assets/ssan_libro_notificacancer/css/styles.css");
         $this->load->js("assets/ssan_libro_notificacancer/js/javascript.js");
         $this->load->view('ssan_libro_notificacancer/ssan_libro_notificacancer_view',$data);
     }
