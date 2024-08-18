@@ -19,13 +19,13 @@ class Ssan_pres_agregaeditaprestador extends CI_Controller {
 
     //PERMITE BUSCAR PRESTADOR.
     public function buscar(){
-        $status_busqueda    =   true;
-        $rut                =   $this->input->post('rutPac');
-        $rutm               =   explode(".", $rut);
-        $rutUs              =   $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
-        $rutsin             =   explode("-", $rutUs);
-        $rutfin             =   $rutsin[0];
-        $arr                =   $this->Ssan_pres_agregaeditaprestador_model->buscar($rutfin);
+        $status_busqueda =   true;
+        $rut =   $this->input->post('rutPac');
+        $rutm =   explode(".", $rut);
+        $rutUs =   $rutm[0] . '' . $rutm[1] . '' . $rutm[2];
+        $rutsin =   explode("-", $rutUs);
+        $rutfin =   $rutsin[0];
+        $arr =   $this->Ssan_pres_agregaeditaprestador_model->buscar($rutfin);
         if(count($arr['prestador'])>0)    {
             $retor          =   $arr['prestador'];
             /*

@@ -2357,7 +2357,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
         #GESTOR DE IMAGENES
         $C_IMAGENES_BLOB = $this->db->query("SELECT
-                I.ID_MAIN AS ID_UNICO_IMAGEN,
+                I.ID_MAIN_LO AS ID_UNICO_IMAGEN,
                 I.ID_HISTO_ZONA AS ID_HISTO_ZONA,
                 I.ID_SOLICITUD_HISTO,
                 I.COD_EMPRESA,
