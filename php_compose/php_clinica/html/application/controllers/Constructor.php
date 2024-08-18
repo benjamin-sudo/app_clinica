@@ -7,12 +7,12 @@ class Constructor extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->library('session');
-        $this->load->model('modelinicio');
+        $this->load->model('Modelinicio');
     }
 
     public function index(){
         $_valor = [];
-        $_valor = $this->modelinicio->_index();
+        $_valor = $this->Modelinicio->_index();
         $this->load->view('inicio',['return'=>$_valor]);
     }
 
@@ -23,7 +23,7 @@ class Constructor extends CI_Controller {
         $access = $this->input->post('access');
         $userL = [];
         $redirect = '';
-        $user = $this->modelinicio->login_modelo($user,$password);
+        $user = $this->Modelinicio->login_modelo($user,$password);
         $status = $user['status'];
         # && $user['status_empresa']
         # var_dump($user);

@@ -11,6 +11,12 @@ docker compose -f "docker-compose-desarrollo.yml" up -d --build
 
 git pull origin main
 
+
+docker exec -it php_clinica /bin/bash
+cd /var/www/html/application/logs/
+cat log-2024-08-18.php
+
+
 docker logs mysql_6
 
 docker compose up -d --build
