@@ -13,9 +13,9 @@ class Constructor extends CI_Controller {
     }
 
     public function index(){
-        //$_valor = [];
-        //$_valor = $this->Modelinicio->_index();
-        //$this->load->view('inicio',['return'=>$_valor]);
+        $_valor = [];
+        $_valor = $this->Modelinicio->_index();
+        $this->load->view('inicio',['return'=>$_valor]);
     }
 
     public function login(){
