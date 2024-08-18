@@ -43,7 +43,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $this->load->css("assets/Ssan_libro_biopsias_listaexterno1/css/styles.css");
         #ADD ARRIBA
         #$this->load->css("assets/ssan_libro_biopsias_listagespab/css/styles.css");                  
-        $this->load->js("assets/Ssan_libro_biopsias_listaexterno1/js/javascript.js");
+        $this->load->js("assets/ssan_libro_biopsias_listaexterno1/js/javascript.js");
         $this->load->view('Ssan_libro_biopsias_listaexterno1/Ssan_libro_biopsias_listaexterno1_view',$return_data);
     }
     
