@@ -7,7 +7,12 @@ class Constructor extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->library('session');
+        #$this->load->model('Modelinicio');
+
+        log_message('error', 'Antes de cargar el modelo');
         $this->load->model('Modelinicio');
+        log_message('error', 'Después de cargar el modelo');
+
     }
 
     public function index(){
