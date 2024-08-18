@@ -688,7 +688,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
             'IND_ESTADO' => 'V',
             'IND_EXTRANJERO' => '0'
         ];
-        $this->db->insert($this->own.'.GG_TGPACTE_', $dataSolicitud);
+        $this->db->insert($this->own.'.GG_TGPACTE', $dataSolicitud);
         $this->db->trans_complete();
         return $this->db->trans_status();
     }

@@ -261,7 +261,7 @@
 
 
     <div class="modal fade" id="modal_nuevo_paciente">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">
