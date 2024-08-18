@@ -9,7 +9,7 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
     var $own            =   "ADMIN";
     var $ownGu          =   "GUADMIN";
 
-    public function __construct() {
+    public function __construct(){
         parent::__construct();
         $this->db = $this->load->database('session',true);
         $this->load->model("sql_class/sqlclass_archivo");
