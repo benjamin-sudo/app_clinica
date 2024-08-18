@@ -8,18 +8,9 @@ class Constructor extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('session');
         #$this->load->model('Modelinicio');
-
-        /*
-        log_message('error', 'Antes de cargar el modelo');
         $this->load->model('Modelinicio');
-        log_message('error', 'Después de cargar el modelo');
-        */
-
-        $this->load->model('Testmodel');
-        echo $this->Testmodel->test();
-
-
-
+        //$this->load->model('Testmodel');
+        //echo $this->Testmodel->test();
     }
 
     public function index(){
