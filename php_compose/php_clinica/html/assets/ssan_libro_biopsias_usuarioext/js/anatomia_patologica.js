@@ -697,11 +697,11 @@ function btn_delete_ap_externo(idanatomia){
                                                             console.log(errro);  
                                                             console.log(errro.responseText);    
                                                             jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                         },
                 success             :   function(aData) { 
                                                             console.log("out desabilita_solicitud_simple_ext  -> ",aData);
-                                                            $('#loadFade').modal('hide');
+                                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                             if(aData.STATUS_PASS){
                                                                 if(aData['STATUS_OUT'].STATUS){
                                                                     jAlert("Se ha eliminado solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre"); 
@@ -1421,7 +1421,8 @@ function js_recorre_zpl(){
     $('#ul_nav_tabs li:first-child a').tab('show');
     $("#modal_vista_zpl_to_pdf").modal({backdrop:'static',keyboard:false}).modal("show");
     generar_zpl_to_pdf(arr[0].code_zpl,arr[0].num_muestra,arr[0].TAMANO_ETIQUETA);
-    $('#loadFade').modal('hide');
+    //$('#loadFade').modal('hide');
+    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
 }
 
 function js_vista_etiqueta_pdf(V_NUMERO_MUESTRA){
@@ -1461,7 +1462,7 @@ function generar_zpl_to_pdf(txt_zpl,num_muestra,V_TAMANO_ETIQUETA){
                                                         console.log("errro      :   ",errro,"                               ");
                                                         console.log("errro      :   ",errro.responseText,"                  ");
                                                         jAlert("<b>Error general, Consulte al administrador</b>","Clinica Libre"); 
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     },
         success             :   function(aData)     { 
                                                         var base64str           =   aData;
@@ -1484,7 +1485,7 @@ function generar_zpl_to_pdf(txt_zpl,num_muestra,V_TAMANO_ETIQUETA){
                                                         Objpdf.setAttribute('style','height:700px;');
                                                         Objpdf.setAttribute('title','PDF');
                                                         $('#pdf_to_'+num_muestra).html(Objpdf);
-                                                        $('#loadFade').modal('hide');
+                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     }, 
     });
 }
@@ -3822,7 +3823,7 @@ function delete_muestra(id_sub_grupo){
                                         },
               success : function(aData){  
                                             console.error("aData -> ",aData);
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                             if (aData.esissan){
                                                 showNotification('top','left',"Se elimino sub-grupo a punto de rotulado",2,'fa fa-check-square');
                                                 $("#modal_gestion_tomamuestraxuser").modal('hide');
