@@ -17,7 +17,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $data = [];
         $this->load->css("assets/Ssan_libro_etapaanalitica/css/styles.css");
         $this->load->js("assets/Ssan_libro_etapaanalitica/js/javascript.js");
-        $this->load->view('Ssan_libro_etapaanalitica/Ssan_libro_etapaanalitica_view',$data);
+        $this->load->view('ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view',$data);
     }
 
     public function index(){

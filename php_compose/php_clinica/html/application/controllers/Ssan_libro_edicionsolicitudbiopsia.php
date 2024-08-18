@@ -17,7 +17,7 @@ class Ssan_libro_edicionsolicitudbiopsia extends CI_Controller {
         #$this->load->js("assets/Ssan_libro_edicionsolicitudbiopsia/js/javascript.js");
         $this->load->js("assets/ssan_libro_notificacancer/js/javascript.js");
         $this->load->css("assets/ssan_libro_notificacancer/css/styles.css");
-        $this->load->view('Ssan_libro_edicionsolicitudbiopsia/Ssan_libro_edicionsolicitudbiopsia_view',$data);
+        $this->load->view('ssan_libro_edicionsolicitudbiopsia/ssan_libro_edicionsolicitudbiopsia_view',$data);
     }
 
     public function html_edicion_macrocopica(){
