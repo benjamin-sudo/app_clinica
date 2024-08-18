@@ -54,8 +54,8 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
             "num_fase" =>  2,
             "ind_template" => "ssan_libro_biopsias_ii_fase",
         ));
-        $this->load->css("assets/Ssan_libro_biopsias_ii_fase/css/styles.css");
-        $this->load->js("assets/Ssan_libro_biopsias_ii_fase/js/javascript.js");
+        $this->load->css("assets/ssan_libro_biopsias_ii_fase/css/styles.css");
+        $this->load->js("assets/ssan_libro_biopsias_ii_fase/js/javascript.js");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js");
         $this->load->view("ssan_libro_biopsias_ii_fase/ssan_libro_biopsias_ii_fase_view",$return_data);
     }
