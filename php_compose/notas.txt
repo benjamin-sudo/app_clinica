@@ -1,3 +1,10 @@
+#
+chmod -R 755 /var/www/html/application/logs/
+chown -R www-data:www-data /var/www/html/application/logs/
+docker stop php_compose-backup_service-1
+docker stats
+docker system df
+
 13.58.178.246
 
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 

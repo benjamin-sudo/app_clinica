@@ -1,6 +1,6 @@
 <?php
 
-class modelinicio extends CI_Model {
+class Modelinicio extends CI_Model {
 
     var $own = 'ADMIN';
     var $ownGu = 'ADMIN';
