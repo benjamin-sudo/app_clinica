@@ -12,15 +12,15 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
     public function __construct(){
         parent::__construct();
         $this->db = $this->load->database('session',true);
-        #$this->load->model("sql_class/sqlclass_archivo");
-        #$this->load->model("sql_class/sql_class_prestadores");
+        $this->load->model("sql_class/sqlclass_archivo");
+        $this->load->model("sql_class/sql_class_prestadores");
         #$this->load->helper('text');
     }
 
     public function cargatipo(){
         $empresa            =   $this->session->userdata('COD_ESTAB');
         return [
-            'arr_tipos'     =>  [],
+            'arr_tipos'     =>  $this->db->query($this->sql_class_prestadores->cargartipo())->result_array(),
             'usu_ario'      =>  '',
             'tok_G'         =>  $this->session->userdata('USERNAME'),
             'em_presa'      =>  $this->session->userdata('COD_ESTAB'),
