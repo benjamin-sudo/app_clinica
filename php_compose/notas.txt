@@ -1,17 +1,4 @@
 #
-chmod -R 755 /var/www/html/application/logs/
-chown -R www-data:www-data /var/www/html/application/logs/
-
-
-find /home/ubuntu/app_clinica/php_compose/php_clinica/html/ -type d -exec chmod 755 {} \;
-find /home/ubuntu/app_clinica/php_compose/php_clinica/html/ -type f -exec chmod 644 {} \;
-chown -R www-data:www-data /home/ubuntu/app_clinica/php_compose/php_clinica/html/
-chmod -R 755 /home/ubuntu/app_clinica/php_compose/php_clinica/html/application/cache/
-chmod -R 755 /home/ubuntu/app_clinica/php_compose/php_clinica/html/application/logs/
-
-
-
-/home/ubuntu/app_clinica/php_compose/php_clinica/html/
 
 
 docker stop php_compose-backup_service-1
@@ -28,6 +15,16 @@ git pull origin main
 docker exec -it php_clinica /bin/bash
 cd /var/www/html/application/logs/
 cat log-2024-08-18.php
+
+chmod -R 755 /var/www/html/application/logs/
+chown -R www-data:www-data /var/www/html/application/logs/
+
+find /home/ubuntu/app_clinica/php_compose/php_clinica/html/ -type d -exec chmod 755 {} \;
+find /home/ubuntu/app_clinica/php_compose/php_clinica/html/ -type f -exec chmod 644 {} \;
+chown -R www-data:www-data /home/ubuntu/app_clinica/php_compose/php_clinica/html/
+chmod -R 755 /home/ubuntu/app_clinica/php_compose/php_clinica/html/application/cache/
+chmod -R 755 /home/ubuntu/app_clinica/php_compose/php_clinica/html/application/logs/
+/home/ubuntu/app_clinica/php_compose/php_clinica/html/
 
 
 docker logs mysql_6
