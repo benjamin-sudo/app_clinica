@@ -20,7 +20,7 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
     public function cargatipo(){
         $empresa            =   $this->session->userdata('COD_ESTAB');
         return [
-            'arr_tipos'     =>  $this->db->query($this->sql_class_prestadores->cargartipo())->result_array(),
+            'arr_tipos'     =>  [],
             'usu_ario'      =>  '',
             'tok_G'         =>  $this->session->userdata('USERNAME'),
             'em_presa'      =>  $this->session->userdata('COD_ESTAB'),
