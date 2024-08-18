@@ -10,7 +10,7 @@ class Modelinicio extends CI_Model {
         $this->load->database('session'); 
     }
 
-    public function index(){
+    public function _index(){
         /*
         try {
             $this->db->select('1');
