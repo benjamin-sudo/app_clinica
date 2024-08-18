@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |  $autoload['packages'] = array(APPPATH.'third_party', '/usr/local/shared');
 |
 */
-#$autoload['packages'] = array('oracle_conteiner');
+$autoload['packages'] = array();
 
 /*
 | -------------------------------------------------------------------
@@ -130,4 +130,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('Modelinicio');
+$autoload['model'] = array();
