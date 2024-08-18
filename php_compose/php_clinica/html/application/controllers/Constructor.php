@@ -9,16 +9,23 @@ class Constructor extends CI_Controller {
         $this->load->library('session');
         #$this->load->model('Modelinicio');
 
+        /*
         log_message('error', 'Antes de cargar el modelo');
         $this->load->model('Modelinicio');
         log_message('error', 'Después de cargar el modelo');
+        */
+
+        $this->load->model('Testmodel');
+        echo $this->Testmodel->test();
+
+
 
     }
 
     public function index(){
-        $_valor = [];
-        $_valor = $this->Modelinicio->_index();
-        $this->load->view('inicio',['return'=>$_valor]);
+        //$_valor = [];
+        //$_valor = $this->Modelinicio->_index();
+        //$this->load->view('inicio',['return'=>$_valor]);
     }
 
     public function login(){
