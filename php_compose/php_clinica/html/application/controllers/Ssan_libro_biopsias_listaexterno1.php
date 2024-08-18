@@ -40,11 +40,11 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js");      
         #BUSQUEDA  
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/javascript_trazabilidad.js");     
-        $this->load->css("assets/Ssan_libro_biopsias_listaexterno1/css/styles.css");
+        $this->load->css("assets/ssan_libro_biopsias_listaexterno1/css/styles.css");
         #ADD ARRIBA
         #$this->load->css("assets/ssan_libro_biopsias_listagespab/css/styles.css");                  
         $this->load->js("assets/ssan_libro_biopsias_listaexterno1/js/javascript.js");
-        $this->load->view('Ssan_libro_biopsias_listaexterno1/Ssan_libro_biopsias_listaexterno1_view',$return_data);
+        $this->load->view('ssan_libro_biopsias_listaexterno1/ssan_libro_biopsias_listaexterno1_view',$return_data);
     }
     
     public function update_main(){
