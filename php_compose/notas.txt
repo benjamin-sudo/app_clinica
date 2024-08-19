@@ -1,14 +1,12 @@
 #docker stop php_compose-backup_service-1
 docker stats
 docker system df
-
+######################################################################
 13.58.178.246
-
 ######################################################################
 # FALTANTE
 CAMBIAR DE EMPRESA 
 LA HORA 
-
 ######################################################################
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 
 docker compose -f "docker-compose-desarrollo.yml" stop php_compose-backup_service-1

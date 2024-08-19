@@ -2446,7 +2446,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
 
     public function ultimo_numero_disponible_cancer($variable) {
         $this->db->trans_start();
-        $sql = "CALL ADMIN.DATA_LAST_NUMERO_CANCER_(?, ?, @P_ULTIMO_NUMERO, @P_STATUS)";
+        $sql = "CALL ADMIN.DATA_LAST_NUMERO_CANCER(?, ?, @P_ULTIMO_NUMERO, @P_STATUS)";
         $this->db->query($sql, array($variable['V_COD_EMPRESA'], $variable['V_ID_ANATOMIA']));
         $query = $this->db->query("SELECT @P_ULTIMO_NUMERO AS P_ULTIMO_NUMERO, @P_STATUS AS P_STATUS");
         $result = $query->row_array();

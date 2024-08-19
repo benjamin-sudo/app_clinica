@@ -111,14 +111,14 @@ services:
     networks:
       - mynetwork
 
-  backup_service:
-    build:
-      context: ./backup_service
-      dockerfile: Dockerfile
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./backup_service/backup:/backup_service/backup
-    restart: always
+  #backup_service:
+    #build:
+      #context: ./backup_service
+      #dockerfile: Dockerfile
+    #volumes:
+      #- db_data:/var/lib/mysql
+      #- ./backup_service/backup:/backup_service/backup
+    #restart: always
 
 secrets:
   mysql_root_password:

@@ -2756,12 +2756,11 @@ function js_star_sala_proceso(id_anatomia){
         error : function(errro) {  
                                     console.log(errro.responseText); 
                                     $("#modal_star_sala_proceso").modal("hide");
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                     jError("Error en el aplicativo","Clinica Libre"); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 },
         success : function(aData) { 
                                     //console.error(" -> ",aData);
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                     $("#html_star_sala_proceso").html(aData.html);
                                     $("#modal_star_sala_proceso").modal({backdrop:'static',keyboard:false}).modal("show");
                                     $("#btn_star_sala_proceso").attr('onclick',aData.id_zona==1?'js_inicia_sala_procesos('+id_anatomia+')':'js_inicia_final_procesos('+id_anatomia+')');
@@ -2773,6 +2772,7 @@ function js_star_sala_proceso(id_anatomia){
                                         document.getElementById('hrs_star_sala_proceso').disabled = true;
                                         document.getElementById('date_fecha_inicio_sala_proceso').disabled = true;
                                     }
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 }, 
     });
 }
