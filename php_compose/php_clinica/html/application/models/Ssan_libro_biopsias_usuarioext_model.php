@@ -12,7 +12,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->db = $this->load->database('session',true);
+        date_default_timezone_set('America/Santiago');
+        $this->db = $this->load->database('session', true);
     }
 
     public function CARGA_LISTA_MISSOLICITUDES_ANATOMIA($DATA) {
@@ -2104,10 +2105,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 }
             }
             return [
-                'STATUS'                        =>  $status,
-                'TXT_ERROR'                     =>  '',
-                'HISTO_OK'                      =>  $arr_histo_ok,
-                'STATUS_BD'                     =>  $this->db->trans_complete(),  
+                'STATUS' =>  $status,
+                'TXT_ERROR' =>  '',
+                'HISTO_OK' =>  $arr_histo_ok,
+                'STATUS_BD' =>  $this->db->trans_complete(),  
             ];
         } else {
             return [
@@ -2121,9 +2122,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         }
     }
     
-    
-
-
     #rechazo
     public function model_confirma_rechazo_muestras($DATA){
         $this->db->trans_start();
@@ -2420,9 +2418,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'C_IMAGENES_BLOB_MUESTRAS' => $C_IMAGENES_BLOB_MUESTRAS,
         );
     }
-
-
-
     
     #PDF RECHAZO
     public function load_info_rechazo($DATA){

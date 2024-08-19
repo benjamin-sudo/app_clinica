@@ -11,15 +11,16 @@ class Ssan_libro_notificacancer extends CI_Controller {
         $this->load->model("Ssan_libro_etapaanalitica_model");
     }
 
-    #$this->load->js("assets/ssan_libro_notificacancer/js/liberia_qr/qrcode.js");
     public function index(){
         $this->output->set_template('blank');
         $data = [];
+        #$this->load->js("assets/ssan_libro_notificacancer/js/liberia_qr/qrcode.js");
         $this->load->css("assets/ssan_libro_notificacancer/css/styles.css");
         $this->load->js("assets/ssan_libro_notificacancer/js/javascript.js");
         $this->load->view('ssan_libro_notificacancer/ssan_libro_notificacancer_view',$data);
     }
 
+    
     public function get_busqueda_solicitudes_ap_cancer(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $arr_data_out = [];

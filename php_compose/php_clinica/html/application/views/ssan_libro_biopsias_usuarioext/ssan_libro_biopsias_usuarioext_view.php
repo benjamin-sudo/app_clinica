@@ -93,10 +93,12 @@
     </div>
 </div>    
 
-
-<?php
-    echo date('Y-m-d H:i:s');
+<hr>
+<?php 
+    echo date('Y-m-d H:i:s'); 
 ?>
+<hr>
+
 
 <section>
 
