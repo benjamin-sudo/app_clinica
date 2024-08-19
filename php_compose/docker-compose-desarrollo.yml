@@ -62,6 +62,7 @@ services:
       context: ./
       dockerfile: ./php_clinica/Dockerfile
     environment:
+      - TZ=America/Santiago
       - APP_BASE_URL=https://clinicalibre.cl
       - VIRTUAL_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_HOST=clinicalibre.cl,www.clinicalibre.cl

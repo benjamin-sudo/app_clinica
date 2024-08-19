@@ -30,6 +30,7 @@ services:
       context: ./
       dockerfile: ./php_clinica/Dockerfile
     environment:
+      - TZ=America/Santiago
       - APP_BASE_URL=http://localhost:9025/
       - APP_ENV=development # Modo de desarrollo
       - ALLOW_EMPTY_PASSWORD=yes # Permitir contraseñas vacías

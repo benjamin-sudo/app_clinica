@@ -6,6 +6,10 @@ docker system df
 
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 
 
+docker compose -f "docker-compose-desarrollo.yml" stop php_clinica
+docker compose -f "docker-compose-desarrollo.yml" rm -f php_clinica
+docker compose -f "docker-compose-desarrollo.yml" up -d --build php_clinica
+
 git pull origin main
 
 docker exec -it php_clinica /bin/bash
