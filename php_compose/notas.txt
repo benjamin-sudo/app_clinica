@@ -109,3 +109,47 @@ BACKUP_FILE="$BACKUP_DIR/mysql_backup_$DATE.tar.gz"
 tar czvf $BACKUP_FILE /var/lib/mysql
 # Opcional: Eliminar respaldos más antiguos de 7 días
 find $BACKUP_DIR -type f -name "*.tar.gz" -mtime +7 -exec rm {} \;
+
+############################################
+
+
+
+INSERT INTO ADMIN.GG_TPRESTA (
+    COD_PRESTA,
+    NOM_CORTOS,
+    NOM_LARGOS,
+    IND_TIPRES,
+    COD_ITEPRES,
+    VAL_BENEFI,
+    VAL_PARTIC,
+    VAL_ACCAUT,
+    VAL_LIBELE,
+    IND_ESTADO,
+    FEC_AUDITA,
+    COD_USUARI,
+    IND_URGEN,
+    COD_EMPRESA,
+    IND_OCUPA,
+    IND_PABE
+)
+SELECT
+    COD_PRESTA,
+    NOM_CORTOS,
+    NOM_LARGOS,
+    IND_TIPRES,
+    COD_ITEPRES,
+    VAL_BENEFI,
+    VAL_PARTIC,
+    VAL_ACCAUT,
+    VAL_LIBELE,
+    IND_ESTADO,
+    FEC_AUDITA,
+    COD_USUARI,
+    IND_URGEN,
+    '800',        
+    IND_OCUPA,
+    IND_PABE
+FROM
+    ADMIN.GG_TPRESTA
+WHERE
+    COD_EMPRESA = '100';
