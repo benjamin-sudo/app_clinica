@@ -507,13 +507,9 @@ function update_etapaanalitica(v_num_page){
     var date_inicio             =   $('#fecha_out').data().date;
     var date_final              =   $('#fecha_out2').data().date;
     var v_storange_tabs_main    =   localStorage.getItem("storange_tabs_main");
-    var v_html_vista            =   v_storange_tabs_main.replace("#", "");
-    // Verifica si v_storange_tabs_main no es null o undefined antes de usar replace
-    if (v_storange_tabs_main) {
+    if (v_storange_tabs_main.replace("#", "")) {
         var v_html_vista = v_storange_tabs_main.replace("#", "");
     } else {
-        // Manejo del caso en que v_storange_tabs_main es null
-        //console.error('v_storange_tabs_main es null o undefined');
         var v_html_vista = ''; // O cualquier valor predeterminado que tenga sentido en tu contexto
     }
     var v_get_sala              =   $("#get_sala").val();
@@ -521,7 +517,6 @@ function update_etapaanalitica(v_num_page){
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     let ind_orden               =   $("#ind_order_by").val();
     let v_num_page2             =   typeof v_num_page === 'undefined' ? 1 : v_num_page;
-
     /*
         console.log("   ######################################################  ");
         console.log("v_storange_tabs_main   ->  ",v_storange_tabs_main);
@@ -533,7 +528,6 @@ function update_etapaanalitica(v_num_page){
         console.log("   ######################################################  ");
         return false;
     */
-
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/update_lista_etapaanalitica_pagina",
@@ -550,12 +544,12 @@ function update_etapaanalitica(v_num_page){
                     v_page_num : v_num_page2, //int 
                     v_page_size : 10  //int 
                 },
-        error : function(errro)     { 
+        error : function(errro) { 
                                         console.log(errro);  
                                         jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                         setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     },
-        success : function(aData)   { 
+        success : function(aData) { 
                                         let html_out = aData.out_html.return_html;
                                         
                                         //console.error(aData);
