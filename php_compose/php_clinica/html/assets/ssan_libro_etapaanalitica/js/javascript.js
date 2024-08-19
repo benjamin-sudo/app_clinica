@@ -506,17 +506,24 @@ function star_automplete(_value){
 function update_etapaanalitica(v_num_page){
     var date_inicio             =   $('#fecha_out').data().date;
     var date_final              =   $('#fecha_out2').data().date;
-    var v_storange_tabs_main    =   localStorage.getItem("storange_tabs_main");
+
+    var v_storange_tabs_main    =   localStorage.getItem("storange_tabs_main") || null;
+
+
+
     if (v_storange_tabs_main.replace("#", "")) {
         var v_html_vista = v_storange_tabs_main.replace("#", "");
     } else {
         var v_html_vista = ''; // O cualquier valor predeterminado que tenga sentido en tu contexto
     }
+    
+    
     var v_get_sala              =   $("#get_sala").val();
     var v_filtro_fechas         =   $("#ind_filtro_busqueda_xfechas").val()===null?0:$("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia          =   localStorage.getItem("storange_ids_anatomia");
     let ind_orden               =   $("#ind_order_by").val();
     let v_num_page2             =   typeof v_num_page === 'undefined' ? 1 : v_num_page;
+    
     /*
         console.log("   ######################################################  ");
         console.log("v_storange_tabs_main   ->  ",v_storange_tabs_main);
@@ -528,6 +535,7 @@ function update_etapaanalitica(v_num_page){
         console.log("   ######################################################  ");
         return false;
     */
+
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/update_lista_etapaanalitica_pagina",
