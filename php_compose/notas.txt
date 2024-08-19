@@ -4,29 +4,35 @@ docker system df
 
 13.58.178.246
 
-####################################
-######### mañana ###################
-######### Revision final ###########
-####################################
+######################################################################
+# FALTANTE
+CAMBIAR DE EMPRESA 
+LA HORA 
 
+######################################################################
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 
 docker compose -f "docker-compose-desarrollo.yml" stop php_compose-backup_service-1
 docker compose -f "docker-compose-desarrollo.yml" rm -f php_compose-backup_service-1
 docker compose -f "docker-compose-desarrollo.yml" up -d --build  php_compose-backup_service-1
 
+######################################################################
 docker compose -f "docker-compose-desarrollo.yml" stop php_clinica
 docker compose -f "docker-compose-desarrollo.yml" rm -f php_clinica
 docker compose -f "docker-compose-desarrollo.yml" up -d --build php_clinica
 
+######################################################################
 git pull origin main
 
+######################################################################
 docker exec -it php_clinica /bin/bash
 cd /var/www/html/application/logs/
 cat log-2024-08-18.php
 
+######################################################################
 chmod -R 755 /var/www/html/application/logs/
 chown -R www-data:www-data /var/www/html/application/logs/
 
+######################################################################
 find /home/ubuntu/app_clinica/php_compose/php_clinica/html/ -type d -exec chmod 755 {} \;
 find /home/ubuntu/app_clinica/php_compose/php_clinica/html/ -type f -exec chmod 644 {} \;
 chown -R www-data:www-data /home/ubuntu/app_clinica/php_compose/php_clinica/html/

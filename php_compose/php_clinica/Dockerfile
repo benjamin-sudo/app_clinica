@@ -32,4 +32,3 @@ EXPOSE 443
 
 # Comando para mantener el contenedor en ejecución
 CMD ["apache2-foreground"]
-
