@@ -84,17 +84,17 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     #FUNCION QUE GRABA LA SOLICITUD 
     public function RECORD_ANATOMIA_PATOLOGICA_EXT(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $contrasena                     =   $this->input->post('contrasena');
-        $accesdata                      =   $this->input->post('accesdata');
-        $session_arr                    =   explode("-",$this->session->userdata('USERNAME'));
-	    $session                        =   $session_arr[0];
-        $return                         =   $this->Ssan_libro_biopsias_usuarioext_model->MODEL_RECORD_ANATOMIA_PATOLOGICA_EXT($session,$accesdata);
-        $TABLA["MODEL_RETURN"]          =   $return;
-        $TABLA["STATUS"]                =   $return["STATUS"];
-        $TABLA["ID_ANATOMIA"]           =   $return["ID_ANATOMIA"];
-        $TABLA["GET_FRAME"]             =   false;
-        $TABLA["VIEWS_PDF"]             =   false;
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $contrasena = $this->input->post('contrasena');
+        $accesdata = $this->input->post('accesdata');
+        $session_arr = explode("-",$this->session->userdata('USERNAME'));
+	    $session = $session_arr[0];
+        $return = $this->Ssan_libro_biopsias_usuarioext_model->MODEL_RECORD_ANATOMIA_PATOLOGICA_EXT($session,$accesdata);
+        $TABLA["MODEL_RETURN"] = $return;
+        $TABLA["STATUS"] = $return["STATUS"];
+        $TABLA["ID_ANATOMIA"] = $return["ID_ANATOMIA"];
+        $TABLA["GET_FRAME"] = false;
+        $TABLA["VIEWS_PDF"] = false;
         $this->output->set_output(json_encode($TABLA));
     }
    

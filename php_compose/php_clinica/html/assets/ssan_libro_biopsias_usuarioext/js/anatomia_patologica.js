@@ -411,23 +411,21 @@ function js_eliminamuestra_cito(value){
 }
 
 function JS_GUARDAANATOMIA_EXTERNO(value){
-    let ID_GESPAB               =   $("#ID_GESPAB").val();
-    let data_get                =   $("#data_get").data();
-    let num_fichae              =   $("#TEMPLATE_NUMFICHAE").val();
+    let ID_GESPAB = $("#ID_GESPAB").val();
+    let data_get = $("#data_get").data();
+    let num_fichae = $("#TEMPLATE_NUMFICHAE").val();
     if(num_fichae === ''){
         console.log("Sin num fichae");
         return false;
     }
-    console.log("-------------------------GET-----------------------------------");
-    console.table($("#data_get").data("get"));
+    //console.log("-------------------------GET-----------------------------------");
+    //console.table($("#data_get").data("get"));
     //console.table($("#data_get").data("get").GET.derivacionic);
-    console.log("num_fichae     ->  ",num_fichae,"  <---------------------------");
-    console.log("data_get       ->  ",data_get,"    <---------------------------");
-    console.log("---------------------------------------------------------------");
+    //console.log("num_fichae     ->  ",num_fichae,"  <---------------------------");
+    //console.log("data_get       ->  ",data_get,"    <---------------------------");
+    //console.log("---------------------------------------------------------------");
     let TEMPLATE_CALL_FROM      =   $('#TEMPLATE_CALL_FROM').val();
-
     document.getElementById("btn-finish").disabled            =   true;
-
     let aData_2                 =   $('#formulario_histo').serializeArray().concat($('#form_anatomia_nmuestras').serializeArray()).concat($('#form_muestras_citologia').serializeArray());
     let aData_3                 =   [
                                         {

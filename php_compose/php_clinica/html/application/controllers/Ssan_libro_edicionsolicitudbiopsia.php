@@ -6,7 +6,7 @@ class Ssan_libro_edicionsolicitudbiopsia extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->model("Ssan_libro_edicionsolicitudbiopsia_model");
-        $this->load->model("ssan_libro_etapaanalitica_model");
+        $this->load->model("Ssan_libro_etapaanalitica_model");
     }
     
     public function index(){

@@ -1,5 +1,9 @@
 FROM php:7.4-apache
 
+# Configura la zona horaria
+RUN echo "America/Santiago" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
+    
 # Instalar mysqli
 RUN docker-php-ext-install mysqli
 
