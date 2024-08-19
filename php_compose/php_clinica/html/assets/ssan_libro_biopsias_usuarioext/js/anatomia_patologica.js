@@ -576,7 +576,7 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
             type : "POST",
             url : "ssan_libro_biopsias_usuarioext/RECORD_ANATOMIA_PATOLOGICA_EXT",
             dataType : "json",
-            beforeSend : function(xhr)       {   console.log(xhr);   },
+            beforeSend : function(xhr) {   console.log(xhr);   },
             data : { 
                                                         contrasena      :   PIDE_FIRMA,
                                                         accesdata       :   CreacionProtocolo,
@@ -2835,9 +2835,9 @@ function recepcion_custodia_masiva(){
         console.log("aux                    ->  ",aux,"<-                       ");
         console.log("arr_solicitudes        ->  ",arr_solicitudes,"<-           ");
         */
-        var num_fist                 =   arr_solicitudes[0];
-        var return_val               =   busqueda_etiquera(3,num_fist,{array_anatomia:arr_solicitudes.length===0?{}:arr_solicitudes});
-        //console.log("return_val      ->  ",return_val);
+        var num_fist = arr_solicitudes[0];
+        var return_val = busqueda_etiquera(3,num_fist,{array_anatomia:arr_solicitudes.length===0?{}:arr_solicitudes});
+        //console.log("return_val -> ",return_val);
         if (return_val){ 
             //UPDATE_PANEL();  
         }
@@ -2882,7 +2882,6 @@ function busqueda_etiquera(from,solicitud,array){
     console.log("   ----------------------------------------------------    ");
     */
     //return false;
-    
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_biopsias_listaexterno1/informacion_x_muestra_grupal",

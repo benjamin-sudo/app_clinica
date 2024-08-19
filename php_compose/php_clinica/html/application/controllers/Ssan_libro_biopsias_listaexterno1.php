@@ -5,10 +5,8 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('session');
-        
         $this->load->model("Ssan_libro_biopsias_listaexterno1_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
-
     }
     
     public function index(){
@@ -19,7 +17,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $origen_sol = 0;  #listado de origen de solicitudes - (DEFAULT 0 - ALL) 
         $pto_entrega = 0;  #listado de origen puntos de entrega descrita en la solicitud de anatomia - (DEFAULT 0 - ALL) 
         $ind_opcion = 0;  #0-MASTER | 1-PB_PROFESIONALXROTULO
-
         $return_data = $this->Ssan_libro_biopsias_usuarioext_model->model_busquedasolicitudes([
             "data_inicio" => date("d-m-Y"),
             "data_final" => date("d-m-Y"),
@@ -32,7 +29,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             "num_fase" =>  1,
             "ind_template" =>  "ssan_libro_biopsias_listaexterno1",
         ]);
-
         #ETIQUETA ZEBRA BROWSER PRINT
         #$this->load->js("assets/ssan_libro_biopsias_listagespab/js/BrowserPrint-1.0.4.min.js");
         #$this->load->js("assets/ssan_libro_biopsias_listagespab/js/etiqueta.js");
@@ -107,15 +103,18 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $data_return = '';
         #editando         
         $ARR_DATA = 'null';
+        
         if (isset($array_data["array_anatomia"]) && is_array($array_data["array_anatomia"]) && count($array_data["array_anatomia"]) > 0) {
             $ARR_DATA = implode(",", $array_data["array_anatomia"]);
         }
+
         $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_INFOXMUESTRAANATOMIACA(array(
             "COD_EMPRESA" =>  $empresa,
             "TXTMUESTRA" =>  $get_etiqueta,
             "NUM_FASE" =>  $NUM_FASE,
             "ARR_DATA" =>  $ARR_DATA,
         ));
+        
         ###
         $ARR_GENTIONMSJ = [];
         if (count($DATA["P_ANATOMIA_PATOLOGICA_MAIN"])>0){
@@ -156,10 +155,11 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                                                                                                                 );
                 }
             }
+
             #falta los log 
             foreach($DATA["P_ANATOMIA_PATOLOGICA_MAIN"] as $i => $row){
                 $id_anatomia =   $row["ID_SOLICITUD"];
-                $html =   $this->load->view("Ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
+                $html =   $this->load->view("ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
                                                     "VIEWS"                             =>  $vista,
                                                     "DATA"                              =>  $row,
                                                     "FIRST"                             =>  $get_etiqueta,
@@ -284,7 +284,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $this->output->set_output(json_encode(array(
             'STATUS' => true,
             'DATA' =>  $DATA,
-
             'NUM_ANAT' => $NUM_ANATOMIA,
             'IND_MODAL' =>  $IND_MODAL,
             'RETURN' =>  $data_return,
@@ -312,6 +311,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
     ########################################################################
     #PAP                    :   6   =   NUM_CO_PAP 
     ########################################################################
+
     public function ultimo_numero_disponible(){
         if(!$this->input->is_ajax_request()){   show_404(); }
         $status = true;
