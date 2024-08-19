@@ -509,7 +509,7 @@ function update_etapaanalitica(v_num_page){
 
     var v_storange_tabs_main    =   localStorage.getItem("storange_tabs_main") || null;
 
-
+     console.log("v_storange_tabs_main  ->  ",v_storange_tabs_main);
 
     if (v_storange_tabs_main.replace("#", "")) {
         var v_html_vista = v_storange_tabs_main.replace("#", "");
