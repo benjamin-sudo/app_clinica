@@ -544,11 +544,8 @@
 </section>
 
 
-
 <?php
-
-echo $this->session->userdata("COD_ESTAB");
-
+    #echo $this->session->userdata("COD_ESTAB");
 ?>
 
 <!--
