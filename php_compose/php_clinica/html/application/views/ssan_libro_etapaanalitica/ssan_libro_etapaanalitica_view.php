@@ -543,6 +543,14 @@
     </div>
 </section>
 
+
+
+<?php
+
+echo $this->session->userdata("COD_ESTAB");
+
+?>
+
 <!--
 <hr>
 <table style="width:100%;margin: 0px 0px 0px 0px" >
