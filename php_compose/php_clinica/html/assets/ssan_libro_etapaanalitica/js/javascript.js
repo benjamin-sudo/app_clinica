@@ -1284,11 +1284,12 @@ function ver_imagenes_min(){
 }
 
 function star_analitica(id_anatomia){
+    alert("Cambia");
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/formulario_main_analitico",
         dataType : "json",
-        beforeSend : function(xhr) {  $('#loadFade').modal('show'); $('#HTML_INFORMACION_HISTORIAL').html(''); },
+        beforeSend : function(xhr) {  $('#loadFade').modal('show'); },
         data : { id_anatomia : id_anatomia, get_sala : $("#get_sala").val() },
         error : function(errro) { 
                                     console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
