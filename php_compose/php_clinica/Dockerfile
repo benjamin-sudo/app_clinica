@@ -1,5 +1,8 @@
 FROM php:7.4-apache
 
+# Instala tzdata para manejo de zonas horarias
+RUN apt-get update && apt-get install -y tzdata
+
 # Configura la zona horaria
 RUN ln -fs /usr/share/zoneinfo/America/Santiago /etc/localtime && \
     echo "America/Santiago" > /etc/timezone && \
