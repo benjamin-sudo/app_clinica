@@ -10,7 +10,8 @@ class Ssan_hdial_hojatratamiento_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
-        $this->db = $this->load->database('oracle_conteiner',true);
+        $this->db = $this->load->database('session',true);
+        date_default_timezone_set('America/Santiago');
     }
 
 

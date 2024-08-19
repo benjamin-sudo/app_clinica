@@ -11,6 +11,7 @@ class Ssan_hdial_ingresoegresopaciente_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->db = $this->load->database('session',true);
+        date_default_timezone_set('America/Santiago');
         $this->load->model("sql_class/sqlclass_archivo");
     }
 

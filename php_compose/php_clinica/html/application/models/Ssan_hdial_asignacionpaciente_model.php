@@ -9,7 +9,8 @@ class ssan_hdial_asignacionpaciente_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->db = $this->load->database('oracle_conteiner',true);
+        $this->db = $this->load->database('session',true);
+        date_default_timezone_set('America/Santiago');
         $this->load->model("sql_class/sql_class_hdial");
         $this->load->model("sql_class/sql_class_pabellon");
     }

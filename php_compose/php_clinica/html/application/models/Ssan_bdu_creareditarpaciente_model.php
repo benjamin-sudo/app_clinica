@@ -8,6 +8,7 @@ class ssan_bdu_creareditarpaciente_model extends CI_Model {
     public function __construct(){
         parent::__construct();
         $this->db = $this->load->database('session',true);
+        date_default_timezone_set('America/Santiago');
         $this->load->helper('text');
         $this->load->model("sql_class/sql_class_ggpacientes");
         $this->load->model("sql_class/sqlclass_archivo");

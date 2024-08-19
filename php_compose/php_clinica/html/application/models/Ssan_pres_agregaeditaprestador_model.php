@@ -11,6 +11,7 @@ class Ssan_pres_agregaeditaprestador_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
+        date_default_timezone_set('America/Santiago');
         $this->db = $this->load->database('session',true);
         $this->load->model("sql_class/sqlclass_archivo");
         $this->load->model("sql_class/sql_class_prestadores");
