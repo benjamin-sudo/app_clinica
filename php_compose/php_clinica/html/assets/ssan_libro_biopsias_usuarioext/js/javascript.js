@@ -270,11 +270,22 @@ function js_nuevopaciente(){
                 setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
             },
             success : function(aData){
-                        console.log("aData  ->  ",aData);
+                        //console.log("aData -> ",aData);
                         setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                        if (aData.validez){
+                            $('#modal_nuevo_paciente').modal('hide');
+                            jAlert('Paciente ha sido creado con éxito ',"Confirmac\u00f3on",function (r){
+                                if(r){ 
+                                    buscar(0,1);
+                                }
+                            });
+                        } else {
+
+
+                        }
                         /*
                         if (aData[0]['validez']){
-                            $('#creanuevopaciente').modal('hide');
+                            
                             jAlert('Su solicitud ha sido Creada',"Confirmac\u00f3on",function (r){
                                 if(r){ 
                                     busqueda_parametros(2); 
