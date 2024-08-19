@@ -1,7 +1,8 @@
 FROM php:7.4-apache
 
 # Configura la zona horaria
-RUN echo "America/Santiago" > /etc/timezone && \
+RUN ln -fs /usr/share/zoneinfo/America/Santiago /etc/localtime && \
+    echo "America/Santiago" > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata
     
 # Instalar mysqli

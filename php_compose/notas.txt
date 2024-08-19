@@ -6,6 +6,14 @@ docker system df
 
 docker compose -f "docker-compose-desarrollo.yml" up -d --build 
 
+
+
+
+docker compose -f "docker-compose-desarrollo.yml" stop php_compose-backup_service-1
+docker compose -f "docker-compose-desarrollo.yml" rm -f php_compose-backup_service-1
+docker compose -f "docker-compose-desarrollo.yml" up -d --build  php_compose-backup_service-1
+
+
 docker compose -f "docker-compose-desarrollo.yml" stop php_clinica
 docker compose -f "docker-compose-desarrollo.yml" rm -f php_clinica
 docker compose -f "docker-compose-desarrollo.yml" up -d --build php_clinica
