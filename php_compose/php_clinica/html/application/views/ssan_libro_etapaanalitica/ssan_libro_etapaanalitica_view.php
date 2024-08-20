@@ -518,7 +518,6 @@
     </div>
 </section>
 
-<input type="button" id="test_pdf" value="test pdf" onclick="test_pdf(768)" style="display: none"> 
 <div id="get_html_pdf"></div>
 <div id="respuesta_familia"></div>
 <div id="get_html_macroscopica"></div>
@@ -542,11 +541,10 @@
         </div>
     </div>
 </section>
+ 
+<input type="hidden" id="v_sysdate" name="v_sysdate"  value="<?php echo $this->session->userdata("COD_ESTAB");;?>"/>
 
-
-<?php
-    #echo $this->session->userdata("COD_ESTAB");
-?>
+<input type="button" id="test_pdf" value="test pdf" onclick="test_pdf(768)" style="display: none"> 
 
 <!--
 <hr>
@@ -555,21 +553,21 @@
         <tr style="margin: 0px 0px 0px 0px">
              <td style="width: 10%;text-align: right;"> 
                  <img 
-                     alt                     =   "64x164" 
-                     class                   =   "img-thumbnail" 
-                     data-src                =   "64x164" 
-                     src                     =   "/assets/ssan_libro_biopsias_usuarioext/img/logo_100.png" 
-                     data-holder-rendered    =   "true" 
-                     style                   =   "width:90px;height:80px;margin: 0px 0px 0px 0px">
+                    alt = "64x164" 
+                    class = "img-thumbnail" 
+                    data-src = "64x164" 
+                    src = "/assets/ssan_libro_biopsias_usuarioext/img/logo_100.png" 
+                    data-holder-rendered = "true" 
+                    style = "width:90px;height:80px;margin: 0px 0px 0px 0px">
              </td>
              <td style="width: 90%;text-align: center">
                  <img 
-                     alt                     =   "200x110" 
-                     class                   =   "img-thumbnail" 
-                     data-src                =   "200x110" 
-                     src                     =   "c" 
-                     data-holder-rendered    =   "true" 
-                     style                   =   "width:400px;height:75px;">
+                    alt = "200x110" 
+                    class = "img-thumbnail" 
+                    data-src = "200x110" 
+                    src = "c" 
+                    data-holder-rendered = "true" 
+                    style = "width:400px;height:75px;">
                  <br style="margin: 0px 0px 0px 0px">
                  <h6 style="margin: 0px 0px 0px 0px">DR: nbenjamin castillo sepulveda | ANATOMO PATOLOGO</h6>
              </td>
