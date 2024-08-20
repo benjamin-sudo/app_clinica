@@ -1123,8 +1123,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
             $this->db->reconnect();
 
-            //$V_NEW_EMPRESA = $V_COD_EMPRESA == '800' ? '100':$V_COD_EMPRESA;
-            //var_dump($V_NEW_EMPRESA);
+            $V_NEW_EMPRESA = $V_COD_EMPRESA == '800' ? '100':$V_COD_EMPRESA;
+            var_dump($V_NEW_EMPRESA);
+
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BUSQUEDA_PRESTACIONES($V_NEW_EMPRESA,$V_ID_HISTO)");
             if ($multi_query) {
                 do {

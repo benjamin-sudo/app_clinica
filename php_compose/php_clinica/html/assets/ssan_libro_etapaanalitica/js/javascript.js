@@ -1284,7 +1284,7 @@ function ver_imagenes_min(){
 }
 
 function star_analitica(id_anatomia){
-    alert("Cambia");
+    //alert("Cambia");
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/formulario_main_analitico",
