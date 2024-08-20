@@ -767,8 +767,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         }
     }
     
-   
-    
     public function busqueda_img_clob($id_anatomia){
         $this->db->trans_start();
         $param          =   array(
@@ -858,7 +856,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                                         'length'    =>  20,
                                         'type'      =>  SQLT_CHR 
                                     ),
-
                                     #CURSORES OUT
                                     array( 
                                         'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
@@ -991,7 +988,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                                         'type'      =>  OCI_B_CURSOR
                                     ),
                                 );
-        
         $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_RCE_ANATOMIA_PATOLOGICA',$param);
         $this->db->trans_complete();
         $arr_info_linea_tiempo                                                                  =   [];
@@ -1002,7 +998,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $log_adverso[$log_adv['ID_NUM_CARGA'].'_'.$log_adv['ID_NMUESTRA']]              =   $log_adv;
             }
         }
-
         if(count($result[":P_AP_INFORMACION_ADICIONAL"])>0){
             foreach ($result[":P_AP_INFORMACION_ADICIONAL"] as $i => $arr_linea_tiempo_logs_row){
                 $ID_SOLICITUD_HISTO                                                             =   $arr_linea_tiempo_logs_row['ID_SOLICITUD_HISTO'];

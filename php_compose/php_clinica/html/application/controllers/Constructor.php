@@ -27,8 +27,6 @@ class Constructor extends CI_Controller {
         $redirect = '';
         $user = $this->Modelinicio->login_modelo($user,$password);
         $status = $user['status'];
-        # && $user['status_empresa']
-        # var_dump($user);
         if($user['status']){
             $userL = $user['row'];
             $unique = str_replace('-','',$userL->USERNAME).$this->getRandomCode();
@@ -43,6 +41,7 @@ class Constructor extends CI_Controller {
             $_SESSION["loginFr"] = 'si';
             $_SESSION["COD_ESTAB"] = $empresas;
             $_SESSION["NOM_ESTAB"] = $txt_empresa;
+            $_SESSION["COUNT_EMPRESAS"] = $user['v_multiple_empresa'];
             $this->session->set_userdata([
                 'unique' => $unique,
                 'ID_UID' => $userL->ID_UID,
@@ -54,6 +53,7 @@ class Constructor extends CI_Controller {
                 'MENUARRFR' => $user['menu'],
                 'COD_ESTAB' => $empresas,
                 'NOM_ESTAB' => $txt_empresa,
+                'COUNT_EMPRESAS' =>  $user['v_multiple_empresa'],
             ]);
             $redirect = 'Dashboard';
         }
@@ -61,6 +61,24 @@ class Constructor extends CI_Controller {
             'status' => $status,
             'redirect' => $redirect,
             'userL' => $user,
+        ]));
+    }
+
+    public function get_cambioempresa_all(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $status = true;
+        $data_empresas = [];
+        $v_txt_empresas = $this->input->post('v_txt_empresas');
+        $v_selectedText = $this->input->post('v_selectedText');
+        $_SESSION["COD_ESTAB"] = $v_txt_empresas;
+        $_SESSION["NOM_ESTAB"] = $v_selectedText;
+        $this->session->set_userdata([
+            'COD_ESTAB' => $v_txt_empresas,
+            'NOM_ESTAB' => $v_selectedText,
+        ]);
+        $this->output->set_output(json_encode([
+            'status' => $status,
+            'data_empresas' => $data_empresas,
         ]));
     }
 

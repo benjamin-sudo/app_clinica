@@ -18,6 +18,19 @@ class Dashboard extends CI_Controller {
         $this->load->view('Dashboard/view_escritorio',['menu'=>$MENUARRFR]);
     }
 
+    public function cambioempresa(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $status = true;
+        $V_ID_UID = $this->session->userdata('ID_UID');
+        $data_empresas = $this->modelinicio->model_busqueempesas($V_ID_UID);
+        $this->output->set_output(json_encode([
+            'status' => $status,
+            'data_empresas' => $data_empresas,
+        ]));
+    }
+    
+
+   
     public function logout(){
         $this->session->sess_destroy();
         redirect('/');
@@ -240,10 +253,9 @@ class Dashboard extends CI_Controller {
         $Horas          =   $FechaOrigen[3];
         $Minutos        =   $FechaOrigen[4];
         $Segundos       =   $FechaOrigen[5];
-        // Sumo los minutos
         $Minutos        =   ((int) $Minutos) + ((int) $MinASumar);
-        // Asigno la fecha modificada a una nueva variable
         $FechaNueva     = date("Y-m-d H:i:s", mktime($Horas, $Minutos, $Segundos, $Mes, $Dia, $Ano));
         return $FechaNueva;
     }
+
 }

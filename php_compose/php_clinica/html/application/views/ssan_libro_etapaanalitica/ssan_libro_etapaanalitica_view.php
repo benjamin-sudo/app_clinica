@@ -1,8 +1,8 @@
 <div class = "info_userdata" 
-    data-getdata = "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
-    data-userdata = "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
-    data-fecha_inicio = "<?php echo date("m/d/Y",$date_inicio);?>"
-    data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
+data-getdata = "<?php echo htmlspecialchars(json_encode($V_DATA),ENT_QUOTES,'UTF-8');?>"
+data-userdata = "<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"
+data-fecha_inicio = "<?php echo date("m/d/Y",$date_inicio);?>"
+data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
 <input type="hidden" id="get_sala" name="get_sala" value="<?php echo $txt_sala;?>"/>
 <input type="hidden" id="SERVER_NAME" name="SERVER_NAME" value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
 <form id="load_ingreso_etapa_analitica" method="post" action="#"></form>

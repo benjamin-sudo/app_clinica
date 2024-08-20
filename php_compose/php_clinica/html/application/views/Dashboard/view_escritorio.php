@@ -56,9 +56,11 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
+      <!--
       <li class="nav-item d-none d-sm-inline-block">
         <a href="../../index.html" class="nav-link">Inicio</a>
       </li>
+      -->
       <li class="nav-item d-none d-sm-inline-block">
         <a href="javascript:js_confimicuenta();" class="nav-link">Configuraci&oacute;n</a>
       </li>
@@ -73,22 +75,27 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
-      <span class="brand-text font-weight-light">Anatom&iacute;a cl&iacute;nica</span>
+      <span class="brand-text font-weight-light">Software Clinica Libre</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="assets/dist/img/anatomia/logo.webp" class="img-circle elevation-2" alt="Imagen Anatomia Patologica">
+          <img src="assets/dist/img/anatomia/logo.webp" class="img-circle elevation-2" alt="Logo sistema de biopsias">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Clinica&nbsp;Anatomia (<?php echo $this->session->userdata("COD_ESTAB");?>)</a>
+          <a href="#" class="d-block">&nbsp;Clinica&nbsp;Anatomia (<?php echo $this->session->userdata("COD_ESTAB");?>)</a>
+        </div>
+      </div>
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="<?php echo in_array($this->session->userdata("COUNT_EMPRESAS"),['0','1'])?'display:none':'';?>">
+        <div class="image">
+          <i class="fa fa-exchange" style="color: whitesmoke;margin-top: 8px;" aria-hidden="true"></i>
+        </div>
+        <div class="info">
+          <a href="javascript:js_cambioemp('<?php echo $this->session->userdata("COD_ESTAB");?>')" class="d-block">&nbsp;Cambio de establecimiento</a>
         </div>
       </div>
       <!-- Sidebar Menu -->
-
-      
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column menu_principal" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-header">Listado Sistema</li>
@@ -140,8 +147,6 @@
           }
         ?>
         </nav>
-
-
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -183,7 +188,6 @@
   <div id="respuesta"></div>
   
   <section>
-    
     <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -235,6 +239,24 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="modal_cambioempresa" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cambio de empresa</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="html_cambioempresa">
+            <select class="form-select" id="txt_empresas" name="txt_empresas" aria-label="Seleccione Empresa"></select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CERRAR VENTANA</button>
+            <button type="button" class="btn btn-success" onclick="js_confirmacambios_all()">CONFIRMA CAMBIO</button>
+          </div>
+        </div>
+      </div>
     </div>
     
   </section>

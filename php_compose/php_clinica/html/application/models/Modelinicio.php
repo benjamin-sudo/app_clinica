@@ -31,6 +31,7 @@ class Modelinicio extends CI_Model {
         $arr_empresa = [];
         $txt_empresa_default = '';
         $cod_empresa_default = '';
+        $v_multiple_empresa = 0;
         $row = [];
         $menu = [];
         $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL FROM ADMIN.FE_USERS WHERE USERNAME = ?";
@@ -46,18 +47,22 @@ class Modelinicio extends CI_Model {
             #activo 
             if ($status){
                 $arr_empresa = $this->db->query("SELECT 
-                        A.*,
-                        'TEST' AS NOM_ESTAB 
-                        FROM 
-                        ADMIN.GU_TUSUXEMPRESA A 
-                        WHERE 
+                    A.*,
+                    E.NOM_RAZSOC AS NOM_ESTAB 
+                    FROM 
+                        ADMIN.GU_TUSUXEMPRESA A,
+                        ADMIN.SS_TEMPRESAS E 
+                    WHERE 
+                        A.COD_ESTABL = E.COD_EMPRESA
+                    AND
                         A.IND_ESTADO = 1 
-                        AND 
+                    AND 
                         A.ID_UID = $ID_UID ")->result_array();
                 if (count($arr_empresa)>0) {
                     $status_empresa = true;
                     $txt_empresa_default = $arr_empresa[0]['NOM_ESTAB'];
                     $cod_empresa_default = $arr_empresa[0]['COD_ESTABL'];
+                    $v_multiple_empresa = count($arr_empresa);
                 }
             }
         } 
@@ -68,9 +73,27 @@ class Modelinicio extends CI_Model {
             'status_empresa' => $status_empresa,
             'arr_empresa' => $arr_empresa,
             'txt_empresa_default' => $txt_empresa_default,
-            'cod_empresa_default' => $cod_empresa_default
+            'cod_empresa_default' => $cod_empresa_default,
+            'v_multiple_empresa' => $v_multiple_empresa
         ];
     }
+
+    public function model_busqueempesas($ID_UID) {
+        $arr_empresa = $this->db->query("SELECT 
+            A.*,
+            E.NOM_RAZSOC AS NOM_ESTAB 
+            FROM 
+                ADMIN.GU_TUSUXEMPRESA A,
+                ADMIN.SS_TEMPRESAS E 
+            WHERE 
+                A.COD_ESTABL = E.COD_EMPRESA
+            AND
+                A.IND_ESTADO = 1 
+            AND 
+                A.ID_UID = $ID_UID ")->result_array();
+        return $arr_empresa;
+    }
+    
 
     #13957520-2
     public function load_menuxuser($ID_UID) {

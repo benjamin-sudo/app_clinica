@@ -8,10 +8,70 @@ $(document).ready(function(){
     $('#modal_perfil_usuario').on('hidden.bs.modal', function(e){ 
         $("#html_perfil_usuario").html('');
     });
+    $('#modal_cambioempresa').on('hidden.bs.modal', function(e){ 
+        $("#html_cambioempresa").html('');
+    });
 });
 
+function js_cambioemp(v_empresaactual){
+    $.ajax({ 
+        type : "POST",
+        url : "Dashboard/cambioempresa",
+        dataType : "json",
+        beforeSend : function(xhr) {  $('#loadFade').modal('show');    },
+        data : { },
+        error : function(err) { 
+                                console.log(err);  
+                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                            },
+        success : function(aData) { 
+                                    console.log(" aData -> ",aData);
+                                    const selectEmpresas = document.getElementById('txt_empresas');
+                                    aData.data_empresas.forEach(function(empresa) {
+                                        let option = document.createElement('option');
+                                        option.value = empresa.COD_ESTABL;
+                                        option.text = empresa.NOM_ESTAB+' ('+empresa.COD_ESTABL+')';
+                                        selectEmpresas.appendChild(option);
+                                    });
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                    $("#txt_empresas").val(v_empresaactual);
+                                    $("#modal_cambioempresa").modal({backdrop:'static',keyboard:false}).modal('show');
+                                }, 
+    });
+}
+
+function js_confirmacambios_all(){
+    let v_txt_empresas = $("#txt_empresas").val();
+    let v_selectedText = $("#txt_empresas option:selected").text();
+    $.ajax({ 
+        type : "POST",
+        url : "Constructor/get_cambioempresa_all",
+        dataType : "json",
+        beforeSend : function(xhr) {  $('#loadFade').modal('show');    },
+        data : { v_txt_empresas : v_txt_empresas , v_selectedText : v_selectedText },
+        error : function(err) { 
+                                console.log(err);  
+                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                            },
+        success : function(aData){ 
+                                    console.log("aData ->  ",aData);
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                    if (aData.status){
+                                        jAlert("Se cambio de establecimiento", "Clinica Libre", function() {
+                                            location.reload(); 
+                                        });
+                                    } else {
+
+                                    }
+                                    
+                                }, 
+    });
+}
+
 function star_ajax_extension(url){
-    console.log("url -> ",url);
+    //console.log("url -> ",url);
     $('#loadFade').modal('show');
     $.ajax({
         url : url, // Ruta al metodo del controlador
@@ -91,25 +151,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function js_confimicuenta(){
-    //console.log("   ->  js_confimicuenta    <-  ");
     $.ajax({ 
-        type        :   "POST",
-        url         :   "Dashboard/configuracion_micuenta",
-        dataType    :   "json",
-        beforeSend  :   function(xhr)   {  $('#loadFade').modal('show');    },
-        data        :                   { },
-        error		:   function(err)   { 
-                                            console.log(err);  
-                                            console.log(err.responseText);    
-                                            $('#loadFade').modal('hide');
-                                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                        },
-        success     :   function(aData) { 
-                                            $('#loadFade').modal('hide');
-                                            console.log("   aData   ->  ",aData);
-                                            $("#html_perfil_usuario").html(aData.html);
-                                            $("#modal_perfil_usuario").modal({backdrop:'static',keyboard:false}).modal('show');
-                                        }, 
+        type : "POST",
+        url : "Dashboard/configuracion_micuenta",
+        dataType : "json",
+        beforeSend : function(xhr) {  $('#loadFade').modal('show');    },
+        data : { },
+        error : function(err) { 
+                                console.log(err);  
+                                console.log(err.responseText);    
+                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                            },
+        success : function(aData) { 
+                                    console.log("   aData   ->  ",aData);
+                                    $("#html_perfil_usuario").html(aData.html);
+                                    $("#modal_perfil_usuario").modal({backdrop:'static',keyboard:false}).modal('show');
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                }, 
     });
 }
 
@@ -119,7 +178,6 @@ function validaPassSegura() {
 }
 
 function nuevaFirma(){
-
 
 }
 
@@ -164,37 +222,37 @@ function cambiaFirma() {
     //console.log("firma      ->  ",firma);
     //console.log("username   ->  ",username);
     $.ajax({ 
-        type            :   "POST",
-        url             :   "Dashboard/solicitudNuevaFirma",
-        dataType        :   "json",
-        data            :   { 
-                                firma : firma,
-                                username : username
-                            },
-        beforeSend      :   function(xhr)       {   $('#loadFade').modal('show');   },
-        error           :   function(errro)     {     
-                                                    console.log(errro.responseText); 
-                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                                    $('#loadFade').modal('hide');
-                                                },
-        success         :   function(aData)     {   
-                                                    $('#loadFade').modal('hide'); 
-                                                    console.log("aData -> ",aData);
-                                                    if(aData.status){
-                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
-                                                        $(".class_card_firmaunica").html(aData.html_codigo);
-                                                    } else {
-                                                        showNotification('top','center','&nbsp;'+aData.html,4,'');
-                                                    }
-                                                }, 
+        type : "POST",
+        url : "Dashboard/solicitudNuevaFirma",
+        dataType : "json",
+        data : { 
+                    firma : firma,
+                    username : username
+                },
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+        error : function(errro) {     
+                                    console.log(errro.responseText); 
+                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                },
+        success : function(aData) {   
+                                    console.log("aData -> ",aData);
+                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                    if(aData.status){
+                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
+                                        $(".class_card_firmaunica").html(aData.html_codigo);
+                                    } else {
+                                        showNotification('top','center','&nbsp;'+aData.html,4,'');
+                                    }
+                                }, 
     });
 }
 
 function confirmCambioF(){
-    let codVerif    =   $('#codVerif').val();
-    let firmaNew    =   $('#firmaNew1').val();
-    let username    =   $('#username').val();
-    if (codVerif    == ''){
+    let codVerif = $('#codVerif').val();
+    let firmaNew = $('#firmaNew1').val();
+    let username = $('#username').val();
+    if (codVerif == ''){
         jError("C&oacute;digo Vac&iacute;o","Clinica Libre Chile");
         return false;
     }
