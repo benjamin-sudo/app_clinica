@@ -1123,9 +1123,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
             $this->db->reconnect();
 
-            $V_NEW_EMPRESA = $V_COD_EMPRESA == '800' ? '100':$V_COD_EMPRESA;
-            var_dump($V_NEW_EMPRESA);
-
+            /*
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BUSQUEDA_PRESTACIONES($V_NEW_EMPRESA,$V_ID_HISTO)");
             if ($multi_query) {
                 do {
@@ -1138,6 +1136,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 $error = $this->db->conn_id->error;
             }
             $this->db->reconnect();
+            */
 
             $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.BD_PRESTACIONES($V_ID_HISTO)");
             if ($multi_query) {
@@ -1180,6 +1179,44 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             $this->db->reconnect();
         }
         
+
+    
+
+
+            $arr_data[':P_LISTA_PRESTACIONES']  =   $this->db->query("SELECT  
+        G.COD_PRESTA,
+        CASE 
+            WHEN A.COD_PRESTA IS NULL OR A.IND_ESTADO IN (0) THEN '' 
+            ELSE 'selected'  
+        END AS SELECTED,
+        G.NOM_CORTOS, 
+        G.NOM_LARGOS, 
+        G.IND_TIPRES, 
+        G.COD_ITEPRES, 
+        G.VAL_BENEFI, 
+        G.VAL_PARTIC, 
+        G.VAL_ACCAUT, 
+        G.VAL_LIBELE, 
+        G.IND_ESTADO, 
+        G.FEC_AUDITA, 
+        G.COD_USUARI, 
+        G.IND_URGEN, 
+        G.COD_EMPRESA, 
+        G.IND_OCUPA, 
+        G.IND_PABE
+    FROM  
+        ADMIN.GG_TPRESTA G
+        LEFT JOIN ADMIN.PB_TPRESTAXANATOMIA A ON G.COD_PRESTA = A.COD_PRESTA AND A.ID_SOLICITUD_HISTO = $V_ID_HISTO
+    WHERE  
+        G.COD_EMPRESA = $V_COD_EMPRESA  
+    AND 
+        G.IND_TIPRES = 'P'
+    ORDER BY 
+        G.NOM_LARGOS")->result_array();
+
+
+
+
         $arr_info_linea_tiempo = [];
         return [
             'STATUS' => true,
