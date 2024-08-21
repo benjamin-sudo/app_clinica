@@ -1,4 +1,20 @@
+######################################################################
+# Listar contenedores y su tamaño
+docker ps -s
+# Mostrar el tamaño de las imágenes Docker
+docker images
+# Verificar el uso de espacio en todo Docker
+docker system df
+# Mostrar el uso de espacio en disco en Ubuntu
+df -h
+# Verificar el uso de espacio en el directorio de Docker
+sudo du -sh /var/lib/docker
+######################################################################
+
 #docker stop php_compose-backup_service-1
+
+git pull origin main
+
 docker stats
 docker system df
 ######################################################################
@@ -20,7 +36,6 @@ docker compose -f "docker-compose-desarrollo.yml" rm -f php_clinica
 docker compose -f "docker-compose-desarrollo.yml" up -d --build php_clinica
 
 ######################################################################
-git pull origin main
 
 ######################################################################
 docker exec -it php_clinica /bin/bash
@@ -51,17 +66,6 @@ user_administradorcodeneite_4_admin
 sudo chmod -R 777 /home/ubuntu/app_clinica
 cat /home/ubuntu/app_clinica/php_compose/php_codeneiter/html/application/config/config.php
 
-######################################################################
-# Listar contenedores y su tamaño
-docker ps -s
-# Mostrar el tamaño de las imágenes Docker
-docker images
-# Verificar el uso de espacio en todo Docker
-docker system df
-# Mostrar el uso de espacio en disco en Ubuntu
-df -h
-# Verificar el uso de espacio en el directorio de Docker
-sudo du -sh /var/lib/docker
 
 ######################################################################
 docker container prune -f
