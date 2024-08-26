@@ -36,11 +36,13 @@ docker compose -f "docker-compose-desarrollo.yml" rm -f php_clinica
 docker compose -f "docker-compose-desarrollo.yml" up -d --build php_clinica
 
 ######################################################################
+cd /home/ubuntu/app_clinica/php_compose/backup_service/backup
+ls -t | tail -n +2 | xargs rm --
 
 ######################################################################
 docker exec -it php_clinica /bin/bash
 cd /var/www/html/application/logs/
-cat log-2024-08-18.php
+cat log-2024-08-26.php
 
 ######################################################################
 chmod -R 755 /var/www/html/application/logs/
