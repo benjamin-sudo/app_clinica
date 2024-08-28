@@ -11,7 +11,7 @@ RUN dos2unix /usr/local/bin/backup.sh
 # Otorga permisos de ejecución al script
 RUN chmod +x /usr/local/bin/backup.sh
 # Configura el crontab para el usuario root
-RUN echo "* * * * * /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1" > /etc/cron.d/backup-cron
+RUN echo "0 2 * * * /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1" > /etc/cron.d/backup-cron
 # Otorga permisos adecuados al archivo crontab y lo activa
 RUN chmod 0644 /etc/cron.d/backup-cron
 # Aplicar el crontab
