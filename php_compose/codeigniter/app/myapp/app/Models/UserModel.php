@@ -528,11 +528,11 @@ class UserModel extends Model {
             $constructora0->update();
             foreach($arrPrivilegios as $i => $row){
                 $get_tusutieneper = $db->query("SELECT ID_UTP FROM ADMIN.GU_TUSUTIENEPER WHERE PER_ID = $row AND ID_UID = ".$last_id)->getResultArray();
-                
+                /*
                 $logger->info("-------------------------------------------");
                 $logger->info("get_tusutieneper ");
                 $logger->info(json_encode($get_tusutieneper));
-
+                */
                 if (count($get_tusutieneper)>0){
                     $v_id_utp = $get_tusutieneper[0]['ID_UTP'];
                     $logger->info("v_id_utp : {$v_id_utp}  ");
@@ -549,10 +549,17 @@ class UserModel extends Model {
 
         //establecimientos
         $arrEmpresas = $aData['post']['arrEmpresas'];
+        //var_dump($arrEmpresas);
+        //var_dump(count($arrEmpresas));
         if(count($arrEmpresas)>0){
             $constructora4 = $db->table('ADMIN.GU_TUSUXEMPRESA');
             $constructora4->set(['IND_ESTADO' => 0]);
             $constructora4->where('ID_UID',$last_id);
+            $constructora4->update();
+            //var_dump($arrEmpresas);
+            $logger->info("-------------------------------------------");
+            $logger->info("arrEmpresas");
+            $logger->info(json_encode($arrEmpresas));
             foreach($arrEmpresas as $i => $row){
                 $get_arrEmpresas = $db->query("SELECT ID_UXE FROM ADMIN.GU_TUSUXEMPRESA WHERE COD_ESTABL IN (".$row.") AND ID_UID = ".$last_id)->getResultArray();
                 if (count($get_arrEmpresas)>0){

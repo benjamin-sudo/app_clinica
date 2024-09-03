@@ -324,8 +324,7 @@
                                 <?php if (count($respuesta['arr_empresas'])>0){ 
                                 foreach ($respuesta['arr_empresas'] as $i => $row){ ?>
                                     <option value="<?php echo $row['COD_EMPRESA'];?>"
-                                        data-info="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>">
-                                        <?php echo $row['NOM_RAZSOC'];?>
+                                        data-info="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"><?php echo $row['NOM_RAZSOC'];?>
                                     </option>
                                 <?php } }?>
                             </select>

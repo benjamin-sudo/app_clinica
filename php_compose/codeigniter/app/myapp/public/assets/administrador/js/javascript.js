@@ -1,12 +1,12 @@
 $(document).ready(function(){
     //https://getbootstrap.com/docs/5.3/getting-started/introduction/
-
+    /*
     console.log("   ---------------------------------------------------------------     ");
     console.log("                       Codeigniter 4                                   ");
     console.log("        bootstrap      -> ", bootstrap.Tooltip.VERSION,"               ");
     console.log("        jQuery         -> ", jQuery.fn.jquery,"                        ");
     console.log("   ---------------------------------------------------------------     ");
-
+    */
     $('#run_esissan').Rut({
         on_error : function(){ 
                                 console.log($("#run_esissan").val());  
@@ -64,7 +64,7 @@ function valida_run_esissan(val) {
         url: "Home/fn_valida_cuenta_esissan",
         dataType: "json",
         beforeSend: function(xhr) {
-            console.log("Mostrar modal");
+            //console.log("Mostrar modal");
         },
         data: {
             run: rut,
@@ -78,9 +78,8 @@ function valida_run_esissan(val) {
             }, 1000);
         },
         success: function(aData) {
-            console.log(" ---------------------------- ");
-            console.log("aData:", aData);
-
+            //console.log(" ---------------------------- ");
+            //console.log("aData:", aData);
             if (aData.return_bd.status_existe) {
                 showNotification('top', 'right', '<i class="fa fa-television" aria-hidden="true"></i>&nbsp;Editando usuario', 2);
                 $("#txtNombres").val(aData.return_bd.getResultArray[0]["FIRST_NAME"]);
@@ -218,6 +217,8 @@ function grabarUsu(){
         ok = 0;
     }
     let arrEmpresas = $("#establecimiento").val() || [];
+    //console.error("   *************************************   ");
+    //console.error("arrEmpresas  ->  ",arrEmpresas);
     if (arrEmpresas.length == 0) {
         errores.push(" - Debe asignar a lo menos una empresa al ususario");
         ok = 0;
@@ -241,10 +242,9 @@ function grabarUsu(){
     } else {
         //validar correo
         let v_txt_actualuzapass = document.getElementById("ind_actualiza_pass").checked?1:0;
-        //console.log("v_txt_actualuzapass    ->  ",v_txt_actualuzapass);
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?','Confirmaci\u00f3n',function(r){
             if(r){
-                console.log(" r -> ",r);
+                //console.log(" r -> ",r);
                 $.ajax({ 
                     type : "POST",
                     url : "Home/fn_gestion_perfil",
@@ -272,7 +272,7 @@ function grabarUsu(){
                                                 setTimeout(function() { $("#loadFade").modal("hide");  }, 1000);
                                             },
                     success : function(aData){ 
-                                                console.log("return  ->",aData);
+                                                //console.log("return  ->",aData);
                                                 setTimeout(function() {  $("#loadFade").modal("hide");  }, 1000);
                                                 showNotification('top','center','<i class="bi bi-check-square-fill"></i> Se ha modificado perfil :<b>'+user+'</b>, numero : '+aData.data_return.last_id+'</b>',2);
                                                 btn_defaultuser();
@@ -338,6 +338,15 @@ function js_delete_privilegios(id){
     js_reload_previlegios();
 }
 
+function js_delete_empresa(id){
+    let arr_priveligos = $("#establecimiento").val();
+    $(".li_empresa_"+id).remove();
+    let indice = arr_priveligos.indexOf(id);
+    arr_priveligos.splice(indice,1);
+    $("#establecimiento").selectpicker('val',arr_priveligos);
+    js_reload_establecimientos();
+}
+
 function js_reload_establecimientos() {
     let arr_establecimiento = $("#establecimiento").val() || [];
     $(".privilegios_empresa").empty();
@@ -349,7 +358,7 @@ function js_reload_establecimientos() {
                             <div class="grid_privilegios_establecimiento1">${index + 1}</div>
                             <div class="grid_privilegios_establecimiento2">${arr['NOM_RAZSOC']} <b>(${arr['COD_EMPRESA']})</b></div>
                             <div class="grid_privilegios_establecimiento3">
-                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="js_delete_empresa(${arr['COD_EMPRESA']})">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="js_delete_empresa('${arr['COD_EMPRESA']}')">
                                      <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -360,15 +369,6 @@ function js_reload_establecimientos() {
     } else {
         $(".privilegios_empresa").html(`<li class="list-group-item" style="cursor:pointer;text-align:center;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;SIN ESTABLECIMIENTO</li>`);
     }
-}
-
-function js_delete_empresa(id){
-    $(".li_empresa_"+id).remove();
-    let arr_priveligos        =   $("#establecimiento").val();
-    let indice                =   arr_priveligos.indexOf(id);
-    arr_priveligos.splice(indice,1);
-    $("#establecimiento").selectpicker('val',arr_priveligos);
-    js_reload_establecimientos();
 }
 
 var normalize = (function() {
@@ -404,19 +404,14 @@ function test(val){
                                              console.log(errro);
                                              console.log(errro.responseText);  
                                              jAlert("Error General, Consulte Al Administrador"); 
-                                             setTimeout(function() {
-                                                $("#loadFade").modal("hide");
-                                            }, 1000);
+                                             setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
                                             },
       success		   :   function(aData)  {  
-                                             setTimeout(function() {
-                                                $("#loadFade").modal("hide");
-                                            }, 1000);
-
-                                             console.log("------------------------------------------");
-                                             console.log("aData         -> ",aData);
-                                             console.log("aData         -> ",aData.patient)
-                                             if( aData && aData.respuesta && Array.isArray(aData.respuesta.issue) ){
+                                            setTimeout(function() { $("#loadFade").modal("hide"); }, 1000);
+                                            //console.log("------------------------------------------");
+                                            //console.log("aData         -> ",aData);
+                                            //console.log("aData         -> ",aData.patient)
+                                            if( aData && aData.respuesta && Array.isArray(aData.respuesta.issue) ){
                                                 aData.respuesta.issue.forEach((row, index) => {
                                                    console.log("--------------------------------------------");
                                                    console.error("error          -> ",index);
@@ -426,22 +421,22 @@ function test(val){
                                                    //$("#respuesta_hl7").append(aData.respuesta.text.div);
                                                 });
                                             } else {
-                                                console.log("SIn errores");
+                                                console.log("Sin Errores");
                                             }
-                                             console.log(aData.jsonData);
-                                             console.log("------------------------------------------");
-                                             console.log(arr_diagnisticos.join("\n"));
-                                             //*********************************************************** */
-                                             //$("#respuesta_hl7").html(aData.respuesta.text.div);
-                                             //showNotification('top','left',"Return",2,'fa fa-check-square');
+                                            //console.log(aData.jsonData);
+                                            //console.log("------------------------------------------");
+                                            //console.log(arr_diagnisticos.join("\n"));
+                                            //*********************************************************** */
+                                            //$("#respuesta_hl7").html(aData.respuesta.text.div);
+                                            //showNotification('top','left',"Return",2,'fa fa-check-square');
                                           }, 
    });
 }
 
 function validaExt() {
-   let nomExt     = $('#nomExt').val()
-   let res        =  nomExt.trim();
-   let ext        =  normalize(res);
+   let nomExt = $('#nomExt').val()
+   let res = nomExt.trim();
+   let ext = normalize(res);
    $('#nomArch').val(ext.replace(/\s+/g, ''));
    buscaExtArch();
 }
@@ -452,36 +447,31 @@ function buscaExtArch() {
    //console.log("rutaactual ->",rutaactual);
    $('#loadFade').modal('show');
    $.ajax({ 
-      type           : "POST",
-      url            : "Home/buscaExtArch",
-      dataType       : "json",
-      beforeSend     :  function(xhr){ },
-      data           :  { "rutaactual": rutaactual },
-      error          :  function(errro)   {  
-                                             console.log(errro);
-                                             console.log(errro.responseText);  
-                                             jAlert("Error General, Consulte Al Administrador"); 
-                                             $('#loadFade').modal('hide');
-                                          },
-      success        :   function(aData)  {  
-                                            
-                                             setTimeout(function() {
-                                                $("#loadFade").modal("hide");
-                                            }, 1000);
-
-
-                                             console.log(aData);
-                                             if (aData.status){
-                                                $("#existeExt").val(0);
-                                                muestraDirAr();
-                                             } else {
-                                                jError("El Nombre de la Extensión ya Existe<br>Favor Busque otro Nombre","Restricción");
-                                                $("#nomExt").val('');
-                                                $("#nomArch").val('');
-                                                $("#existeExt").val(1);
-                                                muestraDirAr();
-                                             }
-                                          }, 
+      type : "POST",
+      url : "Home/buscaExtArch",
+      dataType : "json",
+      beforeSend :  function(xhr){ },
+      data :  { "rutaactual": rutaactual },
+      error :  function(errro) {  
+                                console.log(errro);
+                                console.log(errro.responseText);  
+                                jAlert("Error General, Consulte Al Administrador"); 
+                                $('#loadFade').modal('hide');
+                            },
+      success : function(aData) {  
+                                    setTimeout(function() {  $("#loadFade").modal("hide");   }, 1000);
+                                    //console.log(aData);
+                                    if (aData.status){
+                                        $("#existeExt").val(0);
+                                        muestraDirAr();
+                                    } else {
+                                        jError("El Nombre de la Extensión ya Existe<br>Favor Busque otro Nombre","Restricción");
+                                        $("#nomExt").val('');
+                                        $("#nomArch").val('');
+                                        $("#existeExt").val(1);
+                                        muestraDirAr();
+                                    }
+                                    }, 
    });
 }
 

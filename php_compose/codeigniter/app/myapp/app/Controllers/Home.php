@@ -90,18 +90,18 @@ class Home extends BaseController {
 
     public function grabraExt() {
         if ($this->request->isAJAX()){  }
-        $status                 =   true;    
-        $tip                    =   $this->request->getPost("extension_principal");
-        $rutaactual             =   strtolower($this->request->getPost("nomArch"));    
-        $aData                  =   $this->usersModel->grabarExt($_POST);
+        $status = true;    
+        $tip = $this->request->getPost("extension_principal");
+        $rutaactual = strtolower($this->request->getPost("nomArch"));    
+        $aData = $this->usersModel->grabarExt($_POST);
         //**********************************************************************
-        $fileControllCreado     =   'Controlador no Creado';
-        $fileView               =   'Vista no Creada';
-        $fileModel              =   'Modelo no Creado';
-        $fileCss                =   'CSS no Creado';
-        $fileJs                 =   'JavaScript no Creado';
-        $files                  =   '<br>';
-        $parentPath             =   '';
+        $fileControllCreado = 'Controlador no Creado';
+        $fileView = 'Vista no Creada';
+        $fileModel = 'Modelo no Creado';
+        $fileCss = 'CSS no Creado';
+        $fileJs = 'JavaScript no Creado';
+        $files = '<br>';
+        $parentPath =   '';
         if ($tip == 2)  { //Solo Crea los Directorios Cuando el Padre es Sub-Menu
             //Crea Archivo del Controller
             $file1              =   APPPATH."Controllers/".ucwords($rutaactual).'.php';
@@ -122,7 +122,6 @@ class Home extends BaseController {
 
             fwrite($fileController, $contController);
             fclose($fileController);
-            
             if(file_exists($file1)){
                 $fileControllCreado     =   $file1;
             }
