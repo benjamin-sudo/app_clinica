@@ -47,34 +47,41 @@
         <title>REPORTE DE SOLICITUD ANATOM&Iacute;A PATOLOG&Iacute;A</title>
         <link href="<?php echo base_url();?>/assets/themes/inicio/css/boobtstrap.css" rel="stylesheet"></link>
         <style>
-            div.container               {
-                width                   :   100%;
-                border                  :   1px solid gray;
+            div.container {
+                width :   100%;
+                border :   1px solid gray;
             }
-            .barcode                    {
-                padding                 :   1.5mm;
-                margin                  :   0;
-                vertical-align          :   top;
-                color                   :   #000044;
+
+            .barcode {
+                padding :   1.5mm;
+                margin :   0;
+                vertical-align :   top;
+                color :   #000044;
             }
-            .barcodecell                {
-                text-align              :   center;
-                vertical-align          :   top;
+            .barcodecell {
+                text-align :   center;
+                vertical-align :   top;
             }
        
-            .border                     {
-                border-width            :   thin;
-                border-spacing          :   2px;
-                border-style            :   none;
-                border-color            :   black;
+            .border {
+                border-width :   thin;
+                border-spacing :   2px;
+                border-style :   none;
+                border-color :   black;
             }
-            .TD_TH                      {
-                border                  :   1px solid black;
+            .TD_TH {
+                border : 1px solid black;
+            } 
+            .table_2 {
+                border-collapse :   collapse;
             }
-            .table_2                    {
-                border-collapse         :   collapse;
-            }
+
+
             .subtitulo_formulario2      {
+                font-size               :   14px;
+            }
+
+            .subtitulo_formulario3      {
                 font-size               :   14px;
                 font-family             :   arial;
                 padding                 :   0;
@@ -154,18 +161,16 @@
                 width                   :   100%;
             }
             @page {
-                margin-top: 6px;
-                margin-bottom: 6px;
-                margin-left: 6px;
-                margin-right: 6px;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                margin-left: 15px;
+                margin-right: 15px;
             }
         </style>
     </head>
-
     <!--
         CITOLOG&Iacute;A
     -->
-
     <!--
     <?php
         #echo $DATA['HTML_QR'];
@@ -224,7 +229,7 @@
                     <b><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_HOSPITAL_ETI'];?></b>
                 </td>
                 <td>
-                    <p class="h6" style="margin:0;">N&deg; UNICO: <b><?php echo $VAR_ANATOMIA_PATALOGICA;?></b></p>
+                    <p class="h6" style="margin:0;">N&deg; UNICO:<b><br><?php echo $VAR_ANATOMIA_PATALOGICA;?></b></p>
                 </td>
             </tr>
         </table>
@@ -341,18 +346,17 @@
             </tbody>
         </table>
         
-        
-        <?php $TOTAL_MUESTRAS     =   count($DATA["P_AP_MUESTRAS_CITOLOGIA"]); ?>
+        <?php $TOTAL_MUESTRAS = count($DATA["P_AP_MUESTRAS_CITOLOGIA"]); ?>
         <table tabindex="2" width="100%" align="center" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
             <thead>
                 <tr class="subtitulo_formulario2" >
                     <td colspan="4" class="subtitulo_formulario2"   bgcolor="#ECF1F1">
-                        <b>DETALLE MUESTRAS DE CITOLOGIA: N&deg; <?php echo $TOTAL_MUESTRAS; ?></b>
+                        <b>DETALLE MUESTRAS DE CITOLOG&Iacute;A: N&deg; <?php echo $TOTAL_MUESTRAS;?></b>
                     </td>
                 </tr>
                 <tr class="subtitulo_formulario2" >
                     <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>N&deg;</b></td>
-                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b># UNICA</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1" style="text-align: center"><b># UNICO</b></td>
                     <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>ML</b></td>
                     <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>OBSERVACI&Oacute;N</b></td>
                 </tr>
@@ -360,10 +364,10 @@
             <tbody>
                 <?php foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $row_muestras ){  ?>
                     <tr>
-                        <td width="5%"  class="subtitulo_formulario2"   ><?php echo $row_muestras['N_MUESTRA']; ?></td>
-                        <td width="15%" class="subtitulo_formulario2"   ><?php echo $row_muestras['ID_NMUESTRA']; ?></td>    
-                        <td width="20%" class="subtitulo_formulario2"   ><?php echo $row_muestras['NUM_ML']; ?></td>
-                        <td width="60%" class="subtitulo_formulario2"   ><?php echo $row_muestras['TXT_MUESTRA']; ?></td>
+                        <td width="5%"  class="subtitulo_formulario2" style="text-align: center;"><?php echo $row_muestras['N_MUESTRA']; ?></td>
+                        <td width="15%" class="subtitulo_formulario2" ><?php echo $row_muestras['ID_NMUESTRA']; ?></td>    
+                        <td width="20%" class="subtitulo_formulario2" ><?php echo $row_muestras['NUM_ML']; ?></td>
+                        <td width="60%" class="subtitulo_formulario2" ><?php echo $row_muestras['TXT_MUESTRA']; ?></td>
                     </tr>
                 <?php } ?>
             </tbody>

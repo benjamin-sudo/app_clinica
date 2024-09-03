@@ -313,20 +313,18 @@ function validaExFirm(){
 
 function nuevaFirma(){
     $.ajax({ 
-        type        :   "POST",
-        url         :   "Dashboard/html_nuevafirma",
-        dataType    :   "json",
-        data        :   { },
-        beforeSend  :   function(xhr)   {   $('#loadFade').modal('show');   },
-        error       :   function(errro) {     
+        type : "POST",
+        url : "Dashboard/html_nuevafirma",
+        dataType : "json",
+        data : { },
+        beforeSend : function(xhr) { $('#loadFade').modal('show');   },
+        error : function(errro) {     
                                             console.log(errro.responseText); 
                                             jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
                                             setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-
                                         },
         success     :   function(aData) {   
                                             setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-
                                             console.log("html_nuevafirma -> ",aData);
                                             $(".class_card_firmaunica").html(aData.html);
                                         }, 
@@ -733,8 +731,6 @@ function load() {
 function loadDash() {
     var idSel = $_GET('m');
     var idMen = $_GET('id');
-    // var controller = traeController();
-    //    var funcion = 'loadMenuDashBoard';
     var funcion = 'loadMenuMaterial';
     var variables = { idSel: idSel, idMen: idMen, controller: 'frontend' };
     var id = "menuDash";
@@ -758,16 +754,11 @@ function traeController() {
 }
 
 function getGET() {
-    // capturamos la url
     var loc = document.location.href;
-    // si existe el interrogante
     if (loc.indexOf('?') > 0) {
-        // cogemos la parte de la url que hay despues del interrogante
         var getString = loc.split('?')[1];
-        // obtenemos un array con cada clave=valor
         var GET = getString.split('&');
         var get = {};
-        // recorremos todo el array de valores
         for (var i = 0, l = GET.length; i < l; i++) {
             var tmp = GET[i].split('=');
             get[tmp[0]] = unescape(decodeURI(tmp[1]));
@@ -777,12 +768,10 @@ function getGET() {
 }
 
 function obtGet() {
-    // Cogemos los valores pasados por get
     var valores = getGET();
     if (valores) {
         var i = 0;
         var id = {};
-        // hacemos un bucle para pasar por cada indice del array de valores
         for (var index in valores) {
             id[i] = valores[index];
             i++;

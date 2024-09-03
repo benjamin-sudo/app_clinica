@@ -316,7 +316,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $password                           =   $this->input->post('password');
         $valida                             =	$this->Ssan_libro_biopsias_usuarioext_model->validaClave($password);
         if(count($valida)>0){
-            $DATA                           =   $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_trasporte([
+            $DATA =   $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_trasporte([
                                                     "COD_EMPRESA"   =>  $empresa,
                                                     "SESSION"       =>  $usuarioh[0], 
                                                     "ID_ANATOMIA"   =>  $id_anatomia,
@@ -324,8 +324,8 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
                                                     "DATA_FIRMA"    =>  $valida,
                                                 ]);
         } else {
-            $TXT_ERROR                      =   'Error en firma simple';
-            $STATUS                         =   false;
+            $TXT_ERROR = 'Error en firma simple';
+            $STATUS = false;
         }
 
         $this->output->set_output(json_encode([
@@ -386,21 +386,19 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $dompdf = new mPDF('','',0,'',15,15,16,16,9,9,'L');
         $html_firma = '';
         $HTML_BIOPSIAS = '';
-        
+        $DATA_FIRST = false;
         if(count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"][0])>0){
             $DATA_FIRST = true;
             $HTML_BIOPSIAS = $this->load->view("ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
             $dompdf->WriteHTML($HTML_BIOPSIAS);
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.ANATOMICA');
         }
-        
         if(count($DATA["P_AP_MUESTRAS_CITOLOGIA"][0])>0){
-            $dompdf->AddPage();
+            if ($DATA_FIRST){  $dompdf->AddPage();    }
             $HTML_CITOLOGIA = $this->load->view("ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS_CITO",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
             $dompdf->WriteHTML($HTML_CITOLOGIA);
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.CITOLOGIA');
         }
-
         $base64_pdf = base64_encode($dompdf->Output($txt_name_pdf,'S'));
         $this->output->set_output(json_encode([
             'STATUS' =>  $STATUS,

@@ -46,9 +46,7 @@
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>REPORTE DE SOLICITUD ANATOM&Iacute;A PATOLOG&Iacute;A</title>
-        
         <link href="<?php echo base_url();?>/assets/themes/inicio/css/boobtstrap.css" rel="stylesheet"></link>
-
         <style>
             div.container               {
                 width                   :   100%;
@@ -76,7 +74,12 @@
             .table_2                    {
                 border-collapse         :   collapse;
             }
+            
             .subtitulo_formulario2      {
+                font-size               :   14px;
+            }
+
+            .subtitulo_formulario3      {
                 font-size               :   14px;
                 font-family             :   arial;
                 padding                 :   0;
@@ -89,7 +92,7 @@
                 padding-right           :   10px;
                 height                  :   18px;
             }
-
+            
             .table_etiquetas            {
                 border                  :   1px solid black;
                 margin-bottom           :   2px;
@@ -216,7 +219,7 @@
                     <b><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_HOSPITAL_ETI'];?></b>
                 </td>
                 <td>
-                    <p class="h6" style="margin:0;">N&deg; UNICO: <b><?php echo $VAR_ANATOMIA_PATALOGICA;?></b></p>
+                    <p class="h6" style="margin:0;">N&deg; UNICO: <b><br><?php echo $VAR_ANATOMIA_PATALOGICA;?></b></p>
                 </td>
             </tr>
         </table>
@@ -339,7 +342,7 @@
         <table tabindex="2" width="100%" align="center" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
             <thead>
                 <tr class="subtitulo_formulario2">
-                    <td colspan="3" class="subtitulo_formulario2"   bgcolor="#ECF1F1">
+                    <td colspan="3" class="subtitulo_formulario2" bgcolor="#ECF1F1">
                         <b>INFORMACI&Oacute;N MUESTRAS HISPATOLOGICAS: N&deg; <?php echo $TOTAL_MUESTRAS; ?></b>
                         /
                         <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_USOCASSETTE"]=='SI'?'<b>USO CASETE: SI</b>':'';?>
@@ -348,9 +351,9 @@
                     </td>
                 </tr>
                 <tr class="subtitulo_formulario2">
-                    <td class="subtitulo_formulario2"   bgcolor="#ECF1F1"><b>N&deg;</b></td>
-                    <td class="subtitulo_formulario2"   bgcolor="#ECF1F1" style="text-align: center"><b># UNICO</b></td>
-                    <td class="subtitulo_formulario2"   bgcolor="#ECF1F1"><b>OBSERVACI&Oacute;N</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>N&deg;</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1" style="text-align: center"><b># UNICO</b></td>
+                    <td class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>OBSERVACI&Oacute;N</b></td>
                 </tr>
             </thead>  
             <?php 

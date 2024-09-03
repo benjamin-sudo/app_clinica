@@ -174,7 +174,10 @@ $(document).ready(function(){
 
     localStorage.getItem("html_busqueda_bacode")?$(".ul_lista_cod_encontrados").html('').append(localStorage.getItem("html_busqueda_bacode")):'';
     //boton de filtro // cambios
+    
+    
     $('#ind_filtro_busqueda_xfechas').on('changed.bs.select',function(e,clickedIndex,isSelected,previousValue){
+        //alert("PASA POR ACA");
         /*
         var ind_filtro = $('#ind_filtro_busqueda_xfechas').val();
         var count_filtro = $('#ind_filtro_busqueda_xfechas').val() == null ? 0 : $('#ind_filtro_busqueda_xfechas').val().length;
@@ -191,8 +194,11 @@ $(document).ready(function(){
         }
         */
     }).selectpicker();
+
+
     //console.log("-----------------------");
     //console.log("localStorage.getIte    ->  " , localStorage.getItem("strorage_filtro_categorias") );
+
     if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='0'){
         //console.log("SI");
         //js_opt_todas_las_categorias(false);

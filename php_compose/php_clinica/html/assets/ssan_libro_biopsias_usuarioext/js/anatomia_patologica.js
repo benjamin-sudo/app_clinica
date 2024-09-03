@@ -2234,18 +2234,17 @@ function GET_PDF_ANATOMIA_PANEL(id){
        url : "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
        dataType : "json",
        beforeSend : function(xhr) {   
-                                    console.log(xhr);
-                                    console.log("generando PDF");
                                     $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
                                 },
        data : { id : id },
-       error :   function(errro) { 
-                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+       error : function(errro) { 
+                                    console.log(errro,); 
+                                    console.log(errro.responseText); 
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     jError("Error General, Consulte Al Administrador","Clinica Libre"); 
                                 },
        success : function(aData){ 
-                                    console.log(aData);
+                                    console.error(aData);
                                     if(!aData["STATUS"]){
                                         jError("error al cargar protocolo PDF","Clinica Libre");
                                         return false;
@@ -2271,41 +2270,37 @@ function GET_PDF_ANATOMIA_PANEL(id){
    });
 }
 
-
-
 function valida_cambio_estado_muestras(){
     
 }
 
 function viws_historial(id_anatomia){
     $.ajax({ 
-        type		:   "POST",
-        url 		:   "ssan_spab_gestionlistaquirurgica/vista_historial",
-        dataType        :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        console.log("generando PDF");
-                                                        $('#HTML_INFORMACION_HISTORIAL').html('');
-                                                    },
-        data 		:       
-                                                    { 
-                                                        id_anatomia  :   id_anatomia,
-                                                    },
-        error		:   function(errro)         { 
-                                                        console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        $('#HTML_INFORMACION_HISTORIAL').html('');
-                                                    },
-        success		:   function(aData)         { 
-
-                                                        console.log("-----------------------------------------------");
-                                                        console.log(aData);
-                                                        console.log("ORDENADO       ->",aData.ORDENADO,"            ");
-                                                        console.log("NO_ORDENADO    ->",aData.NO_ORDENADO,"         ");
-                                                        console.log("-----------------------------------------------");
-                                                        $("#HTML_INFORMACION_HISTORIAL").html(aData.HTML_OUT);
-                                                        $("#MODAL_INFORMACION_HISTORIAL").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                    }, 
+        type : "POST",
+        url : "ssan_spab_gestionlistaquirurgica/vista_historial",
+        dataType : "json",
+        beforeSend	: function(xhr) {   
+                                        console.log(xhr);
+                                        console.log("generando PDF");
+                                        $('#HTML_INFORMACION_HISTORIAL').html('');
+                                    },
+        data :  {  id_anatomia : id_anatomia  },
+        error : function(errro) { 
+                                    console.log("quisas->",errro,"-error->",errro.responseText); 
+                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                                    $('#HTML_INFORMACION_HISTORIAL').html('');
+                                },
+        success : function(aData) { 
+                                    /*
+                                    console.log("-----------------------------------------------");
+                                    console.log(aData);
+                                    console.log("ORDENADO       ->",aData.ORDENADO,"            ");
+                                    console.log("NO_ORDENADO    ->",aData.NO_ORDENADO,"         ");
+                                    console.log("-----------------------------------------------");
+                                    */
+                                    $("#HTML_INFORMACION_HISTORIAL").html(aData.HTML_OUT);
+                                    $("#MODAL_INFORMACION_HISTORIAL").modal({backdrop:'static',keyboard:false}).modal("show");
+                                }, 
    });
 }
 
