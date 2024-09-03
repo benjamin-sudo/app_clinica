@@ -1,6 +1,6 @@
 <style>
-    .table                  {
-        border-collapse     :   collapse;
+    .table {
+        border-collapse :   collapse;
     }
 </style>
 <table style="width: 100%;margin-bottom: 0px">

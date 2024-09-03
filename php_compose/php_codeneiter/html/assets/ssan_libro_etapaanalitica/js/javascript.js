@@ -1,34 +1,33 @@
 $(document).ready(function(){
-    var today			=   new Date();
-    var dd              =   today.getDate();
-    var mm              =   today.getMonth()+1; 
-    var yyyy			=   today.getFullYear();
-    if (dd<10)			{   dd='0'+dd; } 
-    if (mm<10)			{   mm='0'+mm; } 
-    var today			=   dd+'-'+mm+'-'+yyyy;
-    var todayDate       =   new Date().getDate();
-    
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if (dd<10) { dd='0'+dd; } 
+    if (mm<10) { mm='0'+mm; } 
+    var today = dd+'-'+mm+'-'+yyyy;
+    var todayDate =   new Date().getDate();
     $('#fecha_out').datetimepicker({
-        useCurrent              :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
-        inline			        :   true,
-        sideBySide              :   true,
-        format			        :   'DD-MM-YYYY',
-        locale			        :   'es-us',
-        //daysOfWeekDisabled	:   [0,6],
-        maxDate                 :   moment($(".info_userdata").data("fecha_final"))._d, 
-        //minDate		        :   new Date(new Date().setDate((todayDate)-(5))), 
-        defaultDate             :   moment($(".info_userdata").data("fecha_inicio"))._d,
-        icons			        :   {
-                                        time : "fa fa-clock-o" ,
-                                        date : "fa fa-calendar" ,
-                                        up : "fa fa-chevron-up" ,
-                                        down : "fa fa-chevron-down" ,
-                                        previous : 'fa fa-chevron-left' ,
-                                        next : 'fa fa-chevron-right' ,
-                                        today : 'fa fa-screenshot' ,
-                                        clear : 'fa fa-trash' ,
-                                        close : 'fa fa-remove' ,
-                                    }
+        useCurrent : false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
+        inline : true,
+        sideBySide : true,
+        format : 'DD-MM-YYYY',
+        locale : 'es-us',
+        //daysOfWeekDisabled : [0,6],
+        maxDate : moment($(".info_userdata").data("fecha_final"))._d, 
+        //minDate : new Date(new Date().setDate((todayDate)-(5))), 
+        defaultDate : moment($(".info_userdata").data("fecha_inicio"))._d,
+        icons : {
+                    time : "fa fa-clock-o" ,
+                    date : "fa fa-calendar" ,
+                    up : "fa fa-chevron-up" ,
+                    down : "fa fa-chevron-down" ,
+                    previous : 'fa fa-chevron-left' ,
+                    next : 'fa fa-chevron-right' ,
+                    today : 'fa fa-screenshot' ,
+                    clear : 'fa fa-trash' ,
+                    close : 'fa fa-remove' ,
+                }
     });
     $(".timepicker").remove();
     
@@ -3419,22 +3418,24 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                                     jError("error al cargar protocolo PDF","e-SISSAN");
                                                     return false;
                                                 } else {
-                                                    var base64str           =   aData["PDF_MODEL"];
-                                                    var binary              =   atob(base64str.replace(/\s/g,''));
-                                                    var len                 =   binary.length;
-                                                    var buffer              =   new ArrayBuffer(len);
-                                                    var view                =   new Uint8Array(buffer);
+                                                    var base64str = aData["PDF_MODEL"];
+                                                    var binary = atob(base64str.replace(/\s/g,''));
+                                                    var len = binary.length;
+                                                    var buffer = new ArrayBuffer(len);
+                                                    var view = new Uint8Array(buffer);
                                                     for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                    var blob                =   new Blob([view],{type:"application/pdf"});
-                                                    var blobURL             =   URL.createObjectURL(blob);
-                                                    Objpdf                  =   document.createElement('object');
+                                                    var blob = new Blob([view],{type:"application/pdf"});
+                                                    var blobURL = URL.createObjectURL(blob);
+                                                    Objpdf = document.createElement('object');
                                                     Objpdf.setAttribute('data',blobURL);
                                                     Objpdf.setAttribute('width','100%');
                                                     Objpdf.setAttribute('style','height:700px;');
                                                     Objpdf.setAttribute('title','PDF');
                                                     $('#PDF_VERDOC').html(Objpdf);
                                                 }
-                                                $('#loadFade').modal('hide'); 
+                                                
+                                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+
                                                 $("#Dv_verdocumentos").modal("show");
                                             }, 
    });

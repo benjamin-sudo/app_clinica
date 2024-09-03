@@ -155,7 +155,7 @@ function js_confimicuenta(){
         type : "POST",
         url : "Dashboard/configuracion_micuenta",
         dataType : "json",
-        beforeSend : function(xhr) {  $('#loadFade').modal('show');    },
+        beforeSend : function(xhr) {  $('#loadFade').modal('show'); },
         data : { },
         error : function(err) { 
                                 console.log(err);  
@@ -183,15 +183,15 @@ function nuevaFirma(){
 
 function cambiaFirma() {
     //timerDestroy(1);
-    var firma       =   $('#firmaNew1').val();
-    var firma2      =   $('#firmaNew2').val();
-    var exFirm      =   $('#exFirm').val();
-    var username    =   $('#username').val();
-    if (firma == '')    {
+    var firma = $('#firmaNew1').val();
+    var firma2 = $('#firmaNew2').val();
+    var exFirm = $('#exFirm').val();
+    var username = $('#username').val();
+    if (firma == '') {
         jWarning('Debe ingresar la nueva firma', 'Informaci\u00F3n');
         return false;
     }
-    if (firma2 == '')   {
+    if (firma2 == '') {
         jWarning('Debe repetir la nueva firma', 'Informaci\u00F3n');
         return false;
     }
@@ -257,29 +257,28 @@ function confirmCambioF(){
         return false;
     }
     $.ajax({ 
-        type            :   "POST",
-        url             :   "Dashboard/confirmCambioFirma",
-        dataType        :   "json",
-        data            :   { 
-                                codVerif : codVerif,
-                                firmaNew : firmaNew,
-                                username : username
-                            },
-        beforeSend      :   function(xhr)       {   $('#loadFade').modal('show');   },
-        error           :   function(errro)     {     
+        type : "POST",
+        url : "Dashboard/confirmCambioFirma",
+        dataType : "json",
+        data : { 
+                    codVerif : codVerif,
+                    firmaNew : firmaNew,
+                    username : username
+                },
+        beforeSend : function(xhr) { $('#loadFade').modal('show');   },
+        error : function(errro) {     
                                                     console.log(errro.responseText); 
                                                     jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
                                                     $('#loadFade').modal('hide');
                                                 },
-        success         :   function(aData)     {   
-                                                    $('#loadFade').modal('hide'); 
-                                                    console.log("aData -> ",aData);
-                                                    if(aData.status){
-                                                        $(".class_card_firmaunica").html(aData.html_firmaunica);
-                                                    } else {
-                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;Código de confirmación no corresponde',4,'');
-                                                    }
-                                                }, 
+        success : function(aData)     {   
+                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                        if(aData.status){
+                            $(".class_card_firmaunica").html(aData.html_firmaunica);
+                        } else {
+                            showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;Código de confirmación no corresponde',4,'');
+                        }
+                    }, 
     });
 }
 
@@ -287,22 +286,22 @@ function validaExFirm(){
     let firma = $('#firmaNew1').val();
     let username = $('#username').val();
     $.ajax({ 
-        type        :   "POST",
-        url         :   "Dashboard/validaFirmaExist",
-        dataType    :   "json",
-        data        :   { 
-                            firma : firma,
-                            username : username,
-                        },
-        beforeSend  :   function(xhr)       {   $('#loadFade').modal('show');   },
-        error       :   function(errro)     {     
-                                                console.log(errro.responseText); 
-                                                jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                                $('#loadFade').modal('hide');
-                                            },
-        success     :   function(aData)     {   
-                                                $('#loadFade').modal('hide');
-                                                console.log("validaFirmaExist -> ",aData);
+        type : "POST",
+        url : "Dashboard/validaFirmaExist",
+        dataType : "json",
+        data : { 
+                    firma : firma,
+                    username : username,
+                },
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+        error :   function(errro) {     
+                                        console.log(errro.responseText); 
+                                        jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                        $('#loadFade').modal('hide');
+                                    },
+        success : function(aData)     {   
+                                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                                //console.log("validaFirmaExist -> ",aData);
                                                 if(!aData.status){
                                                     jAlert("La firma unica digital ya existe en otro usuario","Clinica libre Chile");
                                                     $("#firmaNew1").val('');
@@ -322,10 +321,12 @@ function nuevaFirma(){
         error       :   function(errro) {     
                                             console.log(errro.responseText); 
                                             jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+
                                         },
         success     :   function(aData) {   
-                                            $('#loadFade').modal('hide');
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+
                                             console.log("html_nuevafirma -> ",aData);
                                             $(".class_card_firmaunica").html(aData.html);
                                         }, 
@@ -347,7 +348,7 @@ function confirmEnvioRecuperacion() {
                                                     $('#loadFade').modal('hide');
                                                 },
                 success     :   function(aData) {   
-                                                    $('#loadFade').modal('hide');
+                                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                                     if(aData.status){
                                                         showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
                                                     } else {
@@ -399,17 +400,17 @@ function validaPass(idPass, idError) {
 }
 
 function confirmDatPss() {
-    var err         =   '';
-    var idUsrS      =   $('#idUsrS').val();
-    var nombres     =   $('#nameUsr').val();
-    var apePat      =   $('#apePatUsr').val();
-    var apeMat      =   $('#apeMatUsr').val();
-    var email       =   $('#emailUsr').val();
-    var fono        =   $('#fonoUsr').val();
-    var passActual  =   $('#passAcUsr').val();
-    var passNew     =   $('#password1').val();
-    var passNew2    =   $('#passNew2Usr').val();
-    var nivPass     =   $('#nivContr').val();
+    var err = '';
+    var idUsrS = $('#idUsrS').val();
+    var nombres = $('#nameUsr').val();
+    var apePat = $('#apePatUsr').val();
+    var apeMat = $('#apeMatUsr').val();
+    var email = $('#emailUsr').val();
+    var fono = $('#fonoUsr').val();
+    var passActual = $('#passAcUsr').val();
+    var passNew = $('#password1').val();
+    var passNew2 = $('#passNew2Usr').val();
+    var nivPass = $('#nivContr').val();
     if (nombres === '') {
         err += 'Nombres\n';
     } else if (apePat === '') {
@@ -739,8 +740,6 @@ function loadDash() {
     var id = "menuDash";
     ajax(variables, id, funcion);
 }
-
-
 
 function abrirVentanaCambioClave() {
     $('#idResetearClave').dialog('open');

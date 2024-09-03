@@ -12,36 +12,36 @@ $(document).ready(function(){
     //console.log("---------------------------------------------------------");
     //RECEPCION DE MUESTRAS - VENTANILLAS
     if($("#NUM_FASE").val()             ==  2){
-        var todayDate                   =   new Date().getDate();
-        var date_inicio                 =   $("#date_inicio").val();
-        console.log("date_inicio        ->  ",date_inicio);
+        var todayDate = new Date().getDate();
+        var date_inicio = $("#date_inicio").val();
+        //console.log("date_inicio ->  ",date_inicio);
         $('#fecha_out').datetimepicker({
-            useCurrent                  :   false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
-            inline			:   true,
-            sideBySide                  :   true,
-            format			:   'DD-MM-YYYY',
-            locale			:   'es-us',
-            maxDate                     :   new Date(),
-            defaultDate                 :   moment(date_inicio)._d,
-            icons			: 
-                                        {
-                                            time        :   "fa fa-clock-o"         ,
-                                            date        :   "fa fa-calendar"        ,
-                                            up          :   "fa fa-chevron-up"      ,
-                                            down        :   "fa fa-chevron-down"    ,
-                                            previous    :   'fa fa-chevron-left'    ,
-                                            next        :   'fa fa-chevron-right'   ,
-                                            today       :   'fa fa-screenshot'      ,
-                                            clear       :   'fa fa-trash'           ,
-                                            close       :   'fa fa-remove'          ,
-                                        }
+            useCurrent : false,
+            inline :   true,
+            sideBySide : true,
+            format : 'DD-MM-YYYY',
+            locale : 'es-us',
+            maxDate :   new Date(),
+            defaultDate :   moment(date_inicio)._d,
+            icons : 
+                    {
+                        time : "fa fa-clock-o"         ,
+                        date : "fa fa-calendar"        ,
+                        up : "fa fa-chevron-up"      ,
+                        down : "fa fa-chevron-down"    ,
+                        previous : 'fa fa-chevron-left'    ,
+                        next : 'fa fa-chevron-right'   ,
+                        today : 'fa fa-screenshot'      ,
+                        clear : 'fa fa-trash'           ,
+                        close : 'fa fa-remove'          ,
+                    }
         });
         $(".timepicker").remove();
         $('#fecha_out').on('dp.change',function(e){ 
             $('#fecha_out2').data("DateTimePicker").minDate($('#fecha_out').data().date);
             UPDATE_PANEL();
         });
-        var date_final                  =   $("#date_final").val();
+        var date_final =   $("#date_final").val();
         //console.log("date_final         ->  ",date_final);
         $('#fecha_out2').datetimepicker({
             useCurrent : false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
@@ -52,18 +52,18 @@ $(document).ready(function(){
             defaultDate : moment(date_final)._d,
             maxDate : new Date(),
             minDate : moment(date_inicio)._d,
-            icons			: 
-                                        {
-                                            time        :   "fa fa-clock-o"         ,
-                                            date        :   "fa fa-calendar"        ,
-                                            up          :   "fa fa-chevron-up"      ,
-                                            down        :   "fa fa-chevron-down"    ,
-                                            previous    :   'fa fa-chevron-left'    ,
-                                            next        :   'fa fa-chevron-right'   ,
-                                            today       :   'fa fa-screenshot'      ,
-                                            clear       :   'fa fa-trash'           ,
-                                            close       :   'fa fa-remove'          ,
-                                        }
+            icons : 
+                        {
+                            time : "fa fa-clock-o" ,
+                            date : "fa fa-calendar" ,
+                            up : "fa fa-chevron-up" ,
+                            down : "fa fa-chevron-down" ,
+                            previous : 'fa fa-chevron-left' ,
+                            next : 'fa fa-chevron-right' ,
+                            today : 'fa fa-screenshot' ,
+                            clear : 'fa fa-trash' ,
+                            close : 'fa fa-remove' ,
+                        }
         });
         $('#fecha_out2').on('dp.change',function(e){
             $('#fecha_out').data("DateTimePicker").maxDate($('#fecha_out2').data().date);
@@ -115,18 +115,18 @@ $(document).ready(function(){
     }
 
     $('#busq_rutpac').Rut({
-                                            on_error                    :   function(){
-                                                $('#ErrorRutBUSQUEDA_').html('Rut Incorrecto');
-                                                $("#ErrorRutBUSQUEDA_").show('slow').fadeOut('slow').fadeIn('slow');
-                                                //$("#Corr").val('1');
-                                                swal("Run No Valido", "SOLICITUDES", 'error');
-                                            },
-                                            on_success              :   function(){
-                                                $('#ErrorRutBUSQUEDA_').html('');
-                                                $("#ErrorRutBUSQUEDA_").hide('slow');
-                                                Buscador_();
-                                            },
-                                            format_on               :   'keyup'
+        on_error                    :   function(){
+        $('#ErrorRutBUSQUEDA_').html('Rut Incorrecto');
+        $("#ErrorRutBUSQUEDA_").show('slow').fadeOut('slow').fadeIn('slow');
+        //$("#Corr").val('1');
+            swal("Run No Valido", "SOLICITUDES", 'error');
+        },
+        on_success              :   function(){
+            $('#ErrorRutBUSQUEDA_').html('');
+            $("#ErrorRutBUSQUEDA_").hide('slow');
+            Buscador_();
+        },
+        format_on               :   'keyup'
     });
     $("#modal_encustodia_ap").on('hidden.bs.modal',function(e){ 
         $("#html_modal_encustodia_ap").html(''); 
@@ -161,10 +161,9 @@ function js_ws_test(){
 
 //UPDATE ANTES DE LA RECEPCION
 function UPDATE_PANEL(){
-    var fecha_form          =   $("#NUM_FASE").val()==1?$("#txt_fec_inicio").val():fecha_cale('fecha_out');
-    var fecha_to            =   $("#NUM_FASE").val()==1?$("#txt_fec_fin").val():fecha_cale('fecha_out2');
+    var fecha_form = $("#NUM_FASE").val()==1?$("#txt_fec_inicio").val():fecha_cale('fecha_out');
+    var fecha_to = $("#NUM_FASE").val()==1?$("#txt_fec_fin").val():fecha_cale('fecha_out2');
     //console.log("NUM_FASE   ->  ",$("#NUM_FASE").val());
-
     $('#loadFade').modal('show');
     /*
         console.log("-------------------------------------------------------");
@@ -178,71 +177,58 @@ function UPDATE_PANEL(){
         console.log("ssan_libro_biopsias_i_fase");
         //BUSQUEDA LISTA ANTES DE RECEPCION
         $.ajax({ 
-            type            :   "POST",
-            url             :   "ssan_libro_biopsias_i_fase/update_fase1",
-            dataType        :   "json",
-            beforeSend      :   function(xhr)           { 
-                                                            //console.log(xhr); 
-                                                        },
-            data		:                       { 
-                                                            fecha_form      :   fecha_form,
-                                                            fecha_to        :   fecha_to,
-                                                            NUM_FASE        :   $("#NUM_FASE").val(),
-                                                        },
-            error		:   function(errro)	{  
-                                                            console.log(errro); 
-                                                            console.log(errro.responseText);
-                                                            jError("Error del aplicativo","e-SISSAN"); 
-                                                            $('#loadFade').modal('hide');
-                                                        },
-            success		:   function(aData)     {   
-                                                            $('#loadFade').modal('hide');
-                                                            $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION").remove();
-                                                            $("#LI_LISTA_MAIN").append(aData["HTML"]);
-                                                            $('[data-toggle="tooltip"]').tooltip();
-                                                        }, 
+            type : "POST",
+            url : "ssan_libro_biopsias_i_fase/update_fase1",
+            dataType : "json",
+            beforeSend : function(xhr) { },
+            data : { 
+                        fecha_form      :   fecha_form,
+                        fecha_to        :   fecha_to,
+                        NUM_FASE        :   $("#NUM_FASE").val(),
+                    },
+            error : function(errro)	{  
+                                        console.log(errro); 
+                                        console.log(errro.responseText);
+                                        jError("Error del aplicativo","e-SISSAN"); 
+                                        $('#loadFade').modal('hide');
+                                    },
+            success : function(aData) {   
+                                                $('#loadFade').modal('hide');
+                                                $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION").remove();
+                                                $("#LI_LISTA_MAIN").append(aData["HTML"]);
+                                                $('[data-toggle="tooltip"]').tooltip();
+                                            }, 
         });
     } else {
         //console.log("ssan_libro_biopsias_ii_fase");
         $.ajax({ 
-            type            :   "POST",
-            url             :   "ssan_libro_biopsias_listaexterno1/update_main",
-            dataType        :   "json",
-            beforeSend      :   function(xhr)       { 
-                                                        //console.log(xhr);
-                                                    },
-            data		:                       { 
-                                                        fecha_inicio        :   fecha_form,
-                                                        fecha_final         :   fecha_to,
-                                                        OPTION              :   1,
-                                                        pto_entrega         :   0 ,
-                                                        origen_sol          :   0,
-                                                        ind_template        :   $("#IND_TEMPLETE").val(),
-                                                        NUM_FASE            :   $("#NUM_FASE").val(),
-                                                    },
-            error		:   function(errro)	{  
-                                                        console.log(errro); 
-                                                        console.log(errro.responseText);
-                                                        jError("Error del aplicativo","e-SISSAN");
-                                                        $('#loadFade').modal('hide');
-                                                    },
-            success		:   function(aData) {   
-                                                /*
-                                                console.log("-------------------------------");
-                                                console.log("---------our update_main ------");
-                                                console.log(aData);
-                                                console.log("-------------------------------");
-                                                */
-                                                $('#loadFade').modal('hide');
-                                                $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
-                                                $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
-                                                $("[data-toggle='tooltip']").tooltip();
-                                            }, 
+            type : "POST",
+            url : "ssan_libro_biopsias_listaexterno1/update_main",
+            dataType : "json",
+            beforeSend : function(xhr) { },
+            data : { 
+                        fecha_inicio : fecha_form,
+                        fecha_final : fecha_to,
+                        OPTION : 1,
+                        pto_entrega : 0 ,
+                        origen_sol : 0,
+                        ind_template : $("#IND_TEMPLETE").val(),
+                        NUM_FASE : $("#NUM_FASE").val(),
+                    },
+            error : function(errro)	{  
+                                        console.log(errro); 
+                                        //console.log(errro.responseText);
+                                        jError("Error del aplicativo","e-SISSAN");
+                                        $('#loadFade').modal('hide');
+                                    },
+            success : function(aData) {   
+                                            $('#loadFade').modal('hide');
+                                            $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
+                                            $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
+                                            $("[data-toggle='tooltip']").tooltip();
+                                    }, 
         });
     }
-
-    $('#loadFade').modal('hide');
-
 }
 
 function js_encustodia(){

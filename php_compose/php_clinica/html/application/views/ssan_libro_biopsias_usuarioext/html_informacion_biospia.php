@@ -60,14 +60,14 @@
 <?php if (count($cursor[':C_STATUS'])>0){ ?>
     <div class="alert alert-danger" role="alert">
         <h4 class="alert-heading">Error en la solicitud</h4>
-        <p>La petici&oacute;n de solicitud de anatom&iacute;a patol&oacute;gica no existe en los registros de SSAN. Si cree que existe alg&uacute;n error por favor comunicarse con departamento de inform&aacute;tica del servicios de salud Araucania Norte.</p>
+        <p>La petici&oacute;n de solicitud de anatom&iacute;a patol&oacute;gica no existe en los registros de CLINICA LIBRE. Si cree que existe alg&uacute;n error por favor comunicarse con departamento de inform&aacute;tica del servicios de salud Araucania Norte.</p>
         <hr>
         <p class="mb-0">Departamento de informatica <?php echo date("Y");?></p>
     </div>
 <?php } else { ?>
     <?php
-    $ind_habilitado     =   $cursor[':C_MAIN_AP'][0]["IND_ESTADO"];
-    $ind_color          =   $ind_habilitado=="1"?"#87CB16":"#FB404B";
+    $ind_habilitado =   $cursor[':C_MAIN_AP'][0]["IND_ESTADO"];
+    $ind_color =   $ind_habilitado=="1"?"#87CB16":"#FB404B";
     ?>
     <div class="grid_cabecera_histo">
         <div class="grid_cabecera_histo1">

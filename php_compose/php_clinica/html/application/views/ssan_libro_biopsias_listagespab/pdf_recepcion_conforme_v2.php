@@ -6,29 +6,23 @@
         body { font-family: sans-serif; }
         h1 { color: #333; }
         .content { padding: 20px; border: 1px solid #ddd; margin-top: 20px; }
-
         .border {
-            border-collapse     :   collapse;
-            border              :   1px solid black;
-            font-size           :   12px;
+            border-collapse : collapse;
+            border : 1px solid black;
+            font-size : 12px;
         
         }
-
         .space{
-            border-spacing      :   0px;
-            font-size           :   12px;
+            border-spacing : 0px;
+            font-size : 12px;
         }
-
         .td {
-            border              :   1px solid black;
-            height             :   40px;
+            border : 1px solid black;
+            height : 40px;
         }
-
-        .barcode                {
-            border              :   none !important; /* Quitar el borde */
+        .barcode {
+            border : none !important; /* Quitar el borde */
         }
-
-
     </style>
 </head>
 <body>

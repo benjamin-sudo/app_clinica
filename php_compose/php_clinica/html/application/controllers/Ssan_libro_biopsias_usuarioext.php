@@ -164,30 +164,30 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
                 "DATE_TO" =>  date("d-m-Y"),
             )
         );
-        $TABLA["GET_HTML"]              =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
-        $TABLA["DATA_INFO"]             =   true;
-        $TABLA["SALIDA_DIRECTA"]        =   true;
+        $TABLA["GET_HTML"] = $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
+        $TABLA["DATA_INFO"] = true;
+        $TABLA["SALIDA_DIRECTA"] = true;
         $this->output->set_output(json_encode($TABLA));
     }
     
     public function nueva_solicitud_anatomia(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $session_arr                    =   explode("-",$this->session->userdata('USERNAME'));
-	    $session                        =   $session_arr[0];
-        $IND_SOLICITUD                  =   $this->input->post("NUEVA_SOLICITD");
-        #$DATA_CURSOR                   =   '';
-        $DATA_CURSOR                    =   $this->ssan_libro_biopsias_usuarioext_model->DATA_PRE_NUEVASOLICIUD_ANATOMIA(
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $session_arr = explode("-",$this->session->userdata('USERNAME'));
+	    $session = $session_arr[0];
+        $IND_SOLICITUD = $this->input->post("NUEVA_SOLICITD");
+        #$DATA_CURSOR = '';
+        $DATA_CURSOR = $this->ssan_libro_biopsias_usuarioext_model->DATA_PRE_NUEVASOLICIUD_ANATOMIA(
                 array(
-                "COD_EMPRESA"           =>  $empresa,
-                "USR_SESSION"           =>  $session,
-                "DATE_FROM"             =>  date("d-m-Y"),
-                "DATE_TO"               =>  date("d-m-Y"),
+                "COD_EMPRESA" => $empresa,
+                "USR_SESSION" => $session,
+                "DATE_FROM" => date("d-m-Y"),
+                "DATE_TO" => date("d-m-Y"),
             )
         );
-        //$TABLA["GET_HTML"]            =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
-        $TABLA["GET_HTML"]              =   "";
-        $TABLA["DATA_CURSOR"]           =   $DATA_CURSOR;
+        //$TABLA["GET_HTML"] = $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
+        $TABLA["GET_HTML"] = "";
+        $TABLA["DATA_CURSOR"] = $DATA_CURSOR;
         $this->output->set_output(json_encode($TABLA));
     }
     
@@ -329,12 +329,12 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         }
 
         $this->output->set_output(json_encode([
-            'PASS'                          =>  $password,
-            'GET_BD'                        =>  $DATA,
-            'DATA_FIRMA'                    =>  $valida,
-            'RETURN'                        =>  $STATUS,
-            'TXT_ERROR'                     =>  $TXT_ERROR,
-            'STATUS'                        =>  $STATUS,
+            'PASS' => $password,
+            'GET_BD' =>  $DATA,
+            'DATA_FIRMA' =>  $valida,
+            'RETURN' =>  $STATUS,
+            'TXT_ERROR' =>  $TXT_ERROR,
+            'STATUS' =>  $STATUS,
         ]));
     }
 
@@ -386,21 +386,21 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $dompdf = new mPDF('','',0,'',15,15,16,16,9,9,'L');
         $html_firma = '';
         $HTML_BIOPSIAS = '';
-        #ssan_spab_coordepabellonenfe_new
-        #remplazado por
-        #ssan_libro_biopsias_usuarioext
+        
         if(count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"][0])>0){
             $DATA_FIRST = true;
             $HTML_BIOPSIAS = $this->load->view("ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
             $dompdf->WriteHTML($HTML_BIOPSIAS);
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.ANATOMICA');
         }
+        
         if(count($DATA["P_AP_MUESTRAS_CITOLOGIA"][0])>0){
             $dompdf->AddPage();
             $HTML_CITOLOGIA = $this->load->view("ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS_CITO",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
             $dompdf->WriteHTML($HTML_CITOLOGIA);
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.CITOLOGIA');
         }
+
         $base64_pdf = base64_encode($dompdf->Output($txt_name_pdf,'S'));
         $this->output->set_output(json_encode([
             'STATUS' =>  $STATUS,
@@ -413,7 +413,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             'PDF_MODEL_DATA' =>  $base64_pdf,
         ]));
     }
-
+    
     public function pdf_recepcion_anatomia_pat_ok(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa = $this->session->userdata("COD_ESTAB");

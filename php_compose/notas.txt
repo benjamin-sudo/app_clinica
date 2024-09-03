@@ -9,7 +9,6 @@ docker system df
 df -h
 # Verificar el uso de espacio en el directorio de Docker
 sudo du -sh /var/lib/docker
-
 ######################################################################
 #docker stop php_compose-backup_service-1
 git pull origin main

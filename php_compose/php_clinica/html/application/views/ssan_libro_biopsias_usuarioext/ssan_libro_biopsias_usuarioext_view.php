@@ -27,7 +27,9 @@
     <div class="grid_body_panel1" style="padding: 10px;">
         <div class="card" id="card_fechas">
             <div class="card-body">
-                <h5 class="card-title"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b>FECHA</b></h5>
+                <h5 class="card-title">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<b>FECHA</b>
+                </h5>
                 <br>
                 <h6 class="">Seleccione fecha</h6>
                 <div class="content" style="margin-bottom: 20px;">
@@ -244,7 +246,7 @@
     </div>
 
     <div class="modal fade" id="MODAL_PDF_ANATOMIA_PATOLOGICA">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>

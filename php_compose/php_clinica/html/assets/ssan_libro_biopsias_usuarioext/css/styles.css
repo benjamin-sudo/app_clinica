@@ -20,7 +20,10 @@
         grid-template-columns: auto;
     }
     .grid_body_panel {
-        grid-template-columns: 1fr 1fr ;
+        grid-template-columns: 365px;
+    }
+    .grid_panel_header {
+        grid-template-columns: auto;
     }
 }
 
@@ -175,3 +178,4 @@
     grid-template-columns : 119px 12px auto;
     margin-bottom : 0px;
 }
+

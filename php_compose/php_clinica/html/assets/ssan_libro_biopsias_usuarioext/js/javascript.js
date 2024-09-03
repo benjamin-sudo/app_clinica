@@ -159,7 +159,6 @@ function js_buscarpacientesiexiste(){
      });
 }
 
-
 function js_nuevopaciente(){
     var strMsg='';
     var prevision = 'V';
@@ -169,7 +168,6 @@ function js_nuevopaciente(){
         strMsg += '\n - Nombres Vacio';
         $("#txtNombre" ).css( "border-color","red" );
     }
-
     $("#txtApellidoPaterno").css( "border-color","" );
     if($("#txtApellidoPaterno" ).val()==''){
         strMsg += '\n - Apellido Paterno Vacio';
@@ -314,17 +312,17 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
         url : "ssan_libro_biopsias_usuarioext/new_nueva_solicitud_anatomia_ext",
         dataType : "json",
         beforeSend : function(xhr) { $("#loadFade").modal('show'); },
-        data    :   {
-                        NUM_FICHAE  :   NUM_FICHAE,
-                        ADMISION    :   ADMISION,
-                    },
-        error   :    function(errro) { 
+        data : {
+                    NUM_FICHAE : NUM_FICHAE,
+                    ADMISION : ADMISION,
+                },
+        error : function(errro) { 
                         console.log(errro);
                         setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                         jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
                     },
-        success :   function(aData) { 
-                                        console.log("aData , ",aData);
+        success : function(aData) { 
+                                        //console.log("aData , ",aData);
                                         $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
                                         $("#PA_ID_PROCARCH").val('65');
                                         $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show");
@@ -336,30 +334,28 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
 
 function js_busquedapacientes(val){
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_bdu_editarficha/panel_buscador_paciente_ssan",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("xhr->",xhr);   
-                                                    $("#loadFade").modal('show'); 
-                                                },
-        data                :                   {
-                                                    opciones    : val,
-                                                },
-        error		    :   function(errro) { 
-                                                    console.log(errro);
-                                                    console.log(errro.responseText);  
-                                                    jAlert("Error General, Consulte Al Administrador"); 
-                                                    $("#loadFade").modal('hide'); 
-                                                },
-        success             :   function(aData) { 
-                                                    $("#loadFade").modal('hide'); 
-                                                    console.log("---------------------------------------------");
-                                                    console.log("----------",aData["GET_HTML"],"--------------");
-                                                    console.log("---------------------------------------------");
-                                                    $("#HTML_BUSQUEDA_PACIENTE").html(aData["GET_HTML"]);
-                                                    $("#MODAL_BUSQUEDA_PACIENTE").modal({backdrop:'static',keyboard:false}).modal("show"); 
-                                                }, 
+        type : "POST",
+        url : "ssan_bdu_editarficha/panel_buscador_paciente_ssan",
+        dataType : "json",
+        beforeSend : function(xhr) {   
+                                    //console.log("xhr->",xhr);   
+                                    $("#loadFade").modal('show'); 
+                                },
+        data : { opciones : val },
+        error : function(errro) { 
+                                    console.log(errro);
+                                    //console.log(errro.responseText);  
+                                    jAlert("Error General, Consulte Al Administrador"); 
+                                    $("#loadFade").modal('hide'); 
+                                },
+        success : function(aData) { 
+                                    $("#loadFade").modal('hide'); 
+                                    //console.log("---------------------------------------------");
+                                    //console.log("----------",aData["GET_HTML"],"--------------");
+                                    //console.log("---------------------------------------------");
+                                    $("#HTML_BUSQUEDA_PACIENTE").html(aData["GET_HTML"]);
+                                    $("#MODAL_BUSQUEDA_PACIENTE").modal({backdrop:'static',keyboard:false}).modal("show"); 
+                                }, 
     });
 }
 
@@ -572,8 +568,8 @@ function GET_PDF_ANATOMIA_PANEL(id){
         url : "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
         dataType : "json",
         beforeSend : function(xhr) {   
-                                    console.log(xhr);
-                                    console.log("generando PDF");
+                                    //console.log(xhr);
+                                    //console.log("generando PDF");
                                     $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF&nbsp;");
                                 },
         data : { id : id },
@@ -599,10 +595,11 @@ function GET_PDF_ANATOMIA_PANEL(id){
                                         var blob = new Blob([view],{type:"application/pdf"});
                                         var blobURL = URL.createObjectURL(blob);
                                         Objpdf = document.createElement('object');
-                                        Objpdf                  =   document.createElement('object');
                                         Objpdf.setAttribute('data',blobURL);
                                         Objpdf.setAttribute('width','100%');
-                                        Objpdf.setAttribute('style','height:700px;');
+                                        let windowHeight = window.innerHeight;
+                                        let adjustedHeight = windowHeight - 200;
+                                        Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
                                         Objpdf.setAttribute('title','PDF');
                                         $("#HTML_PDF_ANATOMIA_PATOLOGICA").html(Objpdf);
                                         $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 
