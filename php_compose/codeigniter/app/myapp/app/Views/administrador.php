@@ -295,8 +295,7 @@
                             <select class="selectpicker" name="destinoPriv" id="destinoPriv" data-width="100%" data-container="body" data-selected-text-format="count" data-live-search="true" multiple title="Seleccione privilegios..." onchange="js_reload_previlegios(this)">
                                 <?php if (count($respuesta['roles_creados'])>0){ 
                                 foreach ($respuesta['roles_creados'] as $i => $row){ ?>
-                                    <option value="<?php echo $row['PER_ID'];?>" 
-                                        data-info="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>">
+                                    <option value="<?php echo $row['PER_ID'];?>" data-info="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>">
                                         <?php echo $row['PER_NOMBRE'];?>
                                     </option>
                                 <?php } } ?>
@@ -305,13 +304,9 @@
                     </div>
                     <div class="card" style="margin-bottom: 10px;">
                         <div class="card-body">
-                            <h5 class="card-title">
-                                <i class="fa fa-hashtag" aria-hidden="true"></i>&nbsp;<b>PRIVILEGIOS ASIGNADOS AL USUARIO&nbsp;</b>
-                            </h5>
+                            <h5 class="card-title"><i class="fa fa-hashtag" aria-hidden="true"></i>&nbsp;<b>PRIVILEGIOS ASIGNADOS AL USUARIO&nbsp;</b></h5>
                             <ul class="list-group li_priveligos" style="margin-bottom:4px;" id="">
-                                <li class="list-group-item" style="cursor:pointer;text-align:center;">
-                                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;SIN PRIVILEGIOS
-                                </li>
+                                <li class="list-group-item" style="cursor:pointer;text-align:center;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;SIN PRIVILEGIOS</li>
                             </ul>
                         </div>
                     </div>    
