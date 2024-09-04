@@ -181,30 +181,24 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
             <div class="grid_titulo_panel_main4">&nbsp;</div>
             <div class="grid_titulo_panel_main5">&nbsp;<!-- filtro de busqueda --></div>
             <div class="grid_titulo_panel_main3">
-                <!-- dropup -->
                 <div class="grid_filtro_panel_por_fecha">
-                    <!-- selectpicker -->
-                    <select class=" show-tick " multiple data-selected-text-format="count" data-size="11" name="ind_filtro_busqueda_xfechas" id="ind_filtro_busqueda_xfechas" data-width="100%" tabindex="-98">
-                        <optgroup label="LISTA COMPLETA" data-max-options="1">
-                            <option value="0" >TODAS LAS CATEGORIAS</option>
-                        </optgroup>
-                        <optgroup label="FILTRO POR ESTADO" data-max-options="8">
-                            <option value="9">SALA DE RECEPCI&Oacute;N | MACROSC&Oacute;PICA</option>
-                            <option value="1">SALA MACROSCOPICA</option>
-                            <option value="2">SALA PROCESO</option>
-                            <option value="3">SALA INCLUSI&Oacute;N</option>
-                            <option value="4">PROCESAMIENTO - SALA PROCESO</option>
-                            <option value="5">PROCESAMIENTO - SALA PROCESO | PROCESO</option>
-                            <option value="6">SALA DE TECNICAS (TECNOLOGO)</option>
-                            <option value="7">OFICIA PATOLOGO</option>
-                            <option value="8">FINALIZADO</option>
-                        </optgroup>
+                    <select class="selectpicker"  name="ind_filtro_busqueda_xfechas" id="ind_filtro_busqueda_xfechas" multiple data-selected-text-format="count" data-size="11" data-width="100%" tabindex="-98">
+                        <option value="0" checked>TODAS LAS CATEGORIAS</option>
+                        <option value="9">SALA DE RECEPCI&Oacute;N | MACROSC&Oacute;PICA</option>
+                        <option value="1">SALA MACROSCOPICA</option>
+                        <option value="2">SALA PROCESO</option>
+                        <option value="3">SALA INCLUSI&Oacute;N</option>
+                        <option value="4">PROCESAMIENTO - SALA PROCESO</option>
+                        <option value="5">PROCESAMIENTO - SALA PROCESO | PROCESO</option>
+                        <option value="6">SALA DE TECNICAS (TECNOLOGO)</option>
+                        <option value="7">OFICIA PATOLOGO</option>
+                        <option value="8">FINALIZADO</option>
                     </select>
                 </div>
             </div>
             <div class="grid_titulo_panel_main3">&nbsp;
                 <div class="btn-group">
-                    <button type="button" class="grid_filtro_panel_por_fecha btn btn-warning btn-fill"       id="delete_filtros"     onclick="js_desabilita_filtro_busqueda()">
+                    <button type="button" class="grid_filtro_panel_por_fecha btn btn-warning btn-fill" id="delete_filtros" onclick="js_desabilita_filtro_busqueda()">
                         <i class="fa fa-filter" aria-hidden="true"></i>
                     </button>
                 </div>

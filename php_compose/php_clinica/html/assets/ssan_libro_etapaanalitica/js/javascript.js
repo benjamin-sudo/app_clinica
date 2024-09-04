@@ -161,7 +161,6 @@ $(document).ready(function(){
     
     //busqueda rapida
     $('.radio_busqueda').click(function (){
-        //console.log("$(this).val() radio_busqueda -> ",$(this).val());
         if($(this).val() == 1){
             $(".opcion_bsq_persona").hide();
             $(".opcion_bsq_etiqueta").show();
@@ -170,47 +169,7 @@ $(document).ready(function(){
             $(".opcion_bsq_etiqueta").hide();
         }
     });
-    
-
     localStorage.getItem("html_busqueda_bacode")?$(".ul_lista_cod_encontrados").html('').append(localStorage.getItem("html_busqueda_bacode")):'';
-    //boton de filtro // cambios
-    
-    
-    $('#ind_filtro_busqueda_xfechas').on('changed.bs.select',function(e,clickedIndex,isSelected,previousValue){
-        //alert("PASA POR ACA");
-        /*
-        var ind_filtro = $('#ind_filtro_busqueda_xfechas').val();
-        var count_filtro = $('#ind_filtro_busqueda_xfechas').val() == null ? 0 : $('#ind_filtro_busqueda_xfechas').val().length;
-        console.log("ind_filtro ->",ind_filtro);
-        if (ind_filtro == null){
-            js_desabilita_filtro_busqueda();
-            localStorage.setItem("strorage_filtro_categorias","0");
-        } else {
-            if(js_opt_todas_las_categorias(count_filtro>0?true:false)){
-                //cookie
-               conf_cookie_filtro_estados($('#ind_filtro_busqueda_xfechas').val());
-            }
-            localStorage.setItem("strorage_filtro_categorias",$('#ind_filtro_busqueda_xfechas').val().toString());
-        }
-        */
-    }).selectpicker();
-
-
-    //console.log("-----------------------");
-    //console.log("localStorage.getIte    ->  " , localStorage.getItem("strorage_filtro_categorias") );
-
-    if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='0'){
-        //console.log("SI");
-        //js_opt_todas_las_categorias(false);
-    }  else {
-        console.log("NO");
-        $('#ind_filtro_busqueda_xfechas').selectpicker('val',localStorage.getItem("strorage_filtro_categorias").split(','));
-    }
-    //console.log("---------------------------------------------------------------------------------------------------------");
-    //console.log("star storage_busqueda_por_n_biosia     ->  ",localStorage.getItem("storage_busqueda_por_n_biosia"));
-    //console.log("star storange_ids_anatomia             ->  ",localStorage.getItem("storange_ids_anatomia"));
-    //console.log("---------------------------------------------------------------------------------------------------------");
-    //star check de _panel_por_gestion -> tipo_busqueda
     var ind_star_busq       =   1;
     if(localStorage.getItem("storage_busqueda_por_n_biosia")===null){
         document.getElementById("busqueda_por_paciente").checked = true;
@@ -242,9 +201,59 @@ $(document).ready(function(){
     }).on('page', function(event, num){
         update_etapaanalitica(num);
     });
+
+    $('.selectpicker').selectpicker();
+    if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='0'){
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val','0');
+    }  else {
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val',localStorage.getItem("strorage_filtro_categorias").split(','));
+    }
     //null_tabs();
     star_defatult();
 });
+
+
+let indFiltroBusquedaHandler = function (e, clickedIndex, isSelected, previousValue) {
+    let ind_filtro = $('#ind_filtro_busqueda_xfechas').val();
+    var count_filtro = ind_filtro == null ? 0 : ind_filtro.length;
+    if (!window.ignorarCambio) {
+        if (js_opt_todas_las_categorias(count_filtro > 0 ? true : false)) {
+            update_etapaanalitica(1);
+        }
+    }
+};
+$('#ind_filtro_busqueda_xfechas').on('changed.bs.select', indFiltroBusquedaHandler);
+function js_opt_todas_las_categorias(_booleano) {
+    if (_booleano) {
+        var toRemove = '0';
+        var arr = $('#ind_filtro_busqueda_xfechas').val();
+        arr = arr.filter(function (item) { return item !== toRemove });
+        //console.log("arr -> ", arr);
+        window.ignorarCambio = true; // Activar bandera
+        $('#ind_filtro_busqueda_xfechas').selectpicker('deselectAll');
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val', arr);
+        window.ignorarCambio = false; // Desactivar bandera
+    } else {
+        window.ignorarCambio = true; // Activar bandera
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val', '0');
+        window.ignorarCambio = false; // Desactivar bandera
+    }
+    var selectobject = document.getElementById("ind_filtro_busqueda_xfechas").getElementsByTagName("option");
+    selectobject[0].disabled = _booleano;
+    return true;
+}
+
+function js_desabilita_filtro_busqueda(){
+    let arr = $('#ind_filtro_busqueda_xfechas').val();
+    if (arr.length === 1 && arr[0] === '0') {
+       
+    } else {
+        localStorage.setItem("strorage_filtro_categorias","0");
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val','0');
+    }
+    update_etapaanalitica();
+}
+
 
 function star_defatult(){
     $("#busqueda_por_fecha").show();
@@ -275,8 +284,8 @@ function js_visualizacion_menu_principal2(target){
     $("#busqueda_por_gestion").hide();
     $("#busqueda_por_codigo").hide();
     $("#busqueda_por_persona").hide();
-    if (target == '#_panel_por_fecha'){   $("#busqueda_por_fecha").show(); }
-    if (target == '#_panel_por_gestion'){   $("#busqueda_por_persona").hide();   }
+    if (target == '#_panel_por_fecha'){ $("#busqueda_por_fecha").show(); }
+    if (target == '#_panel_por_gestion'){ $("#busqueda_por_persona").hide(); }
     return true;
 }
 
@@ -512,6 +521,7 @@ function star_automplete(_value){
 function update_etapaanalitica(v_num_page){
     var date_inicio = $('#fecha_out').data().date;
     var date_final = $('#fecha_out2').data().date;
+    $('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
     var v_storange_tabs_main = localStorage.getItem("storange_tabs_main") || null;
     if (v_storange_tabs_main) {
         var v_html_vista = v_storange_tabs_main.replace("#","");
@@ -523,17 +533,21 @@ function update_etapaanalitica(v_num_page){
     var v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
     let ind_orden = $("#ind_order_by").val();
     let v_num_page2 = typeof v_num_page === 'undefined' ? 1 : v_num_page;
-    /*
-        console.log("   ######################################################  ");
-        console.log("v_storange_tabs_main   ->  ",v_storange_tabs_main);
-        console.log("v_get_sala             ->  ",v_get_sala);
-        console.log("v_filtro_fechas        ->  ",v_filtro_fechas);
-        console.log("v_ids_anatomia         ->  ",v_ids_anatomia);
-        console.log("ind_orden              ->  ",ind_orden);
-        console.log("v_num_page2            ->  ",v_num_page2);
-        console.log("   ######################################################  ");
-        return false;
-    */
+    
+    console.log("   ######################################################  ");
+    console.log("v_storange_tabs_main   ->  ",v_storange_tabs_main);
+    console.log("v_get_sala             ->  ",v_get_sala);
+    console.log("v_filtro_fechas        ->  ",v_filtro_fechas);
+    console.log("v_ids_anatomia         ->  ",v_ids_anatomia);
+    console.log("ind_orden              ->  ",ind_orden);
+    console.log("v_num_page2            ->  ",v_num_page2);
+    console.log("   ######################################################  ");
+    return false;
+
+
+    return false;
+
+
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/update_lista_etapaanalitica_pagina",
@@ -557,7 +571,6 @@ function update_etapaanalitica(v_num_page){
                                     },
         success : function(aData) { 
                                         let html_out = aData.out_html.return_html;
-                                        
                                         //console.error(aData);
                                         //console.error("return               ->  ",aData.return);
                                         //console.error("resultados           ->  ",aData.return.resultados);
@@ -569,9 +582,7 @@ function update_etapaanalitica(v_num_page){
                                         console.error("v_html_vista             ->  ",v_html_vista);
                                         console.error("html_li                  ->  ",html_out);
                                         */
-
                                         $(".html"+v_html_vista).html('').html(html_out);
-
                                         if(v_storange_tabs_main == '#_panel_por_fecha'){
                                             $("#V_ULTIMA_PAGE").val(v_num_page);
                                             if (aData.return.n_resultado == '0'){
@@ -584,7 +595,6 @@ function update_etapaanalitica(v_num_page){
                                             $("#anatomia_pagination").hide();
                                         }
                                         $(".n_resultados_panel").html(aData.return.n_resultado);
-
                                         setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     }, 
     });
@@ -615,50 +625,43 @@ function js_delete_list_gestion(new_id_anatomia){
         update_etapaanalitica(1);
     } else {
         $.ajax({ 
-            type                :   "POST",
-            url                 :   "ssan_libro_etapaanalitica/get_elimina_cookie_paciente",
-            dataType            :   "json",
-            beforeSend          :   function(xhr)   {   
-                                                        console.log("ssan_libro_etapaanalitica/get_elimina_cookie_paciente   ->    ",xhr);   
-                                                    },
-            data                :                   {  },
-            error               :   function(errro) { 
-                                                        console.log(errro);  
-                                                        console.log(errro.responseText);    
-                                                        jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                    },
-            success             :   function(aData) { 
-                                                        console.log("return aData   ->  ",aData);
-                                                        $(".solicitud_"+new_id_anatomia).remove();
-                                                    }, 
+            type : "POST",
+            url : "ssan_libro_etapaanalitica/get_elimina_cookie_paciente",
+            dataType : "json",
+            beforeSend : function(xhr) { console.log("ssan_libro_etapaanalitica/get_elimina_cookie_paciente -> ",xhr);      },
+            data : { },
+            error : function(errro) { 
+                                        console.log(errro);  
+                                        console.log(errro.responseText);    
+                                        jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                    },
+            success : function(aData) { 
+                                        console.log("return aData   ->  ",aData);
+                                        $(".solicitud_"+new_id_anatomia).remove();
+                                    }, 
         });
     }
 }
 
 function ver_cookie(){
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_etapaanalitica/ver_gestion_cookie",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("ssan_libro_etapaanalitica/gestion_cookie   ->    ",xhr);   
-                                                },
-        data                :                   {  },
-        error               :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                },
-        success             :   function(aData) { 
-                                                    console.log("return aData   ->  ",aData);
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/ver_gestion_cookie",
+        dataType : "json",
+        beforeSend : function(xhr) { console.log("ssan_libro_etapaanalitica/gestion_cookie -> ",xhr); },
+        data : { },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    console.log(errro.responseText);    
+                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                },
+        success : function(aData) { 
+                                        console.log("return aData   ->  ",aData);
+                                    }, 
     });
 }
 
 function js_visualizacion_menu_principal(target){
-    //console.log("---------------------------------");
-    //console.log("target ->  ",target);
-    //console.log("---------------------------------");
     if (target == '#_panel_por_fecha'){
         $(".grid_filtro_panel_por_fecha").show();
     }
@@ -670,56 +673,23 @@ function js_visualizacion_menu_principal(target){
 
 function conf_cookie_filtro_estados(_filtro_estados){
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_etapaanalitica/gestion_cookie_porfiltros",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("ssan_libro_etapaanalitica/gestion_cookie ->",xhr);   
-                                                },
-        data                :                   { 
-                                                    data_for_cookie :   _filtro_estados,
-                                                },
-        error               :   function(errro) { 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/gestion_cookie_porfiltros",
+        dataType : "json",
+        beforeSend : function(xhr) { },
+        data : {  data_for_cookie : _filtro_estados,  },
+        error : function(errro) { 
                                                     console.log(errro);  
                                                     console.log(errro.responseText);    
                                                     jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
                                                 },
         success             :   function(aData) { 
-                                                    console.log("aData  ->  ",aData);
                                                     console.log("localStorage   ->  ",localStorage.getItem("strorage_filtro_categorias"));
                                                     update_etapaanalitica(1);
                                                 }, 
     });
 }
 
-function js_opt_todas_las_categorias(_booleano){
-    //console.log("js_opt_todas_las_categorias -> _booleano          ->  ",_booleano);
-    if(_booleano){
-        //remueve la opcion todas las categorias
-        var toRemove    =   '0';
-        var arr         =   $('#ind_filtro_busqueda_xfechas').val();
-        arr             =   arr.filter(function(item){ return item !== toRemove });
-        console.log("arr    ->  ",arr); 
-        $('#ind_filtro_busqueda_xfechas').selectpicker('deselectAll');
-        $('#ind_filtro_busqueda_xfechas').selectpicker('val',arr);
-    } else {
-        $('#ind_filtro_busqueda_xfechas').selectpicker('val','0');
-    }
-    //deshabilita la opcion todas las categorias
-    var selectobject                =   document.getElementById("ind_filtro_busqueda_xfechas").getElementsByTagName("option");
-    //console.log("selectobject       ->  ",selectobject);
-    selectobject[0].disabled        =   _booleano;
-    //selectobject[0].checked       =    false;
-    $('#ind_filtro_busqueda_xfechas').selectpicker('refresh');
-    return true;
-}
-
-function js_desabilita_filtro_busqueda(){
-    js_opt_todas_las_categorias(false);
-    conf_cookie_filtro_estados([0]);
-    localStorage.setItem("strorage_filtro_categorias","0");
-    $('#ind_filtro_busqueda_xfechas').selectpicker('val','0').selectpicker('refresh');;
-}
 
 function js_views_historial_clinico_(numfichae){
     $("#li_histo_clinico").attr("onclick",'');

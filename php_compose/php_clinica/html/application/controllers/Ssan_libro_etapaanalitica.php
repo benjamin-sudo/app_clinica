@@ -371,21 +371,20 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     
     public function gestion_cookie_porfiltros(){
         if(!$this->input->is_ajax_request()){  show_404(); }
-        $data_for_cookie                =   $this->input->post('data_for_cookie');
-        
-        $cookie_target                  =   array(
-                                                'name'      =>  'target',
-                                                'value'     =>  '#_panel_por_fecha',
-                                                'expire'    =>  86500,
-                                                'secure'    =>  false
-                                            );
+        $data_for_cookie = $this->input->post('data_for_cookie');
+        $cookie_target = array(
+                                    'name' =>  'target',
+                                    'value' =>  '#_panel_por_fecha',
+                                    'expire' =>  86500,
+                                    'secure' =>  false
+                                );
         $this->input->set_cookie($cookie_target);
-        $cookie_filtros                 =   array(
-                                                'name'      =>  'data_filtro_fechas_estados',
-                                                'value'     =>  implode(",",$data_for_cookie),
-                                                'expire'    =>  86500,
-                                                'secure'    =>  false
-                                            );
+        $cookie_filtros= array(
+                                'name' => 'data_filtro_fechas_estados',
+                                'value' =>  implode(",",$data_for_cookie),
+                                'expire' =>  86500,
+                                'secure' =>  false
+                            );
         $this->input->set_cookie($cookie_filtros);
         $this->output->set_output(json_encode(array(
             'STATUS'    =>  true,
