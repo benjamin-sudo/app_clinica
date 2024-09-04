@@ -25,12 +25,11 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $arr_data = $DATA["ind_filtros_ap"];
         $page_number = $DATA["v_page_num"];
         $page_size = $DATA["v_page_size"];
-        
         $fecha_inicio = date('Y-m-d 00:00:00', strtotime($val_fecha_inicio));
         $fecha_final = date('Y-m-d 23:59:59', strtotime($val_fecha_final));
-        
         $start_row = ($page_number - 1) * $page_size;
         $end_row = $page_size;
+
         # Filtrar estados
 
         $lista_filtro_estados = [];
@@ -1028,7 +1027,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $v_get_sala = $DATA['get_sala']; 
         $V_ID_HISTO = $this->db->escape($DATA['id_anatomia']);
         $V_COD_EMPRESA = $this->db->escape($DATA['cod_empresa']);
-
         #MAIN PRINCIPAL
         $multi_query = $this->db->conn_id->multi_query("CALL ADMIN.CONSULTA_UNICA_ANATOMIA($V_ID_HISTO,$V_COD_EMPRESA)");
         if ($multi_query) {

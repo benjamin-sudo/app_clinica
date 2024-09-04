@@ -521,13 +521,15 @@ function star_automplete(_value){
 function update_etapaanalitica(v_num_page){
     var date_inicio = $('#fecha_out').data().date;
     var date_final = $('#fecha_out2').data().date;
-    $('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
+    
+   
     var v_storange_tabs_main = localStorage.getItem("storange_tabs_main") || null;
     if (v_storange_tabs_main) {
         var v_html_vista = v_storange_tabs_main.replace("#","");
     } else {
         var v_html_vista = '_panel_por_fecha'; // O cualquier valor predeterminado que tenga sentido en tu contexto
     }
+    
     var v_get_sala = $("#get_sala").val();
     var v_filtro_fechas = $("#ind_filtro_busqueda_xfechas").val()===null?0:$("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
@@ -535,18 +537,22 @@ function update_etapaanalitica(v_num_page){
     let v_num_page2 = typeof v_num_page === 'undefined' ? 1 : v_num_page;
     
     console.log("   ######################################################  ");
-    console.log("v_storange_tabs_main   ->  ",v_storange_tabs_main);
-    console.log("v_get_sala             ->  ",v_get_sala);
-    console.log("v_filtro_fechas        ->  ",v_filtro_fechas);
-    console.log("v_ids_anatomia         ->  ",v_ids_anatomia);
-    console.log("ind_orden              ->  ",ind_orden);
-    console.log("v_num_page2            ->  ",v_num_page2);
+    console.log("   v_storange_tabs_main   ->  ",v_storange_tabs_main);
+    console.log("   v_get_sala             ->  ",v_get_sala);
+    console.log("   v_filtro_fechas        ->  ",v_filtro_fechas);
+    console.log("   v_ids_anatomia         ->  ",v_ids_anatomia);
+    console.log("   ind_orden              ->  ",ind_orden);
+    console.log("   v_num_page2            ->  ",v_num_page2);
     console.log("   ######################################################  ");
-    return false;
 
+    //$('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
+    
 
-    return false;
+    if ($('#ind_filtro_busqueda_xfechas').parent().hasClass('open')) {
+        $('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
+    }
 
+    //return false;
 
     $.ajax({ 
         type : "POST",

@@ -26,7 +26,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $arr_estados_filtro = '0';
         $var_fecha_inicio = date("d-m-Y");
         $var_fecha_final = date("d-m-Y");
-        /*
         if(isset($_COOKIE['target']))   {
             $tipo_busqueda              =   $_COOKIE['target'];
             if($tipo_busqueda           === '#_panel_por_fecha'){
@@ -59,9 +58,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $var_fecha_inicio           =   date("d-m-Y");
             $var_fecha_final            =   date("d-m-Y");
         }
-        */
-        $arr_ids_anatomia = [];
-        $tipo_busqueda = '#_panel_por_fecha';
+        #$arr_ids_anatomia = [];
+        #$tipo_busqueda = '#_panel_por_fecha';
         #LOAD_ETAPA_ANALITICA
         $return_data = $this->Ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(
             "cod_empresa" => $this->session->userdata("COD_ESTAB"),
@@ -102,9 +100,11 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $_post_filtro_xfechas = $this->input->post('ind_filtro_busqueda_xfechas');
         $v_page_num = $this->input->post('v_page_num');
         $v_page_size = $this->input->post('v_page_size');
+        
         #TIENE QUE SABER QUE target 
         #_INICIO BUSCADOR DEL FILTRO
-        /*
+
+
         $val_filtro_estaso = '';
         $arr_ids_anatomia = '';
         $cookie_target = array(
@@ -147,9 +147,13 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         } else  if($tipo_busqueda === '#_busqueda_bacode'){
             $arr_ids_anatomia = 'null';
         }
-        */
-        $arr_ids_anatomia = [];
-        $tipo_busqueda = '#_panel_por_fecha';
+        
+        
+        
+        #$arr_ids_anatomia = [];
+        #$tipo_busqueda = '#_panel_por_fecha';
+
+
         $return_data =   $this->Ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(
             "cod_empresa" =>  $this->session->userdata("COD_ESTAB"),
             "usr_session" =>  explode("-",$this->session->userdata("USERNAME"))[0],

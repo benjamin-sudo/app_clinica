@@ -189,14 +189,14 @@ input[type="radio"]                     {
     justify-self                        :   center;
 }
 
-.grid_a_rce_anatomiapatologica          {
-    display                             :   grid;
-    grid-template-columns               :   22px 3fr 2fr auto 1.5fr 10px 1.5fr 100px;
-    align-items                         :   baseline;
-    padding-top                         :   7px;
-    padding-bottom                      :   7px;
-    padding-left                        :   10px;
-    padding-right                       :   10px; 
+.grid_a_rce_anatomiapatologica {
+    display : grid;
+    grid-template-columns : 20px 2fr 2fr 2fr 1fr 10px 1fr 90px;
+    align-items : baseline;
+    padding-top : 7px;
+    padding-bottom : 7px;
+    padding-left : 10px;
+    padding-right : 10px; 
 }
 
 .grid_espera_pdf                        {

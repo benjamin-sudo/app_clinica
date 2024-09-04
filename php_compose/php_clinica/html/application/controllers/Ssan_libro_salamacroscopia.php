@@ -18,7 +18,7 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
         $arr_estados_filtro = '0';
         $var_fecha_inicio = date("d-m-Y");
         $var_fecha_final = date("d-m-Y");
-        /*
+        
         if(isset($_COOKIE['target'])){
             $tipo_busqueda = $_COOKIE['target'];
             if($tipo_busqueda === '#_panel_por_fecha'){
@@ -39,11 +39,14 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
                 $arr_ids_anatomia = [];
             }
         } else {
-           
+            $tipo_busqueda = '#_panel_por_fecha';
+            $arr_ids_anatomia = [];
+            $var_fecha_inicio = date("d-m-Y");
+            $var_fecha_final = date("d-m-Y");
         }
-        */
-        $arr_ids_anatomia = [];
-        $tipo_busqueda = '#_panel_por_fecha';
+        
+        
+
         $return_data = $this->ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(
             "cod_empresa" => $this->session->userdata("COD_ESTAB"),
             "usr_session" => explode("-",$this->session->userdata("USERNAME"))[0],
