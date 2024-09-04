@@ -9,9 +9,7 @@
     $txt_day                        =   $row["LAST_DATE_AUDITA_MOMENT"]===date("Ymd")?'hours':'day';
     $ID_SOLICITUD                   =   $row["ID_SOLICITUD"];
 ?>
-
 <?php $v_border_star = $aux===1?'border-radius:4px 4px 0px 0px;':''; ?>
-
 <a href="#" class="css_lista_ordenada <?php echo $row["STYLE_HISTO_ZONA"];?> list-group-item list-group-item-action  solicitud_<?php echo $row["ID_SOLICITUD"];?>" style="padding:0px;">
     <div class="grid_a_rce_anatomiapatologica css<?php echo substr($ind_opcion,1);?>" id="anatomia_<?php echo $row["ID_SOLICITUD"];?>" data-id_anatomia_pantalla='<?php echo $row["ID_SOLICITUD"];?>'>
         <div class="grid_a_rce_anatomiapatologica1" style="text-align:start">
@@ -39,19 +37,18 @@
             <i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;<b><?php echo $row["NOM_PROFE_CORTO"];?></b>
         </div>
         <div class="grid_a_rce_anatomiapatologica5">
-            <i class="fa fa-map-marker" aria-hidden="true"></i><b>&nbsp;<?php echo $row["TXT_HISTO_ZONA"];?></b>
-            <!--<b><?php echo $row["ID_HISTO_ZONA"];?></b>-->
+            <i class="fa fa-map-marker" aria-hidden="true"></i><b>&nbsp;<?php echo $row["TXT_HISTO_ZONA"];?></b> - <?php echo $row["ID_HISTO_ZONA"];?>
+            <input type="hidden" id="id_zona_<?php echo $row["ID_SOLICITUD"];?>" value="<?php echo $row["ID_HISTO_ZONA"];?>"/>
         </div>
-        <div class="grid_a_rce_anatomiapatologica8 class num_biospias_<?php echo $row["ID_SOLICITUD"];?>" style="text-align: end;"  
-                data-n_biopsia      =    "<?php echo $row['NUM_INTERNO_AP'];?>"
-                data-n_citologia    =    "<?php echo $row['NUM_CO_CITOLOGIA'];?>"
-                data-n_pap          =    "<?php echo $row['NUM_CO_PAP'];?>"
-            >
-            <b class="ind_numeros_anatomia">
-                <?php echo $row['NUM_INTERNO_AP']   ==  ''?'':'N&deg; BIOPSIA: '.$row['NUM_INTERNO_AP'];?> 
-                <?php echo $row['IND_TIPO_BIOPSIA'] ==  4?'<br>':'';?> 
+        <div class="grid_a_rce_anatomiapatologica8 class num_biospias_<?php echo $row["ID_SOLICITUD"];?>" style="text-align: justify;"  
+                data-n_biopsia = "<?php echo $row['NUM_INTERNO_AP'];?>"
+                data-n_citologia = "<?php echo $row['NUM_CO_CITOLOGIA'];?>"
+                data-n_pap = "<?php echo $row['NUM_CO_PAP'];?>">
+            <b class="ind_numeros_anatomia" style="font-size: 12px;">
+                <?php echo $row['NUM_INTERNO_AP'] == ''?'':'N&deg; BIOPSIA: '.$row['NUM_INTERNO_AP'];?> 
+                <?php echo $row['IND_TIPO_BIOPSIA'] == 4?'<br>':'';?> 
                 <?php echo $row['NUM_CO_CITOLOGIA'] ==  ''?'':'N&deg; CITOL&Oacute;GICO: '.$row['NUM_CO_CITOLOGIA'];?> 
-                <?php echo $row['NUM_CO_PAP']       ==  ''?'':'N&deg; PAP: '.$row['NUM_CO_PAP'];?> 
+                <?php echo $row['NUM_CO_PAP'] == ''?'':'N&deg; PAP: '.$row['NUM_CO_PAP'];?> 
             </b>
             <?php echo $row['TXT_EMPRESA_DERIVADO'] ==  '' ? '' : '<br><span class="label label-info"><i class="fa fa-hospital-o" aria-hidden="true"></i>&nbsp;'.$row['TXT_EMPRESA_DERIVADO'].'</span>';?>
             <br>
@@ -66,14 +63,14 @@
                     <?php if($get_sala=='administrativo'){ ?>
                         <div class="grid_li_pdfs1 btn-group-vertical">
                             <button 
-                                type    =   "button" 
-                                class   =   "btn btn-success btn-xs btn-fill" 
-                                id      =   "btn_pdf_macro" 
-                                name    =   "btn_pdf_macro"
+                                type = "button" 
+                                class = "btn btn-success btn-xs btn-fill" 
+                                id = "btn_pdf_macro" 
+                                name = "btn_pdf_macro"
                                 <?php if ($row["ID_HISTO_ZONA"]==0){
-                                    echo    'disabled';
+                                    echo 'disabled';
                                 } else {
-                                    echo    'onclick="js_pdf_microscopica('.$row["ID_SOLICITUD"].')";';
+                                    echo 'onclick="js_pdf_microscopica('.$row["ID_SOLICITUD"].')";';
                                 } ?>
                                 >
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>

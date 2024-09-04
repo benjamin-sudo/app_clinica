@@ -23,41 +23,42 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     public function index(){
         $this->output->set_template('blank');
         $arr_ids_anatomia = '';
-        $arr_estados_filtro = '0';
+        $arr_estados_filtro = '-1';
         $var_fecha_inicio = date("d-m-Y");
         $var_fecha_final = date("d-m-Y");
-        if(isset($_COOKIE['target']))   {
-            $tipo_busqueda              =   $_COOKIE['target'];
-            if($tipo_busqueda           === '#_panel_por_fecha'){
-                $arr_estados_filtro     =   isset($_COOKIE['data_filtro_fechas_estados'])?$_COOKIE['data_filtro_fechas_estados']:'0';
+        if(isset($_COOKIE['target'])) {
+            $tipo_busqueda =   $_COOKIE['target'];
+            if($tipo_busqueda === '#_panel_por_fecha'){
+                $arr_estados_filtro =   isset($_COOKIE['data_filtro_fechas_estados'])?$_COOKIE['data_filtro_fechas_estados']:'0';
                 if(isset($_COOKIE['data'])){
                     //var_dump(1);
-                    $conf_cookie        =   json_decode($this->input->cookie('data',false));
-                    $var_fecha_inicio   =   $conf_cookie->fecha_inicio;
-                    $var_fecha_final    =   strtotime($conf_cookie->fecha_final)>strtotime($conf_cookie->fecha_inicio)?$conf_cookie->fecha_final:$conf_cookie->fecha_inicio;
+                    $conf_cookie = json_decode($this->input->cookie('data',false));
+                    $var_fecha_inicio = $conf_cookie->fecha_inicio;
+                    $var_fecha_final = strtotime($conf_cookie->fecha_final)>strtotime($conf_cookie->fecha_inicio)?$conf_cookie->fecha_final:$conf_cookie->fecha_inicio;
                 } else {
                     //var_dump(2);
-                    $var_fecha_inicio   =   date("d-m-Y");
-                    $var_fecha_final    =   date("d-m-Y");
+                    $var_fecha_inicio = date("d-m-Y");
+                    $var_fecha_final = date("d-m-Y");
                 }
-            } else  if($tipo_busqueda   === '#_panel_por_gestion'){
-                #$arr_ids_anatomia      =   isset($_COOKIE['id_anatomia'])?$_COOKIE['id_anatomia']:'';
-                $arr_ids_anatomia       =   '';
+            } else  if($tipo_busqueda === '#_panel_por_gestion'){
+                #$arr_ids_anatomia =   isset($_COOKIE['id_anatomia'])?$_COOKIE['id_anatomia']:'';
+                $arr_ids_anatomia =   '';
                 #elimina cokkie 
                 #unset($_COOKIE['id_anatomia']); 
                 #setcookie('id_anatomia',null,-1,'/'); 
-            } else  if($tipo_busqueda   === '#_busqueda_xpersona'){
-                $arr_ids_anatomia       =   [];
-            } else  if($tipo_busqueda   === '#_busqueda_bacode'){
-                $arr_ids_anatomia       =   [];
+            } else  if($tipo_busqueda === '#_busqueda_xpersona'){
+                $arr_ids_anatomia = [];
+            } else  if($tipo_busqueda === '#_busqueda_bacode'){
+                $arr_ids_anatomia = [];
             }
         } else {
             #target por defecto
-            $tipo_busqueda              =   '#_panel_por_fecha';
-            $arr_ids_anatomia           =   [];
-            $var_fecha_inicio           =   date("d-m-Y");
-            $var_fecha_final            =   date("d-m-Y");
+            $tipo_busqueda = '#_panel_por_fecha';
+            $arr_ids_anatomia = [];
+            $var_fecha_inicio = date("d-m-Y");
+            $var_fecha_final = date("d-m-Y");
         }
+
         #$arr_ids_anatomia = [];
         #$tipo_busqueda = '#_panel_por_fecha';
         #LOAD_ETAPA_ANALITICA
@@ -76,6 +77,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "ind_filtros_ap" => $arr_estados_filtro,
             "ind_order_by" => "0",
         ));
+
+
         #API VOZ
         #$this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES
@@ -100,11 +103,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $_post_filtro_xfechas = $this->input->post('ind_filtro_busqueda_xfechas');
         $v_page_num = $this->input->post('v_page_num');
         $v_page_size = $this->input->post('v_page_size');
-        
         #TIENE QUE SABER QUE target 
         #_INICIO BUSCADOR DEL FILTRO
-
-
         $val_filtro_estaso = '';
         $arr_ids_anatomia = '';
         $cookie_target = array(
@@ -113,7 +113,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
                                 'expire' => 86500,
                                 'secure' => false
                             );
-        
         $this->input->set_cookie($cookie_target);
         if($tipo_busqueda === '#_panel_por_fecha') {   #_panel_por_fecha   
             #BUSCAR REPETIDOS
@@ -147,13 +146,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         } else  if($tipo_busqueda === '#_busqueda_bacode'){
             $arr_ids_anatomia = 'null';
         }
-        
-        
-        
         #$arr_ids_anatomia = [];
         #$tipo_busqueda = '#_panel_por_fecha';
-
-
         $return_data =   $this->Ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(
             "cod_empresa" =>  $this->session->userdata("COD_ESTAB"),
             "usr_session" =>  explode("-",$this->session->userdata("USERNAME"))[0],

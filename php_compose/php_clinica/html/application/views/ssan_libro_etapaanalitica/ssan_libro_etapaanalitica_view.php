@@ -140,7 +140,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                 </div>
             </div>
             <div class="tab-pane fade" id="_panel_por_fecha" role="tabpanel" aria-labelledby="_panel_por_fecha-tab">
-                <div class="card" style="margin-bottom:0px;margin-top:-4px;padding:9px;">
+                <div class="card" style="margin-bottom:0px;margin-top:6px;padding:9px;">
                    <div class="grid_card_botonhistorial">
                         <div class="grid_card_botonhistorial1">
                             <div class="grid_pabel_tipo_busqueda">
@@ -183,8 +183,8 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
             <div class="grid_titulo_panel_main3">
                 <div class="grid_filtro_panel_por_fecha">
                     <select class="selectpicker"  name="ind_filtro_busqueda_xfechas" id="ind_filtro_busqueda_xfechas" multiple data-selected-text-format="count" data-size="11" data-width="100%" tabindex="-98">
-                        <option value="0" checked>TODAS LAS CATEGORIAS</option>
-                        <option value="9">SALA DE RECEPCI&Oacute;N | MACROSC&Oacute;PICA</option>
+                        <option value="-1" checked>TODAS LAS CATEGORIAS</option>
+                        <option value="0">SALA DE RECEPCI&Oacute;N | MACROSC&Oacute;PICA</option>
                         <option value="1">SALA MACROSCOPICA</option>
                         <option value="2">SALA PROCESO</option>
                         <option value="3">SALA INCLUSI&Oacute;N</option>
@@ -212,9 +212,12 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                 </select>
             </div>
         </div>
-        
-        <hr style="margin: 8px 0px 10px 0px">
 
+        <!--
+            ver_(15722)
+        -->
+
+        <hr style="margin: 8px 0px 10px 0px">
         <ul class="list-group lista_etapa_analitica busqueda_por_fecha html_panel_por_fecha" id="busqueda_por_fecha" style="padding-right:5px;">
             <?php echo $HTML_LI["return_html"];?> 
         </ul>
@@ -242,6 +245,17 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
         </div>
     </div>
 </div>
+
+<!--
+<?php
+    var_dump($ind_filtros_ap);
+    echo "<br>";
+    var_dump($_COOKIE['data_filtro_fechas_estados']);
+    echo "<br>";
+    var_dump($_COOKIE['target']);
+?>
+-->
+
 
 <section>
     <div class="modal fade" id="modal_descipcion_muestras">

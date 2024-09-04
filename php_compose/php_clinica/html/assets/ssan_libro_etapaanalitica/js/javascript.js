@@ -8,7 +8,7 @@ $(document).ready(function(){
     var today = dd+'-'+mm+'-'+yyyy;
     var todayDate = new Date().getDate();
     $('#fecha_out').datetimepicker({
-        useCurrent : false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
+        useCurrent : false,
         inline : true,
         sideBySide : true,
         format : 'DD-MM-YYYY',
@@ -37,7 +37,7 @@ $(document).ready(function(){
     });
 
     $('#fecha_out2').datetimepicker({
-        useCurrent : false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
+        useCurrent : false,
         inline : true,
         sideBySide : true,
         format : 'DD-MM-YYYY',
@@ -138,26 +138,26 @@ $(document).ready(function(){
     
     //panel de busqueda
     $('#panel_altrapriopidad,#panel_casos,#panel_archivar,#panel_etiquetas').on('show.bs.collapse',function(e){
-        e.target.id == 'panel_altrapriopidad'       ?   localStorage.setItem("memoria_altrapriopidad",true):'';
-        e.target.id == 'panel_casos'                ?   localStorage.setItem("memoria_casos",true):'';
-        e.target.id == 'panel_archivar'             ?   localStorage.setItem("memoria_archivar",true):'';
-        e.target.id == 'panel_etiquetas'            ?   localStorage.setItem("memoria_etiquetas",true):'';
-        e.target.id == 'panel_etiquetas'            ?   $("#header_menu_etiquetas").css('border-radius','0px 0px 0px 0px'):'';
+        e.target.id == 'panel_altrapriopidad' ? localStorage.setItem("memoria_altrapriopidad",true):'';
+        e.target.id == 'panel_casos' ? localStorage.setItem("memoria_casos",true):'';
+        e.target.id == 'panel_archivar' ? localStorage.setItem("memoria_archivar",true):'';
+        e.target.id == 'panel_etiquetas' ? localStorage.setItem("memoria_etiquetas",true):'';
+        e.target.id == 'panel_etiquetas' ? $("#header_menu_etiquetas").css('border-radius','0px 0px 0px 0px'):'';
         $("#icono_"+e.target.id).removeClass("fa fa-sort-asc").addClass("fa fa-sort-desc");
     });
     $('#panel_altrapriopidad,#panel_casos,#panel_archivar,#panel_etiquetas').on('hidden.bs.collapse',function(e){
-        e.target.id == 'panel_altrapriopidad'       ?   localStorage.setItem("memoria_altrapriopidad",false):'';
-        e.target.id == 'panel_casos'                ?   localStorage.setItem("memoria_casos",false):'';
-        e.target.id == 'panel_archivar'             ?   localStorage.setItem("memoria_archivar",false):'';
-        e.target.id == 'panel_etiquetas'            ?   localStorage.setItem("memoria_etiquetas",false):'';
-        e.target.id == 'panel_etiquetas'            ?   $("#header_menu_etiquetas").css('border-radius','0px 0px 4px 4px'):'';
+        e.target.id == 'panel_altrapriopidad' ? localStorage.setItem("memoria_altrapriopidad",false):'';
+        e.target.id == 'panel_casos' ? localStorage.setItem("memoria_casos",false):'';
+        e.target.id == 'panel_archivar' ? localStorage.setItem("memoria_archivar",false):'';
+        e.target.id == 'panel_etiquetas' ? localStorage.setItem("memoria_etiquetas",false):'';
+        e.target.id == 'panel_etiquetas' ? $("#header_menu_etiquetas").css('border-radius','0px 0px 4px 4px'):'';
         $("#icono_"+e.target.id).removeClass("fa fa-sort-desc").addClass("fa fa-sort-asc"); 
     });
 
-    localStorage.getItem("memoria_altrapriopidad")  ===     null?localStorage.setItem("memoria_altrapriopidad",true):   js_gestion_panel("altrapriopidad");
-    localStorage.getItem("memoria_casos")           ===     null?localStorage.setItem("memoria_casos",true)         :   js_gestion_panel("casos");
-    localStorage.getItem("memoria_archivar")        ===     null?localStorage.setItem("memoria_archivar",true)      :   js_gestion_panel("archivar");
-    localStorage.getItem("memoria_etiquetas")       ===     null?localStorage.setItem("memoria_etiquetas",true)     :   js_gestion_panel("etiquetas");
+    localStorage.getItem("memoria_altrapriopidad") === null?localStorage.setItem("memoria_altrapriopidad",true): js_gestion_panel("altrapriopidad");
+    localStorage.getItem("memoria_casos") === null?localStorage.setItem("memoria_casos",true) : js_gestion_panel("casos");
+    localStorage.getItem("memoria_archivar") === null?localStorage.setItem("memoria_archivar",true) : js_gestion_panel("archivar");
+    localStorage.getItem("memoria_etiquetas") === null?localStorage.setItem("memoria_etiquetas",true) : js_gestion_panel("etiquetas");
     
     //busqueda rapida
     $('.radio_busqueda').click(function (){
@@ -201,16 +201,34 @@ $(document).ready(function(){
     }).on('page', function(event, num){
         update_etapaanalitica(num);
     });
-
     $('.selectpicker').selectpicker();
-    if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='0'){
-        $('#ind_filtro_busqueda_xfechas').selectpicker('val','0');
+    //console.error("strorage_filtro_categorias -> ",localStorage.getItem("strorage_filtro_categorias"));
+    if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='-1'){
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val','-1');
     }  else {
         $('#ind_filtro_busqueda_xfechas').selectpicker('val',localStorage.getItem("strorage_filtro_categorias").split(','));
     }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var tabs = document.querySelector('#tabs_main_analitica');
+        tabs.addEventListener('shown.bs.tab', function (event) {
+            let activeTab = event.target; 
+            let previousTab = event.relatedTarget; 
+            console.log('Nueva pestaña activa   :   ' + activeTab.id); 
+            console.log('Pestaña anterior       :   ' + previousTab.id); 
+        });
+    });
+    
+
+    //$('#ind_filtro_busqueda_xfechas').selectpicker('val','-1');
     //null_tabs();
     star_defatult();
 });
+
+
+
+
 
 
 let indFiltroBusquedaHandler = function (e, clickedIndex, isSelected, previousValue) {
@@ -218,14 +236,16 @@ let indFiltroBusquedaHandler = function (e, clickedIndex, isSelected, previousVa
     var count_filtro = ind_filtro == null ? 0 : ind_filtro.length;
     if (!window.ignorarCambio) {
         if (js_opt_todas_las_categorias(count_filtro > 0 ? true : false)) {
+            localStorage.setItem("strorage_filtro_categorias",ind_filtro.toString());
             update_etapaanalitica(1);
         }
     }
 };
+
 $('#ind_filtro_busqueda_xfechas').on('changed.bs.select', indFiltroBusquedaHandler);
 function js_opt_todas_las_categorias(_booleano) {
     if (_booleano) {
-        var toRemove = '0';
+        var toRemove = '-1';
         var arr = $('#ind_filtro_busqueda_xfechas').val();
         arr = arr.filter(function (item) { return item !== toRemove });
         //console.log("arr -> ", arr);
@@ -235,7 +255,7 @@ function js_opt_todas_las_categorias(_booleano) {
         window.ignorarCambio = false; // Desactivar bandera
     } else {
         window.ignorarCambio = true; // Activar bandera
-        $('#ind_filtro_busqueda_xfechas').selectpicker('val', '0');
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val', '-1');
         window.ignorarCambio = false; // Desactivar bandera
     }
     var selectobject = document.getElementById("ind_filtro_busqueda_xfechas").getElementsByTagName("option");
@@ -244,16 +264,15 @@ function js_opt_todas_las_categorias(_booleano) {
 }
 
 function js_desabilita_filtro_busqueda(){
-    let arr = $('#ind_filtro_busqueda_xfechas').val();
-    if (arr.length === 1 && arr[0] === '0') {
+    let arr = $('#ind_filtro_busqueda_xfechas').val() || '-1';
+    if (arr.length === 1 && arr[0] === '-1') {
        
     } else {
-        localStorage.setItem("strorage_filtro_categorias","0");
-        $('#ind_filtro_busqueda_xfechas').selectpicker('val','0');
+        localStorage.setItem("strorage_filtro_categorias","-1");
+        $('#ind_filtro_busqueda_xfechas').selectpicker('val','-1');
     }
-    update_etapaanalitica();
+    update_etapaanalitica(1);
 }
-
 
 function star_defatult(){
     $("#busqueda_por_fecha").show();
@@ -263,7 +282,7 @@ function star_defatult(){
 }
 
 function null_tabs(){
-    console.log("null_tabs -> txt_busqueda_titulo");
+    //console.log("null_tabs -> txt_busqueda_titulo");
     localStorage.setItem("storange_tabs_main","#_panel_por_fecha");
     js_visualizacion_menu_principal2("#_panel_por_fecha");
     //localStorage.setItem("html_busqueda_bacode",null);
@@ -279,7 +298,7 @@ function null_tabs(){
 }
 
 function js_visualizacion_menu_principal2(target){
-    console.error("target ->  ",target);
+    //console.error("target ->  ",target);
     $("#busqueda_por_fecha").hide();
     $("#busqueda_por_gestion").hide();
     $("#busqueda_por_codigo").hide();
@@ -303,24 +322,22 @@ function js_gestion(){
 function js_gestion_firma(){
     $('#loadFade').modal('show'); 
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_etapaanalitica/gestion_firma_patologo",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("ssan_libro_etapaanalitica/gestion_cookie   ->  ",xhr);   
-                                                },
-        data                :                   { },
-        error               :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide'); 
-                                                },
-        success             :   function(aData) { 
-                                                    $('#loadFade').modal('hide'); 
-                                                    $("#html_gestion_firma_patologo").html(aData.html);
-                                                    $("#modal_gestion_firma_patologo").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/gestion_firma_patologo",
+        dataType : "json",
+        beforeSend : function(xhr) {  console.log("ssan_libro_etapaanalitica/gestion_cookie   ->  ",xhr);    },
+        data : { },
+        error : function(errro) { 
+                                    console.log(errro);  
+                                    console.log(errro.responseText);    
+                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                                    $('#loadFade').modal('hide'); 
+                                },
+        success : function(aData) { 
+                                        $('#loadFade').modal('hide'); 
+                                        $("#html_gestion_firma_patologo").html(aData.html);
+                                        $("#modal_gestion_firma_patologo").modal({backdrop:'static',keyboard:false}).modal("show");
+                                    }, 
     });
 }
 
@@ -385,16 +402,16 @@ function js_adjunto_firma(archivos){
             return false;
     } else {
         //console.log("archivos en js ->    ",archivos);
-        var formData            =   new FormData();
-        var reader              =   new FileReader();
-        reader.onloadend        =   function(){
-            const blob          =   new Blob([reader.result],{type:"image/jpeg"});
+        var formData = new FormData();
+        var reader = new FileReader();
+        reader.onloadend = function(){
+            const blob = new Blob([reader.result],{type:"image/jpeg"});
             formData.append("img_firma_get",blob,name);
             fetch('ssan_libro_etapaanalitica/return_ima_firma_patologo',{
-                method          :   "POST",
-                body            :   formData,
+                method : "POST",
+                body : formData,
             }).then(function(response){
-                console.log("response           ->",response);
+                console.log("response ->",response);
                 return response.json();
             }).then(function(data_return){
                 //console.log("---------------------------------");
@@ -503,8 +520,8 @@ function star_automplete(_value){
                                         }
                                     }
                                     
-                                    console.error("-----------------------------------------------------------------------------");
-                                    console.error(" busqueda de arrs  ->  ",localStorage.getItem("storange_ids_anatomia"),"  <-      ");
+                                    //console.error("-----------------------------------------------------------------------------");
+                                    //console.error(" busqueda de arrs  ->  ",localStorage.getItem("storange_ids_anatomia"),"  <-      ");
                                     //console.error("-----------------------------------------------------------------------------");
                                     update_etapaanalitica(1);
                                 }
@@ -531,11 +548,11 @@ function update_etapaanalitica(v_num_page){
     }
     
     var v_get_sala = $("#get_sala").val();
-    var v_filtro_fechas = $("#ind_filtro_busqueda_xfechas").val()===null?0:$("#ind_filtro_busqueda_xfechas").val().join(",");
+    var v_filtro_fechas = $("#ind_filtro_busqueda_xfechas").val()===null?'-1':$("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
     let ind_orden = $("#ind_order_by").val();
     let v_num_page2 = typeof v_num_page === 'undefined' ? 1 : v_num_page;
-    
+    /*
     console.log("   ######################################################  ");
     console.log("   v_storange_tabs_main   ->  ",v_storange_tabs_main);
     console.log("   v_get_sala             ->  ",v_get_sala);
@@ -544,16 +561,14 @@ function update_etapaanalitica(v_num_page){
     console.log("   ind_orden              ->  ",ind_orden);
     console.log("   v_num_page2            ->  ",v_num_page2);
     console.log("   ######################################################  ");
-
+    */
     //$('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
-    
-
-    if ($('#ind_filtro_busqueda_xfechas').parent().hasClass('open')) {
+    let v_open = $('#ind_filtro_busqueda_xfechas').parent().hasClass('show');
+    console.log("v_open ->",v_open);
+    if (v_open) {
         $('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
     }
-
     //return false;
-
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/update_lista_etapaanalitica_pagina",
@@ -576,8 +591,11 @@ function update_etapaanalitica(v_num_page){
                                         setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     },
         success : function(aData) { 
-                                        let html_out = aData.out_html.return_html;
+                                        
+                                        //console.error("###################################");
                                         //console.error(aData);
+                                        //console.error("return -> ",aData.return);
+                                        let html_out = aData.out_html.return_html;
                                         //console.error("return               ->  ",aData.return);
                                         //console.error("resultados           ->  ",aData.return.resultados);
                                         //console.error("v_storange_tabs_main ->  ",v_storange_tabs_main);

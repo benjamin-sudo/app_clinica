@@ -15,10 +15,9 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
     public function index(){
         $this->output->set_template("blank");
         $arr_ids_anatomia = '';
-        $arr_estados_filtro = '0';
+        $arr_estados_filtro = '-1';
         $var_fecha_inicio = date("d-m-Y");
         $var_fecha_final = date("d-m-Y");
-        
         if(isset($_COOKIE['target'])){
             $tipo_busqueda = $_COOKIE['target'];
             if($tipo_busqueda === '#_panel_por_fecha'){
@@ -44,9 +43,6 @@ class Ssan_libro_salamacroscopia extends CI_Controller {
             $var_fecha_inicio = date("d-m-Y");
             $var_fecha_final = date("d-m-Y");
         }
-        
-        
-
         $return_data = $this->ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(
             "cod_empresa" => $this->session->userdata("COD_ESTAB"),
             "usr_session" => explode("-",$this->session->userdata("USERNAME"))[0],

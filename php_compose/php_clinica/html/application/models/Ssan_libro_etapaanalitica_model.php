@@ -16,6 +16,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
 
     public function new_load_analitica_paginado($DATA) {
+        
         $cod_empresa = $DATA["cod_empresa"];
         $usr_session = $DATA["usr_session"];
         $opcion = $DATA["ind_order_by"];
@@ -31,12 +32,10 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $end_row = $page_size;
 
         # Filtrar estados
-
+        
         $lista_filtro_estados = [];
-        if ($arr_data == '0') {
-            for ($i = 0; $i <= 8; $i++) {
-                $lista_filtro_estados[] = $i;
-            }
+        if ($arr_data == '-1') {
+            $lista_filtro_estados = [0,1,2,3,4,5,6,7,8,9];
         } else {
             $arr_data_items = explode(',', $arr_data);
             foreach ($arr_data_items as $item) {
@@ -48,7 +47,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
 
-        $arr_datos = [0,1,5,6,7,8];
+        
         $this->db->select(['
         P.ID_SOLICITUD_HISTO                                                                            AS ID_SOLICITUD,
         DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d")                                                       AS LAST_DATE_AUDITA_MOMENT,
@@ -129,14 +128,13 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->where('P.DATE_INICIOREGISTRO >=', $fecha_inicio);
         $this->db->where('P.DATE_INICIOREGISTRO <=', $fecha_final);
         #$lista_filtro_estados
-        $this->db->where_in('P.ID_HISTO_ZONA', $arr_datos);
+        $this->db->where_in('P.ID_HISTO_ZONA', $lista_filtro_estados);
         $this->db->where('P.ID_HISTO_ESTADO', 4);
         $this->db->where('P.IND_ESTADO', 1);
         $this->db->group_start();
         $this->db->where_in('P.COD_EMPRESA', $cod_empresa);
         $this->db->or_where_in('P.COD_ESTABLREF', $cod_empresa);
         $this->db->group_end();
-        // Ordenar según la opción
         switch ($opcion) {
             case '0':
                 $this->db->order_by('P.NUM_INTERNO_AP', 'ASC');
@@ -170,11 +168,12 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->where_in('P.COD_EMPRESA', $cod_empresa);
         $this->db->or_where_in('P.COD_ESTABLREF', $cod_empresa);
         $this->db->group_end();
-
+        
         $query_total_count = $this->db->get();
         $total_count = $query_total_count->row()->total_count;
         $page_size = ($page_size == 0) ? 1 : $page_size;
         $num_paginas = ceil($total_count / $page_size);
+
 
         #Resultados
         $resultados = [
@@ -212,6 +211,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'txt_titulo' =>  $DATA["txt_titulo"],
             '_cookie' =>  $_COOKIE,
             'V_DATA' =>  $DATA,
+            'lista_filtro_estados' => $lista_filtro_estados,
         ];
     }
     
