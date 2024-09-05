@@ -1275,7 +1275,6 @@ function ver_imagenes_min(){
 }
 
 function star_analitica(id_anatomia){
-    //alert("Cambia");
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/formulario_main_analitico",
@@ -2642,6 +2641,7 @@ function js_pdf_microscopica(id_anatomia){
                                     setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                 },
         success : function(aData) { 
+                                    console.log("aData  ->  ",aData);
                                     setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                                     if(!aData["STATUS"]){
                                         jError("Error al cargar protocolo PDF","Clinica Libre");

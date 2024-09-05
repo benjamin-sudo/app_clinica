@@ -117,7 +117,7 @@
                 </td>
                 <td style="width:60%;text-align:center">
                     <h5>
-                        <b>UNIDAD DE ANATOM&Iacute;A PATOL&Oacute;GICA</b><br> 
+                        <b>UNIDAD DE ANATOM&Iacute;A PATOL&Oacute;GICA - hito 1</b><br> 
                         <b><?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['TXT_HOSPDERIVADO'];?></b><br>
                         <?php echo $this->session->userdata("COD_ESTAB") == '100'? '<b>GENERAL BONILLA # 695 FONO 45-2601542</b><br><b>ANGOL</b>':'<b>SERVICIO DE SALUD ARAUCAN&Iacute;A NORTE</b>';?>
                     </h5> 

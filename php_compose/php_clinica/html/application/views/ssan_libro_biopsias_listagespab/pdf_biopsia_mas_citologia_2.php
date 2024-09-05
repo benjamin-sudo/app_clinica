@@ -1,20 +1,20 @@
 <?php
-    $txt_muestras                       =   [];
-    $IND_USOCASSETTE                    =   '0';
-    $P_ANATOMIA_PATOLOGICA_MUESTRAS     =   $DATA['P_ANATOMIA_PATOLOGICA_MUESTRAS']; 
-    $P_AP_MUESTRAS_CITOLOGIA            =   $DATA['P_AP_MUESTRAS_CITOLOGIA']; 
+    $txt_muestras = [];
+    $IND_USOCASSETTE = '0';
+    $P_ANATOMIA_PATOLOGICA_MUESTRAS = $DATA['P_ANATOMIA_PATOLOGICA_MUESTRAS']; 
+    $P_AP_MUESTRAS_CITOLOGIA = $DATA['P_AP_MUESTRAS_CITOLOGIA']; 
     #variables
-    $style_muestras                     =   '0';
-    $html_muestras                      =   '';
-    $arr_info_muestras                  =   [];
-    $arr_html_muestras                  =   [];
-    $arr_info_cito                      =   [];
+    $style_muestras = '0';
+    $html_muestras = '';
+    $arr_info_muestras = [];
+    $arr_html_muestras = [];
+    $arr_info_cito = [];
     if(count($DATA['P_ANATOMIA_PATOLOGICA_MAIN'])>0){
-        $style_muestras                 =   '1'; 
-        $IND_USOCASSETTE                =   $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_USOCASSETTE'];
-        if($IND_USOCASSETTE             ==  '1'){
-            $ARR_CASETE_ORD             =   [];
-            $txt_muestras               =   [];
+        $style_muestras = '1'; 
+        $IND_USOCASSETTE = $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_USOCASSETTE'];
+        if($IND_USOCASSETTE == '1'){
+            $ARR_CASETE_ORD = [];
+            $txt_muestras = [];
             foreach($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row){ 
                 $ARR_CASETE_ORD[$row['ID_CASETE']][] = $row; 
                 array_push($arr_info_muestras,'C:'.$row['NUM_CASSETTE'].'-'.$row["TXT_MUESTRA"]." <b>(".$row["ID_NMUESTRA"].")</b>"); 
@@ -24,18 +24,6 @@
                     $n_muestras         =   $x+1;
                     if ($row_casete["TXT_DESC_MICROSCOPICA"] != ''){
                         array_push($arr_html_muestras,'<li class"class_li"><p><b>CASETE : '.$row_casete['NUM_CASSETTE'].'/'.$n_muestras.' ('.$row_casete['TXT_MUESTRA'].')</b> '.$row_casete["TXT_DESC_MICROSCOPICA"].'<p></li>'); 
-                        /*
-                        $html_muestras      .=  '
-                                                <tr>
-                                                    <td style="width:15%" valign="top">
-                                                        <b>CASETE : '.$row_casete['NUM_CASSETTE'].' /'.$n_muestras.'|'.$row_casete['ID_CASETE'].'</b>
-                                                    </td>
-                                                    <td style="width:85%" valign="top">
-                                                        '.$row_casete["TXT_DESC_MICROSCOPICA"].'
-                                                    </td>
-                                                </tr>
-                                            ';
-                        */
                     }
                 }
             }
@@ -45,15 +33,6 @@
                 array_push($arr_info_muestras,$aux_muestras." ".$row["TXT_MUESTRA"]." <b>(".$row["ID_NMUESTRA"].")</b>");
                 if($row["TXT_DESC_MICROSCOPICA"] != ''){
                     array_push($arr_html_muestras,'<li class"class_li"><p><b>MUESTRA '.$aux_muestras.' ('.$row["TXT_MUESTRA"].')</b>: '.$row["TXT_DESC_MICROSCOPICA"].'<p></li>'); 
-                    /*
-                    $html_muestras          .=  '
-                                                <tr>
-                                                    <td style="width:100%;height:50px;" valign="top">
-                                                        <b>MUESTRA '.$aux_muestras.' ('.$row["TXT_MUESTRA"].')</b>: '.$row["TXT_DESC_MICROSCOPICA"].' 
-                                                    </td>
-                                                </tr>
-                                            ';
-                    */
                 }
             }
         }
@@ -67,69 +46,65 @@
         <link href="<?php echo base_url();?>assets/themes/inicio/css/boobtstrap.css" rel="stylesheet"></link>
         <title>INFORME ANATOMIA</title>
         <style>
-            @page                   {
-                 padding            :   30px !important;
-                 font-size          :   8px;
+            @page {
+                padding : 30px !important;
+                font-size : 8px;
+                footer: html_myfooter;
             }
             p                       {     
-                font-size           :   15px; 
-                margin-bottom       :   2px;
+                font-size : 15px; 
+                margin-bottom : 2px;
             }
-            .class_ul               {
-                margin-bottom       :   10px;
-                margin-top          :   10px;
-                margin-left         :   15px;
-                margin-right        :   0px;
+            .class_ul {
+                margin-bottom : 10px;
+                margin-top : 10px;
+                margin-left : 15px;
+                margin-right : 0px;
             }
-            
-            .class_li               {
-               margin               :   20px 0px 0px 0px;
-            }
+            .class_li {
+               margin : 20px 0px 0px 0px;
+            } 
         </style>
     </head>
     <body>
-        <table style="width:100%;margin-bottom:15px">
+        <table class="table" style="border: none;">
             <tr>
-                <td style="width:20%" valign="top">
+                <td width="10%" style="text-align: center; vertical-align: top;">
+                    <?php echo $this->load->view('ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/img64logo',[],true);?>
                     <br>
-                    <?php echo  $this->load->view('ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/img64logo',[],true);?>
                 </td>
-                <td style="width:60%;text-align:center">
-                    <h5>
-                        <b>UNIDAD DE ANATOM&Iacute;A PATOL&Oacute;GICA</b><br> 
-                        <b><?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['TXT_HOSPDERIVADO'];?></b><br>
-                        <?php echo $this->session->userdata("COD_ESTAB") == '100'? '<b>GENERAL BONILLA # 695 FONO 45-2601542</b><br><b>ANGOL</b>':'<b>SERVICIO DE SALUD ARAUCANIA NORTE</b>';?>
-                    </h5> 
+                <td width="40%" style="padding-left: 10px;">
+                    <h4 style="margin: 0; font-size: 16px;">DR. BOLIVAR LEE OLMOS</h4>
+                    <h4 style="margin: 0; font-size: 14px;">CENTRO MEDICO SIRESA</h4>
+                    <address style="font-size: 12px; line-height: 1.5;">
+                        FONO: PRAT 1130, 98244337
+                        <br>
+                        VICTORIA, REGI&Oacute;N DE LA ARAUCANIA - CHILE
+                        <br>
+                    </address>
                 </td>
-                <td style="width:20%;text-align:right;" valign="top">
-                   left 
-                </td>
-            </tr>
-        </table>
-        
-        <table style="width:100%;margin-bottom:15px">
-            <tr>
-                <td style="width:40%">&nbsp;</td>
-                <td style="width:60%;text-align:right">
-                    
-                    N&deg; SOLICITUD:&nbsp;<b><?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?></b>
-                    <br>
-                    N&deg; DE PAGINA: <b><?php echo $num_page;?></b>
-
-                    <h4>
+                <td width="50%" style="vertical-align: top; text-align: left; padding-left: 10px;">
+                    <h4 style="margin: 0; font-size: 14px;">
                         <b>
-                        <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_INTERNO_AP']=='0'?'':'N&deg; BIOPSIA: '.$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_INTERNO_AP'];?> 
-                        - 
-                        <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['FECHA_YEAR_RECEPCION'];?>
+                            <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_INTERNO_AP']=='0'?'':'N&deg; BIOPSIA: '.$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_INTERNO_AP'];?> 
+                            <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_TIPO_BIOPSIA'] == 4?'-':'';?> 
+                            <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_CO_CITOLOGIA']==''?'':'N&deg; CITOL&Oacute;GICO: '.$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_CO_CITOLOGIA'];?> 
+                            <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_CO_PAP']==''?'':'N&deg; PAP: '.$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NUM_CO_PAP'];?> 
+                            - 
+                            <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['FECHA_YEAR_RECEPCION'];?>
                         </b>
                     </h4>
+                    N&deg; SOLICITUD:&nbsp;<b><?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?></b>
+                    <br>
+                    N&deg; DE PAGINA:&nbsp;<b><?php echo $num_page;?></b>
                 </td>
             </tr>
         </table>
-        <table style="width:100%;margin: 0px 0px 0px 0px;font-size:15px" >
+
+        <table style="width:100%;margin: 0px 0px 0px 0px;font-size:15px">
             <tbody>
                 <tr>
-                    <td style="width:25%"><b>NOMBRES </b></td>
+                    <td style="width:25%"><b>NOMBRES</b></td>
                     <td style="width:1%">&nbsp;:</td>
                     <td style="width:47%">&nbsp;<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['NOMBRE_COMPLETO'];?></td>
                 </tr>
@@ -141,12 +116,12 @@
                 <tr>
                     <td><b>RUN</b></td>
                     <td>&nbsp;:</td>
-                    <td>&nbsp;<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['RUTPACIENTE'];?>&nbsp;</td>
+                    <td><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_RUTPAC"]."-".$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_DIGVER"]." ".$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_IDENTIFICACION"];?></td>
                 </tr>
                 <tr>
                     <td><b>N&deg; FICHA CLINICA</b></td>
                     <td>&nbsp;:</td>
-                    <td>&nbsp;<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['FICHAL'];?>&nbsp;</td>
+                    <td>&nbsp;<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['FICHAL']==""?'NO INFORMADO':$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['FICHAL'];?>&nbsp;</td>
                 </tr>
                 <tr>
                     <td valign="top"><b>MUESTRAS</b></td>
@@ -193,5 +168,6 @@
                 <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['TXT_DIADNOSTICO_AP']==''?'NO INFORMADO':str_replace("\n","<br>",$DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['TXT_DIADNOSTICO_AP']);?>
            </font>
         </p>
+        <htmlpagefooter name="myfooter"> </htmlpagefooter>
     </body>
 </html>

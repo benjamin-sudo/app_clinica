@@ -176,7 +176,6 @@
         <barcode type="QR" class="barcode" code="<?php echo $rul_for_qr;?>" height="1" text="1" size="1"/>
     </div>
     -->
-
     <body>
         <table tabindex="2" width="100%" cellpadding="0" cellspacing="0">
             <tr>

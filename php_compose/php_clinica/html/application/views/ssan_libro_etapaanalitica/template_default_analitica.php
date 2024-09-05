@@ -25,7 +25,7 @@
                             <tr>
                                 <td>
                                     <small><b style="color:#888888;">RUN</b></small><br>
-                                    <small class="text-muted" id="rutLabel"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_RUTPAC"]."-".$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_DIGVER"]." ".$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_IDENTIFICACION"];?> </small>
+                                    <small class="text-muted" id="rutLabel"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_RUTPAC"]."-".$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["COD_DIGVER"]." ".$data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_IDENTIFICACION"];?></small>
                                 </td>
                                 <td>
                                     <small><b style="color:#888888;">SEXO</b></small><br>
