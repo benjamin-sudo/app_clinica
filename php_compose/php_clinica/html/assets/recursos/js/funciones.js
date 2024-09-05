@@ -155,7 +155,7 @@ function js_confimicuenta(){
         type : "POST",
         url : "Dashboard/configuracion_micuenta",
         dataType : "json",
-        beforeSend : function(xhr) {  $('#loadFade').modal('show'); },
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
         data : { },
         error : function(err) { 
                                 console.log(err);  
@@ -267,10 +267,10 @@ function confirmCambioF(){
                 },
         beforeSend : function(xhr) { $('#loadFade').modal('show');   },
         error : function(errro) {     
-                                                    console.log(errro.responseText); 
-                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                                    $('#loadFade').modal('hide');
-                                                },
+                                    console.log(errro.responseText); 
+                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                    $('#loadFade').modal('hide');
+                                },
         success : function(aData)     {   
                         setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                         if(aData.status){
@@ -299,15 +299,15 @@ function validaExFirm(){
                                         jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
                                         $('#loadFade').modal('hide');
                                     },
-        success : function(aData)     {   
-                                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                                //console.log("validaFirmaExist -> ",aData);
-                                                if(!aData.status){
-                                                    jAlert("La firma unica digital ya existe en otro usuario","Clinica libre Chile");
-                                                    $("#firmaNew1").val('');
-                                                    $("#firmaNew2").val('');
-                                                }
-                                            }, 
+        success : function(aData) {   
+                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                        //console.log("validaFirmaExist -> ",aData);
+                                        if(!aData.status){
+                                            jAlert("La firma unica digital ya existe en otro usuario","Clinica libre Chile");
+                                            $("#firmaNew1").val('');
+                                            $("#firmaNew2").val('');
+                                        }
+                                    }, 
     });
 }
 
@@ -335,24 +335,24 @@ function confirmEnvioRecuperacion() {
     jConfirm('Se enviar&aacute; un correo electronico con su firma digital simple.<br>Desea continuar?', 'Confirmaci\u00F3n', function(r) {
         if (r) {
             $.ajax({ 
-                type        :   "POST",
-                url         :   "Dashboard/RecuerdaContrasena",
-                dataType    :   "json",
-                data        :   { },
-                beforeSend  :   function(xhr)   {   $('#loadFade').modal('show');   },
-                error       :   function(errro) {     
-                                                    console.log(errro.responseText); 
-                                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                                    $('#loadFade').modal('hide');
-                                                },
-                success     :   function(aData) {   
-                                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                                    if(aData.status){
-                                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
-                                                    } else {
-                                                        showNotification('top','center','&nbsp;'+aData.html,4,'');
-                                                    }
-                                                }, 
+                type : "POST",
+                url : "Dashboard/RecuerdaContrasena",
+                dataType : "json",
+                data : { },
+                beforeSend  : function(xhr) { $('#loadFade').modal('show');   },
+                error : function(errro) {     
+                                            console.log(errro.responseText); 
+                                            jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                                            $('#loadFade').modal('hide');
+                                        },
+                success : function(aData) {   
+                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                                            if(aData.status){
+                                                showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
+                                            } else {
+                                                showNotification('top','center','&nbsp;'+aData.html,4,'');
+                                            }
+                                        }, 
             });
         }
     });

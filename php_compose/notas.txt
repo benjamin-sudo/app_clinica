@@ -153,3 +153,5 @@ FROM
     ADMIN.GG_TPRESTA
 WHERE
     COD_EMPRESA = '100';
+
+    

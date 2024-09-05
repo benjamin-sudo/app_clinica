@@ -31,8 +31,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $start_row = ($page_number - 1) * $page_size;
         $end_row = $page_size;
 
-        # Filtrar estados
         
+        # Filtrar estados
         $lista_filtro_estados = [];
         if ($arr_data == '-1') {
             $lista_filtro_estados = [0,1,2,3,4,5,6,7,8,9];
@@ -215,7 +215,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         ];
     }
     
-    
     public function li_lista_estapaanalitica_paginado($lista_anatomia, $ind_opcion, $ind_first, $get_sala) {
         $html = '';
         $v_num_registro = 0;
@@ -270,6 +269,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     
     ###################
     #apuntando a oracle
+    ###################
     public function old_etapa_analiticaap_paginado($DATA) {
         $this->db->trans_start();
         $_boreano_out = true;
@@ -285,22 +285,22 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         }
         if (!$_boreano_out) {
             return array(
-                'HTML_LI'       =>  $this->li_lista_estapaanalitica([], $DATA["ind_opcion"], $DATA["ind_first"], $DATA["get_sala"]),
-                'n_resultado'   =>  '0',
-                'STATUS'        =>  false,
-                'BD'            =>  null,
-                'status_bd'     =>  false,
-                'ind_opcion'    =>  $DATA["ind_opcion"],
-                'date_inicio'   =>  strtotime(date("d-m-Y")),
-                'date_final'    =>  strtotime(date("d-m-Y")),
-                'cookie'        =>  isset($_COOKIE['target']) ? '<span class="label label-success">CON COOKIE</span>' : '<span class="label label-warning">SIN COOKIE</span>',
-                'ind_busqueda'  =>  isset($_COOKIE['target']) ? '<span class="label label-warning" id="span_tipo_busqueda">' . $_COOKIE['target'] . '</span>' : '<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
-                'fechas'        =>  isset($_COOKIE['data']) ? $_COOKIE['data'] : 'null',
-                'ids_anatomia'  =>  isset($_COOKIE['id_anatomia']) ? json_decode($_COOKIE['id_anatomia']) : 'null',
-                'txt_sala'      =>  $DATA["get_sala"],
-                'txt_titulo'    =>  $DATA["txt_titulo"],
-                '_cookie'       =>  $_COOKIE,
-                'V_DATA'        =>  [],
+                'HTML_LI' =>  $this->li_lista_estapaanalitica([], $DATA["ind_opcion"], $DATA["ind_first"], $DATA["get_sala"]),
+                'n_resultado' =>  '0',
+                'STATUS' =>  false,
+                'BD' =>  null,
+                'status_bd' =>  false,
+                'ind_opcion' =>  $DATA["ind_opcion"],
+                'date_inicio' =>  strtotime(date("d-m-Y")),
+                'date_final' =>  strtotime(date("d-m-Y")),
+                'cookie' =>  isset($_COOKIE['target']) ? '<span class="label label-success">CON COOKIE</span>' : '<span class="label label-warning">SIN COOKIE</span>',
+                'ind_busqueda' =>  isset($_COOKIE['target']) ? '<span class="label label-warning" id="span_tipo_busqueda">' . $_COOKIE['target'] . '</span>' : '<span class="label label-info" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+                'fechas' =>  isset($_COOKIE['data']) ? $_COOKIE['data'] : 'null',
+                'ids_anatomia' =>  isset($_COOKIE['id_anatomia']) ? json_decode($_COOKIE['id_anatomia']) : 'null',
+                'txt_sala' =>  $DATA["get_sala"],
+                'txt_titulo' =>  $DATA["txt_titulo"],
+                '_cookie' =>  $_COOKIE,
+                'V_DATA' =>  [],
             );
         }
         $param = $DATA["ind_opcion"] == '#_panel_por_gestion' ?  array(

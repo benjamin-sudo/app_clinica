@@ -154,39 +154,39 @@ input[type="radio"]                     {
     display                             :   block;
 }
 
-.style_panel_micro                      {
-    cursor                              :   pointer;
-    margin                              :   0px 0px 5px 0px;
+.style_panel_micro {
+    cursor :   pointer; 
+    margin :   0px 0px 5px 0px;
 }
 
-.grid_panel_download                    {
-    display                             :   grid;
-    grid-template-columns               :   1fr 1fr;
+.grid_panel_download {
+    display :   grid;
+    grid-template-columns :   1fr 1fr;
 }
 
-.grid_body_heard_microcospica           {
-    display                             :   grid;
-    grid-template-columns               :   15px 3fr 15px 3fr 15px 0.4fr;
-    margin-bottom                       :   6px;
-    gap                                 :   3px;
-    margin-left                         :   3px;
-    margin-right                        :   5px;
-    justify-items                       :   stretch;
-    align-items                         :   center;
+.grid_body_heard_microcospica {
+    display : grid;
+    grid-template-columns : 15px 3fr 15px 3fr 15px 0.4fr;
+    margin-bottom : 6px;
+    gap : 3px;
+    margin-left : 3px;
+    margin-right : 5px;
+    justify-items : stretch;
+    align-items : center;
 }
 
-.grid_li_pdfs                           {
-    display                             :   grid;
-    grid-template-columns               :   1fr;
-    padding                             :   6px;
+.grid_li_pdfs {
+    display : grid;
+    grid-template-columns : 1fr;
+    padding : 6px;
 }
 
-.grid_espera_pdf2                       {
-    text-align                          :   center;
+.grid_espera_pdf2 {
+    text-align : center;
 }
 
-.grid_li_pdfs1                          {
-    justify-self                        :   center;
+.grid_li_pdfs1 {
+    justify-self : center;
 }
 
 .grid_a_rce_anatomiapatologica {

@@ -208,8 +208,6 @@ $(document).ready(function(){
     }  else {
         $('#ind_filtro_busqueda_xfechas').selectpicker('val',localStorage.getItem("strorage_filtro_categorias").split(','));
     }
-
-
     document.addEventListener('DOMContentLoaded', function () {
         var tabs = document.querySelector('#tabs_main_analitica');
         tabs.addEventListener('shown.bs.tab', function (event) {
@@ -219,17 +217,10 @@ $(document).ready(function(){
             console.log('Pestaña anterior       :   ' + previousTab.id); 
         });
     });
-    
-
     //$('#ind_filtro_busqueda_xfechas').selectpicker('val','-1');
     //null_tabs();
     star_defatult();
 });
-
-
-
-
-
 
 let indFiltroBusquedaHandler = function (e, clickedIndex, isSelected, previousValue) {
     let ind_filtro = $('#ind_filtro_busqueda_xfechas').val();

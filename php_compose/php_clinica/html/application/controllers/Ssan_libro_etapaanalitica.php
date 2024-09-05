@@ -77,8 +77,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "ind_filtros_ap" => $arr_estados_filtro,
             "ind_order_by" => "0",
         ));
-
-
         #API VOZ
         #$this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES

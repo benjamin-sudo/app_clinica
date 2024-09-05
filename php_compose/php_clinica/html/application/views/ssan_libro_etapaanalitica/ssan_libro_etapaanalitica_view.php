@@ -212,11 +212,6 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                 </select>
             </div>
         </div>
-
-        <!--
-            ver_(15722)
-        -->
-
         <hr style="margin: 8px 0px 10px 0px">
         <ul class="list-group lista_etapa_analitica busqueda_por_fecha html_panel_por_fecha" id="busqueda_por_fecha" style="padding-right:5px;">
             <?php echo $HTML_LI["return_html"];?> 
@@ -255,8 +250,6 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
     var_dump($_COOKIE['target']);
 ?>
 -->
-
-
 <section>
     <div class="modal fade" id="modal_descipcion_muestras">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
