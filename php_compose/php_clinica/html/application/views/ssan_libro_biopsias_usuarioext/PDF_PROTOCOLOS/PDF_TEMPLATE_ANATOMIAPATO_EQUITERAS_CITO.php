@@ -226,7 +226,7 @@
                 </td>
                 <td>
                     <p class="h6" style="margin:0;">ESTABLECIMIENTO</p>
-                    <b><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_HOSPITAL_ETI'];?></b>
+                    <b>CENTRO MEDICO SIRESA</b>
                 </td>
                 <td>
                     <p class="h6" style="margin:0;">N&deg; UNICO:<b><br><?php echo $VAR_ANATOMIA_PATALOGICA;?></b></p>
@@ -239,7 +239,7 @@
         <table tabindex="2" width="100%"  cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
             <thead>
                 <tr class="subtitulo_formulario2" >
-                    <td colspan="2" class="subtitulo_formulario2" bgcolor="#ECF1F1"><b>DATOS PACIENTE:</b></td>
+                    <td colspan="2" class="subtitulo_formulario2" bgcolor="#ECF1F1" style="height:20px"><b>DATOS PACIENTE:</b></td>
                 </tr>
                 <tr>
                     <td width="50%" class="subtitulo_formulario2">NOMBRE DEL PACIENTE:</td>

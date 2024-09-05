@@ -215,10 +215,11 @@
                 </td>
                 <td>
                     <p class="h6" style="margin:0;">ESTABLECIMIENTO</p>
-                    <b><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_HOSPITAL_ETI'];?></b>
+                    <b>CENTRO MEDICO SIRESA</b>
                 </td>
                 <td>
-                    <p class="h6" style="margin:0;">N&deg; UNICO: <b><br><?php echo $VAR_ANATOMIA_PATALOGICA;?></b></p>
+                    <p class="h6" style="margin:0;">N&deg; UNICO: <b><br>
+                    <?php echo $VAR_ANATOMIA_PATALOGICA;?></b></p>
                 </td>
             </tr>
         </table>
