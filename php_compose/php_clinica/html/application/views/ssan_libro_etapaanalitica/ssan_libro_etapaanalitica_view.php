@@ -250,6 +250,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
     var_dump($_COOKIE['target']);
 ?>
 -->
+
 <section>
     <div class="modal fade" id="modal_descipcion_muestras">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">

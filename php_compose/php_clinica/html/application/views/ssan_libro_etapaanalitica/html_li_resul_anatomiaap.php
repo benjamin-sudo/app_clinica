@@ -37,7 +37,7 @@
             <i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;<b><?php echo $row["NOM_PROFE_CORTO"];?></b>
         </div>
         <div class="grid_a_rce_anatomiapatologica5">
-            <i class="fa fa-map-marker" aria-hidden="true"></i><b>&nbsp;<?php echo $row["TXT_HISTO_ZONA"];?></b> - <?php echo $row["ID_HISTO_ZONA"];?>
+            <i class="fa fa-map-marker" aria-hidden="true"></i><b>&nbsp;<?php echo $row["TXT_HISTO_ZONA"];?></b>
             <input type="hidden" id="id_zona_<?php echo $row["ID_SOLICITUD"];?>" value="<?php echo $row["ID_HISTO_ZONA"];?>"/>
         </div>
         <div class="grid_a_rce_anatomiapatologica8 class num_biospias_<?php echo $row["ID_SOLICITUD"];?>" style="text-align: justify;"  

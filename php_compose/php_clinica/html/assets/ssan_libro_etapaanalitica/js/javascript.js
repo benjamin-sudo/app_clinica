@@ -2949,7 +2949,6 @@ function js_sala_tecnicas(id_anatomia){
                                     console.log("aData -> ",aData);
                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                     if(aData.status){
-                                        //$("#btn_previo_sala_tecnicas").prop("disabled",true);
                                         $("#btn_previo_sala_tecnicas").attr('onclick','js_guarda_sala_tecnicas(1,'+id_anatomia+')');
                                         $("#btn_graba_tecnicas").attr('onclick','js_guarda_sala_tecnicas(2,'+id_anatomia+')');
                                         $("#html_sala_tecnicas").html(aData.out_html);

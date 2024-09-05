@@ -9,7 +9,7 @@ class Ssan_libro_salatecnologo extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->library('session');
-        $this->load->model("Ssan_libro_etapaanalitica_model");
+        $this->load->model("ssan_libro_etapaanalitica_model");
         $this->get_sala = 'sala_tecnologo';
         $this->txt_titulo = 'SALA DE TECNICAS';
     }
@@ -45,6 +45,8 @@ class Ssan_libro_salatecnologo extends CI_Controller {
             $var_fecha_inicio = date("d-m-Y");
             $var_fecha_final = date("d-m-Y");
         }
+
+
         $return_data = $this->ssan_libro_etapaanalitica_model->new_load_analitica_paginado(array(
             "cod_empresa" => $this->session->userdata("COD_ESTAB"),
             "usr_session" => explode("-",$this->session->userdata("USERNAME"))[0],
@@ -62,6 +64,8 @@ class Ssan_libro_salatecnologo extends CI_Controller {
             "v_page_num" => 1,      
             "v_page_size" => 10,     
         ));
+
+
         #API VOZ
         $this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES
