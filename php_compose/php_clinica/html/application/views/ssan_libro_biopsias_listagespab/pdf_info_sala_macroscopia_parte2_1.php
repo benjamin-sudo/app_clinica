@@ -121,7 +121,7 @@
                     <?php echo $this->load->view('ssan_libro_biopsias_usuarioext/PDF_PROTOCOLOS/img64logo',[],true);?>
                     <br>
                 </td>
-                <td width="1%"> - </td>
+                <td width="1%"></td>
                 <td width="45%">
                     <h4>DR. BOLIVAR LEE OLMOS</h4>
                     <h4>CENTRO MEDICO SIRESA</h4>
@@ -149,8 +149,6 @@
                 </td>
             </tr>
         </table>
-
-        
 
         <?php  if ($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_TIPO_BIOPSIA'] === '5' || $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_TIPO_BIOPSIA'] === '6') { ?>
             <table style="width:100%;margin: 0px 0px 0px 0px;font-size:15px" >
