@@ -31,8 +31,10 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $start_row = ($page_number - 1) * $page_size;
         $end_row = $page_size;
 
+        # #################
+        # Filtrar estados #
+        # #################
         
-        # Filtrar estados
         $lista_filtro_estados = [];
         if ($arr_data == '-1') {
             $lista_filtro_estados = [0,1,2,3,4,5,6,7,8,9];
@@ -47,9 +49,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
         }
 
-        
         $this->db->select(['
-        P.ID_SOLICITUD_HISTO                                                                            AS ID_SOLICITUD,
+        P.ID_SOLICITUD_HISTO AS ID_SOLICITUD,
         DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d")                                                       AS LAST_DATE_AUDITA_MOMENT,
         P.ID_HISTO_ZONA                                                                                 AS ID_HISTO_ZONA,
         CASE

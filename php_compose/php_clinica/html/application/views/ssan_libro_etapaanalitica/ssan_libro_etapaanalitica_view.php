@@ -369,7 +369,6 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
         </div>
     </div>
 
-
     <div class="modal fade" id="modal_informacion_adminisrativo">
         <div class="modal-dialog modal_xl_900">
         <div class="modal-content">
@@ -542,10 +541,10 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
             </div>
         </div>
     </div>
-</section>
- 
-<input type="hidden" id="v_sysdate" name="v_sysdate"  value="<?php echo $this->session->userdata("COD_ESTAB");;?>"/>
 
+</section>
+
+<input type="hidden" id="v_sysdate" name="v_sysdate"  value="<?php echo $this->session->userdata("COD_ESTAB");;?>"/>
 <input type="button" id="test_pdf" value="test pdf" onclick="test_pdf(768)" style="display: none"> 
 
 <!--
