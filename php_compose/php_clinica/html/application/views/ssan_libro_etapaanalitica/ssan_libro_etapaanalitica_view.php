@@ -545,7 +545,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
 </section>
 
 <input type="hidden" id="v_sysdate" name="v_sysdate"  value="<?php echo $this->session->userdata("COD_ESTAB");;?>"/>
-<input type="button" id="test_pdf" value="test pdf" onclick="test_pdf(768)" style="display: none"> 
+<input type="button" id="test_pdf" value="test pdf" onclick="test_pdf(768)" style="display:none"> 
 
 <!--
 <hr>

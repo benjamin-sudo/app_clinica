@@ -162,4 +162,3 @@ volumes:
 
 networks:
   mynetwork:
-

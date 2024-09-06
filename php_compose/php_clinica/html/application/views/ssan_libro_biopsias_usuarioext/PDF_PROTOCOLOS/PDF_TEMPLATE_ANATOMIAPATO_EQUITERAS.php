@@ -223,9 +223,7 @@
                 </td>
             </tr>
         </table>
-
         <br>
-
         <table tabindex="2" width="100%" align="center" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
             <thead>
                 <tr class="subtitulo_formulario2" >
@@ -263,7 +261,7 @@
                     <td class="subtitulo_formulario2"               >
                         <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['MEDI'] === 'MATR'?'MATRON':'MEDICO';?>:
                     </td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['PROFESIONAL'];?> | <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL'];?></td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['PROFESIONAL'];?> | <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL'];?></td>
                 </tr>
                 <?php #falta especialidad desde el sql;?>
                 <tr>
@@ -387,50 +385,49 @@
                     if(count($DATA_CASETE[$i])>0){
                         foreach ($DATA_CASETE[$i] as $x => $row){
                             if ($x == 0) {$ID_CASETE = $row["ID_CASETE"];}
-                            $TXT_MUESTRAS       .=  ($x+1)." - ".$row['TXT_MUESTRA']."<br>";
+                            $TXT_MUESTRAS .= ($x+1)." - ".$row['TXT_MUESTRA']."<br>";
                         }
                     }
                 ?>
-                    <table class="" width="527px" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
-                        <thead>
-                            <tr>
-                                <td class="" colspan="3">
-                                    <b><?php echo $row_muestras["TXT_HOSPITAL_ETI"]; ?>&nbsp;/&nbsp;<?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA'];?></b>
-                                </td>     
-                            </tr>
-                        </thead>
-                        <thead>
-                            <tr>
-                                <td class="border_bottom_right" width="50%" valign="top">
-                                    <label><font size=2>NOMBRE PACIENTE</font></label><br>
-                                    <b><?php echo $VAR_NOMBRE_PACIENTE;?></b><br>
-                                    <label><font size=2>R.U.N/DNI</font></label><br>   
-                                    <b><?php echo $VAR_IDENTIFICADOR_PAC;?></b><br>
-                                    <label><font size=2>FECHA NAC:</font></label><br>       
-                                    <b><?php echo $NACIMIENTO; ?></b><br>
-                                    <label><font size=2>N&deg; FICHA:</font></label><br>    
-                                    <b><?php echo $FICHAL;?></b><br> 
-                                    <label><font size=2>N&deg; CASETE:</font></label><br>    
-                                    <b><?php echo $i;?></b>
-                                </td>
-                                <td class="border_bottom_left" width="50%" valign="top">
-                                   <?php echo $TXT_MUESTRAS; ?>
-                                </td>
-                                <td style="padding: 8px;text-align: right" >
-                                    <barcode code="C<?php echo $ID_CASETE;?>" type="C128A" height="0.66" text="CASETE" />
-                                    <br/>
-                                    <center>
-                                         <b>C<?php echo $ID_CASETE;?></b>
-                                    </center>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
+                <table class="" width="527px" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
+                    <thead>
+                        <tr>
+                            <td class="" colspan="3">
+                                <b><?php echo $row_muestras["TXT_HOSPITAL_ETI"]; ?>&nbsp;/&nbsp;<?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA'];?></b>
+                            </td>     
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr>
+                            <td class="border_bottom_right" width="50%" valign="top">
+                                <label><font size=2>NOMBRE PACIENTE</font></label><br>
+                                <b><?php echo $VAR_NOMBRE_PACIENTE;?></b><br>
+                                <label><font size=2>R.U.N/DNI</font></label><br>   
+                                <b><?php echo $VAR_IDENTIFICADOR_PAC;?></b><br>
+                                <label><font size=2>FECHA NAC:</font></label><br>       
+                                <b><?php echo $NACIMIENTO; ?></b><br>
+                                <label><font size=2>N&deg; FICHA:</font></label><br>    
+                                <b><?php echo $FICHAL;?></b><br> 
+                                <label><font size=2>N&deg; CASETE:</font></label><br>    
+                                <b><?php echo $i;?></b>
+                            </td>
+                            <td class="border_bottom_left" width="50%" valign="top">
+                                <?php echo $TXT_MUESTRAS; ?>
+                            </td>
+                            <td style="padding: 8px;text-align: right" >
+                                <barcode code="C<?php echo $ID_CASETE;?>" type="C128A" height="0.66" text="CASETE" />
+                                <br/>
+                                <center>
+                                        <b>C<?php echo $ID_CASETE;?></b>
+                                </center>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
         
             <?php
                 }
             ?>
-        
         <?php } else { ?>
             
                 <?php if($TOTAL_MUESTRAS>0){ ?>

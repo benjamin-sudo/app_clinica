@@ -1,9 +1,11 @@
-<?php if ($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['CLOB_FIRMA_CITO'] == ''){ ?>
+<?php if ($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['CLOB_FIRMA_CITO'] == '' ){ ?>
     
     <table style="width:100%;margin-bottom:15px">
        <tbody>
            <tr>
-               <td style="width:100%;text-align: center"><h4>DR: <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['TXT_USER_PATOLOGO_CITOLOGICO'];?></h4></td>
+               <td style="width:100%;text-align: center">
+                    <h4>DR: <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['TXT_USER_PATOLOGO_CITOLOGICO'];?></h4>
+                </td>
            </tr>
            <tr>
                <td style="width:100%;text-align: center"><h4>ANATOMO PATOLOGO</h4></td>
@@ -11,27 +13,27 @@
        </tbody>
     </table>
 
-<?php   } else {    ?>
+<?php } else { ?>
     <table style="width:100%;margin: 0px 0px 0px 0px" >
        <tbody>
            <tr style="margin: 0px 0px 0px 0px">
                 <td style="width: 10%;text-align: right;"> 
                     <img 
-                        alt                     =   "64x164" 
-                        class                   =   "img-thumbnail" 
-                        data-src                =   "64x164" 
-                        src                     =   "/assets/ssan_libro_biopsias_usuarioext/img/logo_<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['COD_EMPRESA_DERIVADA'];?>.png" 
-                        data-holder-rendered    =   "true" 
-                        style                   =   "width:90px;height:80px;margin: 0px 0px 0px 0px">
+                        alt="64x164" 
+                        class="img-thumbnail" 
+                        data-src="64x164" 
+                        src="/assets/ssan_libro_biopsias_usuarioext/img/logo_<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['COD_EMPRESA_DERIVADA'];?>.png" 
+                        data-holder-rendered="true" 
+                        style="width:90px;height:80px;margin: 0px 0px 0px 0px">
                 </td>
                 <td style="width: 40%;text-align: center">
                     <img 
-                        alt                     =   "200x110" 
-                        class                   =   "img-thumbnail" 
-                        data-src                =   "200x110" 
-                        src                     =   "<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['CLOB_FIRMA_CITO'];?>" 
-                        data-holder-rendered    =   "true" 
-                        style                   =   "width: 200px;height: 75px;">
+                        alt="200x110" 
+                        class="img-thumbnail" 
+                        data-src="200x110" 
+                        src="<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['CLOB_FIRMA_CITO'];?>" 
+                        data-holder-rendered = "true" 
+                        style = "width: 200px;height: 75px;">
                     <br style="margin: 0px 0px 0px 0px">
                     <h6 style="margin: 0px 0px 0px 0px">DR: <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['TXT_USER_PATOLOGO_CITOLOGICO'];?> | ANATOMO PATOLOGO</h6>
                 </td>
@@ -54,4 +56,5 @@
             </tr>
        </tbody>
     </table>
-<?php   }   ?>
+<?php } ?>
+

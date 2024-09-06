@@ -477,7 +477,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $html_firma_ap_cito .=  $this->load->view("ssan_libro_biopsias_listagespab/pdf_firma_patologo_citologico",array('DATA'=>$DATA,"empresa"=>$empresa,"code_doc_patologo_citologico"=>$code_doc_patologo_citologico),true);
             $dompdf->SetHTMLFooter($html_firma_ap_cito.$html_footer);
             
-            
         } else {
             if($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_CONF_PAG'] == 0){
                 if($IND_TIPO_BIOPSIA === '5' || $IND_TIPO_BIOPSIA === '6' ){
@@ -776,65 +775,66 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         )));
     }
     
+    
     public function get_update_img_etapas(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $id_anatomia                    =   $this->input->post('id_anatomia');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
-        $html                           =   $this->load->view("ssan_libro_etapaanalitica/html_views_imagenes_carrusel",$return_data,true);
-        $this->output->set_output(json_encode(array(
-            'return_data'               =>  $return_data,
-            'html'                      =>  $html,
-        )));
+        $id_anatomia =   $this->input->post('id_anatomia');
+        $return_data =   $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
+        $html =   $this->load->view("ssan_libro_etapaanalitica/html_views_imagenes_carrusel",$return_data,true);
+        $this->output->set_output(json_encode([
+            'return_data' =>  $return_data,
+            'html' =>  $html,
+        ]));
     }
-    
+
     public function visualiza_carrusel(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $html                           =   '';
-        $id_anatomia                    =   $this->input->post('id_anatomia');
-        $return_data                    =   $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
-        $v_count_img_main               =   count($return_data['data_bd'][':C_IMAGENES_BLOB']);
-        $v_count_img_muestra            =   count($return_data['data_bd'][':C_IMAGENES_BLOB_MUESTRAS']);
-        $v_img_total                    =   ($v_count_img_main+$v_count_img_muestra);
-        $aux_global                     =   0;
-        if($v_img_total>0){
-            $arr_li                     =   array();
-            $arr_img                    =   array();
+        $html = '';
+        $id_anatomia = $this->input->post('id_anatomia');
+        $return_data = $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
+        $v_count_img_main = count($return_data['data_bd'][':C_IMAGENES_BLOB']);
+        $v_count_img_muestra = count($return_data['data_bd'][':C_IMAGENES_BLOB_MUESTRAS']);
+        $v_img_total = ($v_count_img_main+$v_count_img_muestra);
+        $aux_global = 0;
+        if($v_img_total>0){ 
+            $arr_li = array();
+            $arr_img = array();
             if($v_count_img_main > 0){
                 foreach($return_data['data_bd'][':C_IMAGENES_BLOB'] as $i => $row){
-                    $class_act          =   $aux_global==0?'class="active"':'';
-                    $class              =   $aux_global==0?'active':'';
-                    $arr_li[]           =   '<li data-target="#carousel_example_generic" data-slide-to="'.$i.'" '.$class_act.'></li>';
-                    $arr_img[]          =   '<div class="item '.$class.' d-flex justify-content-center"><img src="'.$row["IMG_DATA"].'" alt="'.$i.'"><div class="carousel-caption">'.$row["NAME_IMG"].'</div></div>';
+                    $class_act = $aux_global==0?'class="active"':'';
+                    $class = $aux_global==0?'active':'';
+                    $arr_li[] = '<li data-target="#carousel_example_generic" data-slide-to="'.$i.'" '.$class_act.'></li>';
+                    $arr_img[] = '<div class="item '.$class.' d-flex justify-content-center"><img src="'.$row["IMG_DATA"].'" alt="'.$i.'"><div class="carousel-caption">'.$row["NAME_IMG"].'</div></div>';
                     $aux_global++;
                 }
             }
             if($v_count_img_muestra > 0){
                 foreach($return_data['data_bd'][':C_IMAGENES_BLOB_MUESTRAS'] as $i => $row){
-                    $class_act          =   $aux_global==0?'class="active"':'';
-                    $class              =   $aux_global==0?'active':'';
-                    $arr_li[]           =   '<li data-target="#carousel_example_generic" data-slide-to="'.$i.'" '.$class_act.'></li>';
-                    $arr_img[]          =   '<div class="item '.$class.' d-flex justify-content-center"><img src="'.$row["IMG_DATA"].'" alt="'.$i.'"><div class="carousel-caption">'.$row["NAME_IMG"].'</div></div>';
+                    $class_act = $aux_global==0?'class="active"':'';
+                    $class = $aux_global==0?'active':'';
+                    $arr_li[] = '<li data-target="#carousel_example_generic" data-slide-to="'.$i.'" '.$class_act.'></li>';
+                    $arr_img[] = '<div class="item '.$class.' d-flex justify-content-center"><img src="'.$row["IMG_DATA"].'" alt="'.$i.'"><div class="carousel-caption">'.$row["NAME_IMG"].'</div></div>';
                     $aux_global++;
                 }
             }
-            $html                       =   '
-                                                <div class="row">
-                                                   <div class="col col-lg-12" style="padding:10px;">
-                                                       <div id="carousel_example_generic" class="carousel slide" data-ride="carousel" style="padding:20px;">
-                                                            <ol class="carousel-indicators">'.implode(" ",$arr_li).'</ol>
-                                                            <div class="carousel-inner" role="listbox">'.implode(" ",$arr_img).'</div>
-                                                            <a class="left carousel-control" href="#carousel_example_generic" role="button" data-slide="prev">
-                                                               <span class="fa fa-fast-backward" aria-hidden="true"></span>
-                                                               <span class="sr-only">Previos</span>
-                                                            </a>
-                                                            <a class="right carousel-control" href="#carousel_example_generic" role="button" data-slide="next">
-                                                               <span class="fa fa-fast-forward" aria-hidden="true"></span>
-                                                               <span class="sr-only">Pr&oacute;ximo</span>
-                                                            </a>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                            ';
+            $html = '
+                        <div class="row">
+                            <div class="col col-lg-12" style="padding:10px;">
+                                <div id="carousel_example_generic" class="carousel slide" data-ride="carousel" style="padding:20px;">
+                                    <ol class="carousel-indicators">'.implode(" ",$arr_li).'</ol>
+                                    <div class="carousel-inner" role="listbox">'.implode(" ",$arr_img).'</div>
+                                    <a class="left carousel-control" href="#carousel_example_generic" role="button" data-slide="prev">
+                                        <span class="fa fa-fast-backward" aria-hidden="true"></span>
+                                        <span class="sr-only">Previos</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#carousel_example_generic" role="button" data-slide="next">
+                                        <span class="fa fa-fast-forward" aria-hidden="true"></span>
+                                        <span class="sr-only">Pr&oacute;ximo</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    ';
         }
         $this->output->set_output(json_encode(array(
             'return_data'               =>  $return_data,
@@ -956,18 +956,21 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     }
 
     public function gestor_imagenes_x_muestras(){
+        $return_data = [];
         $empresa = $this->session->userdata("COD_ESTAB");
         $ID_ANATOMIA = $this->input->post('ID_ANATOMIA');
+        /*
         $return_data = $this->ssan_libro_etapaanalitica_model->subir_imagenprotoclo_ap_x_muestra([
             'empresa' => $empresa,
             'id_anatomia' => $ID_ANATOMIA,
-            'id_muestra' =>  $this->input->post('id_muestra'),  
-            'id_casete' =>  $this->input->post('id_casete'),
-            'ind_zona' =>  $this->input->post('ind_zona'),
-            'tipo_muestra' =>  $this->input->post('tipo_muestra'),
+            'id_muestra' => $this->input->post('id_muestra'),  
+            'id_casete' => $this->input->post('id_casete'),
+            'ind_zona' => $this->input->post('ind_zona'),
+            'tipo_muestra' => $this->input->post('tipo_muestra'),
         ]);
-        $RETURN["ID_IMAGEN"] = $return_data;
+        */
         $RETURN["FILES"] = $_FILES;
+        $RETURN["ID_IMAGEN"] = $return_data;
         $RETURN["ID_AP"] = $ID_ANATOMIA;
         $this->output->set_output(json_encode($RETURN));
     }

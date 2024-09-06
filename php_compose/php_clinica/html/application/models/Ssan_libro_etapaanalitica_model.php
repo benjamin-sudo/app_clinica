@@ -16,7 +16,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
 
     public function new_load_analitica_paginado($DATA) {
-        
         $cod_empresa = $DATA["cod_empresa"];
         $usr_session = $DATA["usr_session"];
         $opcion = $DATA["ind_order_by"];
@@ -30,11 +29,9 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $fecha_final = date('Y-m-d 23:59:59', strtotime($val_fecha_final));
         $start_row = ($page_number - 1) * $page_size;
         $end_row = $page_size;
-
         # #################
         # Filtrar estados #
         # #################
-        
         $lista_filtro_estados = [];
         if ($arr_data == '-1') {
             $lista_filtro_estados = [0,1,2,3,4,5,6,7,8,9];
@@ -746,281 +743,58 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             }
             if($ind_first == 1){
                 return array(
-                    'return_html'                   =>  $ind_opcion === '#_panel_por_fecha'   ? $html : $this->sin_resultados('_panel_por_fecha'),
-                    'return_por_gestion'            =>  $ind_opcion === '#_panel_por_gestion' ? $html : $this->sin_resultados('_panel_por_gestion'),
-                    'return_por_codigo'             =>  $ind_opcion === '#_busqueda_bacode'   ? $html : $this->sin_resultados('_busqueda_bacode'),
-                    'return_por_persona'            =>  $ind_opcion === '#_busqueda_xpersona' ? $html : $this->sin_resultados('_busqueda_xpersona'),
+                    'return_html' =>  $ind_opcion === '#_panel_por_fecha'   ? $html : $this->sin_resultados('_panel_por_fecha'),
+                    'return_por_gestion' =>  $ind_opcion === '#_panel_por_gestion' ? $html : $this->sin_resultados('_panel_por_gestion'),
+                    'return_por_codigo' =>  $ind_opcion === '#_busqueda_bacode'   ? $html : $this->sin_resultados('_busqueda_bacode'),
+                    'return_por_persona' =>  $ind_opcion === '#_busqueda_xpersona' ? $html : $this->sin_resultados('_busqueda_xpersona'),
                 );
             } else {
                 return array(
                     //se encarga el js de agregar
-                    'return_html'                   =>  $html
+                    'return_html' => $html
                 );
             }
         } else {
             return array(
-                'return_html'                       =>  $this->sin_resultados('_panel_por_fecha'),
-                'return_por_gestion'                =>  $this->sin_resultados('_panel_por_gestion'),
-                'return_por_codigo'                 =>  $this->sin_resultados('_busqueda_bacode'),
-                'return_por_persona'                =>  $this->sin_resultados('_busqueda_xpersona'),
+                'return_html' => $this->sin_resultados('_panel_por_fecha'),
+                'return_por_gestion' => $this->sin_resultados('_panel_por_gestion'),
+                'return_por_codigo' => $this->sin_resultados('_busqueda_bacode'),
+                'return_por_persona' => $this->sin_resultados('_busqueda_xpersona'),
             );
         }
     }
     
     public function busqueda_img_clob($id_anatomia){
-        $this->db->trans_start();
-        $param          =   array(
-                                #DATA IN
-                                array( 
-                                    'name'      =>  ':V_ID_ANATOMIA',
-                                    'value'     =>  $id_anatomia,
-                                    'length'    =>  20,
-                                    'type'      =>  SQLT_CHR 
-                                ),
-                                #CURSORES OUT
-                                array( 
-                                    'name'      =>  ':C_IMAGENES_BLOB',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_IMAGENES_BLOB_MUESTRAS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                                array( 
-                                    'name'      =>  ':C_STATUS',
-                                    'value'     =>  $this->db->get_cursor(),
-                                    'length'    =>  -1,
-                                    'type'      =>  OCI_B_CURSOR
-                                ),
-                            );
-        $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_IMG_VIEWS',$param);
-        $this->db->trans_complete();
-        return array(
-            'num_anatomia'                      =>  $id_anatomia,
-            'status'                            =>  true,
-            'data_bd'                           =>  $result,
-        );
+        $query = $this->db->query("SELECT ID_MAIN AS ID_UNICO_IMAGEN, ID_SOLICITUD_HISTO, COD_EMPRESA, SIZE_BLG, 
+            CONTEXT_TYPE, MAIN_BLOB, IND_ESTADO, IMG_DATA, NAME_IMG, TXT_OBSERVACIONES, 
+            ID_UID, USR_CREA, DATE_CREA, BFILE, NCLOB 
+        FROM PB_MAIN_BLG_ANATOMIA
+        WHERE ID_SOLICITUD_HISTO IN (?) 
+        AND IND_ESTADO = 1
+        ORDER BY DATE_CREA", array($V_ID_ANATOMIA));
+        $query_muestras = $this->db->query("SELECT ID_MAIN, ID_SOLICITUD_HISTO, ID_HISTO_ZONA, ID_NMUESTRA, ID_CASETE, 
+            COD_EMPRESA, SIZE_BLG, CONTEXT_TYPE, MAIN_BLOB, IND_ESTADO, IMG_DATA, 
+            NAME_IMG, TXT_OBSERVACIONES, BFILE, NCLOB, ID_UID, USR_CREA, DATE_CREA, 
+            USR_AUDITA, DATE_AUDITA 
+        FROM PB_IMG_APMUESTRAS 
+        WHERE ID_SOLICITUD_HISTO IN (?) 
+        AND IND_ESTADO = 1", array($V_ID_ANATOMIA));
+        $result = [];
+        $result[':C_IMAGENES_BLOB'] = $query->result_array();
+        $result[':C_IMAGENES_BLOB_MUESTRAS'] = $query_muestras->result_array();
+        return [
+            'num_anatomia' =>  $id_anatomia,
+            'status' =>  true,
+            'data_bd' =>  $result,
+        ];
     }
     
     function calcular_edad($fecha){
-        $fecha_nac          =   new DateTime(date('d-m-Y',strtotime(str_replace('/','-',$fecha)))); // Creo un objeto DateTime de la fecha ingresada
-        $fecha_hoy          =   new DateTime(date('d-m-Y',time()));                                 // Creo un objeto DateTime de la fecha de hoy
-        $edad               =   date_diff($fecha_hoy,$fecha_nac);                                   // La funcion ayuda a calcular la diferencia, esto seria un objeto
+        $fecha_nac = new DateTime(date('d-m-Y',strtotime(str_replace('/','-',$fecha))));
+        $fecha_hoy = new DateTime(date('d-m-Y',time()));                                
+        $edad = date_diff($fecha_hoy,$fecha_nac);                                  
         return $edad;
     }
-
-    #main principal de las hojas de anatomia
-    /*
-    public function load_informacion_rce_patologico($DATA){
-        $this->db->trans_start();
-        $param              =   array(
-
-                                    #DATA IN
-                                    array( 
-                                        'name'      =>  ':V_COD_EMPRESA',
-                                        'value'     =>  $DATA["cod_empresa"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_USR_SESSION',
-                                        'value'     =>  $DATA["usr_session"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_OPCION',
-                                        'value'     =>  $DATA["ind_opcion"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_IND_FIRST',
-                                        'value'     =>  $DATA["ind_first"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_ID_ANATOMIA',
-                                        'value'     =>  $DATA["id_anatomia"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    array( 
-                                        'name'      =>  ':V_GET_SALA',
-                                        'value'     =>  $DATA["get_sala"],
-                                        'length'    =>  20,
-                                        'type'      =>  SQLT_CHR 
-                                    ),
-                                    #CURSORES OUT
-                                    array( 
-                                        'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_AP_INFORMACION_ADICIONAL',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_INFO_LOG_ADVERSOS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_LISTA_PATOLOGOS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_LISTA_FRAGMENTOS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    #SOLO RCE PATOLOGO
-                                    array( 
-                                        'name'      =>  ':P_LISTA_PRESTACIONES',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_LIS_CODORGANO',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_LIS_CODPATOLOGIA',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_LIS_COD_MAI',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_LIS_MAI_PROCEDIMIENTO',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':C_HISTORIAL_M',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':C_CHAT_ANATOMIA',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':C_IMAGENES_BLOB',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':C_IMAGENES_BLOB_MUESTRAS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    #SALA DE INCLUSION 
-                                    array( 
-                                        'name'      =>  ':P_TECNICAS_APLICADAS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':P_TECNICAS_APLICADASXMUESTRA',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    #SALA DE PROCESO
-                                    array( 
-                                        'name'      =>  ':P_SALA_PROCESO',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    #STATUS SOLICITUD
-                                    array( 
-                                        'name'      =>  ':C_STATUS',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                    array( 
-                                        'name'      =>  ':C_EXCEPCION',
-                                        'value'     =>  $this->db->get_cursor(),
-                                        'length'    =>  -1,
-                                        'type'      =>  OCI_B_CURSOR
-                                    ),
-                                );
-        $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_RCE_ANATOMIA_PATOLOGICA',$param);
-        $this->db->trans_complete();
-        $arr_info_linea_tiempo                                                                  =   [];
-        #ordena data para templetate template_logs_anatomia
-        $log_adverso                                                                            =   [];
-        if(count($result[':P_INFO_LOG_ADVERSOS'])>0){
-            foreach($result[':P_INFO_LOG_ADVERSOS'] as $i => $log_adv){ 
-                $log_adverso[$log_adv['ID_NUM_CARGA'].'_'.$log_adv['ID_NMUESTRA']]              =   $log_adv;
-            }
-        }
-        if(count($result[":P_AP_INFORMACION_ADICIONAL"])>0){
-            foreach ($result[":P_AP_INFORMACION_ADICIONAL"] as $i => $arr_linea_tiempo_logs_row){
-                $ID_SOLICITUD_HISTO                                                             =   $arr_linea_tiempo_logs_row['ID_SOLICITUD_HISTO'];
-                $ID_NUM_CARGA                                                                   =   $arr_linea_tiempo_logs_row['ID_NUM_CARGA'];
-                $ID_NMUESTRA                                                                    =   $arr_linea_tiempo_logs_row['ID_CASETE']==''?$arr_linea_tiempo_logs_row['TXT_BACODE']:$arr_linea_tiempo_logs_row['ID_CASETE'];
-                $id_compuesta                                                                   =   $ID_NUM_CARGA.'_'.$ID_NMUESTRA;
-                $arr_info_linea_tiempo[$ID_SOLICITUD_HISTO][$ID_NUM_CARGA][$ID_NMUESTRA][]      =   array(
-                                                                                                        'MAIN' =>  $arr_linea_tiempo_logs_row ,
-                                                                                                        'ERROR_LOG' =>  array_key_exists($id_compuesta,$log_adverso)?$log_adverso[$id_compuesta]:[]
-                                                                                                    );
-            }
-        }
-        return array(
-            'STATUS' => true,
-            'num_anatomia' => $DATA["id_anatomia"],
-            'linea_time' => $arr_info_linea_tiempo,
-            'data_bd' => $result,
-            'html_log' => $this->load->view("ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$DATA["id_anatomia"],'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$DATA["id_anatomia"]])?[]:$arr_info_linea_tiempo[$DATA["id_anatomia"]]),true),
-            'html_main' => '',
-            'get_sala' => $DATA['get_sala'],
-        );
-    }
-    */
 
     public function load_informacion_rce_patologico_new($DATA){
         # GO -> LOAD_RCE_ANATOMIA_PATOLOGICA
@@ -1924,98 +1698,95 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
     
     public function subir_imagenprotoclo_ap_x_muestra($aData){
-        $base64_string = $_POST['IMG_PROTOCOLO_BASE64'];    // Recuperar la cadena base64
-        $blob = oci_new_descriptor($this->db->conn_id, OCI_D_LOB);
-        $blob->writeTemporary($base64_string);              // Escribir los datos decodificados en un descriptor LOB
-        $ID_IMAGEN                  =   '';
-        $param                      =   array(
-                                            array( 
-                                                'name'      =>  ':VAL_ID_IMAGEN',
-                                                'value'     =>  null,
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_ID_SOLICITUD',
-                                                'value'     =>  $aData['id_anatomia'],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_ID_MUESTRA',
-                                                'value'     =>  $aData['id_muestra'],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_ID_CASETE',
-                                                'value'     =>  '',
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_IND_ZONA',
-                                                'value'     =>  $aData['ind_zona'],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_SESSION',
-                                                'value'     =>  explode("-",$this->session->userdata("USERNAME"))[0],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_ID_UID',
-                                                'value'     =>  $this->session->userdata["ID_UID"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_COD_EMPRESA',
-                                                'value'     =>  $aData['empresa'],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_NAME_IMG',
-                                                'value'     =>  $_FILES["IMG_PROTOCOLO"]["name"],
-                                                //'value'   =>  0,
-                                                'length'    =>  256,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_SIZE_IMG',
-                                                'value'     =>  $_FILES["IMG_PROTOCOLO"]["type"],
-                                                //'value'   =>  0,
-                                                'length'    =>  256,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':VAL_SIZE_TYPE',
-                                                'value'     =>  $_FILES["IMG_PROTOCOLO"]["size"],
-                                                //'value'   =>  0,
-                                                'length'    =>  256,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':P_CLOB_DATA',
-                                                'value'     =>  $blob,
-                                                'length'    =>  -1,
-                                                'type'      =>  SQLT_CLOB
-                                            ),
-                                            array( 
-                                                'name'      =>  ':RETURN_CURSOR',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                        );
+        $base64_string = $_POST['IMG_PROTOCOLO_BASE64'];
+        $blob = oci_new_descriptor($this->db->conn_id,OCI_D_LOB);
+        $blob->writeTemporary($base64_string);
+        $ID_IMAGEN = '';
+        $param = array(
+                        array( 
+                            'name' => ':VAL_ID_IMAGEN',
+                            'value' => null,
+                            'length' => 20,
+                            'type' => SQLT_CHR 
+                        ),
+                        array( 
+                            'name' => ':VAL_ID_SOLICITUD',
+                            'value' => $aData['id_anatomia'],
+                            'length' => 20,
+                            'type' => SQLT_CHR 
+                        ),
+                        array( 
+                            'name' => ':VAL_ID_MUESTRA',
+                            'value' => $aData['id_muestra'],
+                            'length' => 20,
+                            'type' => SQLT_CHR 
+                        ),
+                        array( 
+                            'name' => ':VAL_ID_CASETE',
+                            'value' => '',
+                            'length' => 20,
+                            'type' => SQLT_CHR 
+                        ),
+                        array( 
+                            'name' => ':VAL_IND_ZONA',
+                            'value' => $aData['ind_zona'],
+                            'length' =>  20,
+                            'type' => SQLT_CHR 
+                        ),
+                        array( 
+                            'name' => ':VAL_SESSION',
+                            'value' => explode("-",$this->session->userdata("USERNAME"))[0],
+                            'length' => 20,
+                            'type' => SQLT_CHR 
+                        ),
+                        array( 
+                            'name' =>  ':VAL_ID_UID',
+                            'value' =>  $this->session->userdata["ID_UID"],
+                            'length' =>  20,
+                            'type' =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name' =>  ':VAL_COD_EMPRESA',
+                            'value' =>  $aData['empresa'],
+                            'length' =>  20,
+                            'type' =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name' => ':VAL_NAME_IMG',
+                            'value' => $_FILES["IMG_PROTOCOLO"]["name"],
+                            'length' => 256,
+                            'type' => SQLT_CHR 
+                        ),
+                        array( 
+                            'name' =>  ':VAL_SIZE_IMG',
+                            'value' =>  $_FILES["IMG_PROTOCOLO"]["type"],
+                            'length' =>  256,
+                            'type' =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name' =>  ':VAL_SIZE_TYPE',
+                            'value' =>  $_FILES["IMG_PROTOCOLO"]["size"],
+                            'length' =>  256,
+                            'type' =>  SQLT_CHR 
+                        ),
+                        array( 
+                            'name' =>  ':P_CLOB_DATA',
+                            'value' =>  $blob,
+                            'length' =>  -1,
+                            'type' =>  SQLT_CLOB
+                        ),
+                        array( 
+                            'name' =>  ':RETURN_CURSOR',
+                            'value' =>  $this->db->get_cursor(),
+                            'length' =>  -1,
+                            'type' =>  OCI_B_CURSOR
+                        ),
+                    );
         $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','ANATOMIA_IMG_X_MUESTRAS',$param);
         $this->db->trans_complete();
         return array(
-            'STATUS'        =>  true,
-            'RETURN_CURSOR' =>  empty($result[':RETURN_CURSOR'])?null:$result[':RETURN_CURSOR'],
+            'STATUS' => true,
+            'RETURN_CURSOR' => empty($result[':RETURN_CURSOR'])?null:$result[':RETURN_CURSOR'],
         );
     }
 
