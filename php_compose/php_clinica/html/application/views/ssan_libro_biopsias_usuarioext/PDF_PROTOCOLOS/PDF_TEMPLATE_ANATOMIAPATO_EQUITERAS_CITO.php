@@ -48,16 +48,17 @@
         <link href="<?php echo base_url();?>/assets/themes/inicio/css/boobtstrap.css" rel="stylesheet"></link>
         <style>
             div.container {
-                width :   100%;
-                border :   1px solid gray;
+                width : 100%;
+                border : 1px solid gray;
             }
-
+            
             .barcode {
                 padding : 1.5mm;
                 margin : 0;
                 vertical-align : top;
                 color : #000044;
             }
+            
             .barcodecell {
                 text-align : center;
                 vertical-align : top;
@@ -69,13 +70,14 @@
                 border-style : none;
                 border-color : black;
             }
+            
             .TD_TH {
                 border : 1px solid black;
             } 
+            
             .table_2 {
                 border-collapse : collapse;
             }
-
 
             .subtitulo_formulario2 {
                 font-size : 14px;
