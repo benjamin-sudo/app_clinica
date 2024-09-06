@@ -1,23 +1,23 @@
 <?php
-    $VAR_FECHA_SOLICITUD                =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["FECHA_SOLICITUD"];
-    $VAR_ANATOMIA_PATALOGICA            =   '';
-    $VAR_NOMBRE_PACIENTE                =   '';
-    $VAR_IDENTIFICADOR_PAC              =   '';
-    $FICHAL                             =   '';
-    $EDAD                               =   '';
-    $NACIMIENTO                         =   '';
-    $TXT_PREVISION                      =   '';
-    $VAR_PROFESIONAL_ACARGO             =   '';
-    $NOMBRE_ESTALECIMIENTO              =   '';
+    $VAR_FECHA_SOLICITUD = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["FECHA_SOLICITUD"];
+    $VAR_ANATOMIA_PATALOGICA = '';
+    $VAR_NOMBRE_PACIENTE = '';
+    $VAR_IDENTIFICADOR_PAC = '';
+    $FICHAL = '';
+    $EDAD = '';
+    $NACIMIENTO = '';
+    $TXT_PREVISION = '';
+    $VAR_PROFESIONAL_ACARGO = '';
+    $NOMBRE_ESTALECIMIENTO = '';
     if(count($DATA["ALL_CIRUGIAS"][0])>0){
-        $VAR_ANATOMIA_PATALOGICA        =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_HISTO"];
-        $VAR_NOMBRE_PACIENTE            =   $DATA["ALL_CIRUGIAS"][0]["NOMBRE_COMPLETO"];
-        $VAR_IDENTIFICADOR_PAC          =   $DATA["ALL_CIRUGIAS"][0]["RUTPACIENTE"];
-        $FICHAL                         =   $DATA["ALL_CIRUGIAS"][0]["FICHAL"];
-        $NACIMIENTO                     =   $DATA["ALL_CIRUGIAS"][0]["NACIMIENTO"];
-        $EDAD                           =   $DATA["ALL_CIRUGIAS"][0]["EDAD"];
-        $TXT_PREVISION                  =   $DATA["ALL_CIRUGIAS"][0]["TXT_PREVISION"];
-        $listaRRHH                      =   $DATA['ALL_RRHH'];	
+        $VAR_ANATOMIA_PATALOGICA = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_HISTO"];
+        $VAR_NOMBRE_PACIENTE = $DATA["ALL_CIRUGIAS"][0]["NOMBRE_COMPLETO"];
+        $VAR_IDENTIFICADOR_PAC = $DATA["ALL_CIRUGIAS"][0]["RUTPACIENTE"];
+        $FICHAL = $DATA["ALL_CIRUGIAS"][0]["FICHAL"];
+        $NACIMIENTO = $DATA["ALL_CIRUGIAS"][0]["NACIMIENTO"];
+        $EDAD = $DATA["ALL_CIRUGIAS"][0]["EDAD"];
+        $TXT_PREVISION = $DATA["ALL_CIRUGIAS"][0]["TXT_PREVISION"];
+        $listaRRHH = $DATA['ALL_RRHH'];	
         if(count($listaRRHH) > 0) {
             foreach($listaRRHH as $i => $hhrr) {
                 if ($hhrr['ID_FUNCION_PB'] == '0') {
@@ -28,18 +28,18 @@
             }
         }
     } else {
-        $VAR_ANATOMIA_PATALOGICA        =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
-        $VAR_NOMBRE_PACIENTE            =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NOMBRE_COMPLETO'];
-        $VAR_IDENTIFICADOR_PAC          =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['COD_RUTPAC']."-".$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['COD_DIGVER'];
-        $FICHAL                         =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['FICHAL'];
-        $NACIMIENTO                     =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NACIMIENTO'];
-        $EDAD                           =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['EDAD'];
-        $TXT_PREVISION                  =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PREVISION'];
-        $VAR_PROFESIONAL_ACARGO         =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['PROFESIONAL'].', <b>'.$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL']."</b>";
+        $VAR_ANATOMIA_PATALOGICA = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
+        $VAR_NOMBRE_PACIENTE = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NOMBRE_COMPLETO'];
+        $VAR_IDENTIFICADOR_PAC = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['COD_RUTPAC']."-".$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['COD_DIGVER'];
+        $FICHAL = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['FICHAL'];
+        $NACIMIENTO = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NACIMIENTO'];
+        $EDAD = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['EDAD'];
+        $TXT_PREVISION = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PREVISION'];
+        $VAR_PROFESIONAL_ACARGO = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['PROFESIONAL'].', <b>'.$DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL']."</b>";
     }
-    $GET_MAIN                           =   $VAR_ANATOMIA_PATALOGICA.'&&nbsp;2';
-    $get                                =   'text='.$GET_MAIN;
-    $barcode2                           =   '';
+    $GET_MAIN = $VAR_ANATOMIA_PATALOGICA.'&&nbsp;2';
+    $get = 'text='.$GET_MAIN;
+    $barcode2 = '';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -154,11 +154,11 @@
                 padding-left : 5px;
             }
             
-            footer                      {
-                position                :   absolute;
-                bottom                  :   0;
-                height                  :   60px;
-                width                   :   100%;
+            footer {
+                position : absolute;
+                bottom : 0;
+                height : 60px;
+                width : 100%;
             }
             @page {
                 margin-top: 15px;
