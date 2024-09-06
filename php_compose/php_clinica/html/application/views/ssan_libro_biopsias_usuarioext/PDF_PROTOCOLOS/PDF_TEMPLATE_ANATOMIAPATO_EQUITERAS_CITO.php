@@ -53,105 +53,105 @@
             }
 
             .barcode {
-                padding :   1.5mm;
-                margin :   0;
-                vertical-align :   top;
-                color :   #000044;
+                padding : 1.5mm;
+                margin : 0;
+                vertical-align : top;
+                color : #000044;
             }
             .barcodecell {
-                text-align :   center;
-                vertical-align :   top;
+                text-align : center;
+                vertical-align : top;
             }
        
             .border {
-                border-width :   thin;
-                border-spacing :   2px;
-                border-style :   none;
-                border-color :   black;
+                border-width : thin;
+                border-spacing : 2px;
+                border-style : none;
+                border-color : black;
             }
             .TD_TH {
                 border : 1px solid black;
             } 
             .table_2 {
-                border-collapse :   collapse;
+                border-collapse : collapse;
             }
 
 
-            .subtitulo_formulario2      {
-                font-size               :   14px;
+            .subtitulo_formulario2 {
+                font-size : 14px;
             }
 
-            .subtitulo_formulario3      {
-                font-size               :   14px;
-                font-family             :   arial;
-                padding                 :   0;
-                vertical-align          :   baseline;
-                padding                 :   2px;
-                border-width            :   1px;
-                border-style            :   solid;
-                border-color            :   #ADC9E4;
-                padding-left            :   10px;
-                padding-right           :   10px;
-                height                  :   18px;
+            .subtitulo_formulario3 {
+                font-size : 14px;
+                font-family : arial;
+                padding : 0;
+                vertical-align : baseline;
+                padding : 2px;
+                border-width : 1px;
+                border-style : solid;
+                border-color : #ADC9E4;
+                padding-left : 10px;
+                padding-right : 10px;
+                height : 18px;
             }
 
-            .table_etiquetas            {
-                border                  :   1px solid black;
-                margin-bottom           :   2px;
-                width                   :   100%;
+            .table_etiquetas {
+                border : 1px solid black;
+                margin-bottom : 2px;
+                width : 100%;
             }
 
-            .table_bottom               {
-                border-bottom           :   1px solid black;
-                margin-bottom           :   2px;
+            .table_bottom {
+                border-bottom : 1px solid black;
+                margin-bottom : 2px;
             }
 
-            .border_bottom              {
-                border-bottom-width     :   2px;
-                border-top-width        :   0px;
-                border-left-width       :   0px;
-                border-right-width      :   0px;
-                border-style            :   solid;
+            .border_bottom {
+                border-bottom-width : 2px;
+                border-top-width : 0px;
+                border-left-width : 0px;
+                border-right-width : 0px;
+                border-style : solid;
                 padding-left: 5px;
             }
 
-            .border_bottom_left         {
-                border-bottom-width     :   2px;
-                border-top-width        :   2px;
-                border-left-width       :   0px;
-                border-right-width      :   2px;
-                border-style            :   solid;
-                padding-left            :   5px;
+            .border_bottom_left {
+                border-bottom-width : 2px;
+                border-top-width : 2px;
+                border-left-width : 0px;
+                border-right-width : 2px;
+                border-style : solid;
+                padding-left : 5px;
             }
 
-            .border_bottom_right        {
-                border-bottom-width     :   2px;
-                border-top-width        :   2px;
-                border-left-width       :   0px;
-                border-right-width      :   2px;
-                border-style            :   solid;
-                padding-left            :   5px;
+            .border_bottom_right {
+                border-bottom-width : 2px;
+                border-top-width : 2px;
+                border-left-width : 0px;
+                border-right-width : 2px;
+                border-style : solid;
+                padding-left : 5px;
             }
 
-            .size_9                     {
-                font-size               :   9px;
+            .size_9 {
+                font-size : 9px;
             } 
 
-            .size_2                     {
-                font-size               :   2px;
+            .size_2 {
+                font-size : 2px;
             }
 
-            .size_1                     {
-                font-size               :   1px;
+            .size_1 {
+                font-size : 1px;
             }
 
-            .border_firma               {
-                border-bottom-width     :   2px;
-                border-top-width        :   2px;
-                border-left-width       :   0px;
-                border-right-width      :   2px;
-                border-style            :   solid;
-                padding-left            :   5px;
+            .border_firma {
+                border-bottom-width : 2px;
+                border-top-width : 2px;
+                border-left-width : 0px;
+                border-right-width : 2px;
+                border-style : solid;
+                padding-left : 5px;
             }
             
             footer                      {
@@ -168,9 +168,8 @@
             }
         </style>
     </head>
-    <!--
-        CITOLOG&Iacute;A
-    -->
+    
+    <!-- CITOLOG&Iacute;A  -->
     <!--
     <?php
         #echo $DATA['HTML_QR'];
@@ -267,29 +266,29 @@
         <table tabindex="2" width="100%" align="center" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
             <thead>
                 <tr class="subtitulo_formulario2">
-                    <td class="subtitulo_formulario2"   colspan="2"  bgcolor="#ECF1F1"><b>DETALLE DE LA SOLICITUD:</b></td>
+                    <td class="subtitulo_formulario2" colspan="2" bgcolor="#ECF1F1"><b>DETALLE DE LA SOLICITUD:</b></td>
                 </tr>
                 <tr>
-                    <td class="subtitulo_formulario2"               >
+                    <td class="subtitulo_formulario2" >
                         <?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['MEDI'] === 'MATR'?'MATRON':'MEDICO';?>:
                     </td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['PROFESIONAL'];?> | <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL'];?> </td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['PROFESIONAL'];?> | <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['RUT_PROFESIOAL'];?> </td>
                 </tr>
                 <tr>
                     <td class="subtitulo_formulario2"   width="50%" >PROCEDENCIA SOLICITUD:</td>
                     <td class="subtitulo_formulario2"   width="50%" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA']; ?> </td>
                 </tr>
                 <tr>
-                    <td class="subtitulo_formulario2"               >SERVICIO/UNIDAD PROCEDENCIA:</td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NOMBRE_SERVICIO'];?> <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_SUBDIVISION'];?></td>
+                    <td class="subtitulo_formulario2" >SERVICIO/UNIDAD PROCEDENCIA:</td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['NOMBRE_SERVICIO'];?> <?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_SUBDIVISION'];?></td>
                 </tr>
                 <tr>
-                    <td class="subtitulo_formulario2"               >TIPO DE BIOPSIA:</td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TIPO_DE_BIOPSIA'];?></td>
+                    <td class="subtitulo_formulario2" >TIPO DE BIOPSIA:</td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TIPO_DE_BIOPSIA'];?></td>
                 </tr>
                 <tr>
-                    <td class="subtitulo_formulario2"               >DIAGN&Oacute;STICO CL&Iacute;NICO:</td>
-                    <td class="subtitulo_formulario2"               ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_DIAGNOSTICO'];?></td>
+                    <td class="subtitulo_formulario2" >DIAGN&Oacute;STICO CL&Iacute;NICO:</td>
+                    <td class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_DIAGNOSTICO'];?></td>
                 </tr>
             </thead>
         </table>
@@ -362,7 +361,7 @@
                 </tr>
             </thead>   
             <tbody>
-                <?php foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $row_muestras ){  ?>
+                <?php foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $row_muestras) { ?>
                     <tr>
                         <td width="5%"  class="subtitulo_formulario2" style="text-align: center;"><?php echo $row_muestras['N_MUESTRA']; ?></td>
                         <td width="15%" class="subtitulo_formulario2" ><?php echo $row_muestras['ID_NMUESTRA']; ?></td>    
@@ -376,12 +375,12 @@
         <div style="page-break-after:always;"></div>
         
         <?php if($TOTAL_MUESTRAS>0){ ?>
-            <?php $ID_HISTO         =   $VAR_ANATOMIA_PATALOGICA; ?>
+            <?php $ID_HISTO = $VAR_ANATOMIA_PATALOGICA; ?>
             <?php foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $row_muestras ){ 
                 if ($row_muestras["IND_ETIQUETA"]==2) { ?>
                         <?php
-                            $GET_CODIGO             =   'A'.$row_muestras["ID_NMUESTRA"];
-                            $ruta                   =   '';
+                            $GET_CODIGO = 'A'.$row_muestras["ID_NMUESTRA"];
+                            $ruta = '';
                         ?>
                     <table class="" width="527px" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
                         <thead>
@@ -425,8 +424,9 @@
                 <?php } else { ?>
         
                 <?php 
-                    $GET_CODIGO             =   'A'.$row_muestras["ID_NMUESTRA"];
+                    $GET_CODIGO = 'A'.$row_muestras["ID_NMUESTRA"];
                 ?>
+
                 <table class="" width="100px" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
                         <thead>
                             <tr style="display: none">
@@ -524,7 +524,6 @@
                             </tr>
                         </thead>
                     </table>    
-                    
         
                 <?php } ?> <!-- ELSE TAMANO ETIQUETA -->
             <?php  } ?>
