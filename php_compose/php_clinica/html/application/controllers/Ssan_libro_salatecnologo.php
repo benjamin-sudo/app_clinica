@@ -64,8 +64,6 @@ class Ssan_libro_salatecnologo extends CI_Controller {
             "v_page_num" => 1,      
             "v_page_size" => 10,     
         ));
-
-
         #API VOZ
         $this->load->js("assets/ssan_libro_etapaanalitica/js/apivoz_multiple.js");
         #ARC LOCALES
@@ -79,6 +77,5 @@ class Ssan_libro_salatecnologo extends CI_Controller {
         #HTML OUT
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
-
 }
 ?>
