@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Iniciar SesiSesi&oacute;n</title>
+        <title>Iniciar Sesi&oacute;n Clinica Libre</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -65,8 +65,15 @@
         <!--
         <?php echo getenv('APP_BASE_URL').'/ruta_login'?>
         <br>
-        <?= base_url('ruta_login');?>
         -->
+        <?php echo getenv('APP_ENV') ; ?>
+        <br>
+        <?= base_url('ruta_login');?>
+
+        <br>
+
+        <p><?= base_url() ?></p>
+
         
     </body>
 </html>

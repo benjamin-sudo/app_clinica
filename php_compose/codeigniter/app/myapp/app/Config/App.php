@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
+
 class App extends BaseConfig
 {
     /**
@@ -16,10 +17,14 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
-      #Para producción
-      #var_dump("CONFIG");
-      #public string $baseURL = getenv('APP_BASE_URL') ?: 'https://panel.clinicalibre.cl/';
-      public string $baseURL = 'https://panel.clinicalibre.cl/';
+    
+    #Para producción
+    public string $baseURL = 'https://panel.clinicalibre.cl/';
+    #Para developer
+    #public string $baseURL = ' http://localhost:9000/';
+    #public $baseURL;
+    #public $baseURL = 'http://localhost:9000/';
+
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
      * If you want to accept multiple Hostnames, set this.
