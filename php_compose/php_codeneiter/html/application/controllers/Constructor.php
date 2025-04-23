@@ -56,9 +56,9 @@ class Constructor extends CI_Controller {
             $redirect = 'Dashboard';
         }
         $this->output->set_output(json_encode([
-            'status'    =>  $status,
-            'redirect'  =>  $redirect,
-            'userL'     =>  $user,
+            'status' => $status,
+            'redirect' => $redirect,
+            'userL' => $user,
         ]));
     }
 

@@ -50,8 +50,7 @@ class modelinicio extends CI_Model {
                                                     WHERE 
                                                     A.IND_ESTADO = 1 
                                                     AND 
-                                                    A.ID_UID = $ID_UID
-                ")->result_array();
+                                                    A.ID_UID = $ID_UID")->result_array();
                 if (count($arr_empresa)>0) {
                     $status_empresa = true;
                     $txt_empresa_default = $arr_empresa[0]['NOM_ESTAB'];

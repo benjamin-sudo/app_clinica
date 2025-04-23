@@ -12,7 +12,6 @@ sudo du -sh /var/lib/docker
 ######################################################################
 #docker stop php_compose-backup_service-1
 git pull origin main
-
 docker stats
 docker system df
 ######################################################################
@@ -75,9 +74,11 @@ docker system prune -a -f
 ###############################################    
 #   DAVID RIOSECO MONTECINO
 #   13957520-2
+
 ###############################################
 #   MACARIO ROJAS DI LORENZO
 #   26666862-7
+
 ###############################################
 docker-compose down
 docker-compose up -d
