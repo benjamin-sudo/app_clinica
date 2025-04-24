@@ -15,6 +15,15 @@ class App extends BaseConfig {
         }
     }
     */
+
+    public function __construct() {
+        parent::__construct();
+        $this->baseURL = getenv('APP_BASE_URL') ?? 'http://localhost:9000/';
+        echo "<br>";
+        echo getenv('APP_BASE_URL');
+    }
+
+
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
