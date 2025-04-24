@@ -18,7 +18,8 @@ class App extends BaseConfig {
 
     public function __construct() {
         parent::__construct();
-        $this->baseURL = getenv('APP_BASE_URL') ?? 'http://localhost:9000/';
+        #$this->baseURL = getenv('APP_BASE_URL') ?? 'http://localhost:9000/';
+        $this->baseURL = getenv('APP_ENV') ==  'development' ? 'http://localhost:9000/' : 'https://panel.clinicalibre.cl/';
     }
     
     /**
@@ -36,8 +37,8 @@ class App extends BaseConfig {
     #public string $baseURL = 'https://panel.clinicalibre.cl/';
     #Para developer
     #public string $baseURL = 'http://localhost:9000/';
-    public string $baseURL = 'http://localhost:9000/';
-    #public $baseURL;
+    #public string $baseURL = 'http://localhost:9000/';
+    public $baseURL;
     #public $baseURL = 'http://localhost:9000/';
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
