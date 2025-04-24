@@ -16,7 +16,7 @@ services:
       - CODEIGNITER_DATABASE_PASSWORD=mypassword
       - APP_ENV=development # Modo de desarrollo
       - ALLOW_EMPTY_PASSWORD=yes # Permitir contraseñas vacías
-      - APP_BASE_URL=http://localhost:9025/
+      - APP_BASE_URL=http://localhost:9000/
     depends_on:
       #- oracle_slim
       - mysql_6

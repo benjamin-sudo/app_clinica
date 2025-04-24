@@ -61,14 +61,5 @@
                 <button type="submit">Ingresar</button>
             </form>
         </div>
-        <!--
-        <?php echo getenv('APP_BASE_URL').'/ruta_login'?>
-        <br>
-        -->
-        <?php echo getenv('APP_ENV') ; ?>
-        <br>
-        <?= base_url('ruta_login');?>
-        <br>
-        <p><?= base_url() ?></p>
     </body>
 </html>

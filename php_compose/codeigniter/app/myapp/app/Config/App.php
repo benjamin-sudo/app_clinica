@@ -8,18 +8,14 @@ use CodeIgniter\Config\BaseConfig;
 class App extends BaseConfig
 {
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
-
         // Si app.baseURL existe en .env, lo usamos
-        $baseUrlFromEnv = getenv('app.baseURL');
-        if ($baseUrlFromEnv) {
-            $this->baseURL = $baseUrlFromEnv;
+        $baseUrlFromEnv = getenv('APP_ENV');
+        if ($baseUrlFromEnv == "production") {
+            $this->baseURL = getenv('APP_BASE_URL');
         }
-
         echo 'Base URL: ' . $this->baseURL;
-        
     }
 
 
