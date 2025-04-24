@@ -39,7 +39,8 @@ services:
     ports:
       - "9000:8000"
     volumes:
-      - ./codeigniter/app:/app  
+      - ./codeigniter/app:/app
+      - ./envs/.env.prod:/app/.env
     environment:
       - CODEIGNITER_PROJECT_NAME=myapp
       - CODEIGNITER_DATABASE_HOST=mariadb

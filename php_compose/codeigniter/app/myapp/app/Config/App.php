@@ -7,6 +7,22 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Si app.baseURL existe en .env, lo usamos
+        $baseUrlFromEnv = getenv('app.baseURL');
+        if ($baseUrlFromEnv) {
+            $this->baseURL = $baseUrlFromEnv;
+        }
+
+        echo 'Base URL: ' . $this->baseURL;
+        
+    }
+
+
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
@@ -19,9 +35,10 @@ class App extends BaseConfig
      */
     
     #Para producción
-    public string $baseURL = 'https://panel.clinicalibre.cl/';
+    #public string $baseURL = 'https://panel.clinicalibre.cl/';
     #Para developer
-    #public string $baseURL = ' http://localhost:9000/';
+    #public string $baseURL = 'http://localhost:9000/';
+    public string $baseURL = 'http://localhost:9000/';
     #public $baseURL;
     #public $baseURL = 'http://localhost:9000/';
     /**
@@ -37,7 +54,6 @@ class App extends BaseConfig
      * @phpstan-var list<string>
      */
     public array $allowedHostnames = [];
-
     /**
      * --------------------------------------------------------------------------
      * Index File
