@@ -5,14 +5,16 @@ namespace Config;
 use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig {
+
+    /*
     public function __construct() {
         parent::__construct();
-        // Si app.baseURL existe en .env, lo usamos
         $baseUrlFromEnv = getenv('APP_ENV');
         if ($baseUrlFromEnv == "production") {
             $this->baseURL = getenv('APP_BASE_URL');
         }
     }
+    */
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
