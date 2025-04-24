@@ -19,15 +19,37 @@ class Home extends BaseController {
     public function arr_login(){
         #return redirect()->to('administrador');
         if ($this->request->isAJAX()){ }
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+        log_message('info', "Intento login con usuario: $username");
+
+        /*
+        $usuario = $this->usersModel->where('USERNAME', $username)->first();
+        if ($usuario && password_verify($password, $usuario['PASSWORD'])) {
+            // ¡Login exitoso!
+            session()->set([
+                'usuario_id' => $usuario['USERNAME'],
+                'nombre'     => $usuario['NAME'],
+                'logueado'   => true
+            ]);
+        
+            return redirect()->to('administrador');
+        } else {
+            // Login fallido
+            return redirect()->back()->with('error', 'Credenciales inválidas');
+        }
+        */    
+
         $arr = [];
         $arr = $this->usersModel->ini_contendido();
         $data = [
-                    'css' => ['administrador/css/style.css'],
-                    'js' => ['administrador/js/javascript.js'],
-                    'respuesta' => $arr 
-                ];
+            'css' => ['administrador/css/style.css'],
+            'js' => ['administrador/js/javascript.js'],
+            'respuesta' => $arr 
+        ];
         return view('administrador',$data);
     }
+
 
     public function administrador() {
         #if($this->request->isAJAX()){ }
@@ -312,5 +334,4 @@ class Home extends BaseController {
             ]);
         }
     }
-
 }

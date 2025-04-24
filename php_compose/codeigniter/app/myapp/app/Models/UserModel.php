@@ -1,18 +1,28 @@
 <?php
-namespace App\Models;
 
+namespace App\Models;
 use CodeIgniter\Model;
 use CodeIgniter\Log\Logger;
 
 class UserModel extends Model {
 
+    protected $table = 'ADMIN.FE_USERS';
+    protected $primaryKey = 'USERNAME';
+    protected $allowedFields = ['USERNAME', 'PASSWORD', 'NAME'];
+    protected $returnType = 'array';
+
+
     public function __construct() {
         parent::__construct();
     }
 
+
+
+
+
     public function ini_contendido(){
-        $db     =   db_connect();
-        $sql    =   "SELECT 
+        $db = db_connect();
+        $sql = "SELECT 
                         m.MENP_ID as main_id, m.MENP_NOMBRE as main_nombre, m.MENP_ESTADO as main_estado, m.MENP_RUTA as main_ruta, m.MENP_IDPADRE as main_idpadre, m.MENP_TIPO as main_tipo, m.MENP_ORDER as main_order, m.MENP_FRAME as main_frame, m.MENP_ICON as main_icon, m.MENP_THEME as main_theme, m.MENP_ISTOKEN as main_istoken, m.MENP_PARAM as main_param,
                         sm.MENP_ID as sub_id, sm.MENP_NOMBRE as sub_nombre, sm.MENP_ESTADO as sub_estado, sm.MENP_RUTA as sub_ruta, sm.MENP_IDPADRE as sub_idpadre, sm.MENP_TIPO as sub_tipo, sm.MENP_ORDER as sub_order, sm.MENP_FRAME as sub_frame, sm.MENP_ICON as sub_icon, sm.MENP_THEME as sub_theme, sm.MENP_ISTOKEN as sub_istoken, sm.MENP_PARAM as sub_param,
                         ex.MENP_ID as ext_id, ex.MENP_NOMBRE as ext_nombre, ex.MENP_ESTADO as ext_estado, ex.MENP_RUTA as ext_ruta, ex.MENP_IDPADRE as ext_idpadre, ex.MENP_TIPO as ext_tipo, ex.MENP_ORDER as ext_order, ex.MENP_FRAME as ext_frame, ex.MENP_ICON as ext_icon, ex.MENP_THEME as ext_theme, ex.MENP_ISTOKEN as ext_istoken, ex.MENP_PARAM as ext_param
@@ -299,9 +309,6 @@ class UserModel extends Model {
             'html' => $html,
         ];
     }
-    
-    
-
 
     public function ini_contendido_old3() {
         $db     =   db_connect();
