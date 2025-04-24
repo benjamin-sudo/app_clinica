@@ -274,3 +274,8 @@ Config\App::$baseURL is invalid.
 #20 {main}
 in SYSTEMPATH/HTTP/SiteURI.php on line 197.
  1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-04-24 11:43:53 --> v_id_utp : 7  
+INFO - 2025-04-24 11:43:53 --> v_id_utp : 10  
+INFO - 2025-04-24 11:43:53 --> -------------------------------------------
+INFO - 2025-04-24 11:43:53 --> arrEmpresas
+INFO - 2025-04-24 11:43:53 --> ["800"]

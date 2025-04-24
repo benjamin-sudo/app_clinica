@@ -18,7 +18,6 @@ class App extends BaseConfig {
 
     public function __construct() {
         parent::__construct();
-        #$this->baseURL = getenv('APP_BASE_URL') ?? 'http://localhost:9000/';
         $this->baseURL = getenv('APP_ENV') ==  'development' ? 'http://localhost:9000/' : 'https://panel.clinicalibre.cl/';
     }
     
@@ -32,7 +31,6 @@ class App extends BaseConfig {
      *
      *    http://example.com/
      */
-    
     #Para producción
     #public string $baseURL = 'https://panel.clinicalibre.cl/';
     #Para developer
@@ -130,8 +128,8 @@ class App extends BaseConfig {
      *
      * @see https://www.php.net/manual/en/timezones.php for list of timezones supported by PHP.
      */
-    public string $appTimezone = 'UTC';
-
+    #public string $appTimezone = 'UTC';
+    public string $appTimezone = 'America/Santiago';
     /**
      * --------------------------------------------------------------------------
      * Default Character Set

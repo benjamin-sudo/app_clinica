@@ -12,6 +12,7 @@ class Constructor extends CI_Controller {
 
     public function index(){
         $_valor = [];
+        #var_dump("Sandujs");
         $_valor = $this->modelinicio->_index();
         $this->load->view('inicio',['return'=>$_valor]);
     }
