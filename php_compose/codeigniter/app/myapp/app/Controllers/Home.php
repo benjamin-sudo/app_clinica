@@ -21,16 +21,15 @@ class Home extends BaseController {
         if ($this->request->isAJAX()){ }
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
-        log_message('info', "Intento login con usuario: $username");
-
+        //log_message('info', "Intento login con usuario: $username");
         /*
         $usuario = $this->usersModel->where('USERNAME', $username)->first();
         if ($usuario && password_verify($password, $usuario['PASSWORD'])) {
             // ¡Login exitoso!
             session()->set([
                 'usuario_id' => $usuario['USERNAME'],
-                'nombre'     => $usuario['NAME'],
-                'logueado'   => true
+                'nombre' => $usuario['NAME'],
+                'logueado' => true
             ]);
         
             return redirect()->to('administrador');
@@ -39,7 +38,6 @@ class Home extends BaseController {
             return redirect()->back()->with('error', 'Credenciales inválidas');
         }
         */    
-
         $arr = [];
         $arr = $this->usersModel->ini_contendido();
         $data = [
