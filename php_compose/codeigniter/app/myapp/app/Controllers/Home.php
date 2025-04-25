@@ -48,7 +48,6 @@ class Home extends BaseController {
         return view('administrador',$data);
     }
 
-
     public function administrador() {
         #if($this->request->isAJAX()){ }
         $username = $this->request->getPost('username');
