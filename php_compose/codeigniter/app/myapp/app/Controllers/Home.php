@@ -25,16 +25,13 @@ class Home extends BaseController {
         /*
         $usuario = $this->usersModel->where('USERNAME', $username)->first();
         if ($usuario && password_verify($password, $usuario['PASSWORD'])) {
-            // ¡Login exitoso!
             session()->set([
                 'usuario_id' => $usuario['USERNAME'],
                 'nombre' => $usuario['NAME'],
                 'logueado' => true
             ]);
-        
             return redirect()->to('administrador');
         } else {
-            // Login fallido
             return redirect()->back()->with('error', 'Credenciales inválidas');
         }
         */    
