@@ -8,17 +8,39 @@ class UserModel extends Model {
 
     protected $table = 'ADMIN.FE_USERS';
     protected $primaryKey = 'USERNAME';
-    protected $allowedFields = ['USERNAME', 'PASSWORD', 'NAME'];
+    protected $allowedFields = ['ID_UID','USERNAME', 'PASSWORD', 'NAME'];
     protected $returnType = 'array';
-
 
     public function __construct() {
         parent::__construct();
     }
 
+    public function verificacionsuperuser($username, $password)  {
+        $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL 
+                FROM ADMIN.FE_USERS 
+                WHERE USERNAME = ?";
+        $query = $this->db->query($sql, [$username]);
 
-
-
+        if ($query->getNumRows() > 0) {
+            $user = $query->getRow();
+            if (password_verify($password, $user->PASSWORD)) {
+                return [
+                    'status' => true,
+                    'user' => $user
+                ];
+            } else {
+                return [
+                    'status' => false,
+                    'message' => 'Contraseña incorrecta'
+                ];
+            }
+        } else {
+            return [
+                'status' => false,
+                'message' => 'Usuario no encontrado'
+            ];
+        }
+    }
 
     public function ini_contendido(){
         $db = db_connect();
@@ -56,7 +78,6 @@ class UserModel extends Model {
                 $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = $row; // Datos de la extensión
             }
         }
-
         //*************************************** */
         // Variable para almacenar el HTML
         $html   =   "";
@@ -86,18 +107,18 @@ class UserModel extends Model {
                     $html   .=  "<i class='bi bi-wrench-adjustable-circle-fill'></i></a>&nbsp;".htmlspecialchars($extension['ext_nombre'])."&nbsp;<b style='font-size: 10px;'>(".htmlspecialchars($extension['ext_id']).")</b></h6>";
                     $html   .=  "</li>";
                 }
-                $html       .= "</ul>"; // Cerrar la lista del submenú
+                $html .= "</ul>"; // Cerrar la lista del submenú
             }
-            $html   .=  "</ul>";
-            $html   .=  "</div>";
-            $html   .=  "</div>";
+            $html .= "</ul>";
+            $html .= "</div>";
+            $html .= "</div>";
         }
         return $output  = [
-            'menu_principal'    =>  array_values($menu), // Convertir a array para un mejor formato JSON
-            'menuData'          =>  $menuData,
-            'roles_creados'     =>  $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3) ")->getResultArray(),
-            'arr_empresas'      =>  $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V' ")->getResultArray(),
-            'html'              =>  $html,
+            'menu_principal' => array_values($menu), // Convertir a array para un mejor formato JSON
+            'menuData' => $menuData,
+            'roles_creados' => $db->query("SELECT * FROM ADMIN.GU_TPERMISOS WHERE PER_ESTADO IN (1,2,3) ")->getResultArray(),
+            'arr_empresas' => $db->query("SELECT * FROM ADMIN.SS_TEMPRESAS WHERE IND_ESTADO = 'V' ")->getResultArray(),
+            'html' => $html,
         ];
     }
 
@@ -182,9 +203,6 @@ class UserModel extends Model {
             'html' => $html,
         ];
     }
-    
-
-
 
     function ini_contendido_old4() {
         $db = db_connect();

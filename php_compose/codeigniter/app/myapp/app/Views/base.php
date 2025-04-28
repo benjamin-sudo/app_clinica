@@ -52,23 +52,17 @@
   <script src="https://https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
 -->
 <script type="text/javascript">
-   var type = ['',
-                'info', 
-                'success', 
-                'warning', 
-                'danger', 
-                'primary'
-              ];
+  var type = ['', 'info', 'success', 'warning', 'danger', 'primary' ];
   function showNotification(from, align, txt, color, icono, width) {
     $.notify({
-        icono       :   icono,
-        message     :   txt
+        icono : icono,
+        message : txt
     },{
-        type        :   type[color],
-        timer       :   4000,
-        placement   :   {
-            from    :   from,
-            align   :   align
+        type : type[color],
+        timer : 4000,
+        placement : {
+            from : from,
+            align : align
         }
     });
     $('.alert').css('z-index','9999');
@@ -85,9 +79,7 @@
   <?php endforeach; ?>
 <?php endif; ?>
 
-
 <section>
-
     <div class="modal bg-dark fade" id="loadFade" tabindex="1000" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -122,8 +114,6 @@
       </div>
     </div>
 </section>
-
-
 
 </body>
 </html>

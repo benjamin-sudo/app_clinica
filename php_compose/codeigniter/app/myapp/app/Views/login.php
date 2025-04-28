@@ -61,5 +61,17 @@
                 <button type="submit">Ingresar</button>
             </form>
         </div>
+        <script type="text/javascript" src="assets/themes/js/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="assets/themes/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="assets/themes/js/jquery.Rut.js" ></script>
+        <script type="text/javascript" src="assets/themes/js/jquery.Rut.min.js"></script>
+        <script type="text/javascript" src="assets/themes/js/jquery.alerts.mod.js"></script>
+        <script>
+            $('#username').Rut({
+                on_error : function(){  console.log($("#username").val()); alert('El Run ingresado es Incorrecto. '+$("#username").val(), 'Rut Incorrecto');  $("#username").css('border-color','red').val(''); },
+                on_success : function(){ $("#username").css('border-color',''); },
+                format_on : 'keyup'
+            });
+        </script>
     </body>
 </html>

@@ -9,7 +9,7 @@
         </h4>
     </div>
     <div class="grid_cabecera2">
-        <button type="button" class="btn btn-primary"><i class="fa fa-times" aria-hidden="true"></i> SALIR</button>
+        <button type="button" class="btn btn-primary" onclick="js_logout()"><i class="fa fa-times" aria-hidden="true"></i> SALIR</button>
     </div>
 </div>
 <div class="content">

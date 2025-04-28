@@ -210,7 +210,7 @@ function grabarUsu(){
             }
         }
     }
-    let arrPrivilegios      =   $("#destinoPriv").val()  || [];
+    let arrPrivilegios = $("#destinoPriv").val()  || [];
     //console.log("arrPrivilegios  -> ",arrPrivilegios);
     if (arrPrivilegios.length == 0) {
         errores.push(" - Debe asignar a lo menos un privilegio para el usuario");
@@ -395,41 +395,32 @@ function test(val){
    let arr_diagnisticos    =  [];
    //let ruta              =  "";
    $.ajax({ 
-      type           :  "POST",
-      url            :  "ssan_hl7_hlviifhir/test_hl7",
-      dataType       :  "json",
-      beforeSend     :  function(xhr)     {     },
-      data		     :  { token : $("#token").val() },
-      error		     :  function(errro)  {  
-                                             console.log(errro);
-                                             console.log(errro.responseText);  
-                                             jAlert("Error General, Consulte Al Administrador"); 
-                                             setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
-                                            },
-      success		   :   function(aData)  {  
-                                            setTimeout(function() { $("#loadFade").modal("hide"); }, 1000);
-                                            //console.log("------------------------------------------");
-                                            //console.log("aData         -> ",aData);
-                                            //console.log("aData         -> ",aData.patient)
-                                            if( aData && aData.respuesta && Array.isArray(aData.respuesta.issue) ){
-                                                aData.respuesta.issue.forEach((row, index) => {
-                                                   console.log("--------------------------------------------");
-                                                   console.error("error          -> ",index);
-                                                   console.error("row            -> ",row);
-                                                   console.error("diagnostics    -> ",row.diagnostics);
-                                                   arr_diagnisticos.push(index+" - "+row.diagnostics);
-                                                   //$("#respuesta_hl7").append(aData.respuesta.text.div);
-                                                });
-                                            } else {
-                                                console.log("Sin Errores");
-                                            }
-                                            //console.log(aData.jsonData);
-                                            //console.log("------------------------------------------");
-                                            //console.log(arr_diagnisticos.join("\n"));
-                                            //*********************************************************** */
-                                            //$("#respuesta_hl7").html(aData.respuesta.text.div);
-                                            //showNotification('top','left',"Return",2,'fa fa-check-square');
-                                          }, 
+        type : "POST",
+        url : "ssan_hl7_hlviifhir/test_hl7",
+        dataType : "json",
+        beforeSend : function(xhr)     {     },
+        data : { token : $("#token").val() },
+        error : function(errro)  {  
+            console.log(errro);
+            console.log(errro.responseText);  
+            jAlert("Error General, Consulte Al Administrador"); 
+            setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
+        },
+        success : function(aData) {  
+            setTimeout(function() { $("#loadFade").modal("hide"); }, 1000);
+            if( aData && aData.respuesta && Array.isArray(aData.respuesta.issue) ){
+                aData.respuesta.issue.forEach((row, index) => {
+                    console.log("--------------------------------------------");
+                    console.error("error          -> ",index);
+                    console.error("row            -> ",row);
+                    console.error("diagnostics    -> ",row.diagnostics);
+                    arr_diagnisticos.push(index+" - "+row.diagnostics);
+                    //$("#respuesta_hl7").append(aData.respuesta.text.div);
+                });
+            } else {
+                console.log("Sin Errores");
+            }
+        }, 
    });
 }
 
@@ -685,19 +676,19 @@ function js_estado_r(PER_ID){
 }
 
 function validar(e){
-   var tecla         = (document.all) ? e.keyCode : e.which;
-   if(tecla==13)     {
+   var tecla = (document.all) ? e.keyCode : e.which;
+   if(tecla==13) {
       $("#rut").css("border-color","");  
       if($("#rut").val() == ''){
          jError("RUN del paciente esta vacio.","e-SISSAN Error");
          $("#rut").css("border-color","red");  
          return false;
       } else {
-         var _rut       =   $("#rut").val();
-         var rut_array  =   _rut.split("-");
-         var rut2       =   rut_array[0].replace(".","");
-         var rut        =   rut2.replace(".","");
-         var dv         =   rut_array[1];
+         var _rut = $("#rut").val();
+         var rut_array = _rut.split("-");
+         var rut2 = rut_array[0].replace(".","");
+         var rut = rut2.replace(".","");
+         var dv = rut_array[1];
          if(!valida_rut_dos_variables(rut,dv)){
             jError(" El rut del paciente no es v&aacute;lido.","e-SISSAN Error");
             $("#rut").css("border-color","red");  
@@ -710,18 +701,17 @@ function validar(e){
 }
 
 function alfanumerico(e) {
-    key             =   e.keyCode || e.which;
-    tecla           =   String.fromCharCode(key).toLowerCase();
-    letras          =   "1234567890Ã¡Ã©Ã­Ã³ÃºabcdefghijklmnopqrstuvwxyzÃÃ‰ÃÃ“ÃšABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-    especiales      =   "8-37-39-46-13";
-    tecla_especial  =   false;
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key).toLowerCase();
+    letras = "1234567890Ã¡Ã©Ã­Ã³ÃºabcdefghijklmnopqrstuvwxyzÃÃ‰ÃÃ“ÃšABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+    especiales = "8-37-39-46-13";
+    tecla_especial = false;
     for (var i in especiales) {
-        if (key     ==  especiales[i]) {
+        if (key == especiales[i]) {
             tecla_especial = true;
             break;
         }
     }
-    
     if (letras.indexOf(tecla) == -1 && !tecla_especial) {
         return false;
     }
@@ -733,53 +723,49 @@ function alfanumerico(e) {
 // 1 : hijo - Sub Menu 
 // 2 : nieto - Extension 
 function editarExt(idMen, ind_tipo_menu) {
+    /*
     console.log("********************************");
     console.log("idMen          ->  ", idMen);
     console.log("ind_tipo_menu  ->  ", ind_tipo_menu);
     console.log("********************************");
-
+    */
     document.querySelectorAll('input[name="ck_permiso"]').forEach(function(checkbox) {
         checkbox.checked = false;
     });
     
     $.ajax({ 
-        type        :   "POST",
-        url         :   "Home/buscaEditar",
-        dataType    :   "json",
-        beforeSend  :   function(xhr) { 
-                            $('#loadFade').modal('show'); 
-                        },
-        data:       { 
-                        "idMen": idMen, 
-                        "ind_tipo_menu": ind_tipo_menu 
-                    },
-        error       :   function(error){  
-                                            console.log(error);
-                                            jAlert("Error General, Consulte Al Administrador"); 
-                                            setTimeout(function() {
-                                                $("#loadFade").modal("hide");
-                                            }, 1000);
-                                        },
-        success     :   function(aData)    {
-                                        setTimeout(function(){ $("#loadFade").modal("hide"); },1000);
-                                        //console.log("***********************************************");
-                                        //console.log("buscaEditar -> aData -> ",aData);
-                                        let data_menu = aData.arr_bd.arr_menuprincipal[0];
-                                        if (data_menu){
-                                            $("#nomExt").val(data_menu.MENP_NOMBRE);
-                                            $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled", true);
-                                            $("#listarMenup").val(data_menu.MENP_ID).attr("disabled", true);
-                                            
-                                            $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
-                                        }
-                                        if (aData.arr_bd.directPermissions.length > 0) {
-                                            aData.arr_bd.directPermissions.forEach((row) => {
-                                                //console.log("   ******************  ");
-                                                //console.log("row : ",row);
-                                                document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
-                                            });
-                                        }
-                                    }
+        type :   "POST",
+        url : "Home/buscaEditar",
+        dataType : "json",
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+        data: { 
+            "idMen": idMen, 
+            "ind_tipo_menu": ind_tipo_menu 
+        },
+        error : function(error){  
+            console.log(error);
+            jAlert("Error General, Consulte Al Administrador"); 
+            setTimeout(function() {
+                $("#loadFade").modal("hide");
+            }, 1000);
+        },
+        success : function(aData) {
+            setTimeout(function(){ $("#loadFade").modal("hide"); },1000);
+            let data_menu = aData.arr_bd.arr_menuprincipal[0];
+            if (data_menu){
+                $("#nomExt").val(data_menu.MENP_NOMBRE);
+                $("#nomArch").val(data_menu.MENP_RUTA).attr("disabled", true);
+                $("#listarMenup").val(data_menu.MENP_ID).attr("disabled", true);
+                $("#grabarExt").html('<i class="bi bi-floppy-fill"></i>&nbsp;EDITANDO EXTENSI&Oacute;N').attr('onclick','js_editarextension(' + idMen + ',' + ind_tipo_menu + ')');
+            }
+            if (aData.arr_bd.directPermissions.length > 0) {
+                aData.arr_bd.directPermissions.forEach((row) => {
+                    //console.log("   ******************  ");
+                    //console.log("row : ",row);
+                    document.getElementById('ck_permiso_' + row.PER_ID).checked = true;
+                });
+            }
+        }
     });
 }
 
@@ -812,18 +798,19 @@ function js_editarextension(idMen,ind_tipo_menu){
         $("#listarMenup").attr("disabled", true);
         tipo_de_extension = ind_tipo_menu;
     }
-
-
-    console.error("   *****************************************************   ");
-    console.error("   ************    js_editarextension  ********************");
+    
+    /*
+    console.error("   ********************************************************  ");
+    console.error("   ************ js_editarextension ************************  ");
     console.error("   idMen               => ",idMen);
     console.error("   ind_tipo_menu       => ",ind_tipo_menu);
     console.error("   nombreMenu          => ",nombreMenu);
     console.error("   ind_extension_padre => ",ind_extension_padre);
     console.error("   tipo_de_extension   => ",tipo_de_extension);
     console.error("   arr_permisos        => ",arr_permisos);
+    console.error("   ********************************************************  ");
+    */
     //return false;
-    
     jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar cuenta <b>CLINICA LIBRE</b> <br/>&iquest;Est&aacute; seguro de continuar?', 'CLINICA LIBRE', function(r) {
         if (r) {
             $.ajax({ 
@@ -844,29 +831,45 @@ function js_editarextension(idMen,ind_tipo_menu){
                             bool_checked : check,
                         },
                 error : function(error) {  
-                                                console.log(error);
-                                                jAlert("Error General, Consulte Al Administrador"); 
-                                                setTimeout(function(){  $("#loadFade").modal("hide");  }, 1000);
-                                            },
+                    console.log(error);
+                    jAlert("Error General, Consulte Al Administrador"); 
+                    setTimeout(function(){  $("#loadFade").modal("hide");  }, 1000);
+                },
                 success : function(aData) {  
-                                            console.log("editando_estensiones_privilegios   -> ", aData);
-                                            if (aData.status){
-                                                showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
-                                            } else {
-                                                showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
-                                            }
-                                            setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
-                                        }
+                    console.log("editando_estensiones_privilegios   -> ", aData);
+                    if (aData.status){
+                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Se editaron privilegios', 2);
+                    } else {
+                        showNotification('top', 'right', '<i class="bi bi-database-fill-slash"></i> Error ', 4);
+                    }
+                    setTimeout(function() {  $("#loadFade").modal("hide"); }, 1000);
+                }
             });
         }
     });
 }
 
-/*
-function cargaPrivOrigen() {
-    var id          =   "origen";
-    var funcion     =   'selectOrigen';
-    var variables   =   {}
-    AjaxExt(variables,id,funcion);
+function js_logout() {
+    $.ajax({
+        type: "POST",
+        url: "/Home/deslogarse",
+        dataType: "json",
+        beforeSend: function(xhr){ $('#loadFade').modal('show'); },
+        success: function(response){
+            if(response.status){
+                window.location.href = "/";
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function(error){
+            console.error(error);
+            alert("Error al cerrar sesión.");
+        },
+        complete: function(){
+            setTimeout(function(){
+                $("#loadFade").modal("hide");
+            }, 1000);
+        }
+    });
 }
-*/

@@ -1,14 +1,3 @@
-/*
- To change this license header, choose License Headers in Project Properties.
- To change this template file, choose Tools | Templates
- and open the template in the editor.
- */
-/* 
- Created on : 09-feb-2016, 11:27:02
- Author     : nicolas.villagra =) Hola!
- */
-
-
 $(function() {
     $("#firmsimple").dialog({
         autoOpen: false,
@@ -89,7 +78,6 @@ function validaPass(idPass, idError) {
 }
 
 function confirmDatPss() {
-
     var idUsrS = $('#idUsrS').val();
     var nombres = $('#nameUsr').val();
     var apePat = $('#apePatUsr').val();
@@ -118,7 +106,6 @@ function confirmDatPss() {
     } else if (passNew2 === '') {
         err += 'Repetir Contraseña\n';
     }
-
     if (err !== '') {
         $('#error_LPass').show('fast');
         $('#txtErrPss').html('Estimado Usuario, El Campo <b>' + err + '</b> es Requerido');
@@ -139,22 +126,11 @@ function confirmDatPss() {
 }
 
 function $_GET(param) {
-    /* Obtener la url completa */
     url = document.URL;
-    /* Buscar a partir del signo de interrogación ? */
     url = String(url.match(/\?+.+/));
-    /* limpiar la cadena quitándole el signo ? # */
     url = url.replace("?", "");
     url = url.replace("#", "");
-    /* Crear un array con parametro=valor */
     url = url.split("&");
-    /* 
-     Recorrer el array url
-     obtener el valor y dividirlo en dos partes a través del signo = 
-     0 = parametro
-     1 = valor
-     Si el parámetro existe devolver su valor
-     */
     x = 0;
     while (x < url.length) {
         p = url[x].split("=");
@@ -192,11 +168,8 @@ function removeMenu() {
 
 }
 
-
-
 //Funcion General de Ajax
 function AjaxExt(variables, id, funcion, tipDest, extension) {
-
     var imagens = '<img src="assets/themes/frontend/img/loadings.gif" style="width:100%; height:4px">';
     if (extension == undefined || extension == '') {
         var URLactual = jQuery(location).attr('href');
@@ -211,15 +184,12 @@ function AjaxExt(variables, id, funcion, tipDest, extension) {
     } else {
         var nombreExt = extension;
     }
-
     if (tipDest == undefined || tipDest == '') {
         $("#" + id).html("");
     }
-
     $("#carga").html(imagens);
     $("#cargaSecundaria").html(imagens);
     var post_llamada = $.post(nombreExt + "/" + funcion, variables, function(data) {
-
     }).done(function(data) {
         //hace lo que quieres cuando sale correctamente
         switch (tipDest) {
@@ -242,8 +212,6 @@ function AjaxExt(variables, id, funcion, tipDest, extension) {
                 $("#" + id).html(data);
                 break;
         }
-
-
         $("#carga").html("");
         $("#cargaSecundaria").html("");
     }).fail(function(jqXhr, textStatus, errorThrown) {

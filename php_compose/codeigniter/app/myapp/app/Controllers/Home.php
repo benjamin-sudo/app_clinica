@@ -7,9 +7,11 @@ use App\Models\UserModel;
 class Home extends BaseController {
 
     private $usersModel;
+    protected $session;
 
     public function __construct() {
         $this->usersModel = new UserModel();
+        $this->session = session();
     }
 
     public function index() : string {
@@ -17,33 +19,45 @@ class Home extends BaseController {
     }
 
     public function arr_login(){
-        #return redirect()->to('administrador');
         if ($this->request->isAJAX()){ }
-        $username = $this->request->getPost('username');
+        $username = str_replace('.', '', $this->request->getPost('username'));
         $password = $this->request->getPost('password');
-        //log_message('info', "Intento login con usuario: $username");
-        /*
-        $usuario = $this->usersModel->where('USERNAME', $username)->first();
-        if ($usuario && password_verify($password, $usuario['PASSWORD'])) {
-            session()->set([
-                'usuario_id' => $usuario['USERNAME'],
-                'nombre' => $usuario['NAME'],
-                'logueado' => true
+        #log_message('debug', 'Usuario ingresado: ' . $username);
+        #log_message('debug', 'Password ingresado: ' . $password);
+        $verifica_user = $this->usersModel->verificacionsuperuser($username,$password);
+        if ($verifica_user['status']) {
+            $user = $verifica_user['user']; // <-- ya es objeto
+            $this->session->set([
+                'ID_UID' => $verifica_user['ID_UID'],
+                'USERNAME' => $verifica_user['USERNAME'],
+                'NAME' =>  $verifica_user['NAME'],
+                'EMAIL' => $verifica_user['EMAIL'],
+                'logged_in' => true,
             ]);
-            return redirect()->to('administrador');
+            $arr = [];
+            $arr = $this->usersModel->ini_contendido();
+            $data = [
+                'css' => ['administrador/css/style.css'],
+                'js' => ['administrador/js/javascript.js'],
+                'respuesta' => $arr 
+            ];
+            return view('administrador',$data);
         } else {
-            return redirect()->back()->with('error', 'Credenciales inválidas');
+            return $this->response->setJSON([
+                'status' => false,
+                'message' => $verifica_user['message']
+            ]);
         }
-        */    
-        $arr = [];
-        $arr = $this->usersModel->ini_contendido();
-        $data = [
-            'css' => ['administrador/css/style.css'],
-            'js' => ['administrador/js/javascript.js'],
-            'respuesta' => $arr 
-        ];
-        return view('administrador',$data);
     }
+
+    public function deslogarse() {
+        if ($this->request->isAJAX()) {
+            $this->session->destroy();
+            return $this->response->setJSON(['status' => true, 'message' => 'Sesión cerrada']);
+        }
+        return redirect()->to('/');
+    }
+
 
     public function administrador() {
         #if($this->request->isAJAX()){ }
