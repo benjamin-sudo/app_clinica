@@ -1,4 +1,4 @@
-.grid_cabecera_bdu                      {
+.grid_cabecera_bdu {
     display : grid;
     grid-template-columns : 1fr auto auto;
     margin-top : 0px;
@@ -123,4 +123,11 @@
 
 .custom-padding td {
     padding: 0.25rem; 
+}
+
+.grid_cabecera_resul {
+    display : grid;
+    grid-template-columns : 2fr 1fr;
+    column-gap : 5px;
+    padding: 10px;
 }

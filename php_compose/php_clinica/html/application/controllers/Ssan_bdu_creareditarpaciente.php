@@ -1074,7 +1074,7 @@ class Ssan_bdu_creareditarpaciente extends CI_Controller {
                 }
 
                 $html = '<tr>
-                            <td>' . $row['RNUM'] . '</td>
+                           
                             <td>' . $row['COD_RUTPAC'] . '-' . $row['COD_DIGVER'] . '</td>
                             <td>' . strtoupper($EXTRAN) . '</td>
                             <td>' . $numFichaL . '</td>   

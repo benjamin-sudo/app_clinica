@@ -15,8 +15,8 @@
                 <i class="bi bi-person-add"></i>&nbsp;Agregar Nuevo Paciente
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a href="javascript:FormModal(1,'')" class="dropdown-item"><i class="fa fa-user-circle"       aria-hidden="true"></i>&nbsp;PACIENTE NACIONAL</a></li>
-                <li><a href="javascript:FormModal(0,'')" class="dropdown-item"><i class="fa fa-universal-access"  aria-hidden="true"></i>&nbsp;PACIENTE EXTRANJERO</a></li>
+                <li><a href="javascript:FormModal(1,'')" class="dropdown-item"><i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;PACIENTE NACIONAL</a></li>
+                <li><a href="javascript:FormModal(0,'')" class="dropdown-item"><i class="fa fa-universal-access" aria-hidden="true"></i>&nbsp;PACIENTE EXTRANJERO</a></li>
             </div>
         </div>
     </div>
@@ -84,26 +84,23 @@
     </div>
     <div class="card grid_body_bdu2">
         <div id="result" style="">
-
+            <div class="grid_cabecera_resul">
+                <div class="grid_cabecera_resul1"><b>INFORMACI&Oacute;N DE PACIENTES</b></div>
+                <div class="grid_cabecera_resul2"><b>TOTAL DE RESULTADOS</b>&nbsp;<span class="badge" id="nresultados">0</span></div>
+            </div>
             <table class="table table-striped custom-padding" width="100%">
                 <thead>
                     <tr>
-                        <td colspan="6" style="height:50px;"><b>Informaci&oacute;n de Pacientes</b></td>
-                        <td colspan="4">Total Resultados <span class="badge" id="nresultados"></span></td>
-                    </tr>
-                </thead>
-                <thead>
-                    <tr>
-                        <td width="1%" style="height:50px;">N&deg;</td>
-                        <td width="15%" >Run/ID Fonasa</td>
-                        <td width="10%" >DNI/Pasaporte</td>
-                        <td width="8%" >F.Local</td>
-                        <td width="15%" >Nombres</td>
-                        <td width="15%" >Apellido Paterno</td>
-                        <td width="15%" >Apellido Materno</td>
-                        <td width="9%" >Nacimiento</td>
-                        <td width="5%" >PAIS</td>
-                        <td width="7%" style="width:10%;text-align:center">Opci&oacute;n</td>
+                        <!--<td width="1%" style="height:50px;">N&deg;</td>-->
+                        <td width="15%" style="height: 40px;"><b>RUN/ID FONASA</b></td>
+                        <td width="10%"><b>DNI/PASAPORTE</b></td>
+                        <td width="8%"><b>F.LOCAL</b></td>
+                        <td width="15%"><b>NOMBRES</b></td>
+                        <td width="15%"><b>APELLIDO PATERNO</b></td>
+                        <td width="15%"><b>APELLIDO MATERNO</b></td>
+                        <td width="9%"><b>NACIMIENTO</b></td>
+                        <td width="5%"><b>PAIS</b></td>
+                        <td width="7%" style="width:10%;text-align:center"><b>OPCI&Oacute;N</b></td>
                     </tr>
                 </thead>    
                 <tbody id="resultados"></tbody>

@@ -42,11 +42,13 @@ $(document).ready(function(){
         $("#modalPaciente").css("z-index","1500"); 
         $("#HTML_PERCAPITA").html('');
     });
+    /*
     console.log("   ----------------------------------------    ");
     console.log(" Codeigniter 3 ");
     console.log(" bootstrap -> ", bootstrap.Tooltip.VERSION," ");
     console.log(" jQuery -> ", jQuery.fn.jquery," ");
     console.log("   ----------------------------------------    ");
+    */
     $('.dropdown-toggle').dropdown();
 });
 

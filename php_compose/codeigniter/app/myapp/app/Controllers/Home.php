@@ -28,10 +28,10 @@ class Home extends BaseController {
         if ($verifica_user['status']) {
             $user = $verifica_user['user']; // <-- ya es objeto
             $this->session->set([
-                'ID_UID' => $verifica_user['ID_UID'],
-                'USERNAME' => $verifica_user['USERNAME'],
-                'NAME' =>  $verifica_user['NAME'],
-                'EMAIL' => $verifica_user['EMAIL'],
+                'ID_UID' => $user['ID_UID'],
+                'USERNAME' => $user['USERNAME'],
+                'NAME' =>  $user['NAME'],
+                'EMAIL' => $user['EMAIL'],
                 'logged_in' => true,
             ]);
             $arr = [];
