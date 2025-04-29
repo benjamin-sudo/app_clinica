@@ -91,7 +91,6 @@
             <table class="table table-striped custom-padding" width="100%">
                 <thead>
                     <tr>
-                        <!--<td width="1%" style="height:50px;">N&deg;</td>-->
                         <td width="15%" style="height: 40px;"><b>RUN/ID FONASA</b></td>
                         <td width="10%"><b>DNI/PASAPORTE</b></td>
                         <td width="8%"><b>F.LOCAL</b></td>

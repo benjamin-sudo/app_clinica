@@ -12,6 +12,18 @@
   <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/assets/plugins/template/css/adminlte.min.css">
+  <style>
+/* Centrar el contenedor */
+.toast-centrado {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  top: 20px !important;
+  right: auto !important;
+}
+
+</style>
+
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -46,12 +58,33 @@
         </div>
       </form>
       <p class="mb-0" style="margin-top: 10px;">
-        <a href="register.html" class="text-center">¿Olvidaste tu contraseña?</a>
+        <a href="#" class="text-center" data-toggle="modal" data-target="#recuperarModal">&iquest;Olvidaste tu contrase&ntilde;a?  </a>
       </p>
     </div>
     <!-- /.card-body -->
   </div>
   <!-- /.card -->
+</div>
+<div class="modal fade" id="recuperarModal" tabindex="-1" role="dialog" aria-labelledby="recuperarModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="/enviar-enlace-recuperacion" method="POST">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="recuperarModalLabel">Recuperar contrase&ntilde;a</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Ingrese su correo electr&oacute;nico asociado a la cuenta <b>CL&Iacute;NICA&nbsp;LIBRE</b></p>
+          <input type="email" name="email" class="form-control" required placeholder="correo@ejemplo.cl">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Enviar enlace</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 <!-- /.login-box -->
 <!-- jQuery -->
@@ -63,20 +96,19 @@
 <!-- RUN  -->
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js"></script>
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
-
 <script>
     $(document).ready(function(){
       $("#rut_profesional").Rut({
-        on_error    :   function()  {   
-                                      alert('El RUN ingresado es incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
-                                      console.log($("#rut_profesional").val());  
-                                      $("#rut_profesional").css('border-color','red'); 
-                                      $("#rut_profesional").val('');
-                                    },
-        on_success  :   function()  {   
-                                      $("#rut_profesional").css('border-color','');   
-                                    },
-        format_on   : 'keyup'
+        on_error : function()  {   
+          alert('El RUN ingresado es incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
+          $("#rut_profesional").css('border-color','red'); 
+          $("#rut_profesional").val('');
+          console.log($("#rut_profesional").val());  
+        },
+        on_success : function() {   
+          $("#rut_profesional").css('border-color','');   
+        },
+        format_on : 'keyup'
       });
     document.getElementById("rut_profesional").focus();
   });
@@ -84,8 +116,8 @@
   document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("keypress", function(event) {
       if (event.keyCode === 13 || event.which === 13) {
-        let v_run   =   $("#rut_profesional").val();
-        let v_pass  =   $("#password").val();
+        let v_run = $("#rut_profesional").val();
+        let v_pass = $("#password").val();
         if (v_run != '' &&  v_pass != '' ){
           js_inicio();
         }
@@ -94,32 +126,30 @@
   });
 
 function js_inicio(){
-    let error   =   [];
-    let v_run   =   $("#rut_profesional").val();
-    let v_pass  =   $("#password").val();
-    let access  =   null;
+    let error = [];
+    let v_run = $("#rut_profesional").val();
+    let v_pass = $("#password").val();
+    let access = null;
     $("#rut_profesional").css('border-color','');   
     if (v_pass == ''){
         error.push("RUN Vacio");
         $("#rut_profesional").css('border-color','red');   
     }
-    //**************************************/
     $("#password").css('border-color','');   
     if (v_pass == ''){
         error.push("Contraseña vacia");
         $("#password").css('border-color','red');   
     }
-    //**************************************/
     if (error.length > 0){
         //https://adminlte.io/docs/3.2/javascript/iframe.html
         $('body').Toasts('create', {
-            position    : 'bottomRight',
+            position : 'bottomRight',
             imageHeight : '130px',
-            title       : 'Clinica libre',
-            icon        : 'fas fa-exclamation-triangle',
-            autohide    : true,
-            delay       : 3000,
-            body        : error.join("<br>"),
+            title : 'Clinica libre',
+            icon : 'fas fa-exclamation-triangle',
+            autohide : true,
+            delay : 3000,
+            body : error.join("<br>"),
         });
     } else {
       $.ajax({ 
@@ -128,36 +158,51 @@ function js_inicio(){
         dataType : "json",
         beforeSend : function(xhr) { $("#btn_inicio").prop("disabled",true); },
         data : {  
-                  user      : v_run,
-                  password  : v_pass,
-                  access    : access,
-                },
+          user : v_run,
+          password : v_pass,
+          access : access,
+        },
         error : function(errro) {  
-                                  console.log(errro);
-                                  console.log(errro.responseText); 
-                                  alert("Error General, Consulte Al Administrador"); 
-                                  $("#btn_inicio").prop("disabled",false);
-                                },
+          console.log(errro);
+          console.log(errro.responseText); 
+          alert("Error General, Consulte Al Administrador"); 
+          $("#btn_inicio").prop("disabled",false);
+        },
         success :  function(aData) {  
-                                      //console.log("aData   -> ",aData);
-                                      if (aData.status){
-                                        window.location = aData.redirect;
-                                      } else {
-                                        $("#btn_inicio").prop("disabled",false);
-                                        $('body').Toasts('create', {
-                                          position    : 'bottomRight',
-                                          imageHeight : '130px',
-                                          title       : 'Clinica libre',
-                                          icon        : 'fas fa-exclamation-triangle',
-                                          autohide    : true,
-                                          delay       : 3000,
-                                          body        : 'Error en las credenciales',
-                                        });
-                                      }
-                                    }, 
+          //console.log("aData   -> ",aData);
+          if (aData.status){
+            window.location = aData.redirect;
+          } else {
+            $("#btn_inicio").prop("disabled",false);
+            $('body').Toasts('create', {
+              position : 'bottomRight',
+              imageHeight : '130px',
+              title : 'Clinica libre',
+              icon : 'fas fa-exclamation-triangle',
+              autohide : true,
+              delay : 3000,
+              body : 'Error en las credenciales',
+            });
+          }
+        }, 
       });
     }
   }
 </script>
+<?php if (!empty($mensaje)) {   ?>
+  <script>
+    $(document).Toasts('create', {
+      title: 'Clínica Libre',
+      body :'<?php echo $mensaje; ?>',
+      icon: 'fas fa-exclamation-triangle',
+      position: 'topRight',
+      autohide: true,
+      delay: 3000
+    });
+    setTimeout(() => {
+      $('.toasts-top-right').addClass('toast-centrado');
+    }, 10);
+  </script>
+<?php } ?>
 </body>
 </html>

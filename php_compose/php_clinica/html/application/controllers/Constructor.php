@@ -12,6 +12,35 @@ class Constructor extends CI_Controller {
         #echo $this->Testmodel->test();
     }
 
+    public function enviar_enlace_recuperacion(){
+        $email = $this->input->post('email');
+        $usuario = $this->Modelinicio->obtener_por_correo($email);
+        if ($usuario) {
+            $token = bin2hex(random_bytes(32));
+            $expira = date('Y-m-d H:i:s', strtotime('+1 hour'));
+            $this->Modelinicio->guardar_token_recuperacion($usuario->ID_UID, $token, $expira);
+
+            $this->session->set_flashdata('msg', 'Se envi&oacute; correo para recuperaci&oacute;n a : '.$email);
+            $data['mensaje'] = $this->session->flashdata('msg');
+        } else {
+            $this->session->set_flashdata('msg', 'Correo no registrado : '.$email);
+            $data['mensaje'] = $this->session->flashdata('msg');
+        }
+        $this->load->view('inicio', $data);
+    }
+
+
+
+    /*
+        CREATE TABLE ADMIN.RECUPERACION_TOKENS (
+            ID INT AUTO_INCREMENT PRIMARY KEY,
+            ID_USUARIO INT NOT NULL,
+            TOKEN VARCHAR(64) NOT NULL,
+            EXPIRA DATETIME NOT NULL,
+            USADO TINYINT(1) DEFAULT 0
+        );
+    */
+
     public function index(){
         $_valor = [];
         $_valor = $this->Modelinicio->_index();

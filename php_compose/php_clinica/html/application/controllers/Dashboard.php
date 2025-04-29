@@ -28,8 +28,6 @@ class Dashboard extends CI_Controller {
             'data_empresas' => $data_empresas,
         ]));
     }
-    
-
    
     public function logout(){
         $this->session->sess_destroy();

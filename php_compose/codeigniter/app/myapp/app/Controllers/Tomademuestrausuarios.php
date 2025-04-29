@@ -7,14 +7,13 @@ use App\Models\UserModel;
 
 class tomademuestrausuarios extends Controller {
 
-   var $empresa;
+    var $empresa;
 
-   function __construct() {
-       parent::__construct();
-   }
+    function __construct() {
+        parent::__construct();
+    }
 
-   public function index() {
-       echo view("tomademuestrausuarios/tomademuestrausuarios_view");
-   }
-
+    public function index() {
+        echo view("tomademuestrausuarios/tomademuestrausuarios_view");
+    }
 }

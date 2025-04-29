@@ -11,20 +11,40 @@ class Modelinicio extends CI_Model {
         date_default_timezone_set('America/Santiago');
     }
 
-    public function _index(){
-        /*
-        try {
-            $this->db->select('1');
-            $this->db->get();
-            return true; // Connection is successful
-        } catch (Exception $e) {
-            log_message('error', 'Database connection failed: ' . $e->getMessage());
-            return false; // Connection failed
-        }
-        */
+    public function obtener_por_correo($email) {
+        $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL 
+                FROM ADMIN.FE_USERS 
+                WHERE EMAIL = ?";
+        $query = $this->db->query($sql, array($email));
+        return $query->row();
     }
 
-    public function login_modelo($user,$pass) {
+    public function guardar_token_recuperacion($id_usuario, $token, $expira) {
+        $data = [
+            'ID_USUARIO' => $id_usuario,
+            'TOKEN' => $token,
+            'EXPIRA' => $expira,
+            'USADO' => 0
+        ];
+        return $this->db->insert($own.'.RECUPERACION_TOKENS', $data);
+    }
+
+    # FALTA SUBIR 
+    /*
+        CREATE TABLE ADMIN.RECUPERACION_TOKENS (
+            ID INT AUTO_INCREMENT PRIMARY KEY,
+            ID_UID INT NOT NULL,
+            TOKEN VARCHAR(64) NOT NULL,
+            EXPIRA DATETIME NOT NULL,
+            USADO TINYINT(1) DEFAULT 0
+        );
+    */
+
+    public function _index(){
+        
+    }
+
+    public function login_modelo($user,$pass){
         $ID_UID = '';
         $status = false;
         $status_empresa = false;

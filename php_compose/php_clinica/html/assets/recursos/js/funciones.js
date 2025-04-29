@@ -158,17 +158,17 @@ function js_confimicuenta(){
         beforeSend : function(xhr) { $('#loadFade').modal('show'); },
         data : { },
         error : function(err) { 
-                                console.log(err);  
-                                console.log(err.responseText);    
-                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                            },
+            console.log(err);  
+            console.log(err.responseText);    
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+        },
         success : function(aData) { 
-                                    console.log("   aData   ->  ",aData);
-                                    $("#html_perfil_usuario").html(aData.html);
-                                    $("#modal_perfil_usuario").modal({backdrop:'static',keyboard:false}).modal('show');
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                }, 
+            console.log("   aData   ->  ",aData);
+            $("#html_perfil_usuario").html(aData.html);
+            $("#modal_perfil_usuario").modal({backdrop:'static',keyboard:false}).modal('show');
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+        }, 
     });
 }
 
@@ -332,7 +332,7 @@ function nuevaFirma(){
 }
 
 function confirmEnvioRecuperacion() {
-    jConfirm('Se enviar&aacute; un correo electronico con su firma digital simple.<br>Desea continuar?', 'Confirmaci\u00F3n', function(r) {
+    jConfirm('Se enviar&aacute; un correo electronico con su firma unica digital.<br>Desea continuar?', 'Confirmaci\u00F3n', function(r) {
         if (r) {
             $.ajax({ 
                 type : "POST",
@@ -341,18 +341,19 @@ function confirmEnvioRecuperacion() {
                 data : { },
                 beforeSend  : function(xhr) { $('#loadFade').modal('show');   },
                 error : function(errro) {     
-                                            console.log(errro.responseText); 
-                                            jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                            $('#loadFade').modal('hide');
-                                        },
+                    console.log(errro.responseText); 
+                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+                    $('#loadFade').modal('hide');
+                },
                 success : function(aData) {   
-                                            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                            if(aData.status){
-                                                showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
-                                            } else {
-                                                showNotification('top','center','&nbsp;'+aData.html,4,'');
-                                            }
-                                        }, 
+                    console.log("-> ",aData);
+                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                    if(aData.status){
+                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
+                    } else {
+                        showNotification('top','center','&nbsp;'+aData.html,4,'');
+                    }
+                }, 
             });
         }
     });

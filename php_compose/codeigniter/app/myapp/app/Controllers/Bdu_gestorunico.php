@@ -7,14 +7,14 @@ use App\Models\UserModel;
 
 class bdu_gestorunico extends Controller {
 
-   var $empresa;
+    var $empresa;
 
-   function __construct() {
-       parent::__construct();
-   }
+    function __construct() {
+        parent::__construct();
+    }
 
-   public function index() {
-       echo view("bdu_gestorunico/bdu_gestorunico_view");
-   }
-
+    public function index() {
+        echo view("bdu_gestorunico/bdu_gestorunico_view");
+    }
+    
 }

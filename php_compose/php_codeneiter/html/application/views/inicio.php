@@ -18,7 +18,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="#" class="h1"><b>CL&Iacute;NICA</b>&nbsp;LIBRE</a>
+      <a href="#" class="h1"><b>CL&Iacute;NICA</b>&nbsp;LIBRE 4 </a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Ingrese <b>RUN</b> y contrase&ntilde;a para inicio de sesi&oacute;n</p>
@@ -46,7 +46,7 @@
         </div>
       </form>
       <p class="mb-0" style="margin-top: 10px;">
-        <a href="register.html" class="text-center">¿Olvidaste tu contraseña?</a>
+        <a href="/recuperar-contrasena" class="text-center">&iquest;Olvidaste tu contrase&ntilde;a?</a>
       </p>
     </div>
     <!-- /.card-body -->
@@ -64,62 +64,78 @@
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.js"></script>
 <script type="text/javascript" src="assets/recursos/js/jquery.Rut.min.js"></script>
 
+<div class="modal fade" id="recuperarModal" tabindex="-1" role="dialog" aria-labelledby="recuperarModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="/enviar-enlace-recuperacion" method="POST">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="recuperarModalLabel">Recuperar contraseña</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Ingrese su correo electrónico asociado a la cuenta:</p>
+          <input type="email" name="email" class="form-control" required placeholder="correo@ejemplo.cl">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Enviar enlace</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
-    $(document).ready(function(){
-      $("#rut_profesional").Rut({
-        on_error    :   function()  {   
-                                      alert('El RUN ingresado es incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
-                                      console.log($("#rut_profesional").val());  
-                                      $("#rut_profesional").css('border-color','red'); 
-                                      $("#rut_profesional").val('');
-                                    },
-        on_success  :   function()  {   
-                                      $("#rut_profesional").css('border-color','');   
-                                    },
-        format_on   : 'keyup'
-      });
+  $(document).ready(function(){
+    $("#rut_profesional").Rut({
+      on_error : function()  {   
+        alert('El RUN ingresado es incorrecto. '+$("#rut_profesional").val(), 'Rut Incorrecto'); 
+        console.log($("#rut_profesional").val());  
+        $("#rut_profesional").css('border-color','red'); 
+        $("#rut_profesional").val('');
+      },
+      on_success : function() { $("#rut_profesional").css('border-color',''); },
+      format_on : 'keyup'
+    });
     document.getElementById("rut_profesional").focus();
   });
-
   document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("keypress", function(event) {
       if (event.keyCode === 13 || event.which === 13) {
-        let v_run   =   $("#rut_profesional").val();
-        let v_pass  =   $("#password").val();
+        let v_run = $("#rut_profesional").val();
+        let v_pass = $("#password").val();
         if (v_run != '' &&  v_pass != '' ){
           js_inicio();
         }
       }
     });
   });
-
 function js_inicio(){
-    let error   =   [];
-    let v_run   =   $("#rut_profesional").val();
-    let v_pass  =   $("#password").val();
-    let access  =   null;
+    let error = [];
+    let v_run = $("#rut_profesional").val();
+    let v_pass = $("#password").val();
+    let access = null;
     $("#rut_profesional").css('border-color','');   
     if (v_pass == ''){
-        error.push("RUN Vacio");
+        error.push("RUN Vac&iacute;o");
         $("#rut_profesional").css('border-color','red');   
     }
-    //**************************************/
     $("#password").css('border-color','');   
     if (v_pass == ''){
-        error.push("Contraseña vacia");
+        error.push("Contrase&ntilde;a vac&iacute;a");
         $("#password").css('border-color','red');   
     }
-    //**************************************/
     if (error.length > 0){
         //https://adminlte.io/docs/3.2/javascript/iframe.html
         $('body').Toasts('create', {
-            position    : 'bottomRight',
+            position : 'bottomRight',
             imageHeight : '130px',
-            title       : 'Clinica libre',
-            icon        : 'fas fa-exclamation-triangle',
-            autohide    : true,
-            delay       : 3000,
-            body        : error.join("<br>"),
+            title : 'Clinica libre',
+            icon : 'fas fa-exclamation-triangle',
+            autohide : true,
+            delay : 3000,
+            body : error.join("<br>"),
         });
     } else {
       $.ajax({ 
@@ -128,33 +144,33 @@ function js_inicio(){
         dataType : "json",
         beforeSend : function(xhr) { $("#btn_inicio").prop("disabled",true); },
         data : {  
-                  user      : v_run,
-                  password  : v_pass,
-                  access    : access,
-                },
+          user : v_run,
+          password : v_pass,
+          access : access,
+        },
         error : function(errro) {  
-                                  console.log(errro);
-                                  console.log(errro.responseText); 
-                                  alert("Error General, Consulte Al Administrador"); 
-                                  $("#btn_inicio").prop("disabled",false);
-                                },
+          console.log(errro);
+          console.log(errro.responseText); 
+          alert("Error General, Consulte Al Administrador"); 
+          $("#btn_inicio").prop("disabled",false);
+        },
         success :  function(aData) {  
-                                      //console.log("aData   -> ",aData);
-                                      if (aData.status){
-                                        window.location = aData.redirect;
-                                      } else {
-                                        $("#btn_inicio").prop("disabled",false);
-                                        $('body').Toasts('create', {
-                                          position    : 'bottomRight',
-                                          imageHeight : '130px',
-                                          title       : 'Clinica libre',
-                                          icon        : 'fas fa-exclamation-triangle',
-                                          autohide    : true,
-                                          delay       : 3000,
-                                          body        : 'Error en las credenciales',
-                                        });
-                                      }
-                                    }, 
+          //console.log("aData   -> ",aData);
+          if (aData.status){
+            window.location = aData.redirect;
+          } else {
+            $("#btn_inicio").prop("disabled",false);
+            $('body').Toasts('create', {
+              position : 'bottomRight',
+              imageHeight : '130px',
+              title : 'Clinica libre',
+              icon : 'fas fa-exclamation-triangle',
+              autohide : true,
+              delay : 3000,
+              body : 'Error en las credenciales',
+            });
+          }
+        }, 
       });
     }
   }

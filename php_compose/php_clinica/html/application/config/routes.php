@@ -50,7 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
-$route['default_controller']        =   'Constructor';
-$route['404_override']              =   '';
-$route['translate_uri_dashes']      =   false;
-$route['login']                     =   'Constructor/login0';
+$route['default_controller'] = 'Constructor';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = false;
+$route['login'] = 'Constructor/login0';
+
+$route['enviar-enlace-recuperacion'] = 'constructor/enviar_enlace_recuperacion';
+$route['recuperar/resetear/(:any)'] = 'constructor/resetear/$1';
