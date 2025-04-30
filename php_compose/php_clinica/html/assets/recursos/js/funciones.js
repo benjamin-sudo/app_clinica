@@ -345,8 +345,7 @@ function confirmEnvioRecuperacion() {
                     jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
                     $('#loadFade').modal('hide');
                 },
-                success : function(aData) {   
-                    console.log("-> ",aData);
+                success : function(aData) {  
                     setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
                     if(aData.status){
                         showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
@@ -354,6 +353,7 @@ function confirmEnvioRecuperacion() {
                         showNotification('top','center','&nbsp;'+aData.html,4,'');
                     }
                 }, 
+                complete: function() { $("#loadFade").modal('hide'); }
             });
         }
     });

@@ -57,3 +57,5 @@ $route['login'] = 'Constructor/login0';
 
 $route['enviar-enlace-recuperacion'] = 'constructor/enviar_enlace_recuperacion';
 $route['recuperar/resetear/(:any)'] = 'constructor/resetear/$1';
+$route['recuperar/actualizar'] = 'constructor/actualizar_contrasena';
+

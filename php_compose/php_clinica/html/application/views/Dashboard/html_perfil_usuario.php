@@ -1,20 +1,20 @@
 <style>
-    .grid_perfil_usuario                    {
-        display                             :  grid;
-        grid-template-columns               :  65% 34%;
-        gap                                 :  8px;
+    .grid_perfil_usuario {
+        display :  grid;
+        grid-template-columns : 65% 34%;
+        gap :  8px;
     }
     
-    .grid_datos_personales                  {
-        display                             :  grid;
-        grid-template-columns               :  1fr 1fr 1fr;
-        gap                                 :  8px;
+    .grid_datos_personales {
+        display :  grid;
+        grid-template-columns : 1fr 1fr 1fr;
+        gap :  8px;
     }
 
-    .grid_datos_personales_2                {
-        display                             :  grid;
-        grid-template-columns               :  1fr 2fr;
-        gap                                 :  8px;
+    .grid_datos_personales_2 {
+        display :  grid;
+        grid-template-columns : 1fr 2fr;
+        gap :  8px;
     }
 </style>
 <div class="grid_perfil_usuario">
@@ -82,7 +82,9 @@
                 </div>
                 <div class="row" style="text-align: end;">
                     <div class="col">
-                        <button type="button" class="btn btn-success btn-fill" disabled><i class="bi bi-pen"></i>&nbsp;Cambiar Contrase&ntilde;a</button>
+                        <button type="button" class="btn btn-success btn-fill" disabled>
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Cambiar Contrase&ntilde;a
+                        </button>
                     </div>
                 </div>
             </div>
@@ -93,7 +95,7 @@
 <div class="grid_perfil_usuario">
     <div class="grid_perfil_usuario4">
         <div class="card">
-            <div class="card-header"><b>FIRMA UNICA DIGITAL</b></div>
+            <div class="card-header"><b>FIRMA &Uacute;NICA DIGITAL</b></div>
             <div class="card-body class_card_firmaunica">
                 <?php
                     $v_firma_simple = $data_user[0]['TX_INTRANETSSAN_CLAVEUNICA'];
@@ -116,5 +118,5 @@
 </div>
 <!-- ZONA DE VARIABLE -->
 <div class="info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($data_user),ENT_QUOTES,'UTF-8');?>"></div>
-<input type="hidden" id="exFirm"    name="exFirm"       value="0">
-<input type="hidden" id="username"  name="username"     value="<?php echo $username;?>">
+<input type="hidden" id="exFirm" name="exFirm" value="0">
+<input type="hidden" id="username" name="username" value="<?php echo $username;?>">

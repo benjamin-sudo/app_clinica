@@ -1,1 +1,0 @@
-<h4 class="title" style="color:#e34f49;margin-left:20px;"><b>TOMA DE MUESTRA | ROTULADO | CUSTODIA O TRASPORTE | USUARIOS</b></h4>

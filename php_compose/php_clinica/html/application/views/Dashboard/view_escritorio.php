@@ -226,14 +226,14 @@
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;<b>CONFIGURACI&Oacute;N CUENTA DE USUARIO</b></h3>
+                    <h3 class="modal-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;<b>CONFIGURACI&Oacute;N CUENTA DE USUARIO</b></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body" id="html_perfil_usuario"></div>
                 <div class="modal-footer">
                     <div class="btn-group">
                         <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
-                            <i class="bi bi-x-square-fill"></i>&nbsp;&nbsp;CERRAR VENTANA
+                          <i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR VENTANA
                         </button>
                     </div>
                 </div>

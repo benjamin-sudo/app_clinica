@@ -22,7 +22,7 @@
 </div>
 <div class="row">
     <div class="col-md-12" style="text-align:justify">
-        FAVOR MANTENER SU FIRMA DIGITAL UNICA EN FORMA CONFIDENCIAL DEBIDO A QUE SU USO TIENE IMPLICANCIA LEGAL.
+        FAVOR DE MANTENER SU FIRMA DIGITAL &Uacute;NICA EN FORMA CONFIDENCIAL DEBIDO A QUE SU USO TIENE IMPLICANCIA LEGAL.
     </div>
 </div>
 <!--  style="display:none" -->

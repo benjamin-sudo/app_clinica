@@ -1,1 +1,0 @@
- Vista ssan_libro_salatecnologo.

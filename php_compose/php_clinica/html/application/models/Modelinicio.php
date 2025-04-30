@@ -29,7 +29,38 @@ class Modelinicio extends CI_Model {
         return $this->db->insert($own.'.RECUPERACION_TOKENS', $data);
     }
 
-    # FALTA SUBIR 
+    public function verificar_token($token) {
+        $this->db->where('TOKEN', $token);
+        $this->db->where('USADO', 0);
+        $this->db->where('EXPIRA >=', date('Y-m-d H:i:s')); // válido aún
+        $query = $this->db->get($own.'.RECUPERACION_TOKENS'); // o usa "$own.'.RECUPERACION_TOKENS'" si corresponde
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return false; 
+        }
+    }
+    
+    public function verificar_token_actualiza_borratoken($token, $nueva_pass) {
+        $this->db->where('TOKEN', $token);
+        $this->db->where('USADO', 0);
+        $this->db->where('EXPIRA >=', date('Y-m-d H:i:s'));
+        $query = $this->db->get($this->own.'.RECUPERACION_TOKENS');
+        if ($query->num_rows() > 0) {
+            $tokenData = $query->row();
+            // Actualizar contraseña del usuario
+            $hash = password_hash($nueva_pass, PASSWORD_DEFAULT);
+            $this->db->where('ID_UID', $tokenData->ID_USUARIO);
+            $this->db->update('ADMIN.FE_USERS', ['PASSWORD' => $hash]);
+            // Marcar token como usado
+            $this->db->where('TOKEN', $token);
+            $this->db->update($this->own.'.RECUPERACION_TOKENS', ['USADO' => 1]);
+            return true;
+        }
+        return false;
+    }
+
+    # FALTA SUBIR A PRODUCCION 30.04.2025
     /*
         CREATE TABLE ADMIN.RECUPERACION_TOKENS (
             ID INT AUTO_INCREMENT PRIMARY KEY,

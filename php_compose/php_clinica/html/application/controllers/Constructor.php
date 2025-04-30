@@ -7,6 +7,7 @@ class Constructor extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->library('session');
+        $this->load->library('email');
         $this->load->model('Modelinicio');
         #$this->load->model('Testmodel');
         #echo $this->Testmodel->test();
@@ -19,6 +20,32 @@ class Constructor extends CI_Controller {
             $token = bin2hex(random_bytes(32));
             $expira = date('Y-m-d H:i:s', strtotime('+1 hour'));
             $this->Modelinicio->guardar_token_recuperacion($usuario->ID_UID, $token, $expira);
+            if ($_SERVER['HTTP_HOST'] == 'localhost:9025') {
+                $base = 'http://localhost:9025/';
+            } else {
+                $base = 'https://www.clinicalibre.cl/';
+            }
+            $enlace = $base . "recuperar/resetear/$token";
+            $this->email->initialize([
+                'protocol' => 'smtp',
+                'smtp_host' => 'smtp.gmail.com',
+                'smtp_user' => 'clinicalibrechile@gmail.com',
+                'smtp_pass' => 'ficdkbpjmjgybloy',
+                'smtp_port' => 587,
+                'smtp_crypto' => 'tls',
+                'mailtype' => 'html',
+                'newline' => "\r\n",
+            ]);
+            $this->email->from('clinicalibrechile@gmail.com', 'Clínica Libre Chile');
+            $this->email->to($email);
+            $this->email->subject('Recuperación de contraseña');
+            $mensaje = "
+                <p>Hola, has solicitado recuperar tu acceso.</p>
+                <p>Haz clic en el siguiente enlace para continuar:</p>
+                <p><a href='$enlace'>$enlace</a></p>
+                <p>Este enlace expirará en 1 hora.</p>";
+            $this->email->message($mensaje);
+            $this->email->send();
 
             $this->session->set_flashdata('msg', 'Se envi&oacute; correo para recuperaci&oacute;n a : '.$email);
             $data['mensaje'] = $this->session->flashdata('msg');
@@ -29,7 +56,30 @@ class Constructor extends CI_Controller {
         $this->load->view('inicio', $data);
     }
 
+    public function resetear($token) {
+        $tokenData = $this->Modelinicio->verificar_token($token);
+        if ($tokenData && $tokenData->USADO == 0 && strtotime($tokenData->EXPIRA) > time()) {
+            $data['token'] = $token;
+            $this->load->view('Dashboard/html_resetear_contrasena', $data);
+        } else {
+            echo "Enlace inválido o expirado.";
+        }
+    }
 
+    public function actualizar_contrasena() {
+        $token = $this->input->post('token');
+        $nueva_pass = $this->input->post('passNew1');
+        $tokenData = $this->Modelinicio->verificar_token_actualiza_borratoken($token, $nueva_pass);
+        if ($tokenData) {
+            $data['mensaje'] = 'Contraseña actualizada con éxito.';
+        } else {
+            $data['mensaje'] = 'Token inválido o expirado.';
+        }
+        $this->load->view('inicio', $data);
+    }
+    
+    
+ 
 
     /*
         CREATE TABLE ADMIN.RECUPERACION_TOKENS (

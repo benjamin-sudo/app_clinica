@@ -10,7 +10,6 @@ class UserModel extends Model {
     protected $primaryKey = 'USERNAME';
     protected $allowedFields = ['ID_UID','USERNAME', 'PASSWORD', 'NAME'];
     protected $returnType = 'array';
-
     public function __construct() {
         parent::__construct();
     }

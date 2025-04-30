@@ -13,17 +13,13 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="/assets/plugins/template/css/adminlte.min.css">
   <style>
-/* Centrar el contenedor */
-.toast-centrado {
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  top: 20px !important;
-  right: auto !important;
-}
-
+  .toast-centrado {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 20px !important;
+    right: auto !important;
+  }
 </style>
-
-
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -199,9 +195,7 @@ function js_inicio(){
       autohide: true,
       delay: 3000
     });
-    setTimeout(() => {
-      $('.toasts-top-right').addClass('toast-centrado');
-    }, 10);
+    setTimeout(() => {  $('.toasts-top-right').addClass('toast-centrado'); }, 10);
   </script>
 <?php } ?>
 </body>

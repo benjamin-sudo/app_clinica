@@ -1,1 +1,0 @@
-FORMULARIO GESPAB <?php echo $IND_TIPO_BIOPSIA; ?>

@@ -63,7 +63,7 @@ class Dashboard extends CI_Controller {
             $subject = 'CONFIGURACIÓN FIRMA UNICA';
             $config = [
                 'smtp_user' => 'clinicalibrechile@gmail.com',
-                'smtp_pass' => 'hdmbkfrxxrleunqu',
+                'smtp_pass' => 'ficdkbpjmjgybloy',
                 'protocol' => 'smtp',
                 'smtp_host' => 'smtp.gmail.com',
                 #'smtp_port' => 465,
@@ -117,68 +117,6 @@ class Dashboard extends CI_Controller {
         ]));
     }
 
-    public function RecuerdaContrasena(){
-        if (!$this->input->is_ajax_request()) { show_404(); }
-        $status = true;
-        $html = '';
-        $iuid = $this->session->userdata('ID_UID');
-        $consulta = $this->modelinicio->tradatos_usu($iuid);
-        if(count($consulta)>0){
-            $passCla = $consulta[0]["TX_INTRANETSSAN_CLAVEUNICA"];
-            $userEmail = $consulta[0]["EMAIL"];
-            $subject = 'Solicitud de recuperación de firma digital';
-            $subject = 'RECUPERACIÓN FIRMA UNICA';
-            $config = [
-                'smtp_user' => 'clinicalibrechile@gmail.com',
-                'smtp_pass' => 'hdmbkfrxxrleunqu',
-                'protocol' => 'smtp',
-                'smtp_host' => 'smtp.gmail.com',
-                #'smtp_port' => 465,
-                #'smtp_crypto' => 'ssl', 
-                'smtp_port' => 587,
-                'smtp_crypto' => 'tls', 
-                'mailtype' => 'html',
-                'starttls' => true,
-                'newline' => "\r\n",
-            ];
-            $this->load->library('email',$config);
-            $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
-            $this->email->to($userEmail);
-            $this->email->subject($subject);
-            $body = '<div style="margin:0 auto; width:300px;">
-                            Estimado Usuario.<br> 
-                            Se ha generado una solicitud de recuperaci&oacute;n de firma digital unica en el sistema . Clinica libre
-                            <br> 
-                            <br>                            
-                            <div style="border:solid 1px #ccc;padding:5px;font-size:18px">
-                                Su firma digital simple es la siguiente:
-                                <br>
-                                <b>' . $passCla . '</b>
-                            </div>
-                            <br>
-                            <b>Si usted no ha generado esta solicitud favor comunicarce con el Sub-Departamento de Clinica libre Chile.</b>
-                            <br>
-                                correo : clinicalibrechile@gmail.com
-                            </div>
-                            ';
-            $this->email->message($body);
-            if ($this->email->send()){
-                $html = 'Correo enviado con exito.';
-                $html_codigo = $this->load->view('Dashboard/html_confirmafirmaunica',['firma'=>$firma],true);
-            } else {
-                $status = false;
-                $html = 'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
-            }
-        } else {
-            $status = false;
-            $html = 'Usuario no encontrado. ';
-        }
-        $this->output->set_output(json_encode([
-            'status' => $status,
-            'html' => $html
-        ]));
-    }
-
     public function validaFirmaExist(){
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
@@ -224,7 +162,6 @@ class Dashboard extends CI_Controller {
     public function confirmEnvioRecuperacion() {
         if (!$this->input->is_ajax_request()){ show_404(); }
         $status = true;
-
         $this->output->set_output(json_encode([
             'status' => $status
         ]));
@@ -242,18 +179,75 @@ class Dashboard extends CI_Controller {
     }
 
     function sumarMinutosFecha($FechaStr, $MinASumar)  {
-        $FechaStr       =   str_replace("-", " ", $FechaStr);
-        $FechaStr       =   str_replace(":", " ", $FechaStr);
-        $FechaOrigen    =   explode(" ", $FechaStr);
-        $Dia            =   $FechaOrigen[2];
-        $Mes            =   $FechaOrigen[1];
-        $Ano            =   $FechaOrigen[0];
-        $Horas          =   $FechaOrigen[3];
-        $Minutos        =   $FechaOrigen[4];
-        $Segundos       =   $FechaOrigen[5];
-        $Minutos        =   ((int) $Minutos) + ((int) $MinASumar);
-        $FechaNueva     = date("Y-m-d H:i:s", mktime($Horas, $Minutos, $Segundos, $Mes, $Dia, $Ano));
+        $FechaStr = str_replace("-", " ", $FechaStr);
+        $FechaStr = str_replace(":", " ", $FechaStr);
+        $FechaOrigen = explode(" ", $FechaStr);
+        $Dia = $FechaOrigen[2];
+        $Mes = $FechaOrigen[1];
+        $Ano = $FechaOrigen[0];
+        $Horas = $FechaOrigen[3];
+        $Minutos = $FechaOrigen[4];
+        $Segundos = $FechaOrigen[5];
+        $Minutos = ((int) $Minutos) + ((int) $MinASumar);
+        $FechaNueva = date("Y-m-d H:i:s", mktime($Horas, $Minutos, $Segundos, $Mes, $Dia, $Ano));
         return $FechaNueva;
     }
 
+    public function RecuerdaContrasena(){
+        if (!$this->input->is_ajax_request()) { show_404(); }
+        $status = true;
+        $html = '';
+        $iuid = $this->session->userdata('ID_UID');
+        $consulta = $this->modelinicio->tradatos_usu($iuid);
+        if(count($consulta)>0){
+            $passCla = $consulta[0]["TX_INTRANETSSAN_CLAVEUNICA"];
+            $userEmail = $consulta[0]["EMAIL"];
+            $subject = 'Solicitud de recuperación de firma digital';
+            $subject = 'RECUPERACIÓN FIRMA UNICA';
+            $config = [
+                'smtp_user' => 'clinicalibrechile@gmail.com',
+                'smtp_pass' => 'ficdkbpjmjgybloy',
+                'protocol' => 'smtp',
+                'smtp_host' => 'smtp.gmail.com',
+                #'smtp_port' => 465,
+                #'smtp_crypto' => 'ssl', 
+                'smtp_port' => 587,
+                'smtp_crypto' => 'tls', 
+                'mailtype' => 'html',
+                'starttls' => true,
+                'newline' => "\r\n",
+            ];
+            $this->load->library('email',$config);
+            $this->email->from('clinicalibrechile@gmail.com','Clinica Libre Chile - Firma Unica Digital');
+            $this->email->to($userEmail);
+            $this->email->subject($subject);
+            $body = '<div style="margin:0 auto; width:300px;">Estimado Usuario.<br> 
+                        Se ha generado una solicitud de recuperaci&oacute;n de firma digital unica en el sistema . Clinica libre
+                        <br> 
+                        <br>                            
+                        <div style="border:solid 1px #ccc;padding:5px;font-size:18px">
+                            Su firma digital unica es la siguiente:<br><b>'.$passCla.'</b>
+                        </div>
+                        <br>
+                        <b>Si usted no ha generado esta solicitud favor comunicarce con el Sub-Departamento de Clinica libre Chile.</b>
+                        <br>Correo : <b>clinicalibrechile@gmail.com</b>
+                    </div>';
+            $this->email->message($body);
+            if ($this->email->send()){
+                $html = 'Correo enviado con &eacute;xito.';
+                $html_codigo = $this->load->view('Dashboard/html_confirmafirmaunica',['firma'=>$firma],true);
+            } else {
+                $status = false;
+                $html = 'Error al enviar el correo. ' . $this->email->print_debugger(['headers']);
+            }
+        } else {
+            $status = false;
+            $html = 'Usuario no encontrado.';
+        }
+        $this->output->set_output(json_encode([
+            'status' => $status,
+            'html' => $html
+        ]));
+    }
+    
 }

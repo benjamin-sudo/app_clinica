@@ -22,16 +22,15 @@ class Home extends BaseController {
         if ($this->request->isAJAX()){ }
         $username = str_replace('.', '', $this->request->getPost('username'));
         $password = $this->request->getPost('password');
-        #log_message('debug', 'Usuario ingresado: ' . $username);
-        #log_message('debug', 'Password ingresado: ' . $password);
         $verifica_user = $this->usersModel->verificacionsuperuser($username,$password);
         if ($verifica_user['status']) {
             $user = $verifica_user['user']; // <-- ya es objeto
+            #var_dump($user);
             $this->session->set([
-                'ID_UID' => $user['ID_UID'],
-                'USERNAME' => $user['USERNAME'],
-                'NAME' =>  $user['NAME'],
-                'EMAIL' => $user['EMAIL'],
+                'ID_UID' => $user->ID_UID,
+                'USERNAME' => $user->USERNAME,
+                'NAME' =>  $user->NAME,
+                'EMAIL' => $user->EMAIL,
                 'logged_in' => true,
             ]);
             $arr = [];
