@@ -55,7 +55,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
 $route['login'] = 'Constructor/login0';
 
-$route['enviar-enlace-recuperacion'] = 'constructor/enviar_enlace_recuperacion';
-$route['recuperar/resetear/(:any)'] = 'constructor/resetear/$1';
-$route['recuperar/actualizar'] = 'constructor/actualizar_contrasena';
+$route['enviar-enlace-recuperacion'] = 'Constructor/enviar_enlace_recuperacion';
+$route['recuperar/resetear/(:any)'] = 'Constructor/resetear/$1';
+$route['recuperar/actualizar'] = 'Constructor/actualizar_contrasena';
 

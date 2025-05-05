@@ -136,12 +136,10 @@ class UserModel extends Model {
         
         $menuData = $db->query($sql)->getResultArray();
         $menu = [];
-    
         foreach ($menuData as $row) {
             $menuId = $row['main_id'];
             $subMenuId = $row['sub_id'];
             $extensionId = $row['ext_id'];
-    
             // Organizar en estructura jerárquica
             if (!isset($menu[$menuId])) {
                 $menu[$menuId] = [
@@ -149,14 +147,12 @@ class UserModel extends Model {
                     'submenus' => []
                 ];
             }
-    
             if ($subMenuId && !isset($menu[$menuId]['submenus'][$subMenuId])) {
                 $menu[$menuId]['submenus'][$subMenuId] = [
                     'data' => $row, // Datos del submenú
                     'extensions' => []
                 ];
             }
-    
             if ($extensionId) {
                 $menu[$menuId]['submenus'][$subMenuId]['extensions'][$extensionId] = $row; // Datos de la extensión
             }
@@ -216,24 +212,20 @@ class UserModel extends Model {
                 WHERE 
                     m.MENP_ESTADO = 1 AND m.MENP_FRAME = 3 AND m.MENP_IDPADRE = 0;";
         $menuData = $db->query($sql)->getResultArray();
-    
         // Depuración inicial para verificar los datos obtenidos
         //echo "<pre>";
         //print_r($menuData);
         //echo "</pre>";
-    
         $menu = [];
         foreach($menuData as $row) {
             $menuId = $row['main_id'];
             $subMenuId = $row['sub_id'];
             $extensionId = $row['ext_id'];
-    
             // Verificación de las claves
             if (!isset($row['main_id']) || !isset($row['main_nombre'])) {
                 echo "Error: Faltan datos principales en la fila.";
                 continue;
             }
-    
             if (!isset($menu[$menuId])) {
                 $menu[$menuId] = [
                     'data' => [

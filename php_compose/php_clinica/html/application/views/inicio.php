@@ -108,7 +108,6 @@
       });
     document.getElementById("rut_profesional").focus();
   });
-
   document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("keypress", function(event) {
       if (event.keyCode === 13 || event.which === 13) {
@@ -120,7 +119,6 @@
       }
     });
   });
-
 function js_inicio(){
     let error = [];
     let v_run = $("#rut_profesional").val();
@@ -133,20 +131,22 @@ function js_inicio(){
     }
     $("#password").css('border-color','');   
     if (v_pass == ''){
-        error.push("Contraseña vacia");
+        error.push("Contrase&ntilde;a vac&iacute;a");
         $("#password").css('border-color','red');   
     }
     if (error.length > 0){
         //https://adminlte.io/docs/3.2/javascript/iframe.html
         $('body').Toasts('create', {
-            position : 'bottomRight',
+            position : 'topRight',
             imageHeight : '130px',
-            title : 'Clinica libre',
+            title : 'Cl&iacute;nica libre',
             icon : 'fas fa-exclamation-triangle',
             autohide : true,
             delay : 3000,
             body : error.join("<br>"),
         });
+        setTimeout(() => { $('.toasts-top-right').addClass('toast-centrado'); }, 10);
+        return;
     } else {
       $.ajax({ 
         type : "POST",
@@ -171,32 +171,37 @@ function js_inicio(){
           } else {
             $("#btn_inicio").prop("disabled",false);
             $('body').Toasts('create', {
-              position : 'bottomRight',
+              position : 'topRight',
               imageHeight : '130px',
-              title : 'Clinica libre',
+              title : 'Cl&iacute;nica libre',
               icon : 'fas fa-exclamation-triangle',
               autohide : true,
               delay : 3000,
               body : 'Error en las credenciales',
             });
+            setTimeout(() => { $('.toasts-top-right').addClass('toast-centrado'); }, 10);
+            return;
           }
         }, 
       });
     }
   }
 </script>
-<?php if (!empty($mensaje)) {   ?>
+<?php if ($this->session->flashdata('msg')): ?>
   <script>
-    $(document).Toasts('create', {
-      title: 'Clínica Libre',
-      body :'<?php echo $mensaje; ?>',
-      icon: 'fas fa-exclamation-triangle',
-      position: 'topRight',
-      autohide: true,
-      delay: 3000
+    $(document).ready(function () {
+      $('body').Toasts('create', {
+        title: 'Clínica Libre',
+        body: '<?= $this->session->flashdata('msg') ?>',
+        icon: 'fas fa-check-circle',
+        class: 'bg-success',
+        position: 'topRight',
+        autohide: true,
+        delay: 3000
+      });
     });
-    setTimeout(() => {  $('.toasts-top-right').addClass('toast-centrado'); }, 10);
+    setTimeout(() => { $('.toasts-top-right').addClass('toast-centrado'); }, 10);
   </script>
-<?php } ?>
+<?php endif; ?>
 </body>
 </html>

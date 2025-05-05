@@ -60,36 +60,24 @@ class Constructor extends CI_Controller {
         $tokenData = $this->Modelinicio->verificar_token($token);
         if ($tokenData && $tokenData->USADO == 0 && strtotime($tokenData->EXPIRA) > time()) {
             $data['token'] = $token;
+            $data['row'] = $tokenData;
             $this->load->view('Dashboard/html_resetear_contrasena', $data);
         } else {
             echo "Enlace inválido o expirado.";
         }
     }
-
-    public function actualizar_contrasena() {
+  
+    public function actualizar_contrasena(){
         $token = $this->input->post('token');
         $nueva_pass = $this->input->post('passNew1');
         $tokenData = $this->Modelinicio->verificar_token_actualiza_borratoken($token, $nueva_pass);
         if ($tokenData) {
-            $data['mensaje'] = 'Contraseña actualizada con éxito.';
+            $this->session->set_flashdata('msg', 'Contraseña actualizada con éxito.');
         } else {
-            $data['mensaje'] = 'Token inválido o expirado.';
+            $this->session->set_flashdata('msg', 'Token inválido o expirado.');
         }
-        $this->load->view('inicio', $data);
+        redirect('/');
     }
-    
-    
- 
-
-    /*
-        CREATE TABLE ADMIN.RECUPERACION_TOKENS (
-            ID INT AUTO_INCREMENT PRIMARY KEY,
-            ID_USUARIO INT NOT NULL,
-            TOKEN VARCHAR(64) NOT NULL,
-            EXPIRA DATETIME NOT NULL,
-            USADO TINYINT(1) DEFAULT 0
-        );
-    */
 
     public function index(){
         $_valor = [];
@@ -188,5 +176,12 @@ class Constructor extends CI_Controller {
                 substr($an, rand(0, $su), 1) .
                 substr($an, rand(0, $su), 1);
     }
+
+    #$this->load->view('inicio', $data);
+    #log_message('info', '###############################################################');
+    #log_message('info', 'Intentando actualizar contraseña con token: ' . $token);
+    #log_message('info', '###############################################################');
+    #return view('inicio', $data);
+
 }
 ?>
