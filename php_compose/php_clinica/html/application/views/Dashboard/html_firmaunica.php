@@ -14,7 +14,7 @@
 ?>
 <div class="row">
     <div class="col-md-12 text-center" id="miFirma">
-        SU FIRMA UNICA ES : 
+        SU FIRMA &Uacute;NICA DIGITAL ES : 
         <div style="font-size: 20px;font-weight: bold;">
             <b><?php echo $firmaProcesada;?></b>       
         </div>
@@ -22,11 +22,11 @@
 </div>
 <div class="row">
     <div class="col-md-12" style="text-align:justify">
-        FAVOR DE MANTENER SU FIRMA DIGITAL &Uacute;NICA EN FORMA CONFIDENCIAL DEBIDO A QUE SU USO TIENE IMPLICANCIA LEGAL.
+        FAVOR DE MANTENER SU FIRMA &Uacute;NICA EN FORMA CONFIDENCIAL DEBIDO A QUE SU USO TIENE IMPLICANCIA LEGAL.
     </div>
 </div>
 <!--  style="display:none" -->
 <div class="col-md-12" id="btnsFirma" style="text-align:-webkit-center;margin-top:10px;">
-    <button type="button" class="btn btn-success  pull-left" onclick="confirmEnvioRecuperacion()"><i class="fa fa-envelope"></i> Recuperar</button>
-    <button type="button" class="btn btn-info  pull-right" onclick="nuevaFirma()"><i class="fa fa-random"></i> Generar Nueva</button>
+    <button type="button" class="btn btn-success  pull-left" onclick="confirmEnvioRecuperacion()"><i class="fa fa-envelope"></i>&nbsp;Recuperar</button>
+    <button type="button" class="btn btn-info  pull-right" onclick="nuevaFirma()"><i class="fa fa-random"></i>&nbsp;Generar Nueva</button>
 </div>

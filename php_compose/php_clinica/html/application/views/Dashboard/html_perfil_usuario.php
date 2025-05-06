@@ -108,13 +108,7 @@
             </div>
         </div>
     </div>
-    <div class="grid_perfil_usuario4">&nbsp;
-        <!--
-            <i class="bi bi-google"></i>
-            <br>
-            <i class="bi bi-microsoft"></i>
-        -->
-    </div>
+    <div class="grid_perfil_usuario4">&nbsp;</div>
 </div>
 <!-- ZONA DE VARIABLE -->
 <div class="info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($data_user),ENT_QUOTES,'UTF-8');?>"></div>

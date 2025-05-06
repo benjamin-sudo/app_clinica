@@ -38,8 +38,28 @@
     #loadFade .modal-content { background-color: #fff; }
     #loadFade .modal-body { text-align: center; min-height: 100px; max-height:200px }
     .nav-link.activo { }
-    .text-center { text-align: center;  }
+    .text-center { text-align: center; }
     .btn-warning { color: white !important; }
+    
+
+    .animation__slideOutUp {
+  animation: slideOutUp 0.5s both;
+}
+
+@keyframes slideOutUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+
+
+
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
@@ -98,7 +118,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column menu_principal" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-header">Listado Sistema</li>
+        <li class="nav-header">Listado sistema</li>
         <?php
           if (count($menu['arr_menu'])>0){
             foreach ($menu['arr_menu'] as $mainId => $mainItem) {
@@ -158,7 +178,7 @@
       <div class="page_frame container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Pagina Bienvenida</h1>
+            <h1>P&aacute;gina de bienvenida</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -174,9 +194,9 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>Version CLinica libre</b> 1.0.0
+      <b>Versi&oacute;n Cl&iacute;nica libre</b>&nbsp;<b>1.0.2</b>
     </div>
-    <strong>Clinica libre&copy;<?php echo date('m-Y');?> <a href="#">#</a></strong> Todos los derechos reservados
+    <strong>Clinica libre&copy;<?php echo date('m-Y');?>&nbsp;<a href="#">#</a></strong>&nbsp;Todos los derechos reservados.
   </footer>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -185,10 +205,17 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
   <div id="respuesta"></div>
-  
+
   <section>
-    <div class="modal bg-dark fade" id="loadFade" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+    <!-- Notar que no usamos class="preloader" -->
+    <div id="ajax-preloader" class="flex-column justify-content-center align-items-center" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999;">
+      <img class="animation__shake" src="assets/dist/img/anatomia/logo.ico" alt="Logo" height="60" width="60">
+    </div>
+
+    <div id="loadFade" class="modal bg-dark fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">

@@ -60,7 +60,7 @@
             const errorCoinciden = document.getElementById('mensajeError');
             const errorSeguridad = document.getElementById('seguridadError');
             const boton = document.getElementById('btnCambiar');
-            const esSegura = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pass1);
+            const esSegura = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d.]{8,}$/.test(pass1);
             if (pass1 && pass2) {
                 if (pass1 !== pass2) {
                     errorCoinciden.style.display = 'block';
@@ -85,7 +85,6 @@
                 boton.removeAttribute('onclick');
             }
         }
-
         function enviarFormulario() {
             document.getElementById('formCambiarPass').submit();
         }

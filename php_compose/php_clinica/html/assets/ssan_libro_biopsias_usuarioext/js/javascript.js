@@ -1,24 +1,24 @@
 $(document).ready(function(){
     var todayDate = new Date().getDate();
     $('#fecha_out').datetimepicker({
-        useCurrent		        :   false,
-        inline			        :   true,
-        sideBySide		        :   true,
-        format			        :   'DD-MM-YYYY',
-        locale			        :   'es-us',
-        maxDate                 :   new Date(),
-        defaultDate		        :   new Date(new Date().setDate((todayDate)-(0))), 
-        icons			        :   {
-                                        time : 'fa fa-clock-o',
-                                        date : 'fa fa-calendar',
-                                        up : 'fa fa-chevron-up',
-                                        down : 'fa fa-chevron-down',
-                                        previous : 'fa fa-chevron-left',
-                                        next : 'fa fa-chevron-right',
-                                        today : 'fa fa-screenshot',
-                                        clear : 'fa fa-trash',
-                                        close : 'fa fa-remove',
-                                    }
+        useCurrent : false,
+        inline : true,
+        sideBySide : true,
+        format : 'DD-MM-YYYY',
+        locale : 'es-us',
+        maxDate : new Date(),
+        defaultDate : new Date(new Date().setDate((todayDate)-(0))), 
+        icons : {
+            time : 'fa fa-clock-o',
+            date : 'fa fa-calendar',
+            up : 'fa fa-chevron-up',
+            down : 'fa fa-chevron-down',
+            previous : 'fa fa-chevron-left',
+            next : 'fa fa-chevron-right',
+            today : 'fa fa-screenshot',
+            clear : 'fa fa-trash',
+            close : 'fa fa-remove',
+        }
     }).on('dp.change',function(e){ 
         ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(0);
     });
@@ -313,21 +313,21 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
         dataType : "json",
         beforeSend : function(xhr) { $("#loadFade").modal('show'); },
         data : {
-                    NUM_FICHAE : NUM_FICHAE,
-                    ADMISION : ADMISION,
-                },
+            NUM_FICHAE : NUM_FICHAE,
+            ADMISION : ADMISION,
+        },
         error : function(errro) { 
-                        console.log(errro);
-                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                        jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
-                    },
+            console.log(errro);
+            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+            jAlert("Error General, Consulte Al Administrador","Clinica libre"); 
+        },
         success : function(aData) { 
-                                        //console.log("aData , ",aData);
-                                        $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
-                                        $("#PA_ID_PROCARCH").val('65');
-                                        $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show");
-                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                    }, 
+            //console.log("aData , ",aData);
+            $("#HTML_SOLICITUD_ANATOMIA").html(aData["GET_HTML"]);
+            $("#PA_ID_PROCARCH").val('65');
+            $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal({backdrop:'static',keyboard:false}).modal("show");
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+        }, 
     });
 }
 
@@ -405,22 +405,21 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
 
 function change_day_anatomia(date_from,date_to){
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/NUEVA_SOLICITUD_ANATOMIA3",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   console.log("xhr->",xhr);   },
-        data                :                   {
-                                                    date_from  : date_from,
-                                                    date_to    : date_to,
-                                                },
-        error		        :   function(errro) { 
-                                                    console.log(errro);  
-                                                    jAlert(" Error General, Consulte Al Administrador"); 
-                                                },
-        success             :   function(aData) { 
-                                                    
-                                                    console.log("----------",aData,"--------------------------");
-                                                }, 
+        type : "POST",
+        url : "ssan_spab_gestionlistaquirurgica/NUEVA_SOLICITUD_ANATOMIA3",
+        dataType : "json",
+        beforeSend : function(xhr) { console.log("xhr->",xhr);   },
+        data : {
+            date_from : date_from,
+            date_to : date_to,
+        },
+        error : function(errro) { 
+            console.log(errro);  
+            jAlert(" Error General, Consulte Al Administrador"); 
+        },
+        success : function(aData) { 
+            console.log("----------",aData,"--------------------------");
+        }, 
     });
 }
 
@@ -445,25 +444,24 @@ function local_pdf_rechazomuestra(id_anatomia){
                                                     $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                 },
         success		:   function(aData)         { 
-                                                    console.log("-----------------------");
-                                                    console.log("aData  ->",aData,"<-   ");
+                                                    //console.log("aData  ->",aData,"<-   ");
                                                     if(!aData["STATUS"]){
                                                         jError("error al cargar protocolo PDF","Clinica Libre");
                                                         return false;
                                                     } else {
-                                                        var base64str           =   aData["PDF_MODEL"];
+                                                        var base64str = aData["PDF_MODEL"];
                                                         //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                        var binary              =   atob(base64str.replace(/\s/g,''));
-                                                        var len                 =   binary.length;
-                                                        var buffer              =   new ArrayBuffer(len);
-                                                        var view                =   new Uint8Array(buffer);
+                                                        var binary = atob(base64str.replace(/\s/g,''));
+                                                        var len = binary.length;
+                                                        var buffer = new ArrayBuffer(len);
+                                                        var view = new Uint8Array(buffer);
                                                         for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                        //console.log("view     ->  ",view);
+                                                        //console.log("view -> ",view);
                                                         //create the blob object with content-type "application/pdf"  
-                                                        var blob                =   new Blob([view],{type:"application/pdf"});
-                                                        var blobURL             =   URL.createObjectURL(blob);
+                                                        var blob = new Blob([view],{type:"application/pdf"});
+                                                        var blobURL = URL.createObjectURL(blob);
                                                         //console.log("BlobURL->",blobURL);
-                                                        Objpdf                  =   document.createElement('object');
+                                                        Objpdf = document.createElement('object');
                                                         Objpdf.setAttribute('data',blobURL);
                                                         Objpdf.setAttribute('width','100%');
                                                         Objpdf.setAttribute('style','height:700px;');
@@ -474,7 +472,6 @@ function local_pdf_rechazomuestra(id_anatomia){
                                                 }, 
    });
 }
-
 
 function load_exel()        {
     var ID_BD               =   121321;

@@ -26,7 +26,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             "DATE_TO" => $date_to,
             "LODA_X_SISTEMAS" => 2, //SOLO USUARIO EXTERNO
         ]);
-        $responde['HTML_SOLICITUDEAP']  =  $responde['HTML_SOLICITUDEAP']['NUEVAS_SOLICITUDES'];
+        $responde['HTML_SOLICITUDEAP'] = $responde['HTML_SOLICITUDEAP']['NUEVAS_SOLICITUDES'];
         $this->load->css("assets/ssan_libro_biopsias_usuarioext/css/styles.css");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/javascript.js");
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js"); #js formulario anatomia
@@ -194,13 +194,13 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     #FUNCION QUE INICIA SOLICITUD DE ANATOMA PATOLOGICA EN EL EXTERIOR CON PACIENTE
     public function HTML_SOLICITUD_ANATOMIA(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $DATA                           =   array(
-            'NUM_FICHAE'                =>  $this->input->post("NUM_FICHAE"),
-            'ID_SERV'                   =>  $this->input->post("ID_SERV"),
-            'ID_MEDICO'                 =>  $this->input->post("ID_MEDICO"),
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $DATA = array(
+            'NUM_FICHAE' => $this->input->post("NUM_FICHAE"),
+            'ID_SERV' => $this->input->post("ID_SERV"),
+            'ID_MEDICO' => $this->input->post("ID_MEDICO"),
         );
-        $TABLA["GET_HTML_ANATOMIA"]     =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/FROM_APATOLOGICA_EXT",$DATA,true);
+        $TABLA["GET_HTML_ANATOMIA"] = $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/FROM_APATOLOGICA_EXT",$DATA,true);
     }
 
     public function get_cambio_fecha(){
@@ -239,15 +239,15 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $ZONA_PAB                       =   $this->input->post('ZONA_PAB');
         $ID_SERDEP                      =   $this->input->post('IND_ESPECIALIDAD');
         $aData                          =   $this->Ssan_libro_biopsias_usuarioext_model->main_form_anatomiapatologica(array(
-                                                "COD_EMPRESA"       =>  $empresa,
-                                                "V_CALL_FASE"       =>  0,
-                                                "V_IND_EXTERNO"     =>  0,
-                                                "V_IND_SISTEMA"     =>  0,
-                                                "PA_ID_PROCARCH"    =>  $this->input->post('PA_ID_PROCARCH'),
-                                                "IND_GESPAB"        =>  $this->input->post('IND_GESPAB'),
-                                                "ZONA_PAB"          =>  $this->input->post('ZONA_PAB'),
-                                                "IND_ADMISION"      =>  0,
-                                                "ID_SERDEP"         =>  $ID_SERDEP, 
+                                                "COD_EMPRESA" =>  $empresa,
+                                                "V_CALL_FASE" =>  0,
+                                                "V_IND_EXTERNO" =>  0,
+                                                "V_IND_SISTEMA" =>  0,
+                                                "PA_ID_PROCARCH" =>  $this->input->post('PA_ID_PROCARCH'),
+                                                "IND_GESPAB" =>  $this->input->post('IND_GESPAB'),
+                                                "ZONA_PAB" =>  $this->input->post('ZONA_PAB'),
+                                                "IND_ADMISION" =>  0,
+                                                "ID_SERDEP" =>  $ID_SERDEP, 
                                             ));
         #INFO_ROTULADO
         $array_rotulado                             =   [];
@@ -451,4 +451,5 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $TABLA["ID_RETURN"] = $id_tabla;
         $this->output->set_output(json_encode($TABLA));
     }
+    
 }

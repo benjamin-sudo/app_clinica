@@ -10,6 +10,10 @@ class Modelinicio extends CI_Model {
         $this->load->database('session'); 
         date_default_timezone_set('America/Santiago');
     }
+    
+    public function _index(){
+        
+    }
 
     public function obtener_por_correo($email) {
         $sql = "SELECT ID_UID, USERNAME, PASSWORD, NAME, FIRST_NAME, LAST_NAME, USERGROUP, EMAIL 
@@ -58,21 +62,6 @@ class Modelinicio extends CI_Model {
             return true;
         }
         return false;
-    }
-
-    # FALTA SUBIR A PRODUCCION 30.04.2025
-    /*
-        CREATE TABLE ADMIN.RECUPERACION_TOKENS (
-            ID INT AUTO_INCREMENT PRIMARY KEY,
-            ID_UID INT NOT NULL,
-            TOKEN VARCHAR(64) NOT NULL,
-            EXPIRA DATETIME NOT NULL,
-            USADO TINYINT(1) DEFAULT 0
-        );
-    */
-
-    public function _index(){
-        
     }
 
     public function login_modelo($user,$pass){
@@ -202,12 +191,11 @@ class Modelinicio extends CI_Model {
                 } 
             }
         }
-
-        log_message('error', 'arr_user_permisos');
-        log_message('error', print_r($arr_user_permisos,true));
-        log_message('error', 'menu_hierarchy');
-        log_message('error', print_r($menu_hierarchy,true));
-        //arr_hijo_sub_menu
+        #log_message('error', 'arr_user_permisos');
+        #log_message('error', print_r($arr_user_permisos,true));
+        #log_message('error', 'menu_hierarchy');
+        #log_message('error', print_r($menu_hierarchy,true));
+        #arr_hijo_sub_menu
         $menuData = $this->db->query($this->arr_menu_default())->result_array();
         if (count($menuData) > 0) {
             foreach ($menuData as $aux => $row) {

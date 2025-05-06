@@ -46,7 +46,6 @@ class Constructor extends CI_Controller {
                 <p>Este enlace expirará en 1 hora.</p>";
             $this->email->message($mensaje);
             $this->email->send();
-
             $this->session->set_flashdata('msg', 'Se envi&oacute; correo para recuperaci&oacute;n a : '.$email);
             $data['mensaje'] = $this->session->flashdata('msg');
         } else {
@@ -87,12 +86,12 @@ class Constructor extends CI_Controller {
 
     public function login(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $user = strtoupper(str_replace(".","",$this->input->post('user')));
-        $password = $this->input->post('password');
-        $access = $this->input->post('access');
         $userL = [];
         $redirect = '';
-        $user = $this->Modelinicio->login_modelo($user,$password);
+        $user_run = strtoupper(str_replace(".","",$this->input->post('user')));
+        $password = $this->input->post('password');
+        $access = $this->input->post('access');
+        $user = $this->Modelinicio->login_modelo($user_run,$password);
         $status = $user['status'];
         if($user['status']){
             $userL = $user['row'];
@@ -176,12 +175,10 @@ class Constructor extends CI_Controller {
                 substr($an, rand(0, $su), 1) .
                 substr($an, rand(0, $su), 1);
     }
-
     #$this->load->view('inicio', $data);
     #log_message('info', '###############################################################');
     #log_message('info', 'Intentando actualizar contraseña con token: ' . $token);
     #log_message('info', '###############################################################');
     #return view('inicio', $data);
-
 }
 ?>

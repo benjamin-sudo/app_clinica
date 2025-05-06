@@ -1,8 +1,9 @@
 $(document).ready(function(){
     $('.load-in-frame').click(function(e){
-        e.preventDefault();                       // Evitar que el navegador siga el enlace
-        let url = $(this).attr('href');           // Obtener la URL del enlace
+        e.preventDefault();           
+        let url = $(this).attr('href');         
         localStorage.setItem('ind_llamada_extension',url);
+        console.error(url);
         star_ajax_extension(url);
     });
     $('#modal_perfil_usuario').on('hidden.bs.modal', function(e){ 
@@ -18,26 +19,26 @@ function js_cambioemp(v_empresaactual){
         type : "POST",
         url : "Dashboard/cambioempresa",
         dataType : "json",
-        beforeSend : function(xhr) {  $('#loadFade').modal('show');    },
+        beforeSend : function(xhr) {  $('#loadFade').modal('show'); },
         data : { },
         error : function(err) { 
-                                console.log(err);  
-                                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                            },
+            console.log(err);  
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+        },
         success : function(aData) { 
-                                    console.log(" aData -> ",aData);
-                                    const selectEmpresas = document.getElementById('txt_empresas');
-                                    aData.data_empresas.forEach(function(empresa) {
-                                        let option = document.createElement('option');
-                                        option.value = empresa.COD_ESTABL;
-                                        option.text = empresa.NOM_ESTAB+' ('+empresa.COD_ESTABL+')';
-                                        selectEmpresas.appendChild(option);
-                                    });
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                    $("#txt_empresas").val(v_empresaactual);
-                                    $("#modal_cambioempresa").modal({backdrop:'static',keyboard:false}).modal('show');
-                                }, 
+            console.log(" aData -> ",aData);
+            const selectEmpresas = document.getElementById('txt_empresas');
+            aData.data_empresas.forEach(function(empresa) {
+                let option = document.createElement('option');
+                option.value = empresa.COD_ESTABL;
+                option.text = empresa.NOM_ESTAB+' ('+empresa.COD_ESTABL+')';
+                selectEmpresas.appendChild(option);
+            });
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            $("#txt_empresas").val(v_empresaactual);
+            $("#modal_cambioempresa").modal({backdrop:'static',keyboard:false}).modal('show');
+        }, 
     });
 }
 
@@ -69,84 +70,97 @@ function js_confirmacambios_all(){
     });
 }
 
+function star_ajax_extension(url) {
+    const preloader = $('#ajax-preloader');
+    // Mostrar el preloader con display flex
+    preloader.css({ display: 'flex', opacity: 1 }).removeClass('animation__slideOutUp');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {},
+        error: function(xhr, status, error) {
+            console.error(error);
+            hidePreloader();
+            jError("Error en la página que trata de acceder...", "Clinica Libre");
+        },
+        success: function(response) {
+            $('.page_frame').html(response); // Inserta contenido dinámico
+        },
+        complete: function() {
+            // Espera 400ms y luego oculta con animación
+            setTimeout(() => hidePreloader(), 400);
+        }
+    });
+    function hidePreloader() {
+        preloader.addClass('animation__slideOutUp');
+        setTimeout(() => {
+            preloader.hide().removeClass('animation__slideOutUp');
+        }, 500);
+    }
+}
+
+
+
+/*
 function star_ajax_extension(url){
     $('#loadFade').modal('show');
-    //console.error("#######################");
-    console.error("url -> ",url);
+    console.error("star_ajax_extension ",url);
     $.ajax({
         url : url,
         type : 'POST',
         data : {},
         error : function(xhr,status,error) {
-            console.error(error); // Manejo de errores
-            setTimeout(function(){ 
-                $('#loadFade').modal('hide'); 
-                jError("Error en la pagina que trata de acceder...","Clinica Libre");
-                //window.location.href = '../index.html';  // Redirigir a index.html
-            }, 1000);
+            console.error(error);
+            $('#loadFade').modal('hide'); 
+            jError("Error en la pagina que trata de acceder...","Clinica Libre");
         },
         success : function(response) {
             $('.page_frame').html(response); // Aquí manejas lo que sucede después de recibir la respuesta del servidor
-            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
         },
+        complete: function() { setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000); } 
     });
 }
+*/
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Define una función para actualizar el estado activo del menú
     function actualizarEstadoActivo(id){
-      // Elimina la clase activo de todos los elementos
-      document.querySelectorAll('.menu_principal div').forEach(function(el) {
-          el.classList.remove('activo');
-      });
-      // Añade la clase activo al elemento correcto
-      var elementoActivo = document.getElementById(id);
-      if (elementoActivo) {
-          elementoActivo.classList.add('activo');
-      }
+        document.querySelectorAll('.menu_principal div').forEach(function(el) {
+            el.classList.remove('activo');
+        });
+        var elementoActivo = document.getElementById(id);
+        if (elementoActivo) {
+            elementoActivo.classList.add('activo');
+        }
     }
-    // Captura clics en los enlaces del menu y extensiones
     document.querySelectorAll('.nav-link').forEach(function(link) {
-      link.addEventListener('click', function() {
-          //console.log("Guardando ID : ", this.id);  // Verificar en la consola
-          localStorage.setItem('ultimaPosicionMenu', this.id);
-      });
+        link.addEventListener('click', function() {
+            localStorage.setItem('ultimaPosicionMenu', this.id);
+        });
     });
-    // Evento de clic para el menu principal
     document.querySelector('.menu_principal').addEventListener('click', function(event) {
-        //console.log("click - menu_principal : ",event.target.id);
-        // Asegúrate de que el clic fue en un elemento del menu
         if (event.target.id) {
-            // Guardar la posición del menu en localStorage
             localStorage.setItem('ultimaPosicionMenu', event.target.id);
-            // Actualizar visualmente el menu activo
             actualizarEstadoActivo(event.target.id);
         }
     });
-    // Al cargar la página, verifica si hay una posición guardada y actúa en consecuencia
-    var ultimaPosicion                  =   localStorage.getItem('ultimaPosicionMenu');
-    //console.log("Recuperando posición   :   ",ultimaPosicion);  // Verificar en la consola
+    var ultimaPosicion = localStorage.getItem('ultimaPosicionMenu');
     if (ultimaPosicion) {
-       // Verificar si la posición incluye 'ext-'
-      if (ultimaPosicion.includes('ext-')) {
-          // Código adicional para manejar cuando hay 'ext-'
-          let last_extension = localStorage.getItem('ind_llamada_extension');
-          //console.log("La posición incluye ext- y fue : ",last_extension);
-          star_ajax_extension(last_extension);
-      }
-      var elementoActivo = document.getElementById(ultimaPosicion);
-      if (elementoActivo) {
-          elementoActivo.classList.add('activo');
-          // Desplegar todos los menús padres
-          let parent = elementoActivo.parentElement;
-          while(parent) {
-            if (parent.matches('.nav')) { // Asegúrate de que esta condición coincida con tus elementos de menú
-                parent.style.display = 'block'; // O agrega una clase que muestre el menú
-                parent.classList.add('desplegado'); // Si tienes una clase específica para desplegar menús
-            }
-            parent = parent.parentElement; // Subir en el árbol del DOM
-          }
-      }
+        if (ultimaPosicion.includes('ext-')) {
+            let last_extension = localStorage.getItem('ind_llamada_extension');
+            star_ajax_extension(last_extension);
+        }
+    var elementoActivo = document.getElementById(ultimaPosicion);
+    if (elementoActivo) {
+        elementoActivo.classList.add('activo');
+        let parent = elementoActivo.parentElement;
+        while(parent) {
+        if (parent.matches('.nav')) { 
+            parent.style.display = 'block';
+            parent.classList.add('desplegado'); 
+        }
+        parent = parent.parentElement;
+        }
+    }
     }
 });
 
@@ -164,7 +178,7 @@ function js_confimicuenta(){
             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
         },
         success : function(aData) { 
-            console.log("   aData   ->  ",aData);
+            //console.log(" aData -> ",aData);
             $("#html_perfil_usuario").html(aData.html);
             $("#modal_perfil_usuario").modal({backdrop:'static',keyboard:false}).modal('show');
             setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
@@ -226,25 +240,25 @@ function cambiaFirma() {
         url : "Dashboard/solicitudNuevaFirma",
         dataType : "json",
         data : { 
-                    firma : firma,
-                    username : username
-                },
+            firma : firma,
+            username : username
+        },
         beforeSend : function(xhr) { $('#loadFade').modal('show'); },
         error : function(errro) {     
-                                    console.log(errro.responseText); 
-                                    jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                },
+            console.log(errro.responseText); 
+            jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+        },
         success : function(aData) {   
-                                    console.log("aData -> ",aData);
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                    if(aData.status){
-                                        showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
-                                        $(".class_card_firmaunica").html(aData.html_codigo);
-                                    } else {
-                                        showNotification('top','center','&nbsp;'+aData.html,4,'');
-                                    }
-                                }, 
+            console.log("aData -> ",aData);
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            if(aData.status){
+                showNotification('top','center','<i class="bi bi-send-check"></i>&nbsp;'+aData.html,2,'');
+                $(".class_card_firmaunica").html(aData.html_codigo);
+            } else {
+                showNotification('top','center','&nbsp;'+aData.html,4,'');
+            }
+        }, 
     });
 }
 
@@ -290,24 +304,24 @@ function validaExFirm(){
         url : "Dashboard/validaFirmaExist",
         dataType : "json",
         data : { 
-                    firma : firma,
-                    username : username,
-                },
+            firma : firma,
+            username : username,
+        },
         beforeSend : function(xhr) { $('#loadFade').modal('show'); },
-        error :   function(errro) {     
-                                        console.log(errro.responseText); 
-                                        jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
-                                        $('#loadFade').modal('hide');
-                                    },
+        error : function(errro) {     
+            console.log(errro.responseText); 
+            jAlert("Comuniquese con el administrador ","CLINICA LIBRE"); 
+            $('#loadFade').modal('hide');
+        },
         success : function(aData) {   
-                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                        //console.log("validaFirmaExist -> ",aData);
-                                        if(!aData.status){
-                                            jAlert("La firma unica digital ya existe en otro usuario","Clinica libre Chile");
-                                            $("#firmaNew1").val('');
-                                            $("#firmaNew2").val('');
-                                        }
-                                    }, 
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            //console.log("validaFirmaExist -> ",aData);
+            if(!aData.status){
+                jAlert("La firma unica digital ya existe en otro usuario","Clinica libre Chile");
+                $("#firmaNew1").val('');
+                $("#firmaNew2").val('');
+            }
+        }, 
     });
 }
 
