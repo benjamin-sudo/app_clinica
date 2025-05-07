@@ -62,7 +62,7 @@ class Constructor extends CI_Controller {
             $data['row'] = $tokenData;
             $this->load->view('Dashboard/html_resetear_contrasena', $data);
         } else {
-            echo "Enlace inválido o expirado.";
+            echo "Enlace invalido o expirado.";
         }
     }
   

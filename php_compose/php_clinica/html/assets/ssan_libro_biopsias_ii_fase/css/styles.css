@@ -3,52 +3,52 @@
     ssan_libro_biopsias_ii_fase         :   css
 */
 
-@media(min-width                        :   900px){
-    .modal_xl_900                       {
-        width                           :   98%;
-        height                          :   85%;
-        max-width                       :   90%;
+@media(min-width : 900px){
+    .modal_xl_900 {
+        width : 98%;
+        height : 85%;
+        max-width : 90%;
     }
 }
 
-.GRID_LIBRO_MAIN_SOLICITUD              {
-    display                             :   grid;
-    grid-template-columns               :   1fr 4fr;
-    grid-column-gap                     :   5px;
-    grid-row-gap                        :   5px;
-    justify-items                       :   stretch;
+.GRID_LIBRO_MAIN_SOLICITUD {
+    display : grid;
+    grid-template-columns : 1fr 4fr;
+    grid-column-gap : 5px;
+    grid-row-gap : 5px;
+    justify-items : stretch;
 }
 
-@media screen and (max-width            :   1366px){
-    .GRID_LIBRO_MAIN_SOLICITUD          {
-        grid-template-columns           :   1fr 5fr;
+@media screen and (max-width : 1366px){
+    .GRID_LIBRO_MAIN_SOLICITUD {
+        grid-template-columns : 1fr 5fr;
     }
 }
 
-.GRID_LIBRO_BIOPSIAS_II_MAIN            {
-    display                             :   grid;
-    grid-template-columns               :   auto 1fr auto;
-    grid-column-gap                     :   5px;
-    grid-row-gap                        :   5px;
-    align-items                         :   center;
-    margin-bottom                       :   8px;
+.GRID_LIBRO_BIOPSIAS_II_MAIN {
+    display : grid;
+    grid-template-columns : auto 1fr auto;
+    grid-column-gap : 5px;
+    grid-row-gap : 5px;
+    align-items : center;
+    margin-bottom : 8px;
 }
 
-@media screen and (max-width            :   650px){
-    .GRID_LIBRO_BIOPSIAS_II_MAIN        {
-        grid-template-columns           :   1fr;
+@media screen and (max-width : 650px){
+    .GRID_LIBRO_BIOPSIAS_II_MAIN {
+        grid-template-columns : 1fr;
     }
 }
 
-.punto_toma_muestra                     {
-    padding                             :   0px;
+.punto_toma_muestra {
+    padding : 0px;
 }
 
-.grid_li_rotuloxsuario                  {
-    display                             :   grid;
-    grid-template-columns               :   13px 3fr 1fr;
-    gap                                 :   5px;
-    padding                             :   8px;
+.grid_li_rotuloxsuario {
+    display : grid;
+    grid-template-columns : 13px 3fr 1fr;
+    gap : 5px;
+    padding : 8px;
 }
 
 .grid_li_rotuloxsuario1                 {

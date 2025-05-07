@@ -13,7 +13,7 @@
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap.min.css" >
   <!-- Bootstrap Icons v1.11.2 -->
   <!--
-    <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
+  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
   -->
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/icon/bootstrap-icons.css">
@@ -35,31 +35,16 @@
   <!-- css datetimepicker -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/css_style.css">
   <style>
-    #loadFade .modal-content { background-color: #fff; }
-    #loadFade .modal-body { text-align: center; min-height: 100px; max-height:200px }
-    .nav-link.activo { }
-    .text-center { text-align: center; }
-    .btn-warning { color: white !important; }
-    
-
-    .animation__slideOutUp {
-  animation: slideOutUp 0.5s both;
-}
-
-@keyframes slideOutUp {
-  from {
-    opacity: 1;
-    transform: translateY(0);
+  #loadFade .modal-content { background-color: #fff; }
+  #loadFade .modal-body { text-align: center; min-height: 100px; max-height:200px; }
+  .nav-link.activo { }
+  .text-center { text-align: center; }
+  .btn-warning { color: white !important; }
+  .animation__slideOutUp { animation: slideOutUp 0.5s both; }
+  @keyframes slideOutUp {
+    from { opacity: 1;  transform: translateY(0); }
+    to { opacity: 0;  transform: translateY(-100%); }
   }
-  to {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-}
-
-
-
-
   </style>
 </head>
 <body data-scrollbar-auto-hide="n">
@@ -95,7 +80,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
-      <span class="brand-text font-weight-light">Software Clinica Libre</span>
+      <span class="brand-text font-weight-light">Software Cl&iacute;nica Libre</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -209,8 +194,7 @@
   <div id="respuesta"></div>
 
   <section>
-    
-    <!-- Notar que no usamos class="preloader" -->
+   
     <div id="ajax-preloader" class="flex-column justify-content-center align-items-center" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999;">
       <img class="animation__shake" src="assets/dist/img/anatomia/logo.ico" alt="Logo" height="60" width="60">
     </div>
@@ -272,7 +256,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Cambio de empresa</h5>
+            <h5 class="modal-title">Cambio de establecimiento</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="html_cambioempresa">

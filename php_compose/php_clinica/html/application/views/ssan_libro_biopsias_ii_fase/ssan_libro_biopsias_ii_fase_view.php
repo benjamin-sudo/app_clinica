@@ -1,17 +1,15 @@
-<input type="hidden"    id="hd_tipotabs"        name="hd_tipotabs"      value="1">
-<input type="hidden"    id="NUM_FASE"           name="NUM_FASE"         value="2"/>
-<input type="hidden"    id="IND_TEMPLETE"       name="IND_TEMPLETE"     value="ssan_libro_biopsias_ii_fase"/>
-<input type="hidden"    id="get_sala"           name="get_sala"         value="sala_recepcion_muestras"/>
-<input type="hidden"    id="SERVER_NAME"        name="SERVER_NAME"      value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
-<input type="hidden"    id="date_inicio"        name="date_inicio"      value="<?php echo date("m/d/Y",strtotime($date_inicio));?>"/>
-<input type="hidden"    id="date_final"         name="date_final"       value="<?php echo $date_final>$date_inicio?date("m/d/Y",strtotime($date_final)):date("m/d/Y",strtotime($date_inicio));?>"/>
-<input type="hidden"    id="empresa"            name="empresa"          value="<?php echo $this->session->userdata("COD_ESTAB");?>"/>
-<input type="button"    id="ws_button"          name="ws_button"        value="test ws" onclick="js_test_ws()" style="display: none"/>
-
-<form id="load_ingreso_etapa_analitica"         method="post"           action="#"></form>
-<form id="load_anuncios_anatomia_patologica"    method="post"           action="#"></form>
+<input type="hidden" id="hd_tipotabs" name="hd_tipotabs" value="1">
+<input type="hidden" id="NUM_FASE" name="NUM_FASE" value="2"/>
+<input type="hidden" id="IND_TEMPLETE" name="IND_TEMPLETE" value="ssan_libro_biopsias_ii_fase"/>
+<input type="hidden" id="get_sala" name="get_sala" value="sala_recepcion_muestras"/>
+<input type="hidden" id="SERVER_NAME" name="SERVER_NAME" value="<?php echo $_SERVER['SERVER_NAME'];?>"/>
+<input type="hidden" id="date_inicio" name="date_inicio" value="<?php echo date("m/d/Y",strtotime($date_inicio));?>"/>
+<input type="hidden" id="date_final" name="date_final" value="<?php echo $date_final>$date_inicio?date("m/d/Y",strtotime($date_final)):date("m/d/Y",strtotime($date_inicio));?>"/>
+<input type="hidden" id="empresa" name="empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>"/>
+<input type="button" id="ws_button" name="ws_button" value="test ws" onclick="js_test_ws()" style="display: none"/>
+<form id="load_ingreso_etapa_analitica" method="post" action="#"></form>
+<form id="load_anuncios_anatomia_patologica" method="post" action="#"></form>
 <div class="info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata),ENT_QUOTES,'UTF-8');?>"></div>
-
 <div class="GRID_LIBRO_BIOPSIAS_II_MAIN">
     <div class="GRID_LIBRO_BIOPSIAS_II_MAIN1">
         <h4 class="title" style="color:#e34f49;margin-left:20px;"><b>RECEPCI&Oacute;N DE MUESTRAS</b></h4>
@@ -34,18 +32,13 @@
         </div>
     </div>
 </div>
-<!--
-    <button type="button" class="btn btn-info btn-fill"         id="BTN_recepcion_custodia_masiva"      onclick="recepcion_custodia_masiva()">
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;RECEPCI&Oacute;N
-    </button>
--->
 <div class="dv_derivar" id="" style="margin-top:-5px;"> 
     <div class="GRID_LIBRO_MAIN_SOLICITUD">
         <div class="GRID_LIBRO_MAIN_SOLICITUD1">
             <div class="CSS_GRID_CALENDARIO_OPEN">
                 <div class="CSS_GRID_CALENDARIO_OPEN3">&nbsp;</div>
                 <div class="CSS_GRID_CALENDARIO_OPEN1">
-                    <div class="card class_FIRST" style="padding: 20px;">
+                    <div class="card class_FIRST" style="padding: 10px 15px 15px 15px;">
                         <div class="header">
                             <h5 class="title">
                                 <i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">FECHA INICIAL</b>
@@ -71,7 +64,7 @@
                 <div class="CSS_GRID_CALENDARIO_OPEN2">&nbsp;</div>
                 <div class="CSS_GRID_CALENDARIO_OPEN3">&nbsp;</div>
                 <div class="CSS_GRID_CALENDARIO_OPEN4">
-                    <div class="card" style="padding: 20px;">
+                    <div class="card" style="padding: 10px 15px 15px 15px;">
                         <div class="header">
                             <h5 class="title"><i class="fa fa-calendar" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">FECHA FIN</b></h5>
                         </div>

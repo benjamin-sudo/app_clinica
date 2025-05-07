@@ -72,7 +72,6 @@ function js_confirmacambios_all(){
 
 function star_ajax_extension(url) {
     const preloader = $('#ajax-preloader');
-    // Mostrar el preloader con display flex
     preloader.css({ display: 'flex', opacity: 1 }).removeClass('animation__slideOutUp');
     $.ajax({
         url: url,
@@ -98,8 +97,6 @@ function star_ajax_extension(url) {
         }, 500);
     }
 }
-
-
 
 /*
 function star_ajax_extension(url){

@@ -153,7 +153,6 @@ class Modelinicio extends CI_Model {
         #acceso total
         $arr_acceso_submenus = [];
         $arr_user_permisos = $this->arr_menu_xuser($ID_UID);
-        
         if(count($arr_user_permisos) > 0) {
             foreach ($arr_user_permisos as $row) {
                 switch ($row['NIVEL_MENU']) {

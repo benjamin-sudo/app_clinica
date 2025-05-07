@@ -1198,10 +1198,10 @@ function new_js_FormularioBio_modal(id){
     $("#HTML_ANATOMIAPATOLOGICA").html(nav_form);
     $("#MODAL_ANATOMIAPATOLOGICA").modal("show");
     $("#BTN_ANATOMIAPATOLOGICA").attr('onclick','js_guardaanatomia()').data({
-        value_biopsia       :   value_biopsia,
-        txt_biopsia         :   txt_biopsia,
-        display_nmuestras   :   display_nmuestras,
-        display_ncitologia  :   display_ncitologia 
+        value_biopsia : value_biopsia,
+        txt_biopsia : txt_biopsia,
+        display_nmuestras : display_nmuestras,
+        display_ncitologia : display_ncitologia 
     });
 }
 
@@ -1213,36 +1213,25 @@ function FORM_ANATOMIA_PATOLOGICA_GESPAB(id){
         console.log("-----------------------------------");
     */
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_biopsias_listagespab/html_solicitud_anatomia_pre_gespab",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    //console.log("xhr->",xhr);   
-                                                },
-        data                :                   {
-                                                    id  :  id,
-                                                },
-        error		    :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText); 
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                },
-        success             :   function(aData) { 
-                                                    /*
-                                                    console.log("----------------------------------------------------");
-                                                    console.log("-----success html_solicitud_anatomia_pre_gespab-----");
-                                                    console.log("------",aData,"-------------------------------------");
-                                                    console.log(aData['GET_HTML']);
-                                                    console.log("----------------------------------------------------");
-                                                    */
-                                                    if(aData['STATUS']){
-                                                        $("#HTML_ANATOMIA_PATOLOGICA").html(aData['GET_HTML']);
-                                                        $("#MODAL_FORM_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                    } else {
-                                                        jAlert(aData['TXT_SALIDA'],"Clinica Libre");
-                                                        UPDATE_MAIN();
-                                                    }
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_biopsias_listagespab/html_solicitud_anatomia_pre_gespab",
+        dataType : "json",
+        beforeSend : function(xhr) { },
+        data : { id : id, },
+        error : function(errro) { 
+            console.log(errro);  
+            console.log(errro.responseText); 
+            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+        },
+        success : function(aData) { 
+            if(aData['STATUS']){
+                $("#HTML_ANATOMIA_PATOLOGICA").html(aData['GET_HTML']);
+                $("#MODAL_FORM_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show");
+            } else {
+                jAlert(aData['TXT_SALIDA'],"Clinica Libre");
+                UPDATE_MAIN();
+            }
+        }, 
     });
 }
 
@@ -1258,45 +1247,43 @@ function nuevo_form_apatologica(fichae){
         jAlert("Se Han Detectado Falta De Informaci&oacute;n <br>"+msj.join(""),"Clinica Libre");
         return false;
     } else {
-        var data        =  {
-                                ID_GESPAB           :   $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.ID,
-                                NUM_FICHAE          :   $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.FICHAE,
-                                RUT_PACIENTE        :   $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.COD_RUTPAC,
-                                ID_MEDICO           :   null,
-                                RUT_MEDICO          :   $("#GESTOR_PROTOCOLO_"+fichae).data().ciru1.COD_RUTPRO,
-                                IND_TIPO_BIOPSIA    :   $("#IND_TIPO_BIOPSIA").val(),// 
-                                IND_ESPECIALIDAD    :   $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.ID_SERDEP,
-                                PA_ID_PROCARCH      :   36,
-                                AD_ID_ADMISION      :   null,
-                                TXT_BIOPSIA         :   $("#IND_TIPO_BIOPSIA option:selected").text(),
-                                CALL_FROM           :   2,
-                                ZONA_PAB            :   $("#ZONA_PABELLON").val(),
-                                IND_GESPAB          :   1,
-                            }
+        var data = {
+            ID_GESPAB : $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.ID,
+            NUM_FICHAE : $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.FICHAE,
+            RUT_PACIENTE : $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.COD_RUTPAC,
+            ID_MEDICO : null,
+            RUT_MEDICO : $("#GESTOR_PROTOCOLO_"+fichae).data().ciru1.COD_RUTPRO,
+            IND_TIPO_BIOPSIA : $("#IND_TIPO_BIOPSIA").val(),// 
+            IND_ESPECIALIDAD : $("#GESTOR_PROTOCOLO_"+fichae).data().paciente.ID_SERDEP,
+            PA_ID_PROCARCH : 36,
+            AD_ID_ADMISION : null,
+            TXT_BIOPSIA : $("#IND_TIPO_BIOPSIA option:selected").text(),
+            CALL_FROM : 2, 
+            ZONA_PAB : $("#ZONA_PABELLON").val(),
+            IND_GESPAB : 1,
+        }
         load_form_histopatologico(data);                                                
     }                                      
 }
 
 function load_form_histopatologico(data){
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)       {   
-                                                        //console.log("xhr->",xhr);
-                                                    },
-        data                :   data,
-        error               :   function(errro)     {   
-                                                        console.log("           =>  ",errro,"                           ");
-                                                        console.log("           =>  ",errro.responseText,"              ");
-                                                        $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
-                                                        $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
-                                                        jAlert("<b> Error General, Consulte Al Administrador</b>","Clinica Libre"); 
-                                                    },
-        success             :   function(aData)     { 
-                                                        console.log("aData -> ",aData);
-                                                        $("#HTML_ANATOMIA_PATOLOGICA").html("").html(aData["HTML_FINAL"]);
-                                                    }, 
+        type : "POST",
+        url : "ssan_spab_gestionlistaquirurgica/FORMULARIO_ANATOMIA_PATOLOGICA_V2",
+        dataType : "json",
+        beforeSend : function(xhr) { },
+        data : data,
+        error : function(errro) {   
+            console.log(" =>  ",errro," ");
+            console.log(" =>  ",errro.responseText," ");
+            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
+            $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
+            jAlert("<b> Error General, Consulte Al Administrador</b>","Clinica Libre"); 
+        },
+        success : function(aData) { 
+            console.log("aData -> ",aData);
+            $("#HTML_ANATOMIA_PATOLOGICA").html("").html(aData["HTML_FINAL"]);
+        }, 
     });
 } 
 
@@ -1425,58 +1412,56 @@ function js_vista_etiqueta_pdf(V_NUMERO_MUESTRA){
 
 function generar_zpl_to_pdf(txt_zpl,num_muestra,V_TAMANO_ETIQUETA){
     var ind_conf_frasco                 =   localStorage.getItem("confi_frasco");
+    /*
     console.log("generar_zpl_to_pdf     ->   ");
     console.log("INTO                   ->  ",txt_zpl);
     console.log("num_muestra            ->  ",num_muestra);
     console.log("V_TAMANO_ETIQUETA      ->  ",V_TAMANO_ETIQUETA);
-    
+    */
     $(".popover").popover("hide");
-   
+    /*
     console.log("-------------------------------------------------------------------------------");
     console.log("http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/"+txt_zpl);
     console.log("-------------------------------------------------------------------------------");
-    
+    */
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_spab_gestionlistaquirurgica/php_generar_zpl_to_pdf",
-        dataType            :   "html",//SOLO PARA PDF
-        beforeSend          :   function(mientras)  {   
-                                                        console.log("xhr->",mientras);
-                                                        $('#loadFade').modal('show');
-                                                    },
-        data                :                       {   
-                                                        txt_zpl                 :   txt_zpl,
-                                                        V_TAMANO_ETIQUETA       :   V_TAMANO_ETIQUETA,
-                                                    },
-        error               :   function(errro)     {  
-                                                        console.log("errro      :   ",errro,"                               ");
-                                                        console.log("errro      :   ",errro.responseText,"                  ");
-                                                        jAlert("<b>Error general, Consulte al administrador</b>","Clinica Libre"); 
-                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                                    },
-        success             :   function(aData)     { 
-                                                        var base64str           =   aData;
-                                                        console.log("base64str -> ",base64str);
-                                                        //decode base64 string, 
-                                                        //Eliminar espacio para compatibilidad con IE
-                                                        var binary              =   atob(base64str.replace(/\s/g,''));
-                                                        var len                 =   binary.length;
-                                                        var buffer              =   new ArrayBuffer(len);
-                                                        var view                =   new Uint8Array(buffer);
-                                                        for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                        //console.log("view     ->  ",view);
-                                                        //create the blob object with content-type "application/pdf"  
-                                                        var blob                =   new Blob([view],{type:"application/pdf"});
-                                                        var blobURL             =   URL.createObjectURL(blob);
-                                                        //console.log("BlobURL->",blobURL);
-                                                        Objpdf                  =   document.createElement('object');
-                                                        Objpdf.setAttribute('data',blobURL);
-                                                        Objpdf.setAttribute('width','100%');
-                                                        Objpdf.setAttribute('style','height:700px;');
-                                                        Objpdf.setAttribute('title','PDF');
-                                                        $('#pdf_to_'+num_muestra).html(Objpdf);
-                                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                                    }, 
+        type : "POST",
+        url : "ssan_spab_gestionlistaquirurgica/php_generar_zpl_to_pdf",
+        dataType : "html",//SOLO PARA PDF
+        beforeSend : function(mientras) { console.log("xhr->",mientras);  $('#loadFade').modal('show'); },
+        data : {   
+            txt_zpl : txt_zpl,
+            V_TAMANO_ETIQUETA : V_TAMANO_ETIQUETA,
+        },
+        error : function(errro) {  
+            console.log("errro      :   ",errro,"                               ");
+            console.log("errro      :   ",errro.responseText,"                  ");
+            jAlert("<b>Error general, Consulte al administrador</b>","Clinica Libre"); 
+            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+        },
+        success : function(aData) { 
+            var base64str = aData;
+            console.log("base64str -> ",base64str);
+            //decode base64 string, 
+            //Eliminar espacio para compatibilidad con IE
+            var binary = atob(base64str.replace(/\s/g,''));
+            var len = binary.length;
+            var buffer = new ArrayBuffer(len);
+            var view = new Uint8Array(buffer);
+            for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+            //console.log("view -> ",view);
+            //create the blob object with content-type "application/pdf"  
+            var blob = new Blob([view],{type:"application/pdf"});
+            var blobURL = URL.createObjectURL(blob);
+            //console.log("BlobURL->",blobURL);
+            Objpdf = document.createElement('object');
+            Objpdf.setAttribute('data',blobURL);
+            Objpdf.setAttribute('width','100%');
+            Objpdf.setAttribute('style','height:700px;');
+            Objpdf.setAttribute('title','PDF');
+            $('#pdf_to_'+num_muestra).html(Objpdf);
+            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+        }, 
     });
 }
 
@@ -1487,38 +1472,38 @@ function js_vista_log(id){
         console.log("data_bd_form   ->  ",$("#data_bd_form").data(),"   <-          ");
         console.log("---------------------------------------------------------------");
     */
-    var css_grid_logs   =   '<div class="grid_popover_log">'+
-                                '<div class="grid_popover_log1">'+JSON.stringify($("#data_bd_form").data().log)+'</div>'+
-                            '</div>';
-    console.log("-----------------------");                
-    console.log("->",css_grid_logs);
-    console.log("-----------------------");
+    var css_grid_logs = '<div class="grid_popover_log">'+
+                            '<div class="grid_popover_log1">'+JSON.stringify($("#data_bd_form").data().log)+'</div>'+
+                        '</div>';
+    //console.log("-----------------------");                
+    //console.log("->",css_grid_logs);
+    //console.log("-----------------------");
     $("#BTN_INFO_LOGS_"+id).popover({
-        html            :   true,
-        container       :   "#grid_popover_log",
-        title           :   '<b>logs</b>&nbsp;<button type="button" id="close" class="close" onclick="$(&quot;.popover&quot;).popover(&quot;hide&quot;);">&times;</button',
-        trigger         :   'manual',   //hover //focus //click //manual
-        content         :   'hola', 
+        html : true,
+        container : "#grid_popover_log",
+        title : '<b>logs</b>&nbsp;<button type="button" id="close" class="close" onclick="$(&quot;.popover&quot;).popover(&quot;hide&quot;);">&times;</button',
+        trigger : 'manual',   //hover //focus //click //manual
+        content : 'hola', 
     });
 }
 
 //solo informacion panel de gestion de muestras
 function js_viwes_popover(id,name){
-    var txt_id          =   id.split("_")[3];
-    var txt_titulo      =   '';
+    var txt_id = id.split("_")[3];
+    var txt_titulo = '';
             if  (name == 'BTN_INFO_HISPATOLOGICO'){
         $('#BTN_INFO_LOGS_'+txt_id).popover('hide');
-        txt_titulo      =   'FORMULARIO';
+        txt_titulo = 'FORMULARIO';
     } else  if  (name == 'BTN_INFO_LOGS'){
-        txt_titulo      =   'LOGS';
+        txt_titulo = 'LOGS';
         $('#BTN_INFO_HISPATOLOGICO_'+txt_id).popover('hide');
     }
     $("#"+id).popover({
-        html            :   true,
-        container       :   'body',
-      //content         :   " -> "+id,
-        title           :   '<b style="font-size:12px;">'+txt_titulo+'</b>&nbsp;<button type="button" id="close" class="close" onclick="$(&quot;.popover&quot;).popover(&quot;hide&quot;);">&times;</button>',
-        trigger         :   'manual',   //hover //focus //click //manual
+        html : true,
+        container : 'body',
+      //content : " -> "+id,
+        title : '<b style="font-size:12px;">'+txt_titulo+'</b>&nbsp;<button type="button" id="close" class="close" onclick="$(&quot;.popover&quot;).popover(&quot;hide&quot;);">&times;</button>',
+        trigger : 'manual', //hover //focus //click //manual
     }).popover('toggle');
 }
 
@@ -1598,7 +1583,7 @@ function busqueda_etiquera_modal(from){
 
 function add_muestra(value){
     console.log("---------------------------------------");
-    console.log("BUSCAR  y hacer tabs   =>  ",value,"   ");
+    console.log("BUSCAR  y hacer tabs =>  ",value,"   ");
     console.log("---------------------------------------");
 }
 

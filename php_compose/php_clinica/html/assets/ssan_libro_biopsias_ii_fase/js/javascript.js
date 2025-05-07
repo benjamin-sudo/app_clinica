@@ -1,17 +1,7 @@
 $(document).ready(function(){
-    /*
-        console.log("-----------------------------------------------------------");
-        console.log("   e                   ->  ssan_libro_biopsias_i_fase      ");
-        console.log("   f                   ->  ssan_libro_biopsias_ii_fase     ");
-        console.error("NUM_FASE->",$("#NUM_FASE").val());
-        console.log("-----------------------------------------------------------");
-    */
-    //console.log("     RESOLUCION DE PANTALLA                              ");
-    //console.log("     width       ->  ",screen.width,"                    ");
-    //console.log("     height      ->  ",screen.height,"                   ");
-    //console.log("---------------------------------------------------------");
     //RECEPCION DE MUESTRAS - VENTANILLAS
-    if($("#NUM_FASE").val()             ==  2){
+    //console.log("NUM_FASE -> ",$("#NUM_FASE").val());
+    if($("#NUM_FASE").val() ==  2){
         var todayDate = new Date().getDate();
         var date_inicio = $("#date_inicio").val();
         //console.log("date_inicio ->  ",date_inicio);
@@ -21,30 +11,29 @@ $(document).ready(function(){
             sideBySide : true,
             format : 'DD-MM-YYYY',
             locale : 'es-us',
-            maxDate :   new Date(),
-            defaultDate :   moment(date_inicio)._d,
-            icons : 
-                    {
-                        time : "fa fa-clock-o"         ,
-                        date : "fa fa-calendar"        ,
-                        up : "fa fa-chevron-up"      ,
-                        down : "fa fa-chevron-down"    ,
-                        previous : 'fa fa-chevron-left'    ,
-                        next : 'fa fa-chevron-right'   ,
-                        today : 'fa fa-screenshot'      ,
-                        clear : 'fa fa-trash'           ,
-                        close : 'fa fa-remove'          ,
-                    }
+            maxDate : new Date(),
+            defaultDate : moment(date_inicio)._d,
+            icons :  {
+                time : "fa fa-clock-o" ,
+                date : "fa fa-calendar" ,
+                up : "fa fa-chevron-up" ,
+                down : "fa fa-chevron-down" ,
+                previous : 'fa fa-chevron-left' ,
+                next : 'fa fa-chevron-right' ,
+                today : 'fa fa-screenshot' ,
+                clear : 'fa fa-trash' ,
+                close : 'fa fa-remove' ,
+            }
         });
         $(".timepicker").remove();
         $('#fecha_out').on('dp.change',function(e){ 
             $('#fecha_out2').data("DateTimePicker").minDate($('#fecha_out').data().date);
             UPDATE_PANEL();
         });
-        var date_final =   $("#date_final").val();
+        var date_final = $("#date_final").val();
         //console.log("date_final         ->  ",date_final);
         $('#fecha_out2').datetimepicker({
-            useCurrent : false,//esto es importante ya que las funciones establecen el valor de fecha predeterminado en el valor actual
+            useCurrent : false, 
             inline : true,
             sideBySide : true,
             format : 'DD-MM-YYYY',
@@ -52,18 +41,17 @@ $(document).ready(function(){
             defaultDate : moment(date_final)._d,
             maxDate : new Date(),
             minDate : moment(date_inicio)._d,
-            icons : 
-                        {
-                            time : "fa fa-clock-o" ,
-                            date : "fa fa-calendar" ,
-                            up : "fa fa-chevron-up" ,
-                            down : "fa fa-chevron-down" ,
-                            previous : 'fa fa-chevron-left' ,
-                            next : 'fa fa-chevron-right' ,
-                            today : 'fa fa-screenshot' ,
-                            clear : 'fa fa-trash' ,
-                            close : 'fa fa-remove' ,
-                        }
+            icons :  {
+                time : "fa fa-clock-o" ,
+                date : "fa fa-calendar" ,
+                up : "fa fa-chevron-up" ,
+                down : "fa fa-chevron-down" ,
+                previous : 'fa fa-chevron-left' ,
+                next : 'fa fa-chevron-right' ,
+                today : 'fa fa-screenshot' ,
+                clear : 'fa fa-trash' ,
+                close : 'fa fa-remove' ,
+            }
         });
         $('#fecha_out2').on('dp.change',function(e){
             $('#fecha_out').data("DateTimePicker").maxDate($('#fecha_out2').data().date);
@@ -71,62 +59,60 @@ $(document).ready(function(){
         });
         $(".timepicker").remove();
     } else {
-        var todayDate               =   new Date().getDate();
+        var todayDate = new Date().getDate();
         $("#date_txt_fec_inicio").datetimepicker({
-            format                  :   'DD-MM-YYYY',
-            minDate                 :   new Date(new Date().setDate((todayDate)-(30))), 
-            //maxDate               :   new Date(),
-            locale                  :   'es-us',
-            icons                   :   
-                                        {
-                                            time        :   "fa fa-clock-o"         ,
-                                            date        :   "fa fa-calendar"        ,
-                                            up          :   "fa fa-chevron-up"      ,
-                                            down        :   "fa fa-chevron-down"    ,
-                                            previous    :   "fa fa-chevron-left"    ,
-                                            next        :   "fa fa-chevron-right"   ,
-                                            today       :   "fa fa-screenshot"      ,
-                                            clear       :   "fa fa-trash"           ,
-                                            close       :   "fa fa-remove"          ,
-                                        }
+            format : 'DD-MM-YYYY',
+            minDate : new Date(new Date().setDate((todayDate)-(30))), 
+            //maxDate : new Date(),
+            locale : 'es-us',
+            icons : {
+                time : "fa fa-clock-o" ,
+                date : "fa fa-calendar" ,
+                up : "fa fa-chevron-up" ,
+                down : "fa fa-chevron-down" ,
+                previous : 'fa fa-chevron-left' ,
+                next : 'fa fa-chevron-right' ,
+                today : 'fa fa-screenshot' ,
+                clear : 'fa fa-trash' ,
+                close : 'fa fa-remove' ,
+            }
         }).on('dp.change',function(e){
             UPDATE_PANEL();
         });
         $("#date_txt_fec_fin").datetimepicker({
-            format                  :   'DD-MM-YYYY',
-            minDate                 :   new Date(new Date().setDate((todayDate)-(30))), 
-            //maxDate               :   new Date(),
-            locale                  :   'es-us',
-            icons                   :   
-                                        {
-                                            time        :   "fa fa-clock-o"         ,
-                                            date        :   "fa fa-calendar"        ,
-                                            up          :   "fa fa-chevron-up"      ,
-                                            down        :   "fa fa-chevron-down"    ,
-                                            previous    :   "fa fa-chevron-left"    ,
-                                            next        :   "fa fa-chevron-right"   ,
-                                            today       :   "fa fa-screenshot"      ,
-                                            clear       :   "fa fa-trash"           ,
-                                            close       :   "fa fa-remove"          ,
-                                        }
+            format : 'DD-MM-YYYY',
+            minDate : new Date(new Date().setDate((todayDate)-(30))), 
+            //maxDate : new Date(),
+            locale : 'es-us',
+            icons : {
+                time : "fa fa-clock-o" ,
+                date : "fa fa-calendar" ,
+                up : "fa fa-chevron-up" ,
+                down : "fa fa-chevron-down" ,
+                previous : 'fa fa-chevron-left' ,
+                next : 'fa fa-chevron-right' ,
+                today : 'fa fa-screenshot' ,
+                clear : 'fa fa-trash' ,
+                close : 'fa fa-remove' ,
+            }
         }).on('dp.change',function(e){
             UPDATE_PANEL();
         });
     }
 
     $('#busq_rutpac').Rut({
-        on_error                    :   function(){
+        on_error : function(){
         $('#ErrorRutBUSQUEDA_').html('Rut Incorrecto');
         $("#ErrorRutBUSQUEDA_").show('slow').fadeOut('slow').fadeIn('slow');
         //$("#Corr").val('1');
             swal("Run No Valido", "SOLICITUDES", 'error');
         },
-        on_success              :   function(){
+        on_success : function(){
             $('#ErrorRutBUSQUEDA_').html('');
             $("#ErrorRutBUSQUEDA_").hide('slow');
             Buscador_();
         },
-        format_on               :   'keyup'
+        format_on : 'keyup'
     });
     $("#modal_encustodia_ap").on('hidden.bs.modal',function(e){ 
         $("#html_modal_encustodia_ap").html(''); 
@@ -138,7 +124,6 @@ $(document).ready(function(){
         //console.log("star ws -> RECEPCION DE MUESTRAS <- ");
         //load_envio_a_recepcion_ws(1);
     }
-
     $('#modal_gestion_tomamuestraxuser').on('show.bs.modal',function(e){ 
         $('.class_gestion_tomamuestraxuser .modal-body').css('overflow-y','auto'); 
         var _height = $(window).height()*0.8;
