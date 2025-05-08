@@ -133,9 +133,8 @@ class Modelinicio extends CI_Model {
                 A.ID_UID = $ID_UID ")->result_array();
         return $arr_empresa;
     }
-    
 
-    #13957520-2
+  #13957520-2
     public function load_menuxuser($ID_UID) {
         $menu = [];
         $parentMap = [];

@@ -22,7 +22,6 @@
         </div>
     </div>
 </div>
-
 <div class="grid_body_panel">
     <div class="grid_body_panel1" style="padding: 10px;">
         <div class="card" id="card_fechas">

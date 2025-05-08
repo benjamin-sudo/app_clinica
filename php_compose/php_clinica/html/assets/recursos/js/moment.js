@@ -32,9 +32,9 @@
          }
      },
      monthsParseExact : true,
-     weekdays : 'domingo_lunes_martes_miÃ©rcoles_jueves_viernes_sÃ¡bado'.split('_'),
-     weekdaysShort : 'dom._lun._mar._miÃ©._jue._vie._sÃ¡b.'.split('_'),
-     weekdaysMin : 'do_lu_ma_mi_ju_vi_sÃ¡'.split('_'),
+     weekdays : 'domingo_lunes_martes_miércoles_jueves_viernes_sábado'.split('_'),
+     weekdaysShort : 'dom._lun._mar._mié._jue._vie._sáb.'.split('_'),
+     weekdaysMin : 'do_lu_ma_mi_ju_vi_sá'.split('_'),
      weekdaysParseExact : true,
      longDateFormat : {
          LT : 'H:mm',
@@ -49,7 +49,7 @@
              return '[hoy a la' + ((this.hours() !== 1) ? 's' : '') + '] LT';
          },
          nextDay : function () {
-             return '[maÃ±ana a la' + ((this.hours() !== 1) ? 's' : '') + '] LT';
+             return '[mañana la' + ((this.hours() !== 1) ? 's' : '') + '] LT';
          },
          nextWeek : function () {
              return 'dddd [a la' + ((this.hours() !== 1) ? 's' : '') + '] LT';
@@ -70,12 +70,12 @@
          mm : '%d minutos',
          h : 'una hora',
          hh : '%d horas',
-         d : 'un dÃ­a',
-         dd : '%d dÃ­as',
+         d : 'un días',
+         dd : '%d días',
          M : 'un mes',
          MM : '%d meses',
-         y : 'un aÃ±o',
-         yy : '%d aÃ±os'
+         y : 'un año',
+         yy : '%d años'
      },
      dayOfMonthOrdinalParse : /\d{1,2}Âº/,
      ordinal : '%dÂº',

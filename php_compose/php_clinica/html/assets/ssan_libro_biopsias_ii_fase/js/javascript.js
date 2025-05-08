@@ -1,6 +1,8 @@
 $(document).ready(function(){
     //RECEPCION DE MUESTRAS - VENTANILLAS
     //console.log("NUM_FASE -> ",$("#NUM_FASE").val());
+    //console.error("###################################");
+    //console.error("RECEPCION DE MUESTRAS - VENTANILLAS");
     if($("#NUM_FASE").val() ==  2){
         var todayDate = new Date().getDate();
         var date_inicio = $("#date_inicio").val();
@@ -158,6 +160,10 @@ function UPDATE_PANEL(){
         console.log("   fecha_to        ->",fecha_to,"<-                    ");
         console.log("-------------------------------------------------------");
     */
+
+    
+    let ind_template = $("#IND_TEMPLETE").val();
+    console.log(" ->",ind_template);
     if($("#IND_TEMPLETE").val() == 'ssan_libro_biopsias_i_fase'){
         console.log("ssan_libro_biopsias_i_fase");
         //BUSQUEDA LISTA ANTES DE RECEPCION
@@ -167,22 +173,22 @@ function UPDATE_PANEL(){
             dataType : "json",
             beforeSend : function(xhr) { },
             data : { 
-                        fecha_form      :   fecha_form,
-                        fecha_to        :   fecha_to,
-                        NUM_FASE        :   $("#NUM_FASE").val(),
-                    },
+                fecha_form : fecha_form,
+                fecha_to : fecha_to,
+                NUM_FASE : $("#NUM_FASE").val(),
+            },
             error : function(errro)	{  
-                                        console.log(errro); 
-                                        console.log(errro.responseText);
-                                        jError("Error del aplicativo","e-SISSAN"); 
-                                        $('#loadFade').modal('hide');
-                                    },
+                console.log(errro); 
+                console.log(errro.responseText);
+                jError("Error del aplicativo","e-SISSAN"); 
+                $('#loadFade').modal('hide');
+            },
             success : function(aData) {   
-                                                $('#loadFade').modal('hide');
-                                                $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION").remove();
-                                                $("#LI_LISTA_MAIN").append(aData["HTML"]);
-                                                $('[data-toggle="tooltip"]').tooltip();
-                                            }, 
+                $('#loadFade').modal('hide');
+                $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION").remove();
+                $("#LI_LISTA_MAIN").append(aData["HTML"]);
+                $('[data-toggle="tooltip"]').tooltip();
+            }, 
         });
     } else {
         //console.log("ssan_libro_biopsias_ii_fase");
@@ -192,52 +198,50 @@ function UPDATE_PANEL(){
             dataType : "json",
             beforeSend : function(xhr) { },
             data : { 
-                        fecha_inicio : fecha_form,
-                        fecha_final : fecha_to,
-                        OPTION : 1,
-                        pto_entrega : 0 ,
-                        origen_sol : 0,
-                        ind_template : $("#IND_TEMPLETE").val(),
-                        NUM_FASE : $("#NUM_FASE").val(),
-                    },
+                fecha_inicio : fecha_form,
+                fecha_final : fecha_to,
+                OPTION : 1,
+                pto_entrega : 0 ,
+                origen_sol : 0,
+                ind_template : $("#IND_TEMPLETE").val(),
+                NUM_FASE : $("#NUM_FASE").val(),
+            },
             error : function(errro)	{  
-                                        console.log(errro); 
-                                        //console.log(errro.responseText);
-                                        jError("Error del aplicativo","e-SISSAN");
-                                        $('#loadFade').modal('hide');
-                                    },
+                console.log(errro); 
+                //console.log(errro.responseText);
+                jError("Error del aplicativo","e-SISSAN");
+                $('#loadFade').modal('hide');
+            },
             success : function(aData) {   
-                                            $('#loadFade').modal('hide');
-                                            $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
-                                            $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
-                                            $("[data-toggle='tooltip']").tooltip();
-                                    }, 
+                $('#loadFade').modal('hide');
+                $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
+                $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
+                $("[data-toggle='tooltip']").tooltip();
+            }, 
         });
     }
 }
 
 function js_encustodia(){
     $.ajax({ 
-        type		:   "POST",
-        url		:   "ssan_libro_biopsias_i_fase/en_custodia_anatomiapatologica",
-        dataType	:   "json",
-	beforeSend      :   function(xhr)       { 
-                                                    //console.log(xhr); 
-                                                },
-	data		:                       { 
-                                                    fecha       :   $("#numFecha").val(),
-                                                    OPTION      :   $("#TIPO_PABELLON").val(),
-                                                },
-        error		:   function(errro)	{  
-                                                    console.log(errro); 
-                                                    console.log(errro.responseText);
-                                                    jError("Error del aplicativo","e-SISSAN"); 
-                                                },
-        success		:   function(aData)	{   
-                                                    $("#modal_encustodia_ap").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                    $("#html_modal_encustodia_ap").html('');
-                                                    $("#html_modal_encustodia_ap").html(aData.HTML);
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_biopsias_i_fase/en_custodia_anatomiapatologica",
+        dataType : "json",
+	    beforeSend : function(xhr) { },
+	    data : { 
+            fecha : $("#numFecha").val(),
+            OPTION : $("#TIPO_PABELLON").val(),
+        },
+        error : function(errro)	{  
+            console.log(errro); 
+            console.log(errro.responseText);
+            jError("Error del aplicativo","e-SISSAN"); 
+        },
+        success : function(aData) {   
+            $("#modal_encustodia_ap").modal({backdrop:'static',keyboard:false}).modal("show");
+            $("#html_modal_encustodia_ap").html('');
+            $("#html_modal_encustodia_ap").html(aData.HTML);
+        }, 
     });
 }
 
@@ -258,14 +262,14 @@ function activar_pist(){
 
 function num_muestra_pistoleada(){
     var errores='';
-    var comenzar_nmuestra_pistola           =   $("#comenzar_nmuestra_pistola").val();
-    comenzar_nmuestra_pistola               =   comenzar_nmuestra_pistola.replace("  ","_");///esto ya ke las muestras vendran con idsolicitud(espacio)idmuestra
-    var  Sl_accion_a_realizar               =   $("#Sl_accion_a_realizar").val();
+    var comenzar_nmuestra_pistola = $("#comenzar_nmuestra_pistola").val();
+    comenzar_nmuestra_pistola = comenzar_nmuestra_pistola.replace("  ","_");///esto ya ke las muestras vendran con idsolicitud(espacio)idmuestra
+    var  Sl_accion_a_realizar = $("#Sl_accion_a_realizar").val();
     if(comenzar_nmuestra_pistola==''){
         errores+="Falta indicar numero de muestra";   
     }
     if(Sl_accion_a_realizar==''){
-        errores+="<br>Falta indicar tipo de proceso a realizar";   
+        errores+="<br>Falta indicar el tipo de proceso a realizar";   
     }
     if(errores!=''){ 
         showNotification('top', 'center', errores, 3, 'fa fa-times');
@@ -281,15 +285,15 @@ function num_muestra_pistoleada(){
 
 function num_solicitud_pistoleada(){
     var errores='';
-    var comenzar_nmuestra_pistola           =   '';
-    var comenzar_nsolicitud_pistola         =   $("#comenzar_nsolicitud_pistola").val();//MARCARA LAS MUESTRAS  IDSOLICITUD(ESPACIO ESPACIO)IDMUESTRA
-    var Sl_accion_a_realizar                =   $("#Sl_accion_a_realizar").val();
+    var comenzar_nmuestra_pistola = '';
+    var comenzar_nsolicitud_pistola = $("#comenzar_nsolicitud_pistola").val();//MARCARA LAS MUESTRAS  IDSOLICITUD(ESPACIO ESPACIO)IDMUESTRA
+    var Sl_accion_a_realizar = $("#Sl_accion_a_realizar").val();
 
     if(comenzar_nsolicitud_pistola==''){
-       errores                              +=  "Falta indicar numero de solicitud";   
+       errores +=  "Falta indicar el tipo de proceso a realizar.";   
     }
     if(Sl_accion_a_realizar==''){
-       errores                              +=  "<br>Falta indicar tipo de proceso a realizar";   
+       errores += "<br>Falta indicar tipo de proceso a realizar";   
     }
 
     if(Sl_accion_a_realizar==100 || Sl_accion_a_realizar==''){
@@ -297,10 +301,8 @@ function num_solicitud_pistoleada(){
     } else {
        $("#tr_btn_guardar_1").show();
     }
-
     ///AGREGAR NUEVO PARA ID SOLICITUD
-    var pistoleada                          =   comenzar_nsolicitud_pistola.split("  ");
-    
+    var pistoleada = comenzar_nsolicitud_pistola.split("  ");
     if($("#dv_pistoleada_solicitud_"+pistoleada[0]).length){
         /*
         console.log("---------------------------------------------------------");
@@ -320,16 +322,16 @@ function num_solicitud_pistoleada(){
         //si el id solicitud ya existe entonces debo mnarcar radiod e la mustra
     }
 
-    comenzar_nsolicitud_pistola     =   pistoleada[0]; 
-    comenzar_nmuestra_pistola       =   pistoleada[1]; 
+    comenzar_nsolicitud_pistola =   pistoleada[0]; 
+    comenzar_nmuestra_pistola =   pistoleada[1]; 
     
-    var id                          =   "dv_pistoleada_solicitud_"+pistoleada[0]; //Div o ID de los resultados
-    var funcion                     =   "trae_muestras_x_solicitud"; //Funcion del Controlador a Ejecutar
-    var variables                   =   {
-                                            comenzar_nsolicitud_pistola     :   comenzar_nsolicitud_pistola,
-                                            Sl_accion_a_realizar            :   Sl_accion_a_realizar,
-                                            comenzar_nmuestra_pistola       :   comenzar_nmuestra_pistola
-                                        };
+    var id =   "dv_pistoleada_solicitud_"+pistoleada[0]; //Div o ID de los resultados
+    var funcion =   "trae_muestras_x_solicitud"; //Funcion del Controlador a Ejecutar
+    var variables =   {
+        comenzar_nsolicitud_pistola : comenzar_nsolicitud_pistola,
+        Sl_accion_a_realizar : Sl_accion_a_realizar,
+        comenzar_nmuestra_pistola : comenzar_nmuestra_pistola
+    };
             
     if(errores!=''){ 
         showNotification('top','center',errores,3,'fa fa-times');
@@ -653,35 +655,36 @@ function Buscador_(){
 }
 
 function buscar_buscador(){
-    var num_solicitud       =   $("#busq_numsolicitud").val();
-    var busq_nummuestra     =   $("#busq_nummuestra").val();
-    var busq_rutpac         =   $("#busq_rutpac").val();
-    var id                  =   "div_html_buscador"; //Div o ID de los resultados
-    var funcion             =   "buscar_buscador"; //Funcion del Controlador a Ejecutar
-    var variables           =   {num_solicitud:num_solicitud,busq_nummuestra:busq_nummuestra,busq_rutpac:busq_rutpac};
+    var num_solicitud =   $("#busq_numsolicitud").val();
+    var busq_nummuestra =   $("#busq_nummuestra").val();
+    var busq_rutpac =   $("#busq_rutpac").val();
+    var id =   "div_html_buscador"; //Div o ID de los resultados
+    var funcion =   "buscar_buscador"; //Funcion del Controlador a Ejecutar
+    var variables =   {num_solicitud:num_solicitud,busq_nummuestra:busq_nummuestra,busq_rutpac:busq_rutpac};
     AjaxExt(variables,id,funcion); //Funcion que Ejecuta la llamada del ajax
 }
 
 function pdf_solicitud(idsolicitud,idtabla){
     $('#pdf_modalSOLICITUD').modal('show');
-    var nulsl               =   '';
-    //src="assets/ssan_libro_biopsias_i_fase/upload_muestra/'+idlibro+'_'+idmuestra+'/'+nom_archivo+'"    http://10.5.183.210/pabellon_classpdf/solicitudHISTO_PAGINAS?id=null&idTabla=2813&letra=9
+    var nulsl = '';
+    // src="assets/ssan_libro_biopsias_i_fase/upload_muestra/'+idlibro+'_'+idmuestra+'/'+nom_archivo+'" 
+    // http://10.5.183.210/pabellon_classpdf/solicitudHISTO_PAGINAS?id=null&idTabla=2813&letra=9
     $('#tb_TAB_PDF_SOLICITUD').html('<iframe src="http://10.5.183.210/pabellon_classpdf/pdf2?id='+idtabla+'&letra=9" frameborder="0" style="overflow:hidden;height: 650px;width:100%;" width="100%">PDF SOLICITUD + CODIGOS</iframe>');
     $('#tb_TAB_PDF_SOLICITUD2').html('<iframe src="http://10.5.183.210/pabellon_classpdf/solicitudHISTO_PAGINAS?id='+nulsl+'&idTabla='+idtabla+'&letra=9" frameborder="0" style="overflow:hidden;height: 650px;width:100%;" width="100%">PDF SOLICITUD + CODIGOS</iframe>');
 }
 
 function Carga_listado_pabellon(){
-    var txt_fec_inicio      =   $("#txt_fec_inicio").val();
-    var txt_fec_fin         =   $("#txt_fec_fin").val();
-    var id                  =   "dv_para_tablapabellon"; //Div o ID de los resultados
-    var funcion             =   "Carga_listado_pabellon"; //Funcion del Controlador a Ejecutar
-    var variables           =   {txt_fec_inicio:txt_fec_inicio,txt_fec_fin:txt_fec_fin};
+    var txt_fec_inicio = $("#txt_fec_inicio").val();
+    var txt_fec_fin = $("#txt_fec_fin").val();
+    var id = "dv_para_tablapabellon"; //Div o ID de los resultados
+    var funcion = "Carga_listado_pabellon"; //Funcion del Controlador a Ejecutar
+    var variables = {txt_fec_inicio:txt_fec_inicio,txt_fec_fin:txt_fec_fin};
     //AjaxExt(variables,id,funcion); //Funcion que Ejecuta la llamada del ajax
 }
 
 function PDF_NORECEP(correl){
-   var rnadd    =   Math.floor((Math.random() * 900) + 1);
-   var html     =   '<iframe src="pdf/pdf_comprobante_norecep?correl='+correl+'&r='+rnadd+'" frameborder="0" style="overflow:hidden;height: 650px;width:100%;" width="100%"></iframe>';
+   var rnadd = Math.floor((Math.random() * 900) + 1);
+   var html = '<iframe src="pdf/pdf_comprobante_norecep?correl='+correl+'&r='+rnadd+'" frameborder="0" style="overflow:hidden;height: 650px;width:100%;" width="100%"></iframe>';
    $("#PDF_VERDOC").html(html);
    $("#Dv_verdocumentos").modal("show");
 }
@@ -704,4 +707,3 @@ function Solicitar_activacion(idmues){
         }});
     }
 }
-

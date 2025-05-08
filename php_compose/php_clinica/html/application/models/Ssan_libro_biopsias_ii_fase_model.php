@@ -13,4 +13,5 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
         $this->db = $this->load->database('session',true);
         date_default_timezone_set('America/Santiago');
     }
+    
 }

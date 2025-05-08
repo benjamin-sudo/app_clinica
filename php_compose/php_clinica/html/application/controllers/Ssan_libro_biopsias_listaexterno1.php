@@ -103,89 +103,81 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $data_return = '';
         #editando         
         $ARR_DATA = 'null';
-        
         if (isset($array_data["array_anatomia"]) && is_array($array_data["array_anatomia"]) && count($array_data["array_anatomia"]) > 0) {
             $ARR_DATA = implode(",", $array_data["array_anatomia"]);
         }
-
         $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_INFOXMUESTRAANATOMIACA(array(
             "COD_EMPRESA" =>  $empresa,
             "TXTMUESTRA" =>  $get_etiqueta,
             "NUM_FASE" =>  $NUM_FASE,
             "ARR_DATA" =>  $ARR_DATA,
         ));
-        
         ###
         $ARR_GENTIONMSJ = [];
         if (count($DATA["P_ANATOMIA_PATOLOGICA_MAIN"])>0){
             $arr_muestra_muestras = [];
             $arr_muestras_citologia = [];
             $arr_info_linea_tiempo = [];
-            
             if (count($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"])>0){
                 foreach ($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $arr_muestras_anatomica_row)  {
-                    $arr_muestra_muestras[$arr_muestras_anatomica_row['ID_SOLICITUD_HISTO']][] =   $arr_muestras_anatomica_row;
+                    $arr_muestra_muestras[$arr_muestras_anatomica_row['ID_SOLICITUD_HISTO']][] = $arr_muestras_anatomica_row;
                 }
             }
-            
             if (count($DATA["P_AP_MUESTRAS_CITOLOGIA"])>0){
                 foreach ($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $arr_muestras_citologica_row) {
-                    $arr_muestras_citologia[$arr_muestras_citologica_row['ID_SOLICITUD_HISTO']][] =   $arr_muestras_citologica_row;
+                    $arr_muestras_citologia[$arr_muestras_citologica_row['ID_SOLICITUD_HISTO']][] = $arr_muestras_citologica_row;
                 } 
             }
 
             #ordena data para templetate template_logs_anatomia
-            $log_adverso                                                                                =   [];
+            $log_adverso = [];
             if (count($DATA['P_INFO_LOG_ADVERSOS'])>0){
                 foreach($DATA['P_INFO_LOG_ADVERSOS'] as $i => $log_adv){ 
-                    $log_adverso[$log_adv['ID_NUM_CARGA'].'_'.$log_adv['ID_NMUESTRA']]                  =   $log_adv;
+                    $log_adverso[$log_adv['ID_NUM_CARGA'].'_'.$log_adv['ID_NMUESTRA']] =   $log_adv;
                 }
             }
-
             if(count($DATA["P_AP_INFORMACION_ADICIONAL"])>0){
-                foreach ($DATA["P_AP_INFORMACION_ADICIONAL"] as $i => $arr_linea_tiempo_logs_row)       {
-                    $ID_SOLICITUD_HISTO                                                                 =   $arr_linea_tiempo_logs_row['ID_SOLICITUD_HISTO'];
-                    $ID_NUM_CARGA                                                                       =   $arr_linea_tiempo_logs_row['ID_NUM_CARGA'];
-                    $ID_NMUESTRA                                                                        =   $arr_linea_tiempo_logs_row['ID_CASETE']==''?$arr_linea_tiempo_logs_row['TXT_BACODE']:$arr_linea_tiempo_logs_row['ID_CASETE'];
-                    $id_compuesta                                                                       =   $ID_NUM_CARGA.'_'.$ID_NMUESTRA;
-                    $data_main[]                                                                        =   $arr_linea_tiempo_logs_row;
-                    $arr_info_linea_tiempo[$ID_SOLICITUD_HISTO][$ID_NUM_CARGA][$ID_NMUESTRA][]          =   array(
-                                                                                                                    'MAIN'          =>  $arr_linea_tiempo_logs_row ,
-                                                                                                                    'ERROR_LOG'     =>  array_key_exists($id_compuesta,$log_adverso)?$log_adverso[$id_compuesta]:[]
-                                                                                                                );
+                foreach ($DATA["P_AP_INFORMACION_ADICIONAL"] as $i => $arr_linea_tiempo_logs_row) {
+                    $ID_SOLICITUD_HISTO = $arr_linea_tiempo_logs_row['ID_SOLICITUD_HISTO'];
+                    $ID_NUM_CARGA = $arr_linea_tiempo_logs_row['ID_NUM_CARGA'];
+                    $ID_NMUESTRA = $arr_linea_tiempo_logs_row['ID_CASETE']==''?$arr_linea_tiempo_logs_row['TXT_BACODE']:$arr_linea_tiempo_logs_row['ID_CASETE'];
+                    $id_compuesta = $ID_NUM_CARGA.'_'.$ID_NMUESTRA;
+                    $data_main[] = $arr_linea_tiempo_logs_row;
+                    $arr_info_linea_tiempo[$ID_SOLICITUD_HISTO][$ID_NUM_CARGA][$ID_NMUESTRA][] = array(
+                        'MAIN' =>  $arr_linea_tiempo_logs_row ,
+                        'ERROR_LOG' =>  array_key_exists($id_compuesta,$log_adverso)?$log_adverso[$id_compuesta]:[]
+                    );
                 }
             }
-
             #falta los log 
             foreach($DATA["P_ANATOMIA_PATOLOGICA_MAIN"] as $i => $row){
-                $id_anatomia =   $row["ID_SOLICITUD"];
-                $html =   $this->load->view("ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
-                                                    "VIEWS"                             =>  $vista,
-                                                    "DATA"                              =>  $row,
-                                                    "FIRST"                             =>  $get_etiqueta,
-                                                    "FASE"                              =>  $NUM_FASE,
-                                                    "P_ANATOMIA_PATOLOGICA_MUESTRAS"    =>  empty($arr_muestra_muestras[$id_anatomia])?[]:$arr_muestra_muestras[$id_anatomia],
-                                                    "P_AP_MUESTRAS_CITOLOGIA"           =>  empty($arr_muestras_citologia[$id_anatomia])?[]:$arr_muestras_citologia[$id_anatomia],
-                                                    //"P_AP_INFORMACION_ADICIONAL"      =>  empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia],
-                                                    #"HTML_LOGS"                        =>  $this->load->view("Ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
-                                                    "HTML_LOGS"                         => '',
-                                                ),true);
+                $id_anatomia = $row["ID_SOLICITUD"];
+                $html = $this->load->view("ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
+                    "VIEWS" =>  $vista,
+                    "DATA" =>  $row,
+                    "FIRST" =>  $get_etiqueta,
+                    "FASE" =>  $NUM_FASE,
+                    "P_ANATOMIA_PATOLOGICA_MUESTRAS" =>  empty($arr_muestra_muestras[$id_anatomia])?[]:$arr_muestra_muestras[$id_anatomia],
+                    "P_AP_MUESTRAS_CITOLOGIA" =>  empty($arr_muestras_citologia[$id_anatomia])?[]:$arr_muestras_citologia[$id_anatomia],
+                    //"P_AP_INFORMACION_ADICIONAL" =>  empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia],
+                    #"HTML_LOGS" =>  $this->load->view("Ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
+                    "HTML_LOGS" => '',
+                ),true);
                 
-                $ARR_GENTIONMSJ[]           =   array(
-                    'ID_AP'                 =>  $id_anatomia,
-                    'ID_TABS'               =>  'TABS_'.$id_anatomia,
-                    'TXT_TITULO'            =>  'N&deg;&nbsp;<b>'.$id_anatomia.'</b>',
-                    'HTML'                  =>  $html,
+                $ARR_GENTIONMSJ[] =   array(
+                    'ID_AP' =>  $id_anatomia,
+                    'ID_TABS' =>  'TABS_'.$id_anatomia,
+                    'TXT_TITULO' =>  'N&deg;&nbsp;<b>'.$id_anatomia.'</b>',
+                    'HTML' =>  $html,
                 );
             }
         }
         
         #ID_SOLICITUD
-        $NUM_ANATOMIA                       =   $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
+        $NUM_ANATOMIA = $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];
         if($IND_MODAL){
-            $TXT_GO_BACODE                  =   $NUM_FASE==1?'TRASPORTE | CUSTODIA':$NUM_FASE==2?'PARA RECEPCI&Oacute;N':'VISUALIZACI&Oacute;N';
-            
-            $TABS_HTML                      =   '
+            $TXT_GO_BACODE = $NUM_FASE==1?'TRASPORTE | CUSTODIA':$NUM_FASE==2?'PARA RECEPCI&Oacute;N':'VISUALIZACI&Oacute;N';
+            $TABS_HTML = '
                 <script>
                     $(document).ready(function(){
                         $("#get_etiqueta_modal").keypress(function(e){if(e.which==13){ 
@@ -198,10 +190,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                         });
                         document.getElementById("get_etiqueta_modal").focus();
                         $("#UL_TABS_MUESTRA li:first-child a").tab("show");
-                        console.log("------------------------------------------------");
-                        console.log("la arrogancia          ->  '.$TXT_GO_BACODE.'   ");
-                        console.log("buscar la etiqueta     ->                       ");
-                        console.log("------------------------------------------------");
                     });
                 </script>
                 
@@ -231,7 +219,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                     #
                     switch($NUM_FASE){
                         case 0:
-                            $TABS_HTML  .=  '   <i class="fa fa-eye" aria-hidden="true"></i>    ';
+                            $TABS_HTML  .=  ' <i class="fa fa-eye" aria-hidden="true"></i>    ';
                             break;
                         case 1:
                             #<!--&nbsp;TRASPORTE MASIVO-->
@@ -260,24 +248,24 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             $TABS_HTML .=   '</div>
                 </div>';
             #GESTOR DE TABS
-            $TABS_HTML                  .=   ' <div id="MAIN_TABS_MUESTRA">';
+            $TABS_HTML .= ' <div id="MAIN_TABS_MUESTRA">';
             if(count($ARR_GENTIONMSJ)>0){
-                $HTML_MENSAJE_LU        =   '';
-                $HTML_MENSAJE_DIV       =   '';
+                $HTML_MENSAJE_LU = '';
+                $HTML_MENSAJE_DIV = '';
                 foreach($ARR_GENTIONMSJ as $i => $row){
-                    $ID_INICO           =   $row['ID_TABS'];
-                    $class_active       =   $i==0?'active':'';
-                    $HTML_MENSAJE_LU    .=  '<li class="nav-item '.$class_active.' all_solicitudes_custodia all_solicitudes_trasporte all_solicitudes_recepcion li_histo_'.$row['ID_AP'].' " id="'.$row['ID_AP'].'">
+                    $ID_INICO = $row['ID_TABS'];
+                    $class_active = $i==0?'active':'';
+                    $HTML_MENSAJE_LU .=  '<li class="nav-item '.$class_active.' all_solicitudes_custodia all_solicitudes_trasporte all_solicitudes_recepcion li_histo_'.$row['ID_AP'].' " id="'.$row['ID_AP'].'">
                                                 <a class="nav-link" data-toggle="tab" href="#'.$ID_INICO.'" role="tab">'.$row['TXT_TITULO'].'</b></a>
                                             </li>';
-                    $HTML_MENSAJE_DIV  .=  '<div class="tab-pane '.$class_active.' tab_histo_'.$row['ID_AP'].'"  id="'.$ID_INICO.'" role="tabpanel">'.$row['HTML'].'</div>';
+                    $HTML_MENSAJE_DIV .= '<div class="tab-pane '.$class_active.' tab_histo_'.$row['ID_AP'].'"  id="'.$ID_INICO.'" role="tabpanel">'.$row['HTML'].'</div>';
                 }
-                $TABS_HTML              .=  '<ul class="nav nav-tabs" role="tablist" id="UL_TABS_MUESTRA">'.$HTML_MENSAJE_LU.'</ul>';
-                $TABS_HTML              .=  '<div class="tab-content" id="TABS_TAB_PANEL">'.$HTML_MENSAJE_DIV.'</div>';
+                $TABS_HTML .= '<ul class="nav nav-tabs" role="tablist" id="UL_TABS_MUESTRA">'.$HTML_MENSAJE_LU.'</ul>';
+                $TABS_HTML .= '<div class="tab-content" id="TABS_TAB_PANEL">'.$HTML_MENSAJE_DIV.'</div>';
             } 
-            $TABS_HTML                  .=   '</div>';
+            $TABS_HTML .= '</div>';
         } else {
-            $TABS_HTML                  =   $html;
+            $TABS_HTML = $html;
         }
         
         #out json 
@@ -297,6 +285,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             'P_AP_INFORMACION_ADICIONAL' =>  $DATA["P_AP_INFORMACION_ADICIONAL"],
         )));
     }
+
     ########################################################################
     #LEYENDA
     ########################################################################

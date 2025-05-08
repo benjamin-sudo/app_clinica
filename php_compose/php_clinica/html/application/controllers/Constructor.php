@@ -10,7 +10,6 @@ class Constructor extends CI_Controller {
         $this->load->library('email');
         $this->load->model('Modelinicio');
         #$this->load->model('Testmodel');
-        #echo $this->Testmodel->test();
     }
 
     public function enviar_enlace_recuperacion(){
@@ -36,7 +35,7 @@ class Constructor extends CI_Controller {
                 'mailtype' => 'html',
                 'newline' => "\r\n",
             ]);
-            $this->email->from('clinicalibrechile@gmail.com', 'Clínica Libre Chile');
+            $this->email->from('clinicalibrechile@gmail.com','Clínica Libre Chile');
             $this->email->to($email);
             $this->email->subject('Recuperación de contraseña');
             $mensaje = "
@@ -175,10 +174,12 @@ class Constructor extends CI_Controller {
                 substr($an, rand(0, $su), 1) .
                 substr($an, rand(0, $su), 1);
     }
-    #$this->load->view('inicio', $data);
-    #log_message('info', '###############################################################');
-    #log_message('info', 'Intentando actualizar contraseña con token: ' . $token);
-    #log_message('info', '###############################################################');
-    #return view('inicio', $data);
+    ##############################################################################################
+    #   $this->load->view('inicio', $data);
+    #   log_message('info', '###############################################################');
+    #   log_message('info', 'Intentando actualizar contraseña con token: ' . $token);
+    #   log_message('info', '###############################################################');
+    #   return view('inicio', $data);
+    ##############################################################################################
 }
 ?>

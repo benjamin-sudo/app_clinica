@@ -71,6 +71,7 @@ function js_confirmacambios_all(){
 }
 
 function star_ajax_extension(url) {
+    console.log("url    ->  ",url);
     const preloader = $('#ajax-preloader');
     preloader.css({ display: 'flex', opacity: 1 }).removeClass('animation__slideOutUp');
     $.ajax({
@@ -80,21 +81,14 @@ function star_ajax_extension(url) {
         error: function(xhr, status, error) {
             console.error(error);
             hidePreloader();
-            jError("Error en la página que trata de acceder...", "Clinica Libre");
+            jError("Error en la p&aacute;gina que trata de acceder...", "Cl&iacute;ica Libre");
         },
-        success: function(response) {
-            $('.page_frame').html(response); // Inserta contenido dinámico
-        },
-        complete: function() {
-            // Espera 400ms y luego oculta con animación
-            setTimeout(() => hidePreloader(), 400);
-        }
+        success: function(response) { $('.page_frame').html(response); },
+        complete: function() { setTimeout(() => hidePreloader(), 400); }
     });
     function hidePreloader() {
         preloader.addClass('animation__slideOutUp');
-        setTimeout(() => {
-            preloader.hide().removeClass('animation__slideOutUp');
-        }, 500);
+        setTimeout(() => { preloader.hide().removeClass('animation__slideOutUp'); }, 500);
     }
 }
 

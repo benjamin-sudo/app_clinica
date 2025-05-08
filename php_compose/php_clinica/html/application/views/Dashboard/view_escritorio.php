@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="UTF-8">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -269,7 +270,7 @@
         </div>
       </div>
     </div>
-    
+  
   </section>
     <script type="text/javascript" src="assets/recursos/bootstrap_5/js/jquery.min.js"></script>
     <!-- jQuery UI - v1.12.0-rc.2  -->
@@ -297,6 +298,7 @@
     <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
     <!-- bootstrap-select.min.js -->
     <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
+    
     <!-- Wizard Plugin    -->
     <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
     <!--paginacion bootpage-->
