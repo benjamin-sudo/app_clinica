@@ -150,23 +150,20 @@ function js_ws_test(){
 function UPDATE_PANEL(){
     var fecha_form = $("#NUM_FASE").val()==1?$("#txt_fec_inicio").val():fecha_cale('fecha_out');
     var fecha_to = $("#NUM_FASE").val()==1?$("#txt_fec_fin").val():fecha_cale('fecha_out2');
-    //console.log("NUM_FASE   ->  ",$("#NUM_FASE").val());
+    //console.log("NUM_FASE -> ",$("#NUM_FASE").val());
     $('#loadFade').modal('show');
     /*
-        console.log("-------------------------------------------------------");
-        console.log("   NUM_FASE        ->",$("#NUM_FASE").val(),"<-        ");
-        console.log("   IND_TEMPLETE    ->",$("#IND_TEMPLETE").val(),"<-    ");
-        console.log("   fecha_form      ->",fecha_form,"<-                  ");
-        console.log("   fecha_to        ->",fecha_to,"<-                    ");
-        console.log("-------------------------------------------------------");
+        console.log("-----------------------------------------------");
+        console.log(" NUM_FASE ->",$("#NUM_FASE").val(),"<- ");
+        console.log(" IND_TEMPLETE ->",$("#IND_TEMPLETE").val(),"<- ");
+        console.log(" fecha_form ->",fecha_form,"<- ");
+        console.log(" fecha_to ->",fecha_to,"<- ");
+        console.log("-----------------------------------------------");
     */
-
-    
     let ind_template = $("#IND_TEMPLETE").val();
     console.log(" ->",ind_template);
     if($("#IND_TEMPLETE").val() == 'ssan_libro_biopsias_i_fase'){
         console.log("ssan_libro_biopsias_i_fase");
-        //BUSQUEDA LISTA ANTES DE RECEPCION
         $.ajax({ 
             type : "POST",
             url : "ssan_libro_biopsias_i_fase/update_fase1",

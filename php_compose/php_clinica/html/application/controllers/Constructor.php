@@ -9,7 +9,6 @@ class Constructor extends CI_Controller {
         $this->load->library('session');
         $this->load->library('email');
         $this->load->model('Modelinicio');
-        #$this->load->model('Testmodel');
     }
 
     public function enviar_enlace_recuperacion(){
@@ -38,11 +37,10 @@ class Constructor extends CI_Controller {
             $this->email->from('clinicalibrechile@gmail.com','Clínica Libre Chile');
             $this->email->to($email);
             $this->email->subject('Recuperación de contraseña');
-            $mensaje = "
-                <p>Hola, has solicitado recuperar tu acceso.</p>
-                <p>Haz clic en el siguiente enlace para continuar:</p>
-                <p><a href='$enlace'>$enlace</a></p>
-                <p>Este enlace expirará en 1 hora.</p>";
+            $mensaje = "<p>Hola, has solicitado recuperar tu acceso.</p>
+                        <p>Haz clic en el siguiente enlace para continuar:</p>
+                        <p><a href='$enlace'>$enlace</a></p>
+                        <p>Este enlace expirará en 1 hora.</p>";
             $this->email->message($mensaje);
             $this->email->send();
             $this->session->set_flashdata('msg', 'Se envi&oacute; correo para recuperaci&oacute;n a : '.$email);
@@ -179,7 +177,7 @@ class Constructor extends CI_Controller {
     #   log_message('info', '###############################################################');
     #   log_message('info', 'Intentando actualizar contraseña con token: ' . $token);
     #   log_message('info', '###############################################################');
-    #   return view('inicio', $data);
+    #   return view('inicio', $data); 
     ##############################################################################################
 }
 ?>

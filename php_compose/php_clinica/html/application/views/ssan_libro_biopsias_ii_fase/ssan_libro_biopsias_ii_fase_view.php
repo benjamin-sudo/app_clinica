@@ -117,9 +117,7 @@
     </div>
 </div>
 
-
 <section>
-  
     <!--  ZONA DE MODALES -->
     <div class="modal fade" id="modal_busqueda" data-backdrop="static">
         <div class="modal-dialog modal-md" style="    width: 80%;">

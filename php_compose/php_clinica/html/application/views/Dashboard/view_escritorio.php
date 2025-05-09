@@ -13,9 +13,7 @@
   <!-- Bootstrap 5.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap.min.css" >
   <!-- Bootstrap Icons v1.11.2 -->
-  <!--
-  <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">
-  -->
+  <!--<link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/css/bootstrap-icons.min.css">-->
   <!-- Bootstrap Icons v1.11.2 -->
   <link type="text/css" rel="stylesheet" href="assets/recursos/bootstrap_5/icon/bootstrap-icons.css">
   <!-- FontAwesome Icons -->
@@ -298,7 +296,6 @@
     <script type="text/javascript" src="assets/recursos/js/bootstrap-datetimepicker.js"></script>
     <!-- bootstrap-select.min.js -->
     <script type="text/javascript" src="assets/recursos/datetimepicker/bootstrap-datetimepicker.js"></script>
-    
     <!-- Wizard Plugin    -->
     <script type="text/javascript" src="assets/recursos/js/jquery.bootstrap.wizard.min.js"></script>
     <!--paginacion bootpage-->

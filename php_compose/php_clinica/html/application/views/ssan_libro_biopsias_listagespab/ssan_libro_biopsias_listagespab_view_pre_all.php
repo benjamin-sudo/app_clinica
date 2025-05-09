@@ -183,7 +183,7 @@
 
     .grid_new_numero_interno {
         display : grid;
-        grid-template-columns : 1fr 1fr;
+        grid-template-columns : 0px auto 10px auto 1fr;
         align-items : center;
         justify-items : flex-start;
         padding: 8px;
@@ -192,17 +192,17 @@
 </style>
     <div class="grid_identificacion_paciente">
         <div class="grid_identificacion_paciente1 card">
-            <div class="card-header"><h6 style="margin-bottom: 0px;"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Informaci&oacute;n Basica del paciente</h6></div>
+            <div class="card-header">
+                <h6 style="margin-bottom: 0px;"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Informaci&oacute;n Basica del paciente</h6>
+            </div>
             <div class="card-body">
                 <div class="grid_paciente_inicial">
                     <div class="grid_paciente_inicial1">
-                        <h5 class="card-title">Nombre</h5>
-                        <br>
+                        <h5 class="card-title">Nombre</h5><br>
                         <?php echo $DATA['NOMBRE_COMPLETO'];?> 
                     </div>
                     <div class="grid_paciente_inicial2">
-                        <h5 class="card-title">Identificaci&oacute;n</h5>
-                        <br>
+                        <h5 class="card-title">Identificaci&oacute;n</h5><br>
                         <?php echo $DATA['COD_RUTPAC'];?>-<?php echo $DATA['COD_DIGVER'];?> 
                     </div>
                 </div>
@@ -236,16 +236,17 @@
             </div>
         </div>
     </div>
-    <?php if($FASE == 2) {  ?>
+    <?php if($FASE == 2) { ?>
         <div class="grid_new_numero_interno">
+            <div class="grid_new_numero_interno0">&nbsp;</div>
             <div class="grid_new_numero_interno1 card">
                 <input type="hidden" id="V_IND_TIPO_BIOPSIA" name="V_IND_TIPO_BIOPSIA"  value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
                 <div class="card-header">
-                    <h6 style="margin-bottom: 0px;"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;
+                    <h6 style="margin-bottom: 0px;"><i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;Asignaci&oacute;n
                         <?php if ($DATA['IND_TIPO_BIOPSIA'] == 2 || $DATA['IND_TIPO_BIOPSIA'] == 3 || $DATA['IND_TIPO_BIOPSIA'] == 4){ ?>
-                            &nbsp;N&deg; DE BIOPSIA
+                            &nbsp;N&deg; de biopsia
                         <?php } else if ($DATA['IND_TIPO_BIOPSIA'] == 5 ){?>
-                            &nbsp;N&deg; CITOLOG&Iacute;A
+                            &nbsp;N&deg; citolog&iacute;a
                         <?php } else if ($DATA['IND_TIPO_BIOPSIA'] == 6 ){?>
                             &nbsp;N&deg; PAP
                         <?php } ?>
@@ -261,11 +262,11 @@
                         </div>
                         <div class="grid_btn_ultimonumero1">
                             <button type="button" class="btn btn-info btn-fill" id="btn_last_number_diponible" onclick="busqueda_numero_disponible(<?php echo $DATA['IND_TIPO_BIOPSIA'];?>)">
-                                <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;ULTIMO N&deg; 
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;Buscar ultimo N&deg;
                                 <?php if ($DATA['IND_TIPO_BIOPSIA'] == 2 || $DATA['IND_TIPO_BIOPSIA'] == 3 || $DATA['IND_TIPO_BIOPSIA'] == 4){ ?>
-                                    &nbsp;BIOPSIA
+                                    &nbsp;Biopsia
                                 <?php } else if ($DATA['IND_TIPO_BIOPSIA'] == 5 ){?>
-                                    &nbsp;CITOLOG&Iacute;A
+                                    &nbsp;citolog&iacute;co
                                 <?php } else if ($DATA['IND_TIPO_BIOPSIA'] == 6 ){?>
                                     &nbsp;PAP
                                 <?php } ?>
@@ -275,43 +276,35 @@
                     </div>
                 </div>
             </div>
+            <div class="grid_new_numero_interno0">&nbsp;</div>
             <div class="grid_new_numero_interno2 card">
-                <div class="card-header">  dsadfdgh </div>
-            </div>
-        </div>
-
-
-
-        <?php if ($DATA['IND_TIPO_BIOPSIA'] == 4) { ?>
-            <div class="grid_numero_interno">
-                <div class="grid_numero_interno1">
-                    <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
-                        <h5 style="color:#888888;">&nbsp;N&deg; CITOLOG&Iacute;A</h5>
-                        <div class="input-group mb-3"  id="date_tabla2">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno_cito" name="num_interno_cito"  value="">
+                <?php if ($DATA['IND_TIPO_BIOPSIA'] == 4) { ?>
+                    <div class="card-header">
+                        <h6 style="margin-bottom: 0px;"><i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;Asignaci&oacute;n&nbsp;N&deg;&nbsp;citolog&iacute;co</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid_btn_ultimonumero">
+                            <div class="grid_btn_ultimonumero1">
+                                <div class="input-group mb-3" style="margin-bottom: 0rem !important;">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" id="num_interno_cito" name="num_interno_cito"  value="">
+                                </div>
+                            </div>
+                            <div class="grid_btn_ultimonumero2">
+                                <button type="button" class="btn btn-info btn-fill" id="btn_last_number_diponible" onclick="busqueda_numero_disponible_citologia(<?php echo $DATA['IND_TIPO_BIOPSIA'];?>)">
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;Buscar ultimo N&deg; citolog&iacute;co 
+                                </button>
+                                <input type="hidden" id="ind_tipo_biopsia" name="ind_tipo_biopsia" value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
+                            </div>
                         </div>
-                    </fieldset>
-                </div>
-                <div class="grid_numero_interno2">&nbsp;
-                    <input type="hidden" id="ind_tipo_biopsia" name="ind_tipo_biopsia" value="<?php echo $DATA['IND_TIPO_BIOPSIA'];?>"/>
-                </div>
-                <div class="grid_numero_interno3">
-                    <button type="button" class="btn btn-info btn-fill" id="btn_last_number_diponible" onclick="busqueda_numero_disponible_citologia(<?php echo $DATA['IND_TIPO_BIOPSIA'];?>)">
-                        <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;ULTIMO N&deg; CITOLOGICO 
-                    </button>
-                </div>
-                <div class="grid_numero_interno4">
-                    &nbsp;
-                </div>
+                    </div>
+                <?php } else { ?>
+                    <input type="hidden" class="form-control input-sm" id="num_interno_cito" name="num_interno_cito"  value=""/>
+                <?php } ?>
             </div>
-        <?php } else { ?>
-            <input type="hidden" class="form-control input-sm" id="num_interno_cito" name="num_interno_cito"  value=""/>
-        <?php }  ?>
-        
+            <div class="grid_new_numero_interno0">&nbsp;</div>
+        </div>
     <?php } ?>
-   
-
 
     <!-- GESTION DE MUESTRAS ANATOMIA -->
     <?php if(count($P_ANATOMIA_PATOLOGICA_MUESTRAS)>0){  ?>    
@@ -345,15 +338,15 @@
                 <div class="content" style="margin-top:-10px;">
                     <ul class="list-group" id="UL_RESULTADOS_<?php echo $DATA["ID_SOLICITUD"];?>" style="margin-bottom:0px;">
                     <?php    
-                        $IND_USOCASSETTE        =   $DATA['IND_USOCASSETTE'];
-                        if($IND_USOCASSETTE     == 1){
+                        $IND_USOCASSETTE = $DATA['IND_USOCASSETTE'];
+                        if($IND_USOCASSETTE == 1){
                             //ordenando x casete
                             foreach($ARR_CASETE_ORD  as $y => $data_casete){
-                                $li_muestras        =   '';
-                                $grid_array         =   [];
-                                $aux                =   1;
+                                $li_muestras = '';
+                                $grid_array = [];
+                                $aux = 1;
                                 foreach($data_casete as $z => $row){ 
-                                    $li_muestras    .=  $aux.".-".$row['TXT_MUESTRA']."";
+                                    $li_muestras .=  $aux.".-".$row['TXT_MUESTRA']."";
                                     //array_push($grid_array,$aux.".-".$row['TXT_MUESTRA']);
                                     array_push($grid_array,'<div class="grid_cell2" style="color:#888888;"><b>'.$aux.'.-'.$row['TXT_MUESTRA'].'</b></div>');
                                     $aux++;
@@ -376,12 +369,12 @@
                                         </div>
                                         <div class="CSS_GRID_MUESTRA_CASETE_6 _CENTER_1">
                                             <input 
-                                                type        =   "checkbox" 
-                                                class       =   "form-check-input checkbox_<?php echo $row['ID_NMUESTRA'];?>" 
-                                                id          =   "CHEK_<?php echo 'C'.$data_casete[0]['ID_CASETE'];?>" 
-                                                style       =   "display:block;cursor:pointer;margin:0px" 
-                                                onchange    =   "js_muestra_indivual('C<?php echo $data_casete[0]['ID_CASETE'];?>');"
-                                                value       =   "<?php echo $data_casete[0]['ID_CASETE'];?>"
+                                                type = "checkbox" 
+                                                class = "form-check-input checkbox_<?php echo $row['ID_NMUESTRA'];?>" 
+                                                id = "CHEK_<?php echo 'C'.$data_casete[0]['ID_CASETE'];?>" 
+                                                style = "display:block;cursor:pointer;margin:0px" 
+                                                onchange = "js_muestra_indivual('C<?php echo $data_casete[0]['ID_CASETE'];?>');"
+                                                value = "<?php echo $data_casete[0]['ID_CASETE'];?>"
                                             />
                                         </div>
                                         <div  class="CSS_GRID_MUESTRA_CASETE_5" id="btn_<?php echo "C".$data_casete[0]['ID_CASETE'];?>">
@@ -390,7 +383,6 @@
                                             </span>
                                         </div>
                                     </div>
-                                    
                                     <div id="collapseOne<?php echo $data_casete[0]['ID_CASETE'];?>" class="panel-collapse collapse padding_collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $data_casete[0]['ID_CASETE'];?>">
                                         <div class="css_subgestion_eliminada">
                                             <div class="css_subgestion_eliminada1">
@@ -409,9 +401,8 @@
                                             <div class="css_subgestion_eliminada3">&nbsp;</div>
                                         </div>
                                     </div>
-                                    
                                 </li>
-                                <?php    
+                            <?php    
                             }
                         } else {
                             foreach($P_ANATOMIA_PATOLOGICA_MUESTRAS as $i => $row){
@@ -427,12 +418,12 @@
                                             <div class="CSS_GRID_MUESTRA_4" style="text-align: end"><b><?php echo $row['TXT_ETIQUETA'];?>&nbsp;|&nbsp;<?php echo "A".$row['ID_NMUESTRA'];?></b></div>
                                             <div class="CSS_GRID_MUESTRA_6 _CENTER_1">
                                                 <input 
-                                                    type        =   "checkbox" 
-                                                    class       =   "form-check-input checkbox_<?php echo $DATA["ID_SOLICITUD"];?>" 
-                                                    id          =   "CHEK_<?php echo 'A'.$row['ID_NMUESTRA'];?>" 
-                                                    style       =   "display:block;cursor:pointer;margin:0px" 
-                                                    onchange    =   "js_muestra_indivual('A<?php echo $row['ID_NMUESTRA'];?>');"
-                                                    value       =   "<?php echo $row['ID_NMUESTRA'];?>"
+                                                    type="checkbox" 
+                                                    class="form-check-input checkbox_<?php echo $DATA["ID_SOLICITUD"];?>" 
+                                                    id="CHEK_<?php echo 'A'.$row['ID_NMUESTRA'];?>" 
+                                                    style="display:block;cursor:pointer;margin:0px" 
+                                                    onchange= "js_muestra_indivual('A<?php echo $row['ID_NMUESTRA'];?>');"
+                                                    value="<?php echo $row['ID_NMUESTRA'];?>"
                                                 >
                                             </div>
                                             <div class="CSS_GRID_MUESTRA_5" id="btn_<?php echo "A".$row['ID_NMUESTRA']; ?>">
@@ -465,11 +456,10 @@
                         } ?>
                     </ul>
                 </div>
-                
             </div>
-    <?php   }   ?>
+    <?php } ?>
     
-    <?php   if(count($P_AP_MUESTRAS_CITOLOGIA)>0){  ?>
+    <?php if(count($P_AP_MUESTRAS_CITOLOGIA)>0){  ?>
 
             <div class="card" style="margin-bottom:5px;padding: 16px;">
                 <div class="header">
@@ -578,18 +568,16 @@
                 <?php  }  ?>
             <?php
             break;
-        case 2:
-            ?>
+        case 2: ?>
                 <style>
                     .css_option_recepcion {
                         display : grid;
-                        grid-template-columns : 2fr 1fr 1fr 2fr;
+                        grid-template-columns : 1fr auto auto 1fr auto auto 1fr;
                         align-items : center;
                         justify-content : center;
                         column-gap : 6px;
                         padding : 8px;
                     }
-
                     .css_panel_rechazo {
                         display : grid;
                         grid-template-columns : 4fr 1fr;
@@ -598,56 +586,72 @@
                         column-gap : 6px;
                         padding : 8px;
                    }
+                   .grid_new_fimarrecepcion {
+                        display : grid;
+                        grid-template-columns : 2fr auto 1fr auto 2fr;
+                        gap : 8px;
+                        align-items : center;
+                        justify-content : center;
+                        text-align: center;
+                    }
                 </style>
                 
                 <?php if ($DATA["ID_HISTO_ESTADO"] == 4 && $DATA['IND_ESTADO_MUESTRAS']==1) { ?>
-                        <p><label for="size_2">SOLICITUD YA RECEPCIONADA | <?php echo $DATA["IND_ESTADO_MUESTRAS"];?> </label></p>
+                        <p><label for="size_2">SOLICITUD YA FUE RECEPCIONADA | <?php echo $DATA["IND_ESTADO_MUESTRAS"];?></label></p>
                         <script>$(".checkbox_<?php echo $DATA["ID_SOLICITUD"];?>").hide();</script>
                 <?php } else { ?>
+
                         <div class="css_option_recepcion">
+                            <div class="css_option_recepcion0">&nbsp;</div>
                             <div class="css_option_recepcion1" style="text-align: end;">
-                                <i class="fa fa-check" aria-hidden="true" style="cursor:pointer;color:#87CB16;"></i>&nbsp;<label for="ind_recepciona" style="cursor:pointer;color:#87CB16;">RECEPCI&Oacute;N</label>
+                                <label for="ind_recepciona" style="cursor:pointer;color:#87CB16;font-size:30px;"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCI&Oacute;N DE MUESTRAS</label>
                             </div>
                             <div class="css_option_recepcion2">
                                 <input type="radio"  name="fav_language" id="ind_recepciona" style="display:block;cursor:pointer;margin: 0px 0px 5px 0px;" checked onclick="js_vista_opcion(this.id)" value="1" >
                             </div>
-                            <div class="css_option_recepcion3" style="text-align: end;">
-                                <label for="ind_rechazo" style="cursor:pointer;color:#d9534f;">&nbsp;<i class="fa fa-times" aria-hidden="true"></i>RECHAZO</label>
+                            <div class="css_option_recepcion3">&nbsp;</div>
+                            <div class="css_option_recepcion4" style="text-align: end;">
+                                <label for="ind_rechazo" style="cursor:pointer;color:#d9534f;font-size:30px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZO DE MUESTRAS</label>
                             </div>
-                            <div class="css_option_recepcion3">
+                            <div class="css_option_recepcion5">
                                 <input type="radio" name="fav_language" id="ind_rechazo" style="display:block;cursor:pointer;margin: 0px 0px 5px 0px;" onclick="js_vista_opcion(this.id)" value="1">
                             </div>
+                            <div class="css_option_recepcion6">&nbsp;</div>
                         </div>
-                        <div class="css_grid_password_recepcion">
-                            <div class="css_grid_password_recepcion1">
-                                <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
-                                    <h5 style="color:#888888;">FIRMA UNICA TRASPORTE</h5>
-                                    <div class="input-group mb-3"  id="date_tabla2">
+
+                        <div class="grid_new_fimarrecepcion css_grid_password_recepcion">
+                            <div class="grid_new_fimarrecepcion1">&nbsp;</div>
+                            <div class="card grid_new_fimarrecepcion2">
+                                <div class="card-header">
+                                    <h6 style="margin-bottom: 0px;"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;Firma &uacute;nica transporte</h6>
+                                </div>
+                                <div class="card-body"> 
+                                    <div class="input-group mb-3" id="date_tabla2" style="margin-bottom: 0rem !important;">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
                                         <input type="password" class="form-control" placeholder="Firma quien trasporta" aria-label="Username" aria-describedby="basic-addon1" id="firma_simple_trasporte" name="firma_simple_trasporte"  value="">
                                     </div>
-                                </fieldset>
+                                </div>
                             </div>
-                            <div class="css_grid_password_recepcion4">
-                                <button class="btn btn-xs btn-info" onclick="js_validafirma('firma_simple_trasporte')">
-                                    <i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp;VERIFICACI&Oacute;N<br>&nbsp;FIRMA UNICA
+                            <div class="grid_new_fimarrecepcion3">
+                                <button class="btn btn-info" onclick="js_validafirma('firma_simple_trasporte')">
+                                    <i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp;Verificaci&oacute;n de firma &uacute;nica
                                 </button>
                             </div>
-                            <div class="css_grid_password_recepcion2">
-                                <fieldset class="fieldset_local" style="padding: 10px 10px 0px 10px;">
-                                    <h5 style="color:#888888;">FIRMA UNICA RECEPCI&Oacute;N</h5>
-                                    <div class="input-group mb-3"  id="date_tabla2">
+                            <div class="card grid_new_fimarrecepcion4">
+                                <div class="card-header">
+                                    <h6 style="margin-bottom: 0px;"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;firma &uacute;nica recepci&oacute;n</h6>
+                                </div>
+                                <div class="card-body"> 
+                                    <div class="input-group mb-3" id="date_tabla2" style="margin-bottom: 0rem !important;">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
                                         <input type="password" class="form-control" placeholder="Firma quien recepciona" aria-label="Username" aria-describedby="basic-addon1" id="firma_simple_recepcion" name="firma_simple_recepcion"  value="">
                                     </div>
-                                </fieldset>
-                            </div>
-                            <div class="css_grid_password_recepcion3">
-                                <div class="btn-group">
-                                    <button class="btn btn-fill btn-success all_solicitudes_recepcion toolpit_local" onclick="confirma_recepcion(<?php echo $DATA["ID_SOLICITUD"];?>)">
-                                        <i class="fa fa-check" aria-hidden="true"></i><span class="toolpit_local_txt"><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Confirma recepci&oacute;n de muestras</span>
-                                    </button>
                                 </div>
+                            </div>
+                            <div class="grid_new_fimarrecepcion5">&nbsp;
+                                <button class="btn btn-fill btn-success all_solicitudes_recepcion toolpit_local" onclick="confirma_recepcion(<?php echo $DATA["ID_SOLICITUD"];?>)">
+                                    <i class="fa fa-check" aria-hidden="true"></i><span class="toolpit_local_txt"><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Confirma recepci&oacute;n de muestras</span>
+                                </button>
                             </div>
                         </div>
                         <!-- OTRA OPCIONES -->
