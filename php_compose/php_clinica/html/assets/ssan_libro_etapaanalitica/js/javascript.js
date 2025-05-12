@@ -30,12 +30,10 @@ $(document).ready(function(){
                 }
     });
     $(".timepicker").remove();
-    
     $("#fecha_out").on("dp.change",function(e){ 
         $('#fecha_out2').data("DateTimePicker").minDate($('#fecha_out').data().date);
         update_etapaanalitica(1);
     });
-
     $('#fecha_out2').datetimepicker({
         useCurrent : false,
         inline : true,
@@ -315,16 +313,16 @@ function js_gestion_firma(){
         beforeSend : function(xhr) {  console.log("ssan_libro_etapaanalitica/gestion_cookie   ->  ",xhr);    },
         data : { },
         error : function(errro) { 
-                                    console.log(errro);  
-                                    console.log(errro.responseText);    
-                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#loadFade').modal('hide'); 
-                                },
+            console.log(errro);  
+            console.log(errro.responseText);    
+            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+            $('#loadFade').modal('hide'); 
+        },
         success : function(aData) { 
-                                        $('#loadFade').modal('hide'); 
-                                        $("#html_gestion_firma_patologo").html(aData.html);
-                                        $("#modal_gestion_firma_patologo").modal({backdrop:'static',keyboard:false}).modal("show");
-                                    }, 
+            $('#loadFade').modal('hide'); 
+            $("#html_gestion_firma_patologo").html(aData.html);
+            $("#modal_gestion_firma_patologo").modal({backdrop:'static',keyboard:false}).modal("show");
+        }, 
     });
 }
 
@@ -335,12 +333,12 @@ function js_img_default(){
 function js_img_data(img_base){
     var txt         =   '<div class="card" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">'+
                             '<img '+
-                                'alt                     =  "200x110"'+
-                                'class                   =  "img-thumbnail" '+
-                                'data-src                =  "200x110" '+
-                                'src                     =  "'+img_base+'" '+ 
-                                'data-holder-rendered    =  "true" '+
-                                'style                   =  "width:200px;height:110px;" '+
+                                'alt =  "200x110"'+
+                                'class =  "img-thumbnail" '+
+                                'data-src =  "200x110" '+
+                                'src =  "'+img_base+'" '+ 
+                                'data-holder-rendered =  "true" '+
+                                'style =  "width:200px;height:110px;" '+
                             '>'+
                             '<hr style="margin:2px">'+
                             '<a href="javascript:delete_img_x_muestra()">'+
