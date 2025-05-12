@@ -9,6 +9,9 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
 <form id="load_anuncios_anatomia_patologica" method="post" action="#"></form>
 <form id="get_termino_sala_macroscopia" method="post" action="#"></form>
 <form id="update_chat_x_hoja" method="post" action="#"></form>
+
+<?php print_r();?>
+
 <div class="grid_head_body">
     <div class="grid_head_body1">
         <div class="GRID_LIBRO_BIOPSIAS_II_MAIN1">
@@ -173,7 +176,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
     <div class="grid_etapaanalitica_2"> 
         <div class="grid_titulo_panel_main">
             <div class="grid_titulo_panel_main1">
-                <a href="#">N&deg; DE RESULTADOS&nbsp;<span class="badge n_resultados_panel" style="background-color:dodgerblue;"><?php echo $n_resultado;?></span></a>
+                <a href="#">N&deg; DE RESULTADOS&nbsp;<span class="badge n_resultados_panel" style="background-color:dodgerblue;"><?php echo count($resultados['lista_anatomia']);?></span></a>
                 <input type="hidden" name="V_PAGE_NUMBER" id="V_PAGE_NUMBER" value="<?php echo $n_resultado;?>"/>
                 <input type="hidden" name="V_NUM_PAGINAS" id="V_NUM_PAGINAS" value="<?php echo isset($n_pagina)?$n_pagina:0;?>"/>
                 <input type="hidden" name="V_ULTIMA_PAGE" id="V_ULTIMA_PAGE" value="1"/>

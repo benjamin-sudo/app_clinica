@@ -166,13 +166,10 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         $this->db->where_in('P.COD_EMPRESA', $cod_empresa);
         $this->db->or_where_in('P.COD_ESTABLREF', $cod_empresa);
         $this->db->group_end();
-        
         $query_total_count = $this->db->get();
         $total_count = $query_total_count->row()->total_count;
         $page_size = ($page_size == 0) ? 1 : $page_size;
         $num_paginas = ceil($total_count / $page_size);
-
-
         #Resultados
         $resultados = [
             'lista_anatomia' => $lista_anatomia,
@@ -189,7 +186,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 'fecha_final' => $fecha_final
             ]
         ];
-        
         return [
             'BD' =>  null,
             'resultados' => $resultados,

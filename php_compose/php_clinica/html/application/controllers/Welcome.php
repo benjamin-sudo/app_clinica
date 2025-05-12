@@ -24,8 +24,6 @@ class Welcome extends CI_Controller {
 	
 	public function login(){
         //if (!$this->input->is_ajax_request()) {  show_404(); }
-
-		
 		$this->output->set_output(json_encode([
 			'status' => true
 		]));

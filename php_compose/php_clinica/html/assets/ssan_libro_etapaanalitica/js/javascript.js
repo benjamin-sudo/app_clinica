@@ -133,9 +133,7 @@ $(document).ready(function(){
 
     $("#panel_bacode_1").click(function(){setTimeout(function(){$(".focus_etiqueta").focus();},500);});
     $(".focus_etiqueta").keypress(function(e){ if(e.which==13){ busqueda_etiquera_analitica(0,'',{}); } });
-
     SetFocus();
-    
     //panel de busqueda
     $('#panel_altrapriopidad,#panel_casos,#panel_archivar,#panel_etiquetas').on('show.bs.collapse',function(e){
         e.target.id == 'panel_altrapriopidad' ? localStorage.setItem("memoria_altrapriopidad",true):'';
@@ -153,12 +151,10 @@ $(document).ready(function(){
         e.target.id == 'panel_etiquetas' ? $("#header_menu_etiquetas").css('border-radius','0px 0px 4px 4px'):'';
         $("#icono_"+e.target.id).removeClass("fa fa-sort-desc").addClass("fa fa-sort-asc"); 
     });
-
     localStorage.getItem("memoria_altrapriopidad") === null?localStorage.setItem("memoria_altrapriopidad",true): js_gestion_panel("altrapriopidad");
     localStorage.getItem("memoria_casos") === null?localStorage.setItem("memoria_casos",true) : js_gestion_panel("casos");
     localStorage.getItem("memoria_archivar") === null?localStorage.setItem("memoria_archivar",true) : js_gestion_panel("archivar");
     localStorage.getItem("memoria_etiquetas") === null?localStorage.setItem("memoria_etiquetas",true) : js_gestion_panel("etiquetas");
-    
     //busqueda rapida
     $('.radio_busqueda').click(function (){
         if($(this).val() == 1){
@@ -527,35 +523,32 @@ function star_automplete(_value){
 }
 
 function update_etapaanalitica(v_num_page){
-    var date_inicio = $('#fecha_out').data().date;
-    var date_final = $('#fecha_out2').data().date;
-    
-   
+    let date_inicio = $('#fecha_out').data().date;
+    let date_final = $('#fecha_out2').data().date;
     var v_storange_tabs_main = localStorage.getItem("storange_tabs_main") || null;
     if (v_storange_tabs_main) {
         var v_html_vista = v_storange_tabs_main.replace("#","");
     } else {
-        var v_html_vista = '_panel_por_fecha'; // O cualquier valor predeterminado que tenga sentido en tu contexto
+        var v_html_vista = '_panel_por_fecha';
     }
-    
     var v_get_sala = $("#get_sala").val();
     var v_filtro_fechas = $("#ind_filtro_busqueda_xfechas").val()===null?'-1':$("#ind_filtro_busqueda_xfechas").val().join(",");
     var v_ids_anatomia = localStorage.getItem("storange_ids_anatomia");
     let ind_orden = $("#ind_order_by").val();
     let v_num_page2 = typeof v_num_page === 'undefined' ? 1 : v_num_page;
     /*
-    console.log("   ######################################################  ");
-    console.log("   v_storange_tabs_main   ->  ",v_storange_tabs_main);
-    console.log("   v_get_sala             ->  ",v_get_sala);
-    console.log("   v_filtro_fechas        ->  ",v_filtro_fechas);
-    console.log("   v_ids_anatomia         ->  ",v_ids_anatomia);
-    console.log("   ind_orden              ->  ",ind_orden);
-    console.log("   v_num_page2            ->  ",v_num_page2);
-    console.log("   ######################################################  ");
+        console.log("   ######################################################  ");
+        console.log("   v_storange_tabs_main   ->  ",v_storange_tabs_main);
+        console.log("   v_get_sala             ->  ",v_get_sala);
+        console.log("   v_filtro_fechas        ->  ",v_filtro_fechas);
+        console.log("   v_ids_anatomia         ->  ",v_ids_anatomia);
+        console.log("   ind_orden              ->  ",ind_orden);
+        console.log("   v_num_page2            ->  ",v_num_page2);
+        console.log("   ######################################################  ");
     */
     //$('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
     let v_open = $('#ind_filtro_busqueda_xfechas').parent().hasClass('show');
-    console.log("v_open ->",v_open);
+    //console.log("v_open ->",v_open);
     if (v_open) {
         $('#ind_filtro_busqueda_xfechas').selectpicker('toggle');
     }
@@ -577,41 +570,37 @@ function update_etapaanalitica(v_num_page){
                     v_page_size : 10  //int 
                 },
         error : function(errro) { 
-                                        console.log(errro);  
-                                        jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                    },
+            console.log(errro);  
+            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+        },
         success : function(aData) { 
-                                        
-                                        //console.error("###################################");
-                                        //console.error(aData);
-                                        //console.error("return -> ",aData.return);
-                                        let html_out = aData.out_html.return_html;
-                                        //console.error("return               ->  ",aData.return);
-                                        //console.error("resultados           ->  ",aData.return.resultados);
-                                        //console.error("v_storange_tabs_main ->  ",v_storange_tabs_main);
-                                        //let html_li = $("."+aData.id_html_out).data().zona_li;
-                                        //let html_li = v_html_vista;
-                                        /*
-                                        console.error("v_storange_tabs_main     ->  ",v_storange_tabs_main);
-                                        console.error("v_html_vista             ->  ",v_html_vista);
-                                        console.error("html_li                  ->  ",html_out);
-                                        */
-                                        $(".html"+v_html_vista).html('').html(html_out);
-                                        if(v_storange_tabs_main == '#_panel_por_fecha'){
-                                            $("#V_ULTIMA_PAGE").val(v_num_page);
-                                            if (aData.return.n_resultado == '0'){
-                                                $("#anatomia_pagination").hide();
-                                            } else {
-                                                $("#anatomia_pagination").show();
-                                                $('.anatomia_pagination').bootpag({page : v_num_page, total : aData.return.n_pagina});
-                                            }
-                                        } else {
-                                            $("#anatomia_pagination").hide();
-                                        }
-                                        $(".n_resultados_panel").html(aData.return.n_resultado);
-                                        setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                    }, 
+            //console.error(aData);
+            //console.error("return -> ",aData.return);
+            let html_out = aData.out_html.return_html;
+            //console.error("return -> ",aData.return);
+            //console.error("resultados -> ",aData.return.resultados);
+            //console.error("v_storange_tabs_main ->  ",v_storange_tabs_main);
+            //let html_li = $("."+aData.id_html_out).data().zona_li;
+            //let html_li = v_html_vista;
+            //console.error("v_storange_tabs_main -> ",v_storange_tabs_main);
+            //console.error("v_html_vista -> ",v_html_vista);
+            //console.error("html_li -> ",html_out);
+            $(".html"+v_html_vista).html('').html(html_out);
+            if(v_storange_tabs_main == '#_panel_por_fecha'){
+                $("#V_ULTIMA_PAGE").val(v_num_page);
+                if (aData.return.n_resultado == '0'){
+                    $("#anatomia_pagination").hide();
+                } else {
+                    $("#anatomia_pagination").show();
+                    $('.anatomia_pagination').bootpag({page : v_num_page, total : aData.return.n_pagina});
+                }
+            } else {
+                $("#anatomia_pagination").hide();
+            }
+            $(".n_resultados_panel").html(aData.return.n_resultado);
+            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+        }, 
     });
 }
 
@@ -625,9 +614,9 @@ function js_vista_opcion_busqueda(_value){
 }
 
 function js_delete_list_gestion(new_id_anatomia){
-    var new_id_anatomia                         =   new_id_anatomia.toString();
-    var arr_storange_ids_anatomia               =   localStorage.getItem("storange_ids_anatomia").split(',');
-    var v_return_indice                         =   arr_storange_ids_anatomia.indexOf(new_id_anatomia); 
+    var new_id_anatomia = new_id_anatomia.toString();
+    var arr_storange_ids_anatomia = localStorage.getItem("storange_ids_anatomia").split(',');
+    var v_return_indice = arr_storange_ids_anatomia.indexOf(new_id_anatomia); 
     //console.log("------------------------------------------------------------------------------");
     //console.log("arr_storange_ids_anatomia    =>  ",arr_storange_ids_anatomia);
     //console.log("new_id_anatomia delete       =>  ",new_id_anatomia);

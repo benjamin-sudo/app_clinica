@@ -31,12 +31,10 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             if($tipo_busqueda === '#_panel_por_fecha'){
                 $arr_estados_filtro =   isset($_COOKIE['data_filtro_fechas_estados'])?$_COOKIE['data_filtro_fechas_estados']:'0';
                 if(isset($_COOKIE['data'])){
-                    //var_dump(1);
                     $conf_cookie = json_decode($this->input->cookie('data',false));
                     $var_fecha_inicio = $conf_cookie->fecha_inicio;
                     $var_fecha_final = strtotime($conf_cookie->fecha_final)>strtotime($conf_cookie->fecha_inicio)?$conf_cookie->fecha_final:$conf_cookie->fecha_inicio;
                 } else {
-                    //var_dump(2);
                     $var_fecha_inicio = date("d-m-Y");
                     $var_fecha_final = date("d-m-Y");
                 }
@@ -58,7 +56,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $var_fecha_inicio = date("d-m-Y");
             $var_fecha_final = date("d-m-Y");
         }
-
         #$arr_ids_anatomia = [];
         #$tipo_busqueda = '#_panel_por_fecha';
         #LOAD_ETAPA_ANALITICA
@@ -91,6 +88,7 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $this->load->view("ssan_libro_etapaanalitica/ssan_libro_etapaanalitica_view",$return_data);
     }
 
+    
     public function update_lista_etapaanalitica_pagina(){
         if(!$this->input->is_ajax_request()){ show_404(); }
         $tipo_busqueda = $this->input->post('tabs');
@@ -129,9 +127,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $cookie_time = array(
                                     'name' =>  'data',
                                     'value' =>  json_encode(array(
-                                                    'tipo_busqueda'     =>  'por_fecha',
-                                                    'fecha_inicio'      =>  $fecha_inicio,
-                                                    'fecha_final'       =>  $fecha_final,
+                                                    'tipo_busqueda' =>  'por_fecha',
+                                                    'fecha_inicio' =>  $fecha_inicio,
+                                                    'fecha_final' =>  $fecha_final,
                                                 )),
                                     'expire' =>  86500,
                                     'secure' =>  false
