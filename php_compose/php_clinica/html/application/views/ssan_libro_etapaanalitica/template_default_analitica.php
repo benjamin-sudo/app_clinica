@@ -114,7 +114,7 @@
                 </table>
             </div>
         </div>
-        <div class="card" id="card_logs_muestras" style="margin-bottom: 5px">
+        <div class="card" id="card_logs_muestras" style="margin-bottom: 5px;display:none;">
             <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
                 <h5 class="title"><i class="fa fa-database" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">EVENTOS</b></h5>
             </div>
@@ -318,7 +318,7 @@
             </div>
         </div>
         
-        <div class="card" id="card_logs_chat" style="margin-bottom: 5px">
+        <div class="card" id="card_logs_chat" style="margin-bottom: 5px;display: none;" >
             <div class="header" style="margin-left: 22px;margin-top: 14px;margin-bottom: 10px;">
                 <h5 class="title"><i class="fa fa-weixin" aria-hidden="true" style="color:#888888;"></i>&nbsp;<b style="color:#888888;">MENSAJES</b></h5>
             </div>

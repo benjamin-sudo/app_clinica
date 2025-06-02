@@ -959,19 +959,19 @@ input[type="file"]                      {
 }
 
 .grid_btn_image                         {
-    display                             :   grid;
-    grid-template-columns               :   1fr 1fr;
-    align-items                         :   center;
+    display : grid;
+    grid-template-columns : 1fr 1fr;
+    align-items : center;
 }
 
-.img-thumbnail                          {
-    display                             :   block;
-    margin-left                         :   auto;
-    margin-right                        :   auto;
+.img-thumbnail {
+    display : block;
+    margin-left : auto;
+    margin-right : auto;
 }
 
-.padding-personalizado                  {
-    padding                             :   10px;
+.padding-personalizado {
+    padding : 10px;
 }
 
 .grid_contenedo_paginado {
@@ -1025,4 +1025,7 @@ input[type="file"]                      {
     gap: 8px;
     margin-top: 15px;
     padding: 12px;
+    align-items: baseline;
+    justify-self: flex-start;
+    justify-items: anchor-center;
 }

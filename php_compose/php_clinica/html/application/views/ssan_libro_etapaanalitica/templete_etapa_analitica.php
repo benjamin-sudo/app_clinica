@@ -1298,14 +1298,11 @@
     <?php } ?>
 </style>
 
-
-<hr>
-<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_VISUALIZACION"];?>
-<hr>
-
-
 <script>
 $(document).ready(function(){
+    
+    <?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_VISUALIZACION"]=="1"?" $('#ind_visualizacion').val(1);":"";?>
+
     $('.style_panel_micro').click(function(){
         var panel_select = $(this).val();
         //console.log("panel_select ->  ",panel_select);

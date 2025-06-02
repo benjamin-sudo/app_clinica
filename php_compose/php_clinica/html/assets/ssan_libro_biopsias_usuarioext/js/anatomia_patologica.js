@@ -1839,11 +1839,11 @@ function confirma_trasporte_all(fase){
 //FASE 3 - RECEPCION 
 //RECEPCION INDIVIAL 
 function confirma_recepcion(id_anatomia){
-    var errores                         =   [];
-    var firma_simple_trasporte          =   $("#firma_simple_trasporte").val();
-    var firma_simple_recepcion          =   $("#firma_simple_recepcion").val();
-    var v_num_interno                   =   $("#num_interno").val();
-    var num_interno_cito                =   $("#num_interno_cito").val(); 
+    var errores = [];
+    var firma_simple_trasporte = $("#firma_simple_trasporte").val();
+    var firma_simple_recepcion = $("#firma_simple_recepcion").val();
+    var v_num_interno = $("#num_interno").val();
+    var num_interno_cito = $("#num_interno_cito").val(); 
     //console.log("-----------------------------------------------------------------");
     //console.log("1.-firma_simple_trasporte  ->    ",firma_simple_trasporte,"<-    ");
     //console.log("2.-firma_simple_recepcion  ->    ",firma_simple_recepcion,"<-    ");
@@ -1868,12 +1868,12 @@ function confirma_recepcion(id_anatomia){
         });
         return false;
     } 
-    var STATUS_MUESTRAS                 =   get_lista_activos(id_anatomia);
-    if(STATUS_MUESTRAS.NUM_CHECKED      ==  0){ 
+    var STATUS_MUESTRAS = get_lista_activos(id_anatomia);
+    if(STATUS_MUESTRAS.NUM_CHECKED ==  0){ 
         jError("No se ha marcado muestras para recepci&oacute;n","Clinica Libre");  
         return false;  
     }
-    var LISTA_ANATOMIA                  =   {  RESUL : [] };
+    var LISTA_ANATOMIA = {  RESUL : [] };
     LISTA_ANATOMIA.RESUL.push(STATUS_MUESTRAS);
     if(!STATUS_MUESTRAS.ALL_OK_SAMPLES){
         jConfirm('No todas las muestras fueron marcadas. la solicitud quedara en <b>estado incompleta</b> para la recepci&oacute;n. &iquest;Desea Agregar?','Clinica Libre - ANATOM&Iacute;A PATOL&Oacute;GICA',function(r){
@@ -1891,11 +1891,11 @@ function confirma_recepcion(id_anatomia){
 
 //RECEPCION ALL
 function confirma_recepcion_all(fase){
-    var LISTA_ANATOMIA                  =   {   RESUL : [] };
-    var traffic_all                     =   true;
+    var LISTA_ANATOMIA = {   RESUL : [] };
+    var traffic_all = true;
     $('.all_solicitudes_recepcion').each(function(index,value){
-        var RETURN_ACTIVOS              =   get_lista_activos(value.id);
-        var STATUS_MUESTRAS             =   RETURN_ACTIVOS;
+        var RETURN_ACTIVOS = get_lista_activos(value.id);
+        var STATUS_MUESTRAS = RETURN_ACTIVOS;
         if(!STATUS_MUESTRAS.ALL_OK_SAMPLES){ traffic_all =  false;} 
         LISTA_ANATOMIA.RESUL.push(STATUS_MUESTRAS);
     });

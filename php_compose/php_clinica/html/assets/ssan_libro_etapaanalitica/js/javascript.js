@@ -1222,9 +1222,9 @@ function js_envia_chat(option){
 function update_mensajes_chat(){
     var arr_chat    =   $("#lista_chat").data('mensajes');
     var li_html     =   '';
-    console.log("---------------------------------");
-    console.log("arr_chat   =>  ",arr_chat,"    <=");
-    console.log("---------------------------------");
+    //console.log("---------------------------------");
+    //console.log("arr_chat   =>  ",arr_chat,"    <=");
+    //console.log("---------------------------------");
     $.each(arr_chat,function(aux,row){
         li_html     +=  '<a href="#" class="list-group-item list-group-item-action" style="padding:0px;">'+
                             '<div class="grid_body_li_chat">'+
@@ -1242,11 +1242,10 @@ function update_mensajes_chat(){
 }
 
 function js_end_scroll(){
-    var div                 =   document.getElementById('body_chat');
+    var div = document.getElementById('body_chat');
     //console.log("div->",div);
-    div.scrollTop           =   $('#body_chat')[0].scrollHeight;
+    div.scrollTop = $('#body_chat')[0].scrollHeight;
 }
-
 
 function js_gestion_panel(txt){
     if (txt=='etiquetas' &&  localStorage.getItem("memoria_"+txt)==="false"){ 
