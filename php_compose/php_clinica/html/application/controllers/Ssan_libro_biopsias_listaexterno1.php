@@ -349,10 +349,10 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
         $n_interno_2 = $this->input->post('n_interno_2');
         $ind_tipo_biopsia =   $this->input->post('ind_tipo_biopsia'); 
         $usuarioh = explode("-",$this->session->userdata("USERNAME"));
-        #$num_memo_notificacion             =   true;
+        #$num_memo_notificacion =   true;
         $TXT_ERROR = '';
         $DATA = '';
-        #$valida                            =   '';
+        #$valida =   '';
         $STATUS = true;
         $arr_errores = array();
         $arr_password = $this->input->post('pass');
@@ -364,25 +364,25 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             $STATUS = false;
         } else {
             $DATA = $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_recepcion(array(
-                        "COD_EMPRESA"       =>  $empresa,
-                        "SESSION"           =>  $usuarioh[0], 
-                        "ID_ANATOMIA"       =>  $id_anatomia,
-                        "ARRAY"             =>  $array_muestras,
-                        "DATA_FIRMA"        =>  $valida,
-                        "n_interno"         =>  $n_interno,
-                        "n_interno_2"       =>  $n_interno_2,
-                        "ind_tipo_biopsia"  =>  $ind_tipo_biopsia,
-                    ));
+                "COD_EMPRESA" =>  $empresa,
+                "SESSION" =>  $usuarioh[0], 
+                "ID_ANATOMIA" =>  $id_anatomia,
+                "ARRAY" =>  $array_muestras,
+                "DATA_FIRMA" =>  $valida,
+                "n_interno" =>  $n_interno,
+                "n_interno_2" =>  $n_interno_2,
+                "ind_tipo_biopsia"  =>  $ind_tipo_biopsia,
+            ));
         }
 
         $this->output->set_output(json_encode(array(
-            'ERRORES'       =>  $arr_errores,
-            'PASS'          =>  $arr_password,
-            'GET_BD'        =>  $DATA,
-            'DATA_FIRMA'    =>  $valida,
-            'RETURN'        =>  $STATUS,
-            'TXT_ERROR'     =>  $TXT_ERROR,
-            'STATUS'        =>  $STATUS,
+            'ERRORES' =>  $arr_errores,
+            'PASS' =>  $arr_password,
+            'GET_BD' =>  $DATA,
+            'DATA_FIRMA' =>  $valida,
+            'RETURN' =>  $STATUS,
+            'TXT_ERROR' =>  $TXT_ERROR,
+            'STATUS' =>  $STATUS,
         )));
     }
 

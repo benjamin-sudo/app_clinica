@@ -1848,12 +1848,12 @@ function confirma_recepcion(id_anatomia){
     //console.log("1.-firma_simple_trasporte  ->    ",firma_simple_trasporte,"<-    ");
     //console.log("2.-firma_simple_recepcion  ->    ",firma_simple_recepcion,"<-    ");
     //console.log("-----------------------------------------------------------------");
-    console.log("V_IND_TIPO_BIOPSIA     ->  ",$("#V_IND_TIPO_BIOPSIA").val());
-    console.log("num_interno_cito       ->  ",num_interno_cito);
+    //console.log("V_IND_TIPO_BIOPSIA ->  ",$("#V_IND_TIPO_BIOPSIA").val());
+    //console.log("num_interno_cito ->  ",num_interno_cito);
     firma_simple_trasporte  === ''?errores.push({"txt":"Falta firma simple de quien trasporto muestras","id":"#firma_simple_trasporte"}):$("#firma_simple_trasporte").css("border-color","");
     firma_simple_recepcion  === ''?errores.push({"txt":"Falta firma simple de quien recepciona las muestras","id":"#firma_simple_recepcion"}):$("#firma_simple_recepcion").css("border-color","");
     errores.length>0 ? '' : firma_simple_trasporte === firma_simple_recepcion ? errores.push({"txt":"Firmas Iguales","id":"#firma_simple_trasporte,#firma_simple_recepcion"}) : $("#firma_simple_trasporte,#firma_simple_recepcion").css("border-color","");
-    v_num_interno           === ''?errores.push({"txt":"Indicar N&deg; interno de anatom&iacute;a patol&oacute;gica","id":"#num_interno"}):$("#num_interno").css("border-color","");
+    v_num_interno === ''?errores.push({"txt":"Indicar N&deg; interno de anatom&iacute;a patol&oacute;gica","id":"#num_interno"}):$("#num_interno").css("border-color","");
     //num_interno_cito === '' && $("#V_IND_TIPO_BIOPSIA").val() === 4  ? errores.push({"txt":"Indicar N&deg; citologico vacio","id":"#num_interno_cito"}):$("#num_interno_cito").css("border-color","");
     if (num_interno_cito === '' && $("#V_IND_TIPO_BIOPSIA").val() == 4 ){
         errores.push({"txt":"Indicar N&deg; citologico vacio","id":"#num_interno_cito"});
