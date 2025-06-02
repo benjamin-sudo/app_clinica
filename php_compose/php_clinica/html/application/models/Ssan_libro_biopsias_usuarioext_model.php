@@ -1628,11 +1628,11 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>';
                             if ($row['IND_VISUALIZACION'] == "1") {
-                                $HTML .="SI PAGO";
-                            }
-
+                                $HTML .='<button type="button" class="btn btn-info btn-fill" id="pdf_anatomia_patologica" onclick="js_pdf_microscopica('.$row['ID_SOLICITUD'].')">
+                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    </button>';
+                                    }
                     //$HTML .= $row['IND_VISUALIZACION'];
-
                 } else {
                     $HTML .= '-';
                 }

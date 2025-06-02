@@ -605,3 +605,53 @@ function GET_PDF_ANATOMIA_PANEL(id){
         }, 
     });
 }
+
+function js_pdf_microscopica(id_anatomia){
+    $('#loadFade').modal('show'); 
+    $.ajax({ 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/pdf_macroscopia_parte2",
+        dataType : "json",
+        beforeSend :   function(xhr){ },
+        data : { id : id_anatomia },
+        error : function(errro) { 
+            console.log("quisas->",errro,"-error->",errro.responseText); 
+            $("#protocoloPabellon").css("z-index","1500"); 
+            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+        },
+        success : function(aData) { 
+            console.log("aData  ->  ",aData);
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            if(!aData["STATUS"]){
+                jError("Error al cargar protocolo PDF","Clinica Libre");
+                return false;
+            } else {
+                var base64str = aData["PDF_MODEL"];
+                var binary = atob(base64str.replace(/\s/g,''));
+                var len = binary.length;
+                var buffer = new ArrayBuffer(len);
+                var view = new Uint8Array(buffer);
+                for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                var blob = new Blob([view],{type:"application/pdf"});
+                var blobURL = URL.createObjectURL(blob);
+                Objpdf = document.createElement('object');
+                Objpdf.setAttribute('data',blobURL);
+                Objpdf.setAttribute('width','100%');
+                let windowHeight = window.innerHeight;
+                let adjustedHeight = windowHeight - 200;
+                Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                Objpdf.setAttribute('title','PDF');
+                $('#HTML_PDF_ANATOMIA_PATOLOGICA').html(Objpdf);
+                $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show");
+            }
+        }, 
+   });
+}
+
+
+
+
+
+
+
