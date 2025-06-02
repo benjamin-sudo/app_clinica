@@ -1191,55 +1191,55 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     #finalizacion de rce
     public function finaliza_reporte_anatomia_patologica(){
         if(!$this->input->is_ajax_request()){ show_404(); }  
-        $status_contrasena              =   true;
-        $status                         =   true;
-        $return                         =   [];
-        $accesdata                      =   $this->input->post('accesdata');
-        $id_anatomia                    =   $this->input->post('id_anatomia');
-        $id_salida                      =   $this->input->post('id_salida');
-        $contrasena                     =   $this->input->post('contrasena'); 
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $status_contrasena = true;
+        $status = true;
+        $return = [];
+        $accesdata = $this->input->post('accesdata');
+        $id_anatomia = $this->input->post('id_anatomia');
+        $id_salida = $this->input->post('id_salida');
+        $contrasena = $this->input->post('contrasena'); 
+        $arr_user = $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0)  {
-            $return             =   $this->ssan_libro_etapaanalitica_model->guardado_anatomia_patologica(array( 
-                'accesdata'     =>  $accesdata,
-                'id_anatomia'   =>  $id_anatomia,
-                'session'       =>  explode("-",$this->session->userdata("USERNAME"))[0],
-                'id_salida'     =>  $id_salida,
+            $return = $this->ssan_libro_etapaanalitica_model->guardado_anatomia_patologica(array( 
+                'accesdata' => $accesdata,
+                'id_anatomia' => $id_anatomia,
+                'session' => explode("-",$this->session->userdata("USERNAME"))[0],
+                'id_salida' => $id_salida,
             ));
         } else {
             $status_contrasena  =   false;
         }
         $this->output->set_output(json_encode(array(
-            'status_pass'               =>  $status_contrasena,
-            'status'                    =>  $status,
-            'return'                    =>  $return,
+            'status_pass' => $status_contrasena,
+            'status' => $status,
+            'return' => $return,
         )));
     }
     
     public function guardado_perfil_administrativo() {
         if(!$this->input->is_ajax_request()){ show_404(); }  
-        $status                         =   true;
-        $status_firma                   =   true;
-        $return                         =   [];
-        $contrasena                     =   $this->input->post('contrasena'); 
-        $accesdata                      =   $this->input->post('accesdata');
-        $id_anatomia                    =   $this->input->post('id_anatomia');
-        $arr_user                       =   $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
+        $status = true;
+        $status_firma = true;
+        $return = [];
+        $contrasena = $this->input->post('contrasena'); 
+        $accesdata = $this->input->post('accesdata');
+        $id_anatomia = $this->input->post('id_anatomia');
+        $arr_user = $this->ssan_libro_etapaanalitica_model->sqlvalidaclave($contrasena);
         if(count($arr_user)>0){
-            $return                     =   $this->ssan_libro_etapaanalitica_model->guarda_informacion_perfil_administrativo(array( 
-                'accesdata'             =>  $accesdata,
-                'id_anatomia'           =>  $id_anatomia,
-                'session'               =>  explode("-",$this->session->userdata("USERNAME"))[0],
-                'data_firma'            =>  $arr_user,
+            $return = $this->ssan_libro_etapaanalitica_model->guarda_informacion_perfil_administrativo(array( 
+                'accesdata' => $accesdata,
+                'id_anatomia' => $id_anatomia,
+                'session' => explode("-",$this->session->userdata("USERNAME"))[0],
+                'data_firma' => $arr_user,
             ));
         } else {
-            $status_firma               =   false;
+            $status_firma = false;
         }
         $this->output->set_output(json_encode(array(
-            'status_firma'              =>  $status_firma,
-            'status'                    =>  $status,
-            'return'                    =>  $return,
-            'arr_user'                  =>  $arr_user,
+            'status_firma' => $status_firma,
+            'status' => $status,
+            'return' => $return,
+            'arr_user' => $arr_user,
         )));
     }
     

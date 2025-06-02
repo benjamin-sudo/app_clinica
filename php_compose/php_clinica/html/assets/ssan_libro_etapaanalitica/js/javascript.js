@@ -1725,6 +1725,7 @@ function js_gestion_patologo(id_salida,id_anatomia){
         date_revision_bd : $("#date_revision_bd").val(),  
         date_chequeo_some : $("#date_chequeo_some").val(),
         date_archivada_en_ficha : $("#date_archivada_en_ficha").val(), 
+        ind_visible : $("#ind_visualizacion").val(),
     };
     obj_rce_anatomia.formulario_administrativo.push(data_main_administrativo);
 
@@ -1747,10 +1748,10 @@ function js_gestion_patologo(id_salida,id_anatomia){
         num_he_rapida : $("#num_he_rapida").val(),
      };
     obj_rce_anatomia.formulario_tecnologo_med.push(data_main_tecnologo_medico);
-    var lista_observaciones_img             =   [];
+    var lista_observaciones_img =   [];
     $('.lista_imagenes').each(function(){  
-        console.log("->",this.id);
-        var txt                             =   $("#texto_img_"+this.id).val();
+        //console.log("->",this.id);
+        var txt = $("#texto_img_"+this.id).val();
         lista_observaciones_img.push({'id':this.id,'txt':txt});
     });
     if(lista_observaciones_img.length>0){
@@ -1775,23 +1776,16 @@ function js_gestion_patologo(id_salida,id_anatomia){
     if(arr_patologias!=null){
         obj_rce_anatomia.arr_patologias.push(arr_patologias);
     }
-    
     //descripcion de muestras
     $('.value_microscopia').each(function(){
         var txt = $("#"+this.id).val();
         var num = $("#"+this.id).data('muestra');
         obj_rce_anatomia.arr_info_microscopia.push({'txt':txt,'num':num});
     });
-
     /*
-        console.log("---------------------------------------------------------------------------------------");
-        console.log("   add txt_macroscopia     ");
-        console.log("---------------------------------------------------------------------------------------");
-        console.log("   id_salida   ->  ",id_salida ," || obj_rce_anatomia ||    ->",obj_rce_anatomia,"<----");
-        console.log("---------------------------------------------------------------------------------------");
-        return false;
+    console.log("   id_salida   ->  ",id_salida ," || obj_rce_anatomia ||    ->",obj_rce_anatomia,"<----");
+    return false;
     */
-
     if(id_salida == 1){
         $.ajax({ 
             type : "POST",

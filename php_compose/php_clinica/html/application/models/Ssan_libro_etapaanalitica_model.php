@@ -1378,8 +1378,12 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 if(isset($datos["date_revision_informe"])){
                     $dataSolicitud = array_merge($dataSolicitud, array("DATE_REVISION_INFORME" => date('Y-m-d', strtotime($datos["date_revision_informe"]))));
                 }
+
                 if(isset($datos["date_archivada_en_ficha"])){
                     $dataSolicitud = array_merge($dataSolicitud, array("DATE_ARCHIVADA_EN_FICHA" => date('Y-m-d', strtotime($datos["date_archivada_en_ficha"]))));
+                }
+                if(isset($datos["ind_visible"])){
+                    $dataSolicitud = array_merge($dataSolicitud, array("IND_VISUALIZACION_" => $datos["ind_visible"]));
                 }
             }
             
