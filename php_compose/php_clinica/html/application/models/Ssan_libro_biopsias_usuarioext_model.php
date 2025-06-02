@@ -1404,7 +1404,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             }  else if ($CALL_FASE == 2){
                                 
                                 if($row['ID_HISTO_ESTADO'] == 3 || $row['ID_HISTO_ESTADO'] == 1){
-                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp; 1 RECEPCI&Oacute;N</a></li>';
+                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp; 1RECEPCI&Oacute;N</a></li>';
                                     $BTN .= '<li class="divider"></li>';
                                 } else if($row['ID_HISTO_ESTADO'] == 4){
                                     //IND_ESTADO_MUESTRAS
@@ -1573,8 +1573,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 #$row['ID_SOLICITUD'];
                 $HTML       .=      '
                                     <tr 
-                                            id              =   "DATA_'.$row['ID_SOLICITUD'].'"
-                                            data-paciente   =   "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
+                                            id = "DATA_'.$row['ID_SOLICITUD'].'"
+                                            data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
                                         >
                                         <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
                                         <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br> <i>Ficha:'.$row['FICHAL'].' | '.$row['RUTPACIENTE'].'</i></td>
@@ -1606,9 +1606,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                         if( $row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
                                             $HTML   .= '<a href="javascript:js_cambio_fecha('.$row['ID_SOLICITUD'].')">'.$row['FECHA_TOMA_MUESTRA'].'</a>';
                                         } else {
-                                            $HTML   .= $row['FECHA_TOMA_MUESTRA'];
+                                            $HTML .= $row['FECHA_TOMA_MUESTRA'];
                                         }
-                                        $HTML   .='  
+                                        $HTML .='  
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-fill" id="pdf_anatomia_patologica" onclick="GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')">
@@ -1630,13 +1630,18 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                             </button>';
                 #YA RECEPCIONADA    
                 } else if($row['ID_HISTO_ESTADO'] == 4){   
-                    $HTML       .=          '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
-                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                            </button>';
+                    $HTML .= '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            </button>';
+
+
+                    $HTML .= $row['IND_VISUALIZACION'];
+
                 } else {
-                    $HTML       .=          '-';
+                    $HTML .= '-';
                 }
-                $HTML       .=      '
+
+                $HTML .= '
                                         </td>
                                     </tr>
                                     ';
