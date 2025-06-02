@@ -1619,20 +1619,19 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
                 #RECHAZADA     
                 } else if($row['ID_HISTO_ESTADO'] == 5){     
-                    $HTML       .=          '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')">
-                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                            </button>';
+                    $HTML       .= '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')">
+                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    </button>';
                 #YA RECEPCIONADA    
                 } else if($row['ID_HISTO_ESTADO'] == 4){   
                     $HTML .= '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>';
                             if ($row['IND_VISUALIZACION'] == "1") {
-                                $HTML .='<button type="button" class="btn btn-info btn-fill" id="pdf_anatomia_patologica" onclick="js_pdf_microscopica('.$row['ID_SOLICITUD'].')">
+                                $HTML .='<button type="button" class="btn btn-info btn-fill" id="pdf_anatomia_patologica" onclick="js_pdf_microscopica('.$row['ID_SOLICITUD'].')" style="margin-top: 5px;">
                                         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                     </button>';
                                     }
-                    //$HTML .= $row['IND_VISUALIZACION'];
                 } else {
                     $HTML .= '-';
                 }
