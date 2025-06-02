@@ -1577,8 +1577,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
                                 >
                                 <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
-                                <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br> | run: '.$row['RUTPACIENTE'].'</i></td>
-                                <td style="vertical-align: initial;">   '.$row['PROFESIONAL'].' <br>  <i>'.$row['RUT_PROFESIOAL'].'</i></td>
+                                <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br>'.$row['RUTPACIENTE'].'</i></td>
+                                <td style="vertical-align: initial;">'.$row['PROFESIONAL'].'<br><i>'.$row['RUT_PROFESIOAL'].'</i></td>
                                 <td>
                                     <div class="grid_vista_resumen">
                                         <div class="grid_vista_resumen1"> '.$row['TIPO_DE_BIOPSIA'].'</div>
@@ -1627,7 +1627,12 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     $HTML .= '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>';
+                            if ($row['IND_VISUALIZACION'] == "1") {
+                                $HTML .="SI PAGO";
+                            }
+
                     //$HTML .= $row['IND_VISUALIZACION'];
+
                 } else {
                     $HTML .= '-';
                 }
