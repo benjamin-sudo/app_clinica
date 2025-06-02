@@ -761,14 +761,14 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
     }
     
     public function busqueda_img_clob($id_anatomia){
-        $query = $this->db->query("SELECT ´´ AS ID_UNICO_IMAGEN, ID_SOLICITUD_HISTO, COD_EMPRESA, SIZE_BLG, 
+        $query = $this->db->query("SELECT 0 AS ID_UNICO_IMAGEN, ID_SOLICITUD_HISTO, COD_EMPRESA, SIZE_BLG, 
             CONTEXT_TYPE, MAIN_BLOB, IND_ESTADO, IMG_DATA, NAME_IMG, TXT_OBSERVACIONES, 
             ID_UID, USR_CREA, DATE_CREA, BFILE, NCLOB 
         FROM PB_MAIN_BLG_ANATOMIA
         WHERE ID_SOLICITUD_HISTO IN (?) 
         AND IND_ESTADO = 1
         ORDER BY DATE_CREA", array($V_ID_ANATOMIA));
-        $query_muestras = $this->db->query("SELECT ´´ as  ID_MAIN, ID_SOLICITUD_HISTO, ID_HISTO_ZONA, ID_NMUESTRA, ID_CASETE, 
+        $query_muestras = $this->db->query("SELECT 0 as  ID_MAIN, ID_SOLICITUD_HISTO, ID_HISTO_ZONA, ID_NMUESTRA, ID_CASETE, 
             COD_EMPRESA, SIZE_BLG, CONTEXT_TYPE, MAIN_BLOB, IND_ESTADO, IMG_DATA, 
             NAME_IMG, TXT_OBSERVACIONES, BFILE, NCLOB, ID_UID, USR_CREA, DATE_CREA, 
             USR_AUDITA, DATE_AUDITA 
