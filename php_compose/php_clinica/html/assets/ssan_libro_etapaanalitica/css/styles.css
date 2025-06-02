@@ -1023,4 +1023,6 @@ input[type="file"]                      {
     display : grid;
     grid-template-columns : auto 1fr;
     gap: 8px;
+    margin-top: 15px;
+    padding: 12px;
 }

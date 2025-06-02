@@ -209,13 +209,13 @@
                         <b style="color:#888888;">DESCRIPCI&Oacute;N CITOL&Oacute;GICO</b>
                     </h6>
                     <textarea class="form-control input-sm" 
-                        name        =   "txt_citologico" 
-                        id          =   "txt_citologico" 
-                        cols        =   "65" 
-                        rows        =   "5" 
-                        style       =   "width:100%;"
-                        oninput     =   "js_auto_grow(this)"
-                        maxlength   =   "4000"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_CITOLOGICO"];?></textarea>
+                        name = "txt_citologico" 
+                        id = "txt_citologico" 
+                        cols = "65" 
+                        rows = "5" 
+                        style = "width:100%;"
+                        oninput = "js_auto_grow(this)"
+                        maxlength = "4000"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_CITOLOGICO"];?></textarea>
                     </div>
                 <?php } else {  ?>
                     <input type="hidden" id="txt_diagnostico_citologico" name="txt_diagnostico_citologico" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_DIAG_CITOLOGICO"];?>"/>
@@ -1299,6 +1299,11 @@
 </style>
 
 
+<hr>
+<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["IND_VISUALIZACION"];?>
+<hr>
+
+
 <script>
 $(document).ready(function(){
     $('.style_panel_micro').click(function(){
@@ -1415,6 +1420,10 @@ $(document).ready(function(){
         $("#hrs_inicio_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION21"];?>");
         $("#date_termino_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION3"];?>");
         $("#hrs_termino_cancer").val("<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["DATE_FECHA_REALIZACION32"];?>");
+
+
+
+
     <?php } ?> 
     setTimeout(function(){ 
         autosize($('#txt_diagnostico_ap'));

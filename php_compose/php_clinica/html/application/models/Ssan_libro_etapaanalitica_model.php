@@ -1383,10 +1383,12 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                     $dataSolicitud = array_merge($dataSolicitud, array("DATE_ARCHIVADA_EN_FICHA" => date('Y-m-d', strtotime($datos["date_archivada_en_ficha"]))));
                 }
                 if(isset($datos["ind_visible"])){
-                    $dataSolicitud = array_merge($dataSolicitud, array("IND_VISUALIZACION_" => $datos["ind_visible"]));
+                    $dataSolicitud = array_merge($dataSolicitud, array("IND_VISUALIZACION" => $datos["ind_visible"]));
                 }
             }
             
+            # P.IND_VISUALIZACION AS IND_VISUALIZACION,
+
             if(count($hispatologico["formulario_tecnologo_med"])>0){
                 foreach ($hispatologico["formulario_tecnologo_med"] as $i => $datos){
                     # INFORMACION COMPLEMENTARIA
