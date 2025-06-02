@@ -1403,7 +1403,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 //******************************************************
                             }  else if ($CALL_FASE == 2){
                                 
-                                if($row['ID_HISTO_ESTADO'] == 3 && $row['ID_HISTO_ESTADO'] == 1){
+                                if($row['ID_HISTO_ESTADO'] == 3 || $row['ID_HISTO_ESTADO'] == 1){
                                     $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N</a></li>';
                                     $BTN .= '<li class="divider"></li>';
                                 } else if($row['ID_HISTO_ESTADO'] == 4){
