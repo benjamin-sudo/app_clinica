@@ -1391,14 +1391,14 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 
                             if ($CALL_FASE == 1){
                                 //******************************************************
-                                if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2){
-                                    $BTN                .=      '<li><a href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>EN CUSTODIA / TRASPORTE</a></li>';
-                                    $BTN                .=      '<li class="divider"></li>';
+                                if ($row['ID_HISTO_ESTADO'] == 1 ){
+                                    $BTN .= '<li><a href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>EN CUSTODIA / TRASPORTE</a></li>';
+                                    $BTN .= '<li class="divider"></li>';
                                 }
                                 if ($row['ID_HISTO_ESTADO'] == 2){
                                     //historial
-                                    //$BTN              .=      '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
-                                    //$BTN              .=      '<li class="divider"></li>';
+                                    //$BTN .= '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
+                                    //$BTN .= '<li class="divider"></li>';
                                 }
                                 //******************************************************
                             }  else if ($CALL_FASE == 2){
