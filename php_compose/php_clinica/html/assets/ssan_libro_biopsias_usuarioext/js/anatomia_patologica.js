@@ -1913,7 +1913,7 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
     //console.table(LISTA_ANATOMIA.RESUL);
     //console.table(LISTA_ANATOMIA.RESUL.ARRAY_NMUESTRAS);
     var txt_accion = post==0?'CUSTODIA':post==1?'TRASPORTE':'RECEPCI&Oacute;N';
-    console.log("txt_accion->",txt_accion);
+    //console.log("txt_accion->",txt_accion);
     if (post === 3 ){
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar las solicitud de anatom&iacute;a patol&oacute;gica <b>RECEPCI&Oacute;N</b>&nbsp;&nbsp;&nbsp;<br />&iquest;Est&aacute; seguro de continuar?','Clinica Libre',function(r){
             if(r){

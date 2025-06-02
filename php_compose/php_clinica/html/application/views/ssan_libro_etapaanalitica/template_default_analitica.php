@@ -1,8 +1,8 @@
 
-<input type="hidden" id="id_anatomia"       name="id_anatomia"      value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>"/>
-<input type="hidden" id="NAMESESSION"       name="NAMESESSION"      value="<?php echo $this->session->userdata["NAMESESSION"];?>"/>
-<input type="hidden" id="USERNAME"          name="USERNAME"         value="<?php echo $this->session->userdata["USERNAME"];?>"/>
-<input type="hidden" id="unique"            name="unique"           value="<?php echo $this->session->userdata["unique"];?>"/>
+<input type="hidden" id="id_anatomia" name="id_anatomia" value="<?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["ID_SOLICITUD"];?>"/>
+<input type="hidden" id="NAMESESSION" name="NAMESESSION" value="<?php echo $this->session->userdata["NAMESESSION"];?>"/>
+<input type="hidden" id="USERNAME" name="USERNAME" value="<?php echo $this->session->userdata["USERNAME"];?>"/>
+<input type="hidden" id="unique" name="unique" value="<?php echo $this->session->userdata["unique"];?>"/>
 
 <div class="info_userdata" data-userdata="<?php echo htmlspecialchars(json_encode($this->session->userdata));?>"></div>
 
@@ -41,13 +41,27 @@
                             <tr>
                                 <td colspan="2">
                                     <small><b style="color:#888888;">N&deg;&nbsp;FICHA LOCAL</b></small><br>
-                                    <small class="text-muted" id="FichaLabel"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["FICHAL"];?></small>
+                                    <small class="text-muted" id="FichaLabel">
+                                    <?php
+                                        $ficha = $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["FICHAL"];
+                                        echo (! empty($ficha) && trim($ficha) !== '')
+                                            ? $ficha
+                                            : 'No informado';
+                                    ?>
+                                    </small>
                                 </td>
                             </tr>
                             <tr> 
                                 <td colspan="2">
                                     <small><b style="color:#888888;">PREVISI&Oacute;N</b></small><br>
-                                    <small class="text-muted" id="previsionLabel"><?php echo $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_PREVISION"];?></small>
+                                    <small class="text-muted" id="previsionLabel">
+                                        <?php
+                                            $prev = $data_bd[":P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_PREVISION"];
+                                            echo (! empty($prev) && trim($prev) !== '')
+                                                ? $prev
+                                                : 'No informado';
+                                        ?>
+                                    </small>
                                 </td>
                             </tr>
                         </tbody>

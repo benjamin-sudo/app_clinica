@@ -200,10 +200,10 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             #BUSCAR REPETIDOS
             #cookie para los estados
             $cookie_filtros = array(
-                                    'name'      =>  'data_filtro_fechas_estados',
-                                    'value'     =>  $_post_filtro_xfechas,
-                                    'expire'    =>  86500,
-                                    'secure'    =>  false
+                                    'name' =>  'data_filtro_fechas_estados',
+                                    'value' =>  $_post_filtro_xfechas,
+                                    'expire' =>  86500,
+                                    'secure' =>  false
                                 );
             $this->input->set_cookie($cookie_filtros);
             

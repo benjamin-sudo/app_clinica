@@ -9,9 +9,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
 <form id="load_anuncios_anatomia_patologica" method="post" action="#"></form>
 <form id="get_termino_sala_macroscopia" method="post" action="#"></form>
 <form id="update_chat_x_hoja" method="post" action="#"></form>
-
-<?php print_r();?>
-
+<?php #print_r();?>
 <div class="grid_head_body">
     <div class="grid_head_body1">
         <div class="GRID_LIBRO_BIOPSIAS_II_MAIN1">

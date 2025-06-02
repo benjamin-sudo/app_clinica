@@ -331,46 +331,46 @@ function js_img_default(){
 }
 
 function js_img_data(img_base){
-    var txt         =   '<div class="card" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">'+
-                            '<img '+
-                                'alt =  "200x110"'+
-                                'class =  "img-thumbnail" '+
-                                'data-src =  "200x110" '+
-                                'src =  "'+img_base+'" '+ 
-                                'data-holder-rendered =  "true" '+
-                                'style =  "width:200px;height:110px;" '+
-                            '>'+
-                            '<hr style="margin:2px">'+
-                            '<a href="javascript:delete_img_x_muestra()">'+
-                                '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
-                            '</a>'+
-                        '</div>';
+    var txt = '<div class="card" style="margin-bottom:0px;text-align:-webkit-center;padding:6px;">'+
+                '<img '+
+                    'alt = "200x110"'+
+                    'class = "img-thumbnail" '+
+                    'data-src = "200x110" '+
+                    'src = "'+img_base+'" '+ 
+                    'data-holder-rendered = "true" '+
+                    'style = "width:200px;height:110px;" '+
+                '>'+
+                '<hr style="margin:2px">'+
+                '<a href="javascript:delete_img_x_muestra()">'+
+                    '<i class="fa fa-trash-o" aria-hidden="true"></i>'+
+                '</a>'+
+            '</div>';
     $(".img_gestion").html(txt);
 }
 
 function js_test_ap(){
     $('#loadFade').modal('show');
     $.ajax({ 
-        type                :   "POST",
-        url                 :   "ssan_libro_etapaanalitica/return_ima_firma_patologo",
-        dataType            :   "json",
-        beforeSend          :   function(xhr)   {   
-                                                    console.log("ssan_libro_etapaanalitica/gestion_cookie ->",xhr);   
-                                                },
-        data                :                   { },
-        error               :   function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText);    
-                                                    jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#loadFade').modal('hide'); 
-                                                },
-        success             :   function(aData) { 
-                                                    $('#loadFade').modal('hide'); 
-                                                    console.log("aData  ->  ",aData);
-                                                    //$('#loadFade').modal('hide'); 
-                                                    //$("#html_gestion_firma_patologo").html(aData.html);
-                                                    //$("#modal_gestion_firma_patologo").modal({backdrop:'static',keyboard:false}).modal("show");
-                                                }, 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/return_ima_firma_patologo",
+        dataType : "json",
+        beforeSend : function(xhr) {   
+            console.log("ssan_libro_etapaanalitica/gestion_cookie ->",xhr);   
+        },
+        data : { },
+        error : function(errro) { 
+            console.log(errro);  
+            console.log(errro.responseText);    
+            jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); 
+            $('#loadFade').modal('hide'); 
+        },
+        success : function(aData) { 
+            $('#loadFade').modal('hide'); 
+            console.log("aData  ->  ",aData);
+            //$('#loadFade').modal('hide'); 
+            //$("#html_gestion_firma_patologo").html(aData.html);
+            //$("#modal_gestion_firma_patologo").modal({backdrop:'static',keyboard:false}).modal("show");
+        }, 
     });
 }
 
@@ -1269,27 +1269,27 @@ function star_analitica(id_anatomia){
         beforeSend : function(xhr) {  $('#loadFade').modal('show'); },
         data : { id_anatomia : id_anatomia, get_sala : $("#get_sala").val() },
         error : function(errro) { 
-                                    console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
-                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#HTML_FORMULARIO_ANALITICA').html('');
-                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                },
+            console.log("quisas->",errro,"-error.responseText->",errro.responseText); 
+            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+            $('#HTML_FORMULARIO_ANALITICA').html('');
+            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+        },
         success : function(aData){ 
-                                    console.log("aData  ->  ",aData);
-                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                    if(aData.status_session){
-                                        $("#btn_guardado_previo").attr('onclick','js_guardado_previo('+id_anatomia+')');
-                                        //console.log("BTN -> ",$(".btn_analitica_"+id_anatomia).data('rce_finaliza'));
-                                        if ($(".btn_analitica_"+id_anatomia).data('rce_finaliza')){
-                                            $("#btn_finaliza_rce_anatomia").attr('onclick','js_finaliza_rce('+id_anatomia+')');
-                                            document.getElementById('btn_finaliza_rce_anatomia').disabled      =   false;
-                                        }
-                                        $("#HTML_FORMULARIO_ANALITICA").html(aData.out_html);
-                                        $("#MODAL_FORMULARIO_ANALITICA").modal({backdrop:'static',keyboard:false}).modal("show");
-                                    } else {
-                                        jError("Session ha caducado","Clinica Libre");
-                                    } 
-                                },  
+            console.log("aData  ->  ",aData);
+            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+            if(aData.status_session){
+                $("#btn_guardado_previo").attr('onclick','js_guardado_previo('+id_anatomia+')');
+                //console.log("BTN -> ",$(".btn_analitica_"+id_anatomia).data('rce_finaliza'));
+                if ($(".btn_analitica_"+id_anatomia).data('rce_finaliza')){
+                    $("#btn_finaliza_rce_anatomia").attr('onclick','js_finaliza_rce('+id_anatomia+')');
+                    document.getElementById('btn_finaliza_rce_anatomia').disabled      =   false;
+                }
+                $("#HTML_FORMULARIO_ANALITICA").html(aData.out_html);
+                $("#MODAL_FORMULARIO_ANALITICA").modal({backdrop:'static',keyboard:false}).modal("show");
+            } else {
+                jError("Session ha caducado","Clinica Libre");
+            } 
+        },  
     });
 }
 
