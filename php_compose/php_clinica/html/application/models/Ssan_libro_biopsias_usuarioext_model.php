@@ -1578,10 +1578,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 >
                                 <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
                                 <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br> | run: '.$row['RUTPACIENTE'].'</i></td>
-                                <td style="vertical-align: initial;">
-                                    '.$row['PROFESIONAL'].' <br>
-                                    <i>'.$row['RUT_PROFESIOAL'].'</i>
-                                </td>
+                                <td style="vertical-align: initial;">   '.$row['PROFESIONAL'].' <br>  <i>'.$row['RUT_PROFESIOAL'].'</i></td>
                                 <td>
                                     <div class="grid_vista_resumen">
                                         <div class="grid_vista_resumen1"> '.$row['TIPO_DE_BIOPSIA'].'</div>
