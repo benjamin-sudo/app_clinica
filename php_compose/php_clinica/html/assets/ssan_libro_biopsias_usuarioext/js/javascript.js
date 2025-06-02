@@ -565,43 +565,43 @@ function GET_PDF_ANATOMIA_PANEL(id){
         url : "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
         dataType : "json",
         beforeSend : function(xhr) {   
-                                    //console.log(xhr);
-                                    //console.log("generando PDF");
-                                    $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF&nbsp;");
-                                },
+            //console.log(xhr);
+            //console.log("generando PDF");
+            $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF&nbsp;");
+        },
         data : { id : id },
         error : function(errro) { 
-                                    console.log("quisas->",errro,"-error->",errro.responseText); 
-                                    $("#protocoloPabellon").css("z-index","1500"); 
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
-                                },
+            console.log("quisas->",errro,"-error->",errro.responseText); 
+            $("#protocoloPabellon").css("z-index","1500"); 
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+            $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+        },
         success : function(aData) { 
-                                    console.log(aData);
-                                    if(!aData["STATUS"]){
-                                        jError("error al cargar protocolo PDF","Clinica Libre");
-                                    } else {
-                                        var base64str = aData["PDF_MODEL"];
-                                        //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                        var binary = atob(base64str.replace(/\s/g,''));
-                                        var len = binary.length;
-                                        var buffer = new ArrayBuffer(len);
-                                        var view = new Uint8Array(buffer);
-                                        for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                        var blob = new Blob([view],{type:"application/pdf"});
-                                        var blobURL = URL.createObjectURL(blob);
-                                        Objpdf = document.createElement('object');
-                                        Objpdf.setAttribute('data',blobURL);
-                                        Objpdf.setAttribute('width','100%');
-                                        let windowHeight = window.innerHeight;
-                                        let adjustedHeight = windowHeight - 200;
-                                        Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
-                                        Objpdf.setAttribute('title','PDF');
-                                        $("#HTML_PDF_ANATOMIA_PATOLOGICA").html(Objpdf);
-                                        $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 
-                                    }
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                }, 
+            console.log(aData);
+            if(!aData["STATUS"]){
+                jError("error al cargar protocolo PDF","Clinica Libre");
+            } else {
+                var base64str = aData["PDF_MODEL"];
+                //decode base64 string, Eliminar espacio para compatibilidad con IE
+                var binary = atob(base64str.replace(/\s/g,''));
+                var len = binary.length;
+                var buffer = new ArrayBuffer(len);
+                var view = new Uint8Array(buffer);
+                for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                var blob = new Blob([view],{type:"application/pdf"});
+                var blobURL = URL.createObjectURL(blob);
+                Objpdf = document.createElement('object');
+                Objpdf.setAttribute('data',blobURL);
+                Objpdf.setAttribute('width','100%');
+                let windowHeight = window.innerHeight;
+                let adjustedHeight = windowHeight - 200;
+                Objpdf.setAttribute('style', `height:${adjustedHeight}px;`);
+                Objpdf.setAttribute('title','PDF');
+                $("#HTML_PDF_ANATOMIA_PATOLOGICA").html(Objpdf);
+                $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal({backdrop:'static',keyboard:false}).modal("show"); 
+            }
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+        }, 
     });
 }

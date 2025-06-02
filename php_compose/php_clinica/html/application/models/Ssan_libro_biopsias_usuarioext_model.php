@@ -1482,19 +1482,19 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 
                                         <li class="gespab_group list-group-item LISTA_BODY_'.$CALL_FASE.'" >
                                             <div class="CSS_GRID_CIRUGIA_FASE_1" 
-                                                id                      =   "DATA_'.$row['ID_SOLICITUD'].'"
-                                                data-paciente           =   "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
-                                                >
+                                                id =   "DATA_'.$row['ID_SOLICITUD'].'"
+                                                data-paciente =   "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">
                                                 <div class="text-center">'.$num.'</div>
                                                 <div >
                                                     '.$row['NOMBRE_COMPLETO'].'<hr style="margin: 0px 0px 0px 0px;">
                                                     '.$row['RUTPACIENTE'].'<hr style="margin: 0px 0px 0px 0px;">
+                                                    
+                                                    
                                                     N&deg; Ficha: '.$row['FICHAL'].'
-                                                    <!--    
                                                         &nbsp;|&nbsp; PA_ID_PROCARCH    =   '.$row['PA_ID_PROCARCH'].'<br>
                                                         &nbsp;|&nbsp; ID_HISTO_ESTADO   =   '.$row['ID_HISTO_ESTADO'].'<br>
                                                         &nbsp;|&nbsp; CALL_FASE         =   '.$CALL_FASE.'
-                                                    -->    
+                                                      
                                                  </div>
                                                 <div >'.$row['PROFESIONAL'].'<hr style="margin: 0px 0px 0px 0px;">'.$row['RUT_PROFESIOAL'].'</div>
                                                 <div style="text-align : initial;">
@@ -2422,54 +2422,54 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     #PDF RECHAZO
     public function load_info_rechazo($DATA){
         $this->db->trans_start();
-        $param                  =       array(
-                                            array( 
-                                                'name'      =>  ':V_COD_EMPRESA',
-                                                'value'     =>  $DATA["COD_EMPRESA"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':V_ID_HISTO',
-                                                'value'     =>  $DATA["ID_HISTO"],
-                                                'length'    =>  20,
-                                                'type'      =>  SQLT_CHR 
-                                            ),
-                                            array( 
-                                                'name'      =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':P_AP_MUESTRAS_CITOLOGIA',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                            array( 
-                                                'name'      =>  ':P_INFO_LOG_ADVERSOS',
-                                                'value'     =>  $this->db->get_cursor(),
-                                                'length'    =>  -1,
-                                                'type'      =>  OCI_B_CURSOR
-                                            ),
-                                        );
+        $param = array(
+            array( 
+                'name' =>  ':V_COD_EMPRESA',
+                'value' =>  $DATA["COD_EMPRESA"],
+                'length' =>  20,
+                'type' =>  SQLT_CHR 
+            ),
+            array( 
+                'name' =>  ':V_ID_HISTO',
+                'value' =>  $DATA["ID_HISTO"],
+                'length' =>  20,
+                'type' =>  SQLT_CHR 
+            ),
+            array( 
+                'name' =>  ':P_ANATOMIA_PATOLOGICA_MAIN',
+                'value' =>  $this->db->get_cursor(),
+                'length' =>  -1,
+                'type' =>  OCI_B_CURSOR
+            ),
+            array( 
+                'name' =>  ':P_ANATOMIA_PATOLOGICA_MUESTRAS',
+                'value' =>  $this->db->get_cursor(),
+                'length' =>  -1,
+                'type' =>  OCI_B_CURSOR
+            ),
+            array( 
+                'name' =>  ':P_AP_MUESTRAS_CITOLOGIA',
+                'value' =>  $this->db->get_cursor(),
+                'length' =>  -1,
+                'type' =>  OCI_B_CURSOR
+            ),
+            array( 
+                'name' =>  ':P_INFO_LOG_ADVERSOS',
+                'value' =>  $this->db->get_cursor(),
+                'length' =>  -1,
+                'type' =>  OCI_B_CURSOR
+            ),
+        );
         $result = $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA','LOAD_ANATOMIAPATOLOGICA_RECHAZ',$param);
         $this->db->trans_complete();
         return array(
-            'STATUS'                                        =>	$this->db->trans_status(),
-            'ID_HISTO'                                      =>	$DATA["ID_HISTO"],
-            'COD_EMPRESA'                                   =>	$DATA["COD_EMPRESA"],
-            'P_ANATOMIA_PATOLOGICA_MAIN'                    =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
-            'P_ANATOMIA_PATOLOGICA_MUESTRAS'                =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
-            'P_AP_MUESTRAS_CITOLOGIA'                       =>	empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
-            'P_INFO_LOG_ADVERSOS'                           =>	empty($result[':P_INFO_LOG_ADVERSOS'])?null:$result[':P_INFO_LOG_ADVERSOS'],          
+            'STATUS' =>	$this->db->trans_status(),
+            'ID_HISTO' => $DATA["ID_HISTO"],
+            'COD_EMPRESA' => $DATA["COD_EMPRESA"],
+            'P_ANATOMIA_PATOLOGICA_MAIN' =>	empty($result[':P_ANATOMIA_PATOLOGICA_MAIN'])?null:$result[':P_ANATOMIA_PATOLOGICA_MAIN'],
+            'P_ANATOMIA_PATOLOGICA_MUESTRAS' =>	empty($result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'])?null:$result[':P_ANATOMIA_PATOLOGICA_MUESTRAS'],
+            'P_AP_MUESTRAS_CITOLOGIA' => empty($result[':P_AP_MUESTRAS_CITOLOGIA'])?null:$result[':P_AP_MUESTRAS_CITOLOGIA'],
+            'P_INFO_LOG_ADVERSOS' => empty($result[':P_INFO_LOG_ADVERSOS'])?null:$result[':P_INFO_LOG_ADVERSOS'],          
         );
     }
     
