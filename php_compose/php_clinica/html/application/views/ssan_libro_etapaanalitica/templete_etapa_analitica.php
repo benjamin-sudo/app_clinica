@@ -26,8 +26,22 @@
     <li class="nav-item" role="tab">
         <a class="nav-link" id="archivos-ap-tab" data-bs-toggle="tab" href="#add_archivos_ap" role="tab" aria-controls="add_archivos_ap" aria-selected="false"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
     </li>
+    <li class="nav-item" role="tab">
+        <a class="nav-link" id="registro_visible-tab" data-bs-toggle="tab" href="#registro_visible" role="tab" aria-controls="registro_administrativo" aria-selected="false"><i class="fa fa-wpforms" aria-hidden="true"></i>&nbsp;ADMINISTRATIVO</a>
+    </li>
 </ul>
 <div class="tab-content">
+    <div id='registro_visible' class='tab-pane margin_panel_tabs'>
+        <div class="grid_visiablepago">
+            <div class="grid_visiablepago0"><b style="color:#888888;">VISIBLE DESDE PANEL DE SOLICITUDES</b></div>
+            <div class="grid_visiablepago1">
+            <select class="form-select" id="ind_visualizacion" name="ind_visualizacion" aria-label="Default select example">
+                <option value="0">No</option>
+                <option value="1">Si</option>
+            </select>
+            </div>
+        </div>
+    </div>
     <div id='tabs_pdf' class='tab-pane margin_panel_tabs'>
         <div class="panel_vistas_pdf" style="display: none">
             <div class="panel_vistas_pdf1">&nbsp;</div>

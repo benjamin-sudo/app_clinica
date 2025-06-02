@@ -630,11 +630,11 @@ input[type="checkbox"] {
     grid-template-columns : repeat(3,1fr);
 }
 
-.grid_radio_card                        {
-    display                             :   grid;
-    justify-items                       :   center;
-    align-items                         :   baseline;
-    align-self                          :   stretch;
+.grid_radio_card {
+    display : grid;
+    justify-items : center;
+    align-items : baseline;
+    align-self : stretch;
 }
 
 .grid_radio_butonx2                     {
@@ -997,24 +997,27 @@ input[type="file"]                      {
     margin                              :   0 5px;
 }
 
-.anatomia_pagination ul.bootpag li a    {
-    display                             :   block;
-    padding                             :   10px 15px;
-    border-radius                       :   5px;
-    background-color                    :   #f8f9fa;
-    border                              :   1px solid #dee2e6;
-    color                               :   #007bff;
-    text-decoration                     :   none;
-    transition                          :   background-color 0.3s, color 0.3s;
+.anatomia_pagination ul.bootpag li a {
+    display : block;
+    padding : 10px 15px;
+    border-radius : 5px;
+    background-color : #f8f9fa;
+    border : 1px solid #dee2e6;
+    color : #007bff;
+    text-decoration : none;
+    transition : background-color 0.3s, color 0.3s;
 }
 
 .anatomia_pagination ul.bootpag li a:hover {
-    background-color                    :   #007bff;
-    color                               :   #ffffff;
+    background-color : #007bff;
+    color : #ffffff;
 }
 
 .anatomia_pagination ul.bootpag li.active a {
-    background-color                    :   #007bff;
-    color                               :   #ffffff;
-    border-color                        :   #007bff;
+    background-color : #007bff;
+    color : #ffffff;
+    border-color : #007bff;
 }
+
+
+
