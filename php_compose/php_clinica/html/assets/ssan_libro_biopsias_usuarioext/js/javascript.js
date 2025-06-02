@@ -382,24 +382,24 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
         url : "ssan_libro_biopsias_usuarioext/recarga_html_listaanatomiapatologica",
         dataType : "json",
         data : {
-                    fecha : fecha,
-                    fecha_from : fecha,
-                    fecha_to : fecha,
-                    idtabs : idtabs,
-                    value : value
-                },
+            fecha : fecha,
+            fecha_from : fecha,
+            fecha_to : fecha,
+            idtabs : idtabs,
+            value : value
+        },
         error : function(errro) {  
-                                    $("#GESTION_PASEAPENDIENTE").modal("hide"); 
-                                    console.log("----------------------------------------------------");
-                                    console.log("errro -> ",errro); 
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                },
+            $("#GESTION_PASEAPENDIENTE").modal("hide"); 
+            //console.log("----------------------------------------------------");
+            console.log("errro -> ",errro); 
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+        },
         success : function(aData) {
-                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                    $("#RETURN_DATA_5").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
-                    $("#RETURN_DATA_4").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
-                }, 
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            $("#RETURN_DATA_5").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
+            $("#RETURN_DATA_4").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
+        }, 
     });
 }
 
@@ -525,32 +525,32 @@ function js_confirma_new_fecha(id){
         if(r){
             //console.log("datasend ->  ",datasend);
             $.ajax({ 
-                type            :   "POST",
-                url             :   "ssan_libro_biopsias_usuarioext/get_cambio_fecha",
-                dataType        :   "json",
-                beforeSend      :   function(xhr) { $('#loadFade').modal('show'); },
-                data            :   { 
-                                        id : id,
-                                        pass : r,
-                                        fecha : new_arr_fecha_hora
-                                    },
-                error		    :   function(errro) { 
-                                                        console.log(errro);  
-                                                        console.log(errro.responseText);
-                                                        jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                                    },
-                success         :   function(aData) { 
-                                                        setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                                        console.log("retun  -> ",aData);
-                                                        if (aData.status){
-                                                            showNotification('top','center','El cambio de fecha de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
-                                                            $("#modal_edita_fecha").modal('hide');
-                                                            ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
-                                                        } else {
-                                                            jError(aData.txt_error ,"Clinica Libre");
-                                                        }
-                                                    }, 
+                type : "POST",
+                url : "ssan_libro_biopsias_usuarioext/get_cambio_fecha",
+                dataType : "json",
+                beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+                data : { 
+                    id : id,
+                    pass : r,
+                    fecha : new_arr_fecha_hora
+                },
+                error : function(errro) { 
+                    console.log(errro);  
+                    console.log(errro.responseText);
+                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                },
+                success : function(aData) { 
+                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                    console.log("retun  -> ",aData);
+                    if (aData.status){
+                        showNotification('top','center','El cambio de fecha de biopsia se ha realizado con &eacute;xito',2,'fa fa-check');
+                        $("#modal_edita_fecha").modal('hide');
+                        ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
+                    } else {
+                        jError(aData.txt_error ,"Clinica Libre");
+                    }
+                }, 
             });
         } else {
             jError("Firma simple vac&iacute;a","Error - Clinica Libre"); 
