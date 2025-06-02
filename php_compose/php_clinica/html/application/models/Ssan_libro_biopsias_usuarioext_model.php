@@ -1571,37 +1571,34 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
            foreach ($ARRAY as $i => $row){
                 #$row['ID_SERVICIO'];
                 #$row['ID_SOLICITUD'];
-                $HTML       .=      '
-                                    <tr 
-                                            id = "DATA_'.$row['ID_SOLICITUD'].'"
-                                            data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
-                                        >
-                                        <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
-                                        <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br> <i>Ficha:'.$row['FICHAL'].' | '.$row['RUTPACIENTE'].'</i></td>
-                                        <td style="vertical-align: initial;">
-                                            '.$row['PROFESIONAL'].'
-                                            <br>
-                                            <i>'.$row['RUT_PROFESIOAL'].'</i>
-                                        </td>
-                                        <td>
-                                            <div class="grid_vista_resumen">
-                                                <div class="grid_vista_resumen1"> '.$row['TIPO_DE_BIOPSIA'].'</div>
-                                                <div class="grid_vista_resumen2"> '.$row['TXT_PROCEDENCIA'].'</div>
-                                                <div class="grid_vista_resumen3"> '.$row['NOMBRE_SERVICIO'].'</div>
-                                            </div>
-                                        </td>
-                                        
-
-                                        <td style="text-align: center;">';
+                $HTML .= '
+                            <tr 
+                                    id = "DATA_'.$row['ID_SOLICITUD'].'"
+                                    data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
+                                >
+                                <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
+                                <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br> | run: '.$row['RUTPACIENTE'].'</i></td>
+                                <td style="vertical-align: initial;">
+                                    '.$row['PROFESIONAL'].' <br>
+                                    <i>'.$row['RUT_PROFESIOAL'].'</i>
+                                </td>
+                                <td>
+                                    <div class="grid_vista_resumen">
+                                        <div class="grid_vista_resumen1"> '.$row['TIPO_DE_BIOPSIA'].'</div>
+                                        <div class="grid_vista_resumen2"> '.$row['TXT_PROCEDENCIA'].'</div>
+                                        <div class="grid_vista_resumen3"> '.$row['NOMBRE_SERVICIO'].'</div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;">';
                         #etiqueta estado
                         if ($row['ID_HISTO_ESTADO'] == 5){
-                    $txt_estado     =   '<span class="label label-danger"><i class="fa fa-times" aria-hidden="true"></i>'.$row['TXT_HISTO_ESTADO'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+                    $txt_estado = '<span class="label label-danger"><i class="fa fa-times" aria-hidden="true"></i>'.$row['TXT_HISTO_ESTADO'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
                 } else  if ($row['ID_HISTO_ESTADO'] == 4){
-                    $txt_estado     =   '<span class="label label-success"><i class="fa fa-check" aria-hidden="true"></i>'.$row['TXT_HISTO_ESTADO'].'</span>';
+                    $txt_estado = '<span class="label label-success"><i class="fa fa-check" aria-hidden="true"></i>'.$row['TXT_HISTO_ESTADO'].'</span>';
                 } else {
-                    $txt_estado     =   '<span class="label label-default">'.$row['TXT_HISTO_ESTADO'].'</span>';
+                    $txt_estado = '<span class="label label-default">'.$row['TXT_HISTO_ESTADO'].'</span>';
                 }
-                $HTML           .=  $txt_estado.'</td>
+                $HTML .= $txt_estado.'</td>
                                         <td style="text-align: center;">';
                                         if( $row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
                                             $HTML   .= '<a href="javascript:js_cambio_fecha('.$row['ID_SOLICITUD'].')">'.$row['FECHA_TOMA_MUESTRA'].'</a>';
@@ -1633,14 +1630,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     $HTML .= '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>';
-
-
-                    $HTML .= $row['IND_VISUALIZACION'];
-
+                    //$HTML .= $row['IND_VISUALIZACION'];
                 } else {
                     $HTML .= '-';
                 }
-
                 $HTML .= '
                                         </td>
                                     </tr>
