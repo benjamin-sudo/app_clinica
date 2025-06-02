@@ -1918,87 +1918,84 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar las solicitud de anatom&iacute;a patol&oacute;gica <b>RECEPCI&Oacute;N</b>&nbsp;&nbsp;&nbsp;<br />&iquest;Est&aacute; seguro de continuar?','Clinica Libre',function(r){
             if(r){
                 var pass =  new Array({
-                                "pass1" : $("#firma_simple_trasporte").val(),
-                                "pass2" : $("#firma_simple_recepcion").val()
-                            });
-
+                    "pass1" : $("#firma_simple_trasporte").val(),
+                    "pass2" : $("#firma_simple_recepcion").val()
+                });
                 $('#loadFade').modal('show'); 
                 $.ajax({ 
                         type : "POST",
                         url : "ssan_libro_biopsias_listaexterno1/confirma_recepcion",
                         dataType : "json",
-                        beforeSend : function(xhr)   {   
-                                                                   
-                                                                },
-                        data                :                   {
-                                                                    id_anatomia         :   id_anatomia,
-                                                                    array_muestras      :   LISTA_ANATOMIA, 
-                                                                    pass                :   pass,
-                                                                    n_interno           :   $("#num_interno").val(),
-                                                                    n_interno_2         :   $("#num_interno_cito").val(),
-                                                                    ind_tipo_biopsia    :   $("#ind_tipo_biopsia").val(),
-                                                                },
-                        error		:   function(errro)     { 
-                                                                    console.log(errro);  
-                                                                    console.log(errro.responseText);    
-                                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                                                    jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                                },
-                        success             :   function(aData) { 
-                            
-                                                                    console.log("   -----------------------------------------------------       ");
-                                                                    console.log("   return aData        ->  ",aData,"    <-                     ");
-                                                                    console.log("   FIRMAS aData        ->  ",aData.STATUS,"<-                  ");
-                                                                    console.log("   GET_BD STATUS       ->  ",aData["GET_BD"].STATUS,"<-        ");
-                                                                    console.log("   GET_BD STATUS_BD    ->  ",aData["GET_BD"].STATUS_BD,"<-     ");
-                                                                    console.log("   TXT_ERROR           ->  ",aData["GET_BD"].TXT_ERROR,"<-     ");
-                                                                    console.log("   close_modal         ->  ",aData["GET_BD"].close_modal,"<-   ");
-                                                                    console.log("   --------------------------------------------------------    ");
-
-                                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                                                    if(aData.STATUS){
-                                                                        var var_status_bd               =   aData["GET_BD"].STATUS;
-                                                                        if(var_status_bd === false){
-                                                                            showNotification('top','right',aData["GET_BD"].TXT_ERROR,4,'fa fa-times');
-                                                                            if (aData["GET_BD"].close_modal == 1){
-                                                                                $('#MODAL_INFORMACION_ETIQUETA').modal("hide");
-                                                                                UPDATE_PANEL();
-                                                                            }
-                                                                        } else {
-                                                                            //console.log(" exito ");
-                                                                            aData.GET_BD.HISTO_OK.forEach(function(idhisto){
-                                                                                $(".li_histo_"+idhisto).remove();
-                                                                                $(".tab_histo_"+idhisto).remove();
-                                                                            });
-                                                                            if($('#UL_TABS_MUESTRA li').size()===0){
-                                                                                $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
-                                                                            } else {
-                                                                                $('#UL_TABS_MUESTRA').tab();
-                                                                                $('#UL_TABS_MUESTRA li:last-child a').tab('show');
-                                                                            }
-                                                                            
-                                                                            UPDATE_PANEL();
-                                                                            /*
-                                                                                localStorage.setItem("ind_tipo_mensaje",1);
-                                                                                localStorage.setItem("ind_estapa_analitica",0);
-                                                                                localStorage.setItem("num_fichae",null);
-                                                                                localStorage.setItem("id_anatomia",id_anatomia);
-                                                                                $("#load_anuncios_anatomia_patologica").submit();
-                                                                            */
-                                                                            jConfirm("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha sido recepcionada con &eacute;xito &iquest;Desea ver pdf de recepcion?",'Clinica Libre',function(r) {
-                                                                                if(r){ 
-                                                                                    pdf_recepcion_ok(id_anatomia);
-                                                                                } else {
-                                                                                    console.log("-------------------------------");
-                                                                                    console.log("       -> DIJO NO <-           ");
-                                                                                    console.log("-------------------------------");
-                                                                                }
-                                                                            });
-                                                                        } 
-                                                                    } else {
-                                                                        jError(aData['TXT_ERROR'],"Clinica Libre");
-                                                                    }
-                                                                }, 
+                        beforeSend : function(xhr) {    },
+                        data : {
+                            id_anatomia : id_anatomia,
+                            array_muestras : LISTA_ANATOMIA, 
+                            pass : pass,
+                            n_interno : $("#num_interno").val(),
+                            n_interno_2 : $("#num_interno_cito").val(),
+                            ind_tipo_biopsia : $("#ind_tipo_biopsia").val(),
+                        },
+                        error : function(errro) { 
+                            console.log(errro);  
+                            console.log(errro.responseText);    
+                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                            jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                        },
+                        success : function(aData) { 
+                            /*
+                            console.log("   -----------------------------------------------------       ");
+                            console.log("   return aData        ->  ",aData,"    <-                     ");
+                            console.log("   FIRMAS aData        ->  ",aData.STATUS,"<-                  ");
+                            console.log("   GET_BD STATUS       ->  ",aData["GET_BD"].STATUS,"<-        ");
+                            console.log("   GET_BD STATUS_BD    ->  ",aData["GET_BD"].STATUS_BD,"<-     ");
+                            console.log("   TXT_ERROR           ->  ",aData["GET_BD"].TXT_ERROR,"<-     ");
+                            console.log("   close_modal         ->  ",aData["GET_BD"].close_modal,"<-   ");
+                            console.log("   --------------------------------------------------------    ");
+                            */
+                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                            if(aData.STATUS){
+                                var var_status_bd               =   aData["GET_BD"].STATUS;
+                                if(var_status_bd === false){
+                                    showNotification('top','right',aData["GET_BD"].TXT_ERROR,4,'fa fa-times');
+                                    if (aData["GET_BD"].close_modal == 1){
+                                        $('#MODAL_INFORMACION_ETIQUETA').modal("hide");
+                                        UPDATE_PANEL();
+                                    }
+                                } else {
+                                    //console.log(" exito ");
+                                    aData.GET_BD.HISTO_OK.forEach(function(idhisto){
+                                        $(".li_histo_"+idhisto).remove();
+                                        $(".tab_histo_"+idhisto).remove();
+                                    });
+                                    if($('#UL_TABS_MUESTRA li').size()===0){
+                                        $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
+                                    } else {
+                                        $('#UL_TABS_MUESTRA').tab();
+                                        $('#UL_TABS_MUESTRA li:last-child a').tab('show');
+                                    }
+                                    
+                                    UPDATE_PANEL();
+                                    /*
+                                        localStorage.setItem("ind_tipo_mensaje",1);
+                                        localStorage.setItem("ind_estapa_analitica",0);
+                                        localStorage.setItem("num_fichae",null);
+                                        localStorage.setItem("id_anatomia",id_anatomia);
+                                        $("#load_anuncios_anatomia_patologica").submit();
+                                    */
+                                    jConfirm("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha sido recepcionada con &eacute;xito &iquest;Desea ver pdf de recepcion?",'Clinica Libre',function(r) {
+                                        if(r){ 
+                                            pdf_recepcion_ok(id_anatomia);
+                                        } else {
+                                            console.log("-------------------------------");
+                                            console.log("       -> DIJO NO <-           ");
+                                            console.log("-------------------------------");
+                                        }
+                                    });
+                                } 
+                            } else {
+                                jError(aData['TXT_ERROR'],"Clinica Libre");
+                            }
+                        }, 
                     });
             } else {
                 console.log(" -> RECEPCION NO <- ");

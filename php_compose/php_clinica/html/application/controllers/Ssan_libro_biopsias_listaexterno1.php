@@ -374,7 +374,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                 "ind_tipo_biopsia"  =>  $ind_tipo_biopsia,
             ));
         }
-
         $this->output->set_output(json_encode(array(
             'ERRORES' =>  $arr_errores,
             'PASS' =>  $arr_password,
