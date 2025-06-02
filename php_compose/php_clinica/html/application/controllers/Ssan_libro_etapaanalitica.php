@@ -776,9 +776,9 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     
     public function get_update_img_etapas(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $id_anatomia =   $this->input->post('id_anatomia');
-        $return_data =   $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
-        $html =   $this->load->view("ssan_libro_etapaanalitica/html_views_imagenes_carrusel",$return_data,true);
+        $id_anatomia = $this->input->post('id_anatomia');
+        $return_data = $this->ssan_libro_etapaanalitica_model->busqueda_img_clob($id_anatomia);
+        $html = $this->load->view("ssan_libro_etapaanalitica/html_views_imagenes_carrusel",$return_data,true);
         $this->output->set_output(json_encode([
             'return_data' =>  $return_data,
             'html' =>  $html,

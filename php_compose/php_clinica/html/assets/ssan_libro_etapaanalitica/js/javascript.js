@@ -2212,14 +2212,14 @@ function js_update_img(id_anatomia){
         beforeSend : function(xhr) {   $('.update_img_microscopia').html(''); },
         data : { id_anatomia : id_anatomia },
         error : function(errro) { 
-                                    console.log("quisas->",errro,"-error->",errro.responseText); 
-                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                    $('.update_img_microscopia').html('');
-                                },
+            console.log("quisas->",errro,"-error->",errro.responseText); 
+            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+            $('.update_img_microscopia').html('');
+        },
         success : function(aData) { 
-                                    console.log("consulta -> ",aData);
-                                    $(".update_img_microscopia").html(aData.html);
-                                }, 
+            console.log("consulta -> ",aData);
+            $(".update_img_microscopia").html(aData.html);
+        }, 
    });
 }
 

@@ -215,8 +215,7 @@
         <?php   } else if ($get_sala == 'administrativo'){ ?>    
             <?php echo $this->load->view("ssan_libro_etapaanalitica/html_panel_administrativo",[],true); ?>
         <?php   }   else    {   ?>
-                <b>TEMPLETE NO IDENTIFICADO</b>
-                <br>
+                <b>TEMPLETE NO IDENTIFICADO</b><br>
                 <?php echo $get_sala;?>
         <?php } ?>
 
