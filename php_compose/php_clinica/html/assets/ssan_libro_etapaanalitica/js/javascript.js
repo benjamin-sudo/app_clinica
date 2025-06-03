@@ -2639,7 +2639,6 @@ function js_pdf_microscopica(id_anatomia){
                                     }
                                 }, 
    });
-
 }
 
 function js_load_line_pdf(option,id_anatomia){
