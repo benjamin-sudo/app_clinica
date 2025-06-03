@@ -22,5 +22,6 @@ RUN a2enmod rewrite \
 # Exponer puertos
 EXPOSE 80
 EXPOSE 443
+
 # Comando para mantener el contenedor en ejecución
 CMD ["apache2-foreground"]
