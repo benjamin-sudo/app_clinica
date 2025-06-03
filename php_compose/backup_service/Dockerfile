@@ -1,20 +1,18 @@
-# Usa la imagen base que estés utilizando
-FROM ubuntu:latest
-# Actualiza el repositorio de paquetes e instala cron, nano, dos2unix y otros paquetes necesarios
-RUN apt-get update && apt-get install -y cron nano dos2unix
+# Usa Alpine como base
+FROM alpine:latest
+# Instala cron (dcron) y dos2unix
+RUN apk update \
+ && apk add --no-cache dcron dos2unix
 # Crea el directorio de backup
 RUN mkdir -p /backup_service/backup
-# Copia el script de backup al directorio correcto
+# Copia el script de backup
 COPY backup.sh /usr/local/bin/backup.sh
-# Convierte el script a formato Unix
-RUN dos2unix /usr/local/bin/backup.sh
-# Otorga permisos de ejecución al script
-RUN chmod +x /usr/local/bin/backup.sh
-# Configura el crontab para el usuario root
-RUN echo "0 2 * * * /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1" > /etc/cron.d/backup-cron
-# Otorga permisos adecuados al archivo crontab y lo activa
-RUN chmod 0644 /etc/cron.d/backup-cron
-# Aplicar el crontab
-RUN crontab /etc/cron.d/backup-cron
-# Asegúrate de que cron se ejecuta en el primer plano
-CMD ["cron", "-f"]
+# Convierte a formato Unix y dale permisos de ejecución
+RUN dos2unix /usr/local/bin/backup.sh \
+ && chmod +x /usr/local/bin/backup.sh
+# Define la tarea en el crontab del root (Alpine almacena las crontabs en /etc/crontabs)
+RUN echo "0 2 * * * /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1" > /etc/crontabs/root
+# Exponemos el log (opcional)
+VOLUME [ "/var/log" ]
+# Ejecuta cron en primer plano para que el contenedor no termine
+CMD ["crond", "-f", "-L", "/var/log/backup.log"]
