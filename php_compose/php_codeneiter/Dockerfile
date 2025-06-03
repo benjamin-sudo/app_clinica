@@ -34,10 +34,10 @@ RUN docker-php-ext-configure oci8 --with-oci8=instantclient,/opt/oracle/instantc
     && docker-php-ext-install oci8
 
 # Copia tus archivos de la aplicación a /var/www/html
-COPY ./php_codeneiter/html /var/www/html
+#COPY ./php_codeneiter/html /var/www/html
 
 # Cambia los permisos para garantizar que Apache tenga acceso
-RUN chmod -R 755 /var/www/html
+#RUN chmod -R 755 /var/www/html
 
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
