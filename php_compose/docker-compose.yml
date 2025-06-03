@@ -141,6 +141,7 @@ services:
       - mynetwork
 
   backup_service:
+    container_name: backup_bd
     build:
       context: ./backup_service
       dockerfile: Dockerfile

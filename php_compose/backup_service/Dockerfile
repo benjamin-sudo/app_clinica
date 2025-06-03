@@ -15,4 +15,4 @@ RUN mkdir -p /var/log
 # Expón el log (opcional)
 VOLUME [ "/var/log" ]
 # Arranca cron en primer plano
-CMD ["crond", "-f", "-l", "2"]
+CMD ["crond", "-f"]
