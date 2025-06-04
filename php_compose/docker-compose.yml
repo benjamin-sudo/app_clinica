@@ -100,6 +100,7 @@ services:
     #networks:
       #- mynetwork
 
+
   #bd_session_mysql    
   mysql_6:
     container_name: mysql_6
@@ -126,10 +127,9 @@ services:
       - "9306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      #- ./mysql/conf_1g/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./mysql/:/docker-entrypoint-initdb.d/
     networks:
-      - mynetwork          
+      - mynetwork
 
   #toad_de_mysql
   monitoreo_mysql:
@@ -141,14 +141,19 @@ services:
       - mynetwork
 
   backup_service:
-    container_name: backup_bd
+    container_name: backup_bd_clinica
     build:
       context: ./backup_service
       dockerfile: Dockerfile
     volumes:
       - db_data:/var/lib/mysql
       - ./backup_service/backup:/backup_service/backup
+      - ./backup_service/respaldo:/respaldo 
     restart: always  
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql_6
 
 secrets:
   mysql_root_password:

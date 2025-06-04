@@ -1,0 +1,475 @@
+
+=== INICIANDO RESTAURACIÓN ===
+
+[1/7] Buscando archivos .tar.gz en: ./backup_service/respaldo
+[1/7] Se encontró respaldo: mysql_backup_2025-06-03_19-30-18.tar.gz
+
+[2/7] Deteniendo servicios: mysql_6 y backup_service
+
+[3/7] Ejecutando 'docker compose down -v' para borrar contenedores y volúmenes
+ Volume php_compose_db_data  Removing
+ Volume php_compose_db_data  Removed
+
+[4/7] Obteniendo nombre real del volumen 'db_data'
+[4/7] Volumen lógico: db_data → Nombre real en Docker: php_compose_db_data
+
+[5/7] Creando volumen vacío: php_compose_db_data
+
+[6/7] Iniciando extracción de mysql_backup_2025-06-03_19-30-18.tar.gz en el volumen php_compose_db_data...
+[6/7] Montando host C:/Users/LENOVO/Desktop/php_compose/app_clinica/php_compose/backup_service/respaldo → contenedor:/respaldo
+    • Listando /respaldo dentro del contenedor:
+total 67044
+-rwxrwxrwx    1 root     root             0 Jun  4 14:28 index.php
+-rwxrwxrwx    1 root     root      68649113 Jun  3 19:30 mysql_backup_2025-06-03_19-30-18.tar.gz
+    • Limpiando /var/lib/mysql ...
+    • Ejecutando tar xzvf /respaldo/mysql_backup_2025-06-03_19-30-18.tar.gz -C /var/lib/mysql ...
+var/lib/mysql/
+var/lib/mysql/mysql/
+var/lib/mysql/mysql/db.frm
+var/lib/mysql/mysql/procs_priv.MYI
+var/lib/mysql/mysql/ndb_binlog_index.frm
+var/lib/mysql/mysql/func.frm
+var/lib/mysql/mysql/help_category.ibd
+var/lib/mysql/mysql/time_zone.frm
+var/lib/mysql/mysql/time_zone_transition.ibd
+var/lib/mysql/mysql/proc.MYI
+var/lib/mysql/mysql/db.opt
+var/lib/mysql/mysql/help_category.frm
+var/lib/mysql/mysql/servers.ibd
+var/lib/mysql/mysql/gtid_executed.frm
+var/lib/mysql/mysql/time_zone_transition.frm
+var/lib/mysql/mysql/proc.MYD
+var/lib/mysql/mysql/func.MYD
+var/lib/mysql/mysql/event.frm
+var/lib/mysql/mysql/event.MYD
+var/lib/mysql/mysql/tables_priv.MYI
+var/lib/mysql/mysql/time_zone_leap_second.frm
+var/lib/mysql/mysql/func.MYI
+var/lib/mysql/mysql/help_topic.ibd
+var/lib/mysql/mysql/plugin.frm
+var/lib/mysql/mysql/server_cost.frm
+var/lib/mysql/mysql/engine_cost.ibd
+var/lib/mysql/mysql/help_relation.frm
+var/lib/mysql/mysql/innodb_index_stats.frm
+var/lib/mysql/mysql/proc.frm
+var/lib/mysql/mysql/help_relation.ibd
+var/lib/mysql/mysql/slow_log.CSM
+var/lib/mysql/mysql/slave_master_info.ibd
+var/lib/mysql/mysql/slow_log.frm
+var/lib/mysql/mysql/general_log.CSV
+var/lib/mysql/mysql/procs_priv.frm
+var/lib/mysql/mysql/innodb_index_stats.ibd
+var/lib/mysql/mysql/time_zone_transition_type.ibd
+var/lib/mysql/mysql/db.MYI
+var/lib/mysql/mysql/help_keyword.ibd
+var/lib/mysql/mysql/procs_priv.MYD
+var/lib/mysql/mysql/db.MYD
+var/lib/mysql/mysql/event.MYI
+var/lib/mysql/mysql/columns_priv.MYD
+var/lib/mysql/mysql/gtid_executed.ibd
+var/lib/mysql/mysql/slave_worker_info.ibd
+var/lib/mysql/mysql/help_keyword.frm
+var/lib/mysql/mysql/columns_priv.frm
+var/lib/mysql/mysql/user.MYI
+var/lib/mysql/mysql/innodb_table_stats.ibd
+var/lib/mysql/mysql/columns_priv.MYI
+var/lib/mysql/mysql/proxies_priv.MYD
+var/lib/mysql/mysql/proxies_priv.frm
+var/lib/mysql/mysql/ndb_binlog_index.MYD
+var/lib/mysql/mysql/slow_log.CSV
+var/lib/mysql/mysql/engine_cost.frm
+var/lib/mysql/mysql/tables_priv.frm
+var/lib/mysql/mysql/help_topic.frm
+var/lib/mysql/mysql/tables_priv.MYD
+var/lib/mysql/mysql/plugin.ibd
+var/lib/mysql/mysql/slave_master_info.frm
+var/lib/mysql/mysql/ndb_binlog_index.MYI
+var/lib/mysql/mysql/time_zone.ibd
+var/lib/mysql/mysql/proxies_priv.MYI
+var/lib/mysql/mysql/user.frm
+var/lib/mysql/mysql/server_cost.ibd
+var/lib/mysql/mysql/time_zone_transition_type.frm
+var/lib/mysql/mysql/user.MYD
+var/lib/mysql/mysql/time_zone_name.ibd
+var/lib/mysql/mysql/innodb_table_stats.frm
+var/lib/mysql/mysql/slave_worker_info.frm
+var/lib/mysql/mysql/time_zone_name.frm
+var/lib/mysql/mysql/general_log.frm
+var/lib/mysql/mysql/general_log.CSM
+var/lib/mysql/mysql/servers.frm
+var/lib/mysql/mysql/slave_relay_log_info.ibd
+var/lib/mysql/mysql/time_zone_leap_second.ibd
+var/lib/mysql/mysql/slave_relay_log_info.frm
+var/lib/mysql/ca.pem
+var/lib/mysql/ADMIN/
+var/lib/mysql/ADMIN/SO_TTITUL.frm
+var/lib/mysql/ADMIN/FE_USERS.ibd
+var/lib/mysql/ADMIN/PB_MAIN_BLG_ANATOMIA.frm
+var/lib/mysql/ADMIN/GG_TREGION.ibd
+var/lib/mysql/ADMIN/PB_MAIN_BLG_ANATOMIA.ibd
+var/lib/mysql/ADMIN/GG_TFICHA.frm
+var/lib/mysql/ADMIN/GU_TMENPTIENEPER.frm
+var/lib/mysql/ADMIN/PB_MUESTRAXTECNICA.ibd
+var/lib/mysql/ADMIN/GG_TPACFALLECIDO.frm
+var/lib/mysql/ADMIN/GU_TMENUPRINCIPAL.ibd
+var/lib/mysql/ADMIN/GG_TGRUESP.frm
+var/lib/mysql/ADMIN/GG_TSERVICIO.frm
+var/lib/mysql/ADMIN/PB_INFOROTULADO.ibd
+var/lib/mysql/ADMIN/PB_TPRESTAXANATOMIA.frm
+var/lib/mysql/ADMIN/GG_TPRESTACION.ibd
+var/lib/mysql/ADMIN/PB_ANTECEDENTES_HISTO.frm
+var/lib/mysql/ADMIN/db.opt
+var/lib/mysql/ADMIN/SS_TEMPRESAS.ibd
+var/lib/mysql/ADMIN/IN_TMIEMBROS.frm
+var/lib/mysql/ADMIN/GU_TMENUPRINCIPAL.frm
+var/lib/mysql/ADMIN/GG_TESTCIV.ibd
+var/lib/mysql/ADMIN/PB_TPRESTACIONXANATOMIA.frm
+var/lib/mysql/ADMIN/PB_ANTECEDENTES_HISTO.ibd
+var/lib/mysql/ADMIN/PB_TPATOLOGIAXANATOMIA.ibd
+var/lib/mysql/ADMIN/AP_TTIPATEXPOLI.frm
+var/lib/mysql/ADMIN/GG_TCIUDAD.frm
+var/lib/mysql/ADMIN/MOTIVOS_DESACTIVAR_M.frm
+var/lib/mysql/ADMIN/GU_TUSUXEMPRESA.ibd
+var/lib/mysql/ADMIN/GG_TPRESTA.frm
+var/lib/mysql/ADMIN/GU_TUSUTIENEPER.ibd
+var/lib/mysql/ADMIN/PB_NMUESTRA_AUTOCOMPLETADO.ibd
+var/lib/mysql/ADMIN/GG_TPROFESIONAL.frm
+var/lib/mysql/ADMIN/AP_TPOLIXPROFESIONAL.frm
+var/lib/mysql/ADMIN/URG_TADMISION.frm
+var/lib/mysql/ADMIN/GG_TPRESTACION.frm
+var/lib/mysql/ADMIN/GG_TSEXO.frm
+var/lib/mysql/ADMIN/GG_TDATPREV.frm
+var/lib/mysql/ADMIN/GG_TPAIS.frm
+var/lib/mysql/ADMIN/GG_TPROVIN.frm
+var/lib/mysql/ADMIN/GG_TSEXO.ibd
+var/lib/mysql/ADMIN/PB_PATOLOGIA_ANATOMIA.frm
+var/lib/mysql/ADMIN/TGCD_CIE_DIAGNOSTICOS.ibd
+var/lib/mysql/ADMIN/GG_TPROFESION.frm
+var/lib/mysql/ADMIN/AP_TPOLIXPROFESIONAL.ibd
+var/lib/mysql/ADMIN/PB_IMG_APMUESTRAS.frm
+var/lib/mysql/ADMIN/PB_INFOROTULADO_SUB.frm
+var/lib/mysql/ADMIN/GG_TINSEMP.ibd
+var/lib/mysql/ADMIN/SS_TEMPRESAS.frm
+var/lib/mysql/ADMIN/FE_USERS.frm
+var/lib/mysql/ADMIN/PB_SALA_PABELLON.frm
+var/lib/mysql/ADMIN/AP_TPROFXESTABL.ibd
+var/lib/mysql/ADMIN/GU_TUSUXEMPRESA.frm
+var/lib/mysql/ADMIN/GU_TMENPTIENEPER.ibd
+var/lib/mysql/ADMIN/GG_TCORREL.frm
+var/lib/mysql/ADMIN/PB_INFOROTULADO_SUB.ibd
+var/lib/mysql/ADMIN/PB_PATOLOGIA_ANATOMIA.ibd
+var/lib/mysql/ADMIN/URG_TCIERRE.ibd
+var/lib/mysql/ADMIN/SO_TCPACTE.frm
+var/lib/mysql/ADMIN/GG_TPACFALLECIDO.ibd
+var/lib/mysql/ADMIN/GG_TPROFESIONAL.ibd
+var/lib/mysql/ADMIN/GG_TETNIA.frm
+var/lib/mysql/ADMIN/GG_TFICHA.ibd
+var/lib/mysql/ADMIN/GG_TESTCIV.frm
+var/lib/mysql/ADMIN/AP_TTIPOATENCION.ibd
+var/lib/mysql/ADMIN/GG_TGRUSAN.ibd
+var/lib/mysql/ADMIN/GG_TETNIA.ibd
+var/lib/mysql/ADMIN/GG_TGPACTE.frm
+var/lib/mysql/ADMIN/GG_TPRESTA.ibd
+var/lib/mysql/ADMIN/RECUPERACION_TOKENS.ibd
+var/lib/mysql/ADMIN/GG_TSERVICIO.ibd
+var/lib/mysql/ADMIN/RECUPERACION_TOKENS.frm
+var/lib/mysql/ADMIN/URG_TADMISION.ibd
+var/lib/mysql/ADMIN/PB_TECNICASXMUESTRAS.ibd
+var/lib/mysql/ADMIN/TGCD_CIE_DIAGNOSTICOS.frm
+var/lib/mysql/ADMIN/PB_TORGANOXANATOMIA.frm
+var/lib/mysql/ADMIN/GG_TGRUESP.ibd
+var/lib/mysql/ADMIN/GG_TREGION.frm
+var/lib/mysql/ADMIN/PB_SOLICITUD_HISTO.frm
+var/lib/mysql/ADMIN/GG_TCOMUNA.frm
+var/lib/mysql/ADMIN/PB_SALA_PABELLON.ibd
+var/lib/mysql/ADMIN/PB_TABLAOPERATORIA.ibd
+var/lib/mysql/ADMIN/PB_TECNICASXMUESTRAS.frm
+var/lib/mysql/ADMIN/MOTIVOS_DESACTIVAR_M.ibd
+var/lib/mysql/ADMIN/GG_TDATPREV.ibd
+var/lib/mysql/ADMIN/SO_TTITUL.ibd
+var/lib/mysql/ADMIN/GG_TCIUDAD.ibd
+var/lib/mysql/ADMIN/GG_TPROVIN.ibd
+var/lib/mysql/ADMIN/PB_HISTO_NMUESTRAS.frm
+var/lib/mysql/ADMIN/PB_TPRESTAXANATOMIA.ibd
+var/lib/mysql/ADMIN/PB_LINETIME_HISTO.ibd
+var/lib/mysql/ADMIN/GG_TPAIS.ibd
+var/lib/mysql/ADMIN/GU_TPERMISOS.ibd
+var/lib/mysql/ADMIN/PB_MUESTRAXTECNICA.frm
+var/lib/mysql/ADMIN/AP_TTIPATEXPOLI.ibd
+var/lib/mysql/ADMIN/PB_HISTO_NMUESTRAS.ibd
+var/lib/mysql/ADMIN/PB_TPRESTACIONXANATOMIA.ibd
+var/lib/mysql/ADMIN/GG_TINSEMP.frm
+var/lib/mysql/ADMIN/PB_ORGANO_ANATOMIA.ibd
+var/lib/mysql/ADMIN/GG_TCORREL.ibd
+var/lib/mysql/ADMIN/GG_TGPACTE.ibd
+var/lib/mysql/ADMIN/SO_TMOTICIQ.ibd
+var/lib/mysql/ADMIN/PB_NMUESTRA_AUTOCOMPLETADO.frm
+var/lib/mysql/ADMIN/GG_TCOMUNA.ibd
+var/lib/mysql/ADMIN/GG_TPROFESION.ibd
+var/lib/mysql/ADMIN/PB_LINETIME_HISTO.frm
+var/lib/mysql/ADMIN/PB_INFOROTULADO.frm
+var/lib/mysql/ADMIN/PB_ORGANO_ANATOMIA.frm
+var/lib/mysql/ADMIN/PB_SOLICITUD_HISTO.ibd
+var/lib/mysql/ADMIN/GU_TUSUTIENEPER.frm
+var/lib/mysql/ADMIN/GU_TPERMISOS.frm
+var/lib/mysql/ADMIN/AP_TPROFXESTABL.frm
+var/lib/mysql/ADMIN/AP_TTIPOATENCION.frm
+var/lib/mysql/ADMIN/PB_TABLAOPERATORIA.frm
+var/lib/mysql/ADMIN/PB_FIRMAMEDICO.ibd
+var/lib/mysql/ADMIN/URG_TCIERRE.frm
+var/lib/mysql/ADMIN/IN_TMIEMBROS.ibd
+var/lib/mysql/ADMIN/PB_FIRMAMEDICO.frm
+var/lib/mysql/ADMIN/GG_TFACSAN.ibd
+var/lib/mysql/ADMIN/GG_TFACSAN.frm
+var/lib/mysql/ADMIN/PB_TORGANOXANATOMIA.ibd
+var/lib/mysql/ADMIN/PB_TPATOLOGIAXANATOMIA.frm
+var/lib/mysql/ADMIN/GG_TGRUSAN.frm
+var/lib/mysql/ADMIN/SO_TMOTICIQ.frm
+var/lib/mysql/ADMIN/GG_TSERVICIOXEMP.frm
+var/lib/mysql/ADMIN/GG_TSERVICIOXEMP.ibd
+var/lib/mysql/ADMIN/PB_IMG_APMUESTRAS.ibd
+var/lib/mysql/ADMIN/SO_TCPACTE.ibd
+var/lib/mysql/ibtmp1
+var/lib/mysql/client-key.pem
+var/lib/mysql/ib_buffer_pool
+var/lib/mysql/client-cert.pem
+var/lib/mysql/performance_schema/
+var/lib/mysql/performance_schema/events_stages_summary_by_host_by_event_name.frm
+var/lib/mysql/performance_schema/events_waits_summary_by_instance.frm
+var/lib/mysql/performance_schema/objects_summary_global_by_type.frm
+var/lib/mysql/performance_schema/events_transactions_current.frm
+var/lib/mysql/performance_schema/events_stages_history_long.frm
+var/lib/mysql/performance_schema/global_status.frm
+var/lib/mysql/performance_schema/memory_summary_by_user_by_event_name.frm
+var/lib/mysql/performance_schema/setup_instruments.frm
+var/lib/mysql/performance_schema/setup_consumers.frm
+var/lib/mysql/performance_schema/events_statements_summary_by_host_by_event_name.frm
+var/lib/mysql/performance_schema/file_summary_by_event_name.frm
+var/lib/mysql/performance_schema/file_summary_by_instance.frm
+var/lib/mysql/performance_schema/users.frm
+var/lib/mysql/performance_schema/memory_summary_global_by_event_name.frm
+var/lib/mysql/performance_schema/db.opt
+var/lib/mysql/performance_schema/events_transactions_summary_global_by_event_name.frm
+var/lib/mysql/performance_schema/events_transactions_history_long.frm
+var/lib/mysql/performance_schema/session_variables.frm
+var/lib/mysql/performance_schema/metadata_locks.frm
+var/lib/mysql/performance_schema/table_handles.frm
+var/lib/mysql/performance_schema/events_transactions_summary_by_host_by_event_name.frm
+var/lib/mysql/performance_schema/status_by_thread.frm
+var/lib/mysql/performance_schema/events_transactions_summary_by_account_by_event_name.frm
+var/lib/mysql/performance_schema/events_statements_summary_by_user_by_event_name.frm
+var/lib/mysql/performance_schema/memory_summary_by_account_by_event_name.frm
+var/lib/mysql/performance_schema/events_waits_summary_by_thread_by_event_name.frm
+var/lib/mysql/performance_schema/events_waits_history.frm
+var/lib/mysql/performance_schema/status_by_account.frm
+var/lib/mysql/performance_schema/events_stages_summary_by_thread_by_event_name.frm
+var/lib/mysql/performance_schema/socket_summary_by_instance.frm
+var/lib/mysql/performance_schema/events_statements_summary_by_digest.frm
+var/lib/mysql/performance_schema/setup_actors.frm
+var/lib/mysql/performance_schema/events_transactions_summary_by_thread_by_event_name.frm
+var/lib/mysql/performance_schema/socket_instances.frm
+var/lib/mysql/performance_schema/replication_applier_configuration.frm
+var/lib/mysql/performance_schema/replication_group_member_stats.frm
+var/lib/mysql/performance_schema/memory_summary_by_thread_by_event_name.frm
+var/lib/mysql/performance_schema/events_statements_summary_global_by_event_name.frm
+var/lib/mysql/performance_schema/events_transactions_history.frm
+var/lib/mysql/performance_schema/status_by_host.frm
+var/lib/mysql/performance_schema/cond_instances.frm
+var/lib/mysql/performance_schema/threads.frm
+var/lib/mysql/performance_schema/accounts.frm
+var/lib/mysql/performance_schema/events_statements_summary_by_program.frm
+var/lib/mysql/performance_schema/replication_connection_configuration.frm
+var/lib/mysql/performance_schema/mutex_instances.frm
+var/lib/mysql/performance_schema/host_cache.frm
+var/lib/mysql/performance_schema/status_by_user.frm
+var/lib/mysql/performance_schema/events_statements_history.frm
+var/lib/mysql/performance_schema/events_stages_summary_by_user_by_event_name.frm
+var/lib/mysql/performance_schema/events_stages_current.frm
+var/lib/mysql/performance_schema/hosts.frm
+var/lib/mysql/performance_schema/setup_timers.frm
+var/lib/mysql/performance_schema/events_waits_history_long.frm
+var/lib/mysql/performance_schema/table_lock_waits_summary_by_table.frm
+var/lib/mysql/performance_schema/table_io_waits_summary_by_index_usage.frm
+var/lib/mysql/performance_schema/table_io_waits_summary_by_table.frm
+var/lib/mysql/performance_schema/replication_applier_status.frm
+var/lib/mysql/performance_schema/replication_group_members.frm
+var/lib/mysql/performance_schema/session_account_connect_attrs.frm
+var/lib/mysql/performance_schema/events_transactions_summary_by_user_by_event_name.frm
+var/lib/mysql/performance_schema/processlist.frm
+var/lib/mysql/performance_schema/performance_timers.frm
+var/lib/mysql/performance_schema/socket_summary_by_event_name.frm
+var/lib/mysql/performance_schema/events_statements_summary_by_account_by_event_name.frm
+var/lib/mysql/performance_schema/events_waits_summary_global_by_event_name.frm
+var/lib/mysql/performance_schema/session_connect_attrs.frm
+var/lib/mysql/performance_schema/replication_applier_status_by_coordinator.frm
+var/lib/mysql/performance_schema/user_variables_by_thread.frm
+var/lib/mysql/performance_schema/events_waits_current.frm
+var/lib/mysql/performance_schema/events_stages_history.frm
+var/lib/mysql/performance_schema/events_waits_summary_by_host_by_event_name.frm
+var/lib/mysql/performance_schema/file_instances.frm
+var/lib/mysql/performance_schema/events_waits_summary_by_account_by_event_name.frm
+var/lib/mysql/performance_schema/events_stages_summary_by_account_by_event_name.frm
+var/lib/mysql/performance_schema/events_statements_current.frm
+var/lib/mysql/performance_schema/setup_objects.frm
+var/lib/mysql/performance_schema/prepared_statements_instances.frm
+var/lib/mysql/performance_schema/rwlock_instances.frm
+var/lib/mysql/performance_schema/events_statements_summary_by_thread_by_event_name.frm
+var/lib/mysql/performance_schema/variables_by_thread.frm
+var/lib/mysql/performance_schema/events_waits_summary_by_user_by_event_name.frm
+var/lib/mysql/performance_schema/global_variables.frm
+var/lib/mysql/performance_schema/replication_connection_status.frm
+var/lib/mysql/performance_schema/replication_applier_status_by_worker.frm
+var/lib/mysql/performance_schema/memory_summary_by_host_by_event_name.frm
+var/lib/mysql/performance_schema/session_status.frm
+var/lib/mysql/performance_schema/events_statements_history_long.frm
+var/lib/mysql/performance_schema/events_stages_summary_global_by_event_name.frm
+var/lib/mysql/ca-key.pem
+var/lib/mysql/ibdata1
+var/lib/mysql/mysql.sock
+var/lib/mysql/public_key.pem
+var/lib/mysql/ib_logfile0
+var/lib/mysql/server-key.pem
+var/lib/mysql/private_key.pem
+var/lib/mysql/auto.cnf
+var/lib/mysql/sys/
+var/lib/mysql/sys/x@0024processlist.frm
+var/lib/mysql/sys/x@0024statements_with_runtimes_in_95th_percentile.frm
+var/lib/mysql/sys/host_summary_by_file_io.frm
+var/lib/mysql/sys/statement_analysis.frm
+var/lib/mysql/sys/x@0024session.frm
+var/lib/mysql/sys/user_summary_by_statement_latency.frm
+var/lib/mysql/sys/x@0024user_summary_by_statement_type.frm
+var/lib/mysql/sys/user_summary.frm
+var/lib/mysql/sys/schema_tables_with_full_table_scans.frm
+var/lib/mysql/sys/x@0024waits_by_user_by_latency.frm
+var/lib/mysql/sys/io_global_by_file_by_bytes.frm
+var/lib/mysql/sys/x@0024statements_with_full_table_scans.frm
+var/lib/mysql/sys/x@0024user_summary_by_file_io_type.frm
+var/lib/mysql/sys/x@0024host_summary.frm
+var/lib/mysql/sys/user_summary_by_stages.frm
+var/lib/mysql/sys/x@0024wait_classes_global_by_latency.frm
+var/lib/mysql/sys/db.opt
+var/lib/mysql/sys/latest_file_io.frm
+var/lib/mysql/sys/schema_table_statistics_with_buffer.frm
+var/lib/mysql/sys/user_summary_by_file_io.frm
+var/lib/mysql/sys/schema_table_lock_waits.frm
+var/lib/mysql/sys/x@0024ps_digest_95th_percentile_by_avg_us.frm
+var/lib/mysql/sys/x@0024statements_with_sorting.frm
+var/lib/mysql/sys/innodb_buffer_stats_by_schema.frm
+var/lib/mysql/sys/waits_global_by_latency.frm
+var/lib/mysql/sys/x@0024schema_table_lock_waits.frm
+var/lib/mysql/sys/wait_classes_global_by_avg_latency.frm
+var/lib/mysql/sys/x@0024user_summary_by_file_io.frm
+var/lib/mysql/sys/x@0024host_summary_by_stages.frm
+var/lib/mysql/sys/waits_by_user_by_latency.frm
+var/lib/mysql/sys/x@0024ps_schema_table_statistics_io.frm
+var/lib/mysql/sys/statements_with_full_table_scans.frm
+var/lib/mysql/sys/ps_check_lost_instrumentation.frm
+var/lib/mysql/sys/memory_by_user_by_current_bytes.frm
+var/lib/mysql/sys/host_summary_by_stages.frm
+var/lib/mysql/sys/sys_config_update_set_user.TRN
+var/lib/mysql/sys/x@0024memory_by_thread_by_current_bytes.frm
+var/lib/mysql/sys/x@0024user_summary.frm
+var/lib/mysql/sys/sys_config.frm
+var/lib/mysql/sys/schema_auto_increment_columns.frm
+var/lib/mysql/sys/io_global_by_wait_by_latency.frm
+var/lib/mysql/sys/x@0024memory_by_host_by_current_bytes.frm
+var/lib/mysql/sys/host_summary_by_file_io_type.frm
+var/lib/mysql/sys/x@0024waits_by_host_by_latency.frm
+var/lib/mysql/sys/statements_with_errors_or_warnings.frm
+var/lib/mysql/sys/innodb_buffer_stats_by_table.frm
+var/lib/mysql/sys/x@0024innodb_lock_waits.frm
+var/lib/mysql/sys/statements_with_runtimes_in_95th_percentile.frm
+var/lib/mysql/sys/x@0024latest_file_io.frm
+var/lib/mysql/sys/waits_by_host_by_latency.frm
+var/lib/mysql/sys/memory_global_by_current_bytes.frm
+var/lib/mysql/sys/user_summary_by_file_io_type.frm
+var/lib/mysql/sys/session.frm
+var/lib/mysql/sys/session_ssl_status.frm
+var/lib/mysql/sys/metrics.frm
+var/lib/mysql/sys/io_by_thread_by_latency.frm
+var/lib/mysql/sys/x@0024schema_table_statistics.frm
+var/lib/mysql/sys/x@0024schema_tables_with_full_table_scans.frm
+var/lib/mysql/sys/x@0024user_summary_by_stages.frm
+var/lib/mysql/sys/x@0024innodb_buffer_stats_by_schema.frm
+var/lib/mysql/sys/x@0024user_summary_by_statement_latency.frm
+var/lib/mysql/sys/x@0024io_global_by_file_by_latency.frm
+var/lib/mysql/sys/statements_with_sorting.frm
+var/lib/mysql/sys/x@0024schema_flattened_keys.frm
+var/lib/mysql/sys/schema_unused_indexes.frm
+var/lib/mysql/sys/statements_with_temp_tables.frm
+var/lib/mysql/sys/x@0024memory_by_user_by_current_bytes.frm
+var/lib/mysql/sys/memory_global_total.frm
+var/lib/mysql/sys/x@0024host_summary_by_statement_type.frm
+var/lib/mysql/sys/host_summary_by_statement_type.frm
+var/lib/mysql/sys/version.frm
+var/lib/mysql/sys/user_summary_by_statement_type.frm
+var/lib/mysql/sys/memory_by_host_by_current_bytes.frm
+var/lib/mysql/sys/wait_classes_global_by_latency.frm
+var/lib/mysql/sys/x@0024innodb_buffer_stats_by_table.frm
+var/lib/mysql/sys/x@0024memory_global_by_current_bytes.frm
+var/lib/mysql/sys/innodb_lock_waits.frm
+var/lib/mysql/sys/x@0024schema_table_statistics_with_buffer.frm
+var/lib/mysql/sys/x@0024wait_classes_global_by_avg_latency.frm
+var/lib/mysql/sys/x@0024io_by_thread_by_latency.frm
+var/lib/mysql/sys/x@0024io_global_by_file_by_bytes.frm
+var/lib/mysql/sys/processlist.frm
+var/lib/mysql/sys/x@0024host_summary_by_file_io.frm
+var/lib/mysql/sys/x@0024memory_global_total.frm
+var/lib/mysql/sys/schema_object_overview.frm
+var/lib/mysql/sys/io_global_by_wait_by_bytes.frm
+var/lib/mysql/sys/x@0024statements_with_errors_or_warnings.frm
+var/lib/mysql/sys/sys_config_insert_set_user.TRN
+var/lib/mysql/sys/x@0024statement_analysis.frm
+var/lib/mysql/sys/sys_config.ibd
+var/lib/mysql/sys/schema_table_statistics.frm
+var/lib/mysql/sys/sys_config.TRG
+var/lib/mysql/sys/schema_index_statistics.frm
+var/lib/mysql/sys/x@0024io_global_by_wait_by_latency.frm
+var/lib/mysql/sys/io_global_by_file_by_latency.frm
+var/lib/mysql/sys/x@0024ps_digest_avg_latency_distribution.frm
+var/lib/mysql/sys/x@0024host_summary_by_file_io_type.frm
+var/lib/mysql/sys/x@0024io_global_by_wait_by_bytes.frm
+var/lib/mysql/sys/x@0024schema_index_statistics.frm
+var/lib/mysql/sys/memory_by_thread_by_current_bytes.frm
+var/lib/mysql/sys/host_summary.frm
+var/lib/mysql/sys/x@0024statements_with_temp_tables.frm
+var/lib/mysql/sys/host_summary_by_statement_latency.frm
+var/lib/mysql/sys/x@0024waits_global_by_latency.frm
+var/lib/mysql/sys/x@0024host_summary_by_statement_latency.frm
+var/lib/mysql/sys/schema_redundant_indexes.frm
+var/lib/mysql/ib_logfile1
+var/lib/mysql/server-cert.pem
+    • Ajustando permisos a 999:999 en /var/lib/mysql ...
+    • Extracción y permisos finalizados.
+[6/7] Extracción completada.
+
+[7/7] Levantando todos los servicios definidos en docker-compose.yml
+time="2025-06-04T15:06:28-04:00" level=warning msg="C:\\Users\\LENOVO\\Desktop\\php_compose\\app_clinica\\php_compose\\docker-compose.restore.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Network php_compose_mynetwork  Creating
+ Network php_compose_mynetwork  Created
+time="2025-06-04T15:06:28-04:00" level=warning msg="volume \"php_compose_db_data\" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume"
+ Container mysql_6  Creating
+ Container php_compose-monitoreo_mysql-1  Creating
+ Container php_clinica  Creating
+ Container mysql_6  Created
+ Container user_administrador  Creating
+ Container backup_bd_clinica  Creating
+ Container php_clinica  Created
+ Container php_compose-monitoreo_mysql-1  Created
+ Container user_administrador  Created
+ Container backup_bd_clinica  Created
+ Container mysql_6  Starting
+ Container php_compose-monitoreo_mysql-1  Starting
+ Container php_clinica  Starting
+ Container php_compose-monitoreo_mysql-1  Started
+ Container mysql_6  Started
+ Container backup_bd_clinica  Starting
+ Container user_administrador  Starting
+ Container php_clinica  Started
+ Container backup_bd_clinica  Started
+ Container user_administrador  Started
+
+=== RESTAURACIÓN FINALIZADA ===
+
+Presiona Enter para cerrar...

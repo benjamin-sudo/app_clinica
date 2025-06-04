@@ -1,18 +1,22 @@
 FROM alpine:latest
-# Instala cronie (en lugar de dcron), dos2unix y bash (si lo necesitas)
+# 1. Instalar cronie, dos2unix y bash
 RUN apk update \
  && apk add --no-cache cronie dos2unix bash
-# Crea el directorio de backup
-RUN mkdir -p /backup_service/backup
-# Copia el script y dale permisos
+# 2. Crear el directorio /respaldo (para montar allí los .tar.gz para restauración)
+RUN mkdir -p /respaldo
+# 3. Crear el directorio donde cron escribirá logs
+RUN mkdir -p /var/log
+# 4. Copiar backup.sh (script para generar .tar.gz) y darle permisos
 COPY backup.sh /usr/local/bin/backup.sh
 RUN dos2unix /usr/local/bin/backup.sh \
  && chmod +x /usr/local/bin/backup.sh
-# Define la tarea en /etc/crontabs/root (sin 'root' al inicio)
+# 5. Copiar restaurar.sh (script para restaurar .tar.gz) y darle permisos
+COPY restaurar.sh /usr/local/bin/restaurar.sh
+RUN dos2unix /usr/local/bin/restaurar.sh \
+ && chmod +x /usr/local/bin/restaurar.sh
+# 6. Crear el cron job para backup.sh (se ejecuta todos los días a las 02:00)
 RUN echo "0 2 * * * /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1" > /etc/crontabs/root
-# Crea la carpeta de logs (opcional, para que exista /var/log y crond pueda escribir)
-RUN mkdir -p /var/log
-# Expón el log (opcional)
+# 7. Montar /var/log como volumen (opcional, para poder ver logs desde el host)
 VOLUME [ "/var/log" ]
-# Arranca cron en primer plano
+# 8. Por defecto arranca cron en primer plano
 CMD ["crond", "-f"]

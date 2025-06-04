@@ -396,9 +396,14 @@ function ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(value){
             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
         },
         success : function(aData) {
+
+            console.log(aData);
             setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+            /*
+            
             $("#RETURN_DATA_5").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.NUEVAS_SOLICITUDES);
             $("#RETURN_DATA_4").html('').html(aData["HTML_LISTAS"].HTML_SOLICITUDEAP.VISTA_SOLICITUDES);
+            */
         }, 
     });
 }
