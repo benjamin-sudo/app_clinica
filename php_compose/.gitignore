@@ -2,3 +2,4 @@
 secrets/root_password.txt
 secrets/user_password.txt
 backup_service/backup/
+backup_service/respaldo/
