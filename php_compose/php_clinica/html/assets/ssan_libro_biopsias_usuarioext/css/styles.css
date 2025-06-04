@@ -151,7 +151,7 @@
     justify-items : flex-start;
 }
 
-@media(min-width :   900px){
+@media(min-width : 900px){
     .class_modal_ancho {
         width : 85%;
         max-width : 90%;
@@ -178,5 +178,3 @@
     grid-template-columns : 119px 12px auto;
     margin-bottom : 0px;
 }
-
-

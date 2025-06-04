@@ -5,10 +5,18 @@
 [1/7] Se encontró respaldo: mysql_backup_2025-06-03_19-30-18.tar.gz
 
 [2/7] Deteniendo servicios: mysql_6 y backup_service
+ Container mysql_6  Stopping
+ Container mysql_6  Stopped
 
 [3/7] Ejecutando 'docker compose down -v' para borrar contenedores y volúmenes
+ Container mysql_6  Stopping
+ Container mysql_6  Stopped
+ Container mysql_6  Removing
+ Container mysql_6  Removed
  Volume php_compose_db_data  Removing
+ Network php_compose_mynetwork  Removing
  Volume php_compose_db_data  Removed
+ Network php_compose_mynetwork  Removed
 
 [4/7] Obteniendo nombre real del volumen 'db_data'
 [4/7] Volumen lógico: db_data → Nombre real en Docker: php_compose_db_data
@@ -22,7 +30,7 @@ total 67044
 -rwxrwxrwx    1 root     root             0 Jun  4 14:28 index.php
 -rwxrwxrwx    1 root     root      68649113 Jun  3 19:30 mysql_backup_2025-06-03_19-30-18.tar.gz
     • Limpiando /var/lib/mysql ...
-    • Ejecutando tar xzvf /respaldo/mysql_backup_2025-06-03_19-30-18.tar.gz -C /var/lib/mysql ...
+    • Ejecutando tar xzvf /respaldo/mysql_backup_2025-06-03_19-30-18.tar.gz -C /var/lib/mysql --strip-components=3 ...
 var/lib/mysql/
 var/lib/mysql/mysql/
 var/lib/mysql/mysql/db.frm
@@ -445,13 +453,12 @@ var/lib/mysql/server-cert.pem
 [6/7] Extracción completada.
 
 [7/7] Levantando todos los servicios definidos en docker-compose.yml
-time="2025-06-04T15:06:28-04:00" level=warning msg="C:\\Users\\LENOVO\\Desktop\\php_compose\\app_clinica\\php_compose\\docker-compose.restore.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
  Network php_compose_mynetwork  Creating
  Network php_compose_mynetwork  Created
-time="2025-06-04T15:06:28-04:00" level=warning msg="volume \"php_compose_db_data\" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume"
+time="2025-06-04T16:39:23-04:00" level=warning msg="volume \"php_compose_db_data\" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume"
+ Container php_clinica  Creating
  Container mysql_6  Creating
  Container php_compose-monitoreo_mysql-1  Creating
- Container php_clinica  Creating
  Container mysql_6  Created
  Container user_administrador  Creating
  Container backup_bd_clinica  Creating
@@ -459,13 +466,13 @@ time="2025-06-04T15:06:28-04:00" level=warning msg="volume \"php_compose_db_data
  Container php_compose-monitoreo_mysql-1  Created
  Container user_administrador  Created
  Container backup_bd_clinica  Created
+ Container php_clinica  Starting
  Container mysql_6  Starting
  Container php_compose-monitoreo_mysql-1  Starting
- Container php_clinica  Starting
  Container php_compose-monitoreo_mysql-1  Started
  Container mysql_6  Started
- Container backup_bd_clinica  Starting
  Container user_administrador  Starting
+ Container backup_bd_clinica  Starting
  Container php_clinica  Started
  Container backup_bd_clinica  Started
  Container user_administrador  Started

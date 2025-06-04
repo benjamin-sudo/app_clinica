@@ -1,17 +1,27 @@
-version: "3.8"
+# docker-compose.restore.yml (paso 1: dejar que MySQL inicialice!)
 services:
   mysql_6:
     image: mysql:5.7
-    # Anulamos el command original y ejecutamos directamente mysqld:
-    command: ["mysqld",
-      "--default-authentication-plugin=mysql_native_password",
-      "--character-set-server=utf8mb4",
-      "--collation-server=utf8mb4_spanish_ci",
-      "--init-connect=SET NAMES utf8mb4 COLLATE utf8mb4_spanish_ci",
-      "--explicit_defaults_for_timestamp=1"
-    ]
-    # Quitamos las variables que disparan initialize
-    environment: []
-    # Montamos solo el volumen de datos (sin /docker-entrypoint-initdb.d/)
+    container_name: mysql_6
+
+    # 1) Quitamos EL entrypoint override por completo:
+    #    (si queda esto, MySQL nunca ejecuta "docker-entrypoint.sh" y no creará mysql.user)
+    # entrypoint:
+    #   - mysqld
+    #   - --default-authentication-plugin=mysql_native_password
+    #   - --character-set-server=utf8mb4
+    #   - --collation-server=utf8mb4_spanish_ci
+    #   - --init-connect=SET NAMES utf8mb4 COLLATE utf8mb4_spanish_ci
+    #   - --explicit_defaults_for_timestamp=1
+
+    # 2) Dejamos las mismas variables de entorno que en tu docker-compose.yml original
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_DATABASE: ADMIN
+      MYSQL_USER: ADMIN
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_user_password
+      TZ: America/Santiago
+
+    # 3) Montamos el volumen (vacío tras docker compose down -v) para que arranque
     volumes:
       - db_data:/var/lib/mysql
