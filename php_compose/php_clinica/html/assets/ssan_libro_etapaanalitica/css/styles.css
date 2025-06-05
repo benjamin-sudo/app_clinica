@@ -1035,3 +1035,12 @@ input[type="file"] {
     grid-template-columns : auto auto;
     gap: 8px;
 }
+
+.class_busquedapor_nbioopsia {
+    display : grid;
+    grid-template-columns : auto auto auto;
+    gap: 8px;
+    align-items: flex-end;
+    justify-self: flex-start;
+    justify-items: anchor-center;
+}

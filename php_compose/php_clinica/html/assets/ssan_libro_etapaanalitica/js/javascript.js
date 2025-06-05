@@ -198,6 +198,7 @@ $(document).ready(function(){
     }).on('page', function(event, num){
         update_etapaanalitica(num);
     });
+
     $('.selectpicker').selectpicker();
     //console.error("strorage_filtro_categorias -> ",localStorage.getItem("strorage_filtro_categorias"));
     if (localStorage.getItem("strorage_filtro_categorias")===null || localStorage.getItem("strorage_filtro_categorias")=='-1'){
@@ -206,17 +207,31 @@ $(document).ready(function(){
         $('#ind_filtro_busqueda_xfechas').selectpicker('val',localStorage.getItem("strorage_filtro_categorias").split(','));
     }
 
-
-    document.addEventListener('DOMContentLoaded', function () {
-        var tabs = document.querySelector('#tabs_main_analitica');
-        tabs.addEventListener('shown.bs.tab', function (event) {
-            let activeTab = event.target; 
-            let previousTab = event.relatedTarget; 
-            console.log('Nueva pestana activa : ' + activeTab.id); 
-            console.log('Pestaña anterior : ' + previousTab.id); 
-        });
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+        const nuevoTab = $(e.target); // el <button> activo ahora
+        const idTabActivo = nuevoTab.attr('id'); // ej. "_panel_por_fecha-tab"
+        const zonaLi = nuevoTab.data('zona_li'); // ej. "busqueda_por_persona"
+        const tituloTab = nuevoTab.data('titulo'); // ej. "BÚSQUEDA POR PERSONA"
+        const panelObjetivo= nuevoTab.data('bs-target'); // "#_panel_por_fecha"
+        if (zonaLi == "busqueda_por_fecha") {
+            console.log("listado busqueda por fecha");
+            js_busquedaporfecha();
+        } else if (zonaLi == "busqueda_por_persona") {
+            const radioMarcado = document.querySelector("input[name='ind_tipo_busqueda']:checked");
+            if (radioMarcado.value == "1"){
+                js_preparabusquedaporrun();
+            } else {
+                js_preparabuspornbiopsia();
+            }
+        } 
     });
-
+    const radioMarcado = document.querySelector("input[name='ind_tipo_busqueda']:checked");
+    if (radioMarcado.value == "1"){
+        js_preparabusquedaporrun();
+    } else {
+        js_preparabuspornbiopsia();
+    }
+    //console.error("radioMarcado  ->  ",radioMarcado);
     //$('#ind_filtro_busqueda_xfechas').selectpicker('val','-1');
     //null_tabs();
     star_defatult();
@@ -227,6 +242,98 @@ function star_defatult(){
     $("#busqueda_por_gestion").hide();
     $("#busqueda_por_codigo").hide();
     $("#busqueda_por_persona").hide();
+    //js_preparabusquedaporrun();
+}
+
+function js_preparabusquedaporrun(){
+    $(".class_busquedaporrun").show();
+    $(".class_selector_busquedabiopsia").hide();
+    $('#run_pacientebusqueda').Rut({
+         on_error : function()  {   
+            jAlert('El RUN ingresado es Incorrecto. '+$("#run_pacientebusqueda").val(), 'Rut Incorrecto'); 
+            $("#run_pacientebusqueda").val('');
+            setTimeout(function(){ $("#run_pacientebusqueda").focus(); }, 50);
+        },
+         on_success : function()  {   
+            $("#run_pacientebusqueda").css('border-color',''); 
+            //$("#slc_automplete_biopsia").val('').prop('disabled',true);
+            //$("#btn_incribe_visita").attr("onclick","js_inscribe_vista()");
+            //js_inscribe_vista();  
+        },
+        format_on : 'keyup'
+   });
+   $("#run_pacientebusqueda").val('');
+    setTimeout(function(){  $("#run_pacientebusqueda").focus(); }, 50);
+   return true;
+}
+
+function js_vista_opcion_busqueda(_value){
+    localStorage.setItem("storage_busqueda_por_n_biosia",_value);
+    $("#slc_automplete_biopsia").val('');
+    let num_value = _value == 'busqueda_por_paciente'?1:2;
+    if (num_value == 1){
+        js_preparabusquedaporrun();
+    } else {
+        js_preparabuspornbiopsia();
+    }
+}
+
+function js_preparabuspornbiopsia(){
+    $(".class_busquedaporrun").hide();
+    $(".class_selector_busquedabiopsia").show();
+    return true;
+}
+
+function js_busquedaporfecha(){
+    $(".class_busquedaporrun").hide();
+    $(".class_selector_busquedabiopsia").hide();
+    return true;
+}
+
+
+function js_iniciabusquedapornbiopsia(){
+    //console.log("js_iniciabusquedapornbiopsia");
+    let v_error = [];
+    let v_nbiopsia = $("#slc_automplete_biopsia").val();
+    let v_ind_tipobusqueda =  $("#ind_tipobiopsia").val();
+    let v_ind_yearbiopsia = $("#ind_yearbiopsia").val();
+    if (v_nbiopsia == '') {
+        v_error.push("N&uacute;mero de b&uacute;squeda de biopsia vac&iacute;o.");
+    }
+    if (v_error.length>0){
+        jAlert(v_error.join("<br>"),"","clinica libre");
+    } else {
+        js_iniciobusqueda_biopsia(1,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,null,null)
+    }
+}
+
+function js_iniciabusquedarun(){
+    let v_error = [];
+    let v_run_pacientebusqueda = $("#run_pacientebusqueda").val();
+    v_run_pacientebusqueda == '' ? v_error.push("RUN esta vacio") : '';
+    if (v_error.length > 0) {
+        jError(v_error.join("<br>"),"Clinica Libre");
+    } else {
+        // Quitamos todos los puntos: "16.869.726-0" → "16869726-0"
+        v_run_pacientebusqueda = v_run_pacientebusqueda.replace(/\./g, '').join('-');
+        console.log("v_run_pacientebusqueda ->  ",v_run_pacientebusqueda);
+        js_iniciobusqueda_biopsia(2,null,null,null,v_run_pacientebusqueda[0],v_run_pacientebusqueda[1])
+    }
+}
+
+function js_iniciobusqueda_biopsia(opcion,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,v_run,v_dv){
+    $.ajax({ 
+        type : "POST",
+        url : "ssan_libro_etapaanalitica/busqueda_new_biopsias",
+        dataType : "json",
+        beforeSend : function(xhr) { $('#loadFade').modal('show'); },
+        data : { opcion,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,v_run,v_dv},
+        error : function(errro) {   console.log(errro); jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); },
+        success : function(aData) { 
+            console.log(aData);
+        }, 
+        complete: function(data) { $('#loadFade').modal('hide'); }
+    });
 }
 
 let indFiltroBusquedaHandler = function (e, clickedIndex, isSelected, previousValue) {
@@ -271,8 +378,6 @@ function js_desabilita_filtro_busqueda(){
     }
     update_etapaanalitica(1);
 }
-
-
 
 function null_tabs(){
     //console.log("null_tabs -> txt_busqueda_titulo");
@@ -421,16 +526,6 @@ function js_adjunto_firma(archivos){
     }
 }
 
-
-function js_vista_opcion_busqueda(_value){
-    console.error("_value -> ",_value);
-    localStorage.setItem("storage_busqueda_por_n_biosia",_value);
-    $("#slc_automplete_biopsia").val('');
-    let num_value = _value == 'busqueda_por_paciente'?1:2;
-    console.error("num_value  ->  ",num_value);
-    //star_automplete(num_value);
-}
-
 function star_automplete(_value){
     var opciones = {
         adjustWidth : false,
@@ -519,17 +614,6 @@ function star_automplete(_value){
     $("#slc_automplete_biopsia").easyAutocomplete(opciones);
 }
 
-function js_iniciabusquedarun(){
-    let v_error = [];
-    let v_slc_automplete_biopsia = $("#slc_automplete_biopsia").val();
-    v_slc_automplete_biopsia == '' ? v_error.push("RUN esta vacio") : '';
-    if (v_error.length > 0) {
-        jError(v_error.join("<br>"),"Clinica Libre");
-        console.log(v_error);
-    } else {
-        console.log("PASAAA");
-    }
-}
 
 function update_etapaanalitica(v_num_page){
     let date_inicio = $('#fecha_out').data().date;
@@ -1366,44 +1450,40 @@ function js_data_administrativo(id_anatomia){
             if(r){ 
                 $('#loadFade').modal('show'); 
                 $.ajax({ 
-                    type                                :   "POST",
-                    url                                 :   "ssan_libro_etapaanalitica/guardado_perfil_administrativo",
-                    dataType                            :   "json",
-                    beforeSend                          :   function(xhr)   {   console.log(xhr);   },
-                    data                                :   { 
-                                                                contrasena      :   r,
-                                                                id_anatomia     :   id_anatomia,
-                                                                accesdata       :   obj_rce_anatomia,
-                                                            },
-                    error                               :   function(errro) { 
-                                                                                console.error("errro                  ->",errro); 
-                                                                                console.error("error.responseText     ->",errro.responseText); 
-                                                                                jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                                                $('#loadFade').modal('hide'); 
-
-                                                                            },
-                    success                             :   function(aData) { 
-                                                                                console.table("out      ->  ",aData);
-                                                                                $('#loadFade').modal('hide'); 
-                                                                                if(aData.status_firma){
-                                                                                    jAlert("Se grab&oacute; informaci&oacute;n con &eacute;xito","Clinica Libre");
-                                                                                    localStorage.setItem("ind_tipo_mensaje",7);
-                                                                                    localStorage.setItem("ind_estapa_analitica",0);
-                                                                                    localStorage.setItem("num_fichae",null);
-                                                                                    localStorage.setItem("id_anatomia",id_anatomia);
-                                                                                    //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
-                                                                                    localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
-                                                                                    //$("#load_anuncios_anatomia_patologica").submit();
-                                                                                    
-                                                                                    $("#modal_perfil_administrativo").modal("hide");
-                                                                                    let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
-                                                                                    update_etapaanalitica(V_ULTIMA_PAGE);
-
-                                                                                    
-                                                                                } else {
-                                                                                    jError("Error en la firma simple","Clinica Libre");
-                                                                                }
-                                                                            }, 
+                    type : "POST",
+                    url : "ssan_libro_etapaanalitica/guardado_perfil_administrativo",
+                    dataType : "json",
+                    beforeSend : function(xhr) { console.log(xhr);   },
+                    data : { 
+                        contrasena : r,
+                        id_anatomia : id_anatomia,
+                        accesdata : obj_rce_anatomia,
+                    },
+                    error : function(errro) { 
+                        console.error("errro ->",errro); 
+                        console.error("error.responseText ->",errro.responseText); 
+                        jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+                        $('#loadFade').modal('hide'); 
+                    },
+                    success : function(aData) { 
+                        console.table("out      ->  ",aData);
+                        $('#loadFade').modal('hide'); 
+                        if(aData.status_firma){
+                            jAlert("Se grab&oacute; informaci&oacute;n con &eacute;xito","Clinica Libre");
+                            localStorage.setItem("ind_tipo_mensaje",7);
+                            localStorage.setItem("ind_estapa_analitica",0);
+                            localStorage.setItem("num_fichae",null);
+                            localStorage.setItem("id_anatomia",id_anatomia);
+                            //localStorage.setItem("txt_name_biopsia",get_numeros_asociados(id_anatomia).join(","));
+                            localStorage.setItem("span_tipo_busqueda",$("#span_tipo_busqueda").html());
+                            //$("#load_anuncios_anatomia_patologica").submit();
+                            $("#modal_perfil_administrativo").modal("hide");
+                            let V_ULTIMA_PAGE = $("#V_ULTIMA_PAGE").val();
+                            update_etapaanalitica(V_ULTIMA_PAGE);
+                        } else {
+                            jError("Error en la firma simple","Clinica Libre");
+                        }
+                    }, 
                 });
             } else {
                 console.log("---------------------------------------");
@@ -1441,28 +1521,27 @@ function deshabilita_input_cancer(){
 function star_data_cancer(){
     //num_entrega_cancercritico
     $("#calendar_termino_cancer,#calendar_inicio_cancer").datetimepicker({
-        format              :   'DD-MM-YYYY',
-        //minDate           :   new Date(new Date().setDate((new Date().getDate())-(30))),
-        maxDate             :   new Date(),
-        locale              :   'es-us',
-        icons               :   {
-                                    time        :   "fa fa-clock-o"         ,
-                                    date        :   "fa fa-calendar"        ,
-                                    up          :   "fa fa-chevron-up"      ,
-                                    down        :   "fa fa-chevron-down"    ,
-                                    previous    :   "fa fa-chevron-left"    ,
-                                    next        :   "fa fa-chevron-right"   ,
-                                    today       :   "fa fa-screenshot"      ,
-                                    clear       :   "fa fa-trash"           ,
-                                    close       :   "fa fa-remove"          ,
-                                }
+        format : 'DD-MM-YYYY',
+        //minDate : new Date(new Date().setDate((new Date().getDate())-(30))),
+        maxDate : new Date(),
+        locale : 'es-us',
+        icons : {
+            time : "fa fa-clock-o" ,
+            date : "fa fa-calendar" ,
+            up : "fa fa-chevron-up" ,
+            down : "fa fa-chevron-down" ,
+            previous : "fa fa-chevron-left" ,
+            next : "fa fa-chevron-right" ,
+            today : "fa fa-screenshot" ,
+            clear : "fa fa-trash" ,
+            close : "fa fa-remove" ,
+        }
     }).on('dp.change',function(e){  console.log("e  -> ",e);  });
 }
 
 function js_gestion_cancer(id_anatomia){
     var opcion          =   $(".panel_header_cancer").data().ind_caner;
     //console.log("opcion ->  ",opcion);
-    
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_libro_etapaanalitica/gestion_cancer_panel",

@@ -113,27 +113,27 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         if($tipo_busqueda === '#_panel_por_fecha') {   #_panel_por_fecha   
             #BUSCAR REPETIDOS
             #cookie para los estados
-            $cookie_filtros =   array(
-                                    'name' =>  'data_filtro_fechas_estados',
-                                    'value' =>  $_post_filtro_xfechas,
-                                    'expire' =>  86500,
-                                    'secure' =>  false
-                                );
+            $cookie_filtros = array(
+                'name' => 'data_filtro_fechas_estados',
+                'value' => $_post_filtro_xfechas,
+                'expire' => 86500,
+                'secure' => false
+            );
             $this->input->set_cookie($cookie_filtros);
             #get_filtro_x_fecha
             $val_filtro_estaso = $_post_filtro_xfechas;
             #CONFIRMA CAMBIO
             #COOKIE DATOS DE LA BUSQUEDA
             $cookie_time = array(
-                                    'name' =>  'data',
-                                    'value' =>  json_encode(array(
-                                                    'tipo_busqueda' =>  'por_fecha',
-                                                    'fecha_inicio' =>  $fecha_inicio,
-                                                    'fecha_final' =>  $fecha_final,
-                                                )),
-                                    'expire' =>  86500,
-                                    'secure' =>  false
-                                );
+                'name' => 'data',
+                'value' => json_encode(array(
+                    'tipo_busqueda' => 'por_fecha',
+                    'fecha_inicio' => $fecha_inicio,
+                    'fecha_final' => $fecha_final,
+                )),
+                'expire' => 86500,
+                'secure' => false
+            );
             $this->input->set_cookie($cookie_time);
         } else if($tipo_busqueda === '#_panel_por_gestion') { #_panel_por_gestion
             $arr_ids_anatomia = $txt_ids_anatomia;
@@ -1040,30 +1040,30 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     
     public function gestion_perfil_administrativo(){
         if(!$this->input->is_ajax_request()){ show_404(); }  
-        $cod_empresa                    =   $this->session->userdata("COD_ESTAB");
-        $get_sala                       =   $this->input->post('get_sala');
-        $html                           =   '';
-        $_issesion                      =   true;
-        if ($cod_empresa                ==  ''){
-            $_issesion                  =   false;
+        $cod_empresa =   $this->session->userdata("COD_ESTAB");
+        $get_sala = $this->input->post('get_sala');
+        $html = '';
+        $_issesion =   true;
+        if ($cod_empresa ==  ''){
+            $_issesion =   false;
         } else {
-            $DATA_CURSOR                =   $this->ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
+            $DATA_CURSOR = $this->ssan_libro_etapaanalitica_model->load_informacion_rce_patologico(
             array(
-                "cod_empresa"           =>  $this->session->userdata("COD_ESTAB"),
-                "usr_session"           =>  explode("-",$this->session->userdata("USERNAME"))[0],
-                "ind_opcion"            =>  0,
-                "ind_first"             =>  0,
-                "id_anatomia"           =>  $this->input->post('id_anatomia'),
-                "num_fase"              =>  4,
-                "ind_template"          =>  "ssan_libro_etapaanalitica",
-                "get_sala"              =>  $get_sala,
+                "cod_empresa" => $this->session->userdata("COD_ESTAB"),
+                "usr_session" => explode("-",$this->session->userdata("USERNAME"))[0],
+                "ind_opcion" => 0,
+                "ind_first" => 0,
+                "id_anatomia" => $this->input->post('id_anatomia'),
+                "num_fase" => 4,
+                "ind_template" => "ssan_libro_etapaanalitica",
+                "get_sala" => $get_sala,
             ));
-            $html                       =   $this->load->view("ssan_libro_etapaanalitica/template_default_analitica",$DATA_CURSOR,true);
+            $html = $this->load->view("ssan_libro_etapaanalitica/template_default_analitica",$DATA_CURSOR,true);
         }
         $this->output->set_output(json_encode(array(
-            'status_session'            =>  $_issesion,
-            'info_bd'                   =>  $DATA_CURSOR,
-            'out_html'                  =>  $html
+            'status_session' =>  $_issesion,
+            'info_bd' =>  $DATA_CURSOR,
+            'out_html' =>  $html
         )));
     }
     public function star_descripcion_anatomia(){
@@ -1986,43 +1986,43 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
     
     public function load_line_pdf_vista(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $id_anatomia                    =   $this->input->post('id_anatomia');
+        $status =   true;
+        $id_anatomia = $this->input->post('id_anatomia');
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'id_anatomia'               =>  $id_anatomia,
+            'status' =>  $status,
+            'id_anatomia' =>  $id_anatomia,
         )));
     }
     
     public function viws_historial_clinico() {
-        if(!$this->input->is_ajax_request()) {  show_404();  }
-        $html                           =   'HOLA';
-        $transaccion                    =   '';
-        $numFichaE                      =   $this->input->post('numfichae');
-        $return                         =   $this->ssan_libro_etapaanalitica_model->new_get_busquedatoken(17,$numFichaE);
+        if(!$this->input->is_ajax_request()) { show_404(); }
+        $html = 'HOLA';
+        $transaccion = '';
+        $numFichaE = $this->input->post('numfichae');
+        $return = $this->ssan_libro_etapaanalitica_model->new_get_busquedatoken(17,$numFichaE);
         #https://10.5.183.210/ssan_his_historialclinico_new?m=135&token=6009b73b97b1967523bdcd6eb7860cda5bafdaa3&acc=1
         #https://www.esissan.cl/ssan_his_historialclinico_new?m=135&token=ea94a681f1224094b8dd9b0eddfcb139fda848d8&acc=1
-        #$i_frame                       =   'https://10.5.183.210/ssan_his_historialclinico_new?m=135&'.$return['TOKEN_SESSION'].'&acc=1';
-        $i_frame                        =   'https://www.esissan.cl/ssan_his_historialclinico_new?m=135&'.$return['TOKEN_SESSION'].'&acc=1';
-        $TABLA["IFRAME"]                =   $i_frame;
-        $TABLA["TOKEN"]                 =   $return;
+        #$i_frame = 'https://10.5.183.210/ssan_his_historialclinico_new?m=135&'.$return['TOKEN_SESSION'].'&acc=1';
+        $i_frame = 'https://www.esissan.cl/ssan_his_historialclinico_new?m=135&'.$return['TOKEN_SESSION'].'&acc=1';
+        $TABLA["IFRAME"] = $i_frame;
+        $TABLA["TOKEN"] = $return;
         $this->output->set_output(json_encode($TABLA));
     }
     
     public function get_update_txt_macroscopica(){
         if(!$this->input->is_ajax_request()){ show_404(); }
-        $status                         =   true;
-        $num_muestra                    =   $this->input->post('num_muestra');
-        $txt_update                     =   $this->input->post('txt_update'); 
-        $data_produccion                =   $this->ssan_libro_etapaanalitica_model->get_update_txt_macroscopica(array(
-            "cod_empresa"               =>  $this->session->userdata("COD_ESTAB"),
-            "session"                   =>  explode("-",$this->session->userdata("USERNAME"))[0],
-            "num_muestra"               =>  $num_muestra,
-            "txt_update"                =>  $txt_update,
+        $status =   true;
+        $num_muestra =   $this->input->post('num_muestra');
+        $txt_update =   $this->input->post('txt_update'); 
+        $data_produccion =   $this->ssan_libro_etapaanalitica_model->get_update_txt_macroscopica(array(
+            "cod_empresa" =>  $this->session->userdata("COD_ESTAB"),
+            "session" =>  explode("-",$this->session->userdata("USERNAME"))[0],
+            "num_muestra" =>  $num_muestra,
+            "txt_update" =>  $txt_update,
         ));
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            '$data_produccion'          =>  $data_produccion,
+            'status' =>  $status,
+            '$data_produccion' =>  $data_produccion,
         )));
     }
 
@@ -2035,10 +2035,10 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $HTML_BIOPSIAS = '';
         $HTML_CITOLOGIA = '';
         $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_ANATOMIAPATOLOGICA_PDF(array(
-                                                "ID_HISTO"      =>  $id_tabla,
-                                                "COD_EMPRESA"   =>  $empresa,
-                                            ));
-        $DATA_FIRST                     =   false;
+            "ID_HISTO" => $id_tabla,
+            "COD_EMPRESA" => $empresa,
+        ));
+        $DATA_FIRST = false;
         /*
         require_once APPPATH            .   '/third_party/mpdf/mpdf.php';
         $txt_name_pdf                   =   'SOLICITUD DE ANATOMIA.pdf';
@@ -2072,7 +2072,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $dompdf->WriteHTML($HTML_BIOPSIAS);
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.ANATOMICA');
         }
-
         if(count($DATA["P_AP_MUESTRAS_CITOLOGIA"][0])>0){
             $dompdf->AddPage();
             $HTML_CITOLOGIA             =   $this->load->view("ssan_spab_coordepabellonenfe_new/PDF_PROTOCOLOS/PDF_TEMPLATE_ANATOMIAPATO_EQUITERAS_CITO",array('DATA'=>$DATA,'FIRMA'=>$html_firma),true);
@@ -2080,16 +2079,41 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             $dompdf->SetHTMLFooter('SOLICITUD DE ANATOMIA PATOLOGICA - M.CITOLOGIA');
         }
         */
-        $base64_pdf =   base64_encode($dompdf->Output('SOLICITUD DE ANATOMIA.pdf','S'));
-        #$TABLA["codeContents"] =   $html_firma;
-        $TABLA["IND_TEMPLATE"] =   1;
-        $TABLA["PDF_MODEL"] =   $base64_pdf;
-        $TABLA["PDF_MODEL_DATA"] =   $base64_pdf;
-        $TABLA["STATUS"] =   true;
-        $TABLA["DATA_RETURN"] =   $DATA;
-        $TABLA["ID_RETURN"] =   $id_tabla;
+        $base64_pdf = base64_encode($dompdf->Output('SOLICITUD DE ANATOMIA.pdf','S'));
+        #$TABLA["codeContents"] = $html_firma;
+        $TABLA["IND_TEMPLATE"] = 1;
+        $TABLA["PDF_MODEL"] = $base64_pdf;
+        $TABLA["PDF_MODEL_DATA"] = $base64_pdf;
+        $TABLA["STATUS"] = true;
+        $TABLA["DATA_RETURN"] = $DATA;
+        $TABLA["ID_RETURN"] = $id_tabla;
         $TABLA["HTML_BIOPSIAS"] = $HTML_BIOPSIAS;
         $this->output->set_output(json_encode($TABLA));
     }
+
+    
+    public function busqueda_new_biopsias(){
+        if(!$this->input->is_ajax_request()){ show_404(); }
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $opcion = $this->input->post('opcion');
+        $v_nbiopsia = $this->input->post('v_nbiopsia');
+        $v_ind_tipobusqueda = $this->input->post('v_ind_tipobusqueda');
+        $v_ind_yearbiopsia = $this->input->post('v_ind_yearbiopsia');
+        $v_run = $this->input->post('v_run');
+        $v_dv = $this->input->post('v_dv');
+        $DATA = $this->ssan_libro_etapaanalitica_model->busquedaporparametros_biopsia(array(
+            "empresa" => $empresa,
+            "opcion" => $opcion,
+            "v_nbiopsia" => $v_nbiopsia,
+            "v_ind_tipobusqueda" => $v_ind_tipobusqueda,
+            "v_ind_yearbiopsia" => $v_ind_yearbiopsia,
+            "v_run" => $v_run,
+            "v_dv" => $v_dv,
+        ));
+        $this->output->set_output(json_encode([
+            'status' => true,
+        ]));
+    }
+    
 }
 ?>
