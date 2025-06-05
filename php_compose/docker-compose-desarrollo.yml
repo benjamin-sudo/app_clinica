@@ -122,15 +122,14 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./backup_service/backup:/backup_service/backup
-      - ./backup_service/respaldo:/respaldo 
-    restart: always  
+      - ./backup_service/respaldo:/respaldo
+      - ./backup_service/.env.telegram:/envs/.env.telegram 
+    restart: always
     networks:
       - mynetwork
     depends_on:
       - mysql_6
-    environment:
-      TELEGRAM_TOKEN: 7329669690:AAFGFwaYYi8VoKpPOjHKUIv6hgsRzAhg8wg
-      TELEGRAM_CHAT_ID: 583391555
+
 
 secrets:
   mysql_root_password:
