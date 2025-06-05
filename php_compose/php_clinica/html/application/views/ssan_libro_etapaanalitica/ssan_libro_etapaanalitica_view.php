@@ -9,7 +9,6 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
 <form id="load_anuncios_anatomia_patologica" method="post" action="#"></form>
 <form id="get_termino_sala_macroscopia" method="post" action="#"></form>
 <form id="update_chat_x_hoja" method="post" action="#"></form>
-<?php #print_r();?>
 <div class="grid_head_body">
     <div class="grid_head_body1">
         <div class="GRID_LIBRO_BIOPSIAS_II_MAIN1">
@@ -117,7 +116,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                         </div>
                     </div>
                 </div>
-                <div class="card" style="padding: 13px;">
+                <div class="card" style="padding:13px;margin-bottom:0px;" >
                     <div class="header" style="margin-bottom: 15px;">
                         <h5 class="title">
                             <i class="fa fa-calendar" style="color:#888888;" aria-hidden="true"></i>&nbsp;<b style="color:#888888;">FECHA FIN</b>
@@ -141,6 +140,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                 </div>
             </div>
             <div class="tab-pane fade" id="_panel_por_fecha" role="tabpanel" aria-labelledby="_panel_por_fecha-tab">
+
                 <div class="card" style="margin-bottom:0px;margin-top:6px;padding:9px;">
                    <div class="grid_card_botonhistorial">
                         <div class="grid_card_botonhistorial1">
@@ -149,24 +149,33 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                                     <input type="radio" name="ind_tipo_busqueda" id="busqueda_por_paciente" style="display:block;cursor:pointer;margin: 0px 0px 5px 0px;" checked="" onclick="js_vista_opcion_busqueda(this.id)" value="1">
                                 </div>
                                 <div class="grid_pabel_tipo_busqueda1">
-                                    <label for="busqueda_por_paciente" style="cursor:pointer;color:#888888;">PACIENTE/RUN</label>
+                                    <label for="busqueda_por_paciente" style="cursor:pointer;color:#888888;font-size: 15px;">RUN</label>
                                 </div>
                                 <div class="grid_pabel_tipo_busqueda4">
                                     <input type="radio" name="ind_tipo_busqueda" id="busqueda_por_n_biosia" style="display:block;cursor:pointer;margin: 0px 0px 5px 0px;" onclick="js_vista_opcion_busqueda(this.id)" value="2">
                                 </div>
                                 <div class="grid_pabel_tipo_busqueda3">
-                                     <label for="busqueda_por_n_biosia" style="cursor:pointer;color:#888888;">N&deg; DE BIOPSIA</label>
+                                     <label for="busqueda_por_n_biosia" style="cursor:pointer;color:#888888;font-size: 15px;">N&deg; DE BIOPSIA</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="grid_card_botonhistorial2">
-                            <button type="button" class="btn btn-warning btn-fill" id="btn_historial" onclick="js_viwes_historial()" style="display:none">
-                                <i class="fa fa-history" aria-hidden="true"></i>
+                        <div class="grid_card_botonhistorial2"> </div>
+                    </div>
+                    <div class="grid_busqueda_runbtn">
+                        <div class="grid_busqueda_runbtn0">
+                            <input type="text" class="form-control input-sm solo_numero_busquedas" name="slc_automplete_biopsia" id="slc_automplete_biopsia" value="">
+                        </div>
+                        <div class="grid_busqueda_runbtn1">
+                            <button type="button" class="btn btn-primary btn-fill" id="btn_historial" onclick="js_iniciabusquedarun()">
+                                <i class="fa fa-search-plus" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
-                    <input type="text" name="slc_automplete_biopsia" id="slc_automplete_biopsia" class="form-control input-sm solo_numero_busquedas" value="">
+                    <!--
+                    <input type="text" class="form-control input-sm solo_numero_busquedas" name="slc_busqueda_run" id="slc_busqueda_run" class="form-control input-sm slc_busqueda_run" value="" style="display:none">
+                    -->
                 </div>
+
             </div>
         </div>
     </div>
@@ -185,6 +194,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                 <div class="grid_filtro_panel_por_fecha">
                     <select class="selectpicker"  name="ind_filtro_busqueda_xfechas" id="ind_filtro_busqueda_xfechas" multiple data-selected-text-format="count" data-size="11" data-width="100%" tabindex="-98">
                         <option value="-1" checked>TODAS LAS CATEGORIAS</option>
+                        <!--
                         <option value="0">SALA DE RECEPCI&Oacute;N | MACROSC&Oacute;PICA</option>
                         <option value="1">SALA MACROSCOPICA</option>
                         <option value="2">SALA PROCESO</option>
@@ -194,6 +204,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                         <option value="6">SALA DE TECNICAS (TECNOLOGO)</option>
                         <option value="7">OFICIA PATOLOGO</option>
                         <option value="8">FINALIZADO</option>
+                        -->
                     </select>
                 </div>
             </div>
