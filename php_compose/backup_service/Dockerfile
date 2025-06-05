@@ -1,22 +1,27 @@
 FROM alpine:latest
-# 1. Instalar cronie, dos2unix y bash
-RUN apk update \
- && apk add --no-cache cronie dos2unix bash
-# 2. Crear el directorio /respaldo (para montar allí los .tar.gz para restauración)
-RUN mkdir -p /respaldo
-# 3. Crear el directorio donde cron escribirá logs
-RUN mkdir -p /var/log
-# 4. Copiar backup.sh (script para generar .tar.gz) y darle permisos
+
+# Instalar dependencias necesarias
+RUN apk update && apk add --no-cache cronie dos2unix bash curl docker-cli
+
+# Crear carpetas necesarias
+RUN mkdir -p /respaldo /var/log
+
+# Copiar scripts de respaldo y restauración
 COPY backup.sh /usr/local/bin/backup.sh
-RUN dos2unix /usr/local/bin/backup.sh \
- && chmod +x /usr/local/bin/backup.sh
-# 5. Copiar restaurar.sh (script para restaurar .tar.gz) y darle permisos
+RUN dos2unix /usr/local/bin/backup.sh && chmod +x /usr/local/bin/backup.sh
+
 COPY restaurar.sh /usr/local/bin/restaurar.sh
-RUN dos2unix /usr/local/bin/restaurar.sh \
- && chmod +x /usr/local/bin/restaurar.sh
-# 6. Crear el cron job para backup.sh (se ejecuta todos los días a las 02:00)
+RUN dos2unix /usr/local/bin/restaurar.sh && chmod +x /usr/local/bin/restaurar.sh
+
+# Cron diario para backup a las 02:00
 RUN echo "0 2 * * * /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1" > /etc/crontabs/root
-# 7. Montar /var/log como volumen (opcional, para poder ver logs desde el host)
-VOLUME [ "/var/log" ]
-# 8. Por defecto arranca cron en primer plano
-CMD ["crond", "-f"]
+
+# Copiar script de reporte por Telegram
+COPY reporte_telegram.sh /usr/local/bin/reporte_telegram.sh
+RUN dos2unix /usr/local/bin/reporte_telegram.sh && chmod +x /usr/local/bin/reporte_telegram.sh
+
+# Cron cada hora para reporte
+RUN echo "0 * * * * /usr/local/bin/reporte_telegram.sh >> /var/log/reporte.log 2>&1" >> /etc/crontabs/root
+
+# Ejecutar reporte al iniciar el contenedor, luego cron en primer plano
+CMD /usr/local/bin/reporte_telegram.sh >> /var/log/reporte.log 2>&1 && crond -f
