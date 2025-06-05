@@ -166,9 +166,6 @@ WHERE
 ##############################################################################
 #frame
 https://adminlte.io/docs/3.2/javascript/iframe.html
-
-
 docker inicio default:
-
 docker volume rm php_compose_db_data
 docker volume rm server_totem_db_data

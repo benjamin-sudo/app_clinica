@@ -155,7 +155,6 @@ services:
       - mynetwork
     depends_on:
       - mysql_6
- 
 
 secrets:
   mysql_root_password:

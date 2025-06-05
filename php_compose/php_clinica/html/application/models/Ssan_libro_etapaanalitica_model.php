@@ -1387,7 +1387,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
                 }
             }
             
-            # P.IND_VISUALIZACION AS IND_VISUALIZACION,
+            #
 
             if(count($hispatologico["formulario_tecnologo_med"])>0){
                 foreach ($hispatologico["formulario_tecnologo_med"] as $i => $datos){
