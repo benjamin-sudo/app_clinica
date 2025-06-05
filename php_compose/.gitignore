@@ -3,3 +3,4 @@ secrets/root_password.txt
 secrets/user_password.txt
 backup_service/backup/
 backup_service/respaldo/
+php_compose/codeigniter/app/myapp/writable/logs/*.log
