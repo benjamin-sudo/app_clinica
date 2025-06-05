@@ -1372,11 +1372,11 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         return $query->result_array();
     }
 
-    #########################################
-    #   ssan_libro_biopsias_ii_fase         #
-    #   MAIN ANATOMIA PATOLOGICA PRINCIPAL  #
-    #   MAIN MODULO SIN CITA                #
-    #########################################
+    #############################
+    # ssan_libro_biopsias_ii_fase 
+    # MAIN ANATOMIA PATOLOGICA PRINCIPAL 
+    # MAIN MODULO SIN CITA 
+    #######################
     public function LI_RESULTADOS_ANATOMIA($ARRAY,$CALL_FASE){
         $HTML                   =   '';
         if(count($ARRAY)>0){
@@ -1571,22 +1571,18 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
            foreach ($ARRAY as $i => $row){
                 #$row['ID_SERVICIO'];
                 #$row['ID_SOLICITUD'];
-                $HTML .= '
-                            <tr 
-                                    id = "DATA_'.$row['ID_SOLICITUD'].'"
-                                    data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
-                                >
-                                <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
-                                <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br>'.$row['RUTPACIENTE'].'</i></td>
-                                <td style="vertical-align: initial;">'.$row['PROFESIONAL'].'<br><i>'.$row['RUT_PROFESIOAL'].'</i></td>
-                                <td>
-                                    <div class="grid_vista_resumen">
-                                        <div class="grid_vista_resumen1"> '.$row['TIPO_DE_BIOPSIA'].'</div>
-                                        <div class="grid_vista_resumen2"> '.$row['TXT_PROCEDENCIA'].'</div>
-                                        <div class="grid_vista_resumen3"> '.$row['NOMBRE_SERVICIO'].'</div>
-                                    </div>
-                                </td>
-                                <td style="text-align: center;">';
+                $HTML .= '<tr id = "DATA_'.$row['ID_SOLICITUD'].'"  data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">
+                            <td style="vertical-align: initial;text-align: center;height: 40px"><b>'.($i+1).'</b></td>
+                            <td style="vertical-align: initial;">'.$row['NOMBRE_COMPLETO'].'<br>'.$row['RUTPACIENTE'].'</i></td>
+                            <td style="vertical-align: initial;">'.$row['PROFESIONAL'].'<br><i>'.$row['RUT_PROFESIOAL'].'</i></td>
+                            <td>
+                                <div class="grid_vista_resumen">
+                                    <div class="grid_vista_resumen1"> '.$row['TIPO_DE_BIOPSIA'].'</div>
+                                    <div class="grid_vista_resumen2"> '.$row['TXT_PROCEDENCIA'].'</div>
+                                    <div class="grid_vista_resumen3"> '.$row['NOMBRE_SERVICIO'].'</div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">';
                         #etiqueta estado
                         if ($row['ID_HISTO_ESTADO'] == 5){
                     $txt_estado = '<span class="label label-danger"><i class="fa fa-times" aria-hidden="true"></i>'.$row['TXT_HISTO_ESTADO'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
@@ -1610,41 +1606,67 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                             </button>
                                         </td>
                                         <td>';
+                                $HTML .= '<div class="dropdown">
+                                            <button 
+                                                class="btn btn-primary dropdown-toggle" 
+                                                type="button" 
+                                                id="dropdownMenuButton_'.$row['ID_SOLICITUD'].'" 
+                                                data-bs-toggle="dropdown" 
+                                                aria-expanded="false">
+                                                <i class="fa fa-folder" aria-hidden="true"></i> 
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$row['ID_SOLICITUD'].'">';
+                                            if( $row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
+                                                #EN TRASPORTE - #CUSTODIA
+                                                $HTML .= '<li><a class="dropdown-item" href="javascript:btn_delete_ap_externo('.$row['ID_SOLICITUD'].')""><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Eliminar Muestra</a></li>';
+                                            }   else if($row['ID_HISTO_ESTADO'] == 5){     
+                                                #RECHAZADA     
+                                                $HTML .= '<li><a class="dropdown-item" href="javascript:local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')""><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Ver rechazo</a></li>';
+                                            } else if($row['ID_HISTO_ESTADO'] == 4){    
+                                                #YA RECEPCIONADA 
+                                                $HTML .= '<li><a class="dropdown-item" href="javascript:pdf_recepcion_ok('.$row['ID_SOLICITUD'].')""><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Pdf recepci&oacute;n</a></li>';
+                                                #YA PAGADAS
+                                                if ($row['IND_VISUALIZACION'] == "1") {
+                                                    $HTML .= '<li><a class="dropdown-item" href="javascript:js_pdf_microscopica('.$row['ID_SOLICITUD'].')""><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Informe final</a></li>';
+                                                }
+                                            }
+                                    $HTML .= '</ul>
+                                    </div>';        
+                                    /*                                  
+                                    #EN TRASPORTE - #CUSTODIA
+                                    if( $row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
+                                        $HTML .= '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="btn_delete_ap_externo('.$row['ID_SOLICITUD'].')">
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                    </button>';
 
-                #EN TRASPORTE - #CUSTODIA
-                if( $row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
-                     $HTML       .=         '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="btn_delete_ap_externo('.$row['ID_SOLICITUD'].')">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                            </button>';
-
-                #RECHAZADA     
-                } else if($row['ID_HISTO_ESTADO'] == 5){     
-                    $HTML       .= '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')">
-                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                    </button>';
-                #YA RECEPCIONADA    
-                } else if($row['ID_HISTO_ESTADO'] == 4){   
-                    $HTML .= '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
-                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                            </button>';
-                            if ($row['IND_VISUALIZACION'] == "1") {
-                                $HTML .='<button type="button" class="btn btn-info btn-fill" id="pdf_anatomia_patologica" onclick="js_pdf_microscopica('.$row['ID_SOLICITUD'].')" style="margin-top: 5px;">
-                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                    </button>';
+                                    #RECHAZADA     
+                                    } else if($row['ID_HISTO_ESTADO'] == 5){     
+                                        $HTML       .= '<button type="button" class="btn btn-danger btn-fill" id="pdf_anatomia_patologica" onclick="local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')">
+                                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                        </button>';
+                                    #YA RECEPCIONADA    
+                                    } else if($row['ID_HISTO_ESTADO'] == 4){   
+                                        $HTML .= '<button type="button" class="btn btn-success btn-fill" id="pdf_anatomia_patologica" onclick="pdf_recepcion_ok('.$row['ID_SOLICITUD'].')">
+                                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                </button>';
+                                                if ($row['IND_VISUALIZACION'] == "1") {
+                                                    $HTML .='<button type="button" class="btn btn-info btn-fill" id="pdf_anatomia_patologica" onclick="js_pdf_microscopica('.$row['ID_SOLICITUD'].')" style="margin-top: 5px;">
+                                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                        </button>';
+                                                        }
+                                    } else {
+                                        $HTML .= '-';
                                     }
-                } else {
-                    $HTML .= '-';
-                }
-                $HTML .= '
-                                        </td>
-                                    </tr>
-                                    ';
+                                    */                                  
+                $HTML .= '</td>
+                        </tr>
+                        ';
             }
         } else {
                 $HTML  = '<tr style="text-align: center;">
                             <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
                         </tr>';
-}
+        }
         $HTML2          = '<tr style="text-align: center;">
                             <td colspan="11" style="text-align: center;height: 40px"><b>SIN RESULTADOS</b></td>
                         </tr>';
@@ -1735,14 +1757,11 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         ];
     }
 
-
-
-
-
     #############################################
     #FALTA LOGICA
     #IND_ESTADO = 1 | 0
     #ID_HISTO_ESTADO = 1 | NUEVA SOLICITUD | 2 = EN CUSTODIA | 3 = TRASPORTE | 4 = RECEPCIONADA 
+    #############################################
     public function get_confirma_custodia($DATA) {
         $this->db->trans_start();
         $mivariable = true;

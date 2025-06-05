@@ -474,26 +474,26 @@ function local_pdf_rechazomuestra(id_anatomia){
    });
 }
 
-function load_exel()        {
-    var ID_BD               =   121321;
-    var link                =   "http://10.5.183.210/ssan_spab_gestionlistaquirurgica/load_excel?id="+ID_BD;
-    window.location.href    =   link;
+function load_exel() {
+    var ID_BD = 121321;
+    var link = "http://10.5.183.210/ssan_spab_gestionlistaquirurgica/load_excel?id="+ID_BD;
+    window.location.href = link;
 }
 
 function js_cambio_fecha(id){
-    let fecha_hora          =   $("#DATA_"+id).data('paciente').FECHA_TOMA_MUESTRA;
+    let fecha_hora = $("#DATA_"+id).data('paciente').FECHA_TOMA_MUESTRA;
     //console.log("fecha_hora",fecha_hora);
-    let today               =   new Date();
-    let dd                  =   String(today.getDate()).padStart(2, '0');
-    let mm                  =   String(today.getMonth() + 1).padStart(2, '0'); //Enero es 0
-    let yyyy                =   today.getFullYear();
-    let currentDate         =   yyyy + '-' + mm + '-' + dd;
-    let _fecha_rest         =   restarDiasAFecha(fecha_hora,5);
-    let fecha_partes        =   fecha_hora.split(" ");
-    let solo_fecha          =   fecha_partes[0].split("-");
-    document.getElementById("date").value   =   solo_fecha[2]+"-"+solo_fecha[1]+"-"+solo_fecha[0];
-    document.getElementById("date").min     =   _fecha_rest;
-    document.getElementById("date").max     =   currentDate;
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //Enero es 0
+    let yyyy = today.getFullYear();
+    let currentDate = yyyy + '-' + mm + '-' + dd;
+    let _fecha_rest = restarDiasAFecha(fecha_hora,5);
+    let fecha_partes = fecha_hora.split(" ");
+    let solo_fecha = fecha_partes[0].split("-");
+    document.getElementById("date").value = solo_fecha[2]+"-"+solo_fecha[1]+"-"+solo_fecha[0];
+    document.getElementById("date").min = _fecha_rest;
+    document.getElementById("date").max = currentDate;
     $("#btn_confirmar_fecha").attr('onclick','js_confirma_new_fecha('+id+')');
     $("#modal_edita_fecha").modal({backdrop:'static',keyboard:false}).modal("show"); 
 }

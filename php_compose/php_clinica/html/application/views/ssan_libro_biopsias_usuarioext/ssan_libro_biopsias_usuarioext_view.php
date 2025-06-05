@@ -1,9 +1,7 @@
 
 <div class="PANEL_MAIN">
     <div class="DIV_LEFT">
-        <h4 class="title" style="color : #e34f49;margin-left: 20px;margin-bottom:10px;">
-            <b>PANEL DE SOLICITUD EXTERNO DE ANATOM&Iacute;A PATOL&Oacute;GICA</b>
-        </h4>
+        <h4 class="title" style="color : #e34f49;margin-left: 20px;margin-bottom:10px;"><b>PANEL DE SOLICITUD EXTERNO DE ANATOM&Iacute;A PATOL&Oacute;GICA</b></h4>
     </div>
     <div class="DIV_RIGHT">
         <div class="btn-group">
@@ -94,11 +92,8 @@
         </div>
     </div>
 </div>    
-
 <?php #echo date('Y-m-d H:i:s'); ?>
-
 <section>
-
     <div class="modal fade" id="MODAL_INICIO_SOLICITUD_ANATOMIA">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
@@ -436,9 +431,6 @@
             </div>
         </div>
     </div>
-
-
-
 </section>
 
 <input type="hidden"  id="cod_empresa" name="cod_empresa" value="<?php echo $this->session->userdata("COD_ESTAB");?>"/>

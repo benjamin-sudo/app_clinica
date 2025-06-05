@@ -234,72 +234,72 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
     
     public function FORMULARIO_ANATOMIA_PATOLOGICA_V2(){
         if(!$this->input->is_ajax_request()) { show_404(); }
-        $empresa                        =   $this->session->userdata('COD_ESTAB');
-        $IND_GESPAB                     =   $this->input->post('IND_GESPAB');
-        $ZONA_PAB                       =   $this->input->post('ZONA_PAB');
-        $ID_SERDEP                      =   $this->input->post('IND_ESPECIALIDAD');
-        $aData                          =   $this->Ssan_libro_biopsias_usuarioext_model->main_form_anatomiapatologica(array(
-                                                "COD_EMPRESA" =>  $empresa,
-                                                "V_CALL_FASE" =>  0,
-                                                "V_IND_EXTERNO" =>  0,
-                                                "V_IND_SISTEMA" =>  0,
-                                                "PA_ID_PROCARCH" =>  $this->input->post('PA_ID_PROCARCH'),
-                                                "IND_GESPAB" =>  $this->input->post('IND_GESPAB'),
-                                                "ZONA_PAB" =>  $this->input->post('ZONA_PAB'),
-                                                "IND_ADMISION" =>  0,
-                                                "ID_SERDEP" =>  $ID_SERDEP, 
-                                            ));
+        $empresa = $this->session->userdata('COD_ESTAB');
+        $IND_GESPAB = $this->input->post('IND_GESPAB');
+        $ZONA_PAB = $this->input->post('ZONA_PAB');
+        $ID_SERDEP = $this->input->post('IND_ESPECIALIDAD');
+        $aData = $this->Ssan_libro_biopsias_usuarioext_model->main_form_anatomiapatologica(array(
+            "COD_EMPRESA" =>  $empresa,
+            "V_CALL_FASE" =>  0,
+            "V_IND_EXTERNO" =>  0,
+            "V_IND_SISTEMA" =>  0,
+            "PA_ID_PROCARCH" =>  $this->input->post('PA_ID_PROCARCH'),
+            "IND_GESPAB" =>  $this->input->post('IND_GESPAB'),
+            "ZONA_PAB" =>  $this->input->post('ZONA_PAB'),
+            "IND_ADMISION" =>  0,
+            "ID_SERDEP" =>  $ID_SERDEP, 
+        ));
         #INFO_ROTULADO
-        $array_rotulado                             =   [];
+        $array_rotulado = [];
         if(count($aData["DATA_ROTULADO"])>0){
             foreach($aData["DATA_ROTULADO"]  as $i  => $fila){
-                $array_rotulado[$i]                 =   array("value"=>$fila["ID_ROTULADO"],"name"=>$fila["TXT_OBSERVACION"]);
+                $array_rotulado[$i] = array("value"=>$fila["ID_ROTULADO"],"name"=>$fila["TXT_OBSERVACION"]);
             }
         }
         
         #AUTOCOMPLETE
-        $INSER_INTO                                 =   '';
-        $data_autocomplete                          =   [];
+        $INSER_INTO = '';
+        $data_autocomplete = [];
         if($aData["DATA_AUTOCOMPLETE"]>0){
             foreach ($aData["DATA_AUTOCOMPLETE"] as $x => $row){
-                #$INSER_INTO                       .=   " INSERT INTO PABELLON.PB_NMUESTRA_AUTOCOMPLETADO (ID_AUTOCOMPLETADO,TXT_CHARACTER,TXT_REALNAME,IND_ESTADO) VALUES (".$row["ID_AUTOCOMPLETADO"].",'".$row["TXT_CHARACTER"]."',".$row["TXT_REALNAME"].",1); ";
-                $data_autocomplete[]                =   array("character"=>$row['TXT_CHARACTER'],"realName"=>($x+1));
+                #$INSER_INTO .= " INSERT INTO PABELLON.PB_NMUESTRA_AUTOCOMPLETADO (ID_AUTOCOMPLETADO,TXT_CHARACTER,TXT_REALNAME,IND_ESTADO) VALUES (".$row["ID_AUTOCOMPLETADO"].",'".$row["TXT_CHARACTER"]."',".$row["TXT_REALNAME"].",1); ";
+                $data_autocomplete[] = array("character"=>$row['TXT_CHARACTER'],"realName"=>($x+1));
             }
         }
 
-        $html                                       =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/FROM_APATOLOGICA_EXT",array(
-            "COD_ESTAB"                             =>  $this->session->userdata("COD_ESTAB"),//
+        $html = $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/FROM_APATOLOGICA_EXT",array(
+            "COD_ESTAB" => $this->session->userdata("COD_ESTAB"),//
             //PACIENTE
-            "NUM_FICHAE"                            =>  $this->input->post('NUM_FICHAE'),//
-            "RUT_PACIENTE"                          =>  $this->input->post('RUT_PACIENTE'),//
+            "NUM_FICHAE" => $this->input->post('NUM_FICHAE'),//
+            "RUT_PACIENTE" => $this->input->post('RUT_PACIENTE'),//
             //PROFESIONAL
-            "ID_MEDICO"                             =>  $this->input->post('ID_MEDICO'),
-            "RUT_MEDICO"                            =>  $this->input->post('RUT_MEDICO'),
+            "ID_MEDICO" =>  $this->input->post('ID_MEDICO'),
+            "RUT_MEDICO" =>  $this->input->post('RUT_MEDICO'),
             //INFO SOLICITUD
-            "IND_TIPO_BIOPSIA"                      =>  $this->input->post('IND_TIPO_BIOPSIA'),
-            "TXT_TIPO_BIOPSIA"                      =>  $this->input->post('TXT_BIOPSIA'),
-            "IND_ESPECIALIDAD"                      =>  $this->input->post('IND_ESPECIALIDAD'),
-            "PA_ID_PROCARCH"                        =>  $this->input->post('PA_ID_PROCARCH'),//
-            "AD_ID_ADMISION"                        =>  null,
-            "IND_FRAME"                             =>  0,
-            "CALL_FROM"                             =>  $this->input->post('CALL_FROM'),
+            "IND_TIPO_BIOPSIA" =>  $this->input->post('IND_TIPO_BIOPSIA'),
+            "TXT_TIPO_BIOPSIA" =>  $this->input->post('TXT_BIOPSIA'),
+            "IND_ESPECIALIDAD" =>  $this->input->post('IND_ESPECIALIDAD'),
+            "PA_ID_PROCARCH" =>  $this->input->post('PA_ID_PROCARCH'),//
+            "AD_ID_ADMISION" =>  null,
+            "IND_FRAME" =>  0,
+            "CALL_FROM" =>  $this->input->post('CALL_FROM'),
             //GESPAB
-            "ID_GESPAB"                             =>  $this->input->post('ID_GESPAB'),
+            "ID_GESPAB" =>  $this->input->post('ID_GESPAB'),
             //DATA
-            "DATA"                                  =>  null,
+            "DATA" =>  null,
             //ZONA DE ROTULADO
-            "ZONA_PABELLON"                         =>  $ZONA_PAB,
-            "ARRAY_ROTULADO"                        =>  $array_rotulado,
-            "ARRAY_AUTOCOMPLETE"                    =>  array("NOMBRE_ANATOMIA"=>$data_autocomplete),
+            "ZONA_PABELLON" =>  $ZONA_PAB,
+            "ARRAY_ROTULADO" =>  $array_rotulado,
+            "ARRAY_AUTOCOMPLETE" =>  array("NOMBRE_ANATOMIA"=>$data_autocomplete),
             //DATA GENERAL BASE DE DATOS 
-            "ARRAY_BD"                              =>  $aData,
+            "ARRAY_BD" =>  $aData,
         ),true);
         $this->output->set_output(json_encode(array(
-            'HTML_FINAL'                            =>  $html,
-            'ARRAY_BD'                              =>  $aData,
-            'ID_SERDEP'                             =>  $ID_SERDEP,  
-            'array_rotulado'                        =>  $array_rotulado,
-            'INSER_INTO'                            =>  $INSER_INTO,
+            'HTML_FINAL' => $html,
+            'ARRAY_BD' => $aData,
+            'ID_SERDEP' => $ID_SERDEP,  
+            'array_rotulado' => $array_rotulado,
+            'INSER_INTO' => $INSER_INTO,
         )));
     }
 
@@ -331,10 +331,10 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $this->output->set_output(json_encode([
             'PASS' => $password,
             'GET_BD' =>  $DATA,
-            'DATA_FIRMA' =>  $valida,
-            'RETURN' =>  $STATUS,
-            'TXT_ERROR' =>  $TXT_ERROR,
-            'STATUS' =>  $STATUS,
+            'DATA_FIRMA' => $valida,
+            'RETURN' => $STATUS,
+            'TXT_ERROR' => $TXT_ERROR,
+            'STATUS' => $STATUS,
         ]));
     }
 
@@ -352,11 +352,11 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $valida = $this->Ssan_libro_biopsias_usuarioext_model->validaClave($password);
         if(count($valida)>0){
             $DATA = $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_custodia(array(
-                        "COD_EMPRESA" =>  $empresa,
+                        "COD_EMPRESA" => $empresa,
                         "SESSION" =>  $usuarioh[0], 
-                        "ID_ANATOMIA" =>  $id_anatomia,
+                        "ID_ANATOMIA" => $id_anatomia,
                         "ARRAY" =>  $array_muestras,
-                        "DATA_FIRMA" =>  $valida,
+                        "DATA_FIRMA" => $valida,
                     ));
         } else {
             $TXT_ERROR = 'Error en firma simple';
