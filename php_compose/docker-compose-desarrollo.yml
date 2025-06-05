@@ -68,6 +68,8 @@ services:
       - VIRTUAL_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_HOST=clinicalibre.cl,www.clinicalibre.cl
       - LETSENCRYPT_EMAIL=clinicalibrechile@gmail.com
+    expose:
+      - "80"  
     ports:
       - "9025:80"
       - "9026:443"
