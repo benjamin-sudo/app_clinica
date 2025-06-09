@@ -86,7 +86,9 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="javascript:update_etapaanalitica(1)"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;ACTUALIZAR&nbsp;LISTADO&nbsp;PRINCIPAL</a></li>
+                    <!--
                     <li><a class="dropdown-item" href="javascript:get_excel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;EXCEL PRODUCCI&Oacute;N</a></li>
+                    -->
                     <li><a class="dropdown-item" href="javascript:delete_cookie()"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;ELIMINAR COOKIE</a></a></li>
                     <li><a class="dropdown-item" href="javascript:ver_cookie()"><i class="fa fa-beer" aria-hidden="true"></i>&nbsp;VER COOKIE</a></a></li>
                 </ul>
@@ -165,14 +167,14 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                         <label for="ind_tipobiopsia" class="form-label" style="color: #888888;">B&Uacute;SQUEDA POR</label>
                         <select class="form-select" id="ind_tipobiopsia" name="ind_tipobiopsia">
                             <option value="1">Biopsias</option>
-                            <option value="2">Citologicos</option>
+                            <option value="2">Citolog&iacute;a</option>
                             <option value="3">PAP</option>
                         </select>
                     </div>
                     <div class="class_busquedapor_nbioopsia class_selector_busquedabiopsia" style="display:none">
                         <div class="class_busquedapor_nbioopsia1"> 
                             <label for="ind_yearbiopsia" class="form-label" style="color: #888888;">A&Ntilde;O</label>
-                            <?php  $anio_inicio = 2000; $anio_actual = date('Y');  ?>
+                            <?php  $anio_inicio = 2000; $anio_actual = date('Y'); ?>
                             <select class="form-select" id="ind_yearbiopsia" name="ind_yearbiopsia">
                                 <?php for ($y = $anio_inicio; $y <= $anio_actual; $y++) { $selected = ($y == $anio_actual) ? ' selected' : '';  echo "<option value=\"$y\"$selected>$y</option>"; } ?>
                             </select>
@@ -201,23 +203,19 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                     <input type="text" class="form-control input-sm solo_numero_busquedas" name="slc_busqueda_run" id="slc_busqueda_run" class="form-control input-sm slc_busqueda_run" value="" style="display:none">
                     -->
                 </div>
-
             </div>
         </div>
     </div>
-    
     <div class="grid_etapaanalitica_2"> 
         <div class="grid_titulo_panel_main">
-            
             <div class="grid_titulo_panel_main1">
                 <a href="#">N&deg; DE RESULTADOS&nbsp;<span class="badge n_resultados_panel" style="background-color:dodgerblue;"><?php echo count($resultados['lista_anatomia']);?></span></a>
                 <input type="hidden" name="V_PAGE_NUMBER" id="V_PAGE_NUMBER" value="<?php echo $n_resultado;?>"/>
                 <input type="hidden" name="V_NUM_PAGINAS" id="V_NUM_PAGINAS" value="<?php echo isset($n_pagina)?$n_pagina:0;?>"/>
                 <input type="hidden" name="V_ULTIMA_PAGE" id="V_ULTIMA_PAGE" value="1"/>
             </div>
-
             <div class="grid_titulo_panel_main4">&nbsp;</div>
-            <div class="grid_titulo_panel_main5">&nbsp;<!-- filtro de busqueda --></div>
+            <div class="grid_titulo_panel_main5">&nbsp;</div>
             <div class="grid_titulo_panel_main3">
                 <div class="grid_filtro_panel_por_fecha">
                     <select class="selectpicker"  name="ind_filtro_busqueda_xfechas" id="ind_filtro_busqueda_xfechas" multiple data-selected-text-format="count" data-size="11" data-width="100%" tabindex="-98">
@@ -253,18 +251,23 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
             </div>
         </div>
         <hr style="margin: 8px 0px 10px 0px">
+        
         <ul class="list-group lista_etapa_analitica busqueda_por_fecha html_panel_por_fecha" id="busqueda_por_fecha" style="padding-right:5px;">
             <?php echo $HTML_LI["return_html"];?> 
         </ul>
-        <ul class="list-group lista_etapa_analitica busqueda_por_gestion html_busqueda_por_gestion" id="busqueda_por_gestion" style="padding-right:5px;">
-            <?php echo $HTML_LI["return_por_gestion"];?> 
-        </ul>
-        <ul class="list-group lista_etapa_analitica busqueda_por_codigo html_busqueda_por_codigo" id="busqueda_por_codigo" style="padding-right:5px;">
-            <?php echo $HTML_LI["return_por_codigo"];?> 
-        </ul>
+        
         <ul class="list-group lista_etapa_analitica busqueda_por_persona html_busqueda_por_persona" id="busqueda_por_persona" style="padding-right:5px;">
             <?php echo $HTML_LI["return_por_persona"];?> 
         </ul>
+        
+        <ul class="list-group lista_etapa_analitica busqueda_por_gestion html_busqueda_por_gestion" id="busqueda_por_gestion" style="padding-right:5px;">
+            <?php echo $HTML_LI["return_por_gestion"];?> 
+        </ul>
+        
+        <ul class="list-group lista_etapa_analitica busqueda_por_codigo html_busqueda_por_codigo" id="busqueda_por_codigo" style="padding-right:5px;">
+            <?php echo $HTML_LI["return_por_codigo"];?> 
+        </ul>
+
         <div class="grid_contenedo_paginado">
             <div class="grid_contenedo_paginado1">&nbsp;</div>
             <div class="grid_contenedo_paginado1"><div class="btn-group anatomia_pagination" id="anatomia_pagination"></div></div>

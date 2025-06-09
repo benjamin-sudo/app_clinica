@@ -1,13 +1,13 @@
 <?php
-    $img_all                        =   $row["N_IMAGE_VIEWS"]+$row["N_IMAGE_VIEWS_X_MUESTRA"];
+    $img_all =   $row["N_IMAGE_VIEWS"]+$row["N_IMAGE_VIEWS_X_MUESTRA"];
     if($img_all==0){
-        $n_image_views              =   'disabled';   
+        $n_image_views =   'disabled';   
     } else {
-        $n_image_views              =   'onclick="ver_imagenes('.$row["ID_SOLICITUD"].')"';   
+        $n_image_views =   'onclick="ver_imagenes('.$row["ID_SOLICITUD"].')"';   
     }
-    #$n_image_views                 =   $row["N_IMAGE_VIEWS"]==0||$row["N_IMAGE_VIEWS_X_MUESTRA"]?'disabled':'onclick="ver_imagenes('.$row["ID_SOLICITUD"].')"';
-    $txt_day                        =   $row["LAST_DATE_AUDITA_MOMENT"]===date("Ymd")?'hours':'day';
-    $ID_SOLICITUD                   =   $row["ID_SOLICITUD"];
+    #$n_image_views =   $row["N_IMAGE_VIEWS"]==0||$row["N_IMAGE_VIEWS_X_MUESTRA"]?'disabled':'onclick="ver_imagenes('.$row["ID_SOLICITUD"].')"';
+    $txt_day =   $row["LAST_DATE_AUDITA_MOMENT"]===date("Ymd")?'hours':'day';
+    $ID_SOLICITUD =   $row["ID_SOLICITUD"];
 ?>
 <?php $v_border_star = $aux===1?'border-radius:4px 4px 0px 0px;':''; ?>
 <a href="#" class="css_lista_ordenada <?php echo $row["STYLE_HISTO_ZONA"];?> list-group-item list-group-item-action  solicitud_<?php echo $row["ID_SOLICITUD"];?>" style="padding:0px;">
@@ -248,4 +248,3 @@
         </div>
     </div>
 </a>
-

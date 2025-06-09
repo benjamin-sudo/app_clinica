@@ -93,54 +93,54 @@
                 height                  :   18px;
             }
             
-            .table_etiquetas            {
-                border                  :   1px solid black;
-                margin-bottom           :   2px;
-                width                   :   100%;
+            .table_etiquetas {
+                border : 1px solid black;
+                margin-bottom : 2px;
+                width : 100%;
             }
 
-            .table_bottom               {
-                border-bottom           :   1px solid black;
-                margin-bottom           :   2px;
+            .table_bottom {
+                border-bottom : 1px solid black;
+                margin-bottom : 2px;
             }
 
-            .border_bottom              {
-                border-bottom-width     :   2px;
-                border-top-width        :   0px;
-                border-left-width       :   0px;
-                border-right-width      :   0px;
-                border-style            :   solid;
-                padding-left: 5px;
+            .border_bottom {
+                border-bottom-width : 2px;
+                border-top-width : 0px;
+                border-left-width : 0px;
+                border-right-width : 0px;
+                border-style : solid;
+                padding-left : 5px;
             }
 
-            .border_bottom_left         {
-                border-bottom-width     :   2px;
-                border-top-width        :   2px;
-                border-left-width       :   0px;
-                border-right-width      :   2px;
-                border-style            :   solid;
-                padding-left            :   5px;
+            .border_bottom_left {
+                border-bottom-width : 2px;
+                border-top-width : 2px;
+                border-left-width : 0px;
+                border-right-width : 2px;
+                border-style : solid;
+                padding-left : 5px;
             }
 
-            .border_bottom_right        {
-                border-bottom-width     :   2px;
-                border-top-width        :   2px;
-                border-left-width       :   0px;
-                border-right-width      :   2px;
-                border-style            :   solid;
-                padding-left            :   5px;
+            .border_bottom_right {
+                border-bottom-width : 2px;
+                border-top-width : 2px;
+                border-left-width : 0px;
+                border-right-width : 2px;
+                border-style : solid;
+                padding-left : 5px;
             }
 
-            .size_9                     {
-                font-size               :   9px;
+            .size_9 {
+                font-size : 9px;
             } 
 
-            .size_2                     {
-                font-size               :   2px;
+            .size_2 {
+                font-size : 2px;
             }
 
-            .size_1                     {
-                font-size               :   1px;
+            .size_1 {
+                font-size : 1px;
             }
 
             .border_firma {
@@ -431,18 +431,17 @@
         <?php } else { ?>
             
                 <?php if($TOTAL_MUESTRAS>0){ ?>
-                    <?php $ID_HISTO         =   $VAR_ANATOMIA_PATALOGICA; ?>
+                    <?php $ID_HISTO = $VAR_ANATOMIA_PATALOGICA; ?>
                     <?php foreach ($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row_muestras ){ 
                         if ($row_muestras["IND_ETIQUETA"]==2){  ?>
                                 <?php
-                                    $GET_CODIGO             =   'A'.$row_muestras["ID_NMUESTRA"];
-                                    
+                                    $GET_CODIGO = 'A'.$row_muestras["ID_NMUESTRA"];
                                 ?>
                                 <table class="" width="527px" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
                                     <thead>
                                         <tr>
                                             <td class="" colspan="3">
-                                                <b><?php echo $row_muestras["TXT_HOSPITAL_ETI"]; ?>&nbsp;/&nbsp;<?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA']; ?> </b>
+                                                <b>MUESTRA CL&Iacute;NICA LIBRE&nbsp;/&nbsp;<?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA']; ?> </b>
                                             </td>     
                                         </tr>
                                     </thead>
@@ -480,8 +479,7 @@
                         <?php } else { ?>
 
                         <?php 
-                        $GET_CODIGO           =   'A'.$row_muestras["ID_NMUESTRA"];
-                       
+                        $GET_CODIGO = 'A'.$row_muestras["ID_NMUESTRA"];
                         ?>
                         <table class="" width="100px" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
                                 <thead>

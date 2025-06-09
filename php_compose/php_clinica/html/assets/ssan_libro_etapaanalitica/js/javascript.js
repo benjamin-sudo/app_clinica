@@ -208,21 +208,22 @@ $(document).ready(function(){
     }
 
     $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-        const nuevoTab = $(e.target); // el <button> activo ahora
-        const idTabActivo = nuevoTab.attr('id'); // ej. "_panel_por_fecha-tab"
-        const zonaLi = nuevoTab.data('zona_li'); // ej. "busqueda_por_persona"
-        const tituloTab = nuevoTab.data('titulo'); // ej. "BÚSQUEDA POR PERSONA"
-        const panelObjetivo= nuevoTab.data('bs-target'); // "#_panel_por_fecha"
+        const nuevoTab = $(e.target); 
+        //const idTabActivo = nuevoTab.attr('id'); 
+        const zonaLi = nuevoTab.data('zona_li');
+        //const tituloTab = nuevoTab.data('titulo'); 
+        //const panelObjetivo= nuevoTab.data('bs-target'); 
+        $("#busqueda_por_fecha").hide();
+        $("#busqueda_por_persona").hide();
         if (zonaLi == "busqueda_por_fecha") {
-            console.log("listado busqueda por fecha");
+            //console.error("listado busqueda por fecha");
             js_busquedaporfecha();
+            $("#busqueda_por_fecha").show();
         } else if (zonaLi == "busqueda_por_persona") {
+            //console.error("listado busqueda individual");
             const radioMarcado = document.querySelector("input[name='ind_tipo_busqueda']:checked");
-            if (radioMarcado.value == "1"){
-                js_preparabusquedaporrun();
-            } else {
-                js_preparabuspornbiopsia();
-            }
+             $("#busqueda_por_persona").show();
+            if (radioMarcado.value == "1"){ js_preparabusquedaporrun(); } else { js_preparabuspornbiopsia(); }
         } 
     });
     const radioMarcado = document.querySelector("input[name='ind_tipo_busqueda']:checked");
@@ -290,47 +291,49 @@ function js_busquedaporfecha(){
     return true;
 }
 
-
 function js_iniciabusquedapornbiopsia(){
     //console.log("js_iniciabusquedapornbiopsia");
     let v_error = [];
     let v_nbiopsia = $("#slc_automplete_biopsia").val();
-    let v_ind_tipobusqueda =  $("#ind_tipobiopsia").val();
+    let v_ind_tipobusqueda = $("#ind_tipobiopsia").val();
     let v_ind_yearbiopsia = $("#ind_yearbiopsia").val();
-    if (v_nbiopsia == '') {
-        v_error.push("N&uacute;mero de b&uacute;squeda de biopsia vac&iacute;o.");
-    }
+    if (v_nbiopsia == '') { v_error.push("N&uacute;mero de b&uacute;squeda de biopsia vac&iacute;o."); }
     if (v_error.length>0){
-        jAlert(v_error.join("<br>"),"","clinica libre");
+        jAlert(v_error.join("<br>"),"clinica libre");
     } else {
-        js_iniciobusqueda_biopsia(1,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,null,null)
+        js_iniciobusqueda_biopsia(1,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,null,null,$("#get_sala").val())
     }
 }
 
-function js_iniciabusquedarun(){
-    let v_error = [];
-    let v_run_pacientebusqueda = $("#run_pacientebusqueda").val();
-    v_run_pacientebusqueda == '' ? v_error.push("RUN esta vacio") : '';
-    if (v_error.length > 0) {
-        jError(v_error.join("<br>"),"Clinica Libre");
-    } else {
-        // Quitamos todos los puntos: "16.869.726-0" → "16869726-0"
-        v_run_pacientebusqueda = v_run_pacientebusqueda.replace(/\./g, '').join('-');
-        console.log("v_run_pacientebusqueda ->  ",v_run_pacientebusqueda);
-        js_iniciobusqueda_biopsia(2,null,null,null,v_run_pacientebusqueda[0],v_run_pacientebusqueda[1])
-    }
+function js_iniciabusquedarun() {
+    const v_run = $("#run_pacientebusqueda").val().trim();
+    if (!v_run) { jError("RUN está vacío", "Clínica Libre"); return; }
+    const sinFormato = v_run.replace(/\./g, "").replace(/-/g, ""); // elimina todos los guiones
+    const cuerpo = sinFormato.slice(0, -1);
+    const dv = sinFormato.slice(-1);
+    const formatted = `${cuerpo}-${dv}`;
+    const [num, digitoVerificador] = formatted.split("-");
+    js_iniciobusqueda_biopsia( 2, null, null, null, num, digitoVerificador ,$("#get_sala").val());
 }
 
-function js_iniciobusqueda_biopsia(opcion,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,v_run,v_dv){
+function js_iniciobusqueda_biopsia(opcion,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,v_run,v_dv, get_sala){
     $.ajax({ 
         type : "POST",
         url : "ssan_libro_etapaanalitica/busqueda_new_biopsias",
         dataType : "json",
         beforeSend : function(xhr) { $('#loadFade').modal('show'); },
-        data : { opcion,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,v_run,v_dv},
-        error : function(errro) {   console.log(errro); jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); },
-        success : function(aData) { 
-            console.log(aData);
+        data : { opcion,v_nbiopsia,v_ind_tipobusqueda,v_ind_yearbiopsia,v_run,v_dv ,get_sala },
+        error : function(errro) { console.log(errro); jAlert("Error en el aplicativo, Consulte Al Administrador","Clinica Libre"); },
+        success : function(aData) {
+            //console.log("out -> ",aData);
+            //console.error("out -> ",aData.data.arr_resulta);
+            //console.error("###########################");
+            //console.error("aData ->  ",aData);
+            //console.error("html -> ",aData.data.out.return_html);
+            //console.error("###########################");
+            $(".n_resultados_panel").html(aData.data.arr_resulta);
+            $("#busqueda_por_persona").empty();
+            $("#busqueda_por_persona").append(aData.data.out.return_html);
         }, 
         complete: function(data) { $('#loadFade').modal('hide'); }
     });

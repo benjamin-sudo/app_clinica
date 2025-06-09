@@ -2209,9 +2209,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
         type : "POST",
         url : "ssan_libro_biopsias_usuarioext/BLOB_PDF_ANATOMIA_PATOLOGICA",
         dataType : "json",
-        beforeSend : function(xhr) {   
-            $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
-        },
+        beforeSend : function(xhr) { $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");  },
         data : { id : id },
         error : function(errro) { 
             console.log(errro,); 

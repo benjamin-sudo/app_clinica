@@ -15,8 +15,8 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
     public function index(){
         $this->output->set_template('blank');
         $return_data = [];
-        $origen_sol = 0;  //LISTADO DE ORIGEN DE SOLICITUDES - DEFAULT 0 - ALL 
-        $pto_entrega = 0;  //LISTADO DE ORIGEN PUNTOS DE ENTREGA DESCRITA EN LA SOLICITUD DE ANATOMIA - DEFAULT 0 - ALL
+        $origen_sol = 0; //LISTADO DE ORIGEN DE SOLICITUDES - DEFAULT 0 - ALL 
+        $pto_entrega = 0; //LISTADO DE ORIGEN PUNTOS DE ENTREGA DESCRITA EN LA SOLICITUD DE ANATOMIA - DEFAULT 0 - ALL
         #COOKIE TIEMPO BUSQUEDA
         if(!isset($_COOKIE['date_inicio']) && !isset($_COOKIE['date_final'])){
             #DATE DEFAULT
@@ -59,6 +59,5 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js");
         $this->load->view("ssan_libro_biopsias_ii_fase/ssan_libro_biopsias_ii_fase_view",$return_data);
     }
-    
 }
 ?>

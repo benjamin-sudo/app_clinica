@@ -2090,7 +2090,6 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $TABLA["HTML_BIOPSIAS"] = $HTML_BIOPSIAS;
         $this->output->set_output(json_encode($TABLA));
     }
-
     
     public function busqueda_new_biopsias(){
         if(!$this->input->is_ajax_request()){ show_404(); }
@@ -2101,7 +2100,8 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
         $v_ind_yearbiopsia = $this->input->post('v_ind_yearbiopsia');
         $v_run = $this->input->post('v_run');
         $v_dv = $this->input->post('v_dv');
-        $DATA = $this->ssan_libro_etapaanalitica_model->busquedaporparametros_biopsia(array(
+        $get_sala = $this->input->post('get_sala'); 
+        $data = $this->ssan_libro_etapaanalitica_model->busquedaporparametros_biopsia(array(
             "empresa" => $empresa,
             "opcion" => $opcion,
             "v_nbiopsia" => $v_nbiopsia,
@@ -2109,11 +2109,14 @@ class Ssan_libro_etapaanalitica extends CI_Controller {
             "v_ind_yearbiopsia" => $v_ind_yearbiopsia,
             "v_run" => $v_run,
             "v_dv" => $v_dv,
+            "get_sala" => $get_sala,
         ));
         $this->output->set_output(json_encode([
             'status' => true,
+            'empresa' => $empresa,
+            'data' => $data,
+            'post' => $_POST,
         ]));
     }
-    
 }
 ?>

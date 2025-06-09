@@ -388,7 +388,8 @@
                         <thead>
                             <tr>
                                 <td class="" colspan="3">
-                                    <b><?php echo $row_muestras["TXT_HOSPITAL_ETI"]; ?>/<?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA']; ?> </b>
+                                    <b>MUESTRA CL&Iacute;NICA LIBRE /<?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]['TXT_PROCEDENCIA']; ?> </b>
+                                    <?php #echo $row_muestras["TXT_HOSPITAL_ETI"]; ?>
                                 </td>     
                             </tr>
                         </thead>

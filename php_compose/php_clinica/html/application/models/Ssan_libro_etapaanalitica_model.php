@@ -47,8 +47,8 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
         }
         $this->db->select(['
         P.ID_SOLICITUD_HISTO AS ID_SOLICITUD,
-        DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d")                                                       AS LAST_DATE_AUDITA_MOMENT,
-        P.ID_HISTO_ZONA                                                                                 AS ID_HISTO_ZONA,
+        DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d") AS LAST_DATE_AUDITA_MOMENT,
+        P.ID_HISTO_ZONA AS ID_HISTO_ZONA,
         CASE
             WHEN P.ID_HISTO_ZONA IN (0,"") THEN "callout_enproceso"
             WHEN P.ID_HISTO_ZONA = "1" THEN "callout_macroscopia"      
@@ -57,7 +57,7 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             WHEN P.ID_HISTO_ZONA = "7" THEN "callout_sala_patologo"
             WHEN P.ID_HISTO_ZONA = "8" THEN "callout_sala_reporte_finalizado"
             ELSE "callout_default"
-        END                                                                                             AS STYLE_HISTO_ZONA,
+        END AS STYLE_HISTO_ZONA,
         CASE
             WHEN P.ID_HISTO_ZONA IN (0,"") THEN "SALA DE RECEPCIÓN | MACROSCÓPICA"
             WHEN P.ID_HISTO_ZONA = "1" THEN "SALA MACROSCOPICA"      
@@ -78,7 +78,6 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             WHEN "5" THEN "SOLO CITOLOGÍA"
             ELSE "NO INFORMADO"
         END                                                                                             AS TIPO_DE_BIOPSIA,
-
         (SELECT COUNT(M.ID_NMUESTRA) 
             FROM ADMIN.PB_HISTO_NMUESTRAS M
             WHERE M.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO)                                          AS N_MUESTRAS_TOTAL,
@@ -203,226 +202,204 @@ class Ssan_libro_etapaanalitica_model extends CI_Model {
             'lista_filtro_estados' => $lista_filtro_estados,
         ];
     }
-
-
-
     /**
- * Ejemplo de método en el modelo ssan_libro_etapaanalitica_model
- * 
- * @param array $params Array con las llaves:
- *   - 'empresa'            => código de la empresa en sesión
- *   - 'opcion'             => tipo de búsqueda (1,2,3 para Biopsias/Citológicos/PAP; 2 también se usa para “búsqueda por RUN”)
- *   - 'v_nbiopsia'         => número de biopsia (si aplica)
- *   - 'v_ind_tipobusqueda' => tipo interno de biopsia (si aplica)
- *   - 'v_ind_yearbiopsia'  => año de DATE_INICIOREGISTRO (si aplica)
- *   - 'v_run'              => RUN sin puntos ni guión (solo los dígitos) (si aplica)
- *   - 'v_dv'               => dígito verificador del RUN (si aplica)
- *
- * @return array Lista de resultados (cada elemento es un associative array con los campos seleccionados).
- */
-public function busquedaporparametros_biopsia($params)
-{
-    // 1) Recuperamos los parámetros
-    $cod_empresa          = $params['empresa'];
-    $opcion               = $params['opcion'];             // 1,2 o 3 → Biopsias / Citológicos / PAP
-    $v_nbiopsia           = $params['v_nbiopsia'];         // Ejemplo: “12345”
-    $v_ind_tipobusqueda   = $params['v_ind_tipobusqueda']; // Ejemplo: “A”, “B” (si fuera necesario)
-    $v_ind_yearbiopsia    = $params['v_ind_yearbiopsia'];  // Ejemplo: “2024”
-    $v_run                = $params['v_run'];              // Ejemplo: “16869726”
-    $v_dv                 = $params['v_dv'];               // Ejemplo: “0”
-
-    // ---------------------------------------------------
-    // 2) CASO A: Si vienen v_run + v_dv (opción “búsqueda por RUN”)
-    //    En tu JS original esto se disparaba cuando opcion == 2 y se enviaban v_run y v_dv.
-    // ---------------------------------------------------
-    if (!empty($v_run) && !empty($v_dv)) {
-        $runSinPuntos = preg_replace('/\D+/', '', $v_run); // nos aseguramos de quitar todo no numérico
-        $dv = $v_dv;
-
-        // Armamos la consulta: buscamos en PB_SOLICITUD_HISTO P
-        // y hacemos JOIN al paciente en GG_TGPACTE G para filtrar por RUN+DV
-        $this->db->select([
-            // Selecciona aquí todos los campos que luego vas a mostrar en la grilla
-            'P.ID_SOLICITUD_HISTO             AS ID_SOLICITUD',
-            'DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d") AS LAST_DATE_AUDITA_MOMENT',
-            'P.ID_HISTO_ZONA                  AS ID_HISTO_ZONA',
-            // (Campos CASE para STYLE_HISTO_ZONA, TXT_HISTO_ZONA, etc. 
-            //  los puedes copiar exactamente de new_load_analitica_paginado si quieres)
-            'CASE
-                WHEN P.ID_HISTO_ZONA IN (0,"") THEN "callout_enproceso"
-                WHEN P.ID_HISTO_ZONA = "1" THEN "callout_macroscopia"
-                WHEN P.ID_HISTO_ZONA = "2" THEN "callout_enproceso"
-                WHEN P.ID_HISTO_ZONA = "6" THEN "callout_sala_tecnicas"
-                WHEN P.ID_HISTO_ZONA = "7" THEN "callout_sala_patologo"
-                WHEN P.ID_HISTO_ZONA = "8" THEN "callout_sala_reporte_finalizado"
-                ELSE "callout_default"
-             END AS STYLE_HISTO_ZONA',
-            'CASE
-                WHEN P.ID_HISTO_ZONA IN (0,"") THEN "SALA DE RECEPCIÓN | MACROSCÓPICA"
-                WHEN P.ID_HISTO_ZONA = "1" THEN "SALA MACROSCOPICA"
-                WHEN P.ID_HISTO_ZONA = "2" THEN "SALA PROCESO"
-                WHEN P.ID_HISTO_ZONA = "4" THEN "SALA INCLUSIÓN"
-                WHEN P.ID_HISTO_ZONA = "5" THEN "PROCESAMIENTO - SALA PROCESO"
-                WHEN P.ID_HISTO_ZONA = "6" THEN "SALA DE TECNICAS (TECNOLOGO)"
-                WHEN P.ID_HISTO_ZONA = "7" THEN "OFICINA PATOLOGO"
-                WHEN P.ID_HISTO_ZONA = "8" THEN "FINALIZADO"
-                ELSE "NO INFORMADO"
-             END AS TXT_HISTO_ZONA',
-            'CASE P.IND_TIPO_BIOPSIA
-                WHEN "1" THEN "SI"
-                WHEN "2" THEN "CONTEMPORANEA"
-                WHEN "3" THEN "DIFERIDA"
-                WHEN "4" THEN "BIOPSIA + CITOLOGÍA"
-                WHEN "6" THEN "CITOLOGÍA PAP"
-                WHEN "5" THEN "SOLO CITOLOGÍA"
-                ELSE "NO INFORMADO"
-             END AS TIPO_DE_BIOPSIA',
-            // CONCAT de RUN + DV para mostrarlo
-            'CONCAT(G.COD_RUTPAC, "-", G.COD_DIGVER) AS RUTPACIENTE',
-            'CONCAT(
-                UPPER(G.NOM_NOMBRE)," ",
-                UPPER(G.NOM_APEPAT)," ",
-                UPPER(G.NOM_APEMAT)
-             ) AS NOMBRE_COMPLETO',
-            'DATE_FORMAT(P.DATE_INICIOREGISTRO, "%d-%m-%Y %H:%i") AS DATE_FECHA_REALIZACION'
-        ]);
-        $this->db->from('ADMIN.PB_SOLICITUD_HISTO P');
-
-        // JOIN con GG_TGPACTE para validar RUN + DV
-        $this->db->join('ADMIN.GG_TGPACTE G', 'G.NUM_FICHAE = P.NUM_FICHAE');
-
-        // Filtramos por RUN (sin puntos) y DV
-        // (Asumimos que G.COD_RUTPAC no tiene puntos; si tuviera, habría que hacer REPLACE)
-        $this->db->where("REPLACE(G.COD_RUTPAC, '.', '') = ", $runSinPuntos);
-        $this->db->where("G.COD_DIGVER", $dv);
-
-        // Opcional: restringir solo al establecimiento de la sesión
-        $this->db->group_start();
-          $this->db->where('P.COD_EMPRESA', $cod_empresa);
-          $this->db->or_where('P.COD_ESTABLREF', $cod_empresa);
-        $this->db->group_end();
-
-        // Finalmente, ejecutamos y devolvemos el resultado
-        $query = $this->db->get();
-        return $query->result_array();
+     * Ejemplo de método en el modelo ssan_libro_etapaanalitica_model
+     * @param array $params Array con las llaves:
+     *   - 'empresa' => código de la empresa en sesión
+     *   - 'opcion' => tipo de búsqueda (1,2,3 para Biopsias/Citológicos/PAP; 2 también se usa para “búsqueda por RUN”)
+     *   - 'v_nbiopsia' => número de biopsia (si aplica)
+     *   - 'v_ind_tipobusqueda' => tipo interno de biopsia (si aplica)
+     *   - 'v_ind_yearbiopsia'  => año de DATE_INICIOREGISTRO (si aplica)
+     *   - 'v_run' => RUN sin puntos ni guión (solo los dígitos) (si aplica)
+     *   - 'v_dv' => dígito verificador del RUN (si aplica)
+     * @return array Lista de resultados (cada elemento es un associative array con los campos seleccionados).
+     */
+     public function busquedaporparametros_biopsia($params) {
+        $cod_empresa = $params['empresa'];
+        $opcion = $params['opcion']; // 1,2 o 3 → Biopsias / Citológicos / PAP
+        $v_nbiopsia = $params['v_nbiopsia']; // Ejemplo: “12345”
+        $v_ind_tipobusqueda = $params['v_ind_tipobusqueda']; // Ejemplo: “A”, “B” (si fuera necesario)
+        $v_ind_yearbiopsia = $params['v_ind_yearbiopsia'];  // Ejemplo: “2024”
+        $v_run = $params['v_run']; // Ejemplo: “16869726”
+        $v_dv = $params['v_dv']; // Ejemplo: “0”
+        $get_sala = $params['get_sala'];
+        $arr_resulta = [];
+        if ($params['opcion'] === "2") {
+            $runSinPuntos = preg_replace('/\D+/', '', $params['v_run']);
+            $dv = $params['v_dv'];
+            $query = $this->db
+                ->select('P.ID_SOLICITUD_HISTO AS ID_SOLICITUD')
+                ->select('DATE_FORMAT(P.LAST_DATE_AUDITA,"%Y%m%d")  AS LAST_DATE_AUDITA_MOMENT')
+                ->select('P.ID_HISTO_ZONA AS ID_HISTO_ZONA')
+                ->select('A.COD_RUTPRO AS COD_RUTPRO')
+                ->select('A.COD_DIGVER AS DV')
+                ->select('CONCAT(
+                            SUBSTR(UPPER(A.NOM_NOMBRE),1,1),".",
+                            UPPER(A.NOM_APEPAT)," ",
+                            UPPER(A.NOM_APEMAT)
+                        ) AS NOM_PROFE_CORTO')
+                ->select("
+                    CASE
+                    WHEN P.ID_HISTO_ZONA IN (0,'') THEN 'callout_enproceso'
+                    WHEN P.ID_HISTO_ZONA = '1' THEN 'callout_macroscopia'
+                    WHEN P.ID_HISTO_ZONA = '2' THEN 'callout_enproceso'
+                    WHEN P.ID_HISTO_ZONA = '6' THEN 'callout_sala_tecnicas'
+                    WHEN P.ID_HISTO_ZONA = '7' THEN 'callout_sala_patologo'
+                    WHEN P.ID_HISTO_ZONA = '8' THEN 'callout_sala_reporte_finalizado'
+                    ELSE 'callout_default'
+                    END AS STYLE_HISTO_ZONA
+                ", FALSE)
+                ->select("
+                    CASE
+                    WHEN P.ID_HISTO_ZONA IN (0,'') THEN 'SALA DE RECEPCIÓN | MACROSCÓPICA'
+                    WHEN P.ID_HISTO_ZONA = '1' THEN 'SALA MACROSCOPICA'
+                    WHEN P.ID_HISTO_ZONA = '2' THEN 'SALA PROCESO'
+                    WHEN P.ID_HISTO_ZONA = '4' THEN 'SALA INCLUSIÓN'
+                    WHEN P.ID_HISTO_ZONA = '5' THEN 'PROCESAMIENTO - SALA PROCESO'
+                    WHEN P.ID_HISTO_ZONA = '6' THEN 'SALA DE TECNICAS (TECNOLOGO)'
+                    WHEN P.ID_HISTO_ZONA = '7' THEN 'OFICINA PATOLOGO'
+                    WHEN P.ID_HISTO_ZONA = '8' THEN 'FINALIZADO'
+                    ELSE 'NO INFORMADO'
+                    END AS TXT_HISTO_ZONA
+                ", FALSE)
+                ->select('P.IND_TIPO_BIOPSIA AS IND_TIPO_BIOPSIA')
+                ->select("
+                    CASE P.IND_TIPO_BIOPSIA
+                    WHEN '1' THEN 'SI'
+                    WHEN '2' THEN 'CONTEMPORANEA'
+                    WHEN '3' THEN 'DIFERIDA'
+                    WHEN '4' THEN 'BIOPSIA + CITOLOGÍA'
+                    WHEN '5' THEN 'SOLO CITOLOGÍA'
+                    WHEN '6' THEN 'CITOLOGÍA PAP'
+                    ELSE 'NO INFORMADO'
+                    END AS TIPO_DE_BIOPSIA
+                ", FALSE)
+                ->select('CONCAT(G.COD_RUTPAC,"-",G.COD_DIGVER) AS RUTPACIENTE')
+                ->select('DATE_FORMAT(G.FEC_NACIMI,"%d-%m-%Y") AS NACIMIENTO')
+                ->select("CONCAT(UPPER(G.NOM_NOMBRE),' ',UPPER(G.NOM_APEPAT),' ',UPPER(G.NOM_APEMAT) ) AS NOMBRE_COMPLETO")
+                ->select("(SELECT COUNT(M.ID_NMUESTRA) FROM ADMIN.PB_HISTO_NMUESTRAS M WHERE M.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO) AS N_MUESTRAS_TOTAL")
+                ->select('P.NUM_INTERNO_AP AS NUM_INTERNO_AP')
+                ->select('P.NUM_CO_CITOLOGIA AS NUM_CO_CITOLOGIA')
+                ->select('P.NUM_CO_PAP AS NUM_CO_PAP')
+                ->select('DATE_FORMAT(P.DATE_INICIOREGISTRO,"%d-%m-%Y %H:%i") AS DATE_FECHA_REALIZACION')
+                    ->from("{$this->own}.PB_SOLICITUD_HISTO P")
+                    ->join("{$this->own}.GG_TGPACTE G", "G.NUM_FICHAE = P.NUM_FICHAE")
+                    ->join("{$this->own}.GG_TPROFESIONAL A","A.COD_RUTPRO = P.COD_RUTPRO")
+                ->where("REPLACE(G.COD_RUTPAC,'.','') = ", $runSinPuntos)
+                ->where("G.COD_DIGVER", $dv)
+                ->where("P.ID_HISTO_ESTADO", "4")
+                ->group_start()
+                ->where('P.COD_EMPRESA',   $cod_empresa)
+                ->or_where('P.COD_ESTABLREF',$cod_empresa)
+                ->group_end()
+                ->order_by("DATE(P.DATE_INICIOREGISTRO)", "DESC")
+                ->get();
+            $arr_resulta = $query->result_array();
+            return [
+                'status' => true,
+                'params' => $params,
+                'arr_resulta' => count($arr_resulta),
+                'out' => $this->li_lista_estapaanalitica_paginado($arr_resulta,'#_busqueda_xpersona',0,$get_sala),
+            ];
+        } else if ($params['opcion'] === "1") {
+            $v_nbiopsia = $params['v_nbiopsia'];    
+            $v_ind_tipobusqueda = $params['v_ind_tipobusqueda'];    
+            $v_ind_yearbiopsia = $params['v_ind_yearbiopsia']; 
+            $v_where = "";
+            if ( $v_ind_tipobusqueda == "1") {
+                $v_where = " AND P.NUM_INTERNO_AP = ".$v_nbiopsia;
+            } else  if ( $v_ind_tipobusqueda == "2") { 
+                $v_where = " AND P.NUM_CO_CITOLOGIA = ".$v_nbiopsia;
+            } else  if ( $v_ind_tipobusqueda == "3") { 
+                $v_where = " AND P.NUM_CO_PAP = ".$v_nbiopsia;
+            }
+            $query = $this->db
+                ->select('P.ID_SOLICITUD_HISTO AS ID_SOLICITUD')
+                ->select('DATE_FORMAT(P.LAST_DATE_AUDITA,"%Y%m%d")  AS LAST_DATE_AUDITA_MOMENT')
+                ->select('P.ID_HISTO_ZONA AS ID_HISTO_ZONA')
+                ->select('A.COD_RUTPRO AS COD_RUTPRO')
+                ->select('A.COD_DIGVER AS DV')
+                ->select('CONCAT(
+                            SUBSTR(UPPER(A.NOM_NOMBRE),1,1),".",
+                            UPPER(A.NOM_APEPAT)," ",
+                            UPPER(A.NOM_APEMAT)
+                        ) AS NOM_PROFE_CORTO')
+                ->select("
+                    CASE
+                    WHEN P.ID_HISTO_ZONA IN (0,'') THEN 'callout_enproceso'
+                    WHEN P.ID_HISTO_ZONA = '1' THEN 'callout_macroscopia'
+                    WHEN P.ID_HISTO_ZONA = '2' THEN 'callout_enproceso'
+                    WHEN P.ID_HISTO_ZONA = '6' THEN 'callout_sala_tecnicas'
+                    WHEN P.ID_HISTO_ZONA = '7' THEN 'callout_sala_patologo'
+                    WHEN P.ID_HISTO_ZONA = '8' THEN 'callout_sala_reporte_finalizado'
+                    ELSE 'callout_default'
+                    END AS STYLE_HISTO_ZONA
+                ", FALSE)
+                ->select("
+                    CASE
+                    WHEN P.ID_HISTO_ZONA IN (0,'') THEN 'SALA DE RECEPCIÓN | MACROSCÓPICA'
+                    WHEN P.ID_HISTO_ZONA = '1' THEN 'SALA MACROSCOPICA'
+                    WHEN P.ID_HISTO_ZONA = '2' THEN 'SALA PROCESO'
+                    WHEN P.ID_HISTO_ZONA = '4' THEN 'SALA INCLUSIÓN'
+                    WHEN P.ID_HISTO_ZONA = '5' THEN 'PROCESAMIENTO - SALA PROCESO'
+                    WHEN P.ID_HISTO_ZONA = '6' THEN 'SALA DE TECNICAS (TECNOLOGO)'
+                    WHEN P.ID_HISTO_ZONA = '7' THEN 'OFICINA PATOLOGO'
+                    WHEN P.ID_HISTO_ZONA = '8' THEN 'FINALIZADO'
+                    ELSE 'NO INFORMADO'
+                    END AS TXT_HISTO_ZONA
+                ", FALSE)
+                ->select('P.IND_TIPO_BIOPSIA AS IND_TIPO_BIOPSIA')
+                ->select("
+                    CASE P.IND_TIPO_BIOPSIA
+                    WHEN '1' THEN 'SI'
+                    WHEN '2' THEN 'CONTEMPORANEA'
+                    WHEN '3' THEN 'DIFERIDA'
+                    WHEN '4' THEN 'BIOPSIA + CITOLOGÍA'
+                    WHEN '5' THEN 'SOLO CITOLOGÍA'
+                    WHEN '6' THEN 'CITOLOGÍA PAP'
+                    ELSE 'NO INFORMADO'
+                    END AS TIPO_DE_BIOPSIA
+                ", FALSE)
+                ->select('CONCAT(G.COD_RUTPAC,"-",G.COD_DIGVER) AS RUTPACIENTE')
+                ->select('DATE_FORMAT(G.FEC_NACIMI,"%d-%m-%Y") AS NACIMIENTO')
+                ->select("CONCAT(UPPER(G.NOM_NOMBRE),' ',UPPER(G.NOM_APEPAT),' ',UPPER(G.NOM_APEMAT) ) AS NOMBRE_COMPLETO")
+                ->select("(SELECT COUNT(M.ID_NMUESTRA) FROM ADMIN.PB_HISTO_NMUESTRAS M WHERE M.ID_SOLICITUD_HISTO = P.ID_SOLICITUD_HISTO) AS N_MUESTRAS_TOTAL")
+                ->select('P.NUM_INTERNO_AP AS NUM_INTERNO_AP')
+                ->select('P.NUM_CO_CITOLOGIA AS NUM_CO_CITOLOGIA')
+                ->select('P.NUM_CO_PAP AS NUM_CO_PAP')
+                ->select('DATE_FORMAT(P.DATE_INICIOREGISTRO,"%d-%m-%Y %H:%i") AS DATE_FECHA_REALIZACION')
+                    ->from("{$this->own}.PB_SOLICITUD_HISTO P")
+                    ->join("{$this->own}.GG_TGPACTE G", "G.NUM_FICHAE = P.NUM_FICHAE")
+                    ->join("{$this->own}.GG_TPROFESIONAL A","A.COD_RUTPRO = P.COD_RUTPRO")
+                ->where('DATE_FORMAT(P.DATE_INICIOREGISTRO, "%Y") =', $v_ind_yearbiopsia)
+                ->where("P.ID_HISTO_ESTADO", "4")
+                ->group_start()
+                ->where('P.COD_EMPRESA', $cod_empresa)
+                ->or_where('P.COD_ESTABLREF', $cod_empresa)
+                ->group_end()
+                ->order_by("DATE(P.DATE_INICIOREGISTRO)", "DESC");
+            switch ($v_ind_tipobusqueda) {
+                case '1':
+                    $query->where('P.NUM_INTERNO_AP', (int)$v_nbiopsia);
+                    break;
+                case '2':
+                    $query->where('P.NUM_CO_CITOLOGIA', (int)$v_nbiopsia);
+                    break;
+                case '3':
+                    $query->where('P.NUM_CO_PAP', (int)$v_nbiopsia);
+                    break;
+            }
+            $query = $query->get();
+            $arr_resulta = $query->result_array();
+            return [
+                'status' => true,
+                'params' => $params,
+                'arr_resulta' => count($arr_resulta),
+                'out' => $this->li_lista_estapaanalitica_paginado($arr_resulta,'#_busqueda_xpersona',0,$get_sala),
+            ];
+        }
     }
 
-    // ---------------------------------------------------
-    // 3) CASO B: Búsqueda por “Biopsias / Citológicos / PAP” y año
-    // ---------------------------------------------------
-    // opcion = 1 → Biopsias
-    // opcion = 2 → Citológicos
-    // opcion = 3 → PAP
-    // Además, filtramos YEAR(P.DATE_INICIOREGISTRO) = $v_ind_yearbiopsia
-    // ---------------------------------------------------
-
-    // Nos aseguramos de que venga un año válido; si no, podríamos omitir este filtro
-    $filtroPorAnio = false;
-    if (!empty($v_ind_yearbiopsia) && is_numeric($v_ind_yearbiopsia)) {
-        $filtroPorAnio = true;
-    }
-
-    // Empezamos a armar la query
-    $this->db->select([
-        'P.ID_SOLICITUD_HISTO             AS ID_SOLICITUD',
-        'DATE_FORMAT(P.LAST_DATE_AUDITA, "%Y%m%d") AS LAST_DATE_AUDITA_MOMENT',
-        'P.ID_HISTO_ZONA                  AS ID_HISTO_ZONA',
-        'CASE
-            WHEN P.ID_HISTO_ZONA IN (0,"") THEN "callout_enproceso"
-            WHEN P.ID_HISTO_ZONA = "1" THEN "callout_macroscopia"
-            WHEN P.ID_HISTO_ZONA = "2" THEN "callout_enproceso"
-            WHEN P.ID_HISTO_ZONA = "6" THEN "callout_sala_tecnicas"
-            WHEN P.ID_HISTO_ZONA = "7" THEN "callout_sala_patologo"
-            WHEN P.ID_HISTO_ZONA = "8" THEN "callout_sala_reporte_finalizado"
-            ELSE "callout_default"
-         END AS STYLE_HISTO_ZONA',
-        'CASE
-            WHEN P.ID_HISTO_ZONA IN (0,"") THEN "SALA DE RECEPCIÓN | MACROSCÓPICA"
-            WHEN P.ID_HISTO_ZONA = "1" THEN "SALA MACROSCOPICA"
-            WHEN P.ID_HISTO_ZONA = "2" THEN "SALA PROCESO"
-            WHEN P.ID_HISTO_ZONA = "4" THEN "SALA INCLUSIÓN"
-            WHEN P.ID_HISTO_ZONA = "5" THEN "PROCESAMIENTO - SALA PROCESO"
-            WHEN P.ID_HISTO_ZONA = "6" THEN "SALA DE TECNICAS (TECNOLOGO)"
-            WHEN P.ID_HISTO_ZONA = "7" THEN "OFICINA PATOLOGO"
-            WHEN P.ID_HISTO_ZONA = "8" THEN "FINALIZADO"
-            ELSE "NO INFORMADO"
-         END AS TXT_HISTO_ZONA',
-        'CASE P.IND_TIPO_BIOPSIA
-            WHEN "1" THEN "SI"
-            WHEN "2" THEN "CONTEMPORANEA"
-            WHEN "3" THEN "DIFERIDA"
-            WHEN "4" THEN "BIOPSIA + CITOLOGÍA"
-            WHEN "6" THEN "CITOLOGÍA PAP"
-            WHEN "5" THEN "SOLO CITOLOGÍA"
-            ELSE "NO INFORMADO"
-         END AS TIPO_DE_BIOPSIA',
-        // Incluimos también el RUN+DV del profesional que registró:
-        'CONCAT(A.COD_RUTPRO, "-", A.COD_DIGVER) AS RUT_PROFESIONAL',
-        'CONCAT(
-            SUBSTR(UPPER(A.NOM_NOMBRE), 1, 1), ".", 
-            UPPER(A.NOM_APEPAT), " ", 
-            UPPER(A.NOM_APEMAT)
-         ) AS NOM_PROFE_CORTO',
-        'DATE_FORMAT(P.DATE_INICIOREGISTRO, "%d-%m-%Y %H:%i") AS DATE_FECHA_REALIZACION'
-    ]);
-    $this->db->from('ADMIN.PB_SOLICITUD_HISTO P');
-
-    // JOIN con la tabla de profesional (en tu código original llevabas A y G, etc.)
-    $this->db->join('ADMIN.GG_TPROFESIONAL A', 'A.COD_RUTPRO = P.COD_RUTPRO');
-    // (Podrías agregar más joins si necesitas L, G, etc.)
-
-    // 3.1) Filtrar SOLO el año seleccionado
-    if ($filtroPorAnio) {
-        $this->db->where('YEAR(P.DATE_INICIOREGISTRO)', intval($v_ind_yearbiopsia));
-    }
-
-    // 3.2) Filtrar según el tipo (Biopsias, Citológicos, PAP)
-    switch (strval($opcion)) {
-        case '1': // Biopsias
-            $this->db->where('P.IND_TIPO_BIOPSIA', 1);
-            break;
-
-        case '2': // Citológicos
-            $this->db->where('P.IND_TIPO_BIOPSIA', 6); 
-            // En tu CASE original: cuando IND_TIPO_BIOPSIA=6 → "CITOLOGÍA PAP"
-            // 
-            // Ajusta este valor si tu “Citológicos” en realidad corresponde a otro valor. 
-            // Aquí asumo que:
-            //   - 1  = Biopsias
-            //   - 6  = Citológicos / Citología PAP
-            //   - 3  = PAP (ejemplo)
-            break;
-
-        case '3': // PAP
-            $this->db->where('P.IND_TIPO_BIOPSIA', 3);
-            break;
-
-        default:
-            // Si enviaron un valor distinto, podrías no filtrar por tipo (o filtrar todo)
-            break;
-    }
-
-    // 3.3) Filtrar por empresa / establecimiento como lo hacías en new_load_analitica_paginado
-    $this->db->group_start();
-      $this->db->where('P.COD_EMPRESA', $cod_empresa);
-      $this->db->or_where('P.COD_ESTABLREF', $cod_empresa);
-    $this->db->group_end();
-
-    // 3.4) Ordenar según el parámetro “opcion” si quieres (o por defecto)
-    // En tu enunciado original ponías otro switch para order_by, 
-    // pero ahora estamos usando “opcion” justamente para el filtro de tipo,
-    // así que aquí haré un ORDER BY genérico (por fecha descendente).
-    $this->db->order_by('P.DATE_INICIOREGISTRO', 'DESC');
-
-    // 3.5) Ejecutar y devolver
-    $query = $this->db->get();
-    return $query->result_array();
-}
-
-#hasta malana 
-
-
-    
     public function li_lista_estapaanalitica_paginado($lista_anatomia, $ind_opcion, $ind_first, $get_sala) {
         $html = '';
         $v_num_registro = 0;
@@ -464,17 +441,17 @@ public function busquedaporparametros_biopsia($params)
 
     public function sin_resultados2($txt_li){
         $v_sysdate = date("d-m-Y H:i:s");
+        $val_icono = $txt_li == '_panel_por_fecha'? 'fa fa-calendar':'fa fa-search' ;
         $html = '<li class="list-group-item lista_analitica sin_resultados'.$txt_li.'"> 
                     <div class="grid_sin_informacion">
                         <div class="grid_sin_informacion1"></div>
-                        <div class="grid_sin_informacion2"><b>SIN RESULTADOS</b> - <i><b>'.$v_sysdate.'</b></i></div>
+                        <div class="grid_sin_informacion2"><i class="'.$val_icono.'" aria-hidden="true"></i>&nbsp;<b><i>SIN RESULTADOS</i></b>&nbsp;<i><b>'.$v_sysdate.'</b></i></div>
                         <div class="grid_sin_informacion3"></div>
                     </div>
                 </li>';
         return $html;
     }
 
-    
     ###################
     #apuntando a oracle
     ###################
@@ -563,20 +540,20 @@ public function busquedaporparametros_biopsia($params)
 
     public function load_etapa_analiticaap($DATA){
         $this->db->trans_start();
-        $_boreano_out                           =   true;
+        $_boreano_out =   true;
         #_panel_por_fecha
-        if($DATA["ind_opcion"]                  ==  '#_panel_por_gestion'){
+        if($DATA["ind_opcion"] == '#_panel_por_gestion'){
             #_panel_por_gestion
-            #$_boreano_out                      =   is_null($DATA["arr_ids_anatomia"])?false:true;
+            #$_boreano_out =   is_null($DATA["arr_ids_anatomia"])?false:true;
             if ($DATA["arr_ids_anatomia"] == '' ||  is_null($DATA["arr_ids_anatomia"])){
-                $_boreano_out                   =   false;
+                $_boreano_out =   false;
             } else {
-                $DATA["arr_ids_anatomia"]       =   implode(",", array_unique(explode(",",$DATA["arr_ids_anatomia"]))) ;
+                $DATA["arr_ids_anatomia"] = implode(",", array_unique(explode(",",$DATA["arr_ids_anatomia"]))) ;
                 #var_dump();
             }
         }
         #_panel_por_gestion
-        if($DATA["ind_opcion"]                   ==  '#_panel_por_fecha'){
+        if($DATA["ind_opcion"] == '#_panel_por_fecha'){
             #_panel_por_fecha
             #$$_boreano_out                      =   false;
         }
@@ -677,23 +654,23 @@ public function busquedaporparametros_biopsia($params)
         $result                                 =   $this->db->stored_procedure_multicursor($this->own.'.PROCE_ANATOMIA_PATOLOGIA',$_txt_proce_anatomia,$param);
         $this->db->trans_complete();
         return array (
-            'HTML_LI'                           =>  $this->li_lista_estapaanalitica($result,$DATA["ind_opcion"],$DATA["ind_first"],$DATA["get_sala"]),
-            #'HTML_LI'                          =>  '',
-            'n_resultado'                       =>  count($result[":C_LISTA_ANATOMIA"]),
-            'BD'                                =>  $result,
-            'STATUS'                            =>  true,
-            'status_bd'                         =>  true,
-            'ind_opcion'                        =>  $DATA["ind_opcion"],
-            'date_inicio'                       =>  strtotime($DATA["data_inicio"]),
-            'date_final'                        =>  strtotime($DATA["data_final"]),
-            'cookie'                            =>  isset($_COOKIE['target'])?'<span class="badge bg-success">CON COOKIE</span>':'<span class="badge bg-warning">SIN COOKIE</span>',
-            'ind_busqueda'                      =>  isset($_COOKIE['target'])?'<span class="badge bg-primary" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="badge bg-primary" id="span_tipo_busqueda">#_panel_por_fecha</span>',
-            'fechas'                            =>  isset($_COOKIE['data'])?$_COOKIE['data']:'null',
-            'ids_anatomia'                      =>  isset($_COOKIE['id_anatomia'])?json_decode($_COOKIE['id_anatomia']):'null',
-            'txt_sala'                          =>  $DATA["get_sala"],
-            'txt_titulo'                        =>  $DATA["txt_titulo"],
-            '_cookie'                           =>  $_COOKIE,
-            'V_DATA'                            =>  $DATA,
+            'HTML_LI' =>  $this->li_lista_estapaanalitica($result,$DATA["ind_opcion"],$DATA["ind_first"],$DATA["get_sala"]),
+            #'HTML_LI' =>  '',
+            'n_resultado' =>  count($result[":C_LISTA_ANATOMIA"]),
+            'BD' =>  $result,
+            'STATUS' =>  true,
+            'status_bd' =>  true,
+            'ind_opcion' =>  $DATA["ind_opcion"],
+            'date_inicio' =>  strtotime($DATA["data_inicio"]),
+            'date_final' =>  strtotime($DATA["data_final"]),
+            'cookie' =>  isset($_COOKIE['target'])?'<span class="badge bg-success">CON COOKIE</span>':'<span class="badge bg-warning">SIN COOKIE</span>',
+            'ind_busqueda' =>  isset($_COOKIE['target'])?'<span class="badge bg-primary" id="span_tipo_busqueda">'.$_COOKIE['target'].'</span>':'<span class="badge bg-primary" id="span_tipo_busqueda">#_panel_por_fecha</span>',
+            'fechas' =>  isset($_COOKIE['data'])?$_COOKIE['data']:'null',
+            'ids_anatomia' =>  isset($_COOKIE['id_anatomia'])?json_decode($_COOKIE['id_anatomia']):'null',
+            'txt_sala' =>  $DATA["get_sala"],
+            'txt_titulo' =>  $DATA["txt_titulo"],
+            '_cookie' =>  $_COOKIE,
+            'V_DATA' =>  $DATA,
         );
     }
 

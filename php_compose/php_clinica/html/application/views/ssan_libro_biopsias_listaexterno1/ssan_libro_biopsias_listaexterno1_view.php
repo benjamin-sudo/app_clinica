@@ -295,23 +295,23 @@
         </div>
     </div>
 
-    <div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA">
-        <div class="modal-dialog modal-xl">
+    <!-- 1) No incluyas aria-hidden aquí -->
+    <div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA" tabindex="-1" aria-labelledby="tituloModalAnatomia" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"><b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
-                        <i class="fa fa-window-close" aria-hidden="true"></i>&nbsp;&nbsp;CERRAR&nbsp;VENTANA&nbsp;
-                    </button>
-                </div>
+            <div class="modal-header">
+                <h3 id="tituloModalAnatomia" class="modal-title"> <b style="color:#e34f49">&nbsp;PDF&nbsp;</b>  </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Cerrar ventana">
+                <i class="fa fa-window-close" aria-hidden="true"></i> CERRAR VENTANA </button>
+            </div>
             </div>
         </div>
     </div>
-    
 </section>
 
 <section>

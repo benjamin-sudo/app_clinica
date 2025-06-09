@@ -1,7 +1,7 @@
 
 <div class="PANEL_MAIN">
     <div class="DIV_LEFT">
-        <h4 class="title" style="color : #e34f49;margin-left: 20px;margin-bottom:10px;"><b>PANEL DE SOLICITUD EXTERNO DE ANATOM&Iacute;A PATOL&Oacute;GICA</b></h4>
+        <h4 class="title" style="color : #e34f49;margin-left: 20px;margin-bottom:10px;"><b>PANEL DE SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA</b></h4>
     </div>
     <div class="DIV_RIGHT">
         <div class="btn-group">

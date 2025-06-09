@@ -137,7 +137,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $fecha_final = $v_data_final[2].'-'.$v_data_final[1].'-'.$v_data_final[0].' 23:59:59';
         $cod_empresa = $data_controller['COD_EMPRESA'];
 
-
         $sql = "SELECT 
                     P.ID_ROTULADO AS ID_ROTULADO,
                     CASE
@@ -335,12 +334,12 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'html_externo'  =>  $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
                             ?   $this->html_externo_rce(array("data_controller"=>$data_controller,"data"=>$arr_data))
                             :   $this->LI_RESULTADOS_ANATOMIA($arr_data,$data_controller["num_fase"]),
-            'return_bd'     =>  $result,
-            'userdata'      =>  $this->session->userdata,
-            'ind_opcion'    =>  $data_controller["ind_opcion"], 
-            'ind_template'  =>  $data_controller["ind_template"],
-            'date_inicio'   =>  $data_controller["data_inicio"],
-            'date_final'    =>  $data_controller["data_final"],
+            'return_bd' => $result,
+            'userdata' => $this->session->userdata,
+            'ind_opcion' => $data_controller["ind_opcion"], 
+            'ind_template' => $data_controller["ind_template"],
+            'date_inicio' => $data_controller["data_inicio"],
+            'date_final' => $data_controller["data_final"],
         ];
     }
 
@@ -395,9 +394,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'"     style="width: -webkit-fill-available;margin:-10px 0px 0px 0px;">'.$txt_estado.'</button>';
                     $INFORMACION    .=   '</div>';
                 } else if($row['ID_HISTO_ESTADO'] == 5){
-                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger"                 style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
                 } else {
-                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger"                 style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
                 }
                 
                 $disabled           =   'disabled';
@@ -1404,7 +1403,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             }  else if ($CALL_FASE == 2){
                                 
                                 if($row['ID_HISTO_ESTADO'] == 3 || $row['ID_HISTO_ESTADO'] == 1){
-                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp; 1RECEPCI&Oacute;N</a></li>';
+                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N</a></li>';
                                     $BTN .= '<li class="divider"></li>';
                                 } else if($row['ID_HISTO_ESTADO'] == 4){
                                     //IND_ESTADO_MUESTRAS
@@ -1618,7 +1617,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$row['ID_SOLICITUD'].'">';
                                             if( $row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
                                                 #EN TRASPORTE - #CUSTODIA
-                                                $HTML .= '<li><a class="dropdown-item" href="javascript:btn_delete_ap_externo('.$row['ID_SOLICITUD'].')""><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Eliminar Muestra</a></li>';
+                                                $HTML .= '<li><a class="dropdown-item" href="javascript:btn_delete_ap_externo('.$row['ID_SOLICITUD'].')""><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Eliminar Muestra</a></li>';
                                             }   else if($row['ID_HISTO_ESTADO'] == 5){     
                                                 #RECHAZADA     
                                                 $HTML .= '<li><a class="dropdown-item" href="javascript:local_pdf_rechazomuestra('.$row['ID_SOLICITUD'].')""><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Ver rechazo</a></li>';
