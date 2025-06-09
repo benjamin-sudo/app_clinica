@@ -335,7 +335,7 @@ function js_iniciobusqueda_biopsia(opcion,v_nbiopsia,v_ind_tipobusqueda,v_ind_ye
             $("#busqueda_por_persona").empty();
             $("#busqueda_por_persona").append(aData.data.out.return_html);
         }, 
-        complete: function(data) { $('#loadFade').modal('hide'); }
+        complete: function() {  setTimeout(function(){ $('#loadFade').modal('hide');  }, 500); }
     });
 }
 

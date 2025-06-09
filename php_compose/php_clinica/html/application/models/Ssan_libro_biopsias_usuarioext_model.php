@@ -329,11 +329,10 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 ORDER BY P.DATE_INICIOREGISTRO";
         $query = $this->db->query($sql, array($cod_empresa, $fecha_inicio, $fecha_final));
         $arr_data = $query->result_array();
-
         return [
-            'html_externo'  =>  $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
-                            ?   $this->html_externo_rce(array("data_controller"=>$data_controller,"data"=>$arr_data))
-                            :   $this->LI_RESULTADOS_ANATOMIA($arr_data,$data_controller["num_fase"]),
+            'html_externo' => $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
+                ? $this->html_externo_rce(array("data_controller"=>$data_controller,"data"=>$arr_data))
+                : $this->LI_RESULTADOS_ANATOMIA($arr_data,$data_controller["num_fase"]),
             'return_bd' => $result,
             'userdata' => $this->session->userdata,
             'ind_opcion' => $data_controller["ind_opcion"], 
