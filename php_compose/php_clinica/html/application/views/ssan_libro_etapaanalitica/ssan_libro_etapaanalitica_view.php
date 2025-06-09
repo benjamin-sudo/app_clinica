@@ -283,7 +283,6 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
         </div>
     </div>
 </div>
-
 <!--
 <?php
     var_dump($ind_filtros_ap);
