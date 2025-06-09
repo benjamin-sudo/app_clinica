@@ -174,7 +174,7 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
                     <div class="class_busquedapor_nbioopsia class_selector_busquedabiopsia" style="display:none">
                         <div class="class_busquedapor_nbioopsia1"> 
                             <label for="ind_yearbiopsia" class="form-label" style="color: #888888;">A&Ntilde;O</label>
-                            <?php  $anio_inicio = 2000; $anio_actual = date('Y'); ?>
+                            <?php  $anio_inicio = 2024; $anio_actual = date('Y'); ?>
                             <select class="form-select" id="ind_yearbiopsia" name="ind_yearbiopsia">
                                 <?php for ($y = $anio_inicio; $y <= $anio_actual; $y++) { $selected = ($y == $anio_actual) ? ' selected' : '';  echo "<option value=\"$y\"$selected>$y</option>"; } ?>
                             </select>
@@ -293,7 +293,6 @@ data-fecha_final = "<?php echo date("m/d/Y",$date_final);?>"></div>
     var_dump($_COOKIE['target']);
 ?>
 -->
-
 <section>
     <div class="modal fade" id="modal_descipcion_muestras">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 95%; width: 95%;">
