@@ -186,6 +186,7 @@ function UPDATE_PANEL(){
                 $('[data-toggle="tooltip"]').tooltip();
                 setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
             }, 
+            complete : function () {   setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000); }
         });
     } else {
         //console.log("ssan_libro_biopsias_ii_fase");
@@ -210,10 +211,12 @@ function UPDATE_PANEL(){
                 $('#loadFade').modal('hide');
             },
             success : function(aData) {   
-                $('#loadFade').modal('hide');
+                //$('#loadFade').modal('hide');
                 $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION,.li_lista_externo_rce").remove();
                 $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
                 $("[data-toggle='tooltip']").tooltip();
+                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+
             }, 
         });
     }
