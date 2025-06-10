@@ -166,7 +166,7 @@ function UPDATE_PANEL(){
         console.log("ssan_libro_biopsias_i_fase");
         $.ajax({ 
             type : "POST",
-            url : "ssan_libro_biopsias_i_fase/update_fase1",
+            url : "ssan_libro_biopsias_i_fase/update_fase",
             dataType : "json",
             beforeSend : function(xhr) { },
             data : { 
@@ -191,7 +191,7 @@ function UPDATE_PANEL(){
         //console.log("ssan_libro_biopsias_ii_fase");
         $.ajax({ 
             type : "POST",
-            url : "ssan_libro_biopsias_listaexterno1/update_main",
+            url : "ssan_libro_biopsias_listaexterno1/update_main_recepcion",
             dataType : "json",
             beforeSend : function(xhr) { },
             data : { 

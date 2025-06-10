@@ -87,8 +87,14 @@
         <div class="image">
           <img src="assets/dist/img/anatomia/logo.webp" class="img-circle elevation-2" alt="Logo sistema de biopsias">
         </div>
+        <!-- Clinica&nbsp;Anatomia -->
         <div class="info">
-          <a href="#" class="d-block">&nbsp;Clinica&nbsp;Anatomia (<?php echo $this->session->userdata("COD_ESTAB");?>)</a>
+           <a href="#"
+            class="d-block"
+            title="<?php echo $this->session->userdata('NOM_ESTAB');?>"
+            style="display: block; white-space: normal;  word-wrap: break-word; overflow-wrap: anywhere;">
+            <?php echo $this->session->userdata("NOM_ESTAB");?>
+          </a>
         </div>
       </div>
       <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="<?php echo in_array($this->session->userdata("COUNT_EMPRESAS"),['0','1'])?'display:none':'';?>">
@@ -99,6 +105,7 @@
           <a href="javascript:js_cambioemp('<?php echo $this->session->userdata("COD_ESTAB");?>')" class="d-block">&nbsp;Cambio de establecimiento</a>
         </div>
       </div>
+
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column menu_principal" data-widget="treeview" role="menu" data-accordion="false">

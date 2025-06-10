@@ -41,8 +41,6 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
             $date_inicio = $_COOKIE['date_inicio'];
             $date_final = $_COOKIE['date_final'];
         }
-
-        
         #LOAD
         $return_data = $this->Ssan_libro_biopsias_usuarioext_model->model_busquedasolicitudes_recepcion(array(
             "data_inicio" => $date_inicio,
@@ -61,10 +59,6 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
         $this->load->js("assets/ssan_libro_biopsias_usuarioext/js/anatomia_patologica.js");
         $this->load->view("ssan_libro_biopsias_ii_fase/ssan_libro_biopsias_ii_fase_view",$return_data);
     }
-
-
-
-
 
 }
 ?>

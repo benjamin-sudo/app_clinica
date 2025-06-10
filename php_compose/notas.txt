@@ -135,5 +135,3 @@ docker exec -it backup_bd_clinica sh -c '/usr/local/bin/backup.sh && echo "OK" |
 
 // 2.- #donde se ejecuta los cambios en dev para cargar el respaldo fisico del respaldo anterior
 ./restaurar.sh
-
-

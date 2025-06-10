@@ -2015,19 +2015,19 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                 post==1 ? "ssan_libro_biopsias_usuarioext/confirma_trasporte":"",
                                             //"ssan_spab_gestionlistaquirurgica/confirma_recepcion",
                         dataType :   "json",
-                        beforeSend :   function(xhr) { console.log("xhr->",xhr); },
+                        beforeSend : function(xhr) { console.log("xhr->",xhr); },
                         data : {
-                                    id_anatomia     :   id_anatomia,
-                                    array_muestras  :   LISTA_ANATOMIA, 
-                                    password        :   r,
-                                    pass            :   pass,
-                                },
+                            id_anatomia : id_anatomia,
+                            array_muestras : LISTA_ANATOMIA, 
+                            password : r,
+                            pass : pass,
+                        },
                         error : function(errro) { 
-                                                    console.log(errro);  
-                                                    console.log(errro.responseText); 
-                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                                    jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
-                                                },
+                            console.log(errro);  
+                            console.log(errro.responseText); 
+                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                            jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
+                        },
                         success : function(aData){ 
                                                     setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
                                                     if(aData.STATUS){
@@ -2087,8 +2087,8 @@ function js_confirma_rechazo_recepcion(id_anatomia){
         error.push(" - Indicar observaci&oacute;n de rechazo de muestras");
     }
     if(error.length === 0){
-        var STATUS_MUESTRAS                     =   get_lista_activos(id_anatomia);
-        var html_li                             =   '';
+        var STATUS_MUESTRAS = get_lista_activos(id_anatomia);
+        var html_li = '';
         if(STATUS_MUESTRAS.NUM_ANTEC_ADVERSOS   ==  0){
             showNotification('top','right','Debe indicar evento adverso y su observaci&oacute;n en alguna de las muestras',4,'fa fa-times');
             return false;

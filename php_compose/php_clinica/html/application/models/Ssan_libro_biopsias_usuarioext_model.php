@@ -129,39 +129,45 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         return $query->result_array();
     }
 
-    public function model_busquedasolicitudes($data_controller) {
+
+
+    public function model_busquedasolicitudes_rotulo($data_controller) {
         $v_fecha_inicio = explode("-",$data_controller['data_inicio']);
         $v_data_final = explode("-",$data_controller['data_final']);
         $fecha_inicio = $v_fecha_inicio[2].'-'.$v_fecha_inicio[1].'-'.$v_fecha_inicio[0].' 00:00:00';
         $fecha_final = $v_data_final[2].'-'.$v_data_final[1].'-'.$v_data_final[0].' 23:59:59';
         $cod_empresa = $data_controller['COD_EMPRESA'];
+        $num_fase = $data_controller['num_fase'];
+        //var_dump($num_fase);
+        /*
+        if ($num_fase == '1') {
+            $cods = [$cod_empresa];
+        } else {
+            $sql_emp = "SELECT COD_EMPRESA  FROM ADMIN.SS_TEMPRESAS   WHERE IND_ESTADO = 'V'";
+            $rows = $this->db->query($sql_emp)->result_array();
+            $cods = array_column($rows, 'COD_EMPRESA');
+        }
+        */
+        $cods = [$cod_empresa];
+        $placeholders = implode(',', array_fill(0, count($cods), '?'));
+        $bindings = array_merge([$fecha_inicio, $fecha_final], $cods );
         $sql = "SELECT 
-                    P.ID_ROTULADO AS ID_ROTULADO,
-                    CASE
-                    WHEN P.COD_ESTABLREF = ? THEN
-                    (SELECT G.NOM_RAZSOC
-                    FROM ADMIN.SS_TEMPRESAS G
-                    WHERE G.COD_EMPRESA IN (P.COD_EMPRESA)
-                    LIMIT 1)
-                    ELSE '' 
-                    END AS TXT_EMPRESA_DERIVADO,
-                    P.COD_ESTABLREF AS COD_ESTABLREF,
-                    P.ID_SIC,
-                    P.IND_DERIVACION_IC,
-                    P.ID_HISTO_ZONA,
-                    CONCAT(UPPER(SUBSTRING(A.NOM_NOMBRE, 1, 1)), '.', UPPER(A.NOM_APEPAT), ' ', UPPER(A.NOM_APEMAT)) AS NOM_PROFE_CORTO,
-                    CONCAT(UPPER(A.NOM_APEPAT), ' ', UPPER(A.NOM_APEMAT), ' ', UPPER(A.NOM_NOMBRE)) AS NOM_PROFE,
-                    CONCAT(UPPER(A.COD_RUTPRO), '-', UPPER(A.COD_DIGVER)) AS TXT_RUTPRO,
-                    CONCAT(L.COD_RUTPAC, '-', L.COD_DIGVER) AS RUTPACIENTE,
-                    L.IND_TISEXO AS IND_TISEXO,
-                    L.COD_RUTPAC AS COD_RUTPAC,
-                    FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12) AS NUMEDAD,
-                    DATE_FORMAT(L.FEC_NACIMI, '%d-%m-%Y') AS NACIMIENTO,
-                    FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12) AS EDAD,
-                    CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT)) AS NOMBRE_COMPLETO,
-                    CONCAT(SUBSTRING(L.NOM_NOMBRE, 1, 1), '.', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT)) AS TXTNOMCIRUSMALL,
-                    CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(SUBSTRING(L.NOM_APEMAT, 1, 1))) AS TXTPRIMERNOMBREAPELLIDO,
+                    P.ID_ROTULADO                                                                                       AS ID_ROTULADO,
+                    P.COD_ESTABLREF                                                                                     AS COD_ESTABLREF,
+                    P.ID_SIC                                                                                            AS COD_ESTABLREF,
+                    P.IND_DERIVACION_IC                                                                                 AS IND_DERIVACION_IC,
+                    P.ID_HISTO_ZONA                                                                                     AS ID_HISTO_ZONA,
+                    CONCAT(L.COD_RUTPAC, '-', L.COD_DIGVER)                                                             AS RUTPACIENTE,
+                    L.IND_TISEXO                                                                                        AS IND_TISEXO,
+                    L.COD_RUTPAC                                                                                        AS COD_RUTPAC,
+                    FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12)                                               AS NUMEDAD,
+                    DATE_FORMAT(L.FEC_NACIMI, '%d-%m-%Y')                                                               AS NACIMIENTO,
+                    FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12)                                               AS EDAD,
+                    CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT))                     AS NOMBRE_COMPLETO,
+                    CONCAT(SUBSTRING(L.NOM_NOMBRE, 1, 1), '.', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT))           AS TXTNOMCIRUSMALL,
+                    CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(SUBSTRING(L.NOM_APEMAT, 1, 1)))    AS TXTPRIMERNOMBREAPELLIDO,
                     L.NUM_FICHAE AS NUM_FICHAE,
+
                     CASE
                     WHEN P.COD_EMPRESA = 1000 THEN
                     (SELECT E.NUM_NFICHA
@@ -172,6 +178,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     FROM ADMIN.SO_TCPACTE E
                     WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = P.COD_EMPRESA LIMIT 1)
                     END AS FICHAL,
+
                     (SELECT A.NOM_PREVIS
                     FROM ADMIN.GG_TDATPREV A,
                     ADMIN.SO_TTITUL B,
@@ -182,19 +189,18 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     AND B.NUM_RUTINS = D.COD_RUTINS
                     AND C.NUM_FICHAE = P.NUM_FICHAE
                     AND A.IND_ESTADO = 'V') AS TXT_PREVISION,
-                    CONCAT(UPPER(G.NOM_NOMBRE), ' ', UPPER(G.NOM_APEPAT), ' ', UPPER(G.NOM_APEMAT)) AS PROFESIONAL,
-                    CONCAT(G.NOM_APEPAT, ' ', G.NOM_APEMAT, ' ', G.NOM_NOMBRE) AS PROFESIONAL_2,
-                    CONCAT(G.COD_RUTPRO, '-', G.COD_DIGVER) AS RUT_PROFESIONAL,
-                    G.COD_RUTPRO AS ID,
-                    G.COD_DIGVER AS DV,
-                    G.COD_TPROFE AS MEDI,
+
+                    CONCAT(UPPER(PRO.NOM_NOMBRE), ' ', UPPER(PRO.NOM_APEPAT), ' ', UPPER(PRO.NOM_APEMAT))   AS NOM_PROFE_CORTO,
+                    CONCAT(PRO.NOM_APEPAT, ' ', PRO.NOM_APEMAT, ' ', PRO.NOM_NOMBRE)                        AS NOM_PROFE,
+                    CONCAT(PRO.COD_RUTPRO, '-', PRO.COD_DIGVER)                                             AS TXT_RUTPRO,
+                    PRO.COD_RUTPRO                                                                          AS ID,
+                    PRO.COD_DIGVER                                                                          AS DV,
+                    PRO.COD_TPROFE                                                                          AS MEDI,
                     P.PA_ID_PROCARCH AS PA_ID_PROCARCH,
-                    CASE
-                    WHEN P.PA_ID_PROCARCH = '31' THEN 'PABELLÓN'
+                    CASE WHEN P.PA_ID_PROCARCH = '31' THEN 'PABELLÓN'
                     WHEN P.PA_ID_PROCARCH = '63' THEN 'RCE ESPECIALIDADES'
                     WHEN P.PA_ID_PROCARCH = '65' THEN 'MODULO ANATOMIA'
-                    ELSE 'NO INFORMADO'
-                    END AS TXT_PROCEDENCIA,
+                    ELSE 'NO INFORMADO' END AS TXT_PROCEDENCIA,
                     P.ID_SERDEP AS ID_SERVICIO,
                     (SELECT S.NOM_SERVIC
                     FROM ADMIN.GG_TSERVICIOXEMP T,
@@ -209,41 +215,36 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     DATE_FORMAT(P.DATE_INICIOREGISTRO, '%d-%m-%Y %H:%i') AS FECHA_TOMA_MUESTRA,
                     DATE_FORMAT(P.DATE_INICIOREGISTRO, '%H:%i') AS INICIOHORAMIN,
                     CASE P.IND_TIPO_BIOPSIA
-                    WHEN '1' THEN 'SI'
-                    WHEN '2' THEN 'CONTEMPORANEA'
-                    WHEN '3' THEN 'DIFERIDA'
-                    WHEN '4' THEN 'BIOPSIA + CITOLOGÍA'
-                    WHEN '6' THEN 'CITOLOGÍA PAP'
-                    WHEN '5' THEN 'SOLO CITOLOGÍA'
-                    ELSE 'NO INFORMADO'
+                        WHEN '1' THEN 'SI'
+                        WHEN '2' THEN 'CONTEMPORANEA'
+                        WHEN '3' THEN 'DIFERIDA'
+                        WHEN '4' THEN 'BIOPSIA + CITOLOGÍA'
+                        WHEN '6' THEN 'CITOLOGÍA PAP'
+                        WHEN '5' THEN 'SOLO CITOLOGÍA'  ELSE 'NO INFORMADO'
                     END AS TIPO_DE_BIOPSIA,
                     P.IND_TIPO_BIOPSIA AS IND_TIPO_BIOPSIA,
                     CASE P.IND_ESTADO
-                    WHEN '1' THEN 'NUEVA SOLICITUD'
-                    WHEN '2' THEN 'ESTADO 1'
-                    WHEN '3' THEN 'ESTADO 2'
-                    END AS TXT_ESTADO,
+                        WHEN '1' THEN 'NUEVA SOLICITUD'
+                        WHEN '2' THEN 'ESTADO 1'
+                        WHEN '3' THEN 'ESTADO 2'  END AS TXT_ESTADO,
                     P.DES_SITIOEXT,
                     P.DES_UBICACION,
                     P.DES_TAMANNO,
                     CASE P.ID_TIPO_LESION
-                    WHEN '1' THEN 'LIQUIDO'
-                    WHEN '2' THEN 'ORGANO'
-                    WHEN '3' THEN 'TEJIDO'
-                    ELSE 'NO INFORMADO'
-                    END AS TXT_TIPOSESION,
+                        WHEN '1' THEN 'LIQUIDO'
+                        WHEN '2' THEN 'ORGANO'
+                        WHEN '3' THEN 'TEJIDO'
+                        ELSE 'NO INFORMADO' END AS TXT_TIPOSESION,
                     CASE P.ID_ASPECTO
-                    WHEN '1' THEN 'INFLAMATORIA'
-                    WHEN '2' THEN 'BENIGNA'
-                    WHEN '3' THEN 'NEOPLASICA'
-                    ELSE 'NO INFORMADO'
-                    END AS TXT_ASPECTO,
+                        WHEN '1' THEN 'INFLAMATORIA'
+                        WHEN '2' THEN 'BENIGNA'
+                        WHEN '3' THEN 'NEOPLASICA'
+                        ELSE 'NO INFORMADO' END AS TXT_ASPECTO,
                     CASE P.ID_ANT_PREVIOS
-                    WHEN '1' THEN 'NO'
-                    WHEN '2' THEN 'BIOPSIA'
-                    WHEN '3' THEN 'CITOLOGIA'
-                    ELSE 'NO INFORMADO'
-                    END AS TXT_ANT_PREVIOS,
+                        WHEN '1' THEN 'NO'
+                        WHEN '2' THEN 'BIOPSIA'
+                        WHEN '3' THEN 'CITOLOGIA'
+                        ELSE 'NO INFORMADO' END AS TXT_ANT_PREVIOS,
                     P.ID_ANT_PREVIOS,
                     P.NUM_ANTECEDENTES,
                     P.DES_BIPSIA,
@@ -312,20 +313,226 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     P.ID_UID,
                     P.LAST_USR_AUDITA,
                     DATE_FORMAT(P.LAST_DATE_AUDITA, '%d-%m-%Y %H:%i') AS LAST_DATE_AUDITA,
-                    P.TXT_NAMEAUDITA
-                FROM 
-                    ADMIN.GG_TPROFESIONAL A,
-                    ADMIN.GG_TGPACTE L,
-                    ADMIN.GG_TPROFESIONAL G,
-                    ADMIN.PB_SOLICITUD_HISTO P
-                WHERE
-                    DATE(P.DATE_INICIOREGISTRO) BETWEEN ? AND ?
-                    AND A.COD_RUTPRO = P.COD_RUTPRO
-                    AND P.NUM_FICHAE = L.NUM_FICHAE
-                    AND P.COD_RUTPRO = G.COD_RUTPRO
-                    AND P.IND_ESTADO IN (1)
-                ORDER BY P.DATE_INICIOREGISTRO";
-        $query = $this->db->query($sql, array($cod_empresa, $fecha_inicio, $fecha_final));
+                    P.TXT_NAMEAUDITA,
+                    E.NOM_RAZSOC
+
+                FROM ADMIN.PB_SOLICITUD_HISTO P
+                JOIN ADMIN.GG_TGPACTE L ON L.NUM_FICHAE = P.NUM_FICHAE
+                JOIN ADMIN.GG_TPROFESIONAL PRO ON PRO.COD_RUTPRO = P.COD_RUTPRO
+                JOIN ADMIN.SS_TEMPRESAS E ON E.COD_EMPRESA = P.COD_EMPRESA
+                WHERE P.DATE_INICIOREGISTRO BETWEEN ? AND ?
+                AND P.IND_ESTADO = 1 
+                
+                AND P.COD_EMPRESA IN ($placeholders)
+
+                ORDER BY
+                    P.DATE_INICIOREGISTRO";
+
+        $query    = $this->db->query($sql, $bindings);
+        $arr_data = $query->result_array();
+
+
+        return [
+            'html_externo' => $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
+                ? $this->html_externo_rce(array("data_controller"=>$data_controller,"data"=>$arr_data))
+                : $this->LI_RESULTADOS_ANATOMIA($arr_data,$data_controller["num_fase"]),
+            'return_bd' => $result,
+            'userdata' => $this->session->userdata,
+            'ind_opcion' => $data_controller["ind_opcion"], 
+            'ind_template' => $data_controller["ind_template"],
+            'date_inicio' => $data_controller["data_inicio"],
+            'date_final' => $data_controller["data_final"],
+            'num_fase' => $num_fase,
+        ];
+    }
+
+    public function model_busquedasolicitudes_recepcion($data_controller) {
+        $v_fecha_inicio = explode("-",$data_controller['data_inicio']);
+        $v_data_final = explode("-",$data_controller['data_final']);
+        $fecha_inicio = $v_fecha_inicio[2].'-'.$v_fecha_inicio[1].'-'.$v_fecha_inicio[0].' 00:00:00';
+        $fecha_final = $v_data_final[2].'-'.$v_data_final[1].'-'.$v_data_final[0].' 23:59:59';
+        $cod_empresa = $data_controller['COD_EMPRESA'];
+        $num_fase = $data_controller['num_fase'];
+        if ($cod_empresa == '029') {
+            $sql_emp = "SELECT E.COD_EMPRESA FROM ADMIN.SS_TEMPRESAS E WHERE IND_ESTADO = 'V' ";
+        } else {
+            $sql_emp = "SELECT E.COD_EMPRESA FROM ADMIN.SS_TEMPRESAS E WHERE IND_ESTADO = 'V' AND E.COD_EMPRESA <> '029'";
+        }
+        $rows = $this->db->query($sql_emp)->result_array();
+        $cods = array_column($rows, 'COD_EMPRESA');
+        $placeholders = implode(',', array_fill(0, count($cods), '?'));
+        $bindings = array_merge([$fecha_inicio, $fecha_final], $cods );
+        $sql = "SELECT 
+                    P.ID_ROTULADO                                                                                       AS ID_ROTULADO,
+                    P.COD_ESTABLREF                                                                                     AS COD_ESTABLREF,
+                    P.ID_SIC                                                                                            AS COD_ESTABLREF,
+                    P.IND_DERIVACION_IC                                                                                 AS IND_DERIVACION_IC,
+                    P.ID_HISTO_ZONA                                                                                     AS ID_HISTO_ZONA,
+                    CONCAT(L.COD_RUTPAC, '-', L.COD_DIGVER)                                                             AS RUTPACIENTE,
+                    L.IND_TISEXO                                                                                        AS IND_TISEXO,
+                    L.COD_RUTPAC                                                                                        AS COD_RUTPAC,
+                    FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12)                                               AS NUMEDAD,
+                    DATE_FORMAT(L.FEC_NACIMI, '%d-%m-%Y')                                                               AS NACIMIENTO,
+                    FLOOR(TIMESTAMPDIFF(MONTH, L.FEC_NACIMI, NOW()) / 12)                                               AS EDAD,
+                    CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT))                     AS NOMBRE_COMPLETO,
+                    CONCAT(SUBSTRING(L.NOM_NOMBRE, 1, 1), '.', UPPER(L.NOM_APEPAT), ' ', UPPER(L.NOM_APEMAT))           AS TXTNOMCIRUSMALL,
+                    CONCAT(UPPER(L.NOM_NOMBRE), ' ', UPPER(L.NOM_APEPAT), ' ', UPPER(SUBSTRING(L.NOM_APEMAT, 1, 1)))    AS TXTPRIMERNOMBREAPELLIDO,
+                    L.NUM_FICHAE AS NUM_FICHAE,
+
+                    CASE
+                    WHEN P.COD_EMPRESA = 1000 THEN
+                    (SELECT E.NUM_NFICHA
+                    FROM ADMIN.SO_TCPACTE E
+                    WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = 100 LIMIT 1)
+                    ELSE
+                    (SELECT E.NUM_NFICHA
+                    FROM ADMIN.SO_TCPACTE E
+                    WHERE E.NUM_FICHAE = P.NUM_FICHAE AND E.COD_EMPRESA = P.COD_EMPRESA LIMIT 1)
+                    END AS FICHAL,
+
+                    (SELECT A.NOM_PREVIS
+                    FROM ADMIN.GG_TDATPREV A,
+                    ADMIN.SO_TTITUL B,
+                    ADMIN.GG_TGPACTE C,
+                    ADMIN.GG_TINSEMP D
+                    WHERE A.IND_PREVIS = B.IND_PREVIS
+                    AND B.COD_RUTTIT = C.COD_RUTTIT
+                    AND B.NUM_RUTINS = D.COD_RUTINS
+                    AND C.NUM_FICHAE = P.NUM_FICHAE
+                    AND A.IND_ESTADO = 'V') AS TXT_PREVISION,
+
+                    CONCAT(UPPER(PRO.NOM_NOMBRE), ' ', UPPER(PRO.NOM_APEPAT), ' ', UPPER(PRO.NOM_APEMAT))   AS NOM_PROFE_CORTO,
+                    CONCAT(PRO.NOM_APEPAT, ' ', PRO.NOM_APEMAT, ' ', PRO.NOM_NOMBRE)                        AS NOM_PROFE,
+                    CONCAT(PRO.COD_RUTPRO, '-', PRO.COD_DIGVER)                                             AS TXT_RUTPRO,
+                    PRO.COD_RUTPRO                                                                          AS ID,
+                    PRO.COD_DIGVER                                                                          AS DV,
+                    PRO.COD_TPROFE                                                                          AS MEDI,
+                    P.PA_ID_PROCARCH AS PA_ID_PROCARCH,
+                    CASE WHEN P.PA_ID_PROCARCH = '31' THEN 'PABELLÓN'
+                    WHEN P.PA_ID_PROCARCH = '63' THEN 'RCE ESPECIALIDADES'
+                    WHEN P.PA_ID_PROCARCH = '65' THEN 'MODULO ANATOMIA'
+                    ELSE 'NO INFORMADO' END AS TXT_PROCEDENCIA,
+                    P.ID_SERDEP AS ID_SERVICIO,
+                    (SELECT S.NOM_SERVIC
+                    FROM ADMIN.GG_TSERVICIOXEMP T,
+                    ADMIN.GG_TSERVICIO S
+                    WHERE T.ID_SERDEP = P.ID_SERDEP
+                    AND T.COD_EMPRESA = P.COD_EMPRESA
+                    AND S.ID_SERDEP = T.ID_SERDEP LIMIT 1) AS NOMBRE_SERVICIO,
+                    P.ID_SOLICITUD_HISTO AS ID_SOLICITUD,
+                    UPPER(P.TXT_DIAGNOSTICO) AS TXT_DIAGNOSTICO,
+                    DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i') AS FEC_EMISION,
+                    DATE_FORMAT(P.FEC_USRCREA, '%d-%m-%Y %H:%i') AS FECHA_SOLICITUD,
+                    DATE_FORMAT(P.DATE_INICIOREGISTRO, '%d-%m-%Y %H:%i') AS FECHA_TOMA_MUESTRA,
+                    DATE_FORMAT(P.DATE_INICIOREGISTRO, '%H:%i') AS INICIOHORAMIN,
+                    CASE P.IND_TIPO_BIOPSIA
+                        WHEN '1' THEN 'SI'
+                        WHEN '2' THEN 'CONTEMPORANEA'
+                        WHEN '3' THEN 'DIFERIDA'
+                        WHEN '4' THEN 'BIOPSIA + CITOLOGÍA'
+                        WHEN '6' THEN 'CITOLOGÍA PAP'
+                        WHEN '5' THEN 'SOLO CITOLOGÍA'  ELSE 'NO INFORMADO'
+                    END AS TIPO_DE_BIOPSIA,
+                    P.IND_TIPO_BIOPSIA AS IND_TIPO_BIOPSIA,
+                    CASE P.IND_ESTADO
+                        WHEN '1' THEN 'NUEVA SOLICITUD'
+                        WHEN '2' THEN 'ESTADO 1'
+                        WHEN '3' THEN 'ESTADO 2'  END AS TXT_ESTADO,
+                    P.DES_SITIOEXT,
+                    P.DES_UBICACION,
+                    P.DES_TAMANNO,
+                    CASE P.ID_TIPO_LESION
+                        WHEN '1' THEN 'LIQUIDO'
+                        WHEN '2' THEN 'ORGANO'
+                        WHEN '3' THEN 'TEJIDO'
+                        ELSE 'NO INFORMADO' END AS TXT_TIPOSESION,
+                    CASE P.ID_ASPECTO
+                        WHEN '1' THEN 'INFLAMATORIA'
+                        WHEN '2' THEN 'BENIGNA'
+                        WHEN '3' THEN 'NEOPLASICA'
+                        ELSE 'NO INFORMADO' END AS TXT_ASPECTO,
+                    CASE P.ID_ANT_PREVIOS
+                        WHEN '1' THEN 'NO'
+                        WHEN '2' THEN 'BIOPSIA'
+                        WHEN '3' THEN 'CITOLOGIA'
+                        ELSE 'NO INFORMADO' END AS TXT_ANT_PREVIOS,
+                    P.ID_ANT_PREVIOS,
+                    P.NUM_ANTECEDENTES,
+                    P.DES_BIPSIA,
+                    P.DES_CITOLOGIA,
+                    P.DES_OBSERVACIONES,
+                    P.NUM_FICHAE,
+                    P.COD_USRCREA,
+                    P.FEC_USRCREA,
+                    P.COD_EMPRESA,
+                    P.DES_SITIOEXT,
+                    P.DES_UBICACION,
+                    P.DES_TAMANNO,
+                    P.ID_TIPO_LESION,
+                    P.ID_ASPECTO,
+                    P.ID_ANT_PREVIOS,
+                    P.NUM_ANTECEDENTES,
+                    P.DES_BIPSIA,
+                    P.DES_CITOLOGIA,
+                    P.DES_OBSERVACIONES,
+                    P.IND_ESTADO,
+                    P.FEC_REVISION,
+                    P.ID_TABLA,
+                    P.DES_TIPOMUESTRA,
+                    P.NUM_SUBNUMERACION,
+                    P.COD_USRCREA_TO_MUE,
+                    P.FEC_USRCREA_TO_MUE,
+                    P.COD_USRCREA_ENV,
+                    P.FEC_USRCREA_ENV,
+                    P.COD_USRCREA_RECEP,
+                    P.FEC_USRCREA_RECEP,
+                    P.COD_EMPRESA_RECEP,
+                    P.COD_USRCREA_INFORMADA,
+                    P.FEC_USRCREA_INFORMADA,
+                    P.COD_EMPRESA_INFORMADA,
+                    P.ID_ARCHIVO_SUBIDO,
+                    P.COD_USRCREA_RECH,
+                    P.FEC_USRCREA_RECH,
+                    P.COD_EMPRESA_RECH,
+                    P.TIPO_RECHAZO,
+                    P.OBS_RECHAZO,
+                    P.ID_HISTO_ESTADO,
+                    CASE P.ID_HISTO_ESTADO
+                        WHEN '1' THEN 'NUEVA SOLICITUD'
+                        WHEN '2' THEN 'CUSTODIA'
+                        WHEN '3' THEN 'TRASPORTE'
+                        WHEN '4' THEN 'RECEPCIONADA'
+                        WHEN '5' THEN 'RECHAZADA' ELSE 'NO INFORMADA' END AS TXT_HISTO_ESTADO,
+                    P.AD_ID_ADMISION,
+                    P.ID_SERDEP,
+                    P.IND_TIPO_BIOPSIA,
+                    P.IND_TEMPLATE,
+                    P.DATE_INICIOREGISTRO,
+                    P.COD_RUTPRO,
+                    CASE P.ID_HISTO_ESTADO
+                        WHEN '1' THEN 'NUEVA SOLICITUD'
+                        WHEN '2' THEN 'CUSTODIA'
+                        WHEN '3' THEN 'TRASPORTE'
+                        WHEN '4' THEN 'RECEPCIONADA'
+                        WHEN '5' THEN 'RECHAZADA'   ELSE 'NO INFORMADO'  END AS TXT_HISTO_ESTADO,
+                    P.IND_ESTADO_MUESTRAS AS IND_ESTADO_MUESTRAS,
+                    P.ID_NUM_CARGA,
+                    P.ID_UID,
+                    P.LAST_USR_AUDITA,
+                    DATE_FORMAT(P.LAST_DATE_AUDITA, '%d-%m-%Y %H:%i') AS LAST_DATE_AUDITA,
+                    P.TXT_NAMEAUDITA,
+                    E.NOM_RAZSOC
+
+                FROM ADMIN.PB_SOLICITUD_HISTO P
+                JOIN ADMIN.GG_TGPACTE L ON L.NUM_FICHAE = P.NUM_FICHAE
+                JOIN ADMIN.GG_TPROFESIONAL PRO ON PRO.COD_RUTPRO = P.COD_RUTPRO
+                JOIN ADMIN.SS_TEMPRESAS E ON E.COD_EMPRESA = P.COD_EMPRESA
+                WHERE P.DATE_INICIOREGISTRO BETWEEN ? AND ?
+                AND P.IND_ESTADO = 1 
+                AND P.COD_EMPRESA IN ($placeholders)
+                ORDER BY
+                    P.DATE_INICIOREGISTRO";
+        $query    = $this->db->query($sql, $bindings);
         $arr_data = $query->result_array();
         return [
             'html_externo' => $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
@@ -337,10 +544,200 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'ind_template' => $data_controller["ind_template"],
             'date_inicio' => $data_controller["data_inicio"],
             'date_final' => $data_controller["data_final"],
+            'num_fase' => $num_fase,
         ];
     }
 
+    #############################
+    # ssan_libro_biopsias_ii_fase 
+    # MAIN ANATOMIA PATOLOGICA PRINCIPAL 
+    # MAIN MODULO SIN CITA 
+    #######################
+    public function LI_RESULTADOS_ANATOMIA($ARRAY,$CALL_FASE){
+        $HTML = '';
+        if(count($ARRAY)>0){
+            foreach($ARRAY as $i => $row){
+                $num = ($i+1);
+                $BTN = '
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu">';
 
+                            if ($CALL_FASE == 1){
+                                //******************************************************
+                                if ($row['ID_HISTO_ESTADO'] == 1 ){
+                                    $BTN .= '<li><a href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>EN CUSTODIA / TRASPORTE</a></li>';
+                                    $BTN .= '<li class="divider"></li>';
+                                }
+                                if ($row['ID_HISTO_ESTADO'] == 2){
+                                    //historial
+                                    //$BTN .= '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
+                                    //$BTN .= '<li class="divider"></li>';
+                                }
+                                //******************************************************
+                            }  else if ($CALL_FASE == 2){
+                                
+                                if($row['ID_HISTO_ESTADO'] == 3 || $row['ID_HISTO_ESTADO'] == 1){
+                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N</a></li>';
+                                    $BTN .= '<li class="divider"></li>';
+                                } else if($row['ID_HISTO_ESTADO'] == 4){
+                                    //IND_ESTADO_MUESTRAS
+                                    if ($row['IND_ESTADO_MUESTRAS']!=1){
+                                        $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N REZAGADAS</a></li>';
+                                        //$BTN .= '<li class="divider"></li>';
+                                        $BTN .= '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;INFORME DE RECHAZO</a></li>';
+                                        //$BTN .= '<li class="divider"></li>';
+                                    } else {
+                                        $BTN .= '<li><a class="dropdown-item" href="javascript:pdf_recepcion_ok('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF RECEPCI&Oacute;N</a></li>';
+                                        //$BTN .= '<li><a class="dropdown-item" href="javascript:informar_x_correo('.$row['ID_SOLICITUD'].')"><i class="fa fa-envelope-open" aria-hidden="true"></i>INFORMAR POR CORREO</a></li>';
+                                        //$BTN .= '<li class="divider"></li>';
+                                    }
+                                    //historial
+                                    //$BTN              .=      '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
+                                } else if($row['ID_HISTO_ESTADO'] == 5){
+                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF RECHAZADA</a></li>';
+                                    $BTN .= '<li><hr class="dropdown-divider"></li>';
+                                }
+                                
+                            } else {
+                                $BTN .=  '';
+                            }
+
+                            $BTN .= '<li><a class="dropdown-item" href="javascript:GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>';
+                            $BTN .= '
+                            </ul>
+                        </div>
+                        ';
+                #ID_HISTO_ESTADO
+                $html_tooltip2          =   '';
+                if($row['ID_HISTO_ESTADO']!=1){
+                    $html_tooltip2 = '<div class="grid_tooltip">
+                                        <div class="grid_11">'.$row['TXT_HISTO_ESTADO'].'</div>
+                                        <div class="grid_12">'.$row['TXT_NAMEAUDITA'].'</div>
+                                        <div class="grid_13">RUT</div>
+                                        <div class="grid_14">'.$row['LAST_USR_AUDITA'].'</div>
+                                        <div class="grid_15">FECHA/HORA</div>
+                                        <div class="grid_16">'.$row['LAST_DATE_AUDITA'].'</div>
+                                    </div>';
+                } 
+                $INFORMACION            =   '';
+                       if($row['ID_HISTO_ESTADO'] == 1){
+                    #('.$row['ID_HISTO_ESTADO'].')
+                    $INFORMACION        =   '<button class="btn btn-xs btn-fill cssmain btn-default parpadea" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
+                } else if($row['ID_HISTO_ESTADO'] == 2){
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-warning" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+                } else if($row['ID_HISTO_ESTADO'] == 3){
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-info parpadea" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;EN TRASPORTE</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+                } else if($row['ID_HISTO_ESTADO'] == 4){
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-success" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCIONADA</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger'; 
+                    $txt_estado =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+                } else if($row['ID_HISTO_ESTADO'] == 5){
+                    $INFORMACION = '<button class="btn btn-xs btn-fill cssmain btn-danger" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA</button>';
+                } else {
+                    $INFORMACION = '<button class="btn btn-xs btn-fill cssmain btn-danger" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N</button>';
+                }
+
+                $v_txt_derivado = $row['TXT_EMPRESA_DERIVADO']==''?'':'<span class="label label-warning">'.$row['TXT_EMPRESA_DERIVADO'].'</span> | ';
+                #html li
+                $HTML .= '<li class="gespab_group list-group-item LISTA_BODY_'.$CALL_FASE.'" >
+                                            <div class="CSS_GRID_CIRUGIA_FASE_1" 
+                                                id =   "DATA_'.$row['ID_SOLICITUD'].'"
+                                                data-paciente =   "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">
+                                                <div class="text-center">'.$num.'</div>
+                                                <div >
+                                                    '.$row['NOMBRE_COMPLETO'].'<hr style="margin: 0px 0px 0px 0px;">
+                                                    '.$row['RUTPACIENTE'].'<hr style="margin: 0px 0px 0px 0px;">
+                                                    <!--   
+                                                        N&deg; Ficha: '.$row['FICHAL'].'
+                                                        &nbsp;|&nbsp; PA_ID_PROCARCH = '.$row['PA_ID_PROCARCH'].'<br>
+                                                        &nbsp;|&nbsp; ID_HISTO_ESTADO = '.$row['ID_HISTO_ESTADO'].'<br>
+                                                        &nbsp;|&nbsp; CALL_FASE = '.$CALL_FASE.'
+                                                    -->    
+                                                 </div>
+                                                <div >
+                                                    '.$row['NOM_PROFE_CORTO'].'
+                                                    <hr style="margin: 0px 0px 0px 0px;">'.$row['TXT_RUTPRO'].'
+                                                    <hr style="margin: 0px 0px 0px 0px;"><b>'.$row['NOM_RAZSOC'].'</b>
+                                                </div>
+                                                <div style="text-align : initial;">
+                                                    '.$row['TIPO_DE_BIOPSIA'].'
+                                                    <hr style="margin: 0px 0px 4px 0px;">
+                                                    '.$row['TXT_PROCEDENCIA'].'
+                                                    <hr style="margin: 0px 0px 4px 0px;">
+                                                    '.$row['NOMBRE_SERVICIO'].'
+                                                </div>
+                                                <div style="text-align : initial;">
+                                                    '.$INFORMACION.'
+                                                    <hr style="margin: 0px 0px 4px 0px;"> 
+                                                    <div class="text-center">'.$row['FECHA_SOLICITUD'].'</div>
+                                                    <hr style="margin: 0px 0px 4px 0px;"> 
+                                                    <div class="text-center">
+                                                    '.$v_txt_derivado.' <b>N&deg;:'.$row['ID_SOLICITUD'].'</b> 
+                                                    <!--
+                                                        <hr> 
+                                                        CALL_FASE :&nbsp;|&nbsp;'.$CALL_FASE.'
+                                                        <hr> 
+                                                        ID_HISTO_ESTADO :&nbsp;|&nbsp;'.$row['ID_HISTO_ESTADO'].'
+                                                        <hr> 
+                                                        IND_ESTADO_MUESTRAS :&nbsp;|&nbsp;'.$row['IND_ESTADO_MUESTRAS'].'
+                                                    -->
+                                                    </div> 
+                                                </div>
+                                                <div>
+                                                    <div class="grid_lista_gestion_masivo_li">
+                                                        <div class="grid_lista_gestion_masivo_li1">'.$BTN.'</div>
+                                                        <div class="grid_lista_gestion_masivo_li2"></div>
+                                                        <div class="grid_lista_gestion_masivo_li2">';
+                                                        if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
+                                                            $style_display_none         =   $CALL_FASE==2&&$row['ID_HISTO_ESTADO']==3?'display:none;':'display:none;';
+                                                            $HTML       .=      '
+                                                                                    <input 
+                                                                                    type        =   "checkbox" 
+                                                                                    class       =   "form-check-input marcado_custoria_trasporte  marcado_recepcion_masiva checkbox_'.$row['ID_SOLICITUD'].'" 
+                                                                                    id          =   "CHEK_'.$row['ID_SOLICITUD'].'" 
+                                                                                    style       =   "display:block;cursor:pointer;margin:0px;'.$style_display_none.' " 
+                                                                                    onchange    =   "js_muestra_indivual('.$row['ID_SOLICITUD'].');" value="'.$row['ID_SOLICITUD'].'">';
+                                                            
+                                                            
+                                                        } else {
+                                                            $HTML       .=      '';
+                                                        }
+                                            $HTML .= '</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ';
+            }
+        } else {
+            $HTML           .=      '
+                                    <li class="gespab_group NO_INFORMACION list-group-item">
+                                        <div class="GRID_NO_INFOPANEL"> 
+                                            <div class="GRID_NO_INFOPANEL1">
+                                                <i class="fa fa-times" aria-hidden="true"></i>&nbsp;<b>SIN INFORMACI&Oacute;N</b>   
+                                            </div>
+                                        </div>
+                                    </li>
+                                    ';
+        }
+        return $HTML;
+    }
 
     #llamada de externo 
     public function html_externo_rce($data){
@@ -1370,194 +1767,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         return $query->result_array();
     }
 
-    #############################
-    # ssan_libro_biopsias_ii_fase 
-    # MAIN ANATOMIA PATOLOGICA PRINCIPAL 
-    # MAIN MODULO SIN CITA 
-    #######################
-    public function LI_RESULTADOS_ANATOMIA($ARRAY,$CALL_FASE){
-        $HTML                   =   '';
-        if(count($ARRAY)>0){
-            foreach($ARRAY as $i => $row){
-                $num            =   ($i+1);
-                $BTN            =   '
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-cog" aria-hidden="true"></i>
-                            </button>
-                            <ul class="dropdown-menu">';
-
-                            if ($CALL_FASE == 1){
-                                //******************************************************
-                                if ($row['ID_HISTO_ESTADO'] == 1 ){
-                                    $BTN .= '<li><a href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>EN CUSTODIA / TRASPORTE</a></li>';
-                                    $BTN .= '<li class="divider"></li>';
-                                }
-                                if ($row['ID_HISTO_ESTADO'] == 2){
-                                    //historial
-                                    //$BTN .= '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
-                                    //$BTN .= '<li class="divider"></li>';
-                                }
-                                //******************************************************
-                            }  else if ($CALL_FASE == 2){
-                                
-                                if($row['ID_HISTO_ESTADO'] == 3 || $row['ID_HISTO_ESTADO'] == 1){
-                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N</a></li>';
-                                    $BTN .= '<li class="divider"></li>';
-                                } else if($row['ID_HISTO_ESTADO'] == 4){
-                                    //IND_ESTADO_MUESTRAS
-                                    if ($row['IND_ESTADO_MUESTRAS']!=1){
-                                        $BTN .= '<li><a class="dropdown-item" href="javascript:pre_busqueda(3,'.$row['ID_SOLICITUD'].')"><i class="fa fa-chevron-right"></i>&nbsp;RECEPCI&Oacute;N REZAGADAS</a></li>';
-                                        //$BTN .= '<li class="divider"></li>';
-                                        $BTN .= '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;INFORME DE RECHAZO</a></li>';
-                                        //$BTN .= '<li class="divider"></li>';
-                                    } else {
-                                        $BTN .= '<li><a class="dropdown-item" href="javascript:pdf_recepcion_ok('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF RECEPCI&Oacute;N</a></li>';
-                                        //$BTN .= '<li><a class="dropdown-item" href="javascript:informar_x_correo('.$row['ID_SOLICITUD'].')"><i class="fa fa-envelope-open" aria-hidden="true"></i>INFORMAR POR CORREO</a></li>';
-                                        //$BTN .= '<li class="divider"></li>';
-                                    }
-                                    //historial
-                                    //$BTN              .=      '<li class="historial"><a href="javascript:viws_historial('.$row['ID_SOLICITUD'].')"><i class="fa fa-database" aria-hidden="true"></i>HISTORIAL DE MUESTRAS</a></li>';
-                                } else if($row['ID_HISTO_ESTADO'] == 5){
-                                    $BTN .= '<li><a class="dropdown-item" href="javascript:pdf_rechazomuestra('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;PDF RECHAZADA</a></li>';
-                                    $BTN .= '<li><hr class="dropdown-divider"></li>';
-                                }
-                                
-                            } else {
-                                $BTN                    .=  '';
-                            }
-
-                            $BTN .= '<li><a class="dropdown-item" href="javascript:GET_PDF_ANATOMIA_PANEL('.$row['ID_SOLICITUD'].')"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF ANATOM&Iacute;A PATOL&Oacute;GICA</a></li>';
-                            $BTN .= '
-                            </ul>
-                        </div>
-                        ';
-                #ID_HISTO_ESTADO
-                $html_tooltip2          =   '';
-                if($row['ID_HISTO_ESTADO']!=1){
-                    $html_tooltip2      =   '<div class="grid_tooltip">
-                                                <div class="grid_11">'.$row['TXT_HISTO_ESTADO'].'</div>
-                                                <div class="grid_12">'.$row['TXT_NAMEAUDITA'].'</div>
-                                                <div class="grid_13">RUT</div>
-                                                <div class="grid_14">'.$row['LAST_USR_AUDITA'].'</div>
-                                                <div class="grid_15">FECHA/HORA</div>
-                                                <div class="grid_16">'.$row['LAST_DATE_AUDITA'].'</div>
-                                             </div>';
-                } 
-                $INFORMACION            =   '';
-                       if($row['ID_HISTO_ESTADO'] == 1){
-                    #('.$row['ID_HISTO_ESTADO'].')
-                    $INFORMACION        =   '<button class="btn btn-xs btn-fill cssmain btn-default parpadea" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
-                } else if($row['ID_HISTO_ESTADO'] == 2){
-                    $INFORMACION        =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
-                    $INFORMACION        .=   '<button class="btn btn-xs btn-fill cssmain btn-warning" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
-                    $color_estado           =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
-                    $txt_estado             =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION        .=   '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
-                    $INFORMACION        .=   '</div>';
-                } else if($row['ID_HISTO_ESTADO'] == 3){
-                    $INFORMACION        =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
-                    $INFORMACION        .=   '<button class="btn btn-xs btn-fill cssmain btn-info parpadea" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;EN TRASPORTE</button>';
-                    $color_estado           =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
-                    $txt_estado             =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION        .=   '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
-                    $INFORMACION        .=   '</div>';
-                } else if($row['ID_HISTO_ESTADO'] == 4){
-                    $INFORMACION        =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
-                    $INFORMACION        .=   '<button class="btn btn-xs btn-fill cssmain btn-success" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCIONADA</button>';
-                    $color_estado           =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger'; 
-                    $txt_estado             =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION        .=   '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
-                    $INFORMACION        .=   '</div>';
-                } else if($row['ID_HISTO_ESTADO'] == 5){
-                    $INFORMACION        =   '<button class="btn btn-xs btn-fill cssmain btn-danger" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA</button>';
-                } else {
-                    $INFORMACION        =   '<button class="btn btn-xs btn-fill cssmain btn-danger" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N</button>';
-                }
-                
-                $v_txt_derivado         =   $row['TXT_EMPRESA_DERIVADO']==''?'':'<span class="label label-warning">'.$row['TXT_EMPRESA_DERIVADO'].'</span> | ';
-                #html li
-                $HTML                   .=      '
-                
-                                        <li class="gespab_group list-group-item LISTA_BODY_'.$CALL_FASE.'" >
-                                            <div class="CSS_GRID_CIRUGIA_FASE_1" 
-                                                id =   "DATA_'.$row['ID_SOLICITUD'].'"
-                                                data-paciente =   "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">
-                                                <div class="text-center">'.$num.'</div>
-                                                <div >
-                                                    '.$row['NOMBRE_COMPLETO'].'<hr style="margin: 0px 0px 0px 0px;">
-                                                    '.$row['RUTPACIENTE'].'<hr style="margin: 0px 0px 0px 0px;">
-                                                    <!--   
-                                                        N&deg; Ficha: '.$row['FICHAL'].'
-                                                        &nbsp;|&nbsp; PA_ID_PROCARCH    =   '.$row['PA_ID_PROCARCH'].'<br>
-                                                        &nbsp;|&nbsp; ID_HISTO_ESTADO   =   '.$row['ID_HISTO_ESTADO'].'<br>
-                                                        &nbsp;|&nbsp; CALL_FASE         =   '.$CALL_FASE.'
-                                                    -->    
-                                                 </div>
-                                                <div >'.$row['PROFESIONAL'].'<hr style="margin: 0px 0px 0px 0px;">'.$row['RUT_PROFESIOAL'].'</div>
-                                                <div style="text-align : initial;">
-                                                    '.$row['TIPO_DE_BIOPSIA'].'
-                                                    <hr style="margin: 0px 0px 4px 0px;">
-                                                    '.$row['TXT_PROCEDENCIA'].'
-                                                    <hr style="margin: 0px 0px 4px 0px;">
-                                                    '.$row['NOMBRE_SERVICIO'].'&nbsp;|&nbsp;'.$row['ID_SERVICIO'].'
-                                                </div>
-                                                <div style="text-align : initial;">
-                                                    '.$INFORMACION.'
-                                                    <hr style="margin: 0px 0px 4px 0px;"> 
-                                                    <div class="text-center">'.$row['FECHA_SOLICITUD'].'</div>
-                                                    <hr style="margin: 0px 0px 4px 0px;"> 
-                                                    <div class="text-center">
-                                                    '.$v_txt_derivado.' <b>N&deg;:'.$row['ID_SOLICITUD'].'</b> 
-                                                    <!--
-                                                        <hr> 
-                                                        CALL_FASE               :&nbsp;|&nbsp;'.$CALL_FASE.'
-                                                        <hr> 
-                                                        ID_HISTO_ESTADO         :&nbsp;|&nbsp;'.$row['ID_HISTO_ESTADO'].'
-                                                        <hr> 
-                                                        IND_ESTADO_MUESTRAS     :&nbsp;|&nbsp;'.$row['IND_ESTADO_MUESTRAS'].'
-                                                    -->
-                                                    </div> 
-                                                </div>
-                                                <div>
-                                                    <div class="grid_lista_gestion_masivo_li">
-                                                        <div class="grid_lista_gestion_masivo_li1">'.$BTN.'</div>
-                                                        <div class="grid_lista_gestion_masivo_li2"></div>
-                                                        <div class="grid_lista_gestion_masivo_li2">';
-                                                        if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2 || $row['ID_HISTO_ESTADO'] == 3 ){
-                                                            $style_display_none         =   $CALL_FASE==2&&$row['ID_HISTO_ESTADO']==3?'display:none;':'display:none;';
-                                                            $HTML       .=      '
-                                                                                    <input 
-                                                                                    type        =   "checkbox" 
-                                                                                    class       =   "form-check-input marcado_custoria_trasporte  marcado_recepcion_masiva checkbox_'.$row['ID_SOLICITUD'].'" 
-                                                                                    id          =   "CHEK_'.$row['ID_SOLICITUD'].'" 
-                                                                                    style       =   "display:block;cursor:pointer;margin:0px;'.$style_display_none.' " 
-                                                                                    onchange    =   "js_muestra_indivual('.$row['ID_SOLICITUD'].');" value="'.$row['ID_SOLICITUD'].'">';
-                                                            
-                                                            
-                                                        } else {
-                                                            $HTML       .=      '';
-                                                        }
-                                            $HTML .= '</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    ';
-            }
-        } else {
-            $HTML           .=      '
-                                    <li class="gespab_group NO_INFORMACION list-group-item">
-                                        <div class="GRID_NO_INFOPANEL"> 
-                                            <div class="GRID_NO_INFOPANEL1">
-                                                <i class="fa fa-times" aria-hidden="true"></i>&nbsp;<b>SIN INFORMACI&Oacute;N</b>   
-                                            </div>
-                                        </div>
-                                    </li>
-                                    ';
-        }
-        return $HTML;
-    }
+   
     ######################################
     #LISTA DEL USUARIO QUE ENVIA SOLCITIUD
     #DE TODOS LADOS
