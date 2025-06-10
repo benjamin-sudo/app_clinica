@@ -216,7 +216,6 @@ function UPDATE_PANEL(){
                 $("#LI_LISTA_MAIN").append(aData.STATUS_OUT);
                 $("[data-toggle='tooltip']").tooltip();
                 setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-
             }, 
         });
     }
