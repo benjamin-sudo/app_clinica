@@ -28,13 +28,6 @@ docker compose -f "docker-compose-desarrollo.yml" rm -f php_compose-backup_servi
 docker compose -f "docker-compose-desarrollo.yml" up -d --build  php_compose-backup_service-1
 
 
-docker exec -it backup_bd /usr/local/bin/backup.sh
-
-chmod +x restaurar.sh
-
-docker compose up -d --build
-
-./restaurar.sh
 
 ######################################################################
 docker compose -f "docker-compose-desarrollo.yml" stop php_clinica
@@ -96,6 +89,7 @@ echo "ssprueba.210" > C:/Users/Administrator/Documents/GitHub/app_clinica/php_co
 ###############################################
 #si crontab esta corriendo
 docker exec -it php_compose-backup_service-1 /bin/bash
+
 ls -l /usr/local/bin/backup.sh
 /usr/local/bin/backup.sh
 ps aux | grep cron
@@ -109,63 +103,37 @@ SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 2 * * * root /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1
 
-#########################################
-#!/bin/bash
-# backup.sh
-# Fecha actual para nombrar el archivo de respaldo
-DATE=$(date +'%F_%H-%M-%S')
-# Directorio donde se guardará el respaldo
-BACKUP_DIR="/backup_service/backup"
-# Nombre del archivo de respaldo
-BACKUP_FILE="$BACKUP_DIR/mysql_backup_$DATE.tar.gz"
-# Crear respaldo del volumen
-tar czvf $BACKUP_FILE /var/lib/mysql
-# Opcional: Eliminar respaldos más antiguos de 7 días
-find $BACKUP_DIR -type f -name "*.tar.gz" -mtime +7 -exec rm {} \;
-############################################
 
-INSERT INTO ADMIN.GG_TPRESTA (
-    COD_PRESTA,
-    NOM_CORTOS,
-    NOM_LARGOS,
-    IND_TIPRES,
-    COD_ITEPRES,
-    VAL_BENEFI,
-    VAL_PARTIC,
-    VAL_ACCAUT,
-    VAL_LIBELE,
-    IND_ESTADO,
-    FEC_AUDITA,
-    COD_USUARI,
-    IND_URGEN,
-    COD_EMPRESA,
-    IND_OCUPA,
-    IND_PABE
-)
-SELECT
-    COD_PRESTA,
-    NOM_CORTOS,
-    NOM_LARGOS,
-    IND_TIPRES,
-    COD_ITEPRES,
-    VAL_BENEFI,
-    VAL_PARTIC,
-    VAL_ACCAUT,
-    VAL_LIBELE,
-    IND_ESTADO,
-    FEC_AUDITA,
-    COD_USUARI,
-    IND_URGEN,
-    '800',        
-    IND_OCUPA,
-    IND_PABE
-FROM
-    ADMIN.GG_TPRESTA
-WHERE
-    COD_EMPRESA = '100';
 ##############################################################################
 #frame
 https://adminlte.io/docs/3.2/javascript/iframe.html
-docker inicio default:
+##########################################################################
+//docker inicio default:
 docker volume rm php_compose_db_data
 docker volume rm server_totem_db_data
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//Centro Médico Integra Más Salud
+//20.209.087-7
+//rocio.verago@mayor.cl
+//Matrona
+//Rocío Andrea Vera Gómez
+//Matrona
+#envia correo.
+
+#####################################################################
+// INICIO DE BACKUP -> MANUAL
+docker exec -it backup_bd /usr/local/bin/backup.sh
+docker exec -it php_compose-backup_service /usr/local/bin/backup.sh
+chmod +x restaurar.sh
+docker compose up -d --build
+./restaurar.sh
+
+#################################
+// 1.-  ejecutar manualmente el reapaldo 
+docker exec -it backup_bd_clinica sh -c '/usr/local/bin/backup.sh && echo "OK" || echo "FALLÓ"'
+
+// 2.- #donde se ejecuta los cambios en dev para cargar el respaldo fisico del respaldo anterior
+./restaurar.sh
+
+

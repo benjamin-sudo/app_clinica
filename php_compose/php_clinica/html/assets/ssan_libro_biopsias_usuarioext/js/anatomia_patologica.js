@@ -578,44 +578,44 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
             dataType : "json",
             beforeSend : function(xhr) {   console.log(xhr);   },
             data : { 
-                                                        contrasena      :   PIDE_FIRMA,
-                                                        accesdata       :   CreacionProtocolo,
-                                                    },
-            error           :   function(errro)     { 
-                                                        console.log("---------------------------------------------------------------");
-                                                        console.log("quisas->",errro,"error->",errro.responseText);
-                                                        console.log("---------------------------------------------------------------");
-                                                        jError("Error General, Consulte Al Administrador","Clinica Libre");
-                                                        if (TEMPLATE_CALL_FROM == 0){
-                                                            document.getElementById("btn-finish").disabled = false;
-                                                        }
-                                                    },
-            success         :   function(aData)     {
-                                                        console.log('%c retutn RECORD_ANATOMIA_PATOLOGICA_EXT','background:#222;color:#bada55');
-                                                        if(aData['STATUS']){
-                                                            if(TEMPLATE_CALL_FROM==0){
-                                                                jAlert("Se realiz&oacute; solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre");
-                                                                $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide");
-                                                                ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
-                                                            } else if (TEMPLATE_CALL_FROM == 2){
-                                                                $("#MODAL_FORM_ANATOMIA_PATOLOGICA").modal("hide");
-                                                                jAlert("La solicitud se ha editado realidado con &eacute;xito","Clinica Libre");
-                                                                UPDATE_MAIN();
-                                                                //agregar switch
-                                                                //IMPRIME_ETIQUETA_ANATOMIA(aData['ID_ANATOMIA']);
-                                                            } else {
-                                                                if ($("#IND_IFRAME").val() == 1){
-                                                                    GET_PDF_ANATOMIA(aData['ID_ANATOMIA']);
-                                                                }
-                                                                $("#DIV_FORMULARIO_ANATOMIAPATOLOGICA_EXT").hide();
-                                                            }
-                                                            if(aData['VIEWS_PDF']){
-                                                                GET_PDF_ANATOMIA(aData['ID_ANATOMIA']);
-                                                            }
-                                                        } else { 
-                                                            jError('Contrase&ntilde;a inv&aacute;lida',"Clinica Libre"); 
-                                                        }
-                                                    }, 
+                contrasena : PIDE_FIRMA,
+                accesdata : CreacionProtocolo,
+            },
+            error : function(errro) { 
+                console.log("---------------------------------------------------------------");
+                console.log("quisas->",errro,"error->",errro.responseText);
+                console.log("---------------------------------------------------------------");
+                jError("Error General, Consulte Al Administrador","Clinica Libre");
+                if (TEMPLATE_CALL_FROM == 0){
+                    document.getElementById("btn-finish").disabled = false;
+                }
+            },
+            success : function(aData) {
+                console.log('%c retutn RECORD_ANATOMIA_PATOLOGICA_EXT','background:#222;color:#bada55');
+                if(aData['STATUS']){
+                    if(TEMPLATE_CALL_FROM==0){
+                        jAlert("Se realiz&oacute; solicitud de anatom&iacute;a patol&oacute;gica","Clinica Libre");
+                        $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide");
+                        ACTUALIZA_FECHA_ANATOMIAPATOLOGICA(2);
+                    } else if (TEMPLATE_CALL_FROM == 2){
+                        $("#MODAL_FORM_ANATOMIA_PATOLOGICA").modal("hide");
+                        jAlert("La solicitud se ha editado realidado con &eacute;xito","Clinica Libre");
+                        UPDATE_MAIN();
+                        //agregar switch
+                        //IMPRIME_ETIQUETA_ANATOMIA(aData['ID_ANATOMIA']);
+                    } else {
+                        if ($("#IND_IFRAME").val() == 1){
+                            GET_PDF_ANATOMIA(aData['ID_ANATOMIA']);
+                        }
+                        $("#DIV_FORMULARIO_ANATOMIAPATOLOGICA_EXT").hide();
+                    }
+                    if(aData['VIEWS_PDF']){
+                        GET_PDF_ANATOMIA(aData['ID_ANATOMIA']);
+                    }
+                } else { 
+                    jError('Contrase&ntilde;a inv&aacute;lida',"Clinica Libre"); 
+                }
+            }, 
         });
     }
 }

@@ -86,32 +86,31 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     
     public function get_listado_servicios($cod_empresa) {
         $query = $this->db->query("SELECT *
-                                        FROM (
-                                            SELECT  
-                                                GG_TSERVICIO.ID_SERDEP AS ID, 
-                                                GG_TSERVICIO.NOM_SERVIC AS TXT_DES
-                                            FROM 
-                                                ADMIN.GG_TSERVICIO
-                                            JOIN ADMIN.GG_TSERVICIOXEMP ON GG_TSERVICIOXEMP.ID_SERDEP = GG_TSERVICIO.ID_SERDEP 
-                                            WHERE 
-                                                (GG_TSERVICIOXEMP.IND_MED = '1' OR GG_TSERVICIO.ID_SERDEP IN ('268', '266'))
-                                                AND GG_TSERVICIOXEMP.COD_EMPRESA IN ('{$cod_empresa}')
-                                                AND GG_TSERVICIO.IND_SERDEP = 'S'
-                                            UNION 
-                                            SELECT 
-                                                A.ID_SERDEP AS ID,
-                                                A.NOM_SERVIC AS TXT_DES 
-                                            FROM 
-                                                ADMIN.GG_TSERVICIO A
-                                            JOIN ADMIN.GG_TSERVICIOXEMP B ON A.ID_SERDEP = B.ID_SERDEP
-                                            WHERE 
-                                                B.COD_EMPRESA IN ('{$cod_empresa}')
-                                                AND B.IND_MED = 1
-                                                AND (A.IND_SERDEP = 'S' OR A.IND_SERDEP = 'D')
-                                                AND A.ID_SERDEP NOT IN (229)
-                                        ) AS LISTADOSERVICIOS
-                                        ORDER BY TXT_DES;
-                                    ");
+            FROM (
+                SELECT  
+                    GG_TSERVICIO.ID_SERDEP AS ID, 
+                    GG_TSERVICIO.NOM_SERVIC AS TXT_DES
+                FROM 
+                    ADMIN.GG_TSERVICIO
+                JOIN ADMIN.GG_TSERVICIOXEMP ON GG_TSERVICIOXEMP.ID_SERDEP = GG_TSERVICIO.ID_SERDEP 
+                WHERE 
+                    (GG_TSERVICIOXEMP.IND_MED = '1' OR GG_TSERVICIO.ID_SERDEP IN ('268', '266'))
+                    AND GG_TSERVICIOXEMP.COD_EMPRESA IN ('{$cod_empresa}')
+                    AND GG_TSERVICIO.IND_SERDEP = 'S'
+                UNION 
+                SELECT 
+                    A.ID_SERDEP AS ID,
+                    A.NOM_SERVIC AS TXT_DES 
+                FROM 
+                    ADMIN.GG_TSERVICIO A
+                JOIN ADMIN.GG_TSERVICIOXEMP B ON A.ID_SERDEP = B.ID_SERDEP
+                WHERE 
+                    B.COD_EMPRESA IN ('{$cod_empresa}')
+                    AND B.IND_MED = 1
+                    AND (A.IND_SERDEP = 'S' OR A.IND_SERDEP = 'D')
+                    AND A.ID_SERDEP NOT IN (229)
+            ) AS LISTADOSERVICIOS
+            ORDER BY TXT_DES;");
         return $query->result_array();
     }
     
@@ -136,7 +135,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $fecha_inicio = $v_fecha_inicio[2].'-'.$v_fecha_inicio[1].'-'.$v_fecha_inicio[0].' 00:00:00';
         $fecha_final = $v_data_final[2].'-'.$v_data_final[1].'-'.$v_data_final[0].' 23:59:59';
         $cod_empresa = $data_controller['COD_EMPRESA'];
-
         $sql = "SELECT 
                     P.ID_ROTULADO AS ID_ROTULADO,
                     CASE
@@ -341,6 +339,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             'date_final' => $data_controller["data_final"],
         ];
     }
+
+
 
     #llamada de externo 
     public function html_externo_rce($data){
@@ -2513,10 +2513,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $TEMPLATE_HRS_SOLICITUD = $DATA_TEMPLATE["TEMPLATE_HRS_SOLICITUD"];
         $template_ind_derivacion = $DATA_TEMPLATE["TEMPLATE_IND_DERIVACION"];
         $template_ind_sic = $DATA_TEMPLATE["TEMPLATE_IND_ID_SIC"];
-    
         // Aseguramos que la fecha se formatee correctamente para MySQL
         $DATE_SOLICITUD = date("Y-m-d H:i:s");
-    
         foreach($accesdata as $infObject => $Object) {
             if($infObject == 'examenHispatologico') {
                 $dataSolicitud = array(

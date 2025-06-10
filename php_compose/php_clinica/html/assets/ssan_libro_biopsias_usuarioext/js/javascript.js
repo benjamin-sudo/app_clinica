@@ -137,25 +137,25 @@ function js_buscarpacientesiexiste(){
         beforeSend : function(xhr) { $('#loadFade').modal('show'); },
         data : { 'v_run' : arrayDividido[0], 'v_dv' : arrayDividido[1] },
         error : function(errro) {  
-                                    console.log(errro);
-                                    jAlert("Error General, Consulte Al Administrador"); 
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                },
+            console.log(errro);
+            jAlert("Error General, Consulte Al Administrador"); 
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+        },
         success : function(aData) {  
-                                    console.error(" success -> ",aData);
-                                    let arr_datos = aData.return_data.arr;
-                                    if(aData.status){
-                                        if (arr_datos.length>0){
-                                            jError("El Paciente ya existe","Clinica Libre");
-                                            $("#modal_nuevo_paciente").modal('hide');
-                                        } else {
-                                            js_habilitarInputs();
-                                            habilitarInputPorId('btn_confirmanuevopaciente');
-                                            $("#btn_confirmanuevopaciente").attr("onclick","js_nuevopaciente()");
-                                        }
-                                    }
-                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                }, 
+            console.error(" success -> ",aData);
+            let arr_datos = aData.return_data.arr;
+            if(aData.status){
+                if (arr_datos.length>0){
+                    jError("El Paciente ya existe","Clinica Libre");
+                    $("#modal_nuevo_paciente").modal('hide');
+                } else {
+                    js_habilitarInputs();
+                    habilitarInputPorId('btn_confirmanuevopaciente');
+                    $("#btn_confirmanuevopaciente").attr("onclick","js_nuevopaciente()");
+                }
+            }
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+        }, 
      });
 }
 
@@ -331,31 +331,28 @@ function nueva_solicitud_anatomia(NUM_FICHAE,ADMISION){
     });
 }
 
-
 function js_busquedapacientes(val){
     $.ajax({ 
         type : "POST",
         url : "ssan_bdu_editarficha/panel_buscador_paciente_ssan",
         dataType : "json",
         beforeSend : function(xhr) {   
-                                    //console.log("xhr->",xhr);   
-                                    $("#loadFade").modal('show'); 
-                                },
+            $("#loadFade").modal('show'); 
+        },
         data : { opciones : val },
         error : function(errro) { 
-                                    console.log(errro);
-                                    //console.log(errro.responseText);  
-                                    jAlert("Error General, Consulte Al Administrador"); 
-                                    $("#loadFade").modal('hide'); 
-                                },
+            console.log(errro);
+            jAlert("Error General, Consulte Al Administrador"); 
+            $("#loadFade").modal('hide'); 
+        },
         success : function(aData) { 
-                                    $("#loadFade").modal('hide'); 
-                                    //console.log("---------------------------------------------");
-                                    //console.log("----------",aData["GET_HTML"],"--------------");
-                                    //console.log("---------------------------------------------");
-                                    $("#HTML_BUSQUEDA_PACIENTE").html(aData["GET_HTML"]);
-                                    $("#MODAL_BUSQUEDA_PACIENTE").modal({backdrop:'static',keyboard:false}).modal("show"); 
-                                }, 
+            $("#loadFade").modal('hide'); 
+            //console.log("---------------------------------------------");
+            //console.log("----------",aData["GET_HTML"],"--------------");
+            //console.log("---------------------------------------------");
+            $("#HTML_BUSQUEDA_PACIENTE").html(aData["GET_HTML"]);
+            $("#MODAL_BUSQUEDA_PACIENTE").modal({backdrop:'static',keyboard:false}).modal("show"); 
+        }, 
     });
 }
 

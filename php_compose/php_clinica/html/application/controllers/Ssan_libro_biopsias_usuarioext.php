@@ -75,9 +75,9 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             $status = false;
         }
         $this->output->set_output(json_encode(array(
-            'STATUS_OUT' =>  $aData,
-            'STATUS_PASS' =>  $status,
-            'valida' =>  $valida,
+            'STATUS_OUT' => $aData,
+            'STATUS_PASS' => $status,
+            'valida' => $valida,
         )));
     }
 
