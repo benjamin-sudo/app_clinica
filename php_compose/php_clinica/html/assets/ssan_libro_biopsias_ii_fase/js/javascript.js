@@ -181,10 +181,13 @@ function UPDATE_PANEL(){
                 $('#loadFade').modal('hide');
             },
             success : function(aData) {   
-                $('#loadFade').modal('hide');
+                
                 $(".LISTA_BODY_1,.LISTA_BODY_2,.NO_INFORMACION").remove();
                 $("#LI_LISTA_MAIN").append(aData["HTML"]);
                 $('[data-toggle="tooltip"]').tooltip();
+
+                setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+
             }, 
         });
     } else {
