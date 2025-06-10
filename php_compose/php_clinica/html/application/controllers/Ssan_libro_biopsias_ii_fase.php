@@ -6,9 +6,9 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
         parent::__construct();
         $this->load->library('pdf');
         $this->load->library('session');
-        #$this->load->model("Ssan_libro_biopsias_ii_fase_model");
         $this->load->model("Ssan_libro_biopsias_usuarioext_model");
-        $this->load->model("Ssan_libro_biopsias_listaexterno1_model");
+        #$this->load->model("Ssan_libro_biopsias_listaexterno1_model");
+        $this->load->model("Ssan_libro_biopsias_ii_fase_model");
         #$this->load->model("ssan_pre_gestionarprestador_model");
     }
 
@@ -60,5 +60,38 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
         $this->load->view("ssan_libro_biopsias_ii_fase/ssan_libro_biopsias_ii_fase_view",$return_data);
     }
 
+    public function get_confirma_rechazo_muestras(){
+        if(!$this->input->is_ajax_request()){   show_404(); }
+        $status = true;
+        $data_produccion = [];
+        $contrasena = $this->input->post('contrasena'); 
+        $valida = $this->Ssan_libro_biopsias_usuarioext_model->validaClave($contrasena);
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $id_anatomia = $this->input->post('id_anatomia');
+        $usuarioh = explode("-",$this->session->userdata("USERNAME"));
+        $array_muestras = $this->input->post('array_muestras'); 
+        $STATUS_MUESTRAS = $this->input->post('STATUS_MUESTRAS');  
+        $TXT_GLOBAL = $this->input->post('TXT_GLOBAL');
+        if(count($valida)>0){
+            $data_produccion = $this->Ssan_libro_biopsias_ii_fase_model->model_confirma_rechazo_muestras(array(
+                "ID_ANATOMIA" => $id_anatomia,
+                "COD_EMPRESA" => $empresa,
+                "SESSION" => $usuarioh[0], 
+                "ARRAY" => $array_muestras,
+                "DATA_FIRMA" => $valida,
+                "TXT_GLOBAL" => $TXT_GLOBAL,
+                "STATUS_MUESTRAS" => $STATUS_MUESTRAS
+            ));
+        } else {
+            $status = false;
+        }
+        $this->output->set_output(json_encode([
+            'valida' => $valida,
+            'status' => $status,
+            'data_produccion' => $data_produccion,
+            'post_' => $_POST,
+        ]));
+    }
+    
 }
 ?>

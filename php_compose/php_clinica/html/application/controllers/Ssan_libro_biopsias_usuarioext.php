@@ -371,6 +371,8 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             'STATUS' => $STATUS,
         ]));
     }
+
+    
     #################################
     #GESTOR UNICO DE PDF DE ANATOMIA#
     #################################

@@ -128,10 +128,10 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             $ARR_DATA = implode(",", $array_data["array_anatomia"]);
         }
         $DATA = $this->Ssan_libro_biopsias_usuarioext_model->LOAD_INFOXMUESTRAANATOMIACA(array(
-            "COD_EMPRESA" =>  $empresa,
-            "TXTMUESTRA" =>  $get_etiqueta,
-            "NUM_FASE" =>  $NUM_FASE,
-            "ARR_DATA" =>  $ARR_DATA,
+            "COD_EMPRESA" => $empresa,
+            "TXTMUESTRA" => $get_etiqueta,
+            "NUM_FASE" => $NUM_FASE,
+            "ARR_DATA" => $ARR_DATA,
         ));
         ###
         $ARR_GENTIONMSJ = [];
@@ -149,7 +149,6 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                     $arr_muestras_citologia[$arr_muestras_citologica_row['ID_SOLICITUD_HISTO']][] = $arr_muestras_citologica_row;
                 } 
             }
-
             #ordena data para templetate template_logs_anatomia
             $log_adverso = [];
             if (count($DATA['P_INFO_LOG_ADVERSOS'])>0){
@@ -240,7 +239,7 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
                     #
                     switch($NUM_FASE){
                         case 0:
-                            $TABS_HTML  .=  ' <i class="fa fa-eye" aria-hidden="true"></i>    ';
+                            $TABS_HTML .= ' <i class="fa fa-eye" aria-hidden="true"></i> ';
                             break;
                         case 1:
                             #<!--&nbsp;TRASPORTE MASIVO-->
@@ -306,19 +305,20 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             'P_AP_INFORMACION_ADICIONAL' =>  $DATA["P_AP_INFORMACION_ADICIONAL"],
         )));
     }
-
-    ########################################################################
-    #LEYENDA
-    ########################################################################
-    #CONTEMPOREANA          :   2
-    #DIFERIDA               :   3
-    #BIOPSIA + CITOLOGIA    :   4   =   V_LAST_NUMERO     
-    ########################################################################
-    #BIOPSIA + CITOLIGIA    :   4                 
-    #CITOLOGIA              :   5   =   NUM_CO_CITOLOGIA  
-    ########################################################################
-    #PAP                    :   6   =   NUM_CO_PAP 
-    ########################################################################
+    /**
+     * Constantes de tipos de procedimiento
+     *
+     * Código  | Constante               | Descripción
+     * ------- | ----------------------- | --------------------------------
+     * 2       | CONTEMPOREANA           | Procedimiento contemporáneo
+     * 3       | DIFERIDA                | Procedimiento diferido
+     * 4       | BIOPSIA_CITOLOGIA       | Biopsia + Citología (V_LAST_NUMERO)
+     * 5       | CITOLOGIA               | Citología (NUM_CO_CITOLOGIA)
+     * 6       | PAP                     | Papanicolau (NUM_CO_PAP)
+     *
+     * @package    Application
+     * @subpackage Config
+     */
     public function ultimo_numero_disponible(){
         if(!$this->input->is_ajax_request()){   show_404(); }
         $status = true;

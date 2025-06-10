@@ -1589,7 +1589,7 @@ function add_muestra(value){
 
 function BTN_MARCA_ALL(id){
     var estados                     =   $('.BTN_CHECKED_ALL_'+id).data().toggle;
-    console.log("estados            ->  ",estados);
+    //console.log("estados            ->  ",estados);
     $('.BTN_CHECKED_ALL_'+id).data().toggle = !estados;
     $('.grupo_'+id).each(function(i,obj){
         if(!estados){
@@ -1640,37 +1640,33 @@ function js_muestra_indivual(get_etiqueta_modal){
 
 //VALIDA Y RECUPERA LA INFORMACION
 function get_lista_activos(id_anatomia){
-    
-    console.log("star get_lista_activos");
-    console.log("id_anatomia            -> ",id_anatomia);
-    
-    var ARRAY_NMUESTRAS                 =   new Array();
-    var arr_adverso_no_constado         =   new Array();
-    var NUM_CHECKED                     =   0;
-    var NUM_CHECKED_NO                  =   0;
-    var NUM_ANTEC_ADVERSOS              =   0;
-    var LIST_BUSQ                       =   id_anatomia===''?'.lista_anatomia':'.grupo_'+id_anatomia;
-    
-    console.log("LIST_BUSQ              ->  ",LIST_BUSQ);
-    
+    //console.log("star get_lista_activos");
+    //console.log("id_anatomia            -> ",id_anatomia);
+    var ARRAY_NMUESTRAS = new Array();
+    var arr_adverso_no_constado = new Array();
+    var NUM_CHECKED = 0;
+    var NUM_CHECKED_NO = 0;
+    var NUM_ANTEC_ADVERSOS = 0;
+    var LIST_BUSQ = id_anatomia===''?'.lista_anatomia':'.grupo_'+id_anatomia;
+    //console.log("LIST_BUSQ              ->  ",LIST_BUSQ);
     $(LIST_BUSQ).each(function(index,value){
         /*
         console.log("-------------------------LIST_BUSQ-------------------------");
-        console.log("index              ->",index);
+        console.log("index ->",index);
         console.log("-----------------------------------------------------------");
-        console.log("value              ->",value);
+        console.log("value ->",value);
         console.log("-----------------------------------------------------------");
-        console.log("this.id.data       ->  ",$("#"+this.id).data());
+        console.log("this.id.data -> ",$("#"+this.id).data());
         console.log("-----------------------------------------------------------");
         */
-        var id_muestra                  =   $("#"+this.id).data().id_muestra;
-        var ind_casete                  =   $("#"+this.id).data().casete;
-        NUM_CHECKED                     =   document.getElementById("CHEK_"+this.id).checked?1:0;
-        NUM_CHECKED_NO                  =   document.getElementById("CHEK_"+this.id).checked?0:1;
-        var no_checked_no_constado      =   false;
-        var array_adversos              =   new Array();
+        var id_muestra = $("#"+this.id).data().id_muestra;
+        var ind_casete = $("#"+this.id).data().casete;
+        NUM_CHECKED = document.getElementById("CHEK_"+this.id).checked?1:0;
+        NUM_CHECKED_NO = document.getElementById("CHEK_"+this.id).checked?0:1;
+        var no_checked_no_constado = false;
+        var array_adversos = new Array();
         if(!document.getElementById("CHEK_"+this.id).checked && ($("#SEL_MOTIVO_"+id_muestra).val()=='' || $("#txt_observacion_"+id_muestra).val()=='')){
-            no_checked_no_constado      =   true;
+            no_checked_no_constado = true;
             arr_adverso_no_constado.push({id_muestra:id_muestra});
             $("#"+this.id).addClass("list-group-item-danger");
             $("#collapseOne"+id_muestra).collapse('show');
@@ -1686,28 +1682,28 @@ function get_lista_activos(id_anatomia){
         //ANTENCEDENTES ADVERSOS
         if(!document.getElementById("CHEK_"+this.id).checked && ($("#SEL_MOTIVO_"+id_muestra).val()!=''||$("#txt_observacion_"+id_muestra).val()!='')){
             array_adversos.push({
-                "TXT_MOTIVO"        :   $("#SEL_MOTIVO_"+id_muestra+" option:selected").text(),
-                "IND_MOTIVO"        :   $("#SEL_MOTIVO_"+id_muestra).val(),
-                "TXT_OBSERVACION"   :   $("#txt_observacion_"+id_muestra).val()
+                "TXT_MOTIVO" : $("#SEL_MOTIVO_"+id_muestra+" option:selected").text(),
+                "IND_MOTIVO" : $("#SEL_MOTIVO_"+id_muestra).val(),
+                "TXT_OBSERVACION" : $("#txt_observacion_"+id_muestra).val()
             });
             NUM_ANTEC_ADVERSOS++;
         }
         /*
-            console.log("array_adversos     ->  ",array_adversos);
-            console.log("data               ->  ",$("#"+this.id).data().data_muestra.TXT_MUESTRA);
+            console.log("array_adversos ->  ",array_adversos);
+            console.log("data ->  ",$("#"+this.id).data().data_muestra.TXT_MUESTRA);
         */
         ARRAY_NMUESTRAS.push({ 
-            TXT_MUESTRA                 :   $("#"+this.id).data().data_muestra.TXT_MUESTRA,
-            ID_HISTO                    :   $("#"+this.id).data().id_solicitud,
-            ID_NMUESTRA                 :   id_muestra,
-            IND_CASETE                  :   ind_casete,
-            NUM_NMUESTRA                :   this.id,
-            CHECKED                     :   document.getElementById("CHEK_"+this.id).checked,
-            IN_CHECKED                  :   document.getElementById("CHEK_"+this.id).checked?1:0,
-            NO_CHECKED_CON_DATOS        :   no_checked_no_constado,
-            V_IND_EVENTO_ADVERSO        :   $("#SEL_MOTIVO_"+id_muestra).val(),
-            V_TXT_EVENTO_OBSERVACION    :   $("#txt_observacion_"+id_muestra).val(),
-            ARR_EVENTOS_ADVERSOS        :   array_adversos,
+            TXT_MUESTRA : $("#"+this.id).data().data_muestra.TXT_MUESTRA,
+            ID_HISTO : $("#"+this.id).data().id_solicitud,
+            ID_NMUESTRA : id_muestra,
+            IND_CASETE : ind_casete,
+            NUM_NMUESTRA : this.id,
+            CHECKED : document.getElementById("CHEK_"+this.id).checked,
+            IN_CHECKED : document.getElementById("CHEK_"+this.id).checked?1:0,
+            NO_CHECKED_CON_DATOS : no_checked_no_constado,
+            V_IND_EVENTO_ADVERSO : $("#SEL_MOTIVO_"+id_muestra).val(),
+            V_TXT_EVENTO_OBSERVACION : $("#txt_observacion_"+id_muestra).val(),
+            ARR_EVENTOS_ADVERSOS : array_adversos,
         });
         /*
             console.log("-----------------------------------------------------------");
@@ -1716,20 +1712,20 @@ function get_lista_activos(id_anatomia){
             console.log("-----------------------------------------------------------");
         */
     });
-    var _return     =   {
-                    "NUM_HISTO"             :   id_anatomia,
-                    "NUM_CHECKED"           :   NUM_CHECKED,//contado para restricion
-                    "NUM_CHECKED_NO"        :   NUM_CHECKED_NO,
-                    "ALL_OK_SAMPLES"        :   NUM_CHECKED_NO===0?true:false,
-                    "NUM_OK_SAMPLES"        :   NUM_CHECKED_NO===0?1:0,
-                    "NUM_MUESTRAS"          :   ARRAY_NMUESTRAS.length,
-                    "ARRAY_NMUESTRAS"       :   ARRAY_NMUESTRAS,
-                    "NO_CHECKED_SIN_DATOS"  :   arr_adverso_no_constado.length>0?true:false, 
-                    "INFO_PENDIENTE"        :   arr_adverso_no_constado,
-                    "NUM_ANTEC_ADVERSOS"    :   NUM_ANTEC_ADVERSOS,
-                };
-    console.log("_return    ->  ",_return);
-    console.log("star get_lista_activos");
+    var _return = {
+        "NUM_HISTO" : id_anatomia,
+        "NUM_CHECKED" : NUM_CHECKED,//contado para restricion
+        "NUM_CHECKED_NO" : NUM_CHECKED_NO,
+        "ALL_OK_SAMPLES" : NUM_CHECKED_NO===0?true:false,
+        "NUM_OK_SAMPLES" : NUM_CHECKED_NO===0?1:0,
+        "NUM_MUESTRAS" : ARRAY_NMUESTRAS.length,
+        "ARRAY_NMUESTRAS" : ARRAY_NMUESTRAS,
+        "NO_CHECKED_SIN_DATOS"  : arr_adverso_no_constado.length>0?true:false, 
+        "INFO_PENDIENTE" : arr_adverso_no_constado,
+        "NUM_ANTEC_ADVERSOS" : NUM_ANTEC_ADVERSOS,
+    };
+    //console.log("_return    ->  ",_return);
+    //console.log("star get_lista_activos");
     return _return;
 }
 
@@ -1767,18 +1763,16 @@ function confirma_custodia(id_anatomia){
 
 //CUSTODIA ALL
 function confirma_custodia_all(fase){
-    var LISTA_ANATOMIA          =   {   RESUL   :   []  };
-    var traffic_all             =   true;
-    var txt_busuqeda            =   fase == 1 ? '.all_solicitudes_custodia':'.all_solicitudes_custodia';
+    var LISTA_ANATOMIA = { RESUL : [] };
+    var traffic_all = true;
+    var txt_busuqeda = fase == 1 ? '.all_solicitudes_custodia':'.all_solicitudes_custodia';
     //console.log(" txt_busuqeda  ->",txt_busuqeda);
     $(txt_busuqeda).each(function(index,value){
-        
-        console.log("-----------------------------------");
-        console.log("value.id->     ",value.id,"<-      ");
-        console.log("-----------------------------------");
-        
-        var RETURN_ACTIVOS              =   get_lista_activos(value.id);
-        var STATUS_MUESTRAS             =   RETURN_ACTIVOS;
+        //console.log("-----------------------------------");
+        //console.log("value.id->     ",value.id,"<-      ");
+        //console.log("-----------------------------------");
+        var RETURN_ACTIVOS = get_lista_activos(value.id);
+        var STATUS_MUESTRAS = RETURN_ACTIVOS;
         if(!STATUS_MUESTRAS.ALL_OK_SAMPLES){ traffic_all =  false;} 
         LISTA_ANATOMIA.RESUL.push(STATUS_MUESTRAS);
     });
@@ -2015,7 +2009,7 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                                 post==1 ? "ssan_libro_biopsias_usuarioext/confirma_trasporte":"",
                                             //"ssan_spab_gestionlistaquirurgica/confirma_recepcion",
                         dataType :   "json",
-                        beforeSend : function(xhr) { console.log("xhr->",xhr); },
+                        beforeSend : function(xhr) { $('#loadFade').modal('show');  },
                         data : {
                             id_anatomia : id_anatomia,
                             array_muestras : LISTA_ANATOMIA, 
@@ -2075,7 +2069,7 @@ function js_vista_opcion(ind_id){
 }
 
 function js_confirma_rechazo_recepcion(id_anatomia){
-    var error   =   [];
+    var error = [];
         $("#firma_simple_rechaza").css("border-color",""); 
     if($("#firma_simple_rechaza").val()===''){
         $("#firma_simple_rechaza").css("border-color","red"); 
@@ -2090,7 +2084,7 @@ function js_confirma_rechazo_recepcion(id_anatomia){
         var STATUS_MUESTRAS = get_lista_activos(id_anatomia);
         var html_li = '';
         if(STATUS_MUESTRAS.NUM_ANTEC_ADVERSOS   ==  0){
-            showNotification('top','right','Debe indicar evento adverso y su observaci&oacute;n en alguna de las muestras',4,'fa fa-times');
+            showNotification('top','right','Debe indicar evento adverso y su observaci&oacute;n en alguna de las muestras para el rechazo',4,'fa fa-times');
             return false;
         }
         //LOAD HTML
@@ -2098,7 +2092,6 @@ function js_confirma_rechazo_recepcion(id_anatomia){
         $.each(STATUS_MUESTRAS.ARRAY_NMUESTRAS,function(i,item){
             if(item.ARR_EVENTOS_ADVERSOS.length>0){
                 $.each(item.ARR_EVENTOS_ADVERSOS,function(x,row_adverso){
-                    //var aux = i+1;
                     html_li+='<li class="list-group-item">';
                         html_li+='- '+row_adverso.TXT_MOTIVO+' - '+row_adverso.TXT_OBSERVACION;
                     html_li+='</li>'; 
@@ -2108,34 +2101,42 @@ function js_confirma_rechazo_recepcion(id_anatomia){
         html_li+='</ul>';
         jPrompt('Con esta acci&oacute;n se proceder&aacute; rechazar solicitud de anatom&iacute;a patol&oacute;gica <br/>'+html_li+'<br/>&iquest;Est&aacute; seguro de continuar?','','Confirmaci\u00f3n',function(r){
             if(r){
-                var LISTA_ANATOMIA  = {RESUL:[]};
+                var LISTA_ANATOMIA = {RESUL:[]};
                 LISTA_ANATOMIA.RESUL.push(STATUS_MUESTRAS);
+                //console.error("##################");
+                //console.error(LISTA_ANATOMIA);
+                //console.error(STATUS_MUESTRAS);
+                //console.error("send muestas ->",STATUS_MUESTRAS.ARRAY_NMUESTRAS);
+                //console.error("##################");
                 $.ajax({ 
-                     type           :   "POST",
-                     url            :   "ssan_spab_gestionlistaquirurgica/get_confirma_rechazo_muestras",
-                     dataType       :   "json",
-                     data           :   {
-                                            contrasena          :   r,
-                                            array_muestras      :   LISTA_ANATOMIA, 
-                                            TXT_GLOBAL          :   $("#txt_observacion_rechazo").val(),
-                                        },
-                     error          :   function(errro)         {  
-                                                                    console.log(errro.responseText); 
-                                                                    jError("Error en el aplicativo","Clinica Libre");
-                                                                },
-                     success        :   function(aData)         { 
-                         
-                                                                    console.table("aData    ->  ",aData);
-                                                                    if(aData.status){
-                                                                        jAlert("Se ha rechazado muestra anatom&iacute;a patol&oacute;gica","Clinica Libre");
-                                                                        $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
-                                                                        if(pdf_rechazomuestra(id_anatomia)){
-                                                                            UPDATE_PANEL();
-                                                                        }
-                                                                    } else {
-                                                                        jError("Error Firma simple","Clinica Libre");
-                                                                    }
-                                                                }, 
+                    type : "POST",
+                    url : "ssan_libro_biopsias_ii_fase/get_confirma_rechazo_muestras",
+                    dataType : "json",
+                    data : {
+                        contrasena : r,
+                        array_muestras : LISTA_ANATOMIA, 
+                        TXT_GLOBAL : $("#txt_observacion_rechazo").val(),
+                        STATUS_MUESTRAS : STATUS_MUESTRAS.ARRAY_NMUESTRAS,
+                    },
+                     beforeSend : function(xhr) { $('#loadFade').modal('show');  },
+                    error : function(errro) {  
+                        console.log(errro.responseText); 
+                        jError("Error en el aplicativo","Clinica Libre");
+                    },
+                    success : function(aData) { 
+                        console.table("aData -> ",aData);
+                        if(aData.status){
+                            jAlert("Se ha rechazado muestra anatom&iacute;a patol&oacute;gica","Clinica Libre");
+                            UPDATE_PANEL();
+                            /*
+                            $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
+                            if(pdf_rechazomuestra(id_anatomia)){ }
+                            */
+                        } else {
+                            jError("Error Firma simple","Clinica Libre");
+                        }
+                    }, 
+                    complete : function() { setTimeout(function(){ $('#loadFade').modal('hide'); }, 50); }
                 });
             } else {
                 jError("Firma simple vac&Iacute;a","Clinica Libre"); 
@@ -2148,15 +2149,15 @@ function js_confirma_rechazo_recepcion(id_anatomia){
 
 function pdf_rechazomuestra(id_anatomia){
     //cerrar todos los modal anterior
-    console.log("rechazada id_anatomia->",id_anatomia);
+    //.log("rechazada id_anatomia->",id_anatomia);
     //return false;
     $.ajax({ 
         type		:   "POST",
         url 		:   "ssan_spab_gestionlistaquirurgica/pdf_informerechazo_ap",
         dataType        :   "json",
         beforeSend	:   function(xhr)           {   
-                                                        console.log(xhr);
-                                                        console.log("generando PDF");
+                                                        //console.log(xhr);
+                                                        //console.log("generando PDF");
                                                         $('#PDF_VERDOC').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF");
                                                     },
         data 		:                           { 
@@ -2169,8 +2170,8 @@ function pdf_rechazomuestra(id_anatomia){
                                                         $('#PDF_VERDOC').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
                                                     },
         success		:   function(aData)         { 
-                                                        console.log("-----------------------");
-                                                        console.log("aData  ->",aData,"<-   ");
+                                                        //console.log("-----------------------");
+                                                        //console.log("aData  ->",aData,"<-   ");
                                                         
                                                         if(!aData["STATUS"]){
                                                             jError("error al cargar protocolo PDF","Clinica Libre");
@@ -2214,7 +2215,7 @@ function GET_PDF_ANATOMIA_PANEL(id){
         error : function(errro) { 
             console.log(errro,); 
             console.log(errro.responseText); 
-            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+            setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
             jError("Error General, Consulte Al Administrador","Clinica Libre"); 
         },
         success : function(aData){ 
@@ -2825,10 +2826,10 @@ function pre_busqueda(from,solicitud){
 //busqueda principal = individual
 function busqueda_etiquera(from,solicitud,array){
     /*
-    console.log("-------------------busqueda_etiquera----------------------");
-    console.log("from               ->  ",from);
-    console.log("solicitud          ->  ",solicitud);
-    console.log("array              ->  ",array);
+        console.log("-------------------busqueda_etiquera----------------------");
+        console.log("from -> ",from);
+        console.log("solicitud -> ",solicitud);
+        console.log("array -> ",array);
     */
     var get_etiqueta = '';
     var txt_busq_muestra = false;
@@ -2842,15 +2843,15 @@ function busqueda_etiquera(from,solicitud,array){
         get_etiqueta = 'S'+solicitud;
     }
     /*
-        console.log("   ----------------------------------------------------    ");
-        console.log("   ----------------    busqueda_etiquera   ------------    "); 
-        console.log("   from               =>  ",from,"                         ");
-        console.log("   solicitud          =>  ",solicitud,"                    ");
-        console.log("   get_etiqueta       =>  ",get_etiqueta,"                 ");
-        console.log("   array              =>  ",array,"                        ");
-        console.log("   NUM_FASE           =>  ",$("#NUM_FASE").val(),"         ");
-        console.log("   txt_busq_muestra   =>  ",txt_busq_muestra,"             ");
-        console.log("   ----------------------------------------------------    ");
+    console.log(" ---------------------------------------------------- ");
+    console.log(" ----------------    busqueda_etiquera   ------------ "); 
+    console.log(" from =>  ",from," ");
+    console.log(" solicitud =>  ",solicitud," ");
+    console.log(" get_etiqueta =>  ",get_etiqueta," ");
+    console.log(" array =>  ",array," "); 
+    console.log(" NUM_FASE =>  ",$("#NUM_FASE").val()," ");
+    console.log(" txt_busq_muestra =>  ",txt_busq_muestra," ");
+    console.log(" ---------------------------------------------------- ");
     */
     //return false;
     $.ajax({ 
@@ -2873,9 +2874,7 @@ function busqueda_etiquera(from,solicitud,array){
             jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
         },
         success : function(aData) { 
-
-            console.log("aData  ->",aData);
-
+            //console.log("aData  ->",aData);
             setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
             if(aData.STATUS){
                 if ($('#UL_TABS_MUESTRA li').size()==0){
@@ -2916,7 +2915,7 @@ function informar_x_correo(id_anatomia){
         },
         success : function(aData) { 
             setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-            console.log("aData ->",aData);
+            //console.log("aData ->",aData);
             showNotification('top','center','Se ha enviado correo '+aData.IND_MAIL,1,'fa fa-info');
         }, 
    });

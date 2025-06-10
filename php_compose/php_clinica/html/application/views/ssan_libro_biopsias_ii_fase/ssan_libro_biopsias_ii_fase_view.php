@@ -104,8 +104,8 @@
                         <div class="CSS_GRID_CIRUGIA_FASE_1">
                             <div class="text-center"><b>N&deg;</b></div>
                             <div class=""><b>PACIENTE</b></div>
-                            <div class=""><b>PROFESIONAL</b></div>
-                            <div class=""><b>ESTADO</b></div>
+                            <div class=""><b>PROFESIONAL/ESTABLECIMIENTO</b></div>
+                            <div class=""><b>INFORMACI&Oacute;N</b></div>
                             <div class="" style="text-align:center;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
                             <div class="text-center"><i class="fa fa-cog" aria-hidden="true"></i></div>
                         </div>  

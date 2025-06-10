@@ -3102,30 +3102,30 @@ class ssan_spab_gestionlistaquirurgica extends CI_Controller {
     #ADD 04-03-2022
     public function get_confirma_rechazo_muestras(){
         if(!$this->input->is_ajax_request()){   show_404(); }
-        $status                         =   true;
-        $data_produccion                =   [];
-        $empresa                        =   $this->session->userdata("COD_ESTAB");
-        $id_anatomia                    =   $this->input->post('id_anatomia');
-        $usuarioh                       =   explode("-",$this->session->userdata("USERNAME"));
-        $contrasena                     =   $this->input->post('contrasena'); 
-        $array_muestras                 =   $this->input->post('array_muestras'); 
-        $TXT_GLOBAL                     =   $this->input->post('TXT_GLOBAL');
-        $valida                         =   $this->ssan_libro_biopsias_usuarioext_model->sqlvalidaclave($contrasena);
+        $status = true;
+        $data_produccion = [];
+        $empresa = $this->session->userdata("COD_ESTAB");
+        $id_anatomia = $this->input->post('id_anatomia');
+        $usuarioh = explode("-",$this->session->userdata("USERNAME"));
+        $contrasena = $this->input->post('contrasena'); 
+        $array_muestras = $this->input->post('array_muestras'); 
+        $TXT_GLOBAL = $this->input->post('TXT_GLOBAL');
+        $valida = $this->ssan_libro_biopsias_usuarioext_model->sqlvalidaclave($contrasena);
         if(count($valida)>0){
-            $data_produccion            =   $this->ssan_libro_biopsias_usuarioext_model->model_confirma_rechazo_muestras(array(
-                "ID_ANATOMIA"           =>  $id_anatomia,
-                "COD_EMPRESA"           =>  $empresa,
-                "SESSION"               =>  $usuarioh[0], 
-                "ARRAY"                 =>  $array_muestras,
-                "DATA_FIRMA"            =>  $valida,
-                "TXT_GLOBAL"            =>  $TXT_GLOBAL,
+            $data_produccion = $this->ssan_libro_biopsias_usuarioext_model->model_confirma_rechazo_muestras(array(
+                "ID_ANATOMIA" => $id_anatomia,
+                "COD_EMPRESA" => $empresa,
+                "SESSION" => $usuarioh[0], 
+                "ARRAY" => $array_muestras,
+                "DATA_FIRMA" => $valida,
+                "TXT_GLOBAL" => $TXT_GLOBAL,
             ));
         } else {
-            $status                     =   false;
+            $status = false;
         }
         $this->output->set_output(json_encode(array(
-            'status'                    =>  $status,
-            'data_produccion'           =>  $data_produccion,
+            'status' =>  $status,
+            'data_produccion' => $data_produccion,
         )));
     }
     

@@ -655,7 +655,7 @@
                             </div>
                         </div>
                         <!-- OTRA OPCIONES -->
-                        <div class="css_panel_rechazo" style="display:none">
+                        <div class="css_panel_rechazo" style="display:none;margin-left: 130px;">
                             <div class="css_panel_rechazo1">
                                 <h5 style="color:#888888;">OBSERVACI&Oacute;N GENERAL DE RECHAZO</h5>
                                 <div class="mb-3">
