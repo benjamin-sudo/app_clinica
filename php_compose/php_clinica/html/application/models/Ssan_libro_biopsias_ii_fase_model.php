@@ -25,10 +25,14 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
 
         if(count($STATUS_MUESTRAS)>0){
             foreach ($STATUS_MUESTRAS as $i => $row) {
-                log_message('debug', "#############################");
+                log_message('debug', "###################################################################");
                 log_message('debug', "Contenido STATUS_MUESTRAS de $i \$row en :\n" . print_r($row, TRUE));
+
+
+
             }
         }
+
         /*
             $this->db->where('ID_SOLICITUD_HISTO',$row["NUM_HISTO"]); 
             $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
@@ -43,8 +47,6 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
                 "LAST_DATE_AUDITA" => "SYSDATE",
             ));
         */
-
-        
         return [
             'STATUS' => $status,
             'HISTO_OK' => $arr_histo_ok,

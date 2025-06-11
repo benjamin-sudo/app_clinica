@@ -352,12 +352,12 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $valida = $this->Ssan_libro_biopsias_usuarioext_model->validaClave($password);
         if(count($valida)>0){
             $DATA = $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_custodia(array(
-                        "COD_EMPRESA" => $empresa,
-                        "SESSION" =>  $usuarioh[0], 
-                        "ID_ANATOMIA" => $id_anatomia,
-                        "ARRAY" =>  $array_muestras,
-                        "DATA_FIRMA" => $valida,
-                    ));
+                "COD_EMPRESA" => $empresa,
+                "SESSION" =>  $usuarioh[0], 
+                "ID_ANATOMIA" => $id_anatomia,
+                "ARRAY" =>  $array_muestras,
+                "DATA_FIRMA" => $valida,
+            ));
         } else {
             $TXT_ERROR = 'Error en firma simple';
             $STATUS = false;
@@ -372,7 +372,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         ]));
     }
 
-    
     #################################
     #GESTOR UNICO DE PDF DE ANATOMIA#
     #################################

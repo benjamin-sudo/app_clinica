@@ -138,16 +138,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $fecha_final = $v_data_final[2].'-'.$v_data_final[1].'-'.$v_data_final[0].' 23:59:59';
         $cod_empresa = $data_controller['COD_EMPRESA'];
         $num_fase = $data_controller['num_fase'];
-        //var_dump($num_fase);
-        /*
-        if ($num_fase == '1') {
-            $cods = [$cod_empresa];
-        } else {
-            $sql_emp = "SELECT COD_EMPRESA  FROM ADMIN.SS_TEMPRESAS   WHERE IND_ESTADO = 'V'";
-            $rows = $this->db->query($sql_emp)->result_array();
-            $cods = array_column($rows, 'COD_EMPRESA');
-        }
-        */
         $cods = [$cod_empresa];
         $placeholders = implode(',', array_fill(0, count($cods), '?'));
         $bindings = array_merge([$fecha_inicio, $fecha_final], $cods );
@@ -287,13 +277,11 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     P.OBS_RECHAZO,
                     P.ID_HISTO_ESTADO,
                     CASE P.ID_HISTO_ESTADO
-                    WHEN '1' THEN 'NUEVA SOLICITUD'
-                    WHEN '2' THEN 'CUSTODIA'
-                    WHEN '3' THEN 'TRASPORTE'
-                    WHEN '4' THEN 'RECEPCIONADA'
-                    WHEN '5' THEN 'RECHAZADA'
-                    ELSE 'NO INFORMADA'
-                    END AS TXT_HISTO_ESTADO,
+                        WHEN '1' THEN 'NUEVA SOLICITUD'
+                        WHEN '2' THEN 'CUSTODIA'
+                        WHEN '3' THEN 'TRASPORTE'
+                        WHEN '4' THEN 'RECEPCIONADA'
+                        WHEN '5' THEN 'RECHAZADA' ELSE 'NO INFORMADA' END AS TXT_HISTO_ESTADO,
                     P.AD_ID_ADMISION,
                     P.ID_SERDEP,
                     P.IND_TIPO_BIOPSIA,
@@ -301,21 +289,19 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     P.DATE_INICIOREGISTRO,
                     P.COD_RUTPRO,
                     CASE P.ID_HISTO_ESTADO
-                    WHEN '1' THEN 'NUEVA SOLICITUD'
-                    WHEN '2' THEN 'CUSTODIA'
-                    WHEN '3' THEN 'TRASPORTE'
-                    WHEN '4' THEN 'RECEPCIONADA'
-                    WHEN '5' THEN 'RECHAZADA'
-                    ELSE 'NO INFORMADO'
-                    END AS TXT_HISTO_ESTADO,
+                        WHEN '1' THEN 'NUEVA SOLICITUD'
+                        WHEN '2' THEN 'CUSTODIA'
+                        WHEN '3' THEN 'TRASPORTE'
+                        WHEN '4' THEN 'RECEPCIONADA'
+                        WHEN '5' THEN 'RECHAZADA'  ELSE 'NO INFORMADO'  END AS TXT_HISTO_ESTADO,
                     P.IND_ESTADO_MUESTRAS AS IND_ESTADO_MUESTRAS,
                     P.ID_NUM_CARGA,
                     P.ID_UID,
                     P.LAST_USR_AUDITA,
                     DATE_FORMAT(P.LAST_DATE_AUDITA, '%d-%m-%Y %H:%i') AS LAST_DATE_AUDITA,
                     P.TXT_NAMEAUDITA,
-                    E.NOM_RAZSOC
-
+                    E.NOM_RAZSOC,
+                    P.TXT_NAMEAUDITA
                 FROM ADMIN.PB_SOLICITUD_HISTO P
                 JOIN ADMIN.GG_TGPACTE L ON L.NUM_FICHAE = P.NUM_FICHAE
                 JOIN ADMIN.GG_TPROFESIONAL PRO ON PRO.COD_RUTPRO = P.COD_RUTPRO
@@ -325,8 +311,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 AND P.COD_EMPRESA IN ($placeholders)
                 ORDER BY
                     P.DATE_INICIOREGISTRO";
-
-        $query    = $this->db->query($sql, $bindings);
+        $query = $this->db->query($sql, $bindings);
         $arr_data = $query->result_array();
         return [
             'html_externo' => $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
@@ -517,18 +502,18 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     P.LAST_USR_AUDITA,
                     DATE_FORMAT(P.LAST_DATE_AUDITA, '%d-%m-%Y %H:%i') AS LAST_DATE_AUDITA,
                     P.TXT_NAMEAUDITA,
-                    E.NOM_RAZSOC
-
-                FROM ADMIN.PB_SOLICITUD_HISTO P
-                JOIN ADMIN.GG_TGPACTE L ON L.NUM_FICHAE = P.NUM_FICHAE
-                JOIN ADMIN.GG_TPROFESIONAL PRO ON PRO.COD_RUTPRO = P.COD_RUTPRO
-                JOIN ADMIN.SS_TEMPRESAS E ON E.COD_EMPRESA = P.COD_EMPRESA
+                    E.NOM_RAZSOC,
+                    P.TXT_NAMEAUDITA
+                FROM 
+                    ADMIN.PB_SOLICITUD_HISTO P
+                    JOIN ADMIN.GG_TGPACTE L ON L.NUM_FICHAE = P.NUM_FICHAE
+                    JOIN ADMIN.GG_TPROFESIONAL PRO ON PRO.COD_RUTPRO = P.COD_RUTPRO
+                    JOIN ADMIN.SS_TEMPRESAS E ON E.COD_EMPRESA = P.COD_EMPRESA
                 WHERE P.DATE_INICIOREGISTRO BETWEEN ? AND ?
-                AND P.IND_ESTADO = 1 
-                AND P.COD_EMPRESA IN ($placeholders)
+                AND P.IND_ESTADO = 1 AND P.COD_EMPRESA IN ($placeholders)
                 ORDER BY
                     P.DATE_INICIOREGISTRO";
-        $query    = $this->db->query($sql, $bindings);
+        $query = $this->db->query($sql, $bindings);
         $arr_data = $query->result_array();
         return [
             'html_externo' => $data_controller["ind_template"] == 'ssan_libro_biopsias_listaexterno1' || $data_controller["ind_template"] == 'ssan_libro_biopsias_listaxusuarios'
@@ -554,6 +539,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         if(count($ARRAY)>0){
             foreach($ARRAY as $i => $row){
                 $num = ($i+1);
+                $ARR_ANATOMIA = $row['ID_SOLICITUD'];
                 $BTN = '
                         <div class="btn-group">
                             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -619,34 +605,43 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     </div>';
                 } 
                 $INFORMACION            =   '';
-                       if($row['ID_HISTO_ESTADO'] == 1){
-                    #('.$row['ID_HISTO_ESTADO'].')
-                    $INFORMACION = '<button class="btn btn-xs btn-fill cssmain btn-default parpadea" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
-                } else if($row['ID_HISTO_ESTADO'] == 2){
-                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
-                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-warning" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
+                 
+                
+                  if ($row['ID_HISTO_ESTADO'] == 1){
+                    
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';       
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-default parpadea" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
+                    $INFORMACION .= '</div>';
+
+                } else if($row['ID_HISTO_ESTADO'] == 2){ 
+
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-warning" onclick="js_vercontenido('.$ARR_ANATOMIA.')"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
                     $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
                     $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
                     $INFORMACION .= '</div>';
+
                 } else if($row['ID_HISTO_ESTADO'] == 3){
-                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
-                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-info parpadea" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;EN TRASPORTE</button>';
+                    
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-info parpadea" onclick="js_vercontenido('.$ARR_ANATOMIA.')"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;TRASPORTE</button>';
                     $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
                     $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
                     $INFORMACION .= '</div>';
+
                 } else if($row['ID_HISTO_ESTADO'] == 4){
-                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;">';
-                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-success" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;" data-toggle="tooltip" data-placement="bottom" title=\''.$html_tooltip2.'\' data-html="true"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCIONADA</button>';
-                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger'; 
-                    $txt_estado =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-'.$color_estado.'" style="width: -webkit-fill-available;margin:0px 0px 0px 0px;">'.$txt_estado.'</button>';
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-success" onclick="js_vercontenido('.$ARR_ANATOMIA.')"></i>&nbsp;RECEPCIONADA</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"  aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
                     $INFORMACION .= '</div>';
                 } else if($row['ID_HISTO_ESTADO'] == 5){
-                    $INFORMACION = '<button class="btn btn-xs btn-fill cssmain btn-danger" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA</button>';
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
                 } else {
-                    $INFORMACION = '<button class="btn btn-xs btn-fill cssmain btn-danger" style="width: 100%;margin:0px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N</button>';
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
                 }
 
                 $v_txt_derivado = $row['TXT_EMPRESA_DERIVADO']==''?'':'<span class="label label-warning">'.$row['TXT_EMPRESA_DERIVADO'].'</span> | ';
@@ -746,53 +741,94 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 $ARR_ANATOMIA = $row['ID_SOLICITUD'];
                 $html_tooltip2 = '';
                 if($row['ID_HISTO_ESTADO']!=1){
-                    /*
-                    $html_tooltip2 = '
-                        <div class="grid_tooltip">
-                            <div class="grid_11">'.$row['TXT_HISTO_ESTADO'].'</div>
-                            <div class="grid_12">'.$row['TXT_NAMEAUDITA'].'</div>
-                            <div class="grid_13">RUT</div>
-                            <div class="grid_14">'.$row['LAST_USR_AUDITA'].'</div>
-                            <div class="grid_15">FECHA/HORA</div>
-                            <div class="grid_16">'.$row['LAST_DATE_AUDITA'].'</div>
-                        </div>
-                    ';
-                    */
-                    $html_tooltip2 = $row['TXT_HISTO_ESTADO'].'<br> '.$row['TXT_NAMEAUDITA'].',RUT:'.$row['LAST_USR_AUDITA'].' '.$row['LAST_DATE_AUDITA'];
+                    $html_tooltip2 = '<div class="grid_tooltip">
+                                        <div class="grid_11">'.$row['TXT_HISTO_ESTADO'].'</div>
+                                        <div class="grid_12">'.$row['TXT_NAMEAUDITA'].'</div>
+                                        <div class="grid_13">RUT</div>
+                                        <div class="grid_14">'.$row['LAST_USR_AUDITA'].'</div>
+                                        <div class="grid_15">FECHA/HORA</div>
+                                        <div class="grid_16">'.$row['LAST_DATE_AUDITA'].'</div>
+                                    </div>';
                 }
-
                 $INFORMACION = '';
-                if($row['ID_HISTO_ESTADO'] == 1){
-                    #('.$row['ID_HISTO_ESTADO'].')
-                    $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';       
-                    $INFORMACION    .=   '<button class="btn btn-xs btn-fill cssmain btn-default parpadea" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
-                    $INFORMACION    .=   '</div>';
-                } else  if($row['ID_HISTO_ESTADO'] == 2){
-                    $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
-                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-warning"   data-toggle="tooltip" data-placement="bottom" title=\''.htmlspecialchars($html_tooltip2, ENT_QUOTES).'\' data-html="true"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
-                    $color_estado       =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
-                    $txt_estado         =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'"  >'.$txt_estado.'</button>';
-                    $INFORMACION    .=   '</div>';
-                } else  if($row['ID_HISTO_ESTADO'] == 3){
-                    $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
-                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-info parpadea"   data-toggle="tooltip" data-placement="bottom" title=\''.htmlspecialchars($html_tooltip2, ENT_QUOTES).'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;TRASPORTE</button>';
-                    $color_estado       =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
-                    $txt_estado         =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'"  >'.$txt_estado.'</button>';
-                    $INFORMACION    .=   '</div>';
+
+                /*
+                if ($row['ID_HISTO_ESTADO'] == 1){
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';       
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-default parpadea" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
+                    $INFORMACION .= '</div>';
+
+                } else if($row['ID_HISTO_ESTADO'] == 2){
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-warning" data-toggle="tooltip" data-placement="bottom" title=\''.htmlspecialchars($html_tooltip2, ENT_QUOTES).'\' data-html="true"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+
+                } else if($row['ID_HISTO_ESTADO'] == 3){
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-info parpadea" data-toggle="tooltip" data-placement="bottom" title=\''.htmlspecialchars($html_tooltip2, ENT_QUOTES).'\' data-html="true"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;TRASPORTE</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+
                 } else if($row['ID_HISTO_ESTADO'] == 4){
-                    $INFORMACION    =    '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
-                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-success"   data-toggle="tooltip" data-placement="bottom" title=\''.htmlspecialchars($html_tooltip2, ENT_QUOTES).'\' data-html="true"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCIONADA</button>';
-                    $color_estado       =   $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
-                    $txt_estado         =   $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"  aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
-                    $INFORMACION    .=   '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'"  >'.$txt_estado.'</button>';
-                    $INFORMACION    .=   '</div>';
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-success" data-toggle="tooltip" data-placement="bottom" title=\''.htmlspecialchars($html_tooltip2, ENT_QUOTES).'\' data-html="true"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;RECEPCIONADA</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"  aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+
                 } else if($row['ID_HISTO_ESTADO'] == 5){
-                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
+                
                 } else {
-                    $INFORMACION    =   '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
                 }
+                */
+
+                // hito
+
+                if ($row['ID_HISTO_ESTADO'] == 1){
+                    
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';       
+                    $INFORMACION .= '<button class="btn btn-xs btn-fill cssmain btn-default parpadea" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;NUEVA SOLICITUD&nbsp;</button>';
+                    $INFORMACION .= '</div>';
+
+                } else if($row['ID_HISTO_ESTADO'] == 2){ 
+
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-warning" onclick="js_vercontenido('.$ARR_ANATOMIA.')"><i class="fa fa-inbox" aria-hidden="true"></i>&nbsp;CUSTODIA</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+
+                } else if($row['ID_HISTO_ESTADO'] == 3){
+                    
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-info parpadea" onclick="js_vercontenido('.$ARR_ANATOMIA.')"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;TRASPORTE</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check" aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+
+                } else if($row['ID_HISTO_ESTADO'] == 4){
+                    $INFORMACION = '<div class="btn-group" style="display:flex;justify-content:center;flex-flow: initial;margin-top: 10px;">';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-success" onclick="js_vercontenido('.$ARR_ANATOMIA.')"></i>&nbsp;RECEPCIONADA</button>';
+                    $color_estado = $row['IND_ESTADO_MUESTRAS']==1?'success':'danger';
+                    $txt_estado = $row['IND_ESTADO_MUESTRAS']==1?'<i class="fa fa-check"  aria-hidden="true"></i>&nbsp;COMPLETA':'<i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;INCOMPLETA';
+                    $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
+                    $INFORMACION .= '</div>';
+                } else if($row['ID_HISTO_ESTADO'] == 5){
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
+                } else {
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
+                }
+                
                 
                 $disabled = 'disabled';
                 $ID_MAIN_AP = $row['ID_SOLICITUD'];
@@ -800,52 +836,44 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 $btn_trazabilidad   =   '';
                 if ($btn_traza_visible) {
                     #13.07.2023
-                    $btn_trazabilidad   .=      '
-                                        <button 
+                    $btn_trazabilidad .= ' <button 
                                             type = "button" 
                                             data-toggle = "popover"
                                             data-placement = "left"
-                                            class =   "'.$disabled.' btn btn-small btn-fill btn-danger class_htrazabilidad '.$ID_MAIN_AP.'"
-                                            id =   "btn_trabilidad_'.$ID_MAIN_AP.'"';
-                    $btn_trazabilidad       .=  $ID_MAIN_AP!=''?'onclick = "js_htraxabilidad('.$ID_MAIN_AP.')"':'';
-                    $btn_trazabilidad       .= '>
-                                        <i class="fa fa-database" aria-hidden="true"></i>
+                                            class = "'.$disabled.' btn btn-small btn-fill btn-danger class_htrazabilidad '.$ID_MAIN_AP.'"
+                                            id = "btn_trabilidad_'.$ID_MAIN_AP.'"';
+                    $btn_trazabilidad .=  $ID_MAIN_AP!=''?'onclick = "js_htraxabilidad('.$ID_MAIN_AP.')"':'';
+                    $btn_trazabilidad .= '><i class="fa fa-database" aria-hidden="true"></i>
                                     </button>';
                 }
-                $html               .=  '
-                                                <li class="gespab_group list-group-item list-group-item-'.$style_li.' rotulo_'.$row['ID_ROTULADO'].' li_lista_externo_rce">
-                                                    <div class="CSS_GRID_PUNTO_ENTREGA_EXT" 
-                                                            id              =   "DATA_'.$row['ID_SOLICITUD'].'"
-                                                            data-paciente   =   "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'"
-                                                        >
-                                                        <div class="text-center">'.$row['INICIOHORAMIN'].'</div>
-                                                        <div class="cirugia_row">
-                                                            '.$row['NOMBRE_COMPLETO'].'
-                                                            <br>
-                                                            <i>'.$row['RUTPACIENTE'].'</i>
-                                                        </div>
-                                                        <div class="">'.$row['TXT_DIAGNOSTICO'].'</div>
-                                                        <div class="">'.$row['NOM_PROFE_CORTO'].'</div>
-                                                        <div class="">'.$row['TIPO_DE_BIOPSIA'].'</div>
-                                                        <div class="text-center">'.$INFORMACION.'</div>';
 
+                $html .= ' <li class="gespab_group list-group-item list-group-item-'.$style_li.' rotulo_'.$row['ID_ROTULADO'].' li_lista_externo_rce">
+                                <div class="CSS_GRID_PUNTO_ENTREGA_EXT" id = "DATA_'.$row['ID_SOLICITUD'].'" data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">
+                                    <div class="text-center">'.$row['INICIOHORAMIN'].'</div>
+                                    <div class="cirugia_row">
+                                        '.$row['NOMBRE_COMPLETO'].'
+                                        <br>
+                                        <i>'.$row['RUTPACIENTE'].'</i>
+                                    </div>
+                                    <div class="">'.$row['TXT_DIAGNOSTICO'].'</div>
+                                    <div class="">'.$row['NOM_PROFE_CORTO'].'</div>
+                                    <div class="">'.$row['TIPO_DE_BIOPSIA'].'</div>
+                                    <div class="text-center">'.$INFORMACION.'</div>';
                                     #BOTON SOLICITUD DE ANATOMIA PATOLOGICA
-                                    $html       .=      '<div class="text-center">';
-                                        $html       .=      $btn_trazabilidad;
-                                    $html       .=      '</div>';
+                                    $html .= '<div class="text-center">';
+                                        $html .= $btn_trazabilidad;
+                                    $html .= '</div>';
                                     #BOTON IMPRIME ETIQUETAS INDIVIDUAL
-                                    $html       .=      '<div class="text-center">';
-                                        $html       .=      '
-                                                            <button 
-                                                                type                    =   "button" 
-                                                                data-toggle             =   "popover"
-                                                                data-placement          =   "left"
-                                                                class                   =   "'.$disabled.' btn btn-small btn-success btn-fill BTN_IMPRIME_ETIQUETA_ANATOMIA_'.$ID_MAIN_AP.'"
-                                                                id                      =   "BTN_IMPRIME_ETIQUETA_ANATOMIA_'.$ID_MAIN_AP.'"';
-                                        $html       .=  $ID_MAIN_AP!=''?'onclick        =   "popover_etiquetas(this.id,'.$ID_MAIN_AP.')"':'';
-                                        $html       .=      '';
-                                        $html       .=      '>
-                                                                <i class="fa fa-archive" aria-hidden="true"></i>
+                                        $html .= '<div class="text-center">';
+                                        $html .= ' <button 
+                                                        type = "button" 
+                                                        data-toggle = "popover"
+                                                        data-placement = "left"
+                                                        class = "'.$disabled.' btn btn-small btn-success btn-fill BTN_IMPRIME_ETIQUETA_ANATOMIA_'.$ID_MAIN_AP.'"
+                                                        id = "BTN_IMPRIME_ETIQUETA_ANATOMIA_'.$ID_MAIN_AP.'"';
+                                        $html       .=  $ID_MAIN_AP!=''?'onclick = "popover_etiquetas(this.id,'.$ID_MAIN_AP.')"':'';
+                                        $html       .= '';
+                                        $html       .= '><i class="fa fa-archive" aria-hidden="true"></i>
                                                             </button>
                                                             ';
                                     $html           .=  '</div>';
@@ -853,37 +881,36 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     $html       .=      '<div class="text-center">';
                                     #$html       .=      '-';
                                         $html       .=      '<button 
-                                                                type                    =   "button" 
-                                                                class                   =   "'.$disabled.' btn btn-small btn-info btn-fill"
-                                                                id                      =   "BTN_IMPRIME_ETIQUETA_ANATOMIA"';
-                                        $html   .=  $ID_MAIN_AP!=''?'onclick            =   "IMPRIME_ETIQUETA_ANATOMIA('.$ID_MAIN_AP.')"':'';
+                                                                type = "button" 
+                                                                class = "'.$disabled.' btn btn-small btn-info btn-fill"
+                                                                id = "BTN_IMPRIME_ETIQUETA_ANATOMIA"';
+                                        $html   .=  $ID_MAIN_AP!=''?'onclick = "IMPRIME_ETIQUETA_ANATOMIA('.$ID_MAIN_AP.')"':'';
                                         $html       .=          ' 
-                                                                data-toggle             =   "tooltip" 
-                                                                data-placement          =   "bottom" 
-                                                                title                   =   "Impresi&oacute;n total de etiquetas" 
-                                                                data-html               =   "true"
-                                                                ';
+                                                                data-toggle = "tooltip" 
+                                                                data-placement = "bottom" 
+                                                                title = "Impresi&oacute;n total de etiquetas" 
+                                                                data-html = "true"';
                                         $html       .=          '>';
                                         $html       .=          '<i class="fa fa-print" aria-hidden="true"></i>
                                                             </button>';
                                     $html       .=      '</div>';
                                     #PDF SOLO ANATOMICO
                                     #'.$disabled.'
-                                    $html       .=      '<div class="text-center">
-                                                            <button 
-                                                                type                    =   "button" 
-                                                                class                   =   "btn btn-small btn-warning btn-fill " 
-                                                                id                      =   "PRE_GET_PDF_ANATOMIA_PRE"';
+                                    $html       .= '<div class="text-center">
+                                                        <button 
+                                                            type = "button" 
+                                                            class = "btn btn-small btn-warning btn-fill " 
+                                                            id = "PRE_GET_PDF_ANATOMIA_PRE"';
                                     #if($disabled!='disabled'){
-                                    $html       .=             'onclick                 =   "PRE_GET_PDF_ANATOMIA('.$ID_MAIN_AP.')"';
+                                    $html       .= 'onclick =   "PRE_GET_PDF_ANATOMIA('.$ID_MAIN_AP.')"';
                                     #}
-                                    $html       .=          ' 
-                                                                data-toggle             =   "tooltip" 
-                                                                data-placement          =   "left" 
-                                                                title                   =   "PDF anatom&iacute;a patol&oacute;gica" 
-                                                                data-html               =   "true"
-                                                                ';
-                                    $html       .=         '><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    $html       .= ' 
+                                                        data-toggle = "tooltip" 
+                                                        data-placement = "left" 
+                                                        title = "PDF anatom&iacute;a patol&oacute;gica" 
+                                                        data-html = "true"
+                                                        ';
+                                    $html       .= '><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                                             </button>
                                                         </div>
                                                         ';
@@ -893,12 +920,13 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     //solo nueva solicitud y en custoria
                                     if ($row['ID_HISTO_ESTADO'] == 1 || $row['ID_HISTO_ESTADO'] == 2){
                                         //if($row['IND_DERIVACION_IC'] == 0){
-                                            $html   .=      '<input 
-                                                                type        =   "checkbox" 
-                                                                class       =   "form-check-input marcado_custoria_trasporte checkbox_'.$ID_MAIN_AP.'" 
-                                                                id          =   "CHEK_'.$ID_MAIN_AP.'" 
-                                                                style       =   "display:block;cursor:pointer;margin-left:10px;margin-top:-7px;" 
-                                                                onchange    =   "js_muestra_indivual('.$ID_MAIN_AP.');" value="'.$ID_MAIN_AP.'">';
+                                            $html   .= '<input 
+                                                            type = "checkbox" 
+                                                            class = "form-check-input marcado_custoria_trasporte checkbox_'.$ID_MAIN_AP.'" 
+                                                            id = "CHEK_'.$ID_MAIN_AP.'" 
+                                                            style = "display:block;cursor:pointer;margin-left:10px;margin-top:-7px;" 
+                                                            onchange = "js_muestra_indivual('.$ID_MAIN_AP.');" 
+                                                            value = "'.$ID_MAIN_AP.'">';
                                         //} else {
                                            //$html       .=  'IC';
                                         //}
@@ -908,8 +936,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                     #$html       .=      $row['ID_HISTO_ZONA'];
                                     #ID_HISTO_ZONA
                                     #if($row['ID_HISTO_ZONA'] == 8){ }
-                                    $html       .=      '</div>';
-                                    $html       .='</div>
+                                    $html .= '</div>';
+                                    $html .='</div>
                                             </li>';
             }
         } else {
@@ -1041,13 +1069,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     }
     */
     
-
-
-
-
-
-
-
     public function load_info_ap($data_controller){
         $this->db->trans_start();
         $param          =   array(
@@ -1963,12 +1984,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             //'sql_adversos' => $sql_adversos
         ];
     }
-
-    #############################################
-    #FALTA LOGICA
-    #IND_ESTADO = 1 | 0
-    #ID_HISTO_ESTADO = 1 | NUEVA SOLICITUD | 2 = EN CUSTODIA | 3 = TRASPORTE | 4 = RECEPCIONADA 
-    #############################################
+    # FALTA LOGICA
+    # IND_ESTADO = 1 | 0
+    # ID_HISTO_ESTADO = 1 | NUEVA SOLICITUD | 2 = EN CUSTODIA | 3 = TRASPORTE | 4 = RECEPCIONADA 
     public function get_confirma_custodia($DATA) {
         $this->db->trans_start();
         $mivariable = true;
@@ -1976,16 +1994,16 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         if (count($DATA['ARRAY']) > 0) {
             foreach ($DATA['ARRAY'] as $i => $fila) {
                 foreach ($fila as $x => $row) {
-                    // NUMERO DE CARGA
+                    # NUMERO DE CARGA
                     $ID_CARGA_AP = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); 
                     if (count($row["ARRAY_NMUESTRAS"]) > 0) {
                         foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus) {
-                            // $ID_LINETIME_HISTO = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); // No es necesario
+                            # $ID_LINETIME_HISTO = $this->generate_unique_id($this->ownPab.'.PB_LINETIME_HISTO'); // No es necesario
                             $ID_ANATOMIA = $DATA["ID_ANATOMIA"];
                             $IND_CASETE = $mus['IND_CASETE'];
                             $ID_MUESTRA = $mus['ID_NMUESTRA'];
                             $arr_linea_tiempo = array(
-                                // "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO, // No es necesario
+                                # "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO, // No es necesario
                                 "ID_NUM_CARGA" => $ID_CARGA_AP,
                                 "ID_SOLICITUD_HISTO" => $row["NUM_HISTO"],
                                 "TXT_BACODE" => $mus['ID_NMUESTRA'],
@@ -1994,15 +2012,13 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 "USR_CREA" => $DATA["SESSION"],
                                 "FEC_CREA" => date('Y-m-d H:i:s'),
                                 "IND_ESTADO" => 1,
-                                "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
+                                "ID_UID" => $DATA["DATA_FIRMA"][0]['ID_UID'],
                                 "TXT_MUESTRA" => $mus['TXT_MUESTRA'] == '' ? 'NO INFORMADO' : $mus['TXT_MUESTRA'],
                             );
                             $arr_linea_tiempo[$IND_CASETE == 1 ? "ID_CASETE" : "ID_NMUESTRA"] = $ID_MUESTRA;
-                            
                             $this->db->insert($this->ownPab . '.PB_LINETIME_HISTO', $arr_linea_tiempo);
                             $ID_LINETIME_HISTO = $this->db->insert_id(); // Obtener el ID autogenerado
-        
-                            // ACTUALIZA ESTADO DE LA MUESTRA CON EL ULTIMO LINETIME
+                            # ACTUALIZA ESTADO DE LA MUESTRA CON EL ULTIMO LINETIME
                             $this->db->where($IND_CASETE == 1 ? 'ID_CASETE' : 'ID_NMUESTRA', $ID_MUESTRA);
                             $this->db->update($this->ownPab . '.PB_HISTO_NMUESTRAS', array(
                                 "IND_ESTADO_CU" => $mus['IN_CHECKED'],
@@ -2010,8 +2026,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 "USR_AUDITA" => $DATA["SESSION"],
                                 "DATE_AUDITA" => date('Y-m-d H:i:s')
                             ));
-        
-                            // ARRAY ANTECEDENTES ADVERSOS
+                            # ARRAY ANTECEDENTES ADVERSOS
                             if (isset($mus["ARR_EVENTOS_ADVERSOS"])) {
                                 foreach ($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv) {
                                     $this->db->insert($this->ownPab . '.PB_ANTECEDENTES_HISTO', array(
@@ -2028,47 +2043,48 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             }
                         }
                     }
-                    // ACTUALIZA EL ESTADO DE LA SOLICITUD PRINCIPAL
+                    # ACTUALIZA EL ESTADO DE LA SOLICITUD PRINCIPAL
                     array_push($arr_histo_ok, $row["NUM_HISTO"]);
-                    $this->db->where('ID_SOLICITUD_HISTO', $row["NUM_HISTO"]);
-                    $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
-                        "ID_HISTO_ESTADO" => 2,
-                        "IND_ESTADO_MUESTRAS" => $row["NUM_OK_SAMPLES"],
-                        "ID_NUM_CARGA" => $ID_CARGA_AP,
-                        "LAST_USR_AUDITA" => $DATA["DATA_FIRMA"]->USERNAME,
-                        "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'),
-                        "ID_UID_CUSTODIA" => $DATA["DATA_FIRMA"]->ID_UID,
-                        "DATE_LAST_CUSTODIA" => date('Y-m-d H:i:s'),
-                        "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
-                        "TXT_NAMEAUDITA" => $DATA["DATA_FIRMA"]->NAME . " " . $DATA["DATA_FIRMA"]->MIDDLE_NAME
-                    ));
                 }
             }
         }
-        return array(
+
+        $arr_histo_ok = array_values(array_unique($arr_histo_ok));
+        $this->db->where_in('ID_SOLICITUD_HISTO',$arr_histo_ok);
+        $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
+            "ID_HISTO_ESTADO" => 2,
+            "IND_ESTADO_MUESTRAS" => $row["NUM_OK_SAMPLES"],
+            "ID_NUM_CARGA" => $ID_CARGA_AP,
+            "LAST_USR_AUDITA" => $DATA["DATA_FIRMA"][0]['USERNAME'],
+            "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'),
+            "ID_UID_CUSTODIA" => $DATA["DATA_FIRMA"][0]['ID_UID'],
+            "DATE_LAST_CUSTODIA" => date('Y-m-d H:i:s'),
+            "ID_UID" => $DATA["DATA_FIRMA"][0]['ID_UID'],
+            "TXT_NAMEAUDITA" => $DATA["DATA_FIRMA"][0]['NAME'] . " " . $DATA["DATA_FIRMA"][0]['DATA_FIRMA'],
+        ));
+        return [
             'STATUS' => $mivariable,
             'HISTO_OK' => $arr_histo_ok,
             'STATUS_BD' => $this->db->trans_complete(),
-        );
+        ];
     }
-    
 
     /*            
-    #HOSPITAL ANGOL             –   RECIBE SOLICITUD DE:
-        CSF ALEMANIA            -   303
-        CSF HUEQUEN             -   301
-        PIEDRA DE AGUILA        -   304
+    #HOSPITAL ANGOL – RECIBE SOLICITUD DE:
+        CSF ALEMANIA - 303
+        CSF HUEQUEN - 301
+        PIEDRA DE AGUILA -   304
         CSF RENAICO             -   300 
-        H COLLIPULLI            -   103
-        H PUREN                 -   101
-        CSF LOS SAUCES          -   102
-        CSF LUMACO              -   105
+        H COLLIPULLI -   103
+        H PUREN -   101
+        CSF LOS SAUCES -   102
+        CSF LUMACO -   105
     #HOSPITAL VICTORIA
-        CSF VICTORIA            -   318
-        H TRAGUIEN              -   104
-        H LONQUIMAY             -   108
-        H CURACAUTÍN            -   107
-        CSF ERCILLA             –   302
+        CSF VICTORIA -   318
+        H TRAGUIEN -   104
+        H LONQUIMAY -   108
+        H CURACAUTÍN -   107
+        CSF ERCILLA –   302
     */
     #$_arr_establecimiento_referencia = $this->db->query(" SELECT P.COD_ESTABLREF FROM PABELLON.PB_RED_MAPA_AP P WHERE P.COD_EMPRESA IN ($v_cod_empresa)  AND P.IND_ESTADO IN (1) ")->result_array();
     #$_val_establecimiento_referencia = $_arr_establecimiento_referencia[0]["COD_ESTABLREF"];
@@ -2079,37 +2095,22 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $mivariable = true;
         $arr_histo_ok = [];
         
-        // DERIVACION ENTRE EMPRESAS
+        # DERIVACION ENTRE EMPRESAS
         $_val_establecimiento_referencia = '';
-        if($DATA['COD_EMPRESA'] == '100' || $DATA['COD_EMPRESA'] == '106' || $DATA['COD_EMPRESA'] == '029' || $DATA['COD_EMPRESA'] == '800') {
+        if($DATA['COD_EMPRESA'] == '029' || $DATA['COD_EMPRESA'] == '800') {
             $_val_establecimiento_referencia = ''; 
         } else {
             $v_cod_empresa = $DATA['COD_EMPRESA'];
-            if ($v_cod_empresa == '303' || $v_cod_empresa == '301' || $v_cod_empresa == '304' || $v_cod_empresa == '300' || 
-                $v_cod_empresa == '103' || $v_cod_empresa == '101' || $v_cod_empresa == '102' || $v_cod_empresa == '105') {
-                $_val_establecimiento_referencia = '100';
-            }
-            if ($v_cod_empresa == '318' || $v_cod_empresa == '104' || $v_cod_empresa == '108' || $v_cod_empresa == '107' || $v_cod_empresa == '302') {
-                $_val_establecimiento_referencia = '106';
-            }
+            $_val_establecimiento_referencia = '800';
         }
-        
         if (count($DATA['ARRAY']) > 0) {
             foreach ($DATA['ARRAY'] as $i => $fila) {
                 foreach ($fila as $x => $row) {
-                    // NUMERO DE CARGA
-                    // Ya no necesitamos generar manualmente $ID_CARGA_AP
-                    // Este se generará automáticamente en MySQL con AUTO_INCREMENT
-    
                     if (count($row["ARRAY_NMUESTRAS"]) > 0) {
                         foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus) {
-                            // Ya no necesitamos generar manualmente $ID_LINETIME_HISTO
-                            // Este se generará automáticamente en MySQL con AUTO_INCREMENT
-                            
                             $ID_ANATOMIA = $DATA["ID_ANATOMIA"];
                             $IND_CASETE = $mus['IND_CASETE'];
                             $ID_MUESTRA = $mus['ID_NMUESTRA'];
-                            
                             $arr_linea_tiempo = array(
                                 // "ID_LINETIMEHISTO" => el ID se generará automáticamente,
                                 "ID_NUM_CARGA" => $ID_CARGA_AP,
@@ -2120,10 +2121,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 "USR_CREA" => $DATA["SESSION"],
                                 "FEC_CREA" => date('Y-m-d H:i:s'),
                                 "IND_ESTADO" => 1,
-                                "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
+                                "ID_UID" => $DATA["DATA_FIRMA"][0]['ID_UID'],
                                 "TXT_MUESTRA" => $mus['TXT_MUESTRA'] == '' ? 'NO INFORMADO' : $mus['TXT_MUESTRA'],
                             );
-                            
                             $arr_linea_tiempo[$IND_CASETE == 1 ? "ID_CASETE" : "ID_NMUESTRA"] = $ID_MUESTRA;
                             $this->db->insert($this->ownPab . '.PB_LINETIME_HISTO', $arr_linea_tiempo);
                             // CAMBIA ESTADO DE MUESTRAS
@@ -2151,32 +2151,31 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                         }
                     }
                     array_push($arr_histo_ok, $row["NUM_HISTO"]);
-                    $this->db->where('ID_SOLICITUD_HISTO', $row["NUM_HISTO"]);
-                    $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
-                        "ID_HISTO_ESTADO" => 3,
-                        "DATE_TRASLADO" => date('Y-m-d H:i:s'),
-                        "ID_UID_TRASLADO" => $DATA["DATA_FIRMA"]->ID_UID,
-                        "ID_USER_TRASLADO" => $DATA["SESSION"],
-                        "IND_ESTADO_MUESTRAS" => $row["NUM_OK_SAMPLES"],
-                        "ID_NUM_CARGA" => $ID_CARGA_AP,
-                        "LAST_USR_AUDITA" => $DATA["DATA_FIRMA"]->USERNAME,
-                        "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'),
-                        "ID_UID" => $DATA["DATA_FIRMA"]->ID_UID,
-                        "TXT_NAMEAUDITA" => $DATA["DATA_FIRMA"]->NAME . " " . $DATA["DATA_FIRMA"]->MIDDLE_NAME,
-                        "COD_ESTABLREF" => $_val_establecimiento_referencia
-                    ));
                 }
             }
         }
-        return array(
+        $arr_histo_ok = array_values(array_unique($arr_histo_ok));
+        $this->db->where_in('ID_SOLICITUD_HISTO',$arr_histo_ok);
+        $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
+            "ID_HISTO_ESTADO" => 3,
+            "DATE_TRASLADO" => date('Y-m-d H:i:s'),
+            "ID_UID_TRASLADO" => $DATA["DATA_FIRMA"][0]['ID_UID'],
+            "ID_USER_TRASLADO" => $DATA["SESSION"],
+            "IND_ESTADO_MUESTRAS" => $row["NUM_OK_SAMPLES"],
+            "ID_NUM_CARGA" => $ID_CARGA_AP,
+            "LAST_USR_AUDITA" => $DATA["DATA_FIRMA"][0]['USERNAME'],
+            "LAST_DATE_AUDITA" => date('Y-m-d H:i:s'),
+            "ID_UID" => $DATA["DATA_FIRMA"][0]['ID_UID'],
+            "TXT_NAMEAUDITA" => $DATA["DATA_FIRMA"][0]['NAME'],
+            "COD_ESTABLREF" => $_val_establecimiento_referencia
+        ));
+        return [
             'STATUS' => $mivariable,
             'HISTO_OK' => $arr_histo_ok,
             'STATUS_BD' => $this->db->trans_complete(),
-        );
+        ];
     }
-    
-    
-    // Función para generar IDs únicos en MySQL
+
     private function generate_unique_id($table) {
         $this->db->select_max('ID_LINETIMEHISTO');
         $query = $this->db->get($table);

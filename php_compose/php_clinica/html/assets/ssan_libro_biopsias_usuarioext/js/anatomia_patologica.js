@@ -122,6 +122,11 @@ $(document).ready(function(){
     $("#CONFIG_FRASCO").val(ind_conf_frasco);
     //console.log("CONFIG_FRASCO -> ",$("#CONFIG_FRASCO").val()," ind_conf_frasco ->",ind_conf_frasco);
     $('[data-toggle="tooltip"]').tooltip();
+    $("#transportModal").on('hidden.bs.modal',function(e){ 
+        $(".div_estado_muestra").html(''); 
+        $(".div_fechatrasporte").html(''); 
+        $(".div_responsable").html(''); 
+    });
 });
 
 function star_etiqueta(){
@@ -1809,15 +1814,15 @@ function confirma_trasporte(id_anatomia){
 //TRASPORTE ALL
 
 function confirma_trasporte_all(fase){
-    var LISTA_ANATOMIA                  =   {   RESUL : [] };
-    var traffic_all                     =   true;
-    var txt_busuqeda                    =   fase == 1 ? '.all_solicitudes_trasporte':'.all_solicitudes_trasporte';
+    var LISTA_ANATOMIA = { RESUL : [] };
+    var traffic_all = true;
+    var txt_busuqeda = fase == 1 ? '.all_solicitudes_trasporte':'.all_solicitudes_trasporte';
     $(txt_busuqeda).each(function(index,value){
-        console.log("-----------------------------------");
-        console.log("value.id->     ",value.id,"<-      ");
-        console.log("-----------------------------------");
-        var RETURN_ACTIVOS              =   get_lista_activos(value.id);
-        var STATUS_MUESTRAS             =   RETURN_ACTIVOS;
+        //console.log("-----------------------------------");
+        //console.log("value.id->     ",value.id,"<-      ");
+        //console.log("-----------------------------------");
+        var RETURN_ACTIVOS = get_lista_activos(value.id);
+        var STATUS_MUESTRAS = RETURN_ACTIVOS;
         if(!STATUS_MUESTRAS.ALL_OK_SAMPLES){ traffic_all =  false;} 
         LISTA_ANATOMIA.RESUL.push(STATUS_MUESTRAS);
     });
@@ -2004,11 +2009,10 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                 var pass = new Array({"pass1":r});
                 $('#loadFade').modal('show'); 
                 $.ajax({ 
-                        type :   "POST",
-                        url :   post==0 ? "ssan_libro_biopsias_usuarioext/fn_confirma_custodia":
-                                post==1 ? "ssan_libro_biopsias_usuarioext/confirma_trasporte":"",
-                                            //"ssan_spab_gestionlistaquirurgica/confirma_recepcion",
-                        dataType :   "json",
+                        type : "POST",
+                        url : post==0 ? "ssan_libro_biopsias_usuarioext/fn_confirma_custodia":
+                        post==1 ? "ssan_libro_biopsias_usuarioext/confirma_trasporte":"",
+                        dataType : "json",
                         beforeSend : function(xhr) { $('#loadFade').modal('show');  },
                         data : {
                             id_anatomia : id_anatomia,
@@ -2023,33 +2027,33 @@ function _envios(id_anatomia,post,LISTA_ANATOMIA){
                             jAlert("Error en aplicativo, Consulte Al Administrador","Clinica Libre"); 
                         },
                         success : function(aData){ 
-                                                    setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
-                                                    if(aData.STATUS){
-                                                        aData.GET_BD.HISTO_OK.forEach(function(idhisto){
-                                                            $(".li_histo_"+idhisto).remove();
-                                                            $(".tab_histo_"+idhisto).remove();
-                                                        });
-                                                        if( $('#UL_TABS_MUESTRA li').size()===0){
-                                                            $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
-                                                        } else {
-                                                            $('#UL_TABS_MUESTRA').tab();
-                                                            $('#UL_TABS_MUESTRA li:last-child a').tab('show');
-                                                        }
-                                                        jAlert("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha cambiado de estado","Clinica Libre");
-                                                        //distintas cookie
-                                                        if( $("#IND_FROM").val() == 'GESPAB' ){
-                                                            UPDATE_MAIN();
-                                                        } else {
-                                                            update_main();
-                                                        }
-                                                        if(post==1){
-                                                            console.log(" load_confirma_envio_recepcion ");
-                                                            $("#load_confirma_envio_recepcion").submit();
-                                                        }
-                                                    } else {
-                                                        jError(aData['TXT_ERROR'],"Clinica Libre");
-                                                    }
-                                                }, 
+                            setTimeout(function(){ $('#loadFade').modal('hide');  }, 1000);
+                            if(aData.STATUS){
+                                aData.GET_BD.HISTO_OK.forEach(function(idhisto){
+                                    $(".li_histo_"+idhisto).remove();
+                                    $(".tab_histo_"+idhisto).remove();
+                                });
+                                if( $('#UL_TABS_MUESTRA li').size()===0){
+                                    $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
+                                } else {
+                                    $('#UL_TABS_MUESTRA').tab();
+                                    $('#UL_TABS_MUESTRA li:last-child a').tab('show');
+                                }
+                                jAlert("La solicitud N&deg; "+aData.GET_BD.HISTO_OK.join(",")+", ha cambiado de estado","Clinica Libre");
+                                //distintas cookie
+                                if( $("#IND_FROM").val() == 'GESPAB' ){
+                                    UPDATE_MAIN();
+                                } else {
+                                    update_main();
+                                }
+                                if(post==1){
+                                    console.log(" load_confirma_envio_recepcion ");
+                                    $("#load_confirma_envio_recepcion").submit();
+                                }
+                            } else {
+                                jError(aData['TXT_ERROR'],"Clinica Libre");
+                            }
+                        }, 
                     });
             }
         });
@@ -3949,4 +3953,13 @@ function pdf_recepcion_ok(id_anatomia){
             }
         }, 
    });
+}
+
+function js_vercontenido(id_anatomia){
+    const data_paciente = $("#DATA_"+id_anatomia).data('paciente');
+    //console.error("TXT_NAMEAUDITA -> ",data_paciente.TXT_NAMEAUDITA);
+    $(".div_estado_muestra").html(data_paciente.TXT_HISTO_ESTADO); 
+    $(".div_fechatrasporte").html(data_paciente.LAST_DATE_AUDITA); 
+    $(".div_responsable").html(data_paciente.TXT_NAMEAUDITA); 
+    $("#transportModal").modal({backdrop:'static',keyboard:false}).modal("show");
 }

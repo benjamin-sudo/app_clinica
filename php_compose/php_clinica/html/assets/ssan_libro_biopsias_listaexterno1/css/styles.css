@@ -563,10 +563,13 @@
     padding                     :   11px;
 }
 
-.grid_edicion_name              {
-    display                     :   grid;
-    grid-template-columns       :   auto 1fr auto;
-    gap                         :   5px;
-    margin-left                 :   10px;
-    margin-right                :   13px;
+.grid_edicion_name {
+    display : grid;
+    grid-template-columns : auto 1fr auto;
+    gap : 5px;
+    margin-left : 10px;
+    margin-right : 13px;
 }
+
+
+

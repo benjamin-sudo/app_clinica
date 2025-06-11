@@ -331,3 +331,22 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="transportModal" tabindex="-1" aria-labelledby="transportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transportModalLabel">Detalles actual de las muestras</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Estado en transporte:</strong> <div class="div_estado_muestra"></div></p>
+                <p><strong>Fecha:</strong> <div class="div_fechatrasporte"></div></p>
+                <p><strong>Nombre Responsable:</strong> <div class="div_responsable"></div></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
