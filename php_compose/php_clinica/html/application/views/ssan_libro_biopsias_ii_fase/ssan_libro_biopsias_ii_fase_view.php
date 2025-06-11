@@ -177,9 +177,9 @@
                     <center>
                         <div style="width: 390px;">
                             <select class="selectpicker" id="Sl_accion_a_realizar"  onchange="Sl_accion_a_realizar();">
-                                <option value=""    >SELECCIONE...</option>
+                                <option value="" >SELECCIONE...</option>
                                 <option value="100" >SOLO CONSULTAR</option>
-                                <option value="1"   >RECEPCIONAR MUESTRAS (AP)</option>
+                                <option value="1" >RECEPCIONAR MUESTRAS (AP)</option>
                             </select>
                         </div>
                     </center>
@@ -621,3 +621,5 @@
     </div>
 
 </section>
+
+

@@ -161,7 +161,7 @@ function UPDATE_PANEL(){
         console.log("-----------------------------------------------");
     */
     let ind_template = $("#IND_TEMPLETE").val();
-    console.log(" ->",ind_template);
+    //console.log(" ->",ind_template);
     if($("#IND_TEMPLETE").val() == 'ssan_libro_biopsias_i_fase'){
         console.log("ssan_libro_biopsias_i_fase");
         $.ajax({ 
@@ -186,7 +186,7 @@ function UPDATE_PANEL(){
                 $('[data-toggle="tooltip"]').tooltip();
                 setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
             }, 
-            complete : function () {   setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000); }
+            complete : function () { setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000); }
         });
     } else {
         //console.log("ssan_libro_biopsias_ii_fase");

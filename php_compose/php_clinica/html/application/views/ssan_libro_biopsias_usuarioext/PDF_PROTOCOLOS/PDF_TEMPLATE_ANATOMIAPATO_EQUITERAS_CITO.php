@@ -294,58 +294,61 @@
                 </tr>
             </thead>
         </table>
-        
+
         <table tabindex="2" width="100%" align="center" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 
             <tbody>
                 <tr>
-                    <td colspan="4" class="subtitulo_formulario2"  bgcolor="#ECF1F1">&nbsp;<b>DETALLE SOLICITUD:</b></td>
+                    <td colspan="4" class="subtitulo_formulario2"  bgcolor="#ECF1F1">&nbsp;<b>DETALLE FORMULARIO DE ANATOMIA:</b></td>
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > SITIO DE EXTRACCI&Oacute;N:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_SITIOEXT"]; ?></td>
+                    <td colspan="2"  class="subtitulo_formulario2" ><?= htmlspecialchars($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_SITIOEXT"])?></td>
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > UBICACI&Oacute;N:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_UBICACION"]; ?></td>
+                    <td colspan="2"  class="subtitulo_formulario2" ><?= htmlspecialchars($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_UBICACION"])?></td>
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > TAMA&Ntilde;O:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_TAMANNO"];?></td>
+                    <td colspan="2"  class="subtitulo_formulario2" ><?= htmlspecialchars($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_TAMANNO"])?></td>
                 </tr>
                 <tr>
                     <td width="25%"  class="subtitulo_formulario2" > TIPO DE LESI&Oacute;N:</td>
-                    <td width="25%"  class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_TIPOSESION"]; ?></td>
+                    <td width="25%"  class="subtitulo_formulario2" ><?= htmlspecialchars($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_TIPOSESION"])?></td>
                     <td width="25%"  class="subtitulo_formulario2" > ASPECTO:</td>
-                    <td width="25%"  class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_ASPECTO"]; ?></td>
+                    <td width="25%"  class="subtitulo_formulario2" <?= htmlspecialchars($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_ASPECTO"])?>></td>
                 </tr>
                 <tr>
                     <td width="25%"  class="subtitulo_formulario2" > ANT. PREVIOS:</td>
-                    <td width="25%"  class="subtitulo_formulario2" ><?php echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_ANT_PREVIOS"]; ?></td>
+                    <td width="25%"  class="subtitulo_formulario2"  <?= htmlspecialchars($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["TXT_ANT_PREVIOS"])?>></td>
                     <td width="25%"  class="subtitulo_formulario2" ></td>
                     <td width="25%"  class="subtitulo_formulario2" ></td>
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > DESC. BIOPSIA:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_BIPSIA"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_BIPSIA"];}; ?></td> 
+                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_BIPSIA"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo htmlspecialchars( $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_BIPSIA"]);};?></td> 
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > DESC. CITOLOG&Iacute;A:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_CITOLOGIA"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_CITOLOGIA"];}; ?></td> 
+                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_CITOLOGIA"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo htmlspecialchars($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_CITOLOGIA"]);}; ?></td> 
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > TIPO DE MUESTRA:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_TIPOMUESTRA"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_TIPOMUESTRA"];}; ?></td>
+                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_TIPOMUESTRA"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo htmlspecialchars( $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_TIPOMUESTRA"]);}; ?></td>
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > NUMERACI&Oacute;N DE MUESTRAS:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_SUBNUMERACION"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_SUBNUMERACION"];}; ?></td> 
+                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_SUBNUMERACION"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo htmlspecialchars( $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["NUM_SUBNUMERACION"]);}; ?></td> 
                 </tr>
                 <tr>
                     <td colspan="2"  class="subtitulo_formulario2" > OBSERVACIONES:</td>
-                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_OBSERVACIONES"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_OBSERVACIONES"];}; ?></td> 
+                    <td colspan="2"  class="subtitulo_formulario2" ><?php if($DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_OBSERVACIONES"]==''){ echo "<b>NO INFORMADO</b>";}else{ echo htmlspecialchars( $DATA["P_ANATOMIA_PATOLOGICA_MAIN"][0]["DES_OBSERVACIONES"]);}; ?></td> 
                 </tr>
             </tbody>
         </table>
+
+
+
         
         <?php $TOTAL_MUESTRAS = count($DATA["P_AP_MUESTRAS_CITOLOGIA"]); ?>
         <table tabindex="2" width="100%" align="center" cellpadding="0" cellspacing="0" style="margin-bottom:8px;"> 

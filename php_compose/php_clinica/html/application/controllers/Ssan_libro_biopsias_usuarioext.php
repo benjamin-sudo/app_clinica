@@ -121,7 +121,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             "NUM_FICHAE" => $NUM_FICHAE,
             "ADMISION" => $ADMISION,
         ));
-        $html =   $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
+        $html = $this->load->view("ssan_libro_biopsias_usuarioext/FORMULARIOS/NUEVO_PACIENTE_SOLICITUD",$DATA_CURSOR,true);
         $this->output->set_output(json_encode([
             "GET_HTML" =>  $html,
             "SALIDA_DIRECTA" =>  true,
@@ -402,14 +402,15 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $base64_pdf = base64_encode($dompdf->Output($txt_name_pdf,'S'));
         $this->output->set_output(json_encode([
             'STATUS' =>  $STATUS,
-            'DATA_RETURN' =>  $DATA,
+            'DATA_RETURN' => $DATA,
             'empresa' =>  $empresa,
             'ID_RETURN' =>  $id_tabla,
-            'IND_TEMPLATE' =>  1,
-            'HTML_BIOPSIAS' =>  $HTML_BIOPSIAS,
-            'PDF_MODEL' =>  $base64_pdf,
-            'PDF_MODEL_DATA' =>  $base64_pdf,
-        ]));
+            'IND_TEMPLATE' => 1,
+            'HTML_BIOPSIAS' => $HTML_BIOPSIAS,
+            'HTML_CITOLOGIA' => $HTML_CITOLOGIA,
+            'PDF_MODEL' => $base64_pdf,
+            'PDF_MODEL_DATA' => $base64_pdf,
+        ])); 
     }
     
     public function pdf_recepcion_anatomia_pat_ok(){

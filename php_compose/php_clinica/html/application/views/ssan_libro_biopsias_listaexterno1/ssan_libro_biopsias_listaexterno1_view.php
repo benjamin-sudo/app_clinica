@@ -1,11 +1,9 @@
 <input type="hidden" id="NUM_FASE" name="NUM_FASE" value="1"/>
 <input type="hidden" id="IND_TEMPLETE" name="IND_TEMPLETE" value="ssan_libro_biopsias_listaexterno1"/>
 <div class="header" style="padding-top:0;">
-    <h4 class="title" style="color:#e34f49;margin-bottom:10px;"><b>TOMA DE MUESTRA | ROTULADO | CUSTODIA O TRASPORTE | ADMINISTRADOR</b></h4>
+    <h4 class="title" style="color:#e34f49;margin-bottom:10px;"><b>PUNTO DE TOMA DE MUESTRA | ROTULADO | CUSTODIA O TRASPORTE | ADMINISTRADOR</b></h4>
 </div>
-
 <hr style="margin:0px 0px 0px 0px">
-
 <div class="css_rotulado_externo">
     <div class="css_rotulado_externo1"> 
         <!-- data-width="370px" -->
@@ -53,7 +51,7 @@
             <button type="button" class="btn btn-info btn-fill" id="BTN_recepcion_custodia_masiva" onclick="recepcion_custodia_masiva()">
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;CUSTODIA/TRASPORTE
             </button>
-            <button type="button" class="btn btn-warning btn-fill" id="BTN_" onclick="js_config_etiqueta()">
+            <button type="button" class="btn btn-warning btn-fill" id="BTN_" onclick="js_config_etiqueta()" style="display:none">
                 <i class="fa fa-question-circle-o" aria-hidden="true"></i>
             </button>
             <button type="button" class="btn btn-danger btn-fill" id="btn_" onclick="js_permiso_zebra()">
@@ -192,26 +190,27 @@
         </div>
     </div>
 
-    <div class="modal fade" id="MODAL_INFO_APLICATIVO">
+    <!-- Modal -->
+    <div class="modal fade" id="MODAL_INFO_APLICATIVO" tabindex="-1" aria-labelledby="MODAL_INFO_APLICATIVOLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="title" style="color:#e34f49">
-                        <b>CONFIGURACI&Oacute;N DE ETIQUETA</b>
-                    </h4>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="MODAL_INFO_APLICATIVOLabel" style="color:#e34f49"> <b>CONFIGURACI&Oacute;N DE ETIQUETA</b> </h5>
+                    <!-- Botón de cierre -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body" id="HTML_INFO_APLICATIVO">
-                    <?php echo $this->load->view("ssan_libro_biopsias_listaexterno1/html_configuracion_frasco",[],true);?>
+                    <?php echo $this->load->view("ssan_libro_biopsias_listaexterno1/html_configuracion_frasco", [], true); ?>
                 </div>
-                <div class="modal-footer" style="text-align:end;">
-                    <button type="button" class="btn btn-fill btn-danger btn-xs" data-dismiss="modal">
-                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">
+                        <i class="fa fa-window-close" aria-hidden="true"></i> Cerrar
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
 
     
     <div class="modal fade" id="MODAL_INFORME_EVENTOS_ADVERSOS">
@@ -269,11 +268,11 @@
     <button type="button" class="btn btn-success btn-fill" id="btn_" onclick="test_envio()" style="display:none">TEST ENVIO</button>
 
     <style>
-        @media(min-width    :   900px){
+        @media(min-width : 900px){
             .modal_xl_traza   {
-                width       :   98%;
-                height      :   85%;
-                max-width   :   90%;
+                width : 98%;
+                height : 85%;
+                max-width : 90%;
             }
         }
     </style>

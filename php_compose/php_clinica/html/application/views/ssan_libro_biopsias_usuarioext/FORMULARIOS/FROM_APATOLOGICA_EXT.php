@@ -5,11 +5,10 @@
 <?php   }   else    { ?>
 
 <?php   }   ?>
-    
+
 <div id="data_get" data-get="<?php echo htmlspecialchars(json_encode(isset($ARRAY_GET)?$ARRAY_GET:[]),ENT_QUOTES,'UTF-8');?>"></div>
 <div id="data_bd" data-bd="<?php echo htmlspecialchars(json_encode($ARRAY_BD),ENT_QUOTES,'UTF-8');?>"></div>
 <div id="data_autocomplete" data-autocomplete="<?php echo htmlspecialchars(json_encode($ARRAY_AUTOCOMPLETE),ENT_QUOTES,'UTF-8');?>"></div>
-
 <div id="tabla_biopsia"></div>
 <div id="HTML_ANATOMIA_PATOLOGICA"></div>
 <div id="DIV_FORMULARIO_ANATOMIAPATOLOGICA_EXT">
@@ -18,41 +17,41 @@
         #**************************************************************************
         #FROM_APATOLOGICA_EXT 
         #leyenda
-        #LEGEND             =   0   
-        #$CALL_FROM         =   1    #LLAMADA EXTERNA | RCE + ADMISION
-        #$CALL_FROM         =   2    #LLAMA DESDE GESPAB - MODULO TNS - CENTRAL O MENOR - ETIQUETADO
-        #$CALL_FROM         =   5    #LLAMA DESDE GESPAB - PROTOCOLOS DE INS - PRV - URG - CX-MENOR
+        #LEGEND =   0   
+        #$CALL_FROM = 1 #LLAMADA EXTERNA | RCE + ADMISION
+        #$CALL_FROM = 2 #LLAMA DESDE GESPAB - MODULO TNS - CENTRAL O MENOR - ETIQUETADO
+        #$CALL_FROM = 5 #LLAMA DESDE GESPAB - PROTOCOLOS DE INS - PRV - URG - CX-MENOR
         #TEMPLATE_PA_ID_PROCARCH
-        #PA_ID_PROCARCH     =   36   #ERROR - SISTEMA DE VALORADAS
-        #29-09-2021         =        #NOTIFICACION CANCER 
+        #PA_ID_PROCARCH = 36   #ERROR - SISTEMA DE VALORADAS
+        #29-09-2021 = #NOTIFICACION CANCER 
         #07-09-2021
         #**************************************************************************         
     ?>
     <style>
-        .PANEL_FORMULARIO_MAIN          {
-            display                     :   grid;
-            grid-template-columns       :   60% 40%;
-            grid-column-gap             :   5px;
-            justify-items               :   stretch;
-            align-items                 :   center;
-            margin-bottom               :   50px;
-            margin-top                  :   10px;
+        .PANEL_FORMULARIO_MAIN {
+            display : grid;
+            grid-template-columns : 60% 40%;
+            grid-column-gap : 5px;
+            justify-items : stretch;
+            align-items : center;
+            margin-bottom : 50px;
+            margin-top : 10px;
         }
-        .PANEL_MAIN                     {
-            display                     :   grid;
-            grid-template-columns       :   70% 30%;
-            grid-column-gap             :   5px;
-            grid-row-gap                :   20px;
-            margin-top                  :   0px;
-            margin-bottom               :   0px;
+        .PANEL_MAIN {
+            display : grid;
+            grid-template-columns : 70% 30%;
+            grid-column-gap : 5px;
+            grid-row-gap : 20px;
+            margin-top : 0px;
+            margin-bottom : 0px;
         }
-        .PANEL_PRINCIPAL                {
-            display                     :   grid;
-            grid-template-columns       :   99% 1%;
-            grid-column-gap             :   5px;
-            grid-row-gap                :   20px;
-            margin-top                  :   0px;
-            margin-bottom               :   0px;
+        .PANEL_PRINCIPAL {
+            display : grid;
+            grid-template-columns : 99% 1%;
+            grid-column-gap : 5px;
+            grid-row-gap : 20px;
+            margin-top : 0px;
+            margin-bottom : 0px;
         }
     </style>
     
@@ -186,17 +185,7 @@
                             </tr>
                             <?php } ?>
                             
-                            <tr>
-                                <td colspan="2">
-                                    <div class="td_2">
-                                        <label class="control-label">&nbsp;NOTIFICACI&Oacute;N CANCER&nbsp;<star>*</star></label>
-                                        <select class="form-control input-sm" name="slc_ind_cancer" id="slc_ind_cancer">
-                                            <option value="0" >NO</option>
-                                            <option value="1" >SI</option>
-                                        </select>
-                                    </div>
-                                </td>
-                            </tr>
+                            
                             
                             <tr>
                                 <td colspan="2">
@@ -290,6 +279,19 @@
                                     </div>
                                 </td>
                             </tr>
+                            
+                            <tr style="display:none">
+                                <td colspan="2">
+                                    <div class="td_2">
+                                        <label class="control-label">&nbsp;NOTIFICACI&Oacute;N CANCER&nbsp;<star>*</star></label>
+                                        <select class="form-control input-sm" name="slc_ind_cancer" id="slc_ind_cancer">
+                                            <option value="0" >NO</option>
+                                            <option value="1" >SI</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>  
                 </form>
@@ -362,11 +364,11 @@
                         <table class="table table-striped" style="width:100%;margin-bottom:0px;margin-top:-2px;">
                             <thead>
                                 <tr id="head_nbipsia" style="height: 40px;">
-                                    <th style="width:5%;    text-align:center; height:30px;"><b>N&deg;</b></th>
-                                    <th style="width:50%;   text-align:center;"><b>TIPO DE MUESTRA</b></th>
-                                    <th style="width:30%;   text-align:center;"><b>ETIQUETA</b></th>
-                                    <th style="width:5%;    text-align:center;display:none" class="row_cassete"><b>N&deg; C</b></th>
-                                    <th style="width:5%;    text-align:center;"><i class="fa fa-cog" aria-hidden="true"></i></th>
+                                    <th style="width:5%; text-align:center; height:30px;"><b>N&deg;</b></th>
+                                    <th style="width:50%; text-align:center;"><b>TIPO DE MUESTRA</b></th>
+                                    <th style="width:30%; text-align:center;"><b>ETIQUETA</b></th>
+                                    <th style="width:5%; text-align:center;display:none" class="row_cassete"><b>N&deg; C</b></th>
+                                    <th style="width:5%; text-align:center;"><i class="fa fa-cog" aria-hidden="true"></i></th>
                                 </tr>
                             </thead>
                             <tbody id="TBODY_NUM_MUESTRAS"></tbody>
@@ -376,24 +378,24 @@
                     <?php if(empty($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"])){ ?>        
                         <script>
                             //$("#tabla_biopsia").data({arr_muestra:[],arr_citologia:[]});
-                            document.getElementById("AP_USO_CASSETE").checked       =   false;
-                            document.getElementById("AP_USO_CASSETE").disabled      =   true;
+                            document.getElementById("AP_USO_CASSETE").checked = false;
+                            document.getElementById("AP_USO_CASSETE").disabled = true;
                             js_htmlnummuestra("bio_ant_nMuestasSelect",1);
                         </script>
                     <?php  } else {  ?>  
                         <?php 
-                            $arr            =   array();
-                            $aux_anatomia   =   0;
+                            $arr = array();
+                            $aux_anatomia = 0;
                             foreach($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"] as $i => $row){ ?>
                                 <?php  
-                                $arr[]      =   array(
-                                                    "ID_NMUESTRA"       =>  $row["ID_NMUESTRA"],
-                                                    "N_MUESTRA"         =>  $row["N_MUESTRA"],
-                                                    "TXT_MUESTRA"       =>  $row["TXT_MUESTRA"],
-                                                    "IND_ETIQUETA"      =>  $row["IND_ETIQUETA"],
-                                                    "NUM_CASSETTE"      =>  $row["NUM_CASSETTE"],
-                                                    "DATA"              =>  $row,
-                                                );
+                                $arr[] = array(
+                                    "ID_NMUESTRA" =>  $row["ID_NMUESTRA"],
+                                    "N_MUESTRA" =>  $row["N_MUESTRA"],
+                                    "TXT_MUESTRA" =>  $row["TXT_MUESTRA"],
+                                    "IND_ETIQUETA" =>  $row["IND_ETIQUETA"],
+                                    "NUM_CASSETTE" =>  $row["NUM_CASSETTE"],
+                                    "DATA" =>  $row,
+                                );
                                 $aux_anatomia++;
                             } ?>
                         <script>
@@ -401,16 +403,16 @@
                             $("#bio_ant_nMuestasSelect").val(<?php echo $aux_anatomia;?>);
                             js_htmlnummuestra('',<?php echo $aux_anatomia;?>);
                         </script>
-                        <?php if($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_USOCASSETTE']      == 1){  ?>
+                        <?php if($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['IND_USOCASSETTE'] == 1){  ?>
                             <script>
-                                document.getElementById("AP_USO_CASSETE").checked               =   true;
+                                document.getElementById("AP_USO_CASSETE").checked = true;
                                 js_usocassete("AP_USO_CASSETE");
                             </script>
                         <?php } else { ?>
                             <?php if($DATA["P_ANATOMIA_PATOLOGICA_MUESTRAS"][0]["IND_ETIQUETA"] ==  2){ ?>
                                 <script>
-                                    document.getElementById("AP_USO_CASSETE").checked           =   false;
-                                    document.getElementById("AP_USO_CASSETE").disabled          =   true; 
+                                    document.getElementById("AP_USO_CASSETE").checked = false;
+                                    document.getElementById("AP_USO_CASSETE").disabled = true; 
                                 </script>
                             <?php } ?>
                         <?php } ?>
@@ -470,16 +472,16 @@
                     </form>
 
                     <?php if(count($DATA["P_AP_MUESTRAS_CITOLOGIA"])>0){ 
-                        $cit                =   array();
-                        $aux_citologia      =   0;
+                        $cit =   array();
+                        $aux_citologia =   0;
                         foreach($DATA["P_AP_MUESTRAS_CITOLOGIA"] as $i => $row){ ?>
                             <?php  
-                            $cit[]          =   array(
-                                                    "NUM_MUESTRA"       =>  $row["N_MUESTRA"],
-                                                    "TXT_OBSERVACION"   =>  $row["TXT_MUESTRA"],
-                                                    "IND_ETIQUETA"      =>  $row["IND_ETIQUETA"],
-                                                    "DATA"              =>  $row,
-                                                );
+                            $cit[] = array(
+                                "NUM_MUESTRA" => $row["N_MUESTRA"],
+                                "TXT_OBSERVACION" => $row["TXT_MUESTRA"],
+                                "IND_ETIQUETA" => $row["IND_ETIQUETA"],
+                                "DATA" => $row,
+                            );
                             $aux_citologia++;
                         } 
                         ?>
@@ -502,13 +504,13 @@
     </div>
     <?php if ($CALL_FROM == 1 || $CALL_FROM == 2){ ?>   
         <style>
-            #PANEL_FINAL                     {
-                display                     :   grid;
-                grid-template-columns       :   1fr;
-                grid-column-gap             :   5px;
-                grid-row-gap                :   20px;
-                margin-top                  :   0px;
-                margin-bottom               :   0px;
+            #PANEL_FINAL {
+                display : grid;
+                grid-template-columns : 1fr;
+                grid-column-gap : 5px;
+                grid-row-gap : 20px;
+                margin-top : 0px;
+                margin-bottom : 0px;
             }
         </style>
         <div id="btn-back"></div>
@@ -517,12 +519,11 @@
             <div class="DIV_2 text-center">
                 <?php  if ($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'] == '' || $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_HISTO_ESTADO'] == '1' || $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_HISTO_ESTADO']=='2' ){ ?>
                     <button 
-                        type        =   "button" 
-                        id          =   "btn-finish" 
-                        class       =   "btn btn-info btn-back  btn-fill btn-wd  pull-center" 
-                        onclick     =   "JS_GUARDAANATOMIA_EXTERNO(<?php echo $CALL_FROM;?>)" 
-                        style       =   "display:inline-block;"
-                        >
+                        type = "button" 
+                        id = "btn-finish" 
+                        class = "btn btn-info btn-back  btn-fill btn-wd  pull-center" 
+                        onclick = "JS_GUARDAANATOMIA_EXTERNO(<?php echo $CALL_FROM;?>)" 
+                        style = "display:inline-block;">
                      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
                      <?php if ($CALL_FROM     ==  1){
                          echo "ENVIAR SOLICITUD ANATOM&Iacute;A PATOL&Oacute;GICA";
@@ -533,18 +534,14 @@
                      } ?>
                     </button>
                 <?php }  ?>
- 
                 <?php  if ($DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'] != ''){ ?>
                     <button 
-                        type       =   "button" 
-                        id          =   "btn-finish" 
-                        class       =   "btn btn-danger btn-back  btn-fill btn-wd  pull-center" 
-                        onclick     =   "GET_PDF_ANATOMIA(<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>);hide_from();" 
-                        style       =   "display:inline-block;"
-                    > PDF</button>
+                        type = "button" 
+                        id = "btn-finish" 
+                        class = "btn btn-danger btn-back  btn-fill btn-wd  pull-center" 
+                        onclick = "GET_PDF_ANATOMIA(<?php echo $DATA['P_ANATOMIA_PATOLOGICA_MAIN'][0]['ID_SOLICITUD'];?>);hide_from();"> PDF</button>
                     
                 <?php } ?>
-                
             </div>
         </div>
     <?php } else { ?>
@@ -567,8 +564,10 @@
 
 <script>
     $(document).ready(function(){
-        console.log("btn_envia_form");
+        //console.log("me gusta los problemas ");
         $(".btn_envia_form").prop('disabled', false);
+        document.getElementById("AP_USO_CASSETE").checked = false;
+        document.getElementById("AP_USO_CASSETE").disabled = false;
     });
 
     function hide_from(){
@@ -576,7 +575,8 @@
     }
     
     function star_form_anatomia(){
-        var IND_TIPO_BIOPSIA        =   <?php echo $IND_TIPO_BIOPSIA;?>;
+        var IND_TIPO_BIOPSIA = <?php echo $IND_TIPO_BIOPSIA;?>;
+        /*
         console.log("------------data_bd------------------------------------------------------------------------");
         console.log("               ->",$("#data_bd").data('bd'),"<-                                            ");
         console.log("-------------------------------------------------------------------------------------------");
@@ -585,6 +585,7 @@
         console.log("   P_ANATOMIA_PATOLOGICA_MUESTRAS  ->  ",$("#data_bd").data('bd').P_ANATOMIA_PATOLOGICA_MUESTRAS); 
         console.log("   P_AP_MUESTRAS_CITOLOGIA         ->  ",$("#data_bd").data('bd').P_AP_MUESTRAS_CITOLOGIA); 
         console.log("-------------------------------------------------------------------------------------------");
+        */
         js_htmlnummuestra("bio_ant_nMuestasSelect",1);
         js_htmlnummuestra("bio_ant_nCitologia",1);
     }

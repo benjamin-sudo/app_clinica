@@ -2,7 +2,7 @@
 === INICIANDO RESTAURACIÓN ===
 
 [1/7] Buscando archivos .tar.gz en: ./backup_service/respaldo
-[1/7] Se encontró respaldo: mysql_backup_2025-06-10_14-00-31.tar.gz
+[1/7] Se encontró respaldo: mysql_backup_2025-06-11_02-00-00.tar.gz
 
 [2/7] Deteniendo servicios: mysql_6 y backup_service
  Container backup_bd_clinica  Stopping
@@ -11,8 +11,8 @@
  Container mysql_6  Stopped
 
 [3/7] Ejecutando 'docker compose down -v' para borrar contenedores y volúmenes
- Container php_clinica  Stopping
  Container user_administrador  Stopping
+ Container php_clinica  Stopping
  Container php_compose-monitoreo_mysql-1  Stopping
  Container backup_bd_clinica  Stopping
  Container backup_bd_clinica  Stopped
@@ -41,14 +41,14 @@
 
 [5/7] Creando volumen vacío: php_compose_db_data
 
-[6/7] Iniciando extracción de mysql_backup_2025-06-10_14-00-31.tar.gz en el volumen php_compose_db_data...
+[6/7] Iniciando extracción de mysql_backup_2025-06-11_02-00-00.tar.gz en el volumen php_compose_db_data...
 [6/7] Montando host C:/Users/LENOVO/Desktop/php_compose/app_clinica/php_compose/backup_service/respaldo → contenedor:/respaldo
     • Listando /respaldo dentro del contenedor:
-total 67024
+total 67000
 -rwxrwxrwx    1 root     root             0 Jun  4 14:28 index.php
--rwxrwxrwx    1 root     root      68631243 Jun 10 14:00 mysql_backup_2025-06-10_14-00-31.tar.gz
+-rwxrwxrwx    1 root     root      68606195 Jun 11 02:00 mysql_backup_2025-06-11_02-00-00.tar.gz
     • Limpiando /var/lib/mysql ...
-    • Ejecutando tar xzvf /respaldo/mysql_backup_2025-06-10_14-00-31.tar.gz -C /var/lib/mysql --strip-components=3 ...
+    • Ejecutando tar xzvf /respaldo/mysql_backup_2025-06-11_02-00-00.tar.gz -C /var/lib/mysql --strip-components=3 ...
 var/lib/mysql/
 var/lib/mysql/mysql/
 var/lib/mysql/mysql/db.frm
@@ -473,27 +473,27 @@ var/lib/mysql/server-cert.pem
 [7/7] Levantando todos los servicios definidos en docker-compose.yml
  Network php_compose_mynetwork  Creating
  Network php_compose_mynetwork  Created
-time="2025-06-10T10:13:42-04:00" level=warning msg="volume \"php_compose_db_data\" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume"
+time="2025-06-11T10:26:58-04:00" level=warning msg="volume \"php_compose_db_data\" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume"
  Container php_clinica  Creating
- Container mysql_6  Creating
  Container php_compose-monitoreo_mysql-1  Creating
+ Container mysql_6  Creating
  Container mysql_6  Created
- Container backup_bd_clinica  Creating
  Container user_administrador  Creating
+ Container backup_bd_clinica  Creating
  Container php_clinica  Created
  Container php_compose-monitoreo_mysql-1  Created
  Container user_administrador  Created
  Container backup_bd_clinica  Created
  Container mysql_6  Starting
- Container php_clinica  Starting
  Container php_compose-monitoreo_mysql-1  Starting
+ Container php_clinica  Starting
  Container php_compose-monitoreo_mysql-1  Started
  Container mysql_6  Started
  Container user_administrador  Starting
  Container backup_bd_clinica  Starting
  Container php_clinica  Started
- Container backup_bd_clinica  Started
  Container user_administrador  Started
+ Container backup_bd_clinica  Started
 
 === RESTAURACIÓN FINALIZADA ===
 

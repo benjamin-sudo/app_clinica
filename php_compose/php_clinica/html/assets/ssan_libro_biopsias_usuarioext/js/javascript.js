@@ -424,56 +424,54 @@ function change_day_anatomia(date_from,date_to){
 function local_pdf_rechazomuestra(id_anatomia){
     $("#MODAL_PDF_ANATOMIA_PATOLOGICA").modal("show");
     $.ajax({ 
-        type		:   "POST",
-        url 		:   "ssan_spab_gestionlistaquirurgica/pdf_informerechazo_ap",
-        dataType    :   "json",
-        beforeSend	:   function(xhr)           {   
-                                                    console.log(xhr);
-                                                    console.log("generando PDF");
-                                                    $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF ");
-                                                },
-        data 		:                           { 
-                                                    id  :   id_anatomia,
-                                                },
-        error		:   function(errro)         { 
-                                                    console.log("quisas->",errro,"-error->",errro.responseText); 
-                                                    $("#protocoloPabellon").css("z-index","1500"); 
-                                                    jError("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                    $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
-                                                },
-        success		:   function(aData)         { 
-                                                    //console.log("aData  ->",aData,"<-   ");
-                                                    if(!aData["STATUS"]){
-                                                        jError("error al cargar protocolo PDF","Clinica Libre");
-                                                        return false;
-                                                    } else {
-                                                        var base64str = aData["PDF_MODEL"];
-                                                        //decode base64 string, Eliminar espacio para compatibilidad con IE
-                                                        var binary = atob(base64str.replace(/\s/g,''));
-                                                        var len = binary.length;
-                                                        var buffer = new ArrayBuffer(len);
-                                                        var view = new Uint8Array(buffer);
-                                                        for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
-                                                        //console.log("view -> ",view);
-                                                        //create the blob object with content-type "application/pdf"  
-                                                        var blob = new Blob([view],{type:"application/pdf"});
-                                                        var blobURL = URL.createObjectURL(blob);
-                                                        //console.log("BlobURL->",blobURL);
-                                                        Objpdf = document.createElement('object');
-                                                        Objpdf.setAttribute('data',blobURL);
-                                                        Objpdf.setAttribute('width','100%');
-                                                        Objpdf.setAttribute('style','height:700px;');
-                                                        Objpdf.setAttribute('title','PDF');
-                                                        //$("#Dv_verdocumentos").modal("show");
-                                                        $('#HTML_PDF_ANATOMIA_PATOLOGICA').html(Objpdf);
-                                                    }
-                                                }, 
+        type : "POST",
+        url : "ssan_spab_gestionlistaquirurgica/pdf_informerechazo_ap",
+        dataType : "json",
+        beforeSend : function(xhr) {   
+            console.log(xhr);
+            console.log("generando PDF");
+            $('#HTML_PDF_ANATOMIA_PATOLOGICA').html("<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;GENERANDO PDF ");
+        },
+        data : { id : id_anatomia, },
+        error : function(errro) { 
+            console.log("quisas->",errro,"-error->",errro.responseText); 
+            $("#protocoloPabellon").css("z-index","1500"); 
+            jError("Error General, Consulte Al Administrador","Clinica Libre"); 
+            $('#HTML_PDF_ANATOMIA_PATOLOGICA').html('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+        },
+        success : function(aData) { 
+            //console.log("aData  ->",aData,"<-   ");
+            if(!aData["STATUS"]){
+                jError("error al cargar protocolo PDF","Clinica Libre");
+                return false;
+            } else {
+                var base64str = aData["PDF_MODEL"];
+                //decode base64 string, Eliminar espacio para compatibilidad con IE
+                var binary = atob(base64str.replace(/\s/g,''));
+                var len = binary.length;
+                var buffer = new ArrayBuffer(len);
+                var view = new Uint8Array(buffer);
+                for(var i=0;i<len;i++){ view[i] = binary.charCodeAt(i); }
+                //console.log("view -> ",view);
+                //create the blob object with content-type "application/pdf"  
+                var blob = new Blob([view],{type:"application/pdf"});
+                var blobURL = URL.createObjectURL(blob);
+                //console.log("BlobURL->",blobURL);
+                Objpdf = document.createElement('object');
+                Objpdf.setAttribute('data',blobURL);
+                Objpdf.setAttribute('width','100%');
+                Objpdf.setAttribute('style','height:700px;');
+                Objpdf.setAttribute('title','PDF');
+                //$("#Dv_verdocumentos").modal("show");
+                $('#HTML_PDF_ANATOMIA_PATOLOGICA').html(Objpdf);
+            }
+        }, 
    });
 }
 
 function load_exel() {
     var ID_BD = 121321;
-    var link = "http://10.5.183.210/ssan_spab_gestionlistaquirurgica/load_excel?id="+ID_BD;
+    //var link = "http://10.5.183.210/ssan_spab_gestionlistaquirurgica/load_excel?id="+ID_BD;
     window.location.href = link;
 }
 
@@ -498,12 +496,12 @@ function js_cambio_fecha(id){
 function restarDiasAFecha(fechaStr, diasARestar) {
     const partes = fechaStr.split('-');
     const dia = parseInt(partes[0],10);
-    const mes = parseInt(partes[1],10) - 1; // Los meses en JavaScript estÃ¡n indexados desde 0
+    const mes = parseInt(partes[1],10) - 1; 
     const anio = parseInt(partes[2],10);
     const fecha = new Date(anio, mes, dia);
     fecha.setDate(fecha.getDate() - diasARestar);
     const diaResultado = String(fecha.getDate()).padStart(2, '0');
-    const mesResultado = String(fecha.getMonth() + 1).padStart(2, '0'); // Sumamos 1 porque los meses estÃ¡n indexados desde 0
+    const mesResultado = String(fecha.getMonth() + 1).padStart(2, '0');
     const anioResultado = fecha.getFullYear();
     return `${anioResultado}-${mesResultado}-${diaResultado}`;
 }

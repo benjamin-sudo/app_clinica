@@ -41,8 +41,8 @@
   .btn-warning { color: white !important; }
   .animation__slideOutUp { animation: slideOutUp 0.5s both; }
   @keyframes slideOutUp {
-    from { opacity: 1;  transform: translateY(0); }
-    to { opacity: 0;  transform: translateY(-100%); }
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-100%); }
   }
   </style>
 </head>
@@ -89,9 +89,7 @@
         </div>
         <!-- Clinica&nbsp;Anatomia -->
         <div class="info">
-           <a href="#"
-            class="d-block"
-            title="<?php echo $this->session->userdata('NOM_ESTAB');?>"
+           <a href="#" class="d-block" title="<?php echo $this->session->userdata('NOM_ESTAB');?>"
             style="display: block; white-space: normal;  word-wrap: break-word; overflow-wrap: anywhere;">
             <?php echo $this->session->userdata("NOM_ESTAB");?>
           </a>
@@ -200,11 +198,9 @@
   <div id="respuesta"></div>
 
   <section>
-   
     <div id="ajax-preloader" class="flex-column justify-content-center align-items-center" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999;">
       <img class="animation__shake" src="assets/dist/img/anatomia/logo.ico" alt="Logo" height="250" width="250">
     </div>
-
     <div id="loadFade" class="modal bg-dark fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -316,4 +312,5 @@
     <!-- Personalizaci&oacute;n de contenidos --> 
     <script type="text/javascript" src="assets/recursos/js/funciones.js" ></script>
   </body>
+
 </html>

@@ -261,14 +261,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <h6 class="my-0">DIRECCI&Oacute;N:</h6>
-                                                <small class="text-muted" id="direccionLabel"></small>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    
                                     <tr>
                                         <td>
                                             <div>
@@ -285,6 +278,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <!--
                                     <tr>
                                         <td>
                                             <div>
@@ -293,6 +287,15 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <h6 class="my-0">DIRECCI&Oacute;N:</h6>
+                                                <small class="text-muted" id="direccionLabel"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    -->
                                 </tbody>
                             </table>
                         </div>
@@ -384,54 +387,53 @@ $(document).ready(function(){
     $('#busq_rut').Rut({
         format_on : 'keyup',
         on_error : function() {   
-                                    jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
-                                    console.log(this);
-                                    $("#busq_rut").val('');
-                                },
+            jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
+            //console.log(this);
+            $("#busq_rut").val('');
+        },
         on_success : function()  { 
-                                    console.log("  this -> ",this);
-                                    console.log(this.id);
-                                },
+            //console.log("  this -> ",this);
+            //console.log(this.id);
+        },
     });
     $('#busq_rutfonasa').Rut({
         format_on : 'keyup',
         on_error : function()  {   
-                                    jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
-                                    console.log(this);
-                                    $("#busq_rutfonasa").val('');
-                                },
+            jError("RUN. no es correcto","CLINICA LIBRE CHILE"); 
+            //console.log(this);
+            $("#busq_rutfonasa").val('');
+        },
         on_success  : function()  { 
-                                    console.log("  this -> ",this);
-                                    console.log(this.id);
-                                },
+            //console.log(" this -> ",this);
+            //console.log(this.id);
+        },
     });
 
     $('#myWizard').bootstrapWizard({
-        'nextSelector'      :   '.next-step',
-        'previousSelector'  :   '.prev-step',
-        'onNext'            :   function(tab, navigation, index) {
-
-            console.log("   ############################## ");
-            console.log("   tab -> ",tab," ");
-            console.log("   navigation -> ",navigation," ");
-            console.log("   index -> ",index," ");
-            console.log("   ############################## ");
-            
+        'nextSelector' : '.next-step',
+        'previousSelector' : '.prev-step',
+        'onNext' : function(tab, navigation, index) {
+            //console.log(" ############################## ");
+            //console.log(" tab -> ",tab," ");
+            //console.log(" navigation -> ",navigation," ");
+            //console.log(" index -> ",index," ");
+            //console.log(" ############################## ");
             if (index == 1){
-                let PACIENTE_SEL    =   $("input[name='SELECCIONA_PACIENTE']:checked").val();
+                let PACIENTE_SEL = $("input[name='SELECCIONA_PACIENTE']:checked").val();
                 if(PACIENTE_SEL === undefined) {
                     jAlert("Seleccione Paciente","Clinica Libre");
                     return false;
                 } else {
-                    let DATA_PACIENTE =   $("#DATA_"+PACIENTE_SEL).data().bloque;
+                    let DATA_PACIENTE = $("#DATA_"+PACIENTE_SEL).data().bloque;
+                    //console.error("DATA_PACIENTE ->",DATA_PACIENTE);
                     $("#DATA_PACIENTE_TEMPLATE").removeData();
                     $("#DATA_PACIENTE_TEMPLATE").data(DATA_PACIENTE);
-                    $("#numidentificador").html(DATA_PACIENTE.COD_RUTPAC+" "+DATA_PACIENTE.COD_DIGVER);
-                    $("#nombreLabel").html(DATA_PACIENTE.NOM_NOMBRE+" "+DATA_PACIENTE.APEPATPAC+" "+DATA_PACIENTE.APEMATPAC);
-                    $("#sexoLabel").html(DATA_PACIENTE.TIPO_SEXO);
-                    $("#direccionLabel").html(DATA_PACIENTE.DIRECLOCAL+" "+DATA_PACIENTE.NCASAL);
-                    $("#edadLabel").html(DATA_PACIENTE.FECHANACTO);
-                    $("#fonoLabel").html(DATA_PACIENTE.NUM_CELULAR);
+                    $("#numidentificador").html(DATA_PACIENTE.COD_RUTPAC+"-"+DATA_PACIENTE.COD_DIGVER);
+                    $("#nombreLabel").html(DATA_PACIENTE.NOM_NOMBRE+" "+DATA_PACIENTE.NOM_APEPAT+" "+DATA_PACIENTE.NOM_NOMBRE);
+                    $("#sexoLabel").html(DATA_PACIENTE.IND_TISEXO);
+                    $("#direccionLabel").html('NO INFORMADO');
+                    $("#edadLabel").html(DATA_PACIENTE.FEC_NACIMI);
+                    $("#fonoLabel").html('NO INFORMADO');
                     $("#previsionLabel").html("<b><i>NO INFORMADO</i></b>");
                 }
                 $('#LISTADO_PROFESIONALES').selectpicker();
@@ -441,7 +443,7 @@ $(document).ready(function(){
 
 
             if (index == 2){
-                var msj                                     =   [];
+                var msj =   [];
                 $('#LISTADO_PROFESIONALES,#IND_TIPO_BIOPSIA,#LISTADO_ESPECIALIDAD').selectpicker('setStyle','border-red','remove');
                 if($("#IND_TIPO_BIOPSIA").val()=='')        {
                     $('#IND_TIPO_BIOPSIA').selectpicker('setStyle','border-red', 'add');
@@ -460,7 +462,7 @@ $(document).ready(function(){
                     jAlert("Se han detectado falta de informaci&oacute;n <br>"+msj.join(""),"Clinica Libre");
                     return false;
                 } else {
-                    $('#loadFade').modal('show'); 
+                    //$('#loadFade').modal('show'); 
                     $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html('<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>');
                     $.ajax({ 
                         type : "POST",
@@ -468,36 +470,37 @@ $(document).ready(function(){
                         dataType : "json",
                         beforeSend  : function(xhr) {  },
                         data :  {
-                                    NUM_FICHAE : $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
-                                    RUT_PACIENTE : $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
-                                    ID_MEDICO : null,
-                                    RUT_MEDICO : $("#LISTADO_PROFESIONALES").val(),
-                                    IND_TIPO_BIOPSIA : $("#IND_TIPO_BIOPSIA").val(),// 
-                                    IND_ESPECIALIDAD : $("#LISTADO_ESPECIALIDAD").val(),
-                                    PA_ID_PROCARCH : $("#PA_ID_PROCARCH").val(),
-                                    AD_ID_ADMISION : null,
-                                    TXT_BIOPSIA : $("#IND_TIPO_BIOPSIA option:selected").text(),
-                                    CALL_FROM : 0,
-                                    IND_GESPAB : 0
-                                },
+                            NUM_FICHAE : $("#DATA_PACIENTE_TEMPLATE").data().NUM_FICHAE,
+                            RUT_PACIENTE : $("#DATA_PACIENTE_TEMPLATE").data().COD_RUTPAC,
+                            ID_MEDICO : null,
+                            RUT_MEDICO : $("#LISTADO_PROFESIONALES").val(),
+                            IND_TIPO_BIOPSIA : $("#IND_TIPO_BIOPSIA").val(),// 
+                            IND_ESPECIALIDAD : $("#LISTADO_ESPECIALIDAD").val(),
+                            PA_ID_PROCARCH : $("#PA_ID_PROCARCH").val(),
+                            AD_ID_ADMISION : null,
+                            TXT_BIOPSIA : $("#IND_TIPO_BIOPSIA option:selected").text(),
+                            CALL_FROM : 0,
+                            IND_GESPAB : 0
+                        },
                         error : function(errro) {  
-                                                    //console.log("   -------------------------   ");
-                                                    //console.log(errro);
-                                                    console.log(errro.responseText);
-                                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
-                                                    $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
-                                                    jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
-                                                },
+                            //console.log("   -------------------------   ");
+                            //console.log(errro);
+                            console.log(errro.responseText);
+                            //setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(''); 
+                            $("#MODAL_INICIO_SOLICITUD_ANATOMIA").modal("hide"); 
+                            jAlert("Error General, Consulte Al Administrador","Clinica Libre"); 
+                        },
                         success : function(aData) {
-                                                    //console.log("aData  ->  ",aData);
-                                                    setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
-                                                    $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
-                                                    setTimeout(function() {
-                                                        $(".btn_envia_form").prop('disabled', false);
-                                                        document.getElementById("btn-finish").disabled = false;
-                                                    }, 1000); // 1000 milisegundos = 1 segundo
-                                                }, 
+                            //console.log("aData  ->  ",aData);
+                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html('');
+                            $("#HTML_TEMPLATE_3_PASEQUIRUGICO").html(aData.HTML_FINAL);
+                            setTimeout(function() {
+                                $(".btn_envia_form").prop('disabled', false);
+                                document.getElementById("btn-finish").disabled = false;
+                            }, 1000); // 1000 milisegundos = 1 segundo
+                                //setTimeout(function(){ $('#loadFade').modal('hide'); }, 1000);
+                        }, 
                     });
                 }
             }
@@ -505,7 +508,7 @@ $(document).ready(function(){
                 jAlert("Valida Formulario","Clinica Libre");
             }
             var form = $('#myWizard form');
-            console.log("   form    ->  ",form);
+            //console.log(" form ->  ",form);
             // Supongamos que tienes una función de validación que devuelve true si el formulario es válido
             if (!validarPasoActual(index)) {
                 return false; // detiene la navegación al siguiente paso si la validación falla
@@ -680,36 +683,36 @@ function buscar(OP,LIM_INI){
                         templete : 6 //anatomia ext
                     },
             error :	function(errro) {  
-                                        $("#msj_load").remove(); 
-                                        $("#msj_busqueda").html('');
-                                        console.log(errro); 
-                                        console.log(errro.responseText); 
-                                        document.getElementById("BTN_BUSQ_PAC_1").disabled = false;
-                                        document.getElementById("BTN_DELETE_PAC_1").disabled = false;
-                                        document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
-                                        document.getElementById("BTN_DELETE_PAC_2").disabled = false;
-                                        jAlert("Error General, Consulte Al Administrador"); 
-                                    },
+                $("#msj_load").remove(); 
+                $("#msj_busqueda").html('');
+                console.log(errro); 
+                console.log(errro.responseText); 
+                document.getElementById("BTN_BUSQ_PAC_1").disabled = false;
+                document.getElementById("BTN_DELETE_PAC_1").disabled = false;
+                document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
+                document.getElementById("BTN_DELETE_PAC_2").disabled = false;
+                jAlert("Error General, Consulte Al Administrador"); 
+            },
             success : function(aData) {
-                                        console.error("aData -> ",aData);
-                                        $("#msj_busqueda").html('');
-                                        $("#msj_load").remove();
-                                        $("#resultados").html('');
-                                        $("#new_paginacion").show("slow");
-                                        document.getElementById("BTN_BUSQ_PAC_1").disabled = false;
-                                        document.getElementById("BTN_DELETE_PAC_1").disabled = false;
-                                        document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
-                                        document.getElementById("BTN_DELETE_PAC_2").disabled = false;
-                                        if(AjaxExtJsonAll(aData.json)){   
-                                            if (aData.count === 0){
-                                                $("#resultados_busquedapac").show();
-                                                $("#btn_nuevo_paciente").show();
-                                            } else {
-                                                $("#resultados_busquedapac").hide();
-                                                $("#btn_nuevo_paciente").hide();
-                                            }
-                                        }
-                                    }, 
+                //console.error("aData -> ",aData);
+                $("#msj_busqueda").html('');
+                $("#msj_load").remove();
+                $("#resultados").html('');
+                $("#new_paginacion").show("slow");
+                document.getElementById("BTN_BUSQ_PAC_1").disabled = false;
+                document.getElementById("BTN_DELETE_PAC_1").disabled = false;
+                document.getElementById("BTN_BUSQ_PAC_2").disabled = false;
+                document.getElementById("BTN_DELETE_PAC_2").disabled = false;
+                if(AjaxExtJsonAll(aData.json)){   
+                    if (aData.count === 0){
+                        $("#resultados_busquedapac").show();
+                        $("#btn_nuevo_paciente").show();
+                    } else {
+                        $("#resultados_busquedapac").hide();
+                        $("#btn_nuevo_paciente").hide();
+                    }
+                }
+            }, 
         });
         $("#resultados").html('');
     }

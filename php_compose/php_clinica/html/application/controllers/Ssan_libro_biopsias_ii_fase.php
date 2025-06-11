@@ -6,10 +6,10 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
         parent::__construct();
         $this->load->library('pdf');
         $this->load->library('session');
-        $this->load->model("Ssan_libro_biopsias_usuarioext_model");
         #$this->load->model("Ssan_libro_biopsias_listaexterno1_model");
-        $this->load->model("Ssan_libro_biopsias_ii_fase_model");
         #$this->load->model("ssan_pre_gestionarprestador_model");
+        $this->load->model("Ssan_libro_biopsias_usuarioext_model");
+        $this->load->model("Ssan_libro_biopsias_ii_fase_model");
     }
 
     public function index(){
@@ -23,19 +23,9 @@ class Ssan_libro_biopsias_ii_fase extends CI_Controller {
             $date_inicio = date("d-m-Y");
             $date_final = date("d-m-Y");
             #DATE INICIO TIEMPO
-            $this->input->set_cookie(array(
-                'name' => 'date_inicio',
-                'value' => $date_inicio,
-                'expire' => 86500,
-                'secure' => false
-            ));
+            $this->input->set_cookie(['name' => 'date_inicio', 'value' => $date_inicio, 'expire' => 86500, 'secure' => false]);
             #DATE INICIO TIEMPO
-            $this->input->set_cookie(array(
-                'name' => 'date_final',
-                'value' => $date_final,
-                'expire' => 86500,
-                'secure' => false
-            ));
+            $this->input->set_cookie(['name' => 'date_final', 'value' => $date_final, 'expire' => 86500, 'secure' => false]);
         } else {
             #DATE COOKIE
             $date_inicio = $_COOKIE['date_inicio'];

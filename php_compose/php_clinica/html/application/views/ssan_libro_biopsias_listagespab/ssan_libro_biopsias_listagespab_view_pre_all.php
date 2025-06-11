@@ -405,53 +405,51 @@
                             <?php    
                             }
                         } else {
-                            foreach($P_ANATOMIA_PATOLOGICA_MUESTRAS as $i => $row){
-                                ?>    
-                                    <li class="list-group-item lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-CASETE="0" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $DATA["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
-                                        <div class="CSS_GRID_MUESTRA">
-                                            <div class="CSS_GRID_MUESTRA_1"><?php echo $i+1;?></div>
-                                            <div class="CSS_GRID_MUESTRA_2 panel-heading"  role="tab" id="headingOne<?php echo $row['ID_NMUESTRA'];?>">
-                                                <a role="button" style="padding: 0px" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="li_acordion_mtuestras">
-                                                    <i><?php echo $row['TXT_MUESTRA']?></i>
-                                                </a>
-                                            </div>
-                                            <div class="CSS_GRID_MUESTRA_4" style="text-align: end"><b><?php echo $row['TXT_ETIQUETA'];?>&nbsp;|&nbsp;<?php echo "A".$row['ID_NMUESTRA'];?></b></div>
-                                            <div class="CSS_GRID_MUESTRA_6 _CENTER_1">
-                                                <input 
-                                                    type="checkbox" 
-                                                    class="form-check-input checkbox_<?php echo $DATA["ID_SOLICITUD"];?>" 
-                                                    id="CHEK_<?php echo 'A'.$row['ID_NMUESTRA'];?>" 
-                                                    style="display:block;cursor:pointer;margin:0px" 
-                                                    onchange= "js_muestra_indivual('A<?php echo $row['ID_NMUESTRA'];?>');"
-                                                    value="<?php echo $row['ID_NMUESTRA'];?>"
-                                                >
-                                            </div>
-                                            <div class="CSS_GRID_MUESTRA_5" id="btn_<?php echo "A".$row['ID_NMUESTRA']; ?>">
-                                                <span class="label label-danger">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
+                            foreach($P_ANATOMIA_PATOLOGICA_MUESTRAS as $i => $row){  ?>    
+                                <li class="list-group-item lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-CASETE="0" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $DATA["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
+                                    <div class="CSS_GRID_MUESTRA">
+                                        <div class="CSS_GRID_MUESTRA_1"><?php echo $i+1;?></div>
+                                        <div class="CSS_GRID_MUESTRA_2 panel-heading"  role="tab" id="headingOne<?php echo $row['ID_NMUESTRA'];?>">
+                                            <button class="accordion-button collapsed"   type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $row['ID_NMUESTRA'] ?>"   aria-expanded="false"  aria-controls="collapse<?= $row['ID_NMUESTRA'] ?>"   >
+                                                <i><?= htmlspecialchars($row['TXT_MUESTRA'], ENT_QUOTES, 'UTF-8') ?></i>
+                                            </button>
                                         </div>
-                                        <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>">
-                                            <div class="css_subgestion_eliminada">
-                                                <div class="css_subgestion_eliminada1">
-                                                    <b style="color:#888888;">EVENTO ADVERSOS:</b><br>
-                                                    <select class="form-control input-sm" id="SEL_MOTIVO_<?php echo $row['ID_NMUESTRA'];?>" name="SEL_MOTIVO_<?php echo $row['ID_NMUESTRA'];?>">
-                                                        <option value="">Seleccione...</option>
-                                                        <option value="1">MUESTRA NO ENCONTRADA</option>
-                                                        <option value="2">MUESTRA EN MAL ESTADO</option>
-                                                        <option value="3">MUESTRA RECHAZADA</option>
-                                                    </select>
-                                                </div>
-                                                <div class="css_subgestion_eliminada2">
-                                                    <b style="color:#888888;">OBSERVACI&Oacute;N:</b><br>
-                                                    <input type="text" class="form-control input-sm" id="txt_observacion_<?php echo $row['ID_NMUESTRA'];?>" name="txt_observacion_<?php echo $row['ID_NMUESTRA'];?>" value="">
-                                                </div>
-                                                <div class="css_subgestion_eliminada3">&nbsp;</div>
-                                            </div>
+                                        <div class="CSS_GRID_MUESTRA_4" style="text-align: end"><b><?php echo $row['TXT_ETIQUETA'];?>&nbsp;|&nbsp;<?php echo "A".$row['ID_NMUESTRA'];?></b></div>
+                                        <div class="CSS_GRID_MUESTRA_6 _CENTER_1">
+                                            <input 
+                                                type="checkbox" 
+                                                class="form-check-input checkbox_<?php echo $DATA["ID_SOLICITUD"];?>" 
+                                                id="CHEK_<?php echo 'A'.$row['ID_NMUESTRA'];?>" 
+                                                style="display:block;cursor:pointer;margin:0px" 
+                                                onchange= "js_muestra_indivual('A<?php echo $row['ID_NMUESTRA'];?>');"
+                                                value="<?php echo $row['ID_NMUESTRA'];?>">
                                         </div>
-                                    </li>
-                                <?php
+                                        <div class="CSS_GRID_MUESTRA_5" id="btn_<?php echo "A".$row['ID_NMUESTRA']; ?>">
+                                            <span class="label label-danger">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div id="collapse<?= $row['ID_NMUESTRA'] ?>" class="accordion-collapse collapse"  aria-labelledby="heading<?= $row['ID_NMUESTRA'] ?>"  data-bs-parent="#UL_RESULTADOS_<?= $DATA["ID_SOLICITUD"]?>">
+                                        <div class="css_subgestion_eliminada">
+                                            <div class="css_subgestion_eliminada1">
+                                                <b style="color:#888888;">EVENTO ADVERSOS:</b><br>
+                                                <select class="form-control input-sm" id="SEL_MOTIVO_<?php echo $row['ID_NMUESTRA'];?>" name="SEL_MOTIVO_<?php echo $row['ID_NMUESTRA'];?>">
+                                                    <option value="">Seleccione...</option>
+                                                    <option value="1">MUESTRA NO ENCONTRADA</option>
+                                                    <option value="2">MUESTRA EN MAL ESTADO</option>
+                                                    <option value="3">MUESTRA RECHAZADA</option>
+                                                </select>
+                                            </div>
+                                            <div class="css_subgestion_eliminada2">
+                                                <b style="color:#888888;">OBSERVACI&Oacute;N:</b><br>
+                                                <input type="text" class="form-control input-sm" id="txt_observacion_<?php echo $row['ID_NMUESTRA'];?>" name="txt_observacion_<?php echo $row['ID_NMUESTRA'];?>" value="">
+                                            </div>
+                                            <div class="css_subgestion_eliminada3">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php
                             }
                         } ?>
                     </ul>
@@ -480,7 +478,9 @@
                 
                 <div class="content">
                     <ul class="list-group " id="UL_RESULTADOS_<?php echo $DATA["ID_SOLICITUD"];?>" style="margin-bottom:0px;">
-                    <?php foreach($P_AP_MUESTRAS_CITOLOGIA as $i => $row){ ?>     
+                    <?php foreach($P_AP_MUESTRAS_CITOLOGIA as $i => $row){ ?>
+                        
+                        
                         <li class="list-group-item sin_padding lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-CASETE="0" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $DATA["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
                             <div class="CSS_GRID_MUESTRA2" >
                                 <div class="CSS_GRID_MUESTRA_1"><?php echo $i+1; ?> </div>
@@ -526,6 +526,9 @@
                                 </div>
                             </div>
                         </li>
+
+
+
                     <?php } ?>
                     </ul>
                 </div>
@@ -580,7 +583,7 @@
                     }
                     .css_panel_rechazo {
                         display : grid;
-                        grid-template-columns : 4fr 1fr;
+                        grid-template-columns : 1fr 2fr auto 1fr;
                         align-items : center;
                         justify-content : center;
                         column-gap : 6px;
@@ -597,7 +600,7 @@
                 </style>
                 
                 <?php if ($DATA["ID_HISTO_ESTADO"] == 4 && $DATA['IND_ESTADO_MUESTRAS']==1) { ?>
-                        <p><label for="size_2">SOLICITUD YA FUE RECEPCIONADA | <?php echo $DATA["IND_ESTADO_MUESTRAS"];?></label></p>
+                        <p><label for="size_2">SOLICITUD YA FUE RECEPCIONADA. | <?php echo $DATA["IND_ESTADO_MUESTRAS"];?></label></p>
                         <script>$(".checkbox_<?php echo $DATA["ID_SOLICITUD"];?>").hide();</script>
                 <?php } else { ?>
 
@@ -655,7 +658,8 @@
                             </div>
                         </div>
                         <!-- OTRA OPCIONES -->
-                        <div class="css_panel_rechazo" style="display:none;margin-left: 130px;">
+                        <div class="css_panel_rechazo" style="display:none;">
+                            <div class="css_panel_rechazo0">&nbsp;</div>
                             <div class="css_panel_rechazo1">
                                 <h5 style="color:#888888;">OBSERVACI&Oacute;N GENERAL DE RECHAZO</h5>
                                 <div class="mb-3">
@@ -667,6 +671,7 @@
                                     <i class="fa fa-times" aria-hidden="true"></i><span class="toolpit_local_txt"><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Confirma rechazo de muestras</span>
                                 </button>
                             </div>
+                            <div class="css_panel_rechazo0">&nbsp;</div>
                         </div>
                     <?php if ($DATA["ID_HISTO_ESTADO"] == 4) {?>
                         <script>marcadas_recepcionadas_resagadas(<?php echo $DATA["ID_SOLICITUD"];?>);</script> 
