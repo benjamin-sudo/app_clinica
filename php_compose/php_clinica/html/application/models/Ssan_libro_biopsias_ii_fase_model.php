@@ -22,17 +22,13 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
         $ID_UID = $DATA['DATA_FIRMA'][0]['ID_UID'];
         $ID_ANATOMIA = $DATA['ID_ANATOMIA']; 
         $STATUS_MUESTRAS = $DATA['STATUS_MUESTRAS'];
-
         if(count($STATUS_MUESTRAS)>0){
             foreach ($STATUS_MUESTRAS as $i => $row) {
                 log_message('debug', "###################################################################");
                 log_message('debug', "Contenido STATUS_MUESTRAS de $i \$row en :\n" . print_r($row, TRUE));
-
-
-
+                #mañana
             }
         }
-
         /*
             $this->db->where('ID_SOLICITUD_HISTO',$row["NUM_HISTO"]); 
             $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
