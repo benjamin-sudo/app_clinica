@@ -50,8 +50,6 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
         ];
     }
 }
-
-
 #LOAD
 /*
 if(count($DATA['ARRAY'])>0){
