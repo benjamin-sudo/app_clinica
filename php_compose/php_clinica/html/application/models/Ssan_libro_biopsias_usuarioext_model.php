@@ -1991,6 +1991,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->trans_start();
         $mivariable = true;
         $arr_histo_ok = [];
+        $row = $this->db ->select_max('ID_NUM_CARGA','max_carga')->get($this->ownPab .'.PB_LINETIME_HISTO')->row();
+        $ID_CARGA_AP = ($row->max_carga ?? 0) + 1;
         if (count($DATA['ARRAY']) > 0) {
             foreach ($DATA['ARRAY'] as $i => $fila) {
                 foreach ($fila as $x => $row) {
@@ -2102,7 +2104,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             $v_cod_empresa = $DATA['COD_EMPRESA'];
             $_val_establecimiento_referencia = '800';
         }
-
+        $row = $this->db ->select_max('ID_NUM_CARGA','max_carga')->get($this->ownPab .'.PB_LINETIME_HISTO')->row();
+        $ID_CARGA_AP = ($row->max_carga ?? 0) + 1;
         if (count($DATA['ARRAY']) > 0) {
             foreach ($DATA['ARRAY'] as $i => $fila) {
                 foreach ($fila as $x => $row) {
@@ -2112,9 +2115,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                             $IND_CASETE = $mus['IND_CASETE'];
                             $ID_MUESTRA = $mus['ID_NMUESTRA'];
                             $arr_linea_tiempo = array(
-                                // "ID_LINETIMEHISTO" => el ID se generará automáticamente,
+                                #"ID_LINETIMEHISTO" => $ID_LINETIME_HISTO,
                                 "ID_NUM_CARGA" => $ID_CARGA_AP,
-                                "ID_SOLICITUD_HISTO" => $row["NUM_HISTO"],
+                                "ID_SOLICITUD_HISTO" => $DATA['ID_ANATOMIA'],
                                 "TXT_BACODE" => $mus['ID_NMUESTRA'],
                                 "NUM_FASE" => 2, // EN TRASPORTE
                                 "IND_CHECKED" => $mus['IN_CHECKED'],
@@ -2140,7 +2143,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                         // "ID_ANTECEDENTES_HISTO" => el ID se generará automáticamente,
                                         "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO,
                                         "ID_NUM_CARGA" => $ID_CARGA_AP,
-                                        "ID_SOLICITUD_HISTO" => $ID_ANATOMIA,
+                                        "ID_SOLICITUD_HISTO" => $DATA['ID_ANATOMIA'],
                                         "ID_NMUESTRA" => $ID_MUESTRA,
                                         "ID_MOTIVO_DESAC" => $adv["IND_MOTIVO"],
                                         "TXT_EVENTO_OBSERVACION" => $adv["TXT_OBSERVACION"],
@@ -2154,8 +2157,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 }
             }
         }
-
-
         $arr_histo_ok = array_values(array_unique($arr_histo_ok));
         $this->db->where_in('ID_SOLICITUD_HISTO',$arr_histo_ok);
         $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
@@ -2182,7 +2183,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->select_max('ID_ANTECEDENTES_HISTO');
         $query = $this->db->get($table);
         $row = $query->row_array();
-        return $row['id'] + 1;
+        //log_message('debug', 'DEBUG $miVariable: ' . print_r($row['ID_ANTECEDENTES_HISTO'], TRUE));
+        return $row['ID_ANTECEDENTES_HISTO'] + 1;
     }
 
     #RECEPCION
@@ -2223,14 +2225,14 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             }
             if(count($data_num_interno) > 0){
                 return array(
-                    'STATUS' =>  false,
-                    'TXT_ERROR' =>  'N&deg; meno notificaci&oacute;n ya existe',
-                    'HISTO_OK' =>  null,
-                    'STATUS_BD' =>  false,
-                    'error_memo' =>  1,
-                    'close_modal' =>  0,
-                    'count_interno' =>  count($data_num_interno),
-                    'count_cotologia' =>  0,
+                    'STATUS' => false,
+                    'TXT_ERROR' => 'N&deg; meno notificaci&oacute;n ya existe',
+                    'HISTO_OK' => null,
+                    'STATUS_BD' => false,
+                    'error_memo' => 1,
+                    'close_modal' => 0,
+                    'count_interno' => count($data_num_interno),
+                    'count_cotologia' => 0,
                 );
             }
         }
@@ -2240,7 +2242,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 foreach($DATA['ARRAY'] as $i => $fila){
                     foreach($fila as $x => $row){
                         #NUMERO DE CARGA DE LA TIME LINE
-                        $ID_CARGA_AP                                    =   $this->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'DATABASE_NAME' AND TABLE_NAME = 'PB_LINETIME_HISTO'")->row()->AUTO_INCREMENT;
+                        $ID_CARGA_AP = $this->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'DATABASE_NAME' AND TABLE_NAME = 'PB_LINETIME_HISTO'")->row()->AUTO_INCREMENT;
                         #GESTION DE LAS MUESTAS Y CASET DE ANATOMIA
                         if(count($row["ARRAY_NMUESTRAS"]) > 0){
                             foreach ($row["ARRAY_NMUESTRAS"] as $i => $mus){
@@ -2277,14 +2279,14 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 if(isset($mus["ARR_EVENTOS_ADVERSOS"])){
                                     foreach($mus["ARR_EVENTOS_ADVERSOS"] as $i => $adv){
                                         $this->db->insert('PB_ANTECEDENTES_HISTO',array(
-                                            "ID_ANTECEDENTES_HISTO"     =>  $this->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'DATABASE_NAME' AND TABLE_NAME = 'PB_ANTECEDENTES_HISTO'")->row()->AUTO_INCREMENT,
-                                            "ID_LINETIMEHISTO"          =>  $ID_LINETIME_HISTO,
-                                            "ID_NUM_CARGA"              =>  $ID_CARGA_AP,
-                                            "ID_SOLICITUD_HISTO"        =>  $ID_ANATOMIA,
-                                            "ID_NMUESTRA"               =>  $ID_MUESTRA,
-                                            "ID_MOTIVO_DESAC"           =>  $adv["IND_MOTIVO"],
-                                            "TXT_EVENTO_OBSERVACION"    =>  $adv["TXT_OBSERVACION"],
-                                            "IND_ESTADO"                =>  1,
+                                            "ID_ANTECEDENTES_HISTO" => $this->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'DATABASE_NAME' AND TABLE_NAME = 'PB_ANTECEDENTES_HISTO'")->row()->AUTO_INCREMENT,
+                                            "ID_LINETIMEHISTO" => $ID_LINETIME_HISTO,
+                                            "ID_NUM_CARGA" => $ID_CARGA_AP,
+                                            "ID_SOLICITUD_HISTO" => $ID_ANATOMIA,
+                                            "ID_NMUESTRA" => $ID_MUESTRA,
+                                            "ID_MOTIVO_DESAC" => $adv["IND_MOTIVO"],
+                                            "TXT_EVENTO_OBSERVACION" => $adv["TXT_OBSERVACION"],
+                                            "IND_ESTADO" => 1,
                                         ));
                                     }
                                 }
@@ -2292,8 +2294,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                         }
                         #CONSULTA SI ESTA EN PABELLON
                         #CITOLOGIA Y CITOLOGIA PAP -> GO TO 
-                        $result                         =   $this->db->query("SELECT P.IND_TIPO_BIOPSIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN (".$row['NUM_HISTO'].")")->result_array();
-                        $ind_zona                       =   $result[0]['IND_TIPO_BIOPSIA']=='6'||$result[0]['IND_TIPO_BIOPSIA']=='5'?'4':'0';
+                        $result = $this->db->query("SELECT P.IND_TIPO_BIOPSIA FROM ADMIN.PB_SOLICITUD_HISTO P WHERE P.ID_SOLICITUD_HISTO IN (".$row['NUM_HISTO'].")")->result_array();
+                        $ind_zona = $result[0]['IND_TIPO_BIOPSIA']=='6'||$result[0]['IND_TIPO_BIOPSIA']=='5'?'4':'0';
                         #NUMEROS DE ANATOMIA RESUELTOS
                         array_push($arr_histo_ok,$row["NUM_HISTO"]);
                         #MAIN - RECEPCION OK 
@@ -2338,12 +2340,12 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             ];
         } else {
             return [
-                'STATUS'                        =>  false,
-                'TXT_ERROR'                     =>  'La solicitud ha cambiado de estado',
-                'HISTO_OK'                      =>  null,
-                'STATUS_BD'                     =>  false,
-                'error_memo'                    =>  1,
-                'close_modal'                   =>  1,
+                'STATUS' =>  false,
+                'TXT_ERROR' =>  'La solicitud ha cambiado de estado',
+                'HISTO_OK' =>  null,
+                'STATUS_BD' =>  false,
+                'error_memo' =>  1,
+                'close_modal' =>  1,
             ];
         }
     }

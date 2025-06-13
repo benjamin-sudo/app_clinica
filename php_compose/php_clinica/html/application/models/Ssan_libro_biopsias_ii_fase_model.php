@@ -23,6 +23,8 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
         $ID_UID = $DATA['DATA_FIRMA'][0]['ID_UID'];
         $ID_ANATOMIA = $DATA['ID_ANATOMIA']; 
         $STATUS_MUESTRAS = $DATA['STATUS_MUESTRAS'];
+        $row = $this->db ->select_max('ID_NUM_CARGA','max_carga')->get($this->ownPab .'.PB_LINETIME_HISTO')->row();
+        $ID_CARGA_AP = ($row->max_carga ?? 0) + 1;
         if (count($DATA['ARRAY']) > 0) {
             foreach ($DATA['ARRAY'] as $i => $fila) {
                 foreach ($fila as $x => $row) {
@@ -34,7 +36,7 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
                             $arr_linea_tiempo = array(
                                 // "ID_LINETIMEHISTO" => el ID se generará automáticamente,
                                 "ID_NUM_CARGA" => $ID_CARGA_AP,
-                                "ID_SOLICITUD_HISTO" => $row["NUM_HISTO"],
+                                "ID_SOLICITUD_HISTO" => $ID_ANATOMIA,
                                 "TXT_BACODE" => $mus['ID_NMUESTRA'],
                                 "NUM_FASE" => 2, // EN TRASPORTE
                                 "IND_CHECKED" => $mus['IN_CHECKED'],
@@ -74,13 +76,15 @@ class Ssan_libro_biopsias_ii_fase_model extends CI_Model {
                 }
             }
         }
-        $this->db->where('ID_SOLICITUD_HISTO',$row["NUM_HISTO"]); 
+        #$this->db->where('ID_SOLICITUD_HISTO',$row["NUM_HISTO"]); 
+        $arr_histo_ok = array_values(array_unique($arr_histo_ok));
+        $this->db->where_in('ID_SOLICITUD_HISTO',$arr_histo_ok);
         $this->db->update($this->ownPab.'.PB_SOLICITUD_HISTO',array(
             "FEC_REVISION" => date('Y-m-d H:i:s'),
             "ID_HISTO_ESTADO" => 5,#RECHAZO  
             #"ID_HISTO_ZONA" => $ind_zona,
             "IND_ESTADO_MUESTRAS" => $row["NUM_OK_SAMPLES"],
-            "ID_NUM_CARGA" => $ID_CARGA_AP,
+            #"ID_NUM_CARGA" => $ID_CARGA_AP,
             "ID_UID_RECHAZA" => $ID_UID,
             "TXT_OBS_RECHAZA" => $txt_observacion_glob,
             "LAST_USR_AUDITA" => $DATA["SESSION"],
