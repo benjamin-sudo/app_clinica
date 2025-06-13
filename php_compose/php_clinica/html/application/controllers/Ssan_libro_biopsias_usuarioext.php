@@ -305,7 +305,7 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
 
     #EN TRASPORTE + GPS
     public function confirma_trasporte(){
-        if(!$this->input->is_ajax_request()){  show_404(); }
+        if(!$this->input->is_ajax_request()){ show_404(); }
         $empresa = $this->session->userdata('COD_ESTAB');
         $id_anatomia = $this->input->post('id_anatomia');
         $array_muestras = $this->input->post('array_muestras');
@@ -317,11 +317,11 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
         $valida = $this->Ssan_libro_biopsias_usuarioext_model->validaClave($password);
         if(count($valida)>0){
             $DATA = $this->Ssan_libro_biopsias_usuarioext_model->get_confirma_trasporte([
-                "COD_EMPRESA" =>  $empresa,
-                "SESSION" =>  $usuarioh[0], 
-                "ID_ANATOMIA" =>  $id_anatomia,
-                "ARRAY" =>  $array_muestras,
-                "DATA_FIRMA" =>  $valida,
+                "COD_EMPRESA" => $empresa,
+                "SESSION" => $usuarioh[0], 
+                "ID_ANATOMIA" => $id_anatomia,
+                "ARRAY" => $array_muestras,
+                "DATA_FIRMA" => $valida,
             ]);
         } else {
             $TXT_ERROR = 'Error en firma simple';

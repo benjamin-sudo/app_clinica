@@ -639,17 +639,17 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                     $INFORMACION .= '<button class="btn btn btn-xs btn-fill cssmain btn-'.$color_estado.'" >'.$txt_estado.'</button>';
                     $INFORMACION .= '</div>';
                 } else if($row['ID_HISTO_ESTADO'] == 5){
-                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;padding: 0px;"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;RECHAZADA</button>';
                 } else {
-                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;margin:-10px 0px 0px 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N | '.$row['ID_HISTO_ESTADO'].'</button>';
+                    $INFORMACION = '<button class="btn btn-fill cssmain btn-danger" style="width: 100%;padding: 0px;"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;SIN INFORMACI&Oacute;N</button>';
                 }
 
                 $v_txt_derivado = $row['TXT_EMPRESA_DERIVADO']==''?'':'<span class="label label-warning">'.$row['TXT_EMPRESA_DERIVADO'].'</span> | ';
                 #html li
                 $HTML .= '<li class="gespab_group list-group-item LISTA_BODY_'.$CALL_FASE.'" >
                                             <div class="CSS_GRID_CIRUGIA_FASE_1" 
-                                                id =   "DATA_'.$row['ID_SOLICITUD'].'"
-                                                data-paciente =   "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">
+                                                id = "DATA_'.$row['ID_SOLICITUD'].'"
+                                                data-paciente = "'.htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8').'">
                                                 <div class="text-center">'.$num.'</div>
                                                 <div >
                                                     '.$row['NOMBRE_COMPLETO'].'<hr style="margin: 0px 0px 0px 0px;">
@@ -2102,6 +2102,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
             $v_cod_empresa = $DATA['COD_EMPRESA'];
             $_val_establecimiento_referencia = '800';
         }
+
         if (count($DATA['ARRAY']) > 0) {
             foreach ($DATA['ARRAY'] as $i => $fila) {
                 foreach ($fila as $x => $row) {
@@ -2153,6 +2154,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                 }
             }
         }
+
+
         $arr_histo_ok = array_values(array_unique($arr_histo_ok));
         $this->db->where_in('ID_SOLICITUD_HISTO',$arr_histo_ok);
         $this->db->update($this->ownPab . '.PB_SOLICITUD_HISTO', array(
@@ -2176,7 +2179,7 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     }
 
     private function generate_unique_id($table) {
-        $this->db->select_max('ID_LINETIMEHISTO');
+        $this->db->select_max('ID_ANTECEDENTES_HISTO');
         $query = $this->db->get($table);
         $row = $query->row_array();
         return $row['id'] + 1;
@@ -2185,13 +2188,13 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
     #RECEPCION
     public function get_confirma_recepcion($DATA){
         $this->db->trans_start();
-        $status =   true;
-        $arr_histo_ok =   [];
-        $arr_linea_tiempo =   [];
-        $num_interno =   $DATA["n_interno"];
-        $n_interno_2 =   $DATA["n_interno_2"];
-        $cod_empresa =   $DATA["COD_EMPRESA"];
-        $ID_ANATOMIA =   $DATA["ID_ANATOMIA"];
+        $status = true;
+        $arr_histo_ok = [];
+        $arr_linea_tiempo = [];
+        $num_interno = $DATA["n_interno"];
+        $n_interno_2 = $DATA["n_interno_2"];
+        $cod_empresa = $DATA["COD_EMPRESA"];
+        $ID_ANATOMIA = $DATA["ID_ANATOMIA"];
         $IND_TIPO_BIOPSIA =   $DATA["ind_tipo_biopsia"];
         #LOAD
         #BIOPSIA - CITOLOGIA

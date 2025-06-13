@@ -564,8 +564,8 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
         var PIDE_FIRMA = false;
         /*
         console.log("------------------DATA_HISPATOLOGICO-----------------------");
-        console.log("   ->",CreacionProtocolo,"<-                               ");
-        console.log("   ->",$("#TEMPLATE_CALL_FROM").val(),"                    ");
+        console.log(" ->",CreacionProtocolo,"<- ");
+        console.log(" ->",$("#TEMPLATE_CALL_FROM").val()," ");
         */
         //return false;
         $.ajax({ 
@@ -1789,11 +1789,7 @@ function confirma_trasporte(id_anatomia){
     LISTA_ANATOMIA.RESUL.push(STATUS_MUESTRAS);
     if(!STATUS_MUESTRAS.ALL_OK_SAMPLES){
         jConfirm('No todas las muestras fueron marcadas. la solicitud quedara en <b>estado incompleta</b> para trasporte. &iquest;Desea Agregar?','Clinica Libre',function(r){
-            if(r){ 
-                _envios(id_anatomia,1,LISTA_ANATOMIA);
-            } else {
-                console.log("DIJO NO");
-            }
+            if(r){ _envios(id_anatomia,1,LISTA_ANATOMIA); } else { console.log("DIJO NO"); }
         });
         return false;
     } else {
@@ -2119,9 +2115,9 @@ function js_confirma_rechazo_recepcion(id_anatomia){
                         console.table("aData -> ",aData);
                         if(aData.status){
                             jAlert("Se ha rechazado muestra anatom&iacute;a patol&oacute;gica","Clinica Libre");
+                            $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
                             UPDATE_PANEL();
                             /*
-                            $('#MODAL_INFORMACION_ETIQUETA').modal("hide"); 
                             if(pdf_rechazomuestra(id_anatomia)){ }
                             */
                         } else {
@@ -2791,7 +2787,6 @@ function recepcion_custodia_masiva(){
         return false;
     } else if(aux==1 || NUM_FASE == 1){
         /*
-        console.log("-----------------------------------------------------------");
         console.log("aux                    ->  ",aux,"<-                       ");
         console.log("arr_solicitudes        ->  ",arr_solicitudes,"<-           ");
         */

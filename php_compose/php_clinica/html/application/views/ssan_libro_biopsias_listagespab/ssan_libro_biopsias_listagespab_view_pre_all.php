@@ -344,7 +344,7 @@
                                 $li_muestras = '';
                                 $grid_array = [];
                                 $aux = 1;
-                                $v_identificador_casete = $y . '_'. $DATA["ID_SOLICITUD"];
+                                $v_identificador_casete = $data_casete[0]['ID_CASETE'];
                                 foreach ($data_casete as $z => $row) {  
                                     $li_muestras .=  $aux.".-".$row['TXT_MUESTRA']."";
                                     #array_push($grid_array,$aux.".-".$row['TXT_MUESTRA']);
@@ -374,8 +374,7 @@
                                                 id = "CHEK_<?php echo 'C'.$v_identificador_casete;?>" 
                                                 style = "display:block;cursor:pointer;margin:0px" 
                                                 onchange = "js_muestra_indivual('C<?php echo $v_identificador_casete;?>');"
-                                                value = "<?php echo $v_identificador_casete;?>"
-                                            />
+                                                value = "<?php echo $v_identificador_casete;?>"/>
                                         </div>
                                         <div  class="CSS_GRID_MUESTRA_CASETE_5" id="btn_<?php echo "C".$v_identificador_casete;?>">
                                             <span class="label label-danger">
@@ -402,12 +401,11 @@
                                         </div>
                                     </div>
                                 </li>
-
-
-                            <?php    
+                     <?php    
                             }
                         } else {
-                            foreach($P_ANATOMIA_PATOLOGICA_MUESTRAS as $i => $row){  ?>    
+                            foreach($P_ANATOMIA_PATOLOGICA_MUESTRAS as $i => $row){  ?> 
+
                                 <li class="list-group-item lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-CASETE="0" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $DATA["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
                                     <div class="CSS_GRID_MUESTRA">
                                         <div class="CSS_GRID_MUESTRA_1"><?php echo $i+1;?></div>
@@ -451,6 +449,7 @@
                                         </div>
                                     </div>
                                 </li>
+
                             <?php
                             }
                         } ?>
@@ -482,26 +481,23 @@
                     <ul class="list-group " id="UL_RESULTADOS_<?php echo $DATA["ID_SOLICITUD"];?>" style="margin-bottom:0px;">
                     <?php foreach($P_AP_MUESTRAS_CITOLOGIA as $i => $row){ ?>
                         
-                        
-                        <li class="list-group-item sin_padding lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-CASETE="0" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $DATA["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
-                            <div class="CSS_GRID_MUESTRA2" >
-                                <div class="CSS_GRID_MUESTRA_1"><?php echo $i+1; ?> </div>
-                                <div class="CSS_GRID_MUESTRA_2">
-                                    <a role="button" style="padding: 0px" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<?php echo $row['ID_NMUESTRA'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="li_acordion_mtuestras">
-                                        <i><?php echo $row['TXT_MUESTRA'];?>&nbsp;|&nbsp;<?php echo $row['NUM_ML'];?>&nbsp;mL</i>
-                                    </a>
+                        <li class="list-group-item lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "A".$row['ID_NMUESTRA'];?>" data-CASETE="0" data-id_muestra="<?php echo $row['ID_NMUESTRA'];?>" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $DATA["ID_SOLICITUD"];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
+                            <div class="CSS_GRID_MUESTRA">
+                                <div class="CSS_GRID_MUESTRA_1"><?php echo $i+1;?></div>
+                                <div class="CSS_GRID_MUESTRA_2 panel-heading"  role="tab" id="headingOne<?php echo $row['ID_NMUESTRA'];?>">
+                                    <button class="accordion-button collapsed"   type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $row['ID_NMUESTRA'] ?>"   aria-expanded="false"  aria-controls="collapse<?= $row['ID_NMUESTRA'] ?>"   >
+                                        <i><?= htmlspecialchars($row['TXT_MUESTRA'], ENT_QUOTES, 'UTF-8') ?></i>
+                                    </button>
                                 </div>
-                                <div class="CSS_GRID_MUESTRA_4" style="text-align: end;">
-                                    <b><?php echo $row['TXT_ETIQUETA'];?></b>&nbsp;|&nbsp;<b><?php echo "A".$row['ID_NMUESTRA'];?></b>
-                                </div>
+                                <div class="CSS_GRID_MUESTRA_4" style="text-align: end"><b><?php echo $row['TXT_ETIQUETA'];?>&nbsp;|&nbsp;<?php echo "A".$row['ID_NMUESTRA'];?></b></div>
                                 <div class="CSS_GRID_MUESTRA_6 _CENTER_1">
                                     <input 
-                                        type = "checkbox" 
-                                        class = "form-check-input checkbox_<?php echo $DATA["ID_SOLICITUD"];?>" 
-                                        id = "CHEK_<?php echo 'A'.$row['ID_NMUESTRA'];?>" 
-                                        style = "display:block;cursor:pointer;margin:0px" 
-                                        onchange = "js_muestra_indivual('A<?php echo $row['ID_NMUESTRA'];?>');"
-                                        value = "<?php echo $row['ID_NMUESTRA'];?>">
+                                        type="checkbox" 
+                                        class="form-check-input checkbox_<?php echo $DATA["ID_SOLICITUD"];?>" 
+                                        id="CHEK_<?php echo 'A'.$row['ID_NMUESTRA'];?>" 
+                                        style="display:block;cursor:pointer;margin:0px" 
+                                        onchange= "js_muestra_indivual('A<?php echo $row['ID_NMUESTRA'];?>');"
+                                        value="<?php echo $row['ID_NMUESTRA'];?>">
                                 </div>
                                 <div class="CSS_GRID_MUESTRA_5" id="btn_<?php echo "A".$row['ID_NMUESTRA']; ?>">
                                     <span class="label label-danger">
@@ -509,7 +505,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div id="collapseOne<?php echo $row['ID_NMUESTRA'];?>" class="panel-collapse collapse padding_collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $row['ID_NMUESTRA'];?>">
+                            <div id="collapse<?= $row['ID_NMUESTRA'] ?>" class="accordion-collapse collapse"  aria-labelledby="heading<?= $row['ID_NMUESTRA'] ?>"  data-bs-parent="#UL_RESULTADOS_<?= $DATA["ID_SOLICITUD"]?>">
                                 <div class="css_subgestion_eliminada">
                                     <div class="css_subgestion_eliminada1">
                                         <b style="color:#888888;">EVENTO ADVERSOS:</b><br>
@@ -528,8 +524,6 @@
                                 </div>
                             </div>
                         </li>
-
-
 
                     <?php } ?>
                     </ul>
@@ -684,10 +678,10 @@
             <?php
             break;
         case 3:
-            echo    "<b>EN TRASPORTE A 1) RECEPCI&Oacute;N</b>";
+            echo "<b>EN TRASPORTE A 1) RECEPCI&Oacute;N</b>";
             break;
         default:
-            echo    "<b>NO SE HA IDENTIFICADO</b>";
+            echo "<b>NO SE HA IDENTIFICADO</b>";
             break;    
     }
     ?>
