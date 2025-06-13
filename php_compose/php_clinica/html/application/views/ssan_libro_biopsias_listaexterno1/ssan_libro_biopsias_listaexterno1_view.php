@@ -11,11 +11,11 @@
         <select class="selectpicker" data-width="100%" class="form-control input-sm" data-selected-text-format="count" data-size="8" data-live-search="true" name="viwes_origen_solicitud" id="viwes_origen_solicitud" onchange="changeviwes_origen_solicitud(this)">
             <?php
                 echo $ind_opcion == 0 ? '<option value="0">TODOS LOS ORIGEN DE SOLICITUD</option>':'';
-                if(count($return_bd[":C_DATA_ORIGEN_SIS"])>0){
+                /* if(count($return_bd[":C_DATA_ORIGEN_SIS"])>0){
                     foreach($return_bd[":C_DATA_ORIGEN_SIS"] as $i => $row ){
                         echo '<option value="'.$row["A"].'">'.$row["B"].'</option>';
                     }
-                }
+                } */
             ?>
         </select>
     </div>
@@ -24,11 +24,11 @@
         <select class="selectpicker" data-width="100%" class="form-control input-sm"  data-selected-text-format="count" data-size="8" data-live-search="true" name="viwes_punto_entrega" id="viwes_punto_entrega" onchange="changeviwes_punto_entrega(this)">
             <?php
                 echo $ind_opcion == 0 ? '<option value="0">TODOS PUNTO TOMA DE MUESTRA</option>':'';
-                if(count($return_bd[":C_DATA_PUNTOS_ENTREGA"])>0){
+                /*  if(count($return_bd[":C_DATA_PUNTOS_ENTREGA"])>0){
                     foreach($return_bd[":C_DATA_PUNTOS_ENTREGA"] as $i => $row ){
                         echo '<option value="'.$row["V_ID_ROTULADO"].'">'.$row["V_TXT_OBSERVACION"].'</option>';
                     }
-                } 
+                } */ 
             ?>
         </select>
     </div>
@@ -298,16 +298,16 @@
     <div class="modal fade" id="MODAL_FORM_ANATOMIA_PATOLOGICA" tabindex="-1" aria-labelledby="tituloModalAnatomia" role="dialog">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="tituloModalAnatomia" class="modal-title"> <b style="color:#e34f49">&nbsp;PDF&nbsp;</b>  </h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Cerrar ventana">
-                <i class="fa fa-window-close" aria-hidden="true"></i> CERRAR VENTANA </button>
-            </div>
+                <div class="modal-header">
+                    <h3 id="tituloModalAnatomia" class="modal-title"> <b style="color:#e34f49">&nbsp;PDF&nbsp;</b></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="HTML_ANATOMIA_PATOLOGICA"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Cerrar ventana">
+                        <i class="fa fa-window-close" aria-hidden="true"></i> CERRAR VENTANA 
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -315,7 +315,7 @@
 
 <section>
     <div class="modal fade" id="MODAL_INFORMACION_ETIQUETA">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title"><b style="color:#e34f49">GESTI&Oacute;N DE MUESTRAS ANATOM&Iacute;A</b></h3>
@@ -330,7 +330,10 @@
             </div>
         </div>
     </div>
+
+
 </section>
+
 
 <div class="modal fade" id="transportModal" tabindex="-1" aria-labelledby="transportModalLabel" aria-hidden="true">
     <div class="modal-dialog">

@@ -429,26 +429,22 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
     //console.log("num_fichae     ->  ",num_fichae,"  <---------------------------");
     //console.log("data_get       ->  ",data_get,"    <---------------------------");
     //console.log("---------------------------------------------------------------");
-    let TEMPLATE_CALL_FROM      =   $('#TEMPLATE_CALL_FROM').val();
+    let TEMPLATE_CALL_FROM =   $('#TEMPLATE_CALL_FROM').val();
     document.getElementById("btn-finish").disabled            =   true;
-    let aData_2                 =   $('#formulario_histo').serializeArray().concat($('#form_anatomia_nmuestras').serializeArray()).concat($('#form_muestras_citologia').serializeArray());
-    let aData_3                 =   [
-                                        {
-                                            TABS    :   1,
-                                            FORM    :   $('#formulario_histo').serializeArray()
-                                        },
-                                        {
-                                            TABS    :   2,
-                                            FORM    :   $('#form_anatomia_nmuestras').serializeArray()
-                                        },
-                                        {
-                                            TABS    :   3,
-                                            FORM    :   $('#form_muestras_citologia').serializeArray()
-                                        },
+    let aData_2 = $('#formulario_histo').serializeArray().concat($('#form_anatomia_nmuestras').serializeArray()).concat($('#form_muestras_citologia').serializeArray());
+    let aData_3 = [ {
+            TABS : 1,
+            FORM : $('#formulario_histo').serializeArray(),
+        },{
+            TABS : 2,
+            FORM : $('#form_anatomia_nmuestras').serializeArray(),
+        },{
+            TABS : 3,
+            FORM : $('#form_muestras_citologia').serializeArray(),
+        },
+    ];
 
-                                    ];
-
-    var aDatosVacios    =   new Array();
+    var aDatosVacios = new Array();
     for(var i = 0; i < aData_2.length; i++){
         $("#"+aData_2[i].name).css("border-color","");
         if(
@@ -492,9 +488,9 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
             TEMPLATE_DATE_DMYHM                     :   date_final,
             TEMPLATE_CALL_FROM                      :   $("#TEMPLATE_CALL_FROM").val(), 
             TEMPLATE_EMPRESA                        :   $("#TEMPLATE_EMPRESA").val()===''?null:$("#TEMPLATE_EMPRESA").val(), 
-            TEMPLATE_PLANTILLA                      :   document.getElementById('IND_PLANTILLA_ANATOMIA')   ===null?0:$("#IND_PLANTILLA_ANATOMIA").val(), 
-            TEMPLATE_USODECASSETTE                  :   document.getElementById('AP_USO_CASSETE')           ===null?0:document.getElementById("AP_USO_CASSETE").checked?1:0,
-            TEMPLATE_INFOPOST                       :   document.getElementById('form_pospuesto')           ===null?0:document.getElementById("form_pospuesto").checked?1:0, 
+            TEMPLATE_PLANTILLA                      :   document.getElementById('IND_PLANTILLA_ANATOMIA') ===null?0:$("#IND_PLANTILLA_ANATOMIA").val(), 
+            TEMPLATE_USODECASSETTE                  :   document.getElementById('AP_USO_CASSETE') ===null?0:document.getElementById("AP_USO_CASSETE").checked?1:0,
+            TEMPLATE_INFOPOST                       :   document.getElementById('form_pospuesto') ===null?0:document.getElementById("form_pospuesto").checked?1:0, 
             TEMPLATE_IND_ROTULADO                   :   $("#ind_zona").val(),
             TEMPLATE_IND_ROTULADO_SUB               :   $("#sub_ind_zona").val(),
             //NEW DERIVACION
@@ -503,35 +499,30 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
             TEMPLATE_IND_DERIVACION                 :   null,
             TEMPLATE_IND_ID_SIC                     :   null,
         };
-        
-        
         //typeof $("#tabla_biopsia").data().arr_muestra=="undefined"?[]:$("#tabla_biopsia").data().arr_muestra;
         CreacionProtocolo.DATA_TEMPLATE.push({DATA:DATA});
-        console.log("--------------------------------------------------------------------");
-        console.log("CreacionProtocolo              ->  ",CreacionProtocolo,"   <--------");
-        console.log("--------------------------------------------------------------------");
         //return false;
-        var formulario1                             =   $('#formulario_histo').serializeArray();
-        //console.log("formulario1                  =>  ",formulario1);
+        var formulario1 =   $('#formulario_histo').serializeArray();
+        //console.log("formulario1 =>  ",formulario1);
         //MUESTRA DE BIOPSIA
-        var display_nmuestras                       =   true;
-        var display_ncitologia                      =   true;
-        var array_nmuestras                         =   new Array();
-        var arreglo_ncasete                         =   new Array();
+        var display_nmuestras = true;
+        var display_ncitologia = true;
+        var array_nmuestras = new Array();
+        var arreglo_ncasete = new Array();
         //**************************************************************
         if(display_nmuestras){
             $('[id^=n_muestra_]').each(function(){
-                var arr_num                         =   this.id.split("_");
-                var DATA                            =   $("#btn_muestra_"+arr_num[2]).data();
-                var id_bd                           =   DATA.ID_NMUESTRA;
+                var arr_num = this.id.split("_");
+                var DATA = $("#btn_muestra_"+arr_num[2]).data();
+                var id_bd = DATA.ID_NMUESTRA;
                 arreglo_ncasete.push(document.getElementById("AP_USO_CASSETE").checked?$("#num_cassete_"+arr_num[2]).val():[]);
                 array_nmuestras.push({ 
-                    ID_NMUESTRA         :   id_bd,
-                    N_MUESTRA           :   arr_num[2], 
-                    TXT_MUESTRA         :   $("#n_muestra_"+arr_num[2]).val(),
-                    IND_ETIQUETA        :   $("#ind_equiqueta_"+arr_num[2]).val(),
-                    IND_NUMCASSETTE     :   document.getElementById("AP_USO_CASSETE").checked?$("#num_cassete_"+arr_num[2]).val():0, 
-                    IND_TIPOMUESTRA     :   1,
+                    ID_NMUESTRA : id_bd,
+                    N_MUESTRA : arr_num[2], 
+                    TXT_MUESTRA : $("#n_muestra_"+arr_num[2]).val(),
+                    IND_ETIQUETA : $("#ind_equiqueta_"+arr_num[2]).val(),
+                    IND_NUMCASSETTE : document.getElementById("AP_USO_CASSETE").checked?$("#num_cassete_"+arr_num[2]).val():0, 
+                    IND_TIPOMUESTRA : 1,
                 });
             });
             //***********************************
@@ -548,29 +539,29 @@ function JS_GUARDAANATOMIA_EXTERNO(value){
         //MUESTRA DE BIOPSIA
 
         //MUESTRA DE CITOLOGIA
-        var array_ncitologia            =    new Array();
+        var array_ncitologia = new Array();
         if(display_ncitologia){
             $('[id^=n_citologia_]').each(function(){
-                var arr_num             =   this.id.split("_");
-                var DATA                =   $("#btn_citologia_"+arr_num[2]).data();
-                var id_bd               =   DATA.ID_NMUESTRA;
+                var arr_num = this.id.split("_");
+                var DATA = $("#btn_citologia_"+arr_num[2]).data();
+                var id_bd = DATA.ID_NMUESTRA;
                 array_ncitologia.push({ 
-                    ID_NMUESTRA         :   id_bd==null?'':id_bd,
-                    N_MUESTRA           :   arr_num[2], 
-                    TXT_MUESTRA         :   $("#n_citologia_"+arr_num[2]).val(),
-                    NUM_ML              :   $("#ml_citologia_"+arr_num[2]).val(),
-                    IND_ETIQUETA        :   $("#ind_cito_equiqueta_"+arr_num[2]).val(),
-                    IND_TIPOMUESTRA     :   2,
+                    ID_NMUESTRA : id_bd==null?'':id_bd,
+                    N_MUESTRA : arr_num[2], 
+                    TXT_MUESTRA : $("#n_citologia_"+arr_num[2]).val(),
+                    NUM_ML : $("#ml_citologia_"+arr_num[2]).val(),
+                    IND_ETIQUETA : $("#ind_cito_equiqueta_"+arr_num[2]).val(),
+                    IND_TIPOMUESTRA : 2,
                 });
             });
         }
         //MUESTRA DE CITOLOGIA
         CreacionProtocolo.examenHispatologico.push({
-            listadoHISPATO              :   formulario1,
-            numero_muestas              :   array_nmuestras,
-            arr_citologia               :   array_ncitologia,
+            listadoHISPATO : formulario1,
+            numero_muestas : array_nmuestras,
+            arr_citologia : array_ncitologia,
         });
-        var PIDE_FIRMA                  =   false;
+        var PIDE_FIRMA = false;
         /*
         console.log("------------------DATA_HISPATOLOGICO-----------------------");
         console.log("   ->",CreacionProtocolo,"<-                               ");
@@ -1908,11 +1899,8 @@ function confirma_recepcion_all(fase){
 
 //******************************************************************************
 function _envios(id_anatomia,post,LISTA_ANATOMIA){
-    //console.table([{"id_anatomia":id_anatomia,"_post":post}]);
-    //console.table(LISTA_ANATOMIA.RESUL);
-    //console.table(LISTA_ANATOMIA.RESUL.ARRAY_NMUESTRAS);
+    
     var txt_accion = post==0?'CUSTODIA':post==1?'TRASPORTE':'RECEPCI&Oacute;N';
-    //console.log("txt_accion->",txt_accion);
     if (post === 3 ){
         jConfirm('Con esta acci&oacute;n se proceder&aacute; a editar las solicitud de anatom&iacute;a patol&oacute;gica <b>RECEPCI&Oacute;N</b>&nbsp;&nbsp;&nbsp;<br />&iquest;Est&aacute; seguro de continuar?','Clinica Libre',function(r){
             if(r){

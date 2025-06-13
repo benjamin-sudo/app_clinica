@@ -327,7 +327,6 @@ class Ssan_libro_biopsias_usuarioext extends CI_Controller {
             $TXT_ERROR = 'Error en firma simple';
             $STATUS = false;
         }
-
         $this->output->set_output(json_encode([
             'PASS' => $password,
             'GET_BD' =>  $DATA,

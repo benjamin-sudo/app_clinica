@@ -92,7 +92,7 @@
         grid-template-columns : repeat(4,1fr);
         grid-gap : 10px;
         grid-auto-rows : 40px;
-        grid-template-areas : " . a a . "
+        grid-template-areas :   " . a a . "
                                 " . a a . ";
     }
     
@@ -334,60 +334,60 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="content" style="margin-top:-10px;">
                     <ul class="list-group" id="UL_RESULTADOS_<?php echo $DATA["ID_SOLICITUD"];?>" style="margin-bottom:0px;">
                     <?php    
                         $IND_USOCASSETTE = $DATA['IND_USOCASSETTE'];
                         if($IND_USOCASSETTE == 1){
-                            //ordenando x casete
+                            #ordenando x casete
                             foreach($ARR_CASETE_ORD  as $y => $data_casete){
                                 $li_muestras = '';
                                 $grid_array = [];
                                 $aux = 1;
-                                foreach($data_casete as $z => $row){ 
+                                $v_identificador_casete = $y . '_'. $DATA["ID_SOLICITUD"];
+                                foreach ($data_casete as $z => $row) {  
                                     $li_muestras .=  $aux.".-".$row['TXT_MUESTRA']."";
-                                    //array_push($grid_array,$aux.".-".$row['TXT_MUESTRA']);
+                                    #array_push($grid_array,$aux.".-".$row['TXT_MUESTRA']);
                                     array_push($grid_array,'<div class="grid_cell2" style="color:#888888;"><b>'.$aux.'.-'.$row['TXT_MUESTRA'].'</b></div>');
                                     $aux++;
                                 }
                                 ?>
-                                <li class="list-group-item sin_padding lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "C".$data_casete[0]['ID_CASETE'];?>" data-id_muestra="<?php echo $data_casete[0]['ID_CASETE'];?>" data-CASETE="1" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $row['ID_CASETE'];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
+                                <li class="list-group-item sin_padding lista_anatomia grupo_<?php echo $DATA["ID_SOLICITUD"];?>" id="<?php echo "C".$v_identificador_casete;?>" data-id_muestra="<?php echo $v_identificador_casete;?>" data-CASETE="1" data-id_solicitud="<?php echo $DATA["ID_SOLICITUD"];?>" data-NUM_TABS="<?php echo $row['ID_CASETE'];?>" data-data_muestra="<?php echo htmlspecialchars(json_encode($row),ENT_QUOTES,'UTF-8');?>"> 
                                     <div class="CSS_GRID_MUESTRA_CASETE">
                                         <div class="CSS_GRID_MUESTRA_CASETE_1">
-                                             <?php echo $y;?>
+                                            <b style="color:#888888;"><?php echo $y;?></b>
                                         </div>
                                         <div class="CSS_GRID_MUESTRA_CASETE_3">
-                                            <a role="button" style="padding: 0px" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<?php echo $data_casete[0]['ID_CASETE'];?>" aria-expanded="true" aria-controls="collapseOne<?php echo $data_casete[0]['ID_CASETE'];?>" class="li_acordion_mtuestras">
+                                            <a role="button" style="padding: 0px" data-toggle="collapse" data-parent="#accordion" href="#collapseOne<?php echo $v_identificador_casete;?>" aria-expanded="true" aria-controls="collapseOne<?php echo $v_identificador_casete;?>" class="li_acordion_mtuestras">
                                                 <div class="grid_views_casete">
                                                     <?php echo implode("",$grid_array);?>
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="CSS_GRID_MUESTRA_CASETE_4" style="text-align: end;">
-                                            <b style="color:#888888;"><?php echo "N&deg;".$row['NUM_CASSETTE'];?>&nbsp;|&nbsp;<?php echo "C".$data_casete[0]['ID_CASETE'];?></b>
+                                            <b style="color:#888888;"><?php echo "N&deg;".$row['NUM_CASSETTE'];?>&nbsp;|&nbsp;<?php echo "C".$v_identificador_casete;?></b>
                                         </div>
                                         <div class="CSS_GRID_MUESTRA_CASETE_6 _CENTER_1">
                                             <input 
                                                 type = "checkbox" 
                                                 class = "form-check-input checkbox_<?php echo $row['ID_NMUESTRA'];?>" 
-                                                id = "CHEK_<?php echo 'C'.$data_casete[0]['ID_CASETE'];?>" 
+                                                id = "CHEK_<?php echo 'C'.$v_identificador_casete;?>" 
                                                 style = "display:block;cursor:pointer;margin:0px" 
-                                                onchange = "js_muestra_indivual('C<?php echo $data_casete[0]['ID_CASETE'];?>');"
-                                                value = "<?php echo $data_casete[0]['ID_CASETE'];?>"
+                                                onchange = "js_muestra_indivual('C<?php echo $v_identificador_casete;?>');"
+                                                value = "<?php echo $v_identificador_casete;?>"
                                             />
                                         </div>
-                                        <div  class="CSS_GRID_MUESTRA_CASETE_5" id="btn_<?php echo "C".$data_casete[0]['ID_CASETE'];?>">
+                                        <div  class="CSS_GRID_MUESTRA_CASETE_5" id="btn_<?php echo "C".$v_identificador_casete;?>">
                                             <span class="label label-danger">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
-                                    <div id="collapseOne<?php echo $data_casete[0]['ID_CASETE'];?>" class="panel-collapse collapse padding_collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $data_casete[0]['ID_CASETE'];?>">
+                                    <div id="collapseOne<?php echo $v_identificador_casete;?>" class="panel-collapse collapse padding_collapse" role="tabpanel" aria-labelledby="headingOne<?php echo $v_identificador_casete;?>">
                                         <div class="css_subgestion_eliminada">
                                             <div class="css_subgestion_eliminada1">
                                                 <b style="color:#888888;">EVENTO ADVERSOS:</b><br>
-                                                <select class="form-control input-sm" id="SEL_MOTIVO_<?php echo $data_casete[0]['ID_CASETE'];?>" name="SEL_MOTIVO_<?php echo $data_casete[0]['ID_CASETE'];?>">
+                                                <select class="form-control input-sm" id="SEL_MOTIVO_<?php echo $v_identificador_casete;?>" name="SEL_MOTIVO_<?php echo $v_identificador_casete;?>">
                                                     <option value="">Seleccione...</option>
                                                     <option value="1">MUESTRA NO ENCONTRADA</option>
                                                     <option value="2">MUESTRA EN MAL ESTADO</option>
@@ -396,12 +396,14 @@
                                             </div>
                                             <div class="css_subgestion_eliminada2">
                                                 <b style="color:#888888;">OBSERVACI&Oacute;N:</b><br>
-                                                <input type="text" class="form-control input-sm" id="txt_observacion_<?php echo $data_casete[0]['ID_CASETE'];?>" name="txt_observacion_<?php echo $data_casete[0]['ID_CASETE'];?>" value="">
+                                                <input type="text" class="form-control input-sm" id="txt_observacion_<?php echo $v_identificador_casete;?>" name="txt_observacion_<?php echo $v_identificador_casete;?>" value="">
                                             </div>
                                             <div class="css_subgestion_eliminada3">&nbsp;</div>
                                         </div>
                                     </div>
                                 </li>
+
+
                             <?php    
                             }
                         } else {

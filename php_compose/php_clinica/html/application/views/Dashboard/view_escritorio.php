@@ -194,9 +194,7 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
   <div id="respuesta"></div>
-
   <section>
     <div id="ajax-preloader" class="flex-column justify-content-center align-items-center" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999;">
       <img class="animation__shake" src="assets/dist/img/anatomia/logo.ico" alt="Logo" height="250" width="250">

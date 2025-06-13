@@ -173,22 +173,22 @@ class Ssan_libro_biopsias_listaexterno1 extends CI_Controller {
             foreach($DATA["P_ANATOMIA_PATOLOGICA_MAIN"] as $i => $row){
                 $id_anatomia = $row["ID_SOLICITUD"];
                 $html = $this->load->view("ssan_libro_biopsias_listagespab/ssan_libro_biopsias_listagespab_view_pre_all",array(
-                    "VIEWS" =>  $vista,
-                    "DATA" =>  $row,
-                    "FIRST" =>  $get_etiqueta,
-                    "FASE" =>  $NUM_FASE,
+                    "VIEWS" => $vista,
+                    "DATA" => $row,
+                    "FIRST" => $get_etiqueta,
+                    "FASE" => $NUM_FASE,
                     "P_ANATOMIA_PATOLOGICA_MUESTRAS" =>  empty($arr_muestra_muestras[$id_anatomia])?[]:$arr_muestra_muestras[$id_anatomia],
                     "P_AP_MUESTRAS_CITOLOGIA" =>  empty($arr_muestras_citologia[$id_anatomia])?[]:$arr_muestras_citologia[$id_anatomia],
-                    //"P_AP_INFORMACION_ADICIONAL" =>  empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia],
+                    #"P_AP_INFORMACION_ADICIONAL" =>  empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia],
                     #"HTML_LOGS" =>  $this->load->view("Ssan_libro_etapaanalitica/template_logs_anatomia",array("ID_SOLICITUD"=>$id_anatomia,'P_AP_INFORMACION_ADICIONAL'=>empty($arr_info_linea_tiempo[$id_anatomia])?[]:$arr_info_linea_tiempo[$id_anatomia]),true),
                     "HTML_LOGS" => '',
                 ),true);
                 
-                $ARR_GENTIONMSJ[] =   array(
-                    'ID_AP' =>  $id_anatomia,
-                    'ID_TABS' =>  'TABS_'.$id_anatomia,
-                    'TXT_TITULO' =>  'N&deg;&nbsp;<b>'.$id_anatomia.'</b>',
-                    'HTML' =>  $html,
+                $ARR_GENTIONMSJ[] = array(
+                    'ID_AP' => $id_anatomia,
+                    'ID_TABS' => 'TABS_'.$id_anatomia,
+                    'TXT_TITULO' => 'N&deg;&nbsp;<b>'.$id_anatomia.'</b>',
+                    'HTML' => $html,
                 );
             }
         }

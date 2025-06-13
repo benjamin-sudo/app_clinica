@@ -2094,7 +2094,6 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
         $this->db->trans_start();
         $mivariable = true;
         $arr_histo_ok = [];
-        
         # DERIVACION ENTRE EMPRESAS
         $_val_establecimiento_referencia = '';
         if($DATA['COD_EMPRESA'] == '029' || $DATA['COD_EMPRESA'] == '800') {
@@ -2753,11 +2752,9 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                         "ID_SIC" => $template_ind_sic,
                     ));
                 }
-    
                 if($ID_GESPAB != '') {
                     $dataSolicitud = array_merge($dataSolicitud, array("ID_TABLA" => $ID_GESPAB));
                 }
-    
                 if(isset($Object[0]['listadoHISPATO'])) {
                     $hispatologico = $Object[0]['listadoHISPATO'];
                     foreach ($hispatologico as $i => $datos) {
@@ -2802,13 +2799,15 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                         }
                     }
                 }
-    
+
+                $v_bool_nueva_solicitud = true;
                 if ($TEMPLATE_PA_ID_PROCARCH == '31' || $TEMPLATE_PA_ID_PROCARCH == '36') {
                     $arr_data = $ID_GESPAB == '' ? [] : $this->db->query("SELECT AP.ID_SOLICITUD_HISTO FROM ADMIN.PB_SOLICITUD_HISTO AP WHERE AP.ID_TABLA=".$ID_GESPAB." ORDER BY AP.ID_SOLICITUD_HISTO")->result_array();
                     if (count($arr_data) > 0) {
                         $ID_BIOPSIA = $arr_data[0]["ID_SOLICITUD_HISTO"];
                         $this->db->where('ID_SOLICITUD_HISTO', $ID_BIOPSIA);
                         $this->db->update('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
+                        $v_bool_nueva_solicitud = false;
                     } else {
                         $this->db->insert('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
                         $ID_BIOPSIA = $this->db->insert_id();
@@ -2819,16 +2818,24 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                         $ID_BIOPSIA = $arr_data[0]["ID_SOLICITUD_HISTO"];
                         $this->db->where('ID_SOLICITUD_HISTO', $ID_BIOPSIA);
                         $this->db->update('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
+                        $v_bool_nueva_solicitud = false;
                     } else {
                         $this->db->insert('ADMIN.PB_SOLICITUD_HISTO', $dataSolicitud);
                         $ID_BIOPSIA = $this->db->insert_id();
                     }
                 }
-    
+
+
+                log_message('debug', "v_bool_nueva_solicitud  : " . print_r($v_bool_nueva_solicitud, TRUE));
+
                 $this->db->where('ID_SOLICITUD_HISTO', $ID_BIOPSIA);
                 $this->db->where_in('IND_TIPOMUESTRA', array('1', '2'));
                 $this->db->update('ADMIN.PB_HISTO_NMUESTRAS', array('IND_ESTADO' => '0', 'USR_AUDITA' => $session, 'DATE_AUDITA' => date('Y-m-d H:i:s')));
-    
+                // Antes del foreach:
+                // 1) Para detectar cambios de cassette
+                $lastCassette = null;
+                // 2) Para guardar el ID_CASETE asignado al cassette actual
+                $lastIdCasete = null;
                 if (isset($Object[0]['numero_muestas'])) {
                     $numero_muestas = $Object[0]['numero_muestas'];
                     if (count($numero_muestas) > 0) {
@@ -2842,9 +2849,53 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
                                 'NUM_CASSETTE' => $row['IND_NUMCASSETTE'],
                                 'IND_TIPOMUESTRA' => 1,
                             );
-    
-                            $ID_CASETE = $V_BOOLEANO_CASSETTE == 1 ? $this->db->query("SELECT AP.ID_CASETE AS ID_CASETE FROM ADMIN.PB_HISTO_NMUESTRAS AP WHERE AP.NUM_CASSETTE = ".$row['IND_NUMCASSETTE']." AND AP.ID_SOLICITUD_HISTO = ".$ID_BIOPSIA." AND AP.ID_CASETE IS NOT NULL ORDER BY AP.ID_SOLICITUD_HISTO")->row_array()['ID_CASETE'] : 0;
-    
+                            # var_dump($V_BOOLEANO_CASSETTE);
+                            $ID_CASETE = null;
+                            if ($V_BOOLEANO_CASSETTE == 1) {
+                                // ¿Cambiamos de cassette?
+                                if ($row['IND_NUMCASSETTE'] !== $lastCassette) {
+                                    // Nuevo grupo: calculamos/recuparamos un nuevo ID_CASETE
+                                    if ($v_bool_nueva_solicitud) {
+                                        // === Nueva solicitud: max(ID_CASETE)+1 ===
+                                        $this->db->select_max('ID_CASETE');
+                                        $query  = $this->db->get('ADMIN.PB_HISTO_NMUESTRAS');
+                                        $maxRow = $query->row_array();
+                                        $ID_CASETE = (isset($maxRow['ID_CASETE']) ? (int)$maxRow['ID_CASETE'] : 0) + 1;
+                                    } else {
+                                        // === Existente: recuperar del histórico ===
+                                        $sql = "SELECT AP.ID_CASETE
+                                                    FROM ADMIN.PB_HISTO_NMUESTRAS AP
+                                                    WHERE AP.NUM_CASSETTE = ?
+                                                    AND AP.ID_SOLICITUD_HISTO = ?
+                                                    AND AP.ID_CASETE IS NOT NULL
+                                                    ORDER BY AP.ID_CASETE DESC
+                                                    LIMIT 1";
+                                        $case = $this->db->query($sql, [$row['IND_NUMCASSETTE'],$ID_BIOPSIA])->row_array();
+                                        $ID_CASETE = isset($case['ID_CASETE']) ? (int)$case['ID_CASETE'] : 0;
+                                    }
+                                    // Guarda para las próximas filas del mismo cassette
+                                    $lastCassette = $row['IND_NUMCASSETTE'];
+                                    $lastIdCasete = $ID_CASETE;
+                                } else {
+                                    // Mismo cassette que la fila anterior → reutilizamos el ID ya calculado
+                                    $ID_CASETE = $lastIdCasete;
+                                }
+                            } else {
+                                // No aplica cassette
+                                $ID_CASETE = 0;
+                            }
+                            // Ahora puedes insertar $NUMERO_MUESTRA junto a $ID_CASETE en tu tabla de histo_nmuestras...
+                            $NUMERO_MUESTRA['ID_CASETE'] = $ID_CASETE;
+                            $NUMERO_MUESTRA['ID_SOLICITUD_HISTO'] = $ID_BIOPSIA;
+                            /*
+                            log_message('debug', "##################################################");
+                            log_message('debug', "vuelta : " . $i);
+                            log_message('debug', "ID_BIOPSIA : " . $ID_BIOPSIA);
+                            log_message('debug', "ID_CASETE : " . $ID_CASETE);
+                            log_message('debug', "lastCassette : " . $lastCassette);
+                            log_message('debug', "lastIdCasete : " . $lastIdCasete);
+                            log_message('debug', "##################################################");
+                            */
                             if (empty($row['ID_NMUESTRA'])) {
                                 $NUMERO_MUESTRA = array_merge($NUMERO_MUESTRA, array(
                                     'ID_NMUESTRA' => NULL, // Esto permitirá que MySQL auto-incremente el ID
@@ -2945,8 +2996,8 @@ class ssan_libro_biopsias_usuarioext_model extends CI_Model {
 		$result =   null;
 	    }
 	} catch (Exception $e) {
-	    $return['INFO_RESUL']	    =   false;
-	    $return['MSJ_ERROR']	    =   var_dump($e->getMessage());
+	    $return['INFO_RESUL'] = false;
+	    $return['MSJ_ERROR'] = var_dump($e->getMessage());
 	    return $return;
 	}
 	$this->db->trans_complete();
